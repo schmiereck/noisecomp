@@ -10,9 +10,15 @@ import de.schmiereck.noiseComp.generator.GeneratorInterface;
 
 /**
  * <p>
+ * 	Manages three {@link SoundBuffer}-Objects:<br/>
+ * 	playing buffer:<br/>
+ * 	waiting buffer:<br/>
+ * 	generating buffer:<br/>
+ * </p>
+ * <p>
  * 	{@link #pollGenerate()}:<br/>
  * 	Verwaltet die SoundBuffer füllt diese bei Bedarf mit neu vom
- * 	SinusGenerator generierten Werten.
+ * 	{@link #soundGenerator} generierten Werten.
  * </p>
  * <p>
  * 	{@link #read(byte[], int, int)}:<br/>
@@ -55,6 +61,9 @@ extends AudioInputStream
 	
 	private int bufferSize;
 	
+	/**
+	 * Referenc to the actual used Generator that generates the output signal.
+	 */
 	private GeneratorInterface soundGenerator;
 	
 	/**
@@ -85,8 +94,11 @@ extends AudioInputStream
 		this.soundGenerator = soundGenerator;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.io.InputStream#read(byte[], int, int)
+	 */
 	public int read(byte[] abData, int nOffset, int nLength)
-	throws IOException
+		throws IOException
 	{
 		if (nLength % getFormat().getFrameSize() != 0)
 		{
@@ -126,11 +138,10 @@ extends AudioInputStream
 		
 		return copyiedBytes;
 	}
-	
+
 	/**
 	 * Generiert den nächsten Abschnitt in den leeren Warte-Buffer
 	 * (wenn nötig, da leere Buffer warten).
-	 *
 	 */
 	public void pollGenerate()
 	{
@@ -181,6 +192,8 @@ extends AudioInputStream
 	 * number that can be represented in an integer. If the length
 	 * if finite, this length is returned, clipped by the maximum
 	 * that can be represented.
+	 * 
+	 * @see java.io.InputStream#available()
 	 */
 	public int available()
 	{
@@ -197,14 +210,16 @@ extends AudioInputStream
 		
 		return len;
 	}
-	
+
 	/**
 	 * this method should throw an IOException if the frame size is not 1.
 	 * Since we currently always use 16 bit samples, the frame size is
 	 * always greater than 1. So we always throw an exception.
+	 * 
+	 * @see java.io.InputStream#read()
 	 */
 	public int read()
-	throws IOException
+		throws IOException
 	{
 		throw new IOException("cannot use this method currently");
 	}

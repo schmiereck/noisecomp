@@ -2,8 +2,8 @@ package de.schmiereck.noiseComp.desktopPage;
 
 import java.util.Iterator;
 
-import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 

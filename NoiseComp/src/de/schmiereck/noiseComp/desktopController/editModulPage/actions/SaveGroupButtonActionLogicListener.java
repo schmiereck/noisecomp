@@ -7,8 +7,6 @@ import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData
 import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TracksListWidgetData;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;

@@ -2,7 +2,6 @@ package de.schmiereck.noiseComp.desktopController.editModulPage;
 
 import de.schmiereck.noiseComp.desktop.DesktopData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
-import de.schmiereck.noiseComp.desktopController.EditGeneratorChangedListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.CancelGroupButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.InputTypeEditSaveActionListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.SaveGroupButtonActionLogicListener;
@@ -14,9 +13,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectedListEntryInterface;
-import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
  * Page to edit the data (name and input types) of a generator modul.<br/>

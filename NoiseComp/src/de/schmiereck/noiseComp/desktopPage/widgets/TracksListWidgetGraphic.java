@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.util.Iterator;
 
 import de.schmiereck.noiseComp.desktopPage.DesktopColors;
-import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;

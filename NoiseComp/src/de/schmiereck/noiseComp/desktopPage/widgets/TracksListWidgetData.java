@@ -8,7 +8,6 @@ import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.soundData.SoundData;
 
 
