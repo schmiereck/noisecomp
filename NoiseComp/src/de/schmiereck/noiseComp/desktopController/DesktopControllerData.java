@@ -4,19 +4,19 @@ import java.util.Iterator;
 
 import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.desktop.DesktopData;
-import de.schmiereck.noiseComp.desktopController.actions.AddGeneratorButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.AddGeneratorButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.GroupGeneratorButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.GroupGeneratorButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.PauseButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.PlayButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.PauseButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.PlayButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.StopButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.StopButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.CancelGroupButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.InputTypeEditSaveActionListener;
@@ -28,8 +28,8 @@ import de.schmiereck.noiseComp.desktopController.mainPage.actions.RemoveGenerato
 import de.schmiereck.noiseComp.desktopController.mainPage.actions.RemoveInputButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.mainPage.actions.SetGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.mainPage.actions.SetInputButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.mainPage.actions.ZoomInButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.mainPage.actions.ZoomOutButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.mainPage.actions.ZoomInButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.mainPage.actions.ZoomOutButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectCancelButtonActionLogicListener;
@@ -55,6 +55,8 @@ import de.schmiereck.noiseComp.generator.RectangleGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.controller.ControllerData;
+import de.schmiereck.screenTools.controller.DataChangedListener;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
  * <p>
@@ -151,15 +153,23 @@ extends ControllerData
 	 */
 	//private Generators	mainGenerators = null;
 	
-	private EditData editData = new EditData();
+	private EditData editData;
+
+	/**
+	 * List of {@link DataChangedListener}-Objects.
+	 */
+	private DataChangedObserver dataChangedObserver;
 	
 	/**
 	 * Constructor.
+	 * @param observer
 	 * 
 	 * @param soundData
 	 */
-	public DesktopControllerData(SoundData soundData, GeneratorTypesData generatorTypesData)
+	public DesktopControllerData(DataChangedObserver dataChangedObserver, 
+								 SoundData soundData, GeneratorTypesData generatorTypesData)
 	{
+		this.dataChangedObserver = dataChangedObserver;
 		this.generatorTypesData  = generatorTypesData;
 		
 		this.soundData = soundData;
@@ -168,36 +178,47 @@ extends ControllerData
 		
 		this.desktopData = new DesktopData();
 		
-		this.mainDesktopPageData = this.createMainPage(desktopData);
-		this.selectGeneratorPageData = this.createSelectGeneratorPage(desktopData);
-		this.selectNewGeneratorPageData = this.createNewSelectGeneratorPage(desktopData);
-		this.editModulPageData = this.createEditModulPage(desktopData);
+		this.editData = new EditData(this);
+		
+		this.mainDesktopPageData = this.createMainPage(dataChangedObserver, 
+													   desktopData);
+		this.selectGeneratorPageData = this.createSelectGeneratorPage(dataChangedObserver, 
+																	  desktopData);
+		this.selectNewGeneratorPageData = this.createNewSelectGeneratorPage(dataChangedObserver, 
+																			desktopData);
+		this.editModulPageData = this.createEditModulPage(dataChangedObserver, 
+														  desktopData);
 		//this.saveDesktopPageData = this.createSavePage(desktopData);
 		//this.loadDesktopPageData = this.createLoadPage(desktopData);
 		
 		this.activeDesktopPageData = this.mainDesktopPageData;
 	}
 
-	private MainPageData createMainPage(DesktopData desktopData)
+	private MainPageData createMainPage(DataChangedObserver dataChangedObserver, 
+										DesktopData desktopData)
 	{
-		return new MainPageData(desktopData, this, this.getFieldWidth(), this.getFieldHeight());
+		return new MainPageData(dataChangedObserver, desktopData, this, this.getFieldWidth(), this.getFieldHeight());
 	}
 
-	private SelectGeneratorPageData createSelectGeneratorPage(DesktopData desktopData)
+	private SelectGeneratorPageData createSelectGeneratorPage(DataChangedObserver dataChangedObserver, 
+															  DesktopData desktopData)
 	{
-		return new SelectGeneratorPageData(desktopData, this.getFieldWidth(), this.getFieldHeight(),
-				this.generatorTypesData);
+		return new SelectGeneratorPageData(dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight(),
+										   this.generatorTypesData);
 	}
 
-	private SelectNewGeneratorPageData createNewSelectGeneratorPage(DesktopData desktopData)
+	private SelectNewGeneratorPageData createNewSelectGeneratorPage(DataChangedObserver dataChangedObserver, 
+																	DesktopData desktopData)
 	{
-		return new SelectNewGeneratorPageData(desktopData, this.getFieldWidth(), this.getFieldHeight(),
-				this.generatorTypesData);
+		return new SelectNewGeneratorPageData(dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight(),
+											  this.generatorTypesData);
 	}
 
-	private EditModulPageData createEditModulPage(DesktopData desktopData)
+	private EditModulPageData createEditModulPage(DataChangedObserver dataChangedObserver, 
+												  DesktopData desktopData)
 	{
-		return new EditModulPageData(desktopData, this, this.getFieldWidth(), this.getFieldHeight());
+		return new EditModulPageData(dataChangedObserver,
+									 desktopData, this, this.getFieldWidth(), this.getFieldHeight());
 	}
 	/*
 	private DesktopPageData createSavePage(DesktopData desktopData)
@@ -270,19 +291,19 @@ extends ControllerData
 	}
 	*/
 	public void setActionListeners(
-			AddGeneratorButtonActionLogicListener addGeneratorButtonActionLogicListener,
+			//AddGeneratorButtonActionLogicListener addGeneratorButtonActionLogicListener,
 			RemoveGeneratorButtonActionLogicListener removeGeneratorButtonActionLogicListener,
-			GroupGeneratorButtonActionLogicListener groupGeneratorButtonActionLogicListener,
+			//GroupGeneratorButtonActionLogicListener groupGeneratorButtonActionLogicListener,
 
-			PlayButtonActionLogicListener playButtonActionLogicListener,
-			PauseButtonActionLogicListener pauseButtonActionLogicListener,
-			StopButtonActionLogicListener stopButtonActionLogicListener,
+			//PlayButtonActionLogicListener playButtonActionLogicListener,
+			//PauseButtonActionLogicListener pauseButtonActionLogicListener,
+			//StopButtonActionLogicListener stopButtonActionLogicListener,
 			
 			//ExitButtonActionLogicListener exitButtonActionLogicListener,
 			//NewButtonActionLogicListener newButtonActionLogicListener,
 
-			ZoomInButtonActionLogicListener zoomInButtonActionLogicListener,
-			ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener,
+			//ZoomInButtonActionLogicListener zoomInButtonActionLogicListener,
+			//ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener,
 		   
 			SetGeneratorButtonActionLogicListener setGeneratorButtonActionLogicListener,
 			SetInputButtonActionLogicListener setInputButtonActionLogicListener,
@@ -311,19 +332,19 @@ extends ControllerData
 			InputTypeEditSaveActionListener inputTypeEditSaveActionListener
 			)
 	{
-		this.mainDesktopPageData.setActionListeners(addGeneratorButtonActionLogicListener,
+		this.mainDesktopPageData.setActionListeners(//addGeneratorButtonActionLogicListener,
 													removeGeneratorButtonActionLogicListener,
-													groupGeneratorButtonActionLogicListener,
+													//groupGeneratorButtonActionLogicListener,
 		
-													playButtonActionLogicListener,
-													pauseButtonActionLogicListener,
-													stopButtonActionLogicListener,
+													//playButtonActionLogicListener,
+													//pauseButtonActionLogicListener,
+													//stopButtonActionLogicListener,
 			
 													//exitButtonActionLogicListener,
 													//newButtonActionLogicListener,
 		
-													zoomInButtonActionLogicListener,
-													zoomOutButtonActionLogicListener,
+													//zoomInButtonActionLogicListener,
+													//zoomOutButtonActionLogicListener,
 		
 													setGeneratorButtonActionLogicListener,
 													setInputButtonActionLogicListener,
@@ -430,6 +451,8 @@ extends ControllerData
 	public void setActiveDesktopPageData(DesktopPageData activeDesktopPageData)
 	{
 		this.activeDesktopPageData = activeDesktopPageData;
+		
+		this.dataChangedObserver.dataChanged();
 	}
 	/**
 	 * @return the attribute {@link #desktopData}.

@@ -14,6 +14,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
  * <p>
@@ -56,32 +57,30 @@ extends DesktopPageData
 	/**
 	 * Constructor.
 	 * 
-	 * @param desktopData
-	 * @param desktopSizeX
-	 * @param desktopSizeY
 	 */
-	public SelectNewGeneratorPageData(DesktopData desktopData, int desktopSizeX, int desktopSizeY,
-			GeneratorTypesData generatorTypesData)
+	public SelectNewGeneratorPageData(DataChangedObserver dataChangedObserver, 
+									  DesktopData desktopData, int desktopSizeX, int desktopSizeY,
+									  GeneratorTypesData generatorTypesData)
 	{
 		super(desktopData, desktopSizeX, desktopSizeY);
 
 		{
 			// Add Main Page:
-			PaneData paneData = new PaneData(0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
+			PaneData paneData = new PaneData(dataChangedObserver, 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
 			this.addWidgetData(paneData);
 		}
 		
 		{
-			this.selectCancelButtonData = new FunctionButtonData("cancel", "Cancel", 100, 10, 90, 20);
+			this.selectCancelButtonData = new FunctionButtonData(dataChangedObserver, "cancel", "Cancel", 100, 10, 90, 20);
 			this.addWidgetData(this.selectCancelButtonData);
 		}
 		{
-			LabelData labelData = new LabelData("Generator-Type:", 100, 100, 100, 20);
+			LabelData labelData = new LabelData(dataChangedObserver, "Generator-Type:", 100, 100, 100, 20);
 			this.addWidgetData(labelData);
 		}
 		
 		{
-			this.selectAddButtonData = new FunctionButtonData("selectAdd", "Add selected...", 100, 40, 100, 20);
+			this.selectAddButtonData = new FunctionButtonData(dataChangedObserver, "selectAdd", "Add selected...", 100, 40, 100, 20);
 			this.addWidgetData(this.selectAddButtonData);
 		}
 		

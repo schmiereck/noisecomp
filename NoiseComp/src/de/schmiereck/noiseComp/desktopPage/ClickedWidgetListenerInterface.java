@@ -12,11 +12,16 @@ public interface ClickedWidgetListenerInterface
 {
 
 	/**
+	 * Calling if widget is clicked with mouse.
+	 * 
 	 * @param widgetData
 	 */
 	void notifyClickedWidget(WidgetData widgetData, int pointerPosX, int pointerPosY);
 
 	/**
+	 * Calling if widget mouse click is realeased
+	 * because of: ???
+	 * 
 	 * @param selectedWidgetData
 	 */
 	void notifyReleasedWidget(WidgetData selectedWidgetData);

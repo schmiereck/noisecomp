@@ -25,7 +25,10 @@ implements GeneratorInterface,
 	private float startTimePos = 0.0F;
 	private float endTimePos = 1.0F;
 	
-	private float frameRate;
+	/**
+	 * Is the Frame rate of the outgoing sound.
+	 */
+	private float soundFrameRate;
 	
 	/**
 	 * Is the unique Name of the Generator Object. 
@@ -46,24 +49,24 @@ implements GeneratorInterface,
 	/**
 	 * Constructor.
 	 * 
-	 * @param frameRate		Frames per Second.
+	 * @param soundFrameRate		Frames per Second.
 	 */
-	public Generator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public Generator(String name, Float soundFrameRate, GeneratorTypeData generatorTypeData)
 	{
 		super();
 		
 		this.name = name;
-		this.frameRate = frameRate.floatValue();
+		this.soundFrameRate = soundFrameRate.floatValue();
 		this.generatorTypeData = generatorTypeData;
 		//this.parentModulGenerator = parentModulGenerator;
 	}
 
 	/**
-	 * @return the attribute {@link #frameRate}.
+	 * @return the attribute {@link #soundFrameRate}.
 	 */
-	public float getFrameRate()
+	public float getSoundFrameRate()
 	{
-		return this.frameRate;
+		return this.soundFrameRate;
 	}
 
 	/**
@@ -119,7 +122,7 @@ implements GeneratorInterface,
 		//GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
 
 		// Die Frameposition in Zeit umrechnen.
-		float frameTime = (framePosition / this.getFrameRate());
+		float frameTime = (framePosition / this.getSoundFrameRate());
 		
 		//if (generatorBuffer.checkIsInTime(framePosition) == true)
 		//if ((frameTime >= this.startTimePos) && (frameTime < this.endTimePos))
@@ -166,6 +169,9 @@ implements GeneratorInterface,
 	 * Berechnen des Sample-Wertes für die angegebene Frame-Position.
 	 * 
 	 * @param framePosition
+	 * 			is the position of the frame in the complete line to play.<br/>
+	 * 			(Is NOT the position in the generator, calulate this frame pos with 
+	 * 			soundFramePosition = framePosition - {@link #getStartTimePos()}!)
 	 * @param sample
 	 */
 	public abstract void calculateSoundSample(long framePosition, float frameTime, SoundSample sample, ModulGenerator parentModulGenerator);
@@ -185,6 +191,7 @@ implements GeneratorInterface,
 	public InputData addInputGenerator(Generator inputGenerator, 
 									   InputTypeData inputTypeData, 
 									   Float inputValue, 
+									   String inputStringValue, 
 									   InputTypeData inputModulInputTypeData)
 	{
 		InputData inputData = new InputData(this,
@@ -192,7 +199,7 @@ implements GeneratorInterface,
 											inputTypeData, 
 											inputModulInputTypeData);
 		
-		inputData.setInputValue(inputValue);
+		inputData.setInputValue(inputValue, inputStringValue);
 		
 		if (this.inputs == null)
 		{	
@@ -220,7 +227,7 @@ implements GeneratorInterface,
 	{
 		InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(inputType);
 		
-		InputData inputData = this.addInputGenerator(null, inputTypeData, Float.valueOf(value), null);
+		InputData inputData = this.addInputGenerator(null, inputTypeData, Float.valueOf(value), null, null);
 		
 		return inputData;
 	}
@@ -265,7 +272,7 @@ implements GeneratorInterface,
 	 */
 	public InputData addInputValue(Float value, InputTypeData inputTypeData)
 	{
-		InputData inputData = this.addInputGenerator(null, inputTypeData, value, null);
+		InputData inputData = this.addInputGenerator(null, inputTypeData, value, null, null);
 		
 		//inputData.getInputGenerator();
 
@@ -444,30 +451,33 @@ implements GeneratorInterface,
 	 */
 	public void notifyRemoveGenerator(Generator removedGenerator)
 	{
-		if (this.inputs != null)
-		{	
-			synchronized (this.inputs)
-			{
-				if (this.inputs != null)
-				{	
-					Iterator inputGeneratorsIterator = this.inputs.iterator();
-					
-					while (inputGeneratorsIterator.hasNext())
-					{
-						InputData inputData = (InputData)inputGeneratorsIterator.next();
-		
-						Generator generator = (Generator)inputData.getInputGenerator();
+		if (removedGenerator != null)
+		{
+			if (this.inputs != null)
+			{	
+				synchronized (this.inputs)
+				{
+					if (this.inputs != null)
+					{	
+						Iterator inputGeneratorsIterator = this.inputs.iterator();
 						
-						if (generator == removedGenerator)
+						while (inputGeneratorsIterator.hasNext())
 						{
-							synchronized (this.inputs)
-							{
-								inputGeneratorsIterator.remove();
-							}
+							InputData inputData = (InputData)inputGeneratorsIterator.next();
+			
+							Generator generator = (Generator)inputData.getInputGenerator();
 							
-							this.generateChangedEvent(generator.getStartTimePos(),
-													  generator.getEndTimePos());
-							break;
+							if (generator == removedGenerator)
+							{
+								synchronized (this.inputs)
+								{
+									inputGeneratorsIterator.remove();
+								}
+								
+								this.generateChangedEvent(generator.getStartTimePos(),
+														  generator.getEndTimePos());
+								break;
+							}
 						}
 					}
 				}
@@ -670,7 +680,8 @@ implements GeneratorInterface,
 		return value;
 	}
 
-	protected float calcInputMonoValue(long framePosition, InputData inputData, ModulGenerator parentModulGenerator)
+	protected float calcInputMonoValue(long framePosition, InputData inputData, 
+									   ModulGenerator parentModulGenerator)
 	{
 		float value;
 
@@ -742,6 +753,40 @@ implements GeneratorInterface,
 			}
 		}
 
+		return value;
+	}
+
+	protected String calcInputStringValue(long framePosition, InputTypeData inputTypeData,
+										  ModulGenerator parentModulGenerator)
+	{
+		String value;
+
+		InputData inputData = this.searchInputByType(inputTypeData);
+
+		if (inputData != null)
+		{
+			Generator inputSoundGenerator = inputData.getInputGenerator();
+	
+			// Found Input-Generator ?
+			if (inputSoundGenerator != null)
+			{	
+				// Use his input:
+				
+				//value = inputSoundGenerator.calcInputStringValue(framePosition, parentModulGenerator);
+				value = null;
+			}
+			else
+			{
+				// Found no Input-Generator:
+				
+				value = inputData.getInputStringValue();
+			}
+		}
+		else
+		{
+			value = null;
+		}
+		
 		return value;
 	}
 

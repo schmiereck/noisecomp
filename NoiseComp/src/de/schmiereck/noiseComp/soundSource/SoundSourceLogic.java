@@ -115,7 +115,7 @@ implements GeneratorChangeListenerInterface
 			
 			float timeLen = this.outputGenerator.getEndTimePos() - this.outputGenerator.getStartTimePos();
 			
-			this.soundSamplesBufferData.createBuffer(timeLen, this.outputGenerator.getFrameRate());
+			this.soundSamplesBufferData.createBuffer(timeLen, this.outputGenerator.getSoundFrameRate());
 
 			if (this.outputGenerator != null)
 			{

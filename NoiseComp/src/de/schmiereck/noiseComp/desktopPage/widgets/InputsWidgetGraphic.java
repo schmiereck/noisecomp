@@ -87,20 +87,27 @@ extends ListWidgetGraphic
 		}
 		else
 		{
-			if (inputGenerator != null)
-			{	
-				label = inputGenerator.getName();
-
-				GeneratorTypeData inputGeneratorTypeData = inputGenerator.getGeneratorTypeData();
-				
-				if (inputGeneratorTypeData != null)
-				{
-					label += " [" + inputGeneratorTypeData.getGeneratorTypeName() + "]";
-				}
+			if (inputData.getInputStringValue() != null)
+			{
+				label = String.valueOf(inputData.getInputStringValue());
 			}
 			else
 			{
-				label = "--";
+				if (inputGenerator != null)
+				{	
+					label = inputGenerator.getName();
+
+					GeneratorTypeData inputGeneratorTypeData = inputGenerator.getGeneratorTypeData();
+					
+					if (inputGeneratorTypeData != null)
+					{
+						label += " [" + inputGeneratorTypeData.getGeneratorTypeName() + "]";
+					}
+				}
+				else
+				{
+					label = "--";
+				}
 			}
 		}
 

@@ -54,6 +54,8 @@ extends DocumentData
 		this.mainModel = new MainModel();
 		
 		//this.frameRate = soundData.getFrameRate();
+		
+		//document.setDirty(true);
 	}
 	
 	/* (non-Javadoc)

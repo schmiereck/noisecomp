@@ -23,6 +23,6 @@ public class NoiseCompDocumentWindowFactory
 	 */
 	public DocumentWindow create(Document document)
 	{
-		return new SwingDocumentWindow(document);
+		return new NoiseCompDocumentWindow(document);
 	}
 }

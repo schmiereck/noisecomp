@@ -10,10 +10,13 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
+import de.schmiereck.noiseComp.generator.TrackData;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 
 /**
- * TODO docu
+ * <p>
+ * 	Drawing a widget to display a list of tracks.
+ * </p>
  *
  * @author smk
  * @version 08.02.2004
@@ -21,6 +24,8 @@ import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 public class TracksListWidgetGraphic
 extends ListWidgetGraphic
 {
+	private static Color dragColor1 = new Color(100, 100, 100, 75);
+	private static Color dragColor2 = new Color(120, 120, 120);
 	
 	private static void drawGeneratorArea(Graphics g, ScreenGraficInterface screenGrafic, DesktopColors desktopColors,
 								   TracksListWidgetData tracksData, Generator generator, 
@@ -82,7 +87,7 @@ extends ListWidgetGraphic
 				
 				float generatorSampleScale = generator.getGeneratorSampleDrawScale(parentModulGenerator);
 				
-				float frameRate = generator.getFrameRate();
+				float frameRate = generator.getSoundFrameRate();
 				boolean firstSample = true;
 				int lastX = screenPosX;
 				int lastY = screenPosY;
@@ -294,6 +299,7 @@ extends ListWidgetGraphic
 		screenGrafic.drawLine(g, 0, posY, sizeX, 0);
 		screenGrafic.drawLine(g, tracksData.getGeneratorsLabelSizeX(), posY, 0, sizeY);
 		
+		//----------------------------------------------------------------------
 		// Draw Input Connectors:
 		
 		if (tracksData.getSelectedTrackData() != null)
@@ -340,9 +346,9 @@ extends ListWidgetGraphic
 						int inputScreenPosX = (int)((inputGenerator.getEndTimePos() - horizontalScrollStart) * scaleX);
 						
 						int inp1X = (int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
-						int inp1Y = (int)(posY - (verticalScrollerStart * entryHeight) + selectedPos * entryHeight);
+						int inp1Y = (int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
 						int inp2X = (int)(tracksData.getGeneratorsLabelSizeX() + inputScreenPosX);
-						int inp2Y = (int)(posY - (verticalScrollerStart * entryHeight) + inputPos * entryHeight + entryHeight / 2);
+						int inp2Y = (int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + inputPos * entryHeight + entryHeight / 2);
 						
 						screenGrafic.drawAbsLine(g, 
 								inp1X, inp1Y, 
@@ -358,6 +364,7 @@ extends ListWidgetGraphic
 			}
 		}
 		
+		//----------------------------------------------------------------------
 		// Play Sound Pos:
 		g.setColor(Color.RED);
 		
@@ -371,6 +378,23 @@ extends ListWidgetGraphic
 			int soundPosX = (int)((playTimePos - horizontalScrollStart) * tracksData.getGeneratorScaleX());
 			
 			screenGrafic.drawLine(g, tracksData.getGeneratorsLabelSizeX() + soundPosX, posY, 0, sizeY);
+		}
+		
+		//----------------------------------------------------------------------
+		// Drag-Border:
+
+		if (tracksData.getDoDragging() == true)
+		{
+			g.setColor(dragColor1);
+			//g.setXORMode(dragColor2);
+			
+			int y = tracksData.getDragTargetPosY() - tracksData.getDragTargetOffsetY();
+			
+			screenGrafic.fillRect(g, 
+								  0, y, 
+								  sizeX, tracksData.getListEntryHeight());
+
+			//g.setXORMode(Color.WHITE);
 		}
 	}
 }

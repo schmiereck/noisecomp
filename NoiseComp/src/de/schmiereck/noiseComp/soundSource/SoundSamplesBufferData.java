@@ -87,7 +87,7 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 	public void calcWaitingSamplesPart(float partTime, Generator outputGenerator)
 	{
 		long framePos;
-		long frames = (long)(partTime * outputGenerator.getFrameRate());
+		long frames = (long)(partTime * outputGenerator.getSoundFrameRate());
 		
 		for (framePos = this.emptyBufferStart; framePos < this.emptyBufferEnd; framePos++)
 		{

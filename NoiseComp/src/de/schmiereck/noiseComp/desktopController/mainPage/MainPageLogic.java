@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
+import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.EditData;
 import de.schmiereck.noiseComp.desktopController.EditGeneratorChangedListener;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface;
@@ -13,7 +14,6 @@ import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectEntryData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TracksListWidgetData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
@@ -21,6 +21,8 @@ import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.TrackData;
+import de.schmiereck.screenTools.controller.ControllerLogic;
 
 /**
  * TODO docu
@@ -33,6 +35,7 @@ implements GeneratorSelectedListenerInterface,
 GeneratorInputSelectedListenerInterface,
 EditGeneratorChangedListener
 {
+	private ControllerLogic controllerLogic;
 	private MainPageData mainPageData;
 
 	/**
@@ -40,10 +43,12 @@ EditGeneratorChangedListener
 	 * 
 	 * 
 	 */
-	public MainPageLogic(MainPageData mainPageData)
+	public MainPageLogic(ControllerLogic controllerLogic, 
+						 MainPageData mainPageData)
 	{
 		super();
 		
+		this.controllerLogic = controllerLogic;
 		this.mainPageData = mainPageData;
 		
 		this.registerEditGeneratorChangedListener(this);
@@ -239,7 +244,14 @@ EditGeneratorChangedListener
 			}
 			else
 			{	
-				inputValue = null;
+				if (selectedInputData.getInputStringValue() != null)
+				{	
+					inputValue = selectedInputData.getInputStringValue();
+				}
+				else
+				{	
+					inputValue = null;
+				}
 			}
 			
 			inputModulInputTypeData = selectedInputData.getInputModulInputTypeData();
@@ -273,6 +285,8 @@ EditGeneratorChangedListener
 		}
 		
 		this.mainPageData.getGeneratorInputTypeDescriptionTextWidgetData().setLabelText(inputGeneratorTypeDescription);
+
+		this.controllerLogic.dataChanged();
 	}
 
 	/* (non-Javadoc)
@@ -285,15 +299,17 @@ EditGeneratorChangedListener
 		this.mainPageData.getGeneratorInputTypeSelectData().setInputPos(0);
 		this.mainPageData.getGeneratorInputValueInputlineData().setInputText("");
 		this.mainPageData.getGeneratorInputModulInputSelectData().setInputPos(-1);
-	}
 
+		this.controllerLogic.dataChanged();
+	}
+	/*
 	public void addTrackData(TrackData trackData)
 	{
 		TracksListWidgetData tracksListWidgetData = this.mainPageData.getTracksListWidgetData();
 		
 		tracksListWidgetData.addTrack(trackData);
 	}
-
+	*/
 	/**
 	 * Set the new Input-Settings for the selected Input.
 	 * If there is no selected input, {@link #addInput(InputsWidgetData)} is called.
@@ -377,7 +393,15 @@ EditGeneratorChangedListener
 				{
 					if (inputGeneratorValueStr.length() > 0)
 					{	
-						inputGeneratorValue = Float.valueOf(inputGeneratorValueStr);
+						try
+						{
+							inputGeneratorValue = Float.valueOf(inputGeneratorValueStr);
+						}
+						catch (java.lang.NumberFormatException ex)
+						{
+							// Ignore and use String.
+							inputGeneratorValue = null;
+						}
 					}
 					else
 					{
@@ -409,7 +433,7 @@ EditGeneratorChangedListener
 				//---------------------------------------------------
 
 				if ((inputGenerator == null) && 
-						(inputGeneratorValue == null) && 
+						((inputGeneratorValue == null) && ((inputGeneratorValueStr == null))) && 
 						(inputModulInputTypeData == null))
 				{
 					throw new PopupRuntimeException("no input generator, no value and no modul input type for the input \"" + inputGeneratorName + "\"");
@@ -428,6 +452,7 @@ EditGeneratorChangedListener
 													  inputGenerator, 
 													  inputTypeData, 
 													  inputGeneratorValue, 
+													  inputGeneratorValueStr,
 													  inputModulInputTypeData);
 				}
 				else
@@ -436,7 +461,7 @@ EditGeneratorChangedListener
 
 					selectedInputData.setInputGenerator(inputGenerator);
 					//selectedInputData.setInputTypeData(inputTypeData);
-					selectedInputData.setInputValue(inputGeneratorValue);
+					selectedInputData.setInputValue(inputGeneratorValue, inputGeneratorValueStr);
 					selectedInputData.setInputModulInputTypeData(inputModulInputTypeData);
 				}
 			}
@@ -462,13 +487,17 @@ EditGeneratorChangedListener
 	 */
 	public InputData addInput(Generator selectedGenerator, 
 			Generator inputGenerator, 
-			InputTypeData inputTypeData, Float inputGeneratorValue, 
+			InputTypeData inputTypeData, 
+			Float inputGeneratorValue, 
+			String inputGeneratorValueStr,
 			InputTypeData inputModulInputTypeData)
 	{
 		//Generators generators = this.mainPageData.getTracksListWidgetData().getGenerators();
 		
 		//InputData inputData = generators.addInput(selectedGenerator, inputGenerator, inputTypeData, inputGeneratorValue, inputModulInputTypeData);
-		InputData inputData = selectedGenerator.addInputGenerator(inputGenerator, inputTypeData, inputGeneratorValue, inputModulInputTypeData);
+		InputData inputData = selectedGenerator.addInputGenerator(inputGenerator, inputTypeData, 
+																  inputGeneratorValue, inputGeneratorValueStr,
+																  inputModulInputTypeData);
 		
 		this.mainPageData.getGeneratorInputsData().setSelectedInputData(inputData);
 		
@@ -496,6 +525,8 @@ EditGeneratorChangedListener
 		}
 		
 		this.mainPageData.getInputsVScrollbarData().setScrollerLength(len);
+
+		this.controllerLogic.dataChanged();
 	}
 
 	/**
@@ -521,6 +552,8 @@ EditGeneratorChangedListener
 		float visibleTime = visiblePoints / generatorScaleX;
 		
 		scrollbarData.setScrollerSize(visibleTime);
+
+		this.controllerLogic.dataChanged();
 	}
 
 	/**
@@ -582,15 +615,17 @@ EditGeneratorChangedListener
 		{
 			this.mainPageData.getModulGeneratorTextWidgetData().setLabelText("<Main Modul>");
 		}
+
+		this.controllerLogic.dataChanged();
 	}
 
 	/**
 	 * 
-	 */
 	public void clearTracks()
 	{
 		this.mainPageData.clearTracks();
 	}
+	 */
 
 	public void storeGeneratorEditData()
 	{
@@ -646,7 +681,7 @@ EditGeneratorChangedListener
 	public void removeSelectedTrack()
 	{
 		Generator selectedGenerator = this.mainPageData.getTracksListWidgetData().removeSelectedTrack();
-		
+		/*
 		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
 
 		EditData editData = desktopControllerData.getEditData();
@@ -657,5 +692,14 @@ EditGeneratorChangedListener
 		{
 			editModulTypeData.removeGenerator(selectedGenerator);
 		}
+		*/
+	}
+
+	/**
+	 * Set this Tracks for editing.
+	 */
+	public void setEditModulGeneratorTypeData(ModulGeneratorTypeData modulGeneratorTypeData)
+	{
+		this.mainPageData.getTracksListWidgetData().setTracksData(modulGeneratorTypeData.getTracksData());
 	}
 }

@@ -18,7 +18,6 @@ extends Generator
 	/**
 	 * Constructor.
 	 * 
-	 * @param frameRate	Frames per Second
 	 */
 	public RectangleGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
@@ -42,7 +41,7 @@ extends Generator
 		//float timePos = frameTime - (this.getStartTimePos());
 		
 		// Länge einer Sinus-Periode in Frames.
-		int periodLengthInFrames = Math.round(this.getFrameRate() / signalFrequency);
+		int periodLengthInFrames = Math.round(this.getSoundFrameRate() / signalFrequency);
 		float	periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
 		//float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
 

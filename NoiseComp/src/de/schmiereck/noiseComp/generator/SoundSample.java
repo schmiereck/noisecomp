@@ -17,17 +17,27 @@ package de.schmiereck.noiseComp.generator;
  */
 public class SoundSample
 {
-	private float leftValue = 0.0F;
-	private float rightValue = 0.0F;
+	private float leftValue;
+	private float rightValue;
 	
 	/**
 	 * Constructor.
 	 * 
-	 * 
 	 */
 	public SoundSample()
 	{
-		super();
+		this.leftValue = 0.0F;
+		this.rightValue = 0.0F;
+	}
+	
+	/**
+	 * Constructor.
+	 * 
+	 */
+	public SoundSample(float leftValue, float rightValue)
+	{
+		this.leftValue = leftValue;
+		this.rightValue = rightValue;
 	}
 
 	/**
@@ -187,5 +197,34 @@ public class SoundSample
 			this.leftValue = 0.0F;
 			this.rightValue = 0.0F;
 		}
+	}
+
+	/**
+	 * @param startSoundSample
+	 * @param endSoundSample
+	 * @param soundDivPos
+	 * 			between 0.0F and 1.0F
+	 * @return
+	 */
+	public static SoundSample createInterpolate(SoundSample startSoundSample, 
+												SoundSample endSoundSample, 
+												float soundDivPos)
+	{
+		SoundSample soundSample;
+		
+		if (soundDivPos == 0.0F)
+		{
+			soundSample = startSoundSample;
+		}
+		else
+		{
+			float divL = endSoundSample.leftValue - startSoundSample.leftValue;
+			float divR = endSoundSample.rightValue - startSoundSample.rightValue;
+			
+			soundSample = new SoundSample(startSoundSample.leftValue 	+ (divL * soundDivPos), 
+										  startSoundSample.rightValue	+ (divR * soundDivPos));
+		}
+		
+		return soundSample;
 	}
 }

@@ -10,7 +10,6 @@ import de.schmiereck.noiseComp.desktopPage.DesktopPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.MainActionException;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.Generator;
@@ -21,12 +20,16 @@ import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
+import de.schmiereck.noiseComp.generator.TrackData;
+import de.schmiereck.noiseComp.generator.TracksData;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
 import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.ControllerLogic;
+import de.schmiereck.screenTools.controller.DataChangedListener;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 import de.schmiereck.screenTools.graphic.GraphicComponent;
 import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
 
@@ -64,13 +67,14 @@ extends ControllerLogic
 	 * 
 	 * @param waiter
 	 */
-	public DesktopControllerLogic(SoundSourceLogic soundSourceLogic,
+	public DesktopControllerLogic(DataChangedObserver dataChangedObserver,
+								  SoundSourceLogic soundSourceLogic,
 								  DesktopControllerData controllerData, 
 								  DesktopInputListener inputListener, 
 								  SchedulerWaiter waiter, 
 								  String playerName)
 	{
-		super(waiter);
+		super(dataChangedObserver, waiter);
 
 		try
 		{
@@ -91,12 +95,14 @@ extends ControllerLogic
 			//------------------------------------------------------------------
 			// main page logic: 
 			
-			this.mainPageLogic = new MainPageLogic(this.desktopControllerData.getMainDesktopPageData());
+			this.mainPageLogic = new MainPageLogic(this, 
+												   this.desktopControllerData.getMainDesktopPageData());
 			
 			//------------------------------------------------------------------
 			// edit modul page logic: 
 			
-			EditModulPageLogic editModulPageLogic = new EditModulPageLogic(this.desktopControllerData.getEditModulPageData());
+			EditModulPageLogic editModulPageLogic = new EditModulPageLogic(this,
+																		   this.desktopControllerData.getEditModulPageData());
 			
 			this.desktopControllerData.getEditModulPageData().getInputTypesListWidgetData().registerInputTypeSelectedListener(editModulPageLogic);
 
@@ -218,7 +224,7 @@ extends ControllerLogic
 		{
 			if (this.desktopControllerData.getDesktopData().setPointerPos(posX, posY) == true)
 			{
-				this.dataChanged();
+				//this.dataChanged();
 				//System.out.println("chnaged");
 			}
 		}
@@ -236,7 +242,7 @@ extends ControllerLogic
 		try
 		{
 			DesktopPageLogic.pointerPressed(this.desktopControllerData.getActiveDesktopPageData());
-			this.dataChanged();
+			//this.dataChanged();
 		}
 		catch (PopupRuntimeException ex)
 		{
@@ -249,7 +255,7 @@ extends ControllerLogic
 		try
 		{
 			DesktopPageLogic.pointerReleased(this.desktopControllerData.getActiveDesktopPageData());
-			this.dataChanged();
+			//this.dataChanged();
 		}
 		catch (PopupRuntimeException ex)
 		{
@@ -344,7 +350,24 @@ extends ControllerLogic
 		
 		if (editModulTypeData != null)
 		{
-			editModulTypeData.addGenerator(generator);
+			TrackData trackData = editModulTypeData.addGenerator(generator);
+
+			//----------------------------------------------------------------------
+			// Manage a new Output-Generator specialy:
+			
+			if (generator instanceof OutputGenerator)
+			{	
+				OutputGenerator outputGenerator = (OutputGenerator)generator;
+				
+				//SoundData soundData = this.desktopControllerData.getSoundData();
+
+				this.soundSourceLogic.setOutputGenerator(outputGenerator);
+
+				// Start scheduled polling for the new SoundSource.
+				//this.soundSourceSchedulerLogic.setSoundSourceLogic(this.soundSourceLogic);
+				//soundData.setOutputGenerator(outputGenerator);
+			}
+
 			//Generators generators = editModulTypeData.getGenerators();
 	
 			//generators.addGenerator(generator);
@@ -363,9 +386,9 @@ extends ControllerLogic
 			}
 			*/
 			
-			TrackData trackData = new TrackData(generator);
+			//TrackData trackData = new TrackData(generator);
 			
-			this.addTrackData(trackData);
+			//this.addTrackData(trackData);
 		}
 		else
 		{
@@ -380,7 +403,6 @@ extends ControllerLogic
 	 * 	{@link SoundSourceLogic}-Object.
 	 * 
 	 * @param trackData
-	 */
 	public void addTrackData(TrackData trackData)
 	{
 		//----------------------------------------------------------------------
@@ -407,8 +429,8 @@ extends ControllerLogic
 			//this.soundSourceSchedulerLogic.setSoundSourceLogic(this.soundSourceLogic);
 			//soundData.setOutputGenerator(outputGenerator);
 		}
-		this.dataChanged();
 	}
+	 */
 
 	/**
 	 * Creates a demo list of generators with different types.
@@ -540,7 +562,6 @@ extends ControllerLogic
 			if (focusedWidgetData instanceof InputlineData)
 			{
 				((InputlineData)focusedWidgetData).moveCursor(dir);
-				this.dataChanged();
 			}
 		}
 	}
@@ -558,7 +579,6 @@ extends ControllerLogic
 			if (focusedWidgetData instanceof InputlineData)
 			{
 				((InputlineData)focusedWidgetData).changeCursorPos(dir);
-				this.dataChanged();
 			}
 		}
 	}
@@ -576,7 +596,6 @@ extends ControllerLogic
 			if (focusedWidgetData instanceof SelectData)
 			{
 				((SelectData)focusedWidgetData).scrollInputPos(dir);
-				this.dataChanged();
 			}
 		}
 	}
@@ -594,7 +613,6 @@ extends ControllerLogic
 			if (focusedWidgetData instanceof InputlineData)
 			{
 				((InputlineData)focusedWidgetData).deleteChar(dir);
-				this.dataChanged();
 			}
 		}
 	}
@@ -611,7 +629,6 @@ extends ControllerLogic
 			if (focusedWidgetData instanceof InputlineData)
 			{
 				((InputlineData)focusedWidgetData).inputChar(c);
-				this.dataChanged();
 			}
 		}
 	}
@@ -622,7 +639,6 @@ extends ControllerLogic
 	public void doFocusWalk(int dir)
 	{
 		this.desktopControllerData.getActiveDesktopPageData().focusWalk(dir);
-		this.dataChanged();
 	}
 
 	/**
@@ -634,7 +650,6 @@ extends ControllerLogic
 		{
 			// Aktive Seite holen und Submit auslösen.
 			this.desktopControllerData.getActiveDesktopPageData().submitPage();
-			this.dataChanged();
 		}
 		catch (MainActionException ex)
 		{
@@ -661,7 +676,6 @@ extends ControllerLogic
 				generator.addInputValue(inputTypeData.getDefaultValue(), inputTypeData);
 			}
 		}
-		this.dataChanged();
 	}
 	
 	public void selectMainModul()
@@ -682,28 +696,31 @@ extends ControllerLogic
 	/**
 	 * 	Make the edited generators as the edited list of 
 	 * 	tracks on the main page.<br/>
+	 * Set this Tracks for editing.
 	 * 	
 	 * @see #addTrackData(TrackData) because of the handling of the OutputGenerator.
 	 * 
 	 */
-	public void selectModulGeneratorToEdit(ModulGeneratorTypeData modulTypeData)
+	public void selectModulGeneratorToEdit(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		EditData editData = this.desktopControllerData.getEditData();
 		
-		editData.setEditModulGenerator(modulTypeData);
+		editData.setEditModulGenerator(modulGeneratorTypeData);
 
 		//-----------------------------------------------------
 		// Clear the list with the prviouse selected generators.
-		this.mainPageLogic.clearTracks();
+		//this.mainPageLogic.clearTracks();
 
 		//-----------------------------------------------------
 		// Generators updating in actual View:
 		
-		if (modulTypeData != null)
+		if (modulGeneratorTypeData != null)
 		{
+			this.getMainPageLogic().setEditModulGeneratorTypeData(modulGeneratorTypeData);
 			//Generators generators = modulTypeData.getGenerators();
 		
 			//if (generators != null)
+			/*
 			{
 				Iterator generatorsIterator = modulTypeData.getGeneratorsIterator();
 				
@@ -713,6 +730,15 @@ extends ControllerLogic
 					
 					this.addTrackData(new TrackData(generator));
 				}
+			}
+			*/
+			OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
+			
+			//SoundData soundData = this.desktopControllerData.getSoundData();
+
+			if (outputGenerator != null)
+			{
+				this.soundSourceLogic.setOutputGenerator(outputGenerator);
 			}
 		}
 

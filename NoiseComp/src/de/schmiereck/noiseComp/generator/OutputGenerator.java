@@ -29,7 +29,8 @@ extends Generator
 	 */
 	public void setSignalInput(Generator inputSoundGenerator)
 	{
-		this.addInputGenerator(inputSoundGenerator, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL), null, null);
+		this.addInputGenerator(inputSoundGenerator, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL), 
+							   null, null, null);
 	}
 
 	/* (non-Javadoc)

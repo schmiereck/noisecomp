@@ -7,6 +7,9 @@ import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInte
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 
 /**
@@ -62,6 +65,37 @@ implements ButtonActionLogicListenerInterface
 		this.controllerLogic.addGenerator(generator);
 
 		*/
-		this.controllerData.setActiveDesktopPageData(this.controllerData.getSelectNewGeneratorPageData());
+		//this.controllerData.setActiveDesktopPageData(this.controllerData.getSelectNewGeneratorPageData());
+		
+		//----------------------------------------------------------------------
+		ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)ModulGenerator.createGeneratorTypeData(); 
+
+		modulGeneratorTypeData.setGeneratorTypeName("unnamed");
+		modulGeneratorTypeData.setGeneratorTypeDescription("New created modul.");
+		
+		this.controllerData.getGeneratorTypesData().addGeneratorTypeData(modulGeneratorTypeData);
+
+		//----------------------------------------------------------------------
+		float frameRate = this.controllerData.getSoundData().getFrameRate();
+		
+		//---------------------------------
+		{
+			OutputGenerator outputGenerator;
+
+			GeneratorTypeData generatorTypeData = this.controllerData.searchGeneratorTypeData(OutputGenerator.class.getName());
+			outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate), generatorTypeData);
+	
+			outputGenerator.setStartTimePos(0.0F);
+			outputGenerator.setEndTimePos(5.0F);
+			
+			//outputGenerator.setSignalInput(mixerGenerator);
+			
+			modulGeneratorTypeData.addGenerator(outputGenerator);
+		}		
+		
+		//----------------------------------------------------------------------
+		this.controllerData.getEditData().setEditModulGenerator(modulGeneratorTypeData);
+		
+		this.controllerData.setActiveDesktopPageData(this.controllerData.getEditModulPageData());
 	}
 }

@@ -7,6 +7,7 @@ import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
  * TODO docu
@@ -32,11 +33,13 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * Constructor.
 	 * 
 	 */
-	public GeneratorTypesWidgetData(int posX, int posY, int sizeX, int sizeY,
-			ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
-			GeneratorTypesData generatorTypesData)
+	public GeneratorTypesWidgetData(DataChangedObserver dataChangedObserver,
+									int posX, int posY, int sizeX, int sizeY,
+									ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
+									GeneratorTypesData generatorTypesData)
 	{
-		super(posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
+		super(dataChangedObserver,
+			  posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
 		
 		this.generatorTypesData = generatorTypesData;
 
@@ -137,6 +140,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		{
 			this.activeGeneratorTypeData = null;
 		}
+
+		this.dataChangedVisible();
 	}
 
 	/* (non-Javadoc)
@@ -165,6 +170,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		{
 			this.generatorTypeSelectedListener.notifyGeneratorTypeSelected(this, this.selectedGeneratorTypeData);
 		}
+
+		this.dataChangedVisible();
 	}
 
 	/**
@@ -187,6 +194,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		{
 			this.generatorTypeSelectedListener.notifyGeneratorTypeDeselected(this, generatorTypeData);
 		}
+
+		this.dataChangedVisible();
 	}
 
 	/* (non-Javadoc)
@@ -194,8 +203,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyReleasedWidget(WidgetData selectedWidgetData)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -215,7 +222,10 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		}
 		
 		this.activeGeneratorTypeData = generatorTypeData;
+
+		this.dataChangedVisible();
 	}
+
 	/**
 	 * @param generatorTypeSelectedListener is the new value for attribute {@link #generatorTypeSelectedListener} to set.
 	 */
@@ -240,6 +250,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 				this.generatorTypesData.removeGeneratorType(generatorTypeData);
 				
 				this.setVerticalScrollerLength(this.getGeneratorTypesCount());
+
+				this.dataChangedVisible();
 			}
 		}
 	}
@@ -249,7 +261,5 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyDragWidget(WidgetData selectedWidgetData, int pointerPosX, int pointerPosY)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 }

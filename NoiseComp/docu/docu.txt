@@ -42,3 +42,9 @@ noise
                                |
                                `--->input
 
+================================================================================
+Searching for:
+==============
+visual analysis of the sound's waveform
+plot of signal amplitude
+waveform plotting

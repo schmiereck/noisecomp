@@ -14,6 +14,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
  * TODO docu
@@ -61,55 +62,56 @@ extends DesktopPageData
 	 * @param desktopSizeX
 	 * @param desktopSizeY
 	 */
-	public SelectGeneratorPageData(DesktopData desktopData, int desktopSizeX, int desktopSizeY,
-			GeneratorTypesData generatorTypesData)
+	public SelectGeneratorPageData(DataChangedObserver dataChangedObserver, 
+								   DesktopData desktopData, int desktopSizeX, int desktopSizeY,
+								   GeneratorTypesData generatorTypesData)
 	{
 		super(desktopData, desktopSizeX, desktopSizeY);
 
 		{
 			// Add Main Page:
-			PaneData paneData = new PaneData(0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
+			PaneData paneData = new PaneData(dataChangedObserver, 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
 			this.addWidgetData(paneData);
 		}
 		
 		{
-			this.selectCancelButtonData = new FunctionButtonData("cancel", "Cancel", 100, 10, 90, 20);
+			this.selectCancelButtonData = new FunctionButtonData(dataChangedObserver, "cancel", "Cancel", 100, 10, 90, 20);
 			this.addWidgetData(this.selectCancelButtonData);
 		}
 		{
-			LabelData labelData = new LabelData("Generator-Types:", 100, 100, 100, 20);
+			LabelData labelData = new LabelData(dataChangedObserver, "Generator-Types:", 100, 100, 100, 20);
 			this.addWidgetData(labelData);
 		}
 		ScrollbarData verticalScrollbarData;
 		{
-			verticalScrollbarData = new ScrollbarData("generatorTypesVScroll", 780 - desktopData.getScrollbarWidth2(), 120, 
+			verticalScrollbarData = new ScrollbarData(dataChangedObserver, "generatorTypesVScroll", 780 - desktopData.getScrollbarWidth2(), 120, 
 					desktopData.getScrollbarWidth2(), 400, true);
 			this.addWidgetData(verticalScrollbarData);
 		}
 		{
-			this.generatorTypesListData = new GeneratorTypesWidgetData(100, 120, 680 - desktopData.getScrollbarWidth2(), 400, verticalScrollbarData, null, generatorTypesData);
+			this.generatorTypesListData = new GeneratorTypesWidgetData(dataChangedObserver, 100, 120, 680 - desktopData.getScrollbarWidth2(), 400, verticalScrollbarData, null, generatorTypesData);
 			this.addWidgetData(this.generatorTypesListData);
 		}
 		
 		{
-			this.selectAddButtonData = new FunctionButtonData("selectAdd", "Add selected...", 100, 40, 100, 20);
+			this.selectAddButtonData = new FunctionButtonData(dataChangedObserver, "selectAdd", "Add selected...", 100, 40, 100, 20);
 			this.addWidgetData(this.selectAddButtonData);
 		}
 		{
-			this.selectMainEditButtonData = new FunctionButtonData("selectMainEdit", "Edit Main Modul...", 210, 40, 220, 20);
+			this.selectMainEditButtonData = new FunctionButtonData(dataChangedObserver, "selectMainEdit", "Edit Main Modul...", 210, 40, 220, 20);
 			this.addWidgetData(this.selectMainEditButtonData);
 		}
 		
 		{
-			this.selectInsertButtonData = new FunctionButtonData("selectInsert", "Insert...", 100, 70, 100, 20);
+			this.selectInsertButtonData = new FunctionButtonData(dataChangedObserver, "selectInsert", "Insert...", 100, 70, 100, 20);
 			this.addWidgetData(this.selectInsertButtonData);
 		}
 		{
-			this.selectEditButtonData = new FunctionButtonData("selectEdit", "Edit...", 210, 70, 100, 20);
+			this.selectEditButtonData = new FunctionButtonData(dataChangedObserver, "selectEdit", "Edit...", 210, 70, 100, 20);
 			this.addWidgetData(this.selectEditButtonData);
 		}
 		{
-			this.selectRemoveButtonData = new FunctionButtonData("selectRemove", "Remove", 320, 70, 110, 20);
+			this.selectRemoveButtonData = new FunctionButtonData(dataChangedObserver, "selectRemove", "Remove", 320, 70, 110, 20);
 			this.addWidgetData(this.selectRemoveButtonData);
 		}
 	}

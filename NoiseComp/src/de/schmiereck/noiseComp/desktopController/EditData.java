@@ -1,7 +1,10 @@
 package de.schmiereck.noiseComp.desktopController;
 
+import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData;
+import de.schmiereck.noiseComp.desktopController.mainPage.MainPageData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.screenTools.controller.ControllerData;
 
 /**
  * Manages the information about the curently edited generators and modul.
@@ -26,6 +29,17 @@ public class EditData
 	 */
 	private ModulGeneratorTypeData mainModulTypeData = null;
 
+	private DesktopControllerData controllerData;
+	
+	/**
+	 * Constructor.
+	 * 
+	 */
+	public EditData(DesktopControllerData controllerData)
+	{
+		this.controllerData = controllerData;
+	}
+	
 	/**
 	 * @see #editGenerators
 	public Generators getEditGenerators()
@@ -67,10 +81,36 @@ public class EditData
 	 * @see #editModulTypeData
 	 * @see #editGenerators
 	 */
-	public void setEditModulGenerator(ModulGeneratorTypeData editModulTypeData)
+	public void setEditModulGenerator(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
-		this.editModulTypeData = editModulTypeData;
+		this.editModulTypeData = modulGeneratorTypeData;
 		//this.editGenerators = this.editModulTypeData.getGenerators();
+
+		//----------------------------------------------------------------------
+		// Init EditModul-Page:
+		
+		EditModulPageData editModulPageData = this.controllerData.getEditModulPageData();
+		
+		String generatorTypeName;
+		
+		if (modulGeneratorTypeData != null)
+		{	
+			generatorTypeName = modulGeneratorTypeData.getGeneratorTypeName();
+		}
+		else
+		{
+			generatorTypeName = "";
+		}
+		editModulPageData.getGroupNameInputlineData().setInputText(generatorTypeName);
+
+		//----------------------------------------------------------------------
+		// Init Main-Page:
+		
+		MainPageData mainPageData = this.controllerData.getMainDesktopPageData();
+		
+		mainPageData.getModulGeneratorTextWidgetData().setLabelText(generatorTypeName);
+		
+		mainPageData.getTracksListWidgetData().setTracksData(modulGeneratorTypeData.getTracksData());
 	}
 
 	/**

@@ -9,19 +9,19 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.DesktopGraphic;
 import de.schmiereck.noiseComp.desktopController.EditData;
-import de.schmiereck.noiseComp.desktopController.actions.AddGeneratorButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.AddGeneratorButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.GroupGeneratorButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.GroupGeneratorButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.PauseButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.PlayButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.PauseButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.PlayButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
 //import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.StopButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.StopButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.CancelGroupButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.InputTypeEditSaveActionListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.SaveGroupButtonActionLogicListener;
@@ -31,8 +31,8 @@ import de.schmiereck.noiseComp.desktopController.mainPage.actions.RemoveGenerato
 import de.schmiereck.noiseComp.desktopController.mainPage.actions.RemoveInputButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.mainPage.actions.SetGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.mainPage.actions.SetInputButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.mainPage.actions.ZoomInButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.mainPage.actions.ZoomOutButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.mainPage.actions.ZoomInButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.mainPage.actions.ZoomOutButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectEditButtonActionLogicListener;
@@ -50,11 +50,14 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.RectangleGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
+import de.schmiereck.noiseComp.generator.WaveGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.screenTools.Runner;
 import de.schmiereck.screenTools.RunnerSchedulers;
 import de.schmiereck.screenTools.controller.ControllerSchedulerLogic;
+import de.schmiereck.screenTools.controller.DataChangedListener;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
 
 /*
@@ -74,6 +77,11 @@ public class MainModel
 	
 	private GeneratorTypesData generatorTypesData;
 	
+	/**
+	 * List of {@link DataChangedListener}-Objects.
+	 */
+	private DataChangedObserver dataChangedObserver;
+	
 	private DesktopControllerData controllerData;
 	
 	private DesktopControllerLogic controllerLogic;
@@ -82,6 +90,9 @@ public class MainModel
 	
 	private SchedulerWaiter waiter;
 
+	//private ZoomInButtonActionLogicListener zoomInButtonActionLogicListener;
+	//private ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener;
+	
 	public MainModel()
 	{
 		//======================================================================
@@ -116,9 +127,13 @@ public class MainModel
 		this.waiter = new SchedulerWaiter();
 
 		this.inputListener = new DesktopInputListener();
+
+		//----------------------------------------------------------------------
+		this.dataChangedObserver = new DataChangedObserver();
 		
 		//----------------------------------------------------------------------
-		this.controllerData = new DesktopControllerData(this.soundData, this.generatorTypesData);
+		this.controllerData = new DesktopControllerData(this.dataChangedObserver,
+														this.soundData, this.generatorTypesData);
 		
 		EditData editData = this.controllerData.getEditData();
 		
@@ -127,8 +142,9 @@ public class MainModel
 		//editData.setEditModulGenerator(mainModulGeneratorTypeData);
 
 		//----------------------------------------------------------------------
-		this.controllerLogic = new DesktopControllerLogic(soundSourceLogic,
-														  controllerData, 
+		this.controllerLogic = new DesktopControllerLogic(this.dataChangedObserver,
+														  soundSourceLogic,
+														  this.controllerData, 
 														  this.inputListener, 
 														  this.waiter, 
 														  playerName);
@@ -140,19 +156,19 @@ public class MainModel
 		//----------------------------------------------------------------------
 		this.inputListener.setGameControllerLogic(controllerLogic);
 		
-		AddGeneratorButtonActionLogicListener addGeneratorButtonActionLogicListener	= new AddGeneratorButtonActionLogicListener(controllerLogic, controllerData);
+		//AddGeneratorButtonActionLogicListener addGeneratorButtonActionLogicListener	= new AddGeneratorButtonActionLogicListener(controllerLogic, controllerData);
 		RemoveGeneratorButtonActionLogicListener removeGeneratorButtonActionLogicListener = new RemoveGeneratorButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		GroupGeneratorButtonActionLogicListener groupGeneratorButtonActionLogicListener = new GroupGeneratorButtonActionLogicListener(controllerLogic, controllerData, controllerData.getEditModulPageData());
+		//GroupGeneratorButtonActionLogicListener groupGeneratorButtonActionLogicListener = new GroupGeneratorButtonActionLogicListener(controllerLogic, controllerData, controllerData.getEditModulPageData());
 
-		PlayButtonActionLogicListener playButtonActionLogicListener = new PlayButtonActionLogicListener(controllerLogic, controllerData);
-		PauseButtonActionLogicListener pauseButtonActionLogicListener = new PauseButtonActionLogicListener(controllerLogic, controllerData);
-		StopButtonActionLogicListener stopButtonActionLogicListener = new StopButtonActionLogicListener(controllerLogic, controllerData);
+		//PlayButtonActionLogicListener playButtonActionLogicListener = new PlayButtonActionLogicListener(controllerLogic, controllerData);
+		//PauseButtonActionLogicListener pauseButtonActionLogicListener = new PauseButtonActionLogicListener(controllerLogic, controllerData);
+		//StopButtonActionLogicListener stopButtonActionLogicListener = new StopButtonActionLogicListener(controllerLogic, controllerData);
 		
 		//ExitButtonActionLogicListener exitButtonActionLogicListener = new ExitButtonActionLogicListener(controllerLogic);
 		//NewButtonActionLogicListener newButtonActionLogicListener = new NewButtonActionLogicListener(controllerLogic, controllerData);
 
-		ZoomInButtonActionLogicListener zoomInButtonActionLogicListener = new ZoomInButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener = new ZoomOutButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
+		//this.zoomInButtonActionLogicListener = new ZoomInButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
+		//this.zoomOutButtonActionLogicListener = new ZoomOutButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
 		
 		SetGeneratorButtonActionLogicListener setGeneratorButtonActionLogicListener = new SetGeneratorButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
 		SetInputButtonActionLogicListener setInputButtonActionLogicListener = new SetInputButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
@@ -181,19 +197,19 @@ public class MainModel
 		InputTypeEditSaveActionListener inputTypeEditSaveActionListener = new InputTypeEditSaveActionListener(controllerLogic, controllerData, controllerData.getEditModulPageData());
 		
 		controllerData.setActionListeners(
-				addGeneratorButtonActionLogicListener,
+				//addGeneratorButtonActionLogicListener,
 				removeGeneratorButtonActionLogicListener,
-				groupGeneratorButtonActionLogicListener,
+				//groupGeneratorButtonActionLogicListener,
 				
-				playButtonActionLogicListener,
-				pauseButtonActionLogicListener,
-				stopButtonActionLogicListener,
+				//playButtonActionLogicListener,
+				//pauseButtonActionLogicListener,
+				//stopButtonActionLogicListener,
 				
 				//exitButtonActionLogicListener,
 				//newButtonActionLogicListener,
 				
-				zoomInButtonActionLogicListener,
-				zoomOutButtonActionLogicListener,
+				//zoomInButtonActionLogicListener,
+				//zoomOutButtonActionLogicListener,
 				
 				setGeneratorButtonActionLogicListener,
 				setInputButtonActionLogicListener,
@@ -261,6 +277,7 @@ public class MainModel
 		this.generatorTypesData.addGeneratorTypeData(SinusGenerator.createGeneratorTypeData());
 		this.generatorTypesData.addGeneratorTypeData(RectangleGenerator.createGeneratorTypeData());
 		this.generatorTypesData.addGeneratorTypeData(CutGenerator.createGeneratorTypeData());
+		this.generatorTypesData.addGeneratorTypeData(WaveGenerator.createGeneratorTypeData());
 	}
 
 	private static SourceDataLine createLine()
@@ -274,9 +291,12 @@ public class MainModel
 		int channels 			= 2;			// the number of channels (1 for mono, 2 for stereo, and so on)
 		int frameSize 			= 4;			// the number of bytes in each frame
 		float frameRate 		= sampleRate;	// the number of frames per second
-		boolean bigEndian 		= false; 		// indicates whether the data for a single sample is stored in big-endian byte order 
+		boolean bigEndian 		= true; 		// indicates whether the data for a single sample is stored in big-endian byte order 
 												// (false means little-endian)
-		
+												// Because Java inherently creates big-endian data, 
+												// you must do a lot of extra work to create little-endian audio data in Java.  
+												// Therefore, I elected to create all of the synthetic sounds in this lesson in big-endian order.
+
 		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,	// encoding the audio encoding technique
 												  sampleRate, 
 												  sampleSizeInBits, 

@@ -5,9 +5,12 @@ import java.util.Iterator;
 import de.schmiereck.dataTools.VectorHash;
 import de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.SubmitWidgetListenerInterface;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
- * Manages the data of an widget to select a single entry from a list.<br/>
+ * <p>
+ * 	Manages the data of a widget to select a single entry from a list.<br/>
+ * </p>
  * Uses a list of 
  * {@link de.schmiereck.noiseComp.desktopPage.widgets.SelectEntryData}-Objects.
  *
@@ -49,9 +52,11 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 * @param sizeX
 	 * @param sizeY
 	 */
-	public SelectData(String name, int posX, int posY, int sizeX, int sizeY)
+	public SelectData(DataChangedObserver dataChangedObserver,
+					  String name, int posX, int posY, int sizeX, int sizeY)
 	{
-		super(name, posX, posY, sizeX, sizeY);
+		super(dataChangedObserver,
+			  name, posX, posY, sizeX, sizeY);
 	}
 
 	/* (non-Javadoc)
@@ -59,8 +64,7 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 */
 	public void notifyFocusedWidget(WidgetData widgetData)
 	{
-		// TODO Auto-generated method stub
-		
+		this.dataChangedVisible();
 	}
 
 	/* (non-Javadoc)
@@ -68,8 +72,7 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 */
 	public void notifyDefocusedWidget(WidgetData widgetData)
 	{
-		// TODO Auto-generated method stub
-		
+		this.dataChangedVisible();
 	}
 
 	/**
@@ -86,6 +89,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	public void setInputPos(int inputPos)
 	{
 		this.inputPos = inputPos;
+
+		this.dataChangedVisible();
 	}
 	
 	/**
@@ -182,6 +187,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	public void addSelectEntryData(SelectEntryData selectEntryData)
 	{
 		this.selectEntrys.add(selectEntryData.getValue(), selectEntryData);
+
+		this.dataChangedVisible();
 	}
 
 	/**
@@ -211,6 +218,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 				}
 			}
 		}
+
+		this.dataChangedVisible();
 	}
 
 	/**
@@ -247,6 +256,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	public void setUseEmptyEntry(boolean useEmptyEntry)
 	{
 		this.useEmptyEntry = useEmptyEntry;
+
+		this.dataChangedVisible();
 	}
 
 	/**

@@ -1,6 +1,5 @@
-package de.schmiereck.noiseComp.desktopPage.widgets;
+package de.schmiereck.noiseComp.generator;
 
-import de.schmiereck.noiseComp.generator.Generator;
 
 /**
  * Ein Track ist ein Eintrag in der Liste.

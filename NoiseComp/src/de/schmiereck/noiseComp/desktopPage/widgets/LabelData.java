@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
+import de.schmiereck.screenTools.controller.DataChangedObserver;
+
 /**
  * Manages the Data of an Label-Text Object.
  * The Text is shown with an right alignment.
@@ -18,14 +20,12 @@ extends WidgetData
 	/**
 	 * Constructor.
 	 * 
-	 * @param posX
-	 * @param posY
-	 * @param sizeX
-	 * @param sizeY
 	 */
-	public LabelData(String labelText, int posX, int posY, int sizeX, int sizeY)
+	public LabelData(DataChangedObserver dataChangedObserver,
+					 String labelText, int posX, int posY, int sizeX, int sizeY)
 	{
-		super(posX, posY, sizeX, sizeY, false);
+		super(dataChangedObserver,
+			  posX, posY, sizeX, sizeY, false);
 		this.labelText = labelText;
 	}
 
@@ -42,5 +42,7 @@ extends WidgetData
 	public void setLabelText(String labelText)
 	{
 		this.labelText = labelText;
+
+		this.dataChangedVisible();
 	}
 }

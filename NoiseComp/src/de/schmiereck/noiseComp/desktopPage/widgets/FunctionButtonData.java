@@ -2,6 +2,7 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.SubmitWidgetListenerInterface;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
  * TODO docu
@@ -18,16 +19,12 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	/**
 	 * Constructor.
 	 * 
-	 * @param name
-	 * @param labelText
-	 * @param posX
-	 * @param posY
-	 * @param sizeX
-	 * @param sizeY
 	 */
-	public FunctionButtonData(String name, String labelText, int posX, int posY, int sizeX, int sizeY)
+	public FunctionButtonData(DataChangedObserver dataChangedObserver,
+							  String name, String labelText, int posX, int posY, int sizeX, int sizeY)
 	{
-		super(name, posX, posY, sizeX, sizeY);
+		super(dataChangedObserver,
+			  name, posX, posY, sizeX, sizeY);
 
 		this.labelText = labelText;
 	}
@@ -46,6 +43,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	public void notifyDefocusedWidget(WidgetData widgetData)
 	{
 		this.setHaveFocus(false);
+
+		this.dataChangedVisible();
 	}
 
 	/* (non-Javadoc)
@@ -54,6 +53,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	public void notifyFocusedWidget(WidgetData widgetData)
 	{
 		this.setHaveFocus(true);
+
+		this.dataChangedVisible();
 	}
 
 	/* (non-Javadoc)

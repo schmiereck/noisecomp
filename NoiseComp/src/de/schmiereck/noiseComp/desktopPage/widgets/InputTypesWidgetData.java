@@ -7,6 +7,7 @@ import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.InputTypesData;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
  * TODO docu
@@ -34,11 +35,13 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * Constructor.
 	 * 
 	 */
-	public InputTypesWidgetData(int posX, int posY, int sizeX, int sizeY,
-			ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
-			SelectedListEntryInterface selectedListEntry)
+	public InputTypesWidgetData(DataChangedObserver dataChangedObserver,
+								int posX, int posY, int sizeX, int sizeY,
+								ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
+								SelectedListEntryInterface selectedListEntry)
 	{
-		super(posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
+		super(dataChangedObserver,
+			  posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
 		
 		this.selectedListEntry = selectedListEntry;
 		
@@ -139,6 +142,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		{
 			this.activeInputTypeData = null;
 		}
+
+		this.dataChangedVisible();
 	}
 
 	/* (non-Javadoc)
@@ -163,6 +168,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 				this.inputTypeSelectedListener.notifyInputTypeSelected(this, selectedInputTypeData);
 			}
 		}
+
+		this.dataChangedVisible();
 	}
 	
 	public void setSelectedInputTypeData(InputTypeData selectedInputData)
@@ -214,6 +221,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		}
 		
 		this.activeInputTypeData = inputTypeData;
+
+		this.dataChangedVisible();
 	}
 	/**
 	 * @param inputTypeSelectedListener is the new value for attribute {@link #inputTypeSelectedListener} to set.
@@ -241,6 +250,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 				this.inputTypesData.removeInputTypeData(inputTypeData);
 				
 				this.setVerticalScrollerLength(this.getInputTypesCount());
+
+				this.dataChangedVisible();
 			}
 		}
 	}
@@ -250,8 +261,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyDragWidget(WidgetData selectedWidgetData, int pointerPosX, int pointerPosY)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/**
@@ -259,8 +268,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyInputTypeAdded()
 	{
-		// TODO Auto-generated method stub
-		
 	}
 	/**
 	 * @param inputTypesData is the new value for attribute {@link #inputTypesData} to set.
@@ -268,5 +275,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	public void setInputTypesData(InputTypesData inputTypesData)
 	{
 		this.inputTypesData = inputTypesData;
+
+		this.dataChangedVisible();
 	}
 }

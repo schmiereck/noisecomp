@@ -92,9 +92,12 @@ public class SoundBufferManagerTest
 		
 		float sampleRate = 44100;
 		
+		// Because Java inherently creates big-endian data, 
+		// you must do a lot of extra work to create little-endian audio data in Java.  
+		// Therefore, I elected to create all of the synthetic sounds in this lesson in big-endian order.
 		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
 												  sampleRate, 16, 2, 4, 
-												  sampleRate, false);
+												  sampleRate, true);
 		
 		DataLine.Info	info = new DataLine.Info(SourceDataLine.class, audioFormat);
 

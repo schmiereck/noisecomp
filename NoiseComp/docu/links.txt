@@ -1,6 +1,7 @@
 Links to usefull Recources:
 ---------------------------
 
+http://www.developer.com/java/other/article.php/2226701
 
 Links to other Sound Synthesizers:
 ----------------------------------

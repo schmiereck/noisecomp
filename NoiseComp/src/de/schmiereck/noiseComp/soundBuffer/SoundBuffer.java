@@ -62,9 +62,10 @@ public class SoundBuffer
 	 * 
 	 * 
 	 */
-	public SoundBuffer(int bufferSize, AudioFormat audioFormat, 
-			SoundSourceLogic soundSourceLogic)
-			//GeneratorInterface soundGenerator)
+	public SoundBuffer(int bufferSize, 
+					   AudioFormat audioFormat, 
+					   SoundSourceLogic soundSourceLogic)
+					   //GeneratorInterface soundGenerator)
 	{
 		super();
 		
@@ -153,13 +154,29 @@ public class SoundBuffer
 				rightSampleValue = 0;
 			}
 	
-			// this is for 16 bit stereo, little endian
-			// left:
-			bufferData[bufferPos + 0] = (byte) (leftSampleValue & 0xFF);
-			bufferData[bufferPos + 1] = (byte) ((leftSampleValue >>> 8) & 0xFF);
-			// right:
-			bufferData[bufferPos + 2] = (byte) (rightSampleValue & 0xFF);
-			bufferData[bufferPos + 3] = (byte) ((rightSampleValue >>> 8) & 0xFF);
+			/*
+			if (audioFormat.isBigEndian() == false)
+			{
+				// this is for 16 bit stereo, little endian
+				// left:
+				bufferData[bufferPos + 0] = (byte) (leftSampleValue & 0xFF);
+				bufferData[bufferPos + 1] = (byte) ((leftSampleValue >>> 8) & 0xFF);
+				// right:
+				bufferData[bufferPos + 2] = (byte) (rightSampleValue & 0xFF);
+				bufferData[bufferPos + 3] = (byte) ((rightSampleValue >>> 8) & 0xFF);
+			}
+			else
+			// We recomment, that it is big-endian:
+			*/
+			{
+				// this is for 16 bit stereo, big endian
+				// left:
+				bufferData[bufferPos + 1] = (byte) (leftSampleValue & 0xFF);
+				bufferData[bufferPos + 0] = (byte) ((leftSampleValue >>> 8) & 0xFF);
+				// right:
+				bufferData[bufferPos + 3] = (byte) (rightSampleValue & 0xFF);
+				bufferData[bufferPos + 2] = (byte) ((rightSampleValue >>> 8) & 0xFF);
+			}
 		}
 	}
 	

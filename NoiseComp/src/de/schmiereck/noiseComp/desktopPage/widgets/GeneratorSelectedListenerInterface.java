@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
+import de.schmiereck.noiseComp.generator.TrackData;
+
 /**
  * Informs the listener object, if a track is selected or deselected.
  *

@@ -8,7 +8,10 @@ import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.TrackData;
+import de.schmiereck.noiseComp.generator.TracksData;
 import de.schmiereck.noiseComp.soundData.SoundData;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 
 /**
@@ -27,15 +30,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	
 	private ListWidgetGraphic listWidgetGraphic = null;
 
-	/**
-	 * List of {@link TrackData}-Objects.
-	 */
-	private Vector	tracksVector = new Vector();
-
-	/**
-	 * List of {@link TrackData}-Objects with the Generator as Key.
-	 */
-	private HashMap	tracksHash = new HashMap();
+	//private TracksData tracksData = new TracksData();
+	private TracksData tracksData = null;
 	
 	/**
 	 * Breite der Spalte mit den Generatornamen in Points.
@@ -59,14 +55,23 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	private TrackData activeTrackData = null;
 
 	/**
+	 * true, if a track is dragged with the mouse.
+	 */
+	private boolean doDragging = false;
+
+	/**
 	 * Der mit der Maus überfahrene Part des Generators.
 	 * @see #HIT_PART_NONE
 	 * @see #HIT_PART_GENERATOR
 	 */
-	private int hitGeneratorPart;
-	private TrackData selectedTrackData;
-	private boolean generatorIsSelected;
-	private GeneratorSelectedListenerInterface generatorSelectedListener;
+	private int hitGeneratorPart = HIT_PART_NONE;
+	private TrackData selectedTrackData = null;
+	private boolean generatorIsSelected = false;
+	private GeneratorSelectedListenerInterface generatorSelectedListener = null;
+	
+	private TrackData draggedTrackData = null;
+	private int dragTargetOffsetY = 0;
+	private int dragTargetPosY = 0;
 	
 	/**
 	 * Constructor.
@@ -77,12 +82,14 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @param sizeY
 	 * @param soundData	is used for getting the actual play time position.
 	 */
-	public TracksListWidgetData(int posX, int posY, int sizeX, int sizeY,
-								 int generatorsLabelSizeX,
-								 SoundData soundData, 
-								 ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
+	public TracksListWidgetData(DataChangedObserver dataChangedObserver,
+								int posX, int posY, int sizeX, int sizeY,
+								int generatorsLabelSizeX,
+								SoundData soundData, 
+								ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
 	{
-		super(posX, posY, sizeX, sizeY, 32, verticalScrollbarData, horizontalScrollbarData);
+		super(dataChangedObserver,
+			  posX, posY, sizeX, sizeY, 32, verticalScrollbarData, horizontalScrollbarData);
 	
 		this.generatorsLabelSizeX = generatorsLabelSizeX;
 		this.soundData = soundData;
@@ -111,7 +118,10 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	public void setGeneratorsLabelSizeX(int generatorsLabelSizeX)
 	{
 		this.generatorsLabelSizeX = generatorsLabelSizeX;
+
+		this.dataChangedVisible();
 	}
+
 	/**
 	 * @return the attribute {@link #soundData}.
 	 */
@@ -136,34 +146,46 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	public void setGeneratorScaleX(float generatorScaleX)
 	{
 		this.generatorScaleX = generatorScaleX;
+
+		this.dataChangedVisible();
 	}
 	
 	/**
-	 * @return the count of {@link TrackData}-Objects.
+	 * @see TracksData#getTracksCount()
 	 */
 	public int getTracksCount()
 	{
-		return this.tracksVector.size();
+		return this.tracksData.getTracksCount();
 	}
 
 	/**
-	 * @param generatorPos
-	 * @return
+	 * @see TracksData#getTrack(int)
 	 */
 	public TrackData getTrack(int generatorPos)
 	{
-		return (TrackData)this.tracksVector.get(generatorPos);
+		return this.tracksData.getTrack(generatorPos);
+	}
+
+	/**
+	 * @see #setActiveTrackData(TrackData)
+	 * @see #hitGeneratorPart
+	 */
+	public void setActiveTrackData(TrackData trackData, int hitGeneratorPart)
+	{
+		this.setActiveTrackData(trackData);
+		this.hitGeneratorPart = hitGeneratorPart;
 	}
 
 	/**
 	 * @see #activeTrackData
 	 */
-	public void setActiveTrackData(TrackData trackData, int hitGeneratorPart)
+	public void setActiveTrackData(TrackData trackData)
 	{
 		this.activeTrackData = trackData;
-		this.hitGeneratorPart = hitGeneratorPart;
+		
+		this.dataChangedVisible();
 	}
-
+	
 	/**
 	 * @see #activeTrackData
 	 */
@@ -171,22 +193,25 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	{
 		return this.activeTrackData;
 	}
-
+	
+	/**
+	 * @return
+	 * 		true, if some track is active.
+	 */
+	private boolean getIsTrackActive()
+	{
+		return this.getActiveTrackData() != null;
+	}
+	/*
 	public void addTrack(TrackData trackData)
 	{
-		synchronized (this)
-		{
-			int trackPos = this.tracksVector.size();
-			trackData.setTrackPos(trackPos);
-
-			this.tracksVector.add(trackData);
-			//this.tracksHash.put(trackData.getName(), trackData);
-			this.tracksHash.put(trackData.getGenerator(), trackData);
-			//this.soundData.addGenerator(trackData.getGenerator());
+		this.tracksData.addTrack(trackData);
 	
-			this.setVerticalScrollerLength(this.getTracksCount());
-		}
+		this.setVerticalScrollerLength(this.getTracksCount());
+
+		this.dataChangedVisible();
 	}
+	*/
 	
 	public Generator removeSelectedTrack()
 	{
@@ -202,43 +227,38 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 				
 				int trackPos = selectedTrackData.getTrackPos();
 
-				this.tracksVector.remove(trackPos);
-				
-				for (int pos = trackPos; pos < this.tracksVector.size(); pos++)
-				{
-					((TrackData)this.tracksVector.get(pos)).setTrackPos(pos);
-				}
-				
-				retGenerator = selectedTrackData.getGenerator();
-				
-				//this.tracksHash.remove(selectedTrackData.getName());
-				this.tracksHash.remove(retGenerator);
-				//this.soundData.removeGenerator(trackPos);
+				this.tracksData.removeSelectedTrack(trackPos);
 				
 				this.setVerticalScrollerLength(this.getTracksCount());
+
+				retGenerator = selectedTrackData.getGenerator();
+
+				this.dataChangedVisible();
 			}
 			else
 			{
 				retGenerator = null;
 			}
 		}
+
 		return retGenerator;
 	}
-	
+
+	/*
 	public void clearTracks()
 	{
 		synchronized (this)
 		{
 			this.deselectGenerator();
 			
-			this.tracksVector.clear();
-			this.tracksHash.clear();
-			//this.soundData.clear();
+			this.tracksData.clearTracks();
 			
 			this.setVerticalScrollerLength(this.getTracksCount());
+
+			this.dataChangedVisible();
 		}
 	}
-
+	*/
 	/**
 	 * @return die Zeit, um die gescrollt wurde (in Sekunden).
 	 */
@@ -253,7 +273,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public Iterator getListEntrysIterator()
 	{
-		return this.tracksVector.iterator();
+		return this.tracksData.getTracksIterator();
 	}
 
 	/* (non-Javadoc)
@@ -269,11 +289,15 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyDeactivateWidget(WidgetData widgetData)
 	{
-		if (this.activeTrackData != null)
+		// Some track is active?
+		if (this.getIsTrackActive() == true)
 		{
-			this.activeTrackData = null;
+			this.setActiveTrackData(null);
 		}
+
+		this.dataChangedVisible();
 	}
+
 	/**
 	 * @return the attribute {@link #hitGeneratorPart}.
 	 */
@@ -288,10 +312,10 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	public void notifyClickedWidget(WidgetData widgetData, int pointerPosX, int pointerPosY)
 	{
 		// Some track is Aktive (Rollover) ?
-		if (this.activeTrackData != null)
+		if (this.getIsTrackActive() == true)
 		{
 			// Use this as the new selected Track.
-			this.selectedTrackData = this.activeTrackData;
+			this.selectedTrackData = this.getActiveTrackData();
 			
 			// Is the Generator in the selected Track Active ?
 			if (this.hitGeneratorPart != HIT_PART_NONE)
@@ -319,6 +343,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		{
 			this.deselectGenerator();
 		}
+
+		this.dataChangedVisible();
 	}
 
 	/* (non-Javadoc)
@@ -326,7 +352,11 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyReleasedWidget(WidgetData selectedWidgetData)
 	{
-		
+		if (this.doDragging == true)
+		{
+			this.doDragging = false;
+			System.out.println("stop drag");
+		}
 	}
 	
 	private void deselectGenerator()
@@ -335,7 +365,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		this.hitGeneratorPart = HIT_PART_NONE;
 		this.selectedTrackData = null;
 		this.generatorIsSelected = false;
-		this.activeTrackData = null;
+		this.setActiveTrackData(null);
+		
 		if (this.generatorSelectedListener != null)
 		{
 			this.generatorSelectedListener.notifyGeneratorDeselected(trackData);
@@ -363,9 +394,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public TrackData searchTrackData(Generator generator)
 	{
-		//String name = generator.getName();
-		//return (TrackData)this.tracksHash.get(name);
-		return (TrackData)this.tracksHash.get(generator);
+		return this.tracksData.searchTrackData(generator);
 	}
 
 	/**
@@ -374,22 +403,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public TrackData searchTrackData(String name)
 	{
-		TrackData retTrackData = null;
-		
-		Iterator trackDataIterator = this.tracksHash.values().iterator();
-		
-		while (trackDataIterator.hasNext())
-		{
-			TrackData trackData = (TrackData)trackDataIterator.next();
-			
-			if (trackData.getName().equals(name))
-			{
-				retTrackData = trackData;
-				break;
-			}
-		}
-		
-		return retTrackData;
+		return this.tracksData.searchTrackData(name);
 	}
 	
 	/**
@@ -406,7 +420,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	public void notifyHitWidget(WidgetData activeWidgetData, int pointerPosX, int pointerPosY)
 	{
 		TrackData trackData = TracksListWidgetData.calcHitTrack(pointerPosX, pointerPosY, this);
-		
+
 		int hitGeneratorPart;
 		
 		if (trackData != null)
@@ -419,18 +433,28 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		}
 		
 		this.setActiveTrackData(trackData, hitGeneratorPart);
+
+		this.dataChangedVisible();
 	}
 
+	private static int calcHitTrackPos(int pointerPosX, int pointerPosY, TracksListWidgetData tracksData)
+	{
+		int screenTrackPos = (pointerPosY / tracksData.getListEntryHeight());
+		
+		// Die Positionsnummer des Generators in der Liste.
+		int generatorPos = screenTrackPos + (int)(tracksData.getVerticalScrollerPos());
+		
+		return generatorPos;
+	}
+	
 	private static TrackData calcHitTrack(int pointerPosX, int pointerPosY, TracksListWidgetData tracksData)
 	{
 		TrackData trackData = null;
 		
-		int screenTrackPos = (pointerPosY / tracksData.getListEntryHeight());
-		
 		// Die Positionsnummer des Generators in der Liste.
-		int generatorPos = screenTrackPos + (int)tracksData.getVerticalScrollerPos();
+		int generatorPos = TracksListWidgetData.calcHitTrackPos(pointerPosX, pointerPosY, tracksData);
 		
-		// Innerhalb der Anzahl der vorhandneen generatoren ?
+		// Innerhalb der Anzahl der vorhandenen Generatoren ?
 		if (generatorPos >= 0)
 		{	
 			if (generatorPos < tracksData.getTracksCount())
@@ -479,12 +503,63 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		}
 		return this.listWidgetGraphic;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyDragWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData, int, int)
 	 */
-	public void notifyDragWidget(WidgetData selectedWidgetData, int pointerPosX, int pointerPosY)
+	public void notifyDragWidget(WidgetData selectedWidgetData, 
+								 int pointerPosX, int pointerPosY)
 	{
+		int widgetPointerPosY = pointerPosY - this.getPosY();
+		
+		// No dragging jet?
+		if (this.doDragging == false)
+		{
+			// Some Track is active?
+			if (this.getIsTrackActive() == true)
+			{
+				System.out.println("start drag");
+				this.draggedTrackData = this.getActiveTrackData();
+
+				this.doDragging = true;
+				
+				//int tagetTrackPos = TracksListWidgetData.calcHitTrackPos(pointerPosX, pointerPosY, this);
+
+				this.dragTargetOffsetY = widgetPointerPosY % this.getListEntryHeight();
+				this.dragTargetPosY = pointerPosY;
+			}
+		}
+		else
+		{
+			this.dragTargetPosY = pointerPosY;
+			
+			int tagetTrackPos = TracksListWidgetData.calcHitTrackPos(pointerPosX, 
+																	 (widgetPointerPosY - this.dragTargetOffsetY) + 
+																	 (this.getListEntryHeight() / 2), 
+																	 this);
+			
+			if (tagetTrackPos != this.draggedTrackData.getTrackPos())
+			{
+				System.out.println("notifyDragWidget: " + tagetTrackPos + " - " + widgetPointerPosY);
+				
+				int sourceTrackPos = this.draggedTrackData.getTrackPos();
+				
+				this.tracksData.switchTracksByPos(sourceTrackPos, tagetTrackPos);
+			}
+
+			//System.out.println("notifyDragWidget");
+			/*
+			TrackData activeTrackData = this.getActiveTrackData();
+			
+			if (activeTrackData != null)
+			{
+				if (activeTrackData.getTrackPos() != this.draggedTrackData.getTrackPos())
+				{
+					System.out.println("notifyDragWidget: " + activeTrackData.getTrackPos());
+				}
+			}
+			*/
+		}
 	}
 
 	/**
@@ -494,4 +569,43 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	//{
 	//	return this.soundData.getGenerators();
 	//}
+	/**
+	 * @return returns the {@link #doDragging}.
+	 */
+	protected boolean getDoDragging()
+	{
+		return this.doDragging;
+	}
+	/**
+	 * @return returns the {@link #dragTargetOffsetY}.
+	 */
+	protected int getDragTargetOffsetY()
+	{
+		return this.dragTargetOffsetY;
+	}
+	/**
+	 * @return returns the {@link #dragTargetPosY}.
+	 */
+	protected int getDragTargetPosY()
+	{
+		return this.dragTargetPosY;
+	}
+	/**
+	 * @param tracksData to set {@link #tracksData}.
+	 */
+	public void setTracksData(TracksData tracksData)
+	{
+		this.tracksData = tracksData;
+
+		this.hitGeneratorPart = HIT_PART_NONE;
+		this.selectedTrackData = null;
+		this.generatorIsSelected = false;
+		
+		this.draggedTrackData = null;
+		this.dragTargetOffsetY = 0;
+		this.dragTargetPosY = 0;
+
+		this.activeTrackData = null;
+		this.doDragging = false;
+	}
 }

@@ -3,6 +3,7 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
 import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
  * Manages the data of a scrollbar widget.
@@ -102,14 +103,12 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	/**
 	 * Constructor.
 	 * 
-	 * @param posX
-	 * @param posY
-	 * @param sizeX
-	 * @param sizeY
 	 */
-	public ScrollbarData(String name, int posX, int posY, int sizeX, int sizeY, boolean doScrollVertical)
+	public ScrollbarData(DataChangedObserver dataChangedObserver,
+						 String name, int posX, int posY, int sizeX, int sizeY, boolean doScrollVertical)
 	{
-		super(name, posX, posY, sizeX, sizeY);
+		super(dataChangedObserver,
+			  name, posX, posY, sizeX, sizeY);
 	
 		this.doScrollVertical = doScrollVertical;
 
@@ -146,6 +145,9 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 				this.scrollerPos = 0;
 			}
 		}
+
+		this.dataChangedVisible();
+		this.scrollBarChanged();
 	}
 	/**
 	 * @return the attribute {@link #scrollerPos}.
@@ -174,13 +176,20 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 		{
 			this.scrollerPos = 0.0F;
 		}
+
+		this.dataChangedVisible();
+		this.scrollBarChanged();
 	}
+
 	/**
 	 * @param scrollerSize is the new value for attribute {@link #scrollerSize} to set.
 	 */
 	public void setScrollerSize(float scrollerSize)
 	{
 		this.scrollerSize = scrollerSize;
+
+		this.dataChangedVisible();
+		this.scrollBarChanged();
 	}
 
 	/**
@@ -264,6 +273,7 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	public void setScrollStep(float scrollStep)
 	{
 		this.scrollStep = scrollStep;
+		this.scrollBarChanged();
 	}
 	
 	/* (non-Javadoc)
@@ -308,6 +318,8 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 					{	
 						this.lastDragPos = pointerPosX;
 					}
+
+					this.dataChangedVisible();
 				}
 			}
 		}
@@ -319,6 +331,8 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	public void notifyReleasedWidget(WidgetData selectedWidgetData)
 	{
 		this.dragMode = false;
+
+		this.dataChangedVisible();
 	}
 
 	/**
@@ -334,6 +348,8 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	public void setActiveScrollbarPart(int activeScrollbarPart)
 	{
 		this.activeScrollbarPart = activeScrollbarPart;
+
+		this.dataChangedVisible();
 	}
 
 	/* (non-Javadoc)
@@ -381,6 +397,8 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 				this.lastDragPos = pointerPosX;
 			}
 			this.scrollByScreen(dragOffset);
+
+			this.dataChangedVisible();
 		}
 	}
 	
@@ -480,5 +498,24 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 			}
 		}
 		return hitScrollbarPart;
+	}
+
+	private void scrollBarChanged()
+	{
+		if (this.scrollBarChangedListener != null)
+		{
+			this.scrollBarChangedListener.notifyScrollbarChanged(this);
+		}
+	}
+	
+	private ScrollBarChangedListenerInterface scrollBarChangedListener = null;
+	
+	public void addScrollBarChangedListener(ScrollBarChangedListenerInterface scrollBarChangedListener)
+	{
+		if (this.scrollBarChangedListener != null)
+		{
+			throw new RuntimeException("double use of this.scrollBarChangedListener, change implementation!");
+		}
+		this.scrollBarChangedListener = scrollBarChangedListener;
 	}
 }

@@ -2,9 +2,12 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.SubmitWidgetListenerInterface;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
- * TODO docu
+ * <p>
+ * 	Manages the data of a widget to edit a singele line text.
+ * </p>
  *
  * @author smk
  * @version 07.02.2004
@@ -26,9 +29,11 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 * Constructor.
 	 * 
 	 */
-	public InputlineData(String name, int posX, int posY, int sizeX, int sizeY)
+	public InputlineData(DataChangedObserver dataChangedObserver,
+						 String name, int posX, int posY, int sizeX, int sizeY)
 	{
-		super(name, posX, posY, sizeX, sizeY);
+		super(dataChangedObserver,
+			  name, posX, posY, sizeX, sizeY);
 	}
 	
 	/**
@@ -78,6 +83,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 		{
 			this.inputPos = len;
 		}
+
+		this.dataChangedVisible();
 	}
 
 	public synchronized Integer getInputInteger()
@@ -149,6 +156,7 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 */
 	public void notifyFocusedWidget(WidgetData widgetData)
 	{
+		this.dataChangedVisible();
 	}
 
 	/* (non-Javadoc)
@@ -156,6 +164,7 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 */
 	public void notifyDefocusedWidget(WidgetData widgetData)
 	{
+		this.dataChangedVisible();
 	}
 	
 	/**
@@ -195,6 +204,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 				this.inputPos++;
 			}
 		}
+
+		this.dataChangedVisible();
 	}
 
 	/**
@@ -218,6 +229,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 				this.inputPos = 0;
 			}
 		}
+
+		this.dataChangedVisible();
 	}
 
 	/**
@@ -245,6 +258,8 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 					this.moveCursor(-1);
 				}
 			}
+
+			this.dataChangedVisible();
 		}
 	}
 	/**

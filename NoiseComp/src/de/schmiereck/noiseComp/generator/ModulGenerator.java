@@ -48,7 +48,7 @@ extends Generator
 		// TODO let it crash, write better programs to prevent from this situation ;-) smk
 		//if (outputGenerator != null)
 		{	
-			long outputStartPos = (long)(this.getStartTimePos() * this.getFrameRate());
+			long outputStartPos = (long)(this.getStartTimePos() * this.getSoundFrameRate());
 			
 			//outputGenerator.calculateSoundSample(framePosition, frameTime, sample);
 			SoundSample outputSample = outputGenerator.generateFrameSample(framePosition - outputStartPos, this);

@@ -52,9 +52,9 @@ extends SwingDocumentView
 	{
 		super(document);		
 		
+		//this.setEnabled(true);
+		//this.enableInputMethods(true);
 		this.setFocusable(true);
-		this.setEnabled(true);
-		this.enableInputMethods(true);
 		
 		NoiseCompDocumentData noiseCompDocumentData = (NoiseCompDocumentData)document.getData();
 		
@@ -78,23 +78,23 @@ extends SwingDocumentView
 		JScrollPane scrollPane = new JScrollPane(this.graphicComponent);
 		this.add(scrollPane, BorderLayout.CENTER);
 
-		this.enableEvents(AWTEvent.KEY_EVENT_MASK | 
-							  AWTEvent.FOCUS_EVENT_MASK | 
-							  AWTEvent.INPUT_METHOD_EVENT_MASK |
+		//this.enableEvents(AWTEvent.KEY_EVENT_MASK | 
+		//					  AWTEvent.FOCUS_EVENT_MASK | 
+		//					  AWTEvent.INPUT_METHOD_EVENT_MASK |
 							  //AWTEvent.INPUT_METHODS_ENABLED_MASK |
-							  AWTEvent.MOUSE_EVENT_MASK |
-							  AWTEvent.MOUSE_MOTION_EVENT_MASK);
+		//					  AWTEvent.MOUSE_EVENT_MASK |
+		//					  AWTEvent.MOUSE_MOTION_EVENT_MASK);
 		this.graphicComponent.addMouseListener(this.mainModel.getInputListener());
 		this.graphicComponent.addMouseMotionListener(this.mainModel.getInputListener());
 		this.graphicComponent.addKeyListener(this.mainModel.getInputListener());
 		
-		this.addKeyListener(new java.awt.event.KeyAdapter()
-							    {
-							      public void keyPressed(KeyEvent e)
-							      {
-							        System.out.println("DOC-WIN FRAME KEY PRESSES");
-							      }
-							    });		
+		//this.addKeyListener(new java.awt.event.KeyAdapter()
+		//					    {
+		//					      public void keyPressed(KeyEvent e)
+		//					      {
+		//					        System.out.println("DOC-WIN FRAME KEY PRESSES");
+		//					      }
+		//					    });		
 
 		 //this.getRootPane().addKeyListener(this.mainModel.getInputListener());
 		
@@ -130,15 +130,15 @@ extends SwingDocumentView
  	/* (non-Javadoc)
 	 * @see org.bs.mdi.DocumentView#setWindow(org.bs.mdi.DocumentWindow)
 	 */
-	public void setWindow(DocumentWindow window)
-	{
-		SwingDocumentWindow docWin = ((SwingDocumentWindow)window);
+	//public void setWindow(DocumentWindow window)
+	//{
+	//	SwingDocumentWindow docWin = ((SwingDocumentWindow)window);
 		
 		//docWin.setEnabled(true);
 		//docWin.enableInputMethods(true);
 		//docWin.setFocusable(true);
 		
-		docWin.addKeyListener(this.mainModel.getInputListener());
+		//docWin.addKeyListener(this.mainModel.getInputListener());
 		/*
 		 docWin.addKeyListener(new java.awt.event.KeyAdapter()
 						    {
@@ -172,8 +172,8 @@ extends SwingDocumentView
 									KeyStroke.getKeyStroke(KeyEvent.VK_2, 0, true),
 									JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 	    */
-		super.setWindow(window);
-	}
+	//	super.setWindow(window);
+	//}
 	
 	
 	/* (non-Javadoc)

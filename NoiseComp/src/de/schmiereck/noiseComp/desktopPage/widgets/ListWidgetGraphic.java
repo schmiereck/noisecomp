@@ -16,12 +16,11 @@ public abstract class ListWidgetGraphic
 {
 
 	/**
-	 * @param g
-	 * @param buttonData
+	 * Draw the List.
 	 */
 	public void drawList(Graphics g, ScreenGraficInterface screenGrafic, 
-								  DesktopColors desktopColors,
-								ListWidgetData listWidgetData)
+						 DesktopColors desktopColors,
+						 ListWidgetData listWidgetData)
 	{
 		int posX = listWidgetData.getPosX();
 		int posY = listWidgetData.getPosY();
@@ -60,7 +59,8 @@ public abstract class ListWidgetGraphic
 		
 		if (verticalScrollbarData != null)
 		{	
-			verticalScrollerStart = (verticalScrollbarData.getScrollerPos());
+			//System.out.println("getVerticalScrollerPos: " + listWidgetData.getVerticalScrollerPos());
+			verticalScrollerStart = (verticalScrollbarData.getScrollerPos() - 1F); //(listWidgetData.getListEntryHeight()));
 			verticalScrollerEnd = (verticalScrollerStart + verticalScrollbarData.getScrollerSize());
 		}
 		else

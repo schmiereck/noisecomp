@@ -33,6 +33,12 @@ public class InputData
 	private Float 		inputValue;
 	
 	/**
+	 * String representation of the constant Value {@link #inputValue}.<br/>
+	 * Sometimes <code>null</code>, only used for specals. 
+	 */
+	private String inputStringValue;
+	
+	/**
 	 * The type of the input as defined in the {@link GeneratorTypeData} of the
 	 * Generator used this input.
 	 */
@@ -108,20 +114,31 @@ public class InputData
 		return this.inputValue;
 	}
 	/**
-	 * @see #inputValue
+	 * @see #inputStringValue
 	 */
-	public void setInputValue(Float inputValue)
+	public String getInputStringValue()
 	{
-		if (InputData.compareEqualValues(this.inputValue, inputValue) == false)
+		return this.inputStringValue;
+	}
+
+	/**
+	 * @see #inputValue
+	 * @see #inputStringValue
+	 */
+	public void setInputValue(Float inputValue, String inputStringValue)
+	{
+		if ((InputData.compareEqualValues(this.inputValue, inputValue) == false) ||
+			(InputData.compareEqualValues(this.inputStringValue, inputStringValue) == false))
 		{
 			this.inputValue = inputValue;
-System.out.println("InputData.setInputValue: " + inputValue);
+			this.inputStringValue = inputStringValue;
+System.out.println("InputData.setInputValue: " + inputValue + ", " + inputStringValue);
 
 			this.ownerGenerator.generateChangedEvent();
 		}
 	}
 	
-	private static boolean compareEqualValues(Float value1, Float value2)
+	private static boolean compareEqualValues(Object value1, Object value2)
 	{
 		boolean ret;
 		

@@ -54,8 +54,8 @@ public class DesktopPageLogic
 			int sizeX = widgetData.getSizeX();
 			int sizeY = widgetData.getSizeY();
 			
-			if ((pointerPosX >= posX) && (pointerPosX <= posX + sizeX) && 
-				(pointerPosY >= posY) && (pointerPosY <= posY + sizeY))
+			if ((pointerPosX >= posX) && (pointerPosX <= (posX + sizeX)) && 
+				(pointerPosY >= posY) && (pointerPosY <= (posY + sizeY)))
 			{
 				hit = true;
 				hitWidgetData = widgetData;
@@ -123,6 +123,7 @@ public class DesktopPageLogic
 
 		WidgetData widgetData = desktopPageData.getActiveWidgetData();
 		
+		// Is any widget active yet?
 		if (widgetData != null)
 		{
 			desktopPageData.setSelectedWidgetData(widgetData);

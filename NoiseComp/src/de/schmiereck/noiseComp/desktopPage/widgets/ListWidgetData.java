@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import java.util.Iterator;
+import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
  * Basic Functions for a scrolling List Area.
@@ -10,6 +11,7 @@ import java.util.Iterator;
  */
 public abstract class ListWidgetData
 extends WidgetData
+implements ScrollBarChangedListenerInterface
 {
 	private int listEntryHeight;
 	
@@ -24,15 +26,27 @@ extends WidgetData
 	 * @param sizeX
 	 * @param sizeY
 	 */
-	public ListWidgetData(int posX, int posY, int sizeX, int sizeY,
+	public ListWidgetData(DataChangedObserver dataChangedObserver,
+						  int posX, int posY, int sizeX, int sizeY,
 						  int listEntryHeight,
 						  ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
 	{
-		super(posX, posY, sizeX, sizeY, true);
+		super(dataChangedObserver,
+			  posX, posY, sizeX, sizeY, true);
 
 		this.listEntryHeight = listEntryHeight;
 		this.verticalScrollbarData = verticalScrollbarData;
 		this.horizontalScrollbarData = horizontalScrollbarData;
+		
+		if (this.verticalScrollbarData != null)
+		{
+			this.verticalScrollbarData.addScrollBarChangedListener(this);
+		}
+		
+		if (this.horizontalScrollbarData != null)
+		{
+			this.horizontalScrollbarData.addScrollBarChangedListener(this);
+		}
 	}
 
 	/**
@@ -59,11 +73,15 @@ extends WidgetData
 	public void setVerticalScrollerLength(float length)
 	{
 		this.verticalScrollbarData.setScrollerLength(length);
+		
+		//this.dataChangedVisible();
 	}
 	
 	public void setHorizontalScrollerLength(float length)
 	{
 		this.horizontalScrollbarData.setScrollerLength(length);
+
+		//this.dataChangedVisible();
 	}
 	
 	public float getHorizontalScrollerPos()
@@ -102,4 +120,8 @@ extends WidgetData
 	 */
 	public abstract ListWidgetGraphic getGraphicInstance();
 	
+	public void notifyScrollbarChanged(ScrollbarData scrollbarData)
+	{
+		this.dataChangedVisible();
+	}
 }

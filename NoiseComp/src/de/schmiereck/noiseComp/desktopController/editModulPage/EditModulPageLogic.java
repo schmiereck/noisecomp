@@ -7,6 +7,7 @@ import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.InputTypesData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.screenTools.controller.ControllerLogic;
 
 /**
  * TODO docu
@@ -18,15 +19,17 @@ public class EditModulPageLogic
 implements InputTypeSelectedListenerInterface,
 EditGeneratorChangedListener
 {
+	private ControllerLogic controllerLogic;
 	private EditModulPageData editModulPageData;
 	
 	/**
 	 * Constructor.
 	 * 
-	 * @param data
 	 */
-	public EditModulPageLogic(EditModulPageData editModulPageData)
+	public EditModulPageLogic(ControllerLogic controllerLogic, 
+							  EditModulPageData editModulPageData)
 	{
+		this.controllerLogic = controllerLogic;
 		this.editModulPageData = editModulPageData;
 	}
 

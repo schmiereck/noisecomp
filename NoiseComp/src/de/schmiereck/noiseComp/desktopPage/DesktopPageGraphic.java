@@ -51,6 +51,7 @@ public class DesktopPageGraphic
 	 */
 	public void drawPointer(Graphics g, ScreenGraficInterface screenGrafic, DesktopPageData desktopPageData)
 	{
+		/*
 		screenGrafic.setColor(g, this.desktopColors.getPointerColor());
 		
 		// Vertikale Linie:
@@ -66,6 +67,7 @@ public class DesktopPageGraphic
 		screenGrafic.fillRect(g, 
 							  desktopPageData.getPointerPosX() - 6, desktopPageData.getPointerPosY() - 6, 
 							  12, 12);
+		*/
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
+import de.schmiereck.screenTools.controller.DataChangedObserver;
+
 /**
  * TODO docu
  *
@@ -8,6 +10,8 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
  */
 public class WidgetData
 {
+	private DataChangedObserver dataChangedObserver;
+	
 	private int posX;
 	private int posY;
 	private int sizeX;
@@ -18,14 +22,13 @@ public class WidgetData
 	/**
 	 * Constructor.
 	 * 
-	 * @param posX
-	 * @param posY
-	 * @param sizeX
-	 * @param sizeY
 	 */
-	public WidgetData(int posX, int posY, int sizeX, int sizeY, boolean acceptFocus)
+	public WidgetData(DataChangedObserver dataChangedObserver,
+					  int posX, int posY, int sizeX, int sizeY, 
+					  boolean acceptFocus)
 	{
 		super();
+		this.dataChangedObserver = dataChangedObserver;
 		this.posX = posX;
 		this.posY = posY;
 		this.sizeX = sizeX;
@@ -87,5 +90,19 @@ public class WidgetData
 	public void setHaveFocus(boolean haveFocus)
 	{
 		this.haveFocus = haveFocus;
+	}
+	
+	/**
+	 * @return returns the {@link #dataChangedObserver}.
+	 */
+	protected DataChangedObserver getDataChangedObserver()
+	{
+		return this.dataChangedObserver;
+	}
+	
+	protected void dataChangedVisible()
+	{
+		this.getDataChangedObserver().dataChanged(this.getPosX(), this.getPosY(),
+												  this.getSizeX(), this.getSizeY());
 	}
 }
