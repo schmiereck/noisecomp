@@ -1,10 +1,10 @@
-package de.schmiereck.noiseComp.desctopInput;
+package de.schmiereck.noiseComp.desktopInput;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import de.schmiereck.noiseComp.desctopController.DesctopControllerLogic;
-import de.schmiereck.noiseComp.desctopGraphic.DesctopGraphic;
+import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.DesktopGraphic;
 import de.schmiereck.screenTools.graphic.GraficInputListener;
 import de.schmiereck.screenTools.input.InputDeviceInterface;
 
@@ -14,13 +14,13 @@ import de.schmiereck.screenTools.input.InputDeviceInterface;
  * @author smk
  * @version 08.01.2004
  */
-public class DesctopInputListener
+public class DesktopInputListener
 implements GraficInputListener
 {
-	private DesctopControllerLogic gameControllerLogic = null;
-	private DesctopGraphic graphic = null;
+	private DesktopControllerLogic gameControllerLogic = null;
+	private DesktopGraphic graphic = null;
 	
-	public void setGameControllerLogic(DesctopControllerLogic gameControllerLogic)
+	public void setGameControllerLogic(DesktopControllerLogic gameControllerLogic)
 	{
 		this.gameControllerLogic = gameControllerLogic;
 	}
@@ -129,7 +129,7 @@ implements GraficInputListener
 	/**
 	 * @param multiBufferGraphic
 	 */
-	public void setGraphic(DesctopGraphic graphic)
+	public void setGraphic(DesktopGraphic graphic)
 	{
 		this.graphic = graphic;
 	}

@@ -1,13 +1,13 @@
-package de.schmiereck.noiseComp.desctopController;
+package de.schmiereck.noiseComp.desktopController;
 
 import java.util.Iterator;
 
-import de.schmiereck.noiseComp.desctopPage.DesctopPageData;
-import de.schmiereck.noiseComp.desctopPage.widgets.ButtonData;
-import de.schmiereck.noiseComp.desctopPage.widgets.FunctionButtonData;
-import de.schmiereck.noiseComp.desctopPage.widgets.GeneratorsGraphicData;
-import de.schmiereck.noiseComp.desctopPage.widgets.PaneData;
-import de.schmiereck.noiseComp.desctopPage.widgets.ScrollbarData;
+import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorsGraphicData;
+import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.controller.ControllerData;
 
@@ -17,7 +17,7 @@ import de.schmiereck.screenTools.controller.ControllerData;
  * @author smk
  * @version 08.01.2004
  */
-public class DesctopControllerData
+public class DesktopControllerData
 extends ControllerData
 {
 	private SoundData	soundData = null;
@@ -27,7 +27,7 @@ extends ControllerData
 	/**
 	 * Daten der gerade angezeigte Seite.
 	 */
-	private DesctopPageData activeDesctopPageData = null; 
+	private DesktopPageData activeDesctopPageData = null; 
 	
 	/**
 	 * Vertikale Scrollbar des Generator-Widgets.
@@ -41,15 +41,15 @@ extends ControllerData
 	
 	private GeneratorsGraphicData generatorsGraphicData;
 	
-	private DesctopPageData mainDesctopPageData				= null;
-	private DesctopPageData selectGeneratorDesctopPageData	= null;
+	private DesktopPageData mainDesctopPageData				= null;
+	private DesktopPageData selectGeneratorDesctopPageData	= null;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param soundData
 	 */
-	public DesctopControllerData(SoundData soundData)
+	public DesktopControllerData(SoundData soundData)
 	{
 		this.soundData = soundData;
 
@@ -59,9 +59,9 @@ extends ControllerData
 		this.activeDesctopPageData = this.mainDesctopPageData;
 	}
 
-	private DesctopPageData createSelectGeneratorPage()
+	private DesktopPageData createSelectGeneratorPage()
 	{
-		DesctopPageData	desctopPageData = new DesctopPageData(this.getFieldWidth(), this.getFieldHeight());
+		DesktopPageData	desctopPageData = new DesktopPageData(this.getFieldWidth(), this.getFieldHeight());
 
 		{
 			PaneData paneData = new PaneData(0, 0, this.getFieldWidth(), this.getFieldHeight());
@@ -92,14 +92,14 @@ extends ControllerData
 		return desctopPageData;
 	}
 	
-	private DesctopPageData createMainPage()
+	private DesktopPageData createMainPage()
 	{
 		int topMenuSizeY			= 32 * 2;
 		int bottomMenuSizeY			= 32 * 4;
 		int scrollbarWidth			= 20;
 		int generatorsLabelSizeX	= 100;
 
-		DesctopPageData	desctopPageData = new DesctopPageData(this.getFieldWidth(), this.getFieldHeight());
+		DesktopPageData	desctopPageData = new DesktopPageData(this.getFieldWidth(), this.getFieldHeight());
 
 		{
 			PaneData topMenuPaneData = new PaneData(0, 0, this.getFieldWidth(), topMenuSizeY);
@@ -206,7 +206,7 @@ extends ControllerData
 	/**
 	 * @return the attribute {@link #activeDesctopPageData}.
 	 */
-	public DesctopPageData getActiveDesctopPageData()
+	public DesktopPageData getActiveDesctopPageData()
 	{
 		return this.activeDesctopPageData;
 	}
@@ -227,21 +227,21 @@ extends ControllerData
 	/**
 	 * @return the attribute {@link #mainDesctopPageData}.
 	 */
-	public DesctopPageData getMainDesctopPageData()
+	public DesktopPageData getMainDesctopPageData()
 	{
 		return this.mainDesctopPageData;
 	}
 	/**
 	 * @return the attribute {@link #selectGeneratorDesctopPageData}.
 	 */
-	public DesctopPageData getSelectGeneratorDesctopPageData()
+	public DesktopPageData getSelectGeneratorDesctopPageData()
 	{
 		return this.selectGeneratorDesctopPageData;
 	}
 	/**
 	 * @param activeDesctopPageData is the new value for attribute {@link #activeDesctopPageData} to set.
 	 */
-	public void setActiveDesctopPageData(DesctopPageData activeDesctopPageData)
+	public void setActiveDesctopPageData(DesktopPageData activeDesctopPageData)
 	{
 		this.activeDesctopPageData = activeDesctopPageData;
 	}

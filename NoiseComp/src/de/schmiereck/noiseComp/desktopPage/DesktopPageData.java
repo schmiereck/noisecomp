@@ -1,11 +1,11 @@
-package de.schmiereck.noiseComp.desctopPage;
+package de.schmiereck.noiseComp.desktopPage;
 
 import java.util.Iterator;
 import java.util.Vector;
 
-import de.schmiereck.noiseComp.desctopPage.widgets.ButtonData;
-import de.schmiereck.noiseComp.desctopPage.widgets.ScrollbarData;
-import de.schmiereck.noiseComp.desctopPage.widgets.WidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
+import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 
 
 /**
@@ -20,7 +20,7 @@ import de.schmiereck.noiseComp.desctopPage.widgets.WidgetData;
  * @author smk
  * @version 29.01.2004
  */
-public class DesctopPageData
+public class DesktopPageData
 {
 	/**
 	 * X-Größe des Desctops.
@@ -104,7 +104,7 @@ public class DesctopPageData
 	 * @see #desctopSizeX
 	 * @see #desctopSizeY
 	 */
-	public DesctopPageData(int desctopSizeX, int desctopSizeY)
+	public DesktopPageData(int desctopSizeX, int desctopSizeY)
 	{
 		this.desctopSizeX = desctopSizeX;
 		this.desctopSizeY = desctopSizeY;

@@ -1,11 +1,11 @@
-package de.schmiereck.noiseComp.desctopPage.widgets;
+package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import de.schmiereck.noiseComp.desctopPage.ActivateWidgetListenerInterface;
-import de.schmiereck.noiseComp.desctopPage.ClickedWidgetListenerInterface;
+import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
+import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.soundData.SoundData;
 
 
@@ -253,7 +253,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desctopPage.ActivateWidgetListenerInterface#notifyActivateWidget(de.schmiereck.noiseComp.desctopPage.widgets.WidgetData)
+	 * @see de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface#notifyActivateWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
 	 */
 	public void notifyActivateWidget(WidgetData widgetData)
 	{
@@ -261,7 +261,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desctopPage.ActivateWidgetListenerInterface#notifyDeactivateWidget(de.schmiereck.noiseComp.desctopPage.widgets.WidgetData)
+	 * @see de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface#notifyDeactivateWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
 	 */
 	public void notifyDeactivateWidget(WidgetData widgetData)
 	{
@@ -279,7 +279,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desctopPage.ClickedWidgetListenerInterface#notifyClickedWidget(de.schmiereck.noiseComp.desctopPage.widgets.WidgetData)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyClickedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
 	 */
 	public void notifyClickedWidget(WidgetData widgetData)
 	{

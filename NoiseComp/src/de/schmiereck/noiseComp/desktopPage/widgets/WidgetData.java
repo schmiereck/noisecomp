@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.desctopPage.widgets;
+package de.schmiereck.noiseComp.desktopPage.widgets;
 
 /**
  * TODO docu

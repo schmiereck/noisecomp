@@ -1,13 +1,12 @@
-package de.schmiereck.noiseComp.desctopGraphic;
+package de.schmiereck.noiseComp.desktopController;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import de.schmiereck.noiseComp.desctopController.DesctopControllerData;
-import de.schmiereck.noiseComp.desctopPage.DesctopPageData;
-import de.schmiereck.noiseComp.desctopPage.DesctopPageGraphic;
+import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
+import de.schmiereck.noiseComp.desktopPage.DesktopPageGraphic;
 import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphic;
 
@@ -17,20 +16,20 @@ import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphic;
  * @author smk
  * @version 08.01.2004
  */
-public class DesctopGraphic
+public class DesktopGraphic
 extends MultiBufferFullScreenGraphic
 {
-	private DesctopPageGraphic desctopPageGraphic;
+	private DesktopPageGraphic desctopPageGraphic;
 	
-	public DesctopGraphic()
+	public DesktopGraphic()
 	{
-		this.desctopPageGraphic = new DesctopPageGraphic();
+		this.desctopPageGraphic = new DesktopPageGraphic();
 	}
 	
 	/**
 	 * @param gameControllerData
 	 */
-	public void initGrafic(DesctopControllerData gameControllerData)
+	public void initGrafic(DesktopControllerData gameControllerData)
 	{
 	}
 	
@@ -41,9 +40,9 @@ extends MultiBufferFullScreenGraphic
 	{
 		controllerData.setGraphicSleepMillis(actualWaitPerFramesMillis);
 		
-		DesctopControllerData desctopControllerData = (DesctopControllerData)controllerData;
+		DesktopControllerData desctopControllerData = (DesktopControllerData)controllerData;
 		
-		DesctopPageData desctopPageData = desctopControllerData.getActiveDesctopPageData();
+		DesktopPageData desctopPageData = desctopControllerData.getActiveDesctopPageData();
 		
 		this.desctopPageGraphic.drawWidgets(g, this, desctopPageData);
 		

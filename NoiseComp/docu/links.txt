@@ -1,0 +1,14 @@
+Links to usefull Recources:
+---------------------------
+
+
+Links to other Sound Synthesizers:
+----------------------------------
+"Zrs.Synth" by Emanuel Borsboom 
+http://www.phy.ntnu.edu.tw/java/sound/zrs-synth-0.95/index0.html
+
+"Real-time audio synthesis using JASS" by Kees van den Doel 
+http://www.cs.ubc.ca/spider/kvdoel/jass/
+
+???
+http://akira.ruc.dk/~jludvig/jamsynth/

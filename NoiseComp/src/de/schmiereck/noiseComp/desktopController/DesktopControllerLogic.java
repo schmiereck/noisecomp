@@ -1,11 +1,11 @@
-package de.schmiereck.noiseComp.desctopController;
+package de.schmiereck.noiseComp.desktopController;
 
-import de.schmiereck.noiseComp.desctopInput.DesctopInputListener;
-import de.schmiereck.noiseComp.desctopPage.ButtonPressedCallbackInterface;
-import de.schmiereck.noiseComp.desctopPage.DesctopPageLogic;
-import de.schmiereck.noiseComp.desctopPage.widgets.ButtonData;
-import de.schmiereck.noiseComp.desctopPage.widgets.GeneratorsGraphicData;
-import de.schmiereck.noiseComp.desctopPage.widgets.TrackGraficData;
+import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
+import de.schmiereck.noiseComp.desktopPage.ButtonPressedCallbackInterface;
+import de.schmiereck.noiseComp.desktopPage.DesktopPageLogic;
+import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorsGraphicData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TrackGraficData;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
@@ -23,11 +23,11 @@ import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
  * @author smk
  * @version 08.01.2004
  */
-public class DesctopControllerLogic
+public class DesktopControllerLogic
 extends ControllerLogic
 implements ButtonPressedCallbackInterface
 {
-	private DesctopControllerData controllerData;
+	private DesktopControllerData controllerData;
 	
 	private SoundSchedulerLogic soundSchedulerLogic = null;
 	
@@ -36,7 +36,7 @@ implements ButtonPressedCallbackInterface
 	 * 
 	 * @param waiter
 	 */
-	public DesctopControllerLogic(DesctopControllerData controllerData, DesctopInputListener inputListener, SchedulerWaiter waiter, String playerName)
+	public DesktopControllerLogic(DesktopControllerData controllerData, DesktopInputListener inputListener, SchedulerWaiter waiter, String playerName)
 	{
 		super(waiter);
 		
@@ -57,9 +57,9 @@ implements ButtonPressedCallbackInterface
 	{
 		controllerData.setCalcSleepMillis(actualWaitPerFramesMillis);
 		
-		DesctopControllerData desctopControllerData = (DesctopControllerData)controllerData;
+		DesktopControllerData desctopControllerData = (DesktopControllerData)controllerData;
 		
-		DesctopPageLogic.calcWidgets(desctopControllerData.getActiveDesctopPageData());
+		DesktopPageLogic.calcWidgets(desctopControllerData.getActiveDesctopPageData());
 	}
 
 	/* (non-Javadoc)
@@ -146,12 +146,12 @@ implements ButtonPressedCallbackInterface
 	 */
 	public void pointerPressed()
 	{
-		DesctopPageLogic.pointerPressed(this.controllerData.getActiveDesctopPageData());
+		DesktopPageLogic.pointerPressed(this.controllerData.getActiveDesctopPageData());
 	}
 
 	public void pointerReleased()
 	{
-		DesctopPageLogic.pointerReleased(this.controllerData.getActiveDesctopPageData(), this);
+		DesktopPageLogic.pointerReleased(this.controllerData.getActiveDesctopPageData(), this);
 	}
 	
 	public void buttonPressed(ButtonData pressedButtonData)

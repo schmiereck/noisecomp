@@ -1,13 +1,13 @@
-package de.schmiereck.noiseComp.desctopPage;
+package de.schmiereck.noiseComp.desktopPage;
 
 import java.util.Iterator;
 
-import de.schmiereck.noiseComp.desctopPage.widgets.ButtonData;
-import de.schmiereck.noiseComp.desctopPage.widgets.FunctionButtonData;
-import de.schmiereck.noiseComp.desctopPage.widgets.GeneratorsGraphicData;
-import de.schmiereck.noiseComp.desctopPage.widgets.ScrollbarData;
-import de.schmiereck.noiseComp.desctopPage.widgets.TrackGraficData;
-import de.schmiereck.noiseComp.desctopPage.widgets.WidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorsGraphicData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TrackGraficData;
+import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.noiseComp.generator.Generator;
 
 /**
@@ -16,7 +16,7 @@ import de.schmiereck.noiseComp.generator.Generator;
  * @author smk
  * @version 31.01.2004
  */
-public class DesctopPageLogic
+public class DesktopPageLogic
 {
 
 	/**
@@ -24,7 +24,7 @@ public class DesctopPageLogic
 	 * 
 	 * @param desctopPageData
 	 */
-	public static void calcWidgets(DesctopPageData desctopPageData)
+	public static void calcWidgets(DesktopPageData desctopPageData)
 	{
 		WidgetData hitWidgetData = null;
 		ButtonData hitButtonData = null;
@@ -78,7 +78,7 @@ public class DesctopPageLogic
 						
 						hitScrollbarData = scrollbarData;
 
-						hitScrollbarPart = DesctopPageLogic.calcHitScrollbarPart(pX, pY, posX, posY, sizeX, sizeY, scrollbarData);
+						hitScrollbarPart = DesktopPageLogic.calcHitScrollbarPart(pX, pY, posX, posY, sizeX, sizeY, scrollbarData);
 						break;
 					}
 				}
@@ -92,15 +92,15 @@ public class DesctopPageLogic
 							
 							//hitScrollbarData = scrollbarData;
 
-							//hitScrollbarPart = DesctopPageLogic.calcHitScrollbarPart(pX, pY, posX, posY, sizeX, sizeY, scrollbarData);
+							//hitScrollbarPart = DesktopPageLogic.calcHitScrollbarPart(pX, pY, posX, posY, sizeX, sizeY, scrollbarData);
 
-							TrackGraficData trackGraficData = DesctopPageLogic.calcHitTrack(pX, pY, posX, posY, sizeX, sizeY, generatorsGraphicData);
+							TrackGraficData trackGraficData = DesktopPageLogic.calcHitTrack(pX, pY, posX, posY, sizeX, sizeY, generatorsGraphicData);
 							
 							int hitGeneratorPart;
 							
 							if (trackGraficData != null)
 							{
-								hitGeneratorPart = DesctopPageLogic.calcHitGeneratorPart(pX, pY, posX, posY, sizeX, sizeY, generatorsGraphicData, trackGraficData);
+								hitGeneratorPart = DesktopPageLogic.calcHitGeneratorPart(pX, pY, posX, posY, sizeX, sizeY, generatorsGraphicData, trackGraficData);
 							}
 							else
 							{
@@ -248,7 +248,7 @@ public class DesctopPageLogic
 		return hitScrollbarPart;
 	}
 
-	public static void pointerPressed(DesctopPageData desctopPageData)
+	public static void pointerPressed(DesktopPageData desctopPageData)
 	{
 		desctopPageData.setPointerPressed(true);
 
@@ -303,7 +303,7 @@ public class DesctopPageLogic
 		}		
 	}
 
-	public static void pointerReleased(DesctopPageData desctopPageData, ButtonPressedCallbackInterface buttonPressedCallback)
+	public static void pointerReleased(DesktopPageData desctopPageData, ButtonPressedCallbackInterface buttonPressedCallback)
 	{
 		ButtonData pressedButtonData = desctopPageData.getPressedButtonData();
 		

@@ -1,6 +1,6 @@
-package de.schmiereck.noiseComp.desctopPage;
+package de.schmiereck.noiseComp.desktopPage;
 
-import de.schmiereck.noiseComp.desctopPage.widgets.WidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 
 /**
  * TODO docu

@@ -6,10 +6,10 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-import de.schmiereck.noiseComp.desctopController.DesctopControllerData;
-import de.schmiereck.noiseComp.desctopController.DesctopControllerLogic;
-import de.schmiereck.noiseComp.desctopGraphic.DesctopGraphic;
-import de.schmiereck.noiseComp.desctopInput.DesctopInputListener;
+import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
+import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.DesktopGraphic;
+import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.Runner;
 import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
@@ -43,17 +43,17 @@ public class Main
 		
 		SchedulerWaiter waiter = new SchedulerWaiter();
 
-		DesctopGraphic multiBufferGraphic;
+		DesktopGraphic multiBufferGraphic;
 		
-		multiBufferGraphic = new DesctopGraphic();
+		multiBufferGraphic = new DesktopGraphic();
 		
-		DesctopControllerData controllerData = new DesctopControllerData(soundData);//graphicBridge);
+		DesktopControllerData controllerData = new DesktopControllerData(soundData);//graphicBridge);
 
 		multiBufferGraphic.initGrafic(controllerData);
 
-		DesctopInputListener inputListener = new DesctopInputListener();
+		DesktopInputListener inputListener = new DesktopInputListener();
 		
-		DesctopControllerLogic gameControllerLogic = new DesctopControllerLogic(controllerData, inputListener, waiter, playerName);
+		DesktopControllerLogic gameControllerLogic = new DesktopControllerLogic(controllerData, inputListener, waiter, playerName);
 		
 		inputListener.setGraphic(multiBufferGraphic);
 		inputListener.setGameControllerLogic(gameControllerLogic);

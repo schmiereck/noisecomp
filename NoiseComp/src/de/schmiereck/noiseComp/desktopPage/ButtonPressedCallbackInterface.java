@@ -1,6 +1,6 @@
-package de.schmiereck.noiseComp.desctopPage;
+package de.schmiereck.noiseComp.desktopPage;
 
-import de.schmiereck.noiseComp.desctopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
 
 /**
  * Callback-Interface über das gemeldet wird, wenn ein Button gedrückt wurde.

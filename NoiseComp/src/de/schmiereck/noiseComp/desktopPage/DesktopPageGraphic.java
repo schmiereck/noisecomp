@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.desctopPage;
+package de.schmiereck.noiseComp.desktopPage;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,13 +6,13 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.Iterator;
 
-import de.schmiereck.noiseComp.desctopPage.widgets.ButtonData;
-import de.schmiereck.noiseComp.desctopPage.widgets.FunctionButtonData;
-import de.schmiereck.noiseComp.desctopPage.widgets.GeneratorsGraphicData;
-import de.schmiereck.noiseComp.desctopPage.widgets.PaneData;
-import de.schmiereck.noiseComp.desctopPage.widgets.ScrollbarData;
-import de.schmiereck.noiseComp.desctopPage.widgets.TrackGraficData;
-import de.schmiereck.noiseComp.desctopPage.widgets.WidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorsGraphicData;
+import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TrackGraficData;
+import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.SoundSample;
@@ -24,7 +24,7 @@ import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
  * @author smk
  * @version 01.02.2004
  */
-public class DesctopPageGraphic
+public class DesktopPageGraphic
 {
 
 	/**
@@ -51,7 +51,7 @@ public class DesctopPageGraphic
 	 * 
 	 * 
 	 */
-	public DesctopPageGraphic()
+	public DesktopPageGraphic()
 	{
 		super();
 	}
@@ -59,7 +59,7 @@ public class DesctopPageGraphic
 	/**
 	 * Zeichnet den Mauszeiger.
 	 */
-	public void drawPointer(Graphics g, ScreenGraficInterface screenGrafic, DesctopPageData desctopPageData)
+	public void drawPointer(Graphics g, ScreenGraficInterface screenGrafic, DesktopPageData desctopPageData)
 	{
 		screenGrafic.setColor(g, this.pointerColor);
 		
@@ -74,7 +74,7 @@ public class DesctopPageGraphic
 	/**
 	 * Zeichnet die Eingabeelemente.
 	 */
-	public void drawWidgets(Graphics g, ScreenGraficInterface screenGrafic, DesctopPageData desctopPageData)
+	public void drawWidgets(Graphics g, ScreenGraficInterface screenGrafic, DesktopPageData desctopPageData)
 	{
 		Iterator widgetIterator = desctopPageData.getWidgetsIterator();
 		
@@ -373,7 +373,7 @@ public class DesctopPageGraphic
 	 * @param g
 	 * @param generatorsGraphicData
 	 */
-	private void drawGenerators(Graphics g, ScreenGraficInterface screenGrafic, GeneratorsGraphicData generatorsGraphicData, DesctopPageData desctopPageData)
+	private void drawGenerators(Graphics g, ScreenGraficInterface screenGrafic, GeneratorsGraphicData generatorsGraphicData, DesktopPageData desctopPageData)
 	{
 		int posX = generatorsGraphicData.getPosX();
 		int posY = generatorsGraphicData.getPosY();
