@@ -1,7 +1,7 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
 /**
- * TODO docu
+ * Informs the listener object, if a track is selected or deselected.
  *
  * @author smk
  * @version 08.02.2004

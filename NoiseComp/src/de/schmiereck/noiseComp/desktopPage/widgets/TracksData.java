@@ -19,12 +19,14 @@ import de.schmiereck.noiseComp.soundData.SoundData;
  * @version 26.01.2004
  */
 public class TracksData
-extends WidgetData
+extends ListWidgetData
 implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitWidgetListenerInterface
 {
 	public static final int HIT_PART_NONE		= 0;
 	public static final int HIT_PART_GENERATOR	= 1;
 	
+	private ListWidgetGraphic listWidgetGraphic = null;
+
 	/**
 	 * List of {@link TrackData}-Objects.
 	 */
@@ -36,11 +38,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	private HashMap	tracksHash = new HashMap();
 	
 	/**
-	 * Höhe eines Tracks in Points.
-	 */
-	private int trackHeight = 32;
-	
-	/**
 	 * Breite der Spalte mit den Generatornamen in Points.
 	 */
 	private int generatorsLabelSizeX;
@@ -49,9 +46,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * Eine Sekunde sind 60 Points.
 	 */
 	private float generatorScaleX		= 60.0F;
-	
-	private ScrollbarData verticalScrollbarData;
-	private ScrollbarData horizontalScrollbarData;
 	
 	/**
 	 * Wird verwaltet um Zugriff auf die Liste der Generatoren zu haben.
@@ -72,7 +66,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	private int hitGeneratorPart;
 	private TrackData selectedTrackData;
 	private boolean generatorIsSelected;
-	private GeneratorSelectedListenerInterface listenerLogic;
+	private GeneratorSelectedListenerInterface generatorSelectedListener;
 	
 	/**
 	 * Constructor.
@@ -87,24 +81,32 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 								 SoundData soundData, 
 								 ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
 	{
-		super(posX, posY, sizeX, sizeY);
+		super(posX, posY, sizeX, sizeY, 32, verticalScrollbarData, horizontalScrollbarData);
 	
 		this.generatorsLabelSizeX = generatorsLabelSizeX;
 		this.soundData = soundData;
-		this.verticalScrollbarData = verticalScrollbarData;
-		this.horizontalScrollbarData = horizontalScrollbarData;
-		
+
 		// Momentane Anzahl Generatoren zu...
 		//this.verticalScrollbarData.setScrollerLength(this.soundData.getGeneratorsCount());
 		// ...maximal mögliche Anzahl angezeigter Generatoren.
-		this.verticalScrollbarData.setScrollerSize(this.getSizeY() / this.getTrackHeight());
-		
+		this.setVerticalScrollbarRange(this.getVerticalScrollbarRange());
+
 		// Momentan Breitester Generator (in Sekunden)...
-		this.horizontalScrollbarData.setScrollerLength(20.0F);
+		this.setHorizontalScrollerLength(20.0F);
 		// ...zu Anzahl angezeigter Sekunden.
-		this.horizontalScrollbarData.setScrollerSize((this.getSizeX() - this.generatorsLabelSizeX) / this.generatorScaleX);
+		this.setHorizontalScrollbarRange(this.getHorizontalScrollbarRange());
 	}
 
+	public float getVerticalScrollbarRange()
+	{
+		return (float)this.getSizeY() / (float)this.getListEntryHeight();
+	}
+	
+	public float getHorizontalScrollbarRange()
+	{
+		return (this.getSizeX() - this.generatorsLabelSizeX) / this.generatorScaleX;
+	}
+	
 	/**
 	 * @return the attribute {@link #generatorsLabelSizeX}.
 	 */
@@ -120,56 +122,19 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		this.generatorsLabelSizeX = generatorsLabelSizeX;
 	}
 	/**
-	 * @return the attribute {@link #verticalScrollbarData}.
-	 */
-	public ScrollbarData getVerticalScrollbarData()
-	{
-		return this.verticalScrollbarData;
-	}
-	/**
-	 * @return the attribute {@link #horizontalScrollbarData}.
-	 */
-	public ScrollbarData getHorizontalScrollbarData()
-	{
-		return this.horizontalScrollbarData;
-	}
-	/**
 	 * @return the attribute {@link #soundData}.
 	 */
 	public SoundData getSoundData()
 	{
 		return this.soundData;
 	}
-	
-	/**
-	 * @return the attribute {@link #trackHeight}.
-	 */
-	public int getTrackHeight()
-	{
-		return this.trackHeight;
-	}
+
 	/**
 	 * @return the attribute {@link #generatorScaleX}.
 	 */
 	public float getGeneratorScaleX()
 	{
 		return this.generatorScaleX;
-	}
-
-	/**
-	 * @return die Anzahl Tracks um die gescrollt wurde.
-	 */
-	public int getTrackScrollPos()
-	{
-		return (int)this.verticalScrollbarData.getScrollerPos();
-	}
-
-	/**
-	 * @return die Zeit, um die gescrollt wurde (in Sekunden).
-	 */
-	public float getTimeScrollPos()
-	{
-		return this.horizontalScrollbarData.getScrollerPos();
 	}
 	
 	/**
@@ -218,10 +183,10 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			this.tracksHash.put(trackData.getGenerator(), trackData);
 			this.soundData.addGenerator(trackData.getGenerator());
 	
-			this.verticalScrollbarData.setScrollerLength(this.getTracksCount());
+			this.setVerticalScrollerLength(this.getTracksCount());
 		}
 	}
-
+	
 	public void removeSelectedTrack()
 	{
 		synchronized (this)
@@ -244,15 +209,32 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 				this.tracksHash.remove(selectedTrackData.getGenerator());
 				this.soundData.removeGenerator(trackPos);
 				
-				this.verticalScrollbarData.setScrollerLength(this.getTracksCount());
+				this.setVerticalScrollerLength(this.getTracksCount());
 			}
 		}
 	}
 	
 	/**
+	 * @return die Anzahl Tracks um die gescrollt wurde.
+	 */
+	public int getTrackScrollPos()
+	{
+		return (int)this.getVerticalScrollerPos();
+	}
+
+	/**
+	 * @return die Zeit, um die gescrollt wurde (in Sekunden).
+	 */
+	public float getTimeScrollPos()
+	{
+		return this.getHorizontalScrollerPos();
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData#getListEntrysIterator()
 	 * @return a Iterator over the {@link TrackData}-Objects.
 	 */
-	public Iterator getTracksIterator()
+	public Iterator getListEntrysIterator()
 	{
 		return this.tracksVector.iterator();
 	}
@@ -300,9 +282,9 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 				// Select the Generator.
 				this.generatorIsSelected = true;
 				
-				if (this.listenerLogic != null)
+				if (this.generatorSelectedListener != null)
 				{
-					this.listenerLogic.notifyGeneratorSelected(this.selectedTrackData);
+					this.generatorSelectedListener.notifyGeneratorSelected(this.selectedTrackData);
 				}
 			}
 			else
@@ -310,9 +292,9 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 				// Deselect the Generator.
 				this.generatorIsSelected = false;
 			
-				if (this.listenerLogic != null)
+				if (this.generatorSelectedListener != null)
 				{
-					this.listenerLogic.notifyGeneratorDeselected(this.selectedTrackData);
+					this.generatorSelectedListener.notifyGeneratorDeselected(this.selectedTrackData);
 				}
 			}
 		}
@@ -337,9 +319,9 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		this.selectedTrackData = null;
 		this.generatorIsSelected = false;
 		this.activeTrackData = null;
-		if (this.listenerLogic != null)
+		if (this.generatorSelectedListener != null)
 		{
-			this.listenerLogic.notifyGeneratorDeselected(trackData);
+			this.generatorSelectedListener.notifyGeneratorDeselected(trackData);
 		}
 	}
 
@@ -368,12 +350,37 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		//return (TrackData)this.tracksHash.get(name);
 		return (TrackData)this.tracksHash.get(generator);
 	}
+
 	/**
-	 * @param listenerLogic is the new value for attribute {@link #listenerLogic} to set.
+	 * @param name of the Generator to search for.
+	 * @return Track of the generator or null.
 	 */
-	public void setListenerLogic(GeneratorSelectedListenerInterface listenerLogic)
+	public TrackData searchTrackData(String name)
 	{
-		this.listenerLogic = listenerLogic;
+		TrackData retTrackData = null;
+		
+		Iterator trackDataIterator = this.tracksHash.values().iterator();
+		
+		while (trackDataIterator.hasNext())
+		{
+			TrackData trackData = (TrackData)trackDataIterator.next();
+			
+			if (trackData.getName().equals(name))
+			{
+				retTrackData = trackData;
+				break;
+			}
+		}
+		
+		return retTrackData;
+	}
+	
+	/**
+	 * @param generatorSelectedListener is the new value for attribute {@link #generatorSelectedListener} to set.
+	 */
+	public void setGeneratorSelectedListener(GeneratorSelectedListenerInterface generatorSelectedListener)
+	{
+		this.generatorSelectedListener = generatorSelectedListener;
 	}
 
 	/* (non-Javadoc)
@@ -397,17 +404,17 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		this.setActiveTrackData(trackData, hitGeneratorPart);
 	}
 
-	private static TrackData calcHitTrack(int pointerPosX, int pointerPosY, TracksData generatorsGraphicData)
+	private static TrackData calcHitTrack(int pointerPosX, int pointerPosY, TracksData tracksData)
 	{
 		TrackData trackData = null;
 		
 		// Die Positionsnummer des Generators in der Liste.
-		int generatorPos = (pointerPosY / generatorsGraphicData.getTrackHeight()) + generatorsGraphicData.getTrackScrollPos();
+		int generatorPos = (pointerPosY / tracksData.getListEntryHeight()) + tracksData.getTrackScrollPos();
 		
 		// Innerhalb der Anzahl der vorhandneen generatoren ?
-		if (generatorPos < generatorsGraphicData.getTracksCount())
+		if (generatorPos < tracksData.getTracksCount())
 		{
-			trackData = generatorsGraphicData.getTrack(generatorPos);
+			trackData = tracksData.getTrack(generatorPos);
 		}
 		
 		return trackData;
@@ -418,16 +425,16 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * 			{@link GeneratorsGraphicData#HIT_PART_NONE}:		kein Hit.<br/>
 	 * 			{@link GeneratorsGraphicData#HIT_PART_GENERATOR}:	Generator überfahren.
 	 */
-	private static int calcHitGeneratorPart(int pointerPosX, int pointerPosY, TracksData generatorsGraphicData, TrackData trackData)
+	private static int calcHitGeneratorPart(int pointerPosX, int pointerPosY, TracksData tracksData, TrackData trackData)
 	{
-		int sizeX = generatorsGraphicData.getSizeX();
+		int sizeX = tracksData.getSizeX();
 
 		int hitGeneratorPart = TracksData.HIT_PART_NONE;
 
 		// Inerhalb des Trackbereichs ?
-		if ((pointerPosX >= generatorsGraphicData.getGeneratorsLabelSizeX()) && (pointerPosX <= sizeX))
+		if ((pointerPosX >= tracksData.getGeneratorsLabelSizeX()) && (pointerPosX <= sizeX))
 		{
-			float timePos = ((pointerPosX - generatorsGraphicData.getGeneratorsLabelSizeX()) / generatorsGraphicData.getGeneratorScaleX()) - generatorsGraphicData.getTrackScrollPos();
+			float timePos = ((pointerPosX - tracksData.getGeneratorsLabelSizeX()) / tracksData.getGeneratorScaleX()) - tracksData.getVerticalScrollerPos();
 			
 			Generator generator = trackData.getGenerator();
 			
@@ -437,5 +444,18 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			}
 		}
 		return hitGeneratorPart;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData#getGraphicInstance()
+	 */
+	public ListWidgetGraphic getGraphicInstance()
+	{
+		if (this.listWidgetGraphic == null)
+		{
+			this.listWidgetGraphic = new TracksGraphic();
+		}
+		return this.listWidgetGraphic;
 	}
 }

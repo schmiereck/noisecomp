@@ -145,14 +145,23 @@ implements GeneratorInterface
 	
 	/**
 	 * @see #inputs
+	 * @return the new created and added {@link InputData}-Object.
 	 */
-	public void addInputGenerator(Generator inputGenerator, int inputType)
+	public InputData addInputGenerator(Generator inputGenerator, int inputType)
 	{
 		if (this.inputs == null)
 		{	
 			this.inputs = new Vector();
 		}
-		this.inputs.add(new InputData(inputGenerator, inputType));
+		
+		InputData inputData = new InputData(inputGenerator, inputType);
+		
+		synchronized (this.inputs)
+		{
+			this.inputs.add(inputData);
+		}
+		
+		return inputData;
 	}
 	
 	/**
@@ -170,6 +179,14 @@ implements GeneratorInterface
 			ret = null;
 		}
 		return ret;
+	}
+	
+	/**
+	 * @see #inputs
+	 */
+	public Vector getInputs()
+	{
+		return this.inputs;
 	}
 	
 	public Generator getInputByType(int inputType)
@@ -230,7 +247,10 @@ implements GeneratorInterface
 				
 				if (generator == removedGenerator)
 				{
-					inputGeneratorsIterator.remove();
+					synchronized (this.inputs)
+					{
+						inputGeneratorsIterator.remove();
+					}
 					break;
 				}
 			}

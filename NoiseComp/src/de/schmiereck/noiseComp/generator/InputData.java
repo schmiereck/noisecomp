@@ -32,10 +32,24 @@ public class InputData
 		return this.inputGenerator;
 	}
 	/**
+	 * @param inputGenerator is the new value for attribute {@link #inputGenerator} to set.
+	 */
+	public void setInputGenerator(Generator inputGenerator)
+	{
+		this.inputGenerator = inputGenerator;
+	}
+	/**
 	 * @return the attribute {@link #inputType}.
 	 */
 	public int getInputType()
 	{
 		return this.inputType;
+	}
+	/**
+	 * @param inputType is the new value for attribute {@link #inputType} to set.
+	 */
+	public void setInputType(int inputType)
+	{
+		this.inputType = inputType;
 	}
 }

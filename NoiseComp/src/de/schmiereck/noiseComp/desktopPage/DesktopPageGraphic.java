@@ -1,23 +1,22 @@
 package de.schmiereck.noiseComp.desktopPage;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Iterator;
 
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonGraphic;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineGraphic;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputsData;
+import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.desktopPage.widgets.LabelGraphic;
+import de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetGraphic;
+import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneGraphic;
+import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
-import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
-import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
-import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TracksGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 
@@ -148,8 +147,12 @@ public class DesktopPageGraphic
 							{	
 								TracksData tracksData = (TracksData)widgetData;
 								
-								TracksGraphic.drawGenerators(g, screenGrafic, desktopColors, 
-										tracksData, desktopPageData);
+								ListWidgetGraphic listWidgetGraphic = tracksData.getGraphicInstance();
+								
+								listWidgetGraphic.drawList(g, screenGrafic, desktopColors, 
+										tracksData);
+								//TracksGraphic.drawGenerators(g, screenGrafic, desktopColors, 
+								//		tracksData);
 							}
 							else
 							{
@@ -182,6 +185,18 @@ public class DesktopPageGraphic
 									}
 									
 									InputlineGraphic.drawInputline(g, screenGrafic, desktopColors, inputlineData, active, focused);
+								}
+								else
+								{
+									if (widgetData instanceof InputsData)
+									{	
+										InputsData inputsData = (InputsData)widgetData;
+										
+										ListWidgetGraphic listWidgetGraphic = inputsData.getGraphicInstance();
+										
+										listWidgetGraphic.drawList(g, screenGrafic, desktopColors, 
+																 inputsData);
+									}
 								}
 							}
 						}

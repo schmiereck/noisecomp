@@ -5,6 +5,7 @@ import java.util.Iterator;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputsData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
@@ -49,6 +50,9 @@ extends ControllerData
 	private InputlineData generatorNameInputlineData = null;
 	private InputlineData generatorStartTimeInputlineData = null;
 	private InputlineData generatorEndTimeInputlineData = null;
+	private InputsData generatorInputsData = null;
+	private InputlineData generatorInputNameInputlineData = null;
+	private InputlineData generatorInputTypeInputlineData = null;
 	
 	/**
 	 * Constructor.
@@ -104,6 +108,7 @@ extends ControllerData
 		int topMenuSizeY			= 32 * 2;
 		int bottomMenuSizeY			= 32 * 4;
 		int scrollbarWidth			= 20;
+		int scrollbarWidth2			= 15;
 		int generatorsLabelSizeX	= 100;
 
 		DesktopPageData	desktopPageData = new DesktopPageData(this.getFieldWidth(), this.getFieldHeight());
@@ -174,13 +179,57 @@ extends ControllerData
 			}
 			
 			{
-				LabelData generatorNameLabelData = new LabelData("Inputs:", 250, posY + 10, 60, 16);
-				desktopPageData.addWidgetData(generatorNameLabelData);
+				ButtonData stopButtonData = new FunctionButtonData("set", "Set", 170, posY + 70, 50, 18);
+				desktopPageData.addWidgetData(stopButtonData);
 			}
 			
 			{
-				ButtonData stopButtonData = new FunctionButtonData("set", "Set", 70, posY + 100, 50, 20);
-				desktopPageData.addWidgetData(stopButtonData);
+				LabelData inputsLabelData = new LabelData("Inputs:", 250, posY + 10, 30, 16);
+				desktopPageData.addWidgetData(inputsLabelData);
+			}
+			ScrollbarData inputsVScrollbarData;
+			{
+				inputsVScrollbarData = new ScrollbarData("inputsVScroll", 530 - scrollbarWidth2, posY + 10, 
+						scrollbarWidth2, 100, true);
+				desktopPageData.addWidgetData(inputsVScrollbarData);
+			}
+			{
+				this.generatorInputsData = new InputsData(280, posY + 10, 250 - scrollbarWidth2, 100, inputsVScrollbarData, null);
+				desktopPageData.addWidgetData(this.generatorInputsData);
+			}
+
+			{
+				LabelData generatorInputNameLabelData = new LabelData("Name:", 590, posY + 10, 50, 16);
+				desktopPageData.addWidgetData(generatorInputNameLabelData);
+			}
+			{
+				this.generatorInputNameInputlineData = new InputlineData("inputName", 640, posY + 10, 150, 16);
+				desktopPageData.addWidgetData(this.generatorInputNameInputlineData);
+			}
+			{
+				LabelData generatorInputTypeLabelData = new LabelData("Type:", 590, posY + 30, 60, 16);
+				desktopPageData.addWidgetData(generatorInputTypeLabelData);
+			}
+			{
+				this.generatorInputTypeInputlineData = new InputlineData("inputType", 640, posY + 30, 150, 16);
+				desktopPageData.addWidgetData(this.generatorInputTypeInputlineData);
+			}
+
+			{
+				ButtonData setInputButtonData = new FunctionButtonData("setInput", "Set", 740, posY + 50, 50, 18);
+				desktopPageData.addWidgetData(setInputButtonData);
+			}
+			{
+				ButtonData addInputButtonData = new FunctionButtonData("newInput", "New", 540, posY + 40, 60, 18);
+				desktopPageData.addWidgetData(addInputButtonData);
+			}
+			{
+				ButtonData addInputButtonData = new FunctionButtonData("addInput", "Add", 540, posY + 65, 60, 18);
+				desktopPageData.addWidgetData(addInputButtonData);
+			}
+			{
+				ButtonData removeInputButtonData = new FunctionButtonData("removeInput", "Remove", 540, posY + 90, 60, 18);
+				desktopPageData.addWidgetData(removeInputButtonData);
 			}
 		}
 		
@@ -320,6 +369,27 @@ extends ControllerData
 	public InputlineData getGeneratorEndTimeInputlineData()
 	{
 		return this.generatorEndTimeInputlineData;
+	}
+	/**
+	 * @return the attribute {@link #generatorInputsData}.
+	 */
+	public InputsData getGeneratorInputsData()
+	{
+		return this.generatorInputsData;
+	}
+	/**
+	 * @return the attribute {@link #generatorInputNameInputlineData}.
+	 */
+	public InputlineData getGeneratorInputNameInputlineData()
+	{
+		return this.generatorInputNameInputlineData;
+	}
+	/**
+	 * @return the attribute {@link #generatorInputTypeeInputlineData}.
+	 */
+	public InputlineData getGeneratorInputTypeInputlineData()
+	{
+		return this.generatorInputTypeInputlineData;
 	}
 }
 

@@ -3,7 +3,8 @@ package de.schmiereck.noiseComp.desktopPage;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 
 /**
- * TODO docu
+ * Informs if a widget is actived by mouse rollover.<br/>
+ * The functions are only called once if the active state is changed.
  *
  * @author smk
  * @version 01.02.2004

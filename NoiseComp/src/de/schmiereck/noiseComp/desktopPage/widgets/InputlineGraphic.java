@@ -33,13 +33,20 @@ public class InputlineGraphic
 		int sizeX = inputlineData.getSizeX();
 		int sizeY = inputlineData.getSizeY();
 		
-		if ((active == true) || (focused == true))
+		if (focused == true)
 		{	
-			g.setColor(desktopColors.getActiveInputlineColor());
+			g.setColor(desktopColors.getFocusedInputlineColor());
 		}
 		else
 		{
-			g.setColor(desktopColors.getInactiveInputlineColor());
+			if (active == true)
+			{	
+				g.setColor(desktopColors.getActiveInputlineColor());
+			}
+			else
+			{
+				g.setColor(desktopColors.getInactiveInputlineColor());
+			}
 		}
 		
 		screenGrafic.fillRect(g, posX, posY, sizeX, sizeY);

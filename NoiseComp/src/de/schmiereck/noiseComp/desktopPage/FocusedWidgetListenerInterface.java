@@ -3,7 +3,7 @@ package de.schmiereck.noiseComp.desktopPage;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 
 /**
- * TODO docu
+ * Informs if the state of the focus of a widget is changed. 
  *
  * @author smk
  * @version 07.02.2004
