@@ -21,6 +21,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
@@ -415,8 +416,8 @@ GeneratorInputSelectedListenerInterface
 	private void addGenerator(TracksData tracksData, Generator generator)
 	{
 		tracksData.addTrack(new TrackData(generator));
-		
-		if (OutputGenerator.class.equals(generator.getClass()))
+
+		if (generator instanceof OutputGenerator)
 		{	
 			OutputGenerator outputGenerator = (OutputGenerator)generator;
 			
@@ -437,7 +438,7 @@ GeneratorInputSelectedListenerInterface
 		// Sound-Generatoren für das Sound-Format des Ausgabekanals erzeugen:
 
 		//---------------------------------
-		FaderGenerator faderInGenerator = new FaderGenerator("faderIn", Float.valueOf(frameRate));
+		FaderGenerator faderInGenerator = new FaderGenerator("faderIn", Float.valueOf(frameRate), null);
 		
 		faderInGenerator.setStartTimePos(0.0F);
 		faderInGenerator.setEndTimePos(2.0F);
@@ -450,7 +451,7 @@ GeneratorInputSelectedListenerInterface
 		this.addGenerator(tracksData, faderInGenerator);
 
 		//---------------------------------
-		FaderGenerator faderOutGenerator = new FaderGenerator("faderOut", Float.valueOf(frameRate));
+		FaderGenerator faderOutGenerator = new FaderGenerator("faderOut", Float.valueOf(frameRate), null);
 		
 		faderOutGenerator.setStartTimePos(2.0F);
 		faderOutGenerator.setEndTimePos(5.0F);
@@ -463,7 +464,7 @@ GeneratorInputSelectedListenerInterface
 		this.addGenerator(tracksData, faderOutGenerator);
 		
 		//---------------------------------
-		SinusGenerator sinusGenerator = new SinusGenerator("sinus", Float.valueOf(frameRate));
+		SinusGenerator sinusGenerator = new SinusGenerator("sinus", Float.valueOf(frameRate), null);
 		sinusGenerator.addInputValue(262F, SinusGenerator.INPUT_TYPE_FREQ);
 		//sinusGenerator.setSignalFrequency(262F);
 		
@@ -473,7 +474,7 @@ GeneratorInputSelectedListenerInterface
 		this.addGenerator(tracksData, sinusGenerator);
 		
 		//---------------------------------
-		SinusGenerator sinus2Generator = new SinusGenerator("sinus2", Float.valueOf(frameRate));
+		SinusGenerator sinus2Generator = new SinusGenerator("sinus2", Float.valueOf(frameRate), null);
 		sinus2Generator.addInputValue(131F, SinusGenerator.INPUT_TYPE_FREQ);
 		//sinus2Generator.setSignalFrequency(131F);
 		
@@ -483,7 +484,7 @@ GeneratorInputSelectedListenerInterface
 		this.addGenerator(tracksData, sinus2Generator);
 		
 		//---------------------------------
-		SinusGenerator sinus3Generator = new SinusGenerator("sinus3", Float.valueOf(frameRate));
+		SinusGenerator sinus3Generator = new SinusGenerator("sinus3", Float.valueOf(frameRate), null);
 		sinus3Generator.addInputValue(70F, SinusGenerator.INPUT_TYPE_FREQ);
 		//sinus3Generator.setSignalFrequency(70F);
 		
@@ -493,7 +494,7 @@ GeneratorInputSelectedListenerInterface
 		this.addGenerator(tracksData, sinus3Generator);
 		
 		//---------------------------------
-		MixerGenerator mixerGenerator = new MixerGenerator("mixer", Float.valueOf(frameRate));
+		MixerGenerator mixerGenerator = new MixerGenerator("mixer", Float.valueOf(frameRate), null);
 		
 		mixerGenerator.setStartTimePos(0.0F);
 		mixerGenerator.setEndTimePos(5.0F);
@@ -508,7 +509,7 @@ GeneratorInputSelectedListenerInterface
 		this.addGenerator(tracksData, mixerGenerator);
 		
 		//---------------------------------
-		OutputGenerator outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate));
+		OutputGenerator outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate), null);
 
 		outputGenerator.setStartTimePos(0.0F);
 		outputGenerator.setEndTimePos(5.0F);
@@ -539,7 +540,8 @@ GeneratorInputSelectedListenerInterface
 			if (generator != null)
 			{	
 				name = generator.getName();
-				generatorTypeData = this.controllerData.searchGeneratorTypeData(generator);
+				//generatorTypeData = this.controllerData.searchGeneratorTypeData(generator);
+				generatorTypeData = generator.getGeneratorTypeData();
 				startTime = Float.toString(generator.getStartTimePos());
 				endTime = Float.toString(generator.getEndTimePos());
 				inputs = generator.getInputs();
@@ -847,7 +849,7 @@ GeneratorInputSelectedListenerInterface
 			{
 				Generator selectedGenerator = selectedTrackData.getGenerator();
 				
-				InputData selectedInputData = this.addInput(selectedGenerator, inputGeneratorName, inputType, inputGeneratorValue);
+				InputData selectedInputData = this.controllerData.getTracksData().getGenerators().addInput(selectedGenerator, inputGeneratorName, inputType, inputGeneratorValue);
 				
 				this.controllerData.getGeneratorInputsData().setSelectedInputData(selectedInputData);
 			}
@@ -858,51 +860,6 @@ GeneratorInputSelectedListenerInterface
 		}
 	}
 	
-	public InputData addInput(Generator generator, String inputGeneratorName, Integer inputType, Float inputValue)
-	{
-		InputData inputData;
-		
-		TrackData inputTrackData;
-		
-		if (inputGeneratorName != null)
-		{
-			if (inputGeneratorName.length() > 0)
-			{
-				inputTrackData = this.controllerData.getTracksData().searchTrackData(inputGeneratorName);
-
-				// Found no Track with the name of the Input ?
-				if (inputTrackData == null)
-				{
-					throw new RuntimeException("input generator \"" + inputGeneratorName + "\" not found");
-				}
-			}
-			else
-			{
-				inputTrackData = null;
-			}
-		}
-		else
-		{
-			inputTrackData = null;
-		}
-		
-		Generator inputGenerator;
-		
-		// Found a Track with the name of the Input ?
-		if (inputTrackData != null)
-		{
-			inputGenerator = inputTrackData.getGenerator();
-		}
-		else
-		{
-			inputGenerator = null;
-		}
-		
-		inputData = generator.addInputGenerator(inputGenerator, inputType.intValue(), inputValue);
-		
-		return inputData;
-	}
-
 	/**
 	 * Set the new Input-Settings for the selected Input.
 	 * If there is no selected input, {@link #addInput(InputsWidgetData)} is called.
@@ -1011,7 +968,7 @@ GeneratorInputSelectedListenerInterface
 
 					Generator selectedGenerator = selectedTrackData.getGenerator();
 
-					selectedInputData = this.addInput(selectedGenerator, inputGeneratorName, inputType, inputGeneratorValue);
+					selectedInputData = this.controllerData.getTracksData().getGenerators().addInput(selectedGenerator, inputGeneratorName, inputType, inputGeneratorValue);
 					
 					this.controllerData.getGeneratorInputsData().setSelectedInputData(selectedInputData);
 				}
@@ -1052,7 +1009,8 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void addDefaultInputs(Generator generator)
 	{
-		GeneratorTypeData generatorTypeData = this.controllerData.searchGeneratorTypeData(generator);
+		//GeneratorTypeData generatorTypeData = this.controllerData.searchGeneratorTypeData(generator);
+		GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
 		
 		Iterator inputTypesDataIterator = generatorTypeData.getInputTypesDataIterator();
 		

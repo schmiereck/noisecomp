@@ -7,7 +7,12 @@ import java.util.Vector;
 /**
  * Implementiert die Logik eines Generators der einen Sample für eine
  * Frameposition in einem Buffer ablegt, um ihn nicht mehrfach zu berechnen.
- *
+ * <p>
+ * 	The "ouput signal" is calculated based on the internal logic of the generator 
+ * 	and the values of differnet inputs.<br/>
+ * 	The the count and types of the acceped inputs are defined by the generator type
+ * 	returned by the function {@link #createGeneratorTypeData()}.
+ * </p>
  * @author smk
  * @version 22.01.2004
  */
@@ -43,6 +48,8 @@ implements GeneratorInterface
 	 */
 	private Vector inputs = null;
 	
+	private GeneratorTypeData generatorTypeData;
+	
 	/**
 	 * Constructor.
 	 * 
@@ -52,12 +59,13 @@ implements GeneratorInterface
 	 * 						false: liefer den Default-Wert zurück.
 	 * @param frameRate		Anzahl der Frames pro Sekunde.
 	 */
-	public Generator(String name, Float frameRate)
+	public Generator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
 		super();
 		
 		this.name = name;
 		this.frameRate = frameRate.floatValue();
+		this.generatorTypeData = generatorTypeData;
 	}
 
 	/**
@@ -149,15 +157,15 @@ implements GeneratorInterface
 	 */
 	public InputData addInputGenerator(Generator inputGenerator, int inputType, Float inputValue)
 	{
-		if (this.inputs == null)
-		{	
-			this.inputs = new Vector();
-		}
-		
 		InputData inputData = new InputData(inputGenerator, inputType);
 		
 		inputData.setInputValue(inputValue);
 		
+		if (this.inputs == null)
+		{	
+			this.inputs = new Vector();
+		}
+			
 		synchronized (this.inputs)
 		{
 			this.inputs.add(inputData);
@@ -196,9 +204,13 @@ implements GeneratorInterface
 	public Iterator getInputsIterator()
 	{
 		Iterator ret;
+		
 		if (this.inputs != null)
 		{	
-			ret = this.inputs.iterator();
+			synchronized (this.inputs)
+			{
+				ret = this.inputs.iterator();
+			}					
 		}
 		else
 		{
@@ -212,7 +224,20 @@ implements GeneratorInterface
 	 */
 	public Vector getInputs()
 	{
-		return this.inputs;
+		Vector ret;
+		
+		if (this.inputs != null)
+		{	
+			synchronized (this.inputs)
+			{
+				ret = this.inputs;
+			}
+		}
+		else
+		{
+			ret = null;
+		}
+		return ret;
 	}
 	
 	/**<
@@ -226,22 +251,25 @@ implements GeneratorInterface
 	{
 		InputData retInputData = null;
 		
-		if (this.inputs != null)
-		{	
-			Iterator inputGeneratorsIterator = this.inputs.iterator();
-			
-			while (inputGeneratorsIterator.hasNext())
-			{
-				InputData inputData = (InputData)inputGeneratorsIterator.next();
+		synchronized (this.inputs)
+		{
+			if (this.inputs != null)
+			{	
+				Iterator inputGeneratorsIterator = this.inputs.iterator();
 				
-				if (inputData.getInputType() == inputType)
+				while (inputGeneratorsIterator.hasNext())
 				{
-					if (retInputData != null)
-					{
-						throw new RuntimeException("found more than one input by type " + inputType);
-					}
+					InputData inputData = (InputData)inputGeneratorsIterator.next();
 					
-					retInputData = inputData;
+					if (inputData.getInputType() == inputType)
+					{
+						if (retInputData != null)
+						{
+							throw new RuntimeException("found more than one input by type " + inputType + " in generator " + this.getName());
+						}
+						
+						retInputData = inputData;
+					}
 				}
 			}
 		}
@@ -254,13 +282,16 @@ implements GeneratorInterface
 	public int getInputsCount()
 	{
 		int ret;
-		if (this.inputs != null)
-		{	
-			ret = this.inputs.size();
-		}
-		else
+		synchronized (this.inputs)
 		{
-			ret = 0;
+			if (this.inputs != null)
+			{	
+				ret = this.inputs.size();
+			}
+			else
+			{
+				ret = 0;
+			}
 		}
 		return ret;
 	}
@@ -273,23 +304,26 @@ implements GeneratorInterface
 	 */
 	public void notifyRemoveGenerator(Generator removedGenerator)
 	{
-		if (this.inputs != null)
-		{	
-			Iterator inputGeneratorsIterator = this.inputs.iterator();
-			
-			while (inputGeneratorsIterator.hasNext())
-			{
-				InputData inputData = (InputData)inputGeneratorsIterator.next();
-
-				Generator generator = (Generator)inputData.getInputGenerator();
+		synchronized (this.inputs)
+		{
+			if (this.inputs != null)
+			{	
+				Iterator inputGeneratorsIterator = this.inputs.iterator();
 				
-				if (generator == removedGenerator)
+				while (inputGeneratorsIterator.hasNext())
 				{
-					synchronized (this.inputs)
+					InputData inputData = (InputData)inputGeneratorsIterator.next();
+	
+					Generator generator = (Generator)inputData.getInputGenerator();
+					
+					if (generator == removedGenerator)
 					{
-						inputGeneratorsIterator.remove();
+						synchronized (this.inputs)
+						{
+							inputGeneratorsIterator.remove();
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
@@ -312,4 +346,17 @@ implements GeneratorInterface
 		return 1.0F;
 	}
 
+	public static GeneratorTypeData createGeneratorTypeData()
+	{
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SinusGenerator.class, "Base", "Is the base of all other generators.");
+		
+		return generatorTypeData;
+	}
+	/**
+	 * @return the attribute {@link #generatorTypeData}.
+	 */
+	public GeneratorTypeData getGeneratorTypeData()
+	{
+		return this.generatorTypeData;
+	}
 }

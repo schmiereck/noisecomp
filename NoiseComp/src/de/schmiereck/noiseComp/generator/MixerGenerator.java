@@ -31,9 +31,9 @@ extends Generator
 	 * @param holdLastValue
 	 * @param frameRate
 	 */
-	public MixerGenerator(String name, Float frameRate)
+	public MixerGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
-		super(name, frameRate);
+		super(name, frameRate, generatorTypeData);
 	}
 
 	public void addVolumeInput(Generator volumeInput)
@@ -135,8 +135,8 @@ extends Generator
 		soundSample.setStereoValues(signalLeft * volume, signalRight * volume);
 	}
 
-	/**
-	 * @return
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{

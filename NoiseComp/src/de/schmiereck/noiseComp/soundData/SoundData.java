@@ -1,12 +1,12 @@
 package de.schmiereck.noiseComp.soundData;
 
 import java.util.Iterator;
-import java.util.Vector;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 
@@ -23,16 +23,7 @@ public class SoundData
 {
 	private static final int BUFFER_SIZE = 16000; 
 
-	/**
-	 * The Output-Object of the Sound-Generators.
-	 */
-	private OutputGenerator	outputGenerator = null;
-	
-	/**
-	 * List of {@link Generator}-Objects with an
-	 * Integer-Position-Number as Key.
-	 */
-	private Vector	generators = new Vector();
+	private Generators generators = null;
 
 	private SourceDataLine line;
 	
@@ -62,27 +53,24 @@ public class SoundData
 	 */
 	public OutputGenerator getOutputGenerator()
 	{
-		return this.outputGenerator;
+		return this.generators.getOutputGenerator();
 	}
 	/**
 	 * @param outputGenerator is the new value for attribute {@link #outputGenerator} to set.
 	 */
 	public void setOutputGenerator(OutputGenerator outputGenerator)
 	{
-		this.outputGenerator = outputGenerator;
+		this.generators.setOutputGenerator(outputGenerator);
 
 		this.soundBufferManager = new SoundBufferManager(this.line.getFormat(), this.frameRate,  
-				AudioSystem.NOT_SPECIFIED, BUFFER_SIZE, this.outputGenerator);
+				AudioSystem.NOT_SPECIFIED, BUFFER_SIZE, outputGenerator);
 	}
 	/**
 	 * @param generator is the Generator to add.
 	 */
 	public void addGenerator(Generator generator)
 	{
-		synchronized (this)
-		{
-			this.generators.add(generator);
-		}
+		this.generators.addGenerator(generator);
 	}
 
 	/**
@@ -90,29 +78,7 @@ public class SoundData
 	 */
 	public void removeGenerator(int trackPos)
 	{
-		synchronized (this)
-		{
-			Generator removedGenerator = (Generator)this.generators.get(trackPos);
-			this.generators.remove(trackPos);
-			
-			// Alle Generatoren durchlaufen und benachrichtigen 
-			// das einer der ihren gelöscht wurde (als Input entfernen usw.):
-			
-			Iterator generatorsIterator = this.generators.iterator();
-			
-			while (generatorsIterator.hasNext())
-			{
-				Generator generator = (Generator)generatorsIterator.next();
-				
-				generator.notifyRemoveGenerator(removedGenerator);
-			}
-			
-			// Output removed ?
-			if (removedGenerator == outputGenerator)
-			{
-				this.setOutputGenerator(null);
-			}
-		}
+		this.generators.removeGenerator(trackPos);
 	}
 	
 	/**
@@ -120,7 +86,7 @@ public class SoundData
 	 */
 	public Iterator getGeneratorsIterator()
 	{
-		return this.generators.iterator();
+		return this.generators.getGeneratorsIterator();
 	}
 
 	/**
@@ -206,10 +172,23 @@ public class SoundData
 	 */
 	public void clear()
 	{
-		synchronized (this)
-		{
-			this.generators.clear();
-			this.setOutputGenerator(null);
-		}
+		this.generators.clear();
 	}
+
+	/**
+	 * @see #generators
+	 */
+	public void setGenerators(Generators generators)
+	{
+		this.generators = generators;
+	}
+
+	/**
+	 * @return the attribute {@link #generators}.
+	 */
+	public Generators getGenerators()
+	{
+		return this.generators;
+	}
+	
 }

@@ -8,6 +8,7 @@ import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.soundData.SoundData;
 
 
@@ -230,12 +231,15 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			
 			this.tracksVector.clear();
 			this.tracksHash.clear();
-			this.soundData.clear();
+			//this.soundData.clear();
+			
+			Generators generators = new Generators();
+			this.soundData.setGenerators(generators);
 			
 			this.setVerticalScrollerLength(this.getTracksCount());
 		}
 	}
-	
+
 	/**
 	 * @return die Zeit, um die gescrollt wurde (in Sekunden).
 	 */
@@ -484,5 +488,13 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @see #soundData#getGenerators()
+	 */
+	public Generators getGenerators()
+	{
+		return this.soundData.getGenerators();
 	}
 }

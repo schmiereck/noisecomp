@@ -36,6 +36,8 @@ implements ButtonActionLogicListenerInterface
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
 		this.controllerData.getTracksData().clearTracks();
+		
+		this.controllerData.createBaseGeneratorTypes();
 	}
 
 }

@@ -4,6 +4,11 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.Generators;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
  * TODO docu
@@ -35,6 +40,29 @@ public class SaveGroupButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
+		String modulName = this.controllerData.getGroupNameInputlineData().getInputText();
+		
+		modulName = modulName.trim();
+		
+		if (modulName.length() > 0)
+		{	
+			String modulDescription = "XXX";
+			
+			ModulGeneratorTypeData modulTypeData = new ModulGeneratorTypeData(ModulGenerator.class, modulName, modulDescription);
+
+			Generators generators = this.controllerData.getTracksData().getGenerators();
+			
+			modulTypeData.setGenerators(generators);
+			
+			this.controllerData.getGeneratorTypesData().addGeneratorTypeData(modulTypeData);
+			
+			this.controllerData.getTracksData().clearTracks();
+			
+			this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
+		}
+		else
+		{
+			throw new RuntimeException("no modul name");
+		}
 	}
 }

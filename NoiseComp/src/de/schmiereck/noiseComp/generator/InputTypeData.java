@@ -65,7 +65,7 @@ public class InputTypeData
 		this.inputCountMin = inputCountMin;
 	}
 
-		/**
+	/**
 	 * Constructor.
 	 * 
 	 * @param inputType
@@ -81,6 +81,46 @@ public class InputTypeData
 		this.inputTypeName = inputTypeName;
 		this.inputCountMax = inputCountMax;
 		this.inputCountMin = inputCountMin;
+		this.defaultValue = defaultValue;
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 */
+	public InputTypeData(Integer inputTypeType, String inputTypeName, 
+			Integer inputTypeCountMax, Integer inputTypeCountMin, 
+			Float defaultValue)
+	{
+		super();
+		this.inputType = inputTypeType.intValue();
+		this.inputTypeName = inputTypeName;
+
+		int countMin;
+
+		if (inputTypeCountMin != null)
+		{
+			countMin = inputTypeCountMin.intValue();
+		}
+		else
+		{
+			countMin = -1;
+		}
+
+		int countMax;
+
+		if (inputTypeCountMax != null)
+		{
+			countMax = inputTypeCountMax.intValue();
+		}
+		else
+		{
+			countMax = -1;
+		}
+		
+		this.inputCountMax = countMax;
+		this.inputCountMin = countMin;
+		
 		this.defaultValue = defaultValue;
 	}
 

@@ -15,9 +15,9 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public OutputGenerator(String name, Float frameRate)
+	public OutputGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
-		super(name, frameRate);
+		super(name, frameRate, generatorTypeData);
 	}
 
 	/**
@@ -59,8 +59,8 @@ extends Generator
 		}
 	}
 
-	/**
-	 * @return
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{

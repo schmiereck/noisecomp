@@ -98,18 +98,20 @@ public class GeneratorTypeData
 		//try
 		{
 //			Class pageViewClass = ;
-			Class[]	params		= new Class[2];
+			Class[]	params		= new Class[3];
 			
-			params[0] = String.class;	// generatorName
-			params[1] = Float.class;	// frameRate
+			params[0] = String.class;				// generatorName
+			params[1] = Float.class;				// frameRate
+			params[2] = GeneratorTypeData.class;	// generatorTypeData
 			
 			try
 			{
 				Constructor generatorConstructor = this.generatorClass.getConstructor(params);
-				Object[]	args	= new Object[2];
+				Object[]	args	= new Object[3];
 
 				args[0] = generatorName;
 				args[1] = Float.valueOf(frameRate);
+				args[2] = this;
 				
 				try
 				{

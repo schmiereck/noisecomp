@@ -13,26 +13,26 @@ import de.schmiereck.dataTools.VectorHash;
 public class GeneratorTypesData
 {
 	/**
-	 * List of the available {@link GeneratorTypeData}-Objects.
+	 * List of the available {@link GeneratorTypeData}-Objects with the Class-Name-Strings as keys.
 	 */
 	private VectorHash generatorTypes = new VectorHash();
 	
 	public void addGeneratorTypeData(GeneratorTypeData generatorTypeData)
 	{
-		this.generatorTypes.add(generatorTypeData.getGeneratorClass(), generatorTypeData);
+		this.generatorTypes.add(generatorTypeData.getGeneratorClass().getName(), generatorTypeData);
 	}
 
 	/**
 	 * @param generator
 	 * @return
 	 */
-	public GeneratorTypeData searchGeneratorTypeData(Generator generator)
+	public GeneratorTypeData searchGeneratorTypeData(String generatorTypeClassName)
 	{
 		GeneratorTypeData generatorTypeData;
 		
-		if (generator != null)
+		if (generatorTypeClassName != null)
 		{	
-			generatorTypeData = (GeneratorTypeData)this.generatorTypes.get(generator.getClass());
+			generatorTypeData = (GeneratorTypeData)this.generatorTypes.get(generatorTypeClassName);
 		}
 		else
 		{	
@@ -41,7 +41,7 @@ public class GeneratorTypesData
 
 		return generatorTypeData;
 	}
-	
+
 	public GeneratorTypeData get(int pos)
 	{
 		GeneratorTypeData generatorTypeData;
@@ -51,9 +51,9 @@ public class GeneratorTypesData
 		return generatorTypeData;
 	}
 	
-	public void removeGeneratorType(GeneratorTypeData generatorTypeData)
+	public void removeGeneratorType(String generatorTypeClassName)
 	{
-		this.generatorTypes.remove(generatorTypeData);
+		this.generatorTypes.remove(generatorTypeClassName);
 	}
 	
 	public int getSize()
@@ -64,5 +64,13 @@ public class GeneratorTypesData
 	public Iterator getGeneratorTypesIterator()
 	{
 		return this.generatorTypes.iterator();
+	}
+
+	/**
+	 * 
+	 */
+	public void clear()
+	{
+		this.generatorTypes.clear();
 	}
 }

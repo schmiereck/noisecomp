@@ -20,9 +20,9 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public FaderGenerator(String name, Float frameRate)
+	public FaderGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
-		super(name, frameRate);
+		super(name, frameRate, generatorTypeData);
 	}
 
 	/**
@@ -158,6 +158,9 @@ extends Generator
 		return startFadeValue;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
+	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData(FaderGenerator.class, "Fader", "Fades linear from a start to a end value.");

@@ -29,6 +29,7 @@ import de.schmiereck.noiseComp.desktopController.actions.SetInputButtonActionLog
 import de.schmiereck.noiseComp.desktopController.actions.ZoomInButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.ZoomOutButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
+import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.Runner;
 import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
@@ -53,6 +54,8 @@ public class Main
 		float frameRate = line.getFormat().getFrameRate();
 
 		SoundData soundData = new SoundData(line, frameRate);
+		
+		soundData.setGenerators(new Generators());
 		
 		//------------------------------------
 		// Setup Desktop:

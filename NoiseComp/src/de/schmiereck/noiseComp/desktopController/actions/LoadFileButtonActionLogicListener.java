@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.desktopController.actions;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -11,11 +13,14 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.generator.FaderGenerator;
+import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.MixerGenerator;
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypesData;
+import de.schmiereck.noiseComp.generator.Generators;
+import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
-import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLException;
@@ -72,18 +77,29 @@ implements ButtonActionLogicListenerInterface
 				
 				SoundData soundData = this.controllerData.getSoundData();
 			
-				// List with temporarely {@link LoadFileGeneratorNodeData}-Objects.
-				Vector loadFileGeneratorNodeDatas = new Vector();
-				
 				Node noiseNode = XMLData.selectSingleNode(xmlDoc, "/noise");
 
+				//-----------------------------------------------------
+				// GeneratorTypesData:
+				
+				this.createGeneratorTypes(noiseNode, soundData);//, loadFileGeneratorNodeDatas);
+				
+				//-----------------------------------------------------
 				// Inserting the Generators.
 				
-				this.createGenerators(noiseNode, soundData, loadFileGeneratorNodeDatas);
+				Generators generators = this.createGenerators(soundData, noiseNode);
+
+				//-----------------------------------------------------
+				// Generators updating in actual View:
 				
-				// Inserting the inputs:
+				Iterator generatorsIterator = generators.getGeneratorsIterator();
 				
-				this.createGeneratorInputs(loadFileGeneratorNodeDatas);
+				while (generatorsIterator.hasNext())
+				{
+					Generator generator = (Generator)generatorsIterator.next();
+					
+					this.controllerLogic.addGenerator(generator);
+				}
 			}
 			catch (XMLException ex)
 			{
@@ -96,88 +112,218 @@ implements ButtonActionLogicListenerInterface
 		else
 		{
 			// TODO show ERROR message
+			throw new RuntimeException("file name is empty");
 		}
 	}
 
+	private Generators createGenerators(SoundData soundData, Node rootNode)
+	{
+		Generators generators = new Generators();
+		
+		// List with temporarely {@link LoadFileGeneratorNodeData}-Objects.
+		Vector loadFileGeneratorNodeDatas = new Vector();
+		
+		this.createGenerators(rootNode, soundData, generators, loadFileGeneratorNodeDatas);
+		
+		// Inserting the inputs:
+		
+		this.createGeneratorInputs(generators, loadFileGeneratorNodeDatas);
+		
+		return generators;
+	}
+
+	private void createGeneratorTypes(Node noiseNode, SoundData soundData)//, Vector loadFileGeneratorNodeDatas)
+	{
+		Node generatorTypesNode = XMLData.selectSingleNode(noiseNode, "generatorTypes");
+
+		if (generatorTypesNode != null)
+		{
+			GeneratorTypesData generatorTypesData = this.controllerData.getGeneratorTypesData();
+		
+			generatorTypesData.clear();
+			
+			NodeIterator generatorTypesNodeIterator = XMLData.selectNodeIterator(generatorTypesNode, "generatorType");
+	
+			Node generatorTypeNode;
+	
+			while ((generatorTypeNode = generatorTypesNodeIterator.nextNode()) != null)
+			{
+				String generatorTypeClassName = XMLData.selectSingleNodeText(generatorTypeNode, "generatorTypeClassName");
+				String generatorClassName = XMLData.selectSingleNodeText(generatorTypeNode, "generatorClassName");
+				String generatorTypeName = XMLData.selectSingleNodeText(generatorTypeNode, "name");
+				String generatorTypeDescription = XMLData.selectSingleNodeText(generatorTypeNode, "description");
+				
+				GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
+				
+				if (generatorTypeData != null)
+				{
+					throw new RuntimeException("generator type \"" + generatorTypeClassName + "\" allready exist");
+				}
+				
+				Class generatorClass;
+				try
+				{
+					generatorClass = Class.forName(generatorClassName);
+				}
+				catch (ClassNotFoundException ex)
+				{
+					throw new RuntimeException("Class not found", ex);
+				}
+				
+				generatorTypeData = this.createGeneratorTypeData(generatorTypeClassName, generatorClass, generatorTypeName, generatorTypeDescription);
+				
+				generatorTypesData.addGeneratorTypeData(generatorTypeData);
+				
+				//--------------------------------------------------------
+				// inputTypes:
+				
+				Node inputTypesNode = XMLData.selectSingleNode(generatorTypeNode, "inputTypes");
+	
+				NodeIterator inputTypeNodesIterator = XMLData.selectNodeIterator(inputTypesNode, "inputType");
+	
+				Node inputTypeNode;
+	
+				while ((inputTypeNode = inputTypeNodesIterator.nextNode()) != null)
+				{
+					String inputTypeName = XMLData.selectSingleNodeText(inputTypeNode, "name");
+					Integer inputTypeType = XMLData.selectSingleNodeInteger(inputTypeNode, "type");
+					Integer inputTypeCountMin = XMLData.selectSingleNodeInteger(inputTypeNode, "countMin");
+					Integer inputTypeCountMax = XMLData.selectSingleNodeInteger(inputTypeNode, "countMax");
+					Float inputTypeDefaultValue = XMLData.selectSingleNodeFloat(inputTypeNode, "defaultValue");
+					
+					InputTypeData inputTypeData = new InputTypeData(inputTypeType, inputTypeName, inputTypeCountMax, inputTypeCountMin, inputTypeDefaultValue);
+	
+					generatorTypeData.addInputTypeData(inputTypeData);
+				}
+				
+				//--------------------------------------------------------
+				// ModulGeneratorType:
+				
+				//if (generatorTypeClassName.equals(ModulGeneratorTypeData.class.getName()))
+				if (generatorTypeData instanceof ModulGeneratorTypeData)	
+				{
+					ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+					
+					Generators modulGenerators = this.createGenerators(soundData, generatorTypeNode);
+					
+					modulGeneratorTypeData.setGenerators(modulGenerators);
+				}
+			}
+		}
+	}
+
+	public GeneratorTypeData createGeneratorTypeData(String generatorTypeClassName, Class generatorClass, String generatorTypeName, String generatorTypeDescription)
+	{
+		GeneratorTypeData generatorTypeData = null;
+		
+		Class generatorTypeDataClass;
+		
+		try
+		{
+			generatorTypeDataClass = Class.forName(generatorTypeClassName);
+		}
+		catch (ClassNotFoundException ex)
+		{
+			throw new RuntimeException("class not found: " + generatorTypeClassName, ex);
+		}
+		
+		Class[]	params		= new Class[3];
+		
+		params[0] = Class.class;	// generatorClass
+		params[1] = String.class;	// generatorTypeName
+		params[2] = String.class;	// generatorTypeDescription
+		
+		try
+		{
+			Constructor generatorConstructor = generatorTypeDataClass.getConstructor(params);
+			Object[]	args	= new Object[3];
+
+			args[0] = generatorClass;
+			args[1] = generatorTypeName;
+			args[2] = generatorTypeDescription;
+			
+			try
+			{
+				//pageView = (HTMLPageView)Class.forName(pageViewClassName).newInstance();
+				generatorTypeData = (GeneratorTypeData)generatorConstructor.newInstance(args);
+			}
+			catch (java.lang.InstantiationException ex)
+			{
+				throw new RuntimeException("new instance: " + generatorTypeClassName, ex);
+			}
+			catch (java.lang.IllegalAccessException ex)
+			{
+				throw new RuntimeException("access exception for class: " + generatorTypeClassName, ex);
+			}
+			//catch (java.lang.ClassNotFoundException ex)
+			//{
+			//	throw new RuntimeException("class not found: " + pageViewClassName, ex);
+			//} 
+			catch (IllegalArgumentException ex)
+			{
+				throw new RuntimeException("illegal argument: " + generatorTypeClassName, ex);
+			} 
+			catch (InvocationTargetException ex)
+			{
+				throw new RuntimeException("invocation target: " + generatorTypeClassName, ex);
+			}
+		}
+		catch (java.lang.NoSuchMethodException ex)
+		{
+			throw new RuntimeException("no such method exception for class: " + generatorTypeClassName, ex);
+		}
+		
+		return generatorTypeData;
+	}
+	
 	/**
 	 * 
 	 * @param noiseNode is the root Node of the Generators-XML.
 	 * @param soundData is the empty sound data object the generators are inserted.
 	 * @param loadFileGeneratorNodeDatas is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
-	private void createGenerators(Node noiseNode, SoundData soundData, Vector loadFileGeneratorNodeDatas)
+	private void createGenerators(Node noiseNode, SoundData soundData, Generators generators, Vector loadFileGeneratorNodeDatas)
 	{
 		Node generatorsNode = XMLData.selectSingleNode(noiseNode, "generators");
 
-		NodeIterator generatorNodesIterator = XMLData.selectNodeIterator(generatorsNode, "generator");
+		NodeIterator generatorsNodeIterator = XMLData.selectNodeIterator(generatorsNode, "generator");
 
 		Node generatorNode;
+
+		GeneratorTypesData generatorTypesData = this.controllerData.getGeneratorTypesData();
 		
-		while ((generatorNode = generatorNodesIterator.nextNode()) != null)
+		while ((generatorNode = generatorsNodeIterator.nextNode()) != null)
 		{
 			String generatorType = XMLData.selectSingleNodeText(generatorNode, "type");
 			String generatorName = XMLData.selectSingleNodeText(generatorNode, "name");
 			Float generatorStartTime = XMLData.selectSingleNodeFloat(generatorNode, "startTime");
 			Float generatorEndTime = XMLData.selectSingleNodeFloat(generatorNode, "endTime");
 			
+			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorType);
+			
 			Generator generator;
 			
-			if (generatorType.equals(FaderGenerator.class.getName()))
-			{	
-				FaderGenerator faderGenerator = new FaderGenerator(generatorName, Float.valueOf(soundData.getFrameRate()));
-				
-				//Float generatorStartFadeValue = XMLData.selectSingleNodeFloat(generatorNode, "startFadeValue");
-				//faderGenerator.setStartFadeValue(generatorStartFadeValue.floatValue());
+			generator = generatorTypeData.createGeneratorInstance(generatorName, soundData.getFrameRate());
 
-				//Float generatorEndFadeValue = XMLData.selectSingleNodeFloat(generatorNode, "endFadeValue");
-				//faderGenerator.setEndFadeValue(generatorEndFadeValue.floatValue());
-
-				generator = faderGenerator;
-			}
-			else
-			{
-				if (generatorType.equals(MixerGenerator.class.getName()))
-				{	
-					generator = new MixerGenerator(generatorName, Float.valueOf(soundData.getFrameRate()));
-				}
-				else
-				{
-					if (generatorType.equals(OutputGenerator.class.getName()))
-					{	
-						generator = new OutputGenerator(generatorName, Float.valueOf(soundData.getFrameRate()));
-					}
-					else
-					{
-						if (generatorType.equals(SinusGenerator.class.getName()))
-						{	
-							SinusGenerator sinusGenerator = new SinusGenerator(generatorName, Float.valueOf(soundData.getFrameRate()));
-							
-							//Float generatorSignalFrequency = XMLData.selectSingleNodeFloat(generatorNode, "signalFrequency");
-							//sinusGenerator.setSignalFrequency(generatorSignalFrequency.floatValue());
-							
-							generator = sinusGenerator;
-						}
-						else
-						{
-							generator = null;
-						}
-					}
-				}
-			}
-			
 			if (generator != null)
 			{					
 				generator.setStartTimePos(generatorStartTime.floatValue());
 				generator.setEndTimePos(generatorEndTime.floatValue());
 				
-				this.controllerLogic.addGenerator(generator);
+				//this.controllerLogic.addGenerator(generator);
+				generators.addGenerator(generator);
+				
+				if (generator instanceof OutputGenerator)
+				{	
+					generators.setOutputGenerator((OutputGenerator)generator);
+				}
 				
 				loadFileGeneratorNodeDatas.add(new LoadFileGeneratorNodeData(generator, generatorNode));
 			}
 			else
 			{
 				// TODO show ERROR message
-				break;
+				throw new RuntimeException("can't create generator by type: " + generatorTypeData);
 			}
 		}
 	}
@@ -187,7 +333,7 @@ implements ButtonActionLogicListenerInterface
 	 * 
 	 * @param loadFileGeneratorNodeDatas is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
-	private void createGeneratorInputs(Vector loadFileGeneratorNodeDatas)
+	private void createGeneratorInputs(Generators generators, Vector loadFileGeneratorNodeDatas)
 	{
 		Iterator loadFileGeneratorNodeDatasIterator = loadFileGeneratorNodeDatas.iterator();
 		
@@ -212,7 +358,7 @@ implements ButtonActionLogicListenerInterface
 					Integer inputType = XMLData.selectSingleNodeInteger(inputNode, "type");
 					Float inputValue = XMLData.selectSingleNodeFloat(inputNode, "value");
 					
-					this.controllerLogic.addInput(generator, inputGeneratorName, inputType, inputValue);
+					generators.addInput(generator, inputGeneratorName, inputType, inputValue);
 				}
 			}
 		}

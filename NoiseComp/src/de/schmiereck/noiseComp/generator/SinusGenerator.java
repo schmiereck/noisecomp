@@ -33,9 +33,9 @@ extends Generator
 	 * 
 	 * Frames per Second
 	 */
-	public SinusGenerator(String name, Float frameRate)
+	public SinusGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
-		super(name, frameRate);
+		super(name, frameRate, generatorTypeData);
 	}
 	
 	/* (non-Javadoc)
@@ -175,8 +175,8 @@ extends Generator
 		return value;
 	}
 	
-	/**
-	 * @return
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{

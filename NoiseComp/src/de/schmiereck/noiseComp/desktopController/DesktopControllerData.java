@@ -56,7 +56,11 @@ extends ControllerData
 
 	private boolean playSound = false;
 	
-	private GeneratorTypesData generatorTypesData = new GeneratorTypesData();
+	/**
+	 * The supported generator types.
+	 * @see #createBaseGeneratorTypes()
+	 */
+	private GeneratorTypesData generatorTypesData  = new GeneratorTypesData();
 	
 	/**
 	 * Daten der gerade angezeigte Seite.
@@ -212,10 +216,7 @@ extends ControllerData
 	{
 		this.soundData = soundData;
 
-		this.generatorTypesData.addGeneratorTypeData(FaderGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(MixerGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(OutputGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(SinusGenerator.createGeneratorTypeData());
+		this.createBaseGeneratorTypes();
 		
 		this.desktopData = new DesktopData();
 		
@@ -226,6 +227,16 @@ extends ControllerData
 		this.loadDesktopPageData = this.createLoadPage(desktopData);
 		
 		this.activeDesktopPageData = this.mainDesktopPageData;
+	}
+
+	public void createBaseGeneratorTypes()
+	{
+		this.generatorTypesData.clear();
+		
+		this.generatorTypesData.addGeneratorTypeData(FaderGenerator.createGeneratorTypeData());
+		this.generatorTypesData.addGeneratorTypeData(MixerGenerator.createGeneratorTypeData());
+		this.generatorTypesData.addGeneratorTypeData(OutputGenerator.createGeneratorTypeData());
+		this.generatorTypesData.addGeneratorTypeData(SinusGenerator.createGeneratorTypeData());
 	}
 
 	private DesktopPageData createMainPage(DesktopData desktopData)
@@ -701,6 +712,7 @@ extends ControllerData
 	{
 		return this.generatorsHScrollbarData;
 	}
+
 	/**
 	 * @return the attribute {@link #tracksData}.
 	 */
@@ -708,6 +720,7 @@ extends ControllerData
 	{
 		return this.tracksData;
 	}
+	
 	/**
 	 * @return the attribute {@link #mainDesktopPageData}.
 	 */
@@ -819,9 +832,9 @@ extends ControllerData
 		return this.loadFileNameInputlineData;
 	}
 	
-	public GeneratorTypeData searchGeneratorTypeData(Generator generator)
+	public GeneratorTypeData searchGeneratorTypeData(String generatorTypeClassName)
 	{
-		return this.generatorTypesData.searchGeneratorTypeData(generator);
+		return this.generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
 	}
 	/**
 	 * @return the attribute {@link #groupGeneratorPageData}.
@@ -836,6 +849,20 @@ extends ControllerData
 	public GeneratorTypesWidgetData getGeneratorTypesListData()
 	{
 		return this.generatorTypesListData;
+	}
+	/**
+	 * @return the attribute {@link #groupNameInputlineData}.
+	 */
+	public InputlineData getGroupNameInputlineData()
+	{
+		return this.groupNameInputlineData;
+	}
+	/**
+	 * @return the attribute {@link #generatorTypesData}.
+	 */
+	public GeneratorTypesData getGeneratorTypesData()
+	{
+		return this.generatorTypesData;
 	}
 }
 
