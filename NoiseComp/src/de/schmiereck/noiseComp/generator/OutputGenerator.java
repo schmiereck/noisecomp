@@ -1,7 +1,10 @@
 package de.schmiereck.noiseComp.generator;
 
 /**
- * TODO docu
+ * The output of this generator is send to the audio hardware if a instance 
+ * of this generator is used as &quote;root&quote;.<br/>
+ * If it is used in a generator module, it works as the output signal of 
+ * the module instance.
  *
  * @author smk
  * @version 22.01.2004
@@ -77,5 +80,13 @@ extends Generator
 		}
 		
 		return generatorTypeData;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorBuffer()
+	 */
+	public GeneratorBuffer createGeneratorBuffer()
+	{
+		return new GeneratorFullBuffer();
 	}
 }
