@@ -360,7 +360,7 @@ extends ListWidgetGraphic
 		// Play Sound Pos:
 		g.setColor(Color.RED);
 		
-		float playTimePos = tracksData.getSoundData().getSoundBufferManager().getActualTime();
+		float playTimePos = tracksData.getSoundPlayTimePos();
 		
 		//screenGrafic.setFont()
 		screenGrafic.drawString(g, posX + 6, posY, "time:" + playTimePos);

@@ -21,10 +21,13 @@ import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
  */
 public class SoundData
 {
-	private static final int BUFFER_SIZE = 16000; 
+	private static final int BUFFER_SIZE = 32000; //16000; 
 
-	private Generators generators = null;
+	//nur noch die setOutput() aufrufen, wenn sich dieser ändert.
+	//private Generators generators = null;
 
+	private OutputGenerator outputGenerator = null;
+	
 	private SourceDataLine line;
 	
 	private SoundBufferManager soundBufferManager;
@@ -53,17 +56,17 @@ public class SoundData
 	 */
 	public OutputGenerator getOutputGenerator()
 	{
-		return this.generators.getOutputGenerator();
+		return this.outputGenerator;
 	}
 	/**
 	 * @param outputGenerator is the new value for attribute {@link #outputGenerator} to set.
 	 */
 	public void setOutputGenerator(OutputGenerator outputGenerator)
 	{
-		this.generators.setOutputGenerator(outputGenerator);
+		this.outputGenerator = outputGenerator;
 
 		this.soundBufferManager = new SoundBufferManager(this.line.getFormat(), this.frameRate,  
-				AudioSystem.NOT_SPECIFIED, BUFFER_SIZE, outputGenerator);
+				AudioSystem.NOT_SPECIFIED, SoundData.BUFFER_SIZE, outputGenerator);
 	}
 	/**
 	 * @param generator is the Generator to add.
@@ -75,19 +78,43 @@ public class SoundData
 
 	/**
 	 * @param trackPos
-	 */
 	public void removeGenerator(int trackPos)
 	{
 		this.generators.removeGenerator(trackPos);
 	}
+	 */
 	
 	/**
 	 * @return a Iterator over the {@link Generator}-Objects.
-	 */
 	public Iterator getGeneratorsIterator()
 	{
 		return this.generators.getGeneratorsIterator();
 	}
+	 */
+
+	/**
+	 * 
+	public void clear()
+	{
+		this.generators.clear();
+	}
+	 */
+
+	/**
+	 * @see #generators
+	public void setGenerators(Generators generators)
+	{
+		this.generators = generators;
+	}
+	 */
+
+	/**
+	 * @return the attribute {@link #generators}.
+	public Generators getGenerators()
+	{
+		return this.generators;
+	}
+	 */
 
 	/**
 	 * @return the attribute {@link #lineBufferData}.
@@ -165,30 +192,6 @@ public class SoundData
 	public float getFrameRate()
 	{
 		return this.frameRate;
-	}
-
-	/**
-	 * 
-	 */
-	public void clear()
-	{
-		this.generators.clear();
-	}
-
-	/**
-	 * @see #generators
-	 */
-	public void setGenerators(Generators generators)
-	{
-		this.generators = generators;
-	}
-
-	/**
-	 * @return the attribute {@link #generators}.
-	 */
-	public Generators getGenerators()
-	{
-		return this.generators;
 	}
 	
 }

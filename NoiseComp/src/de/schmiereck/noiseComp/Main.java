@@ -65,7 +65,10 @@ public class Main
 
 		SoundData soundData = new SoundData(line, frameRate);
 		
-		soundData.setGenerators(new Generators());
+		Generators generators = new Generators();
+
+		//------------------------------------
+		///soundData.setGenerators(generators);
 		
 		//------------------------------------
 		// Setup Desktop:
@@ -79,7 +82,7 @@ public class Main
 		
 		multiBufferGraphic = new DesktopGraphic();
 		
-		DesktopControllerData controllerData = new DesktopControllerData(soundData);//graphicBridge);
+		DesktopControllerData controllerData = new DesktopControllerData(soundData, generators);
 
 		multiBufferGraphic.initGrafic(controllerData);
 
@@ -174,7 +177,7 @@ public class Main
 		
 		Runner.run(controllerData, controllerLogic, 
 				multiBufferGraphic, inputListener, 
-				waiter, 24, 8,
+				waiter, 24, 16,
 				false, useFullScreen,
 				-1, -1);
 		

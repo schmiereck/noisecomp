@@ -75,26 +75,43 @@ public class Generators
 			Generator removedGenerator = (Generator)this.generators.get(trackPos);
 			this.generators.remove(trackPos);
 			
-			// Alle Generatoren durchlaufen und benachrichtigen 
-			// das einer der ihren gelöscht wurde (als Input entfernen usw.):
-			
-			Iterator generatorsIterator = this.generators.iterator();
-			
-			while (generatorsIterator.hasNext())
-			{
-				Generator generator = (Generator)generatorsIterator.next();
-				
-				generator.notifyRemoveGenerator(removedGenerator);
-			}
-			
-			// Output removed ?
-			if (removedGenerator == outputGenerator)
-			{
-				this.setOutputGenerator(null);
-			}
+			this.notifyGeneratorsOfRemoving(removedGenerator);
 		}
 	}
 
+	public void removeGenerator(Generator generator)
+	{
+		synchronized (this)
+		{
+			this.generators.remove(generator);
+			
+			this.notifyGeneratorsOfRemoving(generator);
+		}
+	}
+
+	/**
+	 * Alle Generatoren durchlaufen und benachrichtigen 
+	 * das einer der ihren gelöscht wurde (als Input entfernen usw.):
+	 * @param removedGenerator
+	 */
+	private void notifyGeneratorsOfRemoving(Generator removedGenerator)
+	{
+		Iterator generatorsIterator = this.generators.iterator();
+		
+		while (generatorsIterator.hasNext())
+		{
+			Generator generator = (Generator)generatorsIterator.next();
+			
+			generator.notifyRemoveGenerator(removedGenerator);
+		}
+		
+		// Output removed ?
+		if (removedGenerator == outputGenerator)
+		{
+			this.setOutputGenerator(null);
+		}
+	}
+	
 	/**
 	 * @return a Iterator over the {@link Generator}-Objects.
 	 */

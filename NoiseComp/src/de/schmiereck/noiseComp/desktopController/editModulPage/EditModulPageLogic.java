@@ -5,6 +5,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.InputTypeSelectedListenerInte
 import de.schmiereck.noiseComp.desktopPage.widgets.InputTypesWidgetData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.generator.InputTypesData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
@@ -51,9 +52,16 @@ EditGeneratorChangedListener
 	 */
 	public void notifyEditGeneratorChanged(ModulGeneratorTypeData editModulTypeData, Generators editGenerators)
 	{
+		InputTypesData inputTypesData;
+		
 		if (editModulTypeData != null)
 		{	
-			this.editModulPageData.getInputTypesListWidgetData().setInputTypesData(editModulTypeData.getInputTypesData());
+			inputTypesData = editModulTypeData.getInputTypesData();
 		}
+		else
+		{
+			inputTypesData = null;
+		}
+		this.editModulPageData.getInputTypesListWidgetData().setInputTypesData(inputTypesData);
 	}
 }

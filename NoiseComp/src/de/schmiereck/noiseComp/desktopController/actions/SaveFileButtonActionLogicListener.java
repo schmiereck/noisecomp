@@ -92,9 +92,10 @@ implements ButtonActionLogicListenerInterface
 		//-----------------------------------------------------
 		// Generators:
 		
-		Generators generators = soundData.getGenerators();
+		///Generators generators = soundData.getGenerators();
+		Generators mainGenerators = this.controllerData.getMainGenerators();
 		
-		this.appendGenerators(xmlDoc, noiseNode, generators);
+		this.appendGenerators(xmlDoc, noiseNode, mainGenerators);
 		
 		XMLPort.save(fileName, xmlDoc);
 	}

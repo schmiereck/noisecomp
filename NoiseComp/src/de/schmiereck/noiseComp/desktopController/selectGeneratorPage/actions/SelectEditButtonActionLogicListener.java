@@ -70,10 +70,8 @@ public class SelectEditButtonActionLogicListener
 
 		this.mainPageLogic.clearTracks();
 		
-		this.controllerData.getSoundData().setGenerators(generators);
-		
-		this.controllerData.setEditGenerators(modulTypeData, generators);
-		this.mainPageLogic.triggerEditGeneratorChanged(modulTypeData, generators);
+		this.controllerData.getEditData().setEditModulGenerator(modulTypeData);
+		this.mainPageLogic.triggerEditGeneratorChanged(this.controllerData.getEditData());
 		
 		//-----------------------------------------------------
 		// Generators updating in actual View:

@@ -2,6 +2,7 @@ package de.schmiereck.noiseComp.desktopController.editModulPage.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.EditData;
 import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData;
 import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
@@ -57,7 +58,9 @@ public class SaveGroupButtonActionLogicListener
 		{	
 			String modulDescription = "Generic Modul.";
 			
-			ModulGeneratorTypeData editModulTypeData = this.controllerData.getEditModulTypeData();
+			EditData editData = this.controllerData.getEditData();
+			
+			ModulGeneratorTypeData editModulTypeData = editData.getEditModulTypeData();
 			Generators generators;
 			
 			// Actualy no modul edited ?
@@ -66,7 +69,7 @@ public class SaveGroupButtonActionLogicListener
 				editModulTypeData = new ModulGeneratorTypeData(ModulGenerator.class, modulName, modulDescription);
 
 				//generators = this.controllerData.getTracksListWidgetData().getGenerators();
-				generators = this.controllerData.getEditGenerators();
+				generators =editData.getEditGenerators();
 				
 				editModulTypeData.setGenerators(generators);
 			
@@ -81,11 +84,11 @@ public class SaveGroupButtonActionLogicListener
 				editModulTypeData.setGeneratorTypeName(modulName);
 				editModulTypeData.setGeneratorTypeDescription(modulDescription);
 				
-				generators = this.controllerData.getEditGenerators();
+				generators = editData.getEditGenerators();
 			}
 			
-			this.controllerData.setEditGenerators(editModulTypeData, generators);
-			this.mainPageLogic.triggerEditGeneratorChanged(editModulTypeData, generators);
+			editData.setEditModulGenerator(editModulTypeData);
+			this.mainPageLogic.triggerEditGeneratorChanged(editData);
 			
 			this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 		}

@@ -9,7 +9,8 @@ import de.schmiereck.screenTools.graphic.GraficInputListener;
 import de.schmiereck.screenTools.input.InputDeviceInterface;
 
 /**
- * TODO docu
+ * Listener for Keyboard and Mouse Inputs.<br/>
+ * Connect this events with the {@link DesktopControllerLogic} logic.
  *
  * @author smk
  * @version 08.01.2004

@@ -146,25 +146,18 @@ extends ControllerData
 	 */
 	private Generators	mainGenerators = null;
 
-	/**
-	 * List of the currently edited generators in the project.
-	 */
-	private Generators	editGenerators = null;
-	/**
-	 * Currently edited modul type in the project.<br/>
-	 * Is null, if main generators is edited.
-	 */
-	private ModulGeneratorTypeData editModulTypeData = null;
+	private EditData editData = new EditData();
 	
 	/**
 	 * Constructor.
 	 * 
 	 * @param soundData
 	 */
-	public DesktopControllerData(SoundData soundData)
+	public DesktopControllerData(SoundData soundData, Generators mainGenerators)
 	{
 		this.soundData = soundData;
-
+		this.mainGenerators = mainGenerators;
+		
 		this.createBaseGeneratorTypes();
 		
 		this.desktopData = new DesktopData();
@@ -798,31 +791,6 @@ extends ControllerData
 	}
 
 	/**
-	 * @see #editGenerators
-	 */
-	public Generators getEditGenerators()
-	{
-		return this.editGenerators;
-	}
-	/**
-	 * @see #editModulTypeData
-	 */
-	public ModulGeneratorTypeData getEditModulTypeData()
-	{
-		return this.editModulTypeData;
-	}
-	
-	/**
-	 * @see #editModulTypeData
-	 * @see #editGenerators
-	 */
-	public void setEditGenerators(ModulGeneratorTypeData editModulTypeData, Generators editGenerators)
-	{
-		this.editModulTypeData = editModulTypeData;
-		this.editGenerators = editGenerators;
-	}
-	
-	/**
 	 * 
 	 */
 	public void clearTracks()
@@ -831,7 +799,7 @@ extends ControllerData
 
 		Generators generators = new Generators();
 		
-		this.soundData.setGenerators(generators);
+		///this.soundData.setGenerators(generators);
 		
 		this.setMainGenerators(generators);
 	}
@@ -861,6 +829,13 @@ extends ControllerData
 	public int getTracksCount()
 	{
 		return this.mainDesktopPageData.getTracksListWidgetData().getTracksCount();
+	}
+	/**
+	 * @return the attribute {@link #editData}.
+	 */
+	public EditData getEditData()
+	{
+		return this.editData;
 	}
 }
 

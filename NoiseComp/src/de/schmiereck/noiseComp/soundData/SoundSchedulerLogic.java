@@ -52,15 +52,15 @@ extends SchedulerLogic
 			{
 				nRead = soundBufferManager.read(abData);
 				
+				int	nWritten = line.write(abData, 0, nRead);
+				
+				//System.out.println("actualWaitPerFramesMillis: " + actualWaitPerFramesMillis + ", nWritten:" + nWritten + ", nRead: " + nRead);
 				//System.out.println("nRead:" + nRead);
 			}
 			catch (IOException ex)
 			{
 				throw new RuntimeException("read sound data", ex);
 			}
-			int	nWritten = line.write(abData, 0, nRead);
-			
-			//System.out.println("nWritten:" + nWritten);
 		}
 	}
 

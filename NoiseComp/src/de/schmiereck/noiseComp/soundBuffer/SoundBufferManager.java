@@ -128,7 +128,8 @@ extends AudioInputStream
 	}
 	
 	/**
-	 * Generiert den nächsten Abschnitt in den leeren Warte-Buffer.
+	 * Generiert den nächsten Abschnitt in den leeren Warte-Buffer
+	 * (wenn nötig, da leere Buffer warten).
 	 *
 	 */
 	public void pollGenerate()

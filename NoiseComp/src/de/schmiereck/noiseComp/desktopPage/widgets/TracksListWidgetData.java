@@ -76,6 +76,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @param posY
 	 * @param sizeX
 	 * @param sizeY
+	 * @param soundData	is used for getting the actual play time position.
 	 */
 	public TracksListWidgetData(int posX, int posY, int sizeX, int sizeY,
 								 int generatorsLabelSizeX,
@@ -115,9 +116,11 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	/**
 	 * @return the attribute {@link #soundData}.
 	 */
-	public SoundData getSoundData()
+	public float getSoundPlayTimePos()
 	{
-		return this.soundData;
+		float playTimePos = this.soundData.getSoundBufferManager().getActualTime();
+		
+		return playTimePos;
 	}
 
 	/**
@@ -186,8 +189,10 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		}
 	}
 	
-	public void removeSelectedTrack()
+	public Generator removeSelectedTrack()
 	{
+		Generator retGenerator;
+		
 		synchronized (this)
 		{
 			TrackData selectedTrackData = this.getSelectedTrackData();
@@ -204,13 +209,21 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 				{
 					((TrackData)this.tracksVector.get(pos)).setTrackPos(pos);
 				}
+				
+				retGenerator = selectedTrackData.getGenerator();
+				
 				//this.tracksHash.remove(selectedTrackData.getName());
-				this.tracksHash.remove(selectedTrackData.getGenerator());
-				this.soundData.removeGenerator(trackPos);
+				this.tracksHash.remove(retGenerator);
+				//this.soundData.removeGenerator(trackPos);
 				
 				this.setVerticalScrollerLength(this.getTracksCount());
 			}
+			else
+			{
+				retGenerator = null;
+			}
 		}
+		return retGenerator;
 	}
 	
 	public void clearTracks()
@@ -478,8 +491,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	/**
 	 * @see #soundData#getGenerators()
 	 */
-	public Generators getGenerators()
-	{
-		return this.soundData.getGenerators();
-	}
+	///public Generators getGenerators()
+	//{
+	//	return this.soundData.getGenerators();
+	//}
 }

@@ -537,7 +537,7 @@ public class MainPageData
 	 */
 	public ModulGeneratorTypeData getEditModulTypeData()
 	{
-		return this.desktopControllerData.getEditModulTypeData();
+		return this.desktopControllerData.getEditData().getEditModulTypeData();
 	}
 
 	/**
@@ -553,5 +553,12 @@ public class MainPageData
 	public ScrollbarData getInputsVScrollbarData()
 	{
 		return this.inputsVScrollbarData;
+	}
+	/**
+	 * @return the attribute {@link #desktopControllerData}.
+	 */
+	public DesktopControllerData getDesktopControllerData()
+	{
+		return this.desktopControllerData;
 	}
 }

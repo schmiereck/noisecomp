@@ -41,7 +41,7 @@ public class GroupGeneratorButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		ModulGeneratorTypeData editModulTypeData = this.controllerData.getEditModulTypeData();
+		ModulGeneratorTypeData editModulTypeData = this.controllerData.getEditData().getEditModulTypeData();
 		
 		String generatorTypeName;
 		

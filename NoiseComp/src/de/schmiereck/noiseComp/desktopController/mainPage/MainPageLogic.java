@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.PopupRuntimeException;
+import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
+import de.schmiereck.noiseComp.desktopController.EditData;
 import de.schmiereck.noiseComp.desktopController.EditGeneratorChangedListener;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface;
@@ -32,6 +34,7 @@ GeneratorInputSelectedListenerInterface,
 EditGeneratorChangedListener
 {
 	private MainPageData mainPageData;
+
 	/**
 	 * Constructor.
 	 * 
@@ -42,7 +45,7 @@ EditGeneratorChangedListener
 		super();
 		
 		this.mainPageData = mainPageData;
-
+		
 		this.registerEditGeneratorChangedListener(this);
 		
 		this.mainPageData.getTracksListWidgetData().registerGeneratorSelectedListener(this);
@@ -536,8 +539,11 @@ EditGeneratorChangedListener
 	 * @see #editModulTypeData
 	 * @see #editGenerators
 	 */
-	public void triggerEditGeneratorChanged(ModulGeneratorTypeData editModulTypeData, Generators editGenerators)
+	public void triggerEditGeneratorChanged(EditData editData)
 	{
+		ModulGeneratorTypeData editModulTypeData = editData.getEditModulTypeData();
+		Generators editGenerators = editData.getEditGenerators();
+		
 		if (this.editGeneratorChangedListeners != null)
 		{
 			Iterator editGeneratorChangedListenersIterator = this.editGeneratorChangedListeners.iterator();
@@ -556,6 +562,10 @@ EditGeneratorChangedListener
 	 */
 	public void notifyEditGeneratorChanged(ModulGeneratorTypeData editModulTypeData, Generators editGenerators)
 	{
+		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
+		
+		///desktopControllerData.getSoundData().setGenerators(editGenerators);
+		
 		if (editModulTypeData != null)
 		{	
 			this.mainPageData.getModulGeneratorTextWidgetData().setLabelText(editModulTypeData.getGeneratorTypeName());
@@ -627,6 +637,12 @@ EditGeneratorChangedListener
 	 */
 	public void removeSelectedTrack()
 	{
-		this.mainPageData.getTracksListWidgetData().removeSelectedTrack();
+		Generator selectedGenerator = this.mainPageData.getTracksListWidgetData().removeSelectedTrack();
+		
+		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
+
+		Generators editGenerators = desktopControllerData.getEditData().getEditGenerators();
+
+		editGenerators.removeGenerator(selectedGenerator);
 	}
 }

@@ -44,7 +44,7 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		ModulGeneratorTypeData editModulTypeData = this.controllerData.getEditModulTypeData();
+		ModulGeneratorTypeData editModulTypeData = this.controllerData.getEditData().getEditModulTypeData();
 		
 		// Actualy no modul edited ?
 		if (editModulTypeData == null)
