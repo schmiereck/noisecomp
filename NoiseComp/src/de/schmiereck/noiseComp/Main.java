@@ -20,6 +20,8 @@ import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLog
 import de.schmiereck.noiseComp.desktopController.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetInputButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.ZoomInButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.ZoomOutButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.Runner;
@@ -72,6 +74,9 @@ public class Main
 		ExitButtonActionLogicListener exitButtonActionLogicListener = new ExitButtonActionLogicListener(controllerLogic);
 		NewButtonActionLogicListener newButtonActionLogicListener = new NewButtonActionLogicListener(controllerLogic, controllerData);
 
+		ZoomInButtonActionLogicListener zoomInButtonActionLogicListener = new ZoomInButtonActionLogicListener(controllerLogic, controllerData);
+		ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener = new ZoomOutButtonActionLogicListener(controllerLogic, controllerData);
+		
 		SetGeneratorButtonActionLogicListener setGeneratorButtonActionLogicListener = new SetGeneratorButtonActionLogicListener(controllerLogic, controllerData);
 		SetInputButtonActionLogicListener setInputButtonActionLogicListener = new SetInputButtonActionLogicListener(controllerLogic, controllerData);
 		
@@ -87,6 +92,9 @@ public class Main
 		
 		controllerData.setActionListeners(exitButtonActionLogicListener,
 										  newButtonActionLogicListener,
+				
+				zoomInButtonActionLogicListener,
+				zoomOutButtonActionLogicListener,
 				
 				setGeneratorButtonActionLogicListener,
 				setInputButtonActionLogicListener,

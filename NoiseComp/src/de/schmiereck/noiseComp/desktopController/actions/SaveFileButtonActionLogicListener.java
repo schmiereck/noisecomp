@@ -16,8 +16,8 @@ import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
-import de.schmiereck.noiseComp.xmlUtils.XMLData;
-import de.schmiereck.noiseComp.xmlUtils.XMLPort;
+import de.schmiereck.xmlTools.XMLData;
+import de.schmiereck.xmlTools.XMLPort;
 
 /**
  * TODO docu

@@ -14,6 +14,8 @@ import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLog
 import de.schmiereck.noiseComp.desktopController.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetInputButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.ZoomInButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.ZoomOutButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
@@ -96,6 +98,9 @@ extends ControllerData
 	private FunctionButtonData loadButtonData	= null;
 	private FunctionButtonData saveButtonData	= null;
 
+	private FunctionButtonData zoomInButtonData	= null;
+	private FunctionButtonData zoomOutButtonData	= null;
+	
 	/**
 	 * Dialog:	Main:	Set-Generator-Button.
 	 */
@@ -207,6 +212,17 @@ extends ControllerData
 			{
 				this.exitButtonData = new FunctionButtonData("exit", "Exit", this.getFieldWidth() - 100, 10, 90, 20);
 				desktopPageData.addWidgetData(this.exitButtonData);
+			}
+			
+			{
+				this.zoomInButtonData = new FunctionButtonData("zoomIn", "+", this.getFieldWidth() - 375, 40, 20, 20);
+				desktopPageData.addWidgetData(this.zoomInButtonData);
+				this.zoomInButtonData.setAcceptFocus(false);
+			}
+			{
+				this.zoomOutButtonData = new FunctionButtonData("zoomOut", "-", this.getFieldWidth() - 350, 40, 20, 20);
+				desktopPageData.addWidgetData(this.zoomOutButtonData);
+				this.zoomOutButtonData.setAcceptFocus(false);
 			}
 			
 			FunctionButtonData playButtonData = new FunctionButtonData("play", "Play", 100, 40, 90, 20);
@@ -458,12 +474,19 @@ extends ControllerData
 	
 	public void setActionListeners(ExitButtonActionLogicListener exitButtonActionLogicListener,
 								   NewButtonActionLogicListener newButtonActionLogicListener,
+
+								   ZoomInButtonActionLogicListener zoomInButtonActionLogicListener,
+								   ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener,
+								   
 								   SetGeneratorButtonActionLogicListener setGeneratorButtonActionLogicListener,
 								   SetInputButtonActionLogicListener setInputButtonActionLogicListener,
+								   
 								   SelectCancelButtonActionLogicListener selectCancelButtonActionLogicListener,
+								   
 								   SaveButtonActionLogicListener saveButtonActionLogicListener,
 								   SaveCancelButtonActionLogicListener saveCancelButtonActionLogicListener,
 								   SaveFileButtonActionLogicListener saveFileButtonActionLogicListener,
+								   
 								   LoadButtonActionLogicListener loadButtonActionLogicListener,
 								   LoadCancelButtonActionLogicListener loadCancelButtonActionLogicListener,
 								   LoadFileButtonActionLogicListener loadFileButtonActionLogicListener)
@@ -471,6 +494,9 @@ extends ControllerData
 		this.exitButtonData.addActionLogicListener(exitButtonActionLogicListener);
 		this.newButtonData.addActionLogicListener(newButtonActionLogicListener);
 
+		this.zoomInButtonData.addActionLogicListener(zoomInButtonActionLogicListener);
+		this.zoomOutButtonData.addActionLogicListener(zoomOutButtonActionLogicListener);
+		
 		this.setGeneratorButtonData.addActionLogicListener(setGeneratorButtonActionLogicListener);
 		this.setInputButtonData.addActionLogicListener(setInputButtonActionLogicListener);
 		

@@ -136,6 +136,14 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	{
 		return this.generatorScaleX;
 	}
+
+	/**
+	 * @see #generatorScaleX
+	 */
+	public void setGeneratorScaleX(float generatorScaleX)
+	{
+		this.generatorScaleX = generatorScaleX;
+	}
 	
 	/**
 	 * @return the count of {@link TrackData}-Objects.

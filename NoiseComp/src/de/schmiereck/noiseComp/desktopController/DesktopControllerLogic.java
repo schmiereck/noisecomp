@@ -174,18 +174,6 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	 */
 	public void buttonPressed(InputWidgetData pressedButtonData)
 	{
-		/*
-		Button b = new Button();
-		ActionListener l = new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				// TODO Auto-generated method stub
-
-			}
-		};
-		b.addActionListener(l);
-		*/
 		if (pressedButtonData != null)
 		{
 			if ("play".equals(pressedButtonData.getName()) == true)
@@ -383,18 +371,32 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		}
 	}
 
+	/**
+	 * Get the active track list and and the genarator to this list.
+	 * 
+	 * @see #addGenerator(TracksData, Generator)
+	 * @param generator
+	 */
 	public void addGenerator(Generator generator)
 	{
 		TracksData tracksData = this.controllerData.getTracksData();
 
-		//sinusGenerator.setStartTimePos(generatorsGraphicData.getTracksCount() - 6);
-		//sinusGenerator.setEndTimePos(generatorsGraphicData.getTracksCount() - 3);
-		//generator.setStartTimePos(0.0F);
-		//generator.setEndTimePos(1.0F);
-		
 		this.addGenerator(tracksData, generator);
 	}
-	
+
+	/**
+	 * <p>
+	 * 	Put the generator into a new {@link TracksData}-Object and add the
+	 * 	new track to the track list.
+	 * </p>
+	 * <p>
+	 * 	If the generator is a {@link OutputGenerator}-Object, 
+	 * 	this Object is set as output for the sound data.
+	 * </p>
+	 * 
+	 * @param tracksData
+	 * @param generator
+	 */
 	private void addGenerator(TracksData tracksData, Generator generator)
 	{
 		tracksData.addTrack(new TrackData(generator));
@@ -411,6 +413,10 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		//this.controllerData.getGeneratorsScrollbarData().setScrollerSize(12);
 	}
 
+	/**
+	 * Creates a demo list of generators with different types.
+	 * It's only for developing.
+	 */
 	private OutputGenerator createGenerators(TracksData tracksData, SoundData soundData, float frameRate)
 	{
 		// Sound-Generatoren für das Sound-Format des Ausgabekanals erzeugen:
@@ -578,6 +584,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.controllerData.getGeneratorInputTypeSelectData().clearSelectEntrys();
 		this.controllerData.getGeneratorStartTimeInputlineData().setInputText("");
 		this.controllerData.getGeneratorEndTimeInputlineData().setInputText("");
+		this.controllerData.getGeneratorInputsData().setGeneratorInputs(null, null);
 	}
 
 	/**

@@ -3,7 +3,7 @@ package de.schmiereck.noiseComp.generator;
 import java.util.Iterator;
 import java.util.Vector;
 
-import de.schmiereck.noiseComp.dataUtils.VectorHash;
+import de.schmiereck.dataTools.VectorHash;
 
 /**
  * TODO docu

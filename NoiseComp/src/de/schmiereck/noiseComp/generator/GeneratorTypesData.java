@@ -1,6 +1,6 @@
 package de.schmiereck.noiseComp.generator;
 
-import de.schmiereck.noiseComp.dataUtils.VectorHash;
+import de.schmiereck.dataTools.VectorHash;
 
 /**
  * TODO docu
