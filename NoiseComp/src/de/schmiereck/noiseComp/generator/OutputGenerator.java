@@ -26,7 +26,7 @@ extends Generator
 	 */
 	public void setSignalInput(Generator inputSoundGenerator)
 	{
-		this.addInputGenerator(inputSoundGenerator, INPUT_TYPE_SIGNAL);
+		this.addInputGenerator(inputSoundGenerator, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 	}
 
 	/* (non-Javadoc)
@@ -34,6 +34,10 @@ extends Generator
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample)
 	{
+		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		
+		this.calcInputSignals(framePosition, signalInputData, soundSample);
+		/*
 		InputData inputData = this.searchInputByType(INPUT_TYPE_SIGNAL);
 		
 		if (inputData != null)
@@ -57,6 +61,7 @@ extends Generator
 				}
 			}
 		}
+		*/
 	}
 
 	/* (non-Javadoc)
@@ -67,7 +72,7 @@ extends Generator
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData(OutputGenerator.class, "Output", "The input signal is audible at the audio hardware.");
 		
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1);
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "Is a signal between -1 and 1 send to output speakers.");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

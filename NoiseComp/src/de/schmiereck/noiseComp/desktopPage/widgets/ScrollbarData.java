@@ -143,7 +143,14 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	 */
 	public void setScrollerPos(float scrollerPos)
 	{
-		this.scrollerPos = scrollerPos;
+		if (scrollerPos >= 0.0F)
+		{	
+			this.scrollerPos = scrollerPos;
+		}
+		else
+		{
+			this.scrollerPos = 0.0F;
+		}
 	}
 	/**
 	 * @param scrollerSize is the new value for attribute {@link #scrollerSize} to set.

@@ -155,9 +155,9 @@ implements GeneratorInterface
 	 * @see #inputs
 	 * @return the new created and added {@link InputData}-Object.
 	 */
-	public InputData addInputGenerator(Generator inputGenerator, int inputType, Float inputValue)
+	public InputData addInputGenerator(Generator inputGenerator, InputTypeData inputTypeData, Float inputValue)
 	{
-		InputData inputData = new InputData(inputGenerator, inputType);
+		InputData inputData = new InputData(inputGenerator, inputTypeData);
 		
 		inputData.setInputValue(inputValue);
 		
@@ -175,27 +175,34 @@ implements GeneratorInterface
 	}
 	
 	/**
-	 * @see #addInputGenerator(Generator, int, Float)
+	 * @see #addInputGenerator(Generator, InputTypeData, Float)
 	 */
-	public InputData addInputGenerator(Generator inputGenerator, int inputType)
+	public InputData addInputGenerator(Generator inputGenerator, InputTypeData inputTypeData)
 	{
-		return this.addInputGenerator(inputGenerator, inputType, null);
+		return this.addInputGenerator(inputGenerator, inputTypeData, null);
 	}
 
-	/**
-	 * @see #addInputGenerator(Generator, int, Float)
-	 */
-	public InputData addInputValue(Float value, int inputType)
-	{
-		return this.addInputGenerator(null, inputType, value);
-	}
-
-	/**
-	 * @see #addInputGenerator(Generator, int, Float)
-	 */
 	public InputData addInputValue(float value, int inputType)
 	{
-		return this.addInputGenerator(null, inputType, Float.valueOf(value));
+		InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(inputType);
+		
+		return this.addInputGenerator(null, inputTypeData, Float.valueOf(value));
+	}
+
+	/**
+	 * @see #addInputGenerator(Generator, InputTypeData, Float)
+	 */
+	public InputData addInputValue(Float value, InputTypeData inputTypeData)
+	{
+		return this.addInputGenerator(null, inputTypeData, value);
+	}
+
+	/**
+	 * @see #addInputGenerator(Generator, InputTypeData, Float)
+	 */
+	public InputData addInputValue(float value, InputTypeData inputTypeData)
+	{
+		return this.addInputGenerator(null, inputTypeData, Float.valueOf(value));
 	}
 	
 	/**
@@ -247,7 +254,7 @@ implements GeneratorInterface
 	 * @param inputType
 	 * @return
 	 */
-	public InputData searchInputByType(int inputType)
+	public InputData searchInputByType(InputTypeData inputTypeData)
 	{
 		InputData retInputData = null;
 		
@@ -261,11 +268,11 @@ implements GeneratorInterface
 				{
 					InputData inputData = (InputData)inputGeneratorsIterator.next();
 					
-					if (inputData.getInputType() == inputType)
+					if (inputData.getInputTypeData().getInputType() == inputTypeData.getInputType())
 					{
 						if (retInputData != null)
 						{
-							throw new RuntimeException("found more than one input by type " + inputType + " in generator " + this.getName());
+							throw new RuntimeException("found more than one input by type " + inputTypeData + " in generator " + this.getName());
 						}
 						
 						retInputData = inputData;
@@ -359,4 +366,195 @@ implements GeneratorInterface
 	{
 		return this.generatorTypeData;
 	}
+	
+	protected void calcInputValue(long framePosition, InputTypeData inputTypeData, SoundSample value)
+	{
+		InputData inputData = this.searchInputByType(inputTypeData);
+		
+		if (inputData != null)
+		{
+			this.calcInputValue(framePosition, inputData, value);
+		}
+		else
+		{
+			//throw new RuntimeException("input type not found: " + inputType);
+			value.setMonoValue(this.getInputDefaultValueByInputType(inputTypeData));
+		}
+	}
+	
+	protected void calcInputValue(long framePosition, InputData inputData, SoundSample value)
+	{
+		GeneratorInterface inputSoundGenerator = inputData.getInputGenerator();
+
+		// Found Input-Generator ?
+		if (inputSoundGenerator != null)
+		{	
+			// Use his input:
+			
+			SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition);
+			
+			value.setValues(inputSoundSample);
+		}
+		else
+		{
+			// Found no Input-Generator:
+			
+			Float inputValue = inputData.getInputValue();
+			
+			// Found constant input value ?
+			if (inputValue != null)
+			{
+				value.setMonoValue(inputValue.floatValue());
+			}
+			else
+			{
+				// Found no input value:
+				// Use Default Value of Input type:
+				
+				value.setMonoValue(this.getInputDefaultValueByInputType(inputData));
+			}
+		}
+	}
+
+	protected void calcInputSignals(long framePosition, InputData inputData, SoundSample signal)
+	{
+		if (inputData != null)
+		{	
+			GeneratorInterface inputSoundGenerator = inputData.getInputGenerator();
+	
+			// Found Input-Generator ?
+			if (inputSoundGenerator != null)
+			{	
+				// Use his input:
+				
+				SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition);
+				
+				signal.setSignals(inputSoundSample);
+			}
+			else
+			{
+				// Found no Input-Generator:
+				
+				Float inputValue = inputData.getInputValue();
+				
+				// Found constant input value ?
+				if (inputValue != null)
+				{
+					signal.setMonoSignal(inputValue.floatValue());
+				}
+				else
+				{
+					// Found no input value:
+					// Use Default Value of Input type:
+					
+					signal.setMonoSignal(this.getInputDefaultValueByInputType(inputData));
+				}
+			}
+		}
+		else
+		{
+			signal.setMonoSignal(0.0F);
+		}
+	}
+	
+	protected float calcInputMonoValue(long framePosition, InputTypeData inputTypeData) //, float defaultValue)
+	{
+		float value;
+		
+		InputData inputData = this.searchInputByType(inputTypeData);
+		
+		if (inputData != null)
+		{
+			value = this.calcInputMonoValue(framePosition, inputData);
+		}
+		else
+		{
+			//throw new RuntimeException("input type not found: " + inputType);
+			value = this.getInputDefaultValueByInputType(inputTypeData);
+		}
+		
+		return value;
+	}
+
+	protected float calcInputMonoValue(long framePosition, InputData inputData)
+	{
+		float value;
+
+		GeneratorInterface inputSoundGenerator = inputData.getInputGenerator();
+
+		// Found Input-Generator ?
+		if (inputSoundGenerator != null)
+		{	
+			// Use his input:
+			
+			SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition);
+			
+			if (inputSoundSample != null)
+			{	
+				value = inputSoundSample.getMonoValue();
+			}
+			else
+			{
+				// Found no input signal:
+				
+				value = 0.0F; // this.getInputDefaultValueByInputType(inputType);
+			}
+		}
+		else
+		{
+			// Found no Input-Generator:
+			
+			Float inputValue = inputData.getInputValue();
+		
+			// Found constant input value ?
+			if (inputValue != null)
+			{
+				value = inputValue.floatValue();
+			}
+			else
+			{
+				// Found no input value:
+				// Use Default Value of Input type:
+				
+				value = this.getInputDefaultValueByInputType(inputData);
+			}
+		}
+
+		return value;
+	}
+
+	protected float getInputDefaultValueByInputType(InputData inputData)
+	{
+		float ret;
+		
+		InputTypeData inputTypeData = inputData.getInputTypeData();
+		
+		// Found InputType ? (this situation may be occourse, if load an older type from file)
+		if (inputTypeData != null)
+		{	
+			ret = this.getInputDefaultValueByInputType(inputTypeData);
+		}
+		else
+		{	
+			ret = 0.0F;
+		}
+		return ret;
+	}
+
+	private float getInputDefaultValueByInputType(InputTypeData inputTypeData)
+	{
+		float ret;
+		Float defaultValue = inputTypeData.getDefaultValue();
+		
+		if (defaultValue != null)
+		{	
+			ret = defaultValue.floatValue();
+		}
+		else
+		{	
+			ret = 0.0F;
+		}
+		return ret;
+	}
+	
 }

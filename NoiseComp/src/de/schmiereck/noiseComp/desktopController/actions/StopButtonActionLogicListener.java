@@ -4,15 +4,14 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
  * TODO docu
  *
  * @author smk
- * @version <p>22.02.2004: created, smk</p>
+ * @version <p>06.03.2004: created, smk</p>
  */
-public class GroupGeneratorButtonActionLogicListener
+public class StopButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
@@ -23,7 +22,7 @@ public class GroupGeneratorButtonActionLogicListener
 	 * 
 	 * 
 	 */
-	public GroupGeneratorButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public StopButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
 		super();
 		
@@ -36,20 +35,6 @@ public class GroupGeneratorButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		ModulGeneratorTypeData editModulTypeData = this.controllerData.getEditModulTypeData();
-		
-		String generatorTypeName;
-		
-		if (editModulTypeData != null)
-		{	
-			generatorTypeName = editModulTypeData.getGeneratorTypeName();
-		}
-		else
-		{
-			generatorTypeName = "";
-		}
-		this.controllerData.getGroupNameInputlineData().setInputText(generatorTypeName);
-		
-		this.controllerData.setActiveDesktopPageData(this.controllerData.getGroupGeneratorPageData());
+		this.controllerLogic.stopSound();
 	}
 }

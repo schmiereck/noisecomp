@@ -237,9 +237,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			{
 				this.deselectGeneratorType();
 				
-				this.generatorTypesData.removeGeneratorType(generatorTypeData.getClass().getName());
-				
-				//this.soundData.removeGeneratorInput(selectedGeneratorTypeData);
+				this.generatorTypesData.removeGeneratorType(generatorTypeData);
 				
 				this.setVerticalScrollerLength(this.getGeneratorTypesCount());
 			}

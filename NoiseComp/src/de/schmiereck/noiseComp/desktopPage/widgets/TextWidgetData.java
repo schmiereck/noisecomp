@@ -1,13 +1,13 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
+
 /**
- * Manages the Data of an Label-Text Object.
- * The Text is shown with an right alignment.
- * 
+ * TODO docu
+ *
  * @author smk
- * @version 07.02.2004
+ * @version <p>06.03.2004: created, smk</p>
  */
-public class LabelData 
+public class TextWidgetData
 extends WidgetData
 {
 	/**
@@ -23,7 +23,7 @@ extends WidgetData
 	 * @param sizeX
 	 * @param sizeY
 	 */
-	public LabelData(String labelText, int posX, int posY, int sizeX, int sizeY)
+	public TextWidgetData(String labelText, int posX, int posY, int sizeX, int sizeY)
 	{
 		super(posX, posY, sizeX, sizeY, false);
 		this.labelText = labelText;

@@ -11,7 +11,7 @@ import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 
 /**
- * Verwaltet eine Liste aus {@link Generator}-Objekten.
+ * Verwaltet eine Liste aus {@link Generator}-Objekten in einem {@link Generators}-Objekt.
  * Verwaltet ein Output-Objekt.
  * Stellt Funktionen zur Echtzeit Wiedergabe des Signals des Output-Generators zur Verfügung.
  * Verwaltet die für die Ausgabe nötigen Puffer-Objekte.
@@ -67,11 +67,11 @@ public class SoundData
 	}
 	/**
 	 * @param generator is the Generator to add.
-	 */
 	public void addGenerator(Generator generator)
 	{
 		this.generators.addGenerator(generator);
 	}
+	 */
 
 	/**
 	 * @param trackPos

@@ -46,17 +46,35 @@ public class SaveGroupButtonActionLogicListener
 		
 		if (modulName.length() > 0)
 		{	
-			String modulDescription = "XXX";
+			String modulDescription = "Generic Modul.";
 			
-			ModulGeneratorTypeData modulTypeData = new ModulGeneratorTypeData(ModulGenerator.class, modulName, modulDescription);
+			ModulGeneratorTypeData editModulTypeData = this.controllerData.getEditModulTypeData();
+			Generators generators;
+			
+			// Actualy no modul edited ?
+			if (editModulTypeData == null)
+			{	
+				editModulTypeData = new ModulGeneratorTypeData(ModulGenerator.class, modulName, modulDescription);
 
-			Generators generators = this.controllerData.getTracksData().getGenerators();
+				generators = this.controllerData.getTracksData().getGenerators();
 			
-			modulTypeData.setGenerators(generators);
+				editModulTypeData.setGenerators(generators);
 			
-			this.controllerData.getGeneratorTypesData().addGeneratorTypeData(modulTypeData);
+				this.controllerData.getGeneratorTypesData().addGeneratorTypeData(editModulTypeData);
 			
-			this.controllerData.getTracksData().clearTracks();
+				this.controllerData.clearTracks();
+			}
+			else
+			{
+				// A modul is actualy edited:
+				
+				editModulTypeData.setGeneratorTypeName(modulName);
+				editModulTypeData.setGeneratorTypeDescription(modulDescription);
+				
+				generators = this.controllerData.getEditGenerators();
+			}
+			
+			this.controllerData.setEditGenerators(editModulTypeData, generators);
 			
 			this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 		}

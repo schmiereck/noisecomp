@@ -78,8 +78,6 @@ extends ListWidgetGraphic
 			screenGrafic.setColor(g, Color.BLACK);
 		}
 
-		GeneratorTypeData inputGeneratorTypeData = inputsData.getGeneratorTypeData(inputData.getInputGenerator());
-		
 		Generator inputGenerator = inputData.getInputGenerator();
 		
 		String label;
@@ -93,21 +91,25 @@ extends ListWidgetGraphic
 			if (inputGenerator != null)
 			{	
 				label = inputGenerator.getName();
+
+				GeneratorTypeData inputGeneratorTypeData = inputGenerator.getGeneratorTypeData();
+				
+				if (inputGeneratorTypeData != null)
+				{
+					label += " [" + inputGeneratorTypeData.getGeneratorTypeName() + "]";
+				}
 			}
 			else
 			{
 				label = "--";
 			}
-			
-			if (inputGeneratorTypeData != null)
-			{
-				label += " [" + inputGeneratorTypeData.getGeneratorTypeName() + "]";
-			}
 		}
 
-		GeneratorTypeData generatorTypeData = inputsData.getGeneratorTypeData(inputsData.getSelectedGenerator());
+		//Generator selectedGenerator = inputsData.getSelectedGenerator();
 		
-		InputTypeData inputTypeData = generatorTypeData.getInputTypeData(inputData.getInputType());
+		//GeneratorTypeData selectedGeneratorTypeData = selectedGenerator.getGeneratorTypeData();
+		
+		InputTypeData inputTypeData = inputData.getInputTypeData();
 		
 		String inputTypeName;
 		

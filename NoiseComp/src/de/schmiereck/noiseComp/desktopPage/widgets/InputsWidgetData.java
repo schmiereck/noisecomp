@@ -293,23 +293,4 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		
 	}
 
-	/**
-	 * @param generator
-	 * @return
-	 */
-	public GeneratorTypeData getGeneratorTypeData(Generator generator)
-	{
-		GeneratorTypeData ret;
-		
-		if (generator != null)
-		{
-			ret = this.generatorTypesData.searchGeneratorTypeData(generator.getClass().getName());
-		}
-		else
-		{
-			ret = null;
-		}
-		return ret;
-	}
-
 }

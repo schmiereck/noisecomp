@@ -36,16 +36,22 @@ public class InputTypeData
 	private Float defaultValue = null;
 	
 	/**
+	 * Description of the input type.
+	 */
+	private String inputDescription = null;
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @param inputType
 	 * @param inputTypeName
 	 */
-	public InputTypeData(int inputType, String inputTypeName)
+	public InputTypeData(int inputType, String inputTypeName, String inputDescription)
 	{
 		super();
 		this.inputType = inputType;
 		this.inputTypeName = inputTypeName;
+		this.inputDescription = inputDescription;
 	}
 	
 	/**
@@ -56,13 +62,14 @@ public class InputTypeData
 	 * @param inputCountMax
 	 * @param inputCountMin
 	 */
-	public InputTypeData(int inputType, String inputTypeName, int inputCountMax, int inputCountMin)
+	public InputTypeData(int inputType, String inputTypeName, int inputCountMax, int inputCountMin, String inputDescription)
 	{
 		super();
 		this.inputType = inputType;
 		this.inputTypeName = inputTypeName;
 		this.inputCountMax = inputCountMax;
 		this.inputCountMin = inputCountMin;
+		this.inputDescription = inputDescription;
 	}
 
 	/**
@@ -74,7 +81,7 @@ public class InputTypeData
 	 * @param inputCountMin
 	 */
 	public InputTypeData(int inputType, String inputTypeName, int inputCountMax, int inputCountMin, 
-						 Float defaultValue)
+						 Float defaultValue, String inputDescription)
 	{
 		super();
 		this.inputType = inputType;
@@ -82,6 +89,7 @@ public class InputTypeData
 		this.inputCountMax = inputCountMax;
 		this.inputCountMin = inputCountMin;
 		this.defaultValue = defaultValue;
+		this.inputDescription = inputDescription;
 	}
 
 	/**
@@ -90,7 +98,7 @@ public class InputTypeData
 	 */
 	public InputTypeData(Integer inputTypeType, String inputTypeName, 
 			Integer inputTypeCountMax, Integer inputTypeCountMin, 
-			Float defaultValue)
+			Float defaultValue, String inputDescription)
 	{
 		super();
 		this.inputType = inputTypeType.intValue();
@@ -122,6 +130,7 @@ public class InputTypeData
 		this.inputCountMin = countMin;
 		
 		this.defaultValue = defaultValue;
+		this.inputDescription = inputDescription;
 	}
 
 	/**
@@ -158,5 +167,12 @@ public class InputTypeData
 	public String getInputTypeName()
 	{
 		return this.inputTypeName;
+	}
+	/**
+	 * @return the attribute {@link #inputDescription}.
+	 */
+	public String getInputDescription()
+	{
+		return this.inputDescription;
 	}
 }

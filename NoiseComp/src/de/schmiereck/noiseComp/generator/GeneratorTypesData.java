@@ -13,13 +13,15 @@ import de.schmiereck.dataTools.VectorHash;
 public class GeneratorTypesData
 {
 	/**
-	 * List of the available {@link GeneratorTypeData}-Objects with the Class-Name-Strings as keys.
+	 * List of the available {@link GeneratorTypeData}-Objects with the Class-Name-Strings as keys.<br/>
+	 * If the GeneratorType is a generic type like {@link ModulGenerator},
+	 * the name of the generic type is appendet after a &quot;#&quot; on the class name.
 	 */
 	private VectorHash generatorTypes = new VectorHash();
 	
 	public void addGeneratorTypeData(GeneratorTypeData generatorTypeData)
 	{
-		this.generatorTypes.add(generatorTypeData.getGeneratorClass().getName(), generatorTypeData);
+		this.generatorTypes.add(generatorTypeData.getGeneratorTypeClassName(), generatorTypeData);
 	}
 
 	/**
@@ -51,9 +53,9 @@ public class GeneratorTypesData
 		return generatorTypeData;
 	}
 	
-	public void removeGeneratorType(String generatorTypeClassName)
+	public void removeGeneratorType(GeneratorTypeData generatorTypeData)
 	{
-		this.generatorTypes.remove(generatorTypeClassName);
+		this.generatorTypes.remove(generatorTypeData.getGeneratorTypeClassName(), generatorTypeData);
 	}
 	
 	public int getSize()

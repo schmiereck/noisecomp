@@ -139,7 +139,7 @@ public class Generators
 		return retGenerator;
 	}
 
-	public InputData addInput(Generator generator, String inputGeneratorName, Integer inputType, Float inputValue)
+	public InputData addInput(Generator generator, String inputGeneratorName, InputTypeData inputTypeData, Float inputValue)
 	{
 		InputData inputData;
 		
@@ -183,7 +183,7 @@ public class Generators
 		 */
 		Generator inputGenerator = this.searchGenerator(inputGeneratorName);
 		
-		inputData = generator.addInputGenerator(inputGenerator, inputType.intValue(), inputValue);
+		inputData = generator.addInputGenerator(inputGenerator, inputTypeData, inputValue);
 		
 		return inputData;
 	}

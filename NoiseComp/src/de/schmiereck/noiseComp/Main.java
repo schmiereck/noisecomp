@@ -6,6 +6,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+import de.schmiereck.noiseComp.desktopController.AddInputButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.DesktopGraphic;
@@ -17,15 +18,23 @@ import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicLi
 import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.NewInputButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.PauseButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.PlayButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.RemoveGeneratorButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.RemoveInputButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveGroupButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SelectCancelButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SelectEditButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SelectMainEditButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SelectRemoveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetInputButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.StopButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.ZoomInButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.ZoomOutButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
@@ -83,6 +92,10 @@ public class Main
 		AddGeneratorButtonActionLogicListener addGeneratorButtonActionLogicListener	= new AddGeneratorButtonActionLogicListener(controllerLogic, controllerData);
 		RemoveGeneratorButtonActionLogicListener removeGeneratorButtonActionLogicListener = new RemoveGeneratorButtonActionLogicListener(controllerLogic, controllerData);
 		GroupGeneratorButtonActionLogicListener groupGeneratorButtonActionLogicListener = new GroupGeneratorButtonActionLogicListener(controllerLogic, controllerData);
+
+		PlayButtonActionLogicListener playButtonActionLogicListener = new PlayButtonActionLogicListener(controllerLogic, controllerData);
+		PauseButtonActionLogicListener pauseButtonActionLogicListener = new PauseButtonActionLogicListener(controllerLogic, controllerData);
+		StopButtonActionLogicListener stopButtonActionLogicListener = new StopButtonActionLogicListener(controllerLogic, controllerData);
 		
 		ExitButtonActionLogicListener exitButtonActionLogicListener = new ExitButtonActionLogicListener(controllerLogic);
 		NewButtonActionLogicListener newButtonActionLogicListener = new NewButtonActionLogicListener(controllerLogic, controllerData);
@@ -92,9 +105,15 @@ public class Main
 		
 		SetGeneratorButtonActionLogicListener setGeneratorButtonActionLogicListener = new SetGeneratorButtonActionLogicListener(controllerLogic, controllerData);
 		SetInputButtonActionLogicListener setInputButtonActionLogicListener = new SetInputButtonActionLogicListener(controllerLogic, controllerData);
+		RemoveInputButtonActionLogicListener removeInputButtonActionLogicListener = new RemoveInputButtonActionLogicListener(controllerLogic, controllerData);
+		NewInputButtonActionLogicListener newInputButtonActionLogicListener = new NewInputButtonActionLogicListener(controllerLogic, controllerData);
+		AddInputButtonActionLogicListener addInputButtonActionLogicListener = new AddInputButtonActionLogicListener(controllerLogic, controllerData);
 		
 		SelectCancelButtonActionLogicListener selectCancelButtonActionLogicListener = new SelectCancelButtonActionLogicListener(controllerLogic, controllerData);
 		SelectAddButtonActionLogicListener selectAddButtonActionLogicListener = new SelectAddButtonActionLogicListener(controllerLogic, controllerData);
+		SelectEditButtonActionLogicListener selectEditButtonActionLogicListener = new SelectEditButtonActionLogicListener(controllerLogic, controllerData);
+		SelectMainEditButtonActionLogicListener selectMainEditButtonActionLogicListener = new SelectMainEditButtonActionLogicListener(controllerLogic, controllerData);
+		SelectRemoveButtonActionLogicListener selectRemoveButtonActionLogicListener = new SelectRemoveButtonActionLogicListener(controllerLogic, controllerData);
 		
 		SaveButtonActionLogicListener saveButtonActionLogicListener = new SaveButtonActionLogicListener(controllerLogic, controllerData);
 		SaveCancelButtonActionLogicListener saveCancelButtonActionLogicListener = new SaveCancelButtonActionLogicListener(controllerLogic, controllerData);
@@ -112,6 +131,10 @@ public class Main
 				removeGeneratorButtonActionLogicListener,
 				groupGeneratorButtonActionLogicListener,
 				
+				playButtonActionLogicListener,
+				pauseButtonActionLogicListener,
+				stopButtonActionLogicListener,
+				
 				exitButtonActionLogicListener,
 				newButtonActionLogicListener,
 				
@@ -120,9 +143,15 @@ public class Main
 				
 				setGeneratorButtonActionLogicListener,
 				setInputButtonActionLogicListener,
+				removeInputButtonActionLogicListener,
+				newInputButtonActionLogicListener,
+				addInputButtonActionLogicListener,
 				
 				selectCancelButtonActionLogicListener,
 				selectAddButtonActionLogicListener,
+				selectEditButtonActionLogicListener,
+				selectMainEditButtonActionLogicListener,
+				selectRemoveButtonActionLogicListener,
 										  
 				saveButtonActionLogicListener,
 				saveCancelButtonActionLogicListener,

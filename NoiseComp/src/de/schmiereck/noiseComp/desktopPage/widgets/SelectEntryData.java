@@ -42,4 +42,11 @@ public class SelectEntryData
 	{
 		return this.labelText;
 	}
+	/**
+	 * @return the attribute {@link #entry}.
+	 */
+	public Object getEntry()
+	{
+		return this.entry;
+	}
 }

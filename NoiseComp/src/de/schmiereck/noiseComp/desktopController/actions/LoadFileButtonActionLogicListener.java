@@ -13,12 +13,13 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
@@ -27,7 +28,7 @@ import de.schmiereck.xmlTools.XMLException;
 import de.schmiereck.xmlTools.XMLPort;
 
 /**
- * TODO docu
+ * Load a generators definition from a XML file into memory.
  *
  * @author smk
  * @version 21.02.2004
@@ -73,12 +74,14 @@ implements ButtonActionLogicListenerInterface
 			{
 				xmlDoc = XMLPort.open(fileName);
 			
-				this.controllerData.getTracksData().clearTracks();
+				this.controllerData.clearTracks();
 				
 				SoundData soundData = this.controllerData.getSoundData();
-			
+
 				Node noiseNode = XMLData.selectSingleNode(xmlDoc, "/noise");
 
+				String version = XMLData.selectSingleNodeText(noiseNode, "version");
+				
 				//-----------------------------------------------------
 				// GeneratorTypesData:
 				
@@ -87,18 +90,20 @@ implements ButtonActionLogicListenerInterface
 				//-----------------------------------------------------
 				// Inserting the Generators.
 				
-				Generators generators = this.createGenerators(soundData, noiseNode);
+				Generators mainGenerators = this.controllerData.getMainGenerators();
+				
+				this.createGenerators(noiseNode, soundData, mainGenerators);
 
 				//-----------------------------------------------------
 				// Generators updating in actual View:
 				
-				Iterator generatorsIterator = generators.getGeneratorsIterator();
+				Iterator generatorsIterator = mainGenerators.getGeneratorsIterator();
 				
 				while (generatorsIterator.hasNext())
 				{
 					Generator generator = (Generator)generatorsIterator.next();
 					
-					this.controllerLogic.addGenerator(generator);
+					this.controllerLogic.addTrackData(new TrackData(generator));
 				}
 			}
 			catch (XMLException ex)
@@ -116,10 +121,8 @@ implements ButtonActionLogicListenerInterface
 		}
 	}
 
-	private Generators createGenerators(SoundData soundData, Node rootNode)
+	private void createGenerators(Node rootNode, SoundData soundData, Generators generators)
 	{
-		Generators generators = new Generators();
-		
 		// List with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 		Vector loadFileGeneratorNodeDatas = new Vector();
 		
@@ -128,8 +131,6 @@ implements ButtonActionLogicListenerInterface
 		// Inserting the inputs:
 		
 		this.createGeneratorInputs(generators, loadFileGeneratorNodeDatas);
-		
-		return generators;
 	}
 
 	private void createGeneratorTypes(Node noiseNode, SoundData soundData)//, Vector loadFileGeneratorNodeDatas)
@@ -152,6 +153,7 @@ implements ButtonActionLogicListenerInterface
 				String generatorClassName = XMLData.selectSingleNodeText(generatorTypeNode, "generatorClassName");
 				String generatorTypeName = XMLData.selectSingleNodeText(generatorTypeNode, "name");
 				String generatorTypeDescription = XMLData.selectSingleNodeText(generatorTypeNode, "description");
+				String generatorModulTypeName;	// Not realy needed, because 'generatorTypeName' should be the same.
 				
 				GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
 				
@@ -163,6 +165,18 @@ implements ButtonActionLogicListenerInterface
 				Class generatorClass;
 				try
 				{
+					int namePartPos = generatorClassName.indexOf("#");
+
+					// Class name with appended name of a generic modul type ?
+					if (namePartPos != -1)
+					{
+						generatorModulTypeName = generatorClassName.substring(namePartPos + 1);
+						generatorClassName = generatorClassName.substring(0, namePartPos);
+					}
+					else
+					{
+						generatorModulTypeName = null;
+					}
 					generatorClass = Class.forName(generatorClassName);
 				}
 				catch (ClassNotFoundException ex)
@@ -190,8 +204,9 @@ implements ButtonActionLogicListenerInterface
 					Integer inputTypeCountMin = XMLData.selectSingleNodeInteger(inputTypeNode, "countMin");
 					Integer inputTypeCountMax = XMLData.selectSingleNodeInteger(inputTypeNode, "countMax");
 					Float inputTypeDefaultValue = XMLData.selectSingleNodeFloat(inputTypeNode, "defaultValue");
+					String inputDescription = XMLData.selectSingleNodeText(inputTypeNode, "description");
 					
-					InputTypeData inputTypeData = new InputTypeData(inputTypeType, inputTypeName, inputTypeCountMax, inputTypeCountMin, inputTypeDefaultValue);
+					InputTypeData inputTypeData = new InputTypeData(inputTypeType, inputTypeName, inputTypeCountMax, inputTypeCountMin, inputTypeDefaultValue, inputDescription);
 	
 					generatorTypeData.addInputTypeData(inputTypeData);
 				}
@@ -204,7 +219,9 @@ implements ButtonActionLogicListenerInterface
 				{
 					ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
 					
-					Generators modulGenerators = this.createGenerators(soundData, generatorTypeNode);
+					Generators modulGenerators = new Generators();
+					
+					this.createGenerators(generatorTypeNode, soundData, modulGenerators);
 					
 					modulGeneratorTypeData.setGenerators(modulGenerators);
 				}
@@ -295,6 +312,7 @@ implements ButtonActionLogicListenerInterface
 		while ((generatorNode = generatorsNodeIterator.nextNode()) != null)
 		{
 			String generatorType = XMLData.selectSingleNodeText(generatorNode, "type");
+			//String generatorModulTypeName = XMLData.selectSingleNodeText(generatorNode, "modulTypeName");
 			String generatorName = XMLData.selectSingleNodeText(generatorNode, "name");
 			Float generatorStartTime = XMLData.selectSingleNodeFloat(generatorNode, "startTime");
 			Float generatorEndTime = XMLData.selectSingleNodeFloat(generatorNode, "endTime");
@@ -309,7 +327,18 @@ implements ButtonActionLogicListenerInterface
 			{					
 				generator.setStartTimePos(generatorStartTime.floatValue());
 				generator.setEndTimePos(generatorEndTime.floatValue());
-				
+
+				/*
+				// Generator is a Module ?
+				if (generator instanceof ModulGenerator)
+				{
+					ModulGenerator modulGenerator = (ModulGenerator)generator;
+					
+					String modulTypeName = XMLData.selectSingleNodeText(generatorNode, "modulTypeName");
+					
+					modulGenerator.getGeneratorTypeData();
+				}
+				*/
 				//this.controllerLogic.addGenerator(generator);
 				generators.addGenerator(generator);
 				
@@ -358,7 +387,9 @@ implements ButtonActionLogicListenerInterface
 					Integer inputType = XMLData.selectSingleNodeInteger(inputNode, "type");
 					Float inputValue = XMLData.selectSingleNodeFloat(inputNode, "value");
 					
-					generators.addInput(generator, inputGeneratorName, inputType, inputValue);
+					InputTypeData inputTypeData = generator.getGeneratorTypeData().getInputTypeData(inputType.intValue());
+					
+					generators.addInput(generator, inputGeneratorName, inputTypeData, inputValue);
 				}
 			}
 		}

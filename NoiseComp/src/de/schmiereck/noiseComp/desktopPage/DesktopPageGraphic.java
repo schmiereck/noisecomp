@@ -19,6 +19,8 @@ import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectGraphic;
+import de.schmiereck.noiseComp.desktopPage.widgets.TextWidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TextWidgetGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
@@ -246,6 +248,15 @@ public class DesktopPageGraphic
 												
 												listWidgetGraphic.drawList(g, screenGrafic, desktopColors, 
 														listWidgetData);
+											}
+											else
+											{
+												if (widgetData instanceof TextWidgetData)
+												{	
+													TextWidgetData textWidgetData = (TextWidgetData)widgetData;
+													
+													TextWidgetGraphic.drawLabel(g, screenGrafic, desktopColors, textWidgetData);
+												}
 											}
 										}
 									}

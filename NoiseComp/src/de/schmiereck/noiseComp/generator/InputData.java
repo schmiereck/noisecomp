@@ -25,7 +25,7 @@ public class InputData
 	 * The type of the input as defined in the {@link GeneratorTypeData} of the
 	 * Generator used this input.
 	 */
-	private int 		inputType;
+	private InputTypeData 		inputTypeData;
 	
 	/**
 	 * Constructor.
@@ -33,11 +33,11 @@ public class InputData
 	 * @param inputGenerator
 	 * @param inputType
 	 */
-	public InputData(Generator inputGenerator, int inputType)
+	public InputData(Generator inputGenerator, InputTypeData inputTypeData)
 	{
 		super();
 		this.inputGenerator = inputGenerator;
-		this.inputType = inputType;
+		this.inputTypeData = inputTypeData;
 	}
 	/**
 	 * @return the attribute {@link #inputGenerator}.
@@ -54,25 +54,18 @@ public class InputData
 		this.inputGenerator = inputGenerator;
 	}
 	/**
-	 * @return the attribute {@link #inputType}.
+	 * @return the attribute {@link #inputTypeData}.
 	 */
-	public int getInputType()
+	public InputTypeData getInputTypeData()
 	{
-		return this.inputType;
+		return this.inputTypeData;
 	}
 	/**
-	 * @param inputType is the new value for attribute {@link #inputType} to set.
+	 * @param inputTypeData is the new value for attribute {@link #inputTypeData} to set.
 	 */
-	public void setInputType(int inputType)
+	public void setInputType(InputTypeData inputTypeData)
 	{
-		this.inputType = inputType;
-	}
-	/**
-	 * @see #inputType
-	 */
-	public void setInputType(Integer inputType)
-	{
-		this.inputType = inputType.intValue();
+		this.inputTypeData = inputTypeData;
 	}
 	/**
 	 * @see #inputValue

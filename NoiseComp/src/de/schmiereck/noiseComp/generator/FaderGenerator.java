@@ -66,7 +66,8 @@ extends Generator
 	
 	private float calcEndFadeValue(long framePosition)
 	{
-		float endFadeValue;
+		float endFadeValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_END_VALUE));
+		/*
 		{
 			InputData endFadeValueInputData = this.searchInputByType(INPUT_TYPE_END_VALUE);
 			
@@ -109,12 +110,14 @@ extends Generator
 		}
 		// Die Frameposition in Zeit umrechnen.
 		//float frameTime = (framePosition / this.getFrameRate());
+		 */
 		return endFadeValue;
 	}
 
 	private float calcStartFadeValue(long framePosition)
 	{
-		float startFadeValue;
+		float startFadeValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_START_VALUE));
+		/*
 		{
 			InputData startFadeValueInputData = this.searchInputByType(INPUT_TYPE_START_VALUE);
 			
@@ -155,10 +158,11 @@ extends Generator
 				startFadeValue = 0.0F;
 			}
 		}
+		*/
 		return startFadeValue;
 	}
 
-	/* (non-Javadoc)
+		/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
@@ -166,11 +170,11 @@ extends Generator
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData(FaderGenerator.class, "Fader", "Fades linear from a start to a end value.");
 		
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_START_VALUE, "startFadeValue", 1, 1);
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_START_VALUE, "startFadeValue", 1, 1, "Start value between -1 and 1 of the fading over generator length (other value ranges can used).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_END_VALUE, "endFadeValue", 1, 1);
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_END_VALUE, "endFadeValue", 1, 1, "End value between -1 and 1 of the fading over generator length (other value ranges can used).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		return generatorTypeData;

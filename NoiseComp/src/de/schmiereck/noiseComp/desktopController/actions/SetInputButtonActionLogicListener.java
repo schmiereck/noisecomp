@@ -31,7 +31,6 @@ implements ButtonActionLogicListenerInterface
 		this.controllerData = controllerData;
 	}
 	
-	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
 	 */

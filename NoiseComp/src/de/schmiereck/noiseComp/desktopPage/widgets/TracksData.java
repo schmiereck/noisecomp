@@ -190,7 +190,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			this.tracksVector.add(trackData);
 			//this.tracksHash.put(trackData.getName(), trackData);
 			this.tracksHash.put(trackData.getGenerator(), trackData);
-			this.soundData.addGenerator(trackData.getGenerator());
+			//this.soundData.addGenerator(trackData.getGenerator());
 	
 			this.setVerticalScrollerLength(this.getTracksCount());
 		}
@@ -232,9 +232,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			this.tracksVector.clear();
 			this.tracksHash.clear();
 			//this.soundData.clear();
-			
-			Generators generators = new Generators();
-			this.soundData.setGenerators(generators);
 			
 			this.setVerticalScrollerLength(this.getTracksCount());
 		}

@@ -176,9 +176,8 @@ public class DesktopPageLogic
 	 * </p>
 	 * 
 	 * @param desktopPageData
-	 * @param buttonPressedCallback
 	 */
-	public static void pointerReleased(DesktopPageData desktopPageData, ButtonPressedCallbackInterface buttonPressedCallback)
+	public static void pointerReleased(DesktopPageData desktopPageData)
 	{
 		InputWidgetData pressedButtonData = desktopPageData.getPressedButtonData();
 		
@@ -189,8 +188,6 @@ public class DesktopPageLogic
 			// Mouse is still over the Button ?
 			if (pressedButtonData == desktopPageData.getActiveWidgetData())
 			{	
-				buttonPressedCallback.buttonPressed(pressedButtonData);
-				
 				if (pressedButtonData.getButtonActionLogicListener() != null)
 				{
 					pressedButtonData.getButtonActionLogicListener().notifyButtonReleased(pressedButtonData);

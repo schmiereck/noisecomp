@@ -58,6 +58,26 @@ public class GeneratorTypeData
 		return this.generatorClass;
 	}
 
+	/**
+	 * @see #generatorClass
+	 * @see #generatorTypeName
+	 */
+	public String getGeneratorTypeClassName()
+	{
+		String generatorTypeClassName;
+		
+		if (this.generatorClass.equals(ModulGenerator.class) == true)
+		{
+			generatorTypeClassName = this.getGeneratorClass().getName() + "#" + this.getGeneratorTypeName();
+		}
+		else
+		{
+			generatorTypeClassName = this.getGeneratorClass().getName();
+		}
+		
+		return generatorTypeClassName;
+	}
+	
 	public InputTypeData getInputTypeData(int inputType)
 	{
 		return (InputTypeData)this.inputTypes.get(Integer.valueOf(inputType));
@@ -150,5 +170,19 @@ public class GeneratorTypeData
 		//}
 		
 		return generator;
+	}
+	/**
+	 * @param generatorTypeDescription is the new value for attribute {@link #generatorTypeDescription} to set.
+	 */
+	public void setGeneratorTypeDescription(String generatorTypeDescription)
+	{
+		this.generatorTypeDescription = generatorTypeDescription;
+	}
+	/**
+	 * @param generatorTypeName is the new value for attribute {@link #generatorTypeName} to set.
+	 */
+	public void setGeneratorTypeName(String generatorTypeName)
+	{
+		this.generatorTypeName = generatorTypeName;
 	}
 }

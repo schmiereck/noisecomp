@@ -46,7 +46,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		ModulGeneratorTypeData generatorTypeData = new ModulGeneratorTypeData(SinusGenerator.class, "Modul", "Manages a Group of other generators.");
+		ModulGeneratorTypeData generatorTypeData = new ModulGeneratorTypeData(ModulGenerator.class, "Modul", "Manages a Group of other generators.");
 		
 		return generatorTypeData;
 	}

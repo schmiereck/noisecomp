@@ -1,18 +1,17 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController;
 
-import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
-import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
 
 /**
  * TODO docu
  *
  * @author smk
- * @version 21.02.2004
+ * @version <p>06.03.2004: created, smk</p>
  */
-public class NewButtonActionLogicListener 
-implements ButtonActionLogicListenerInterface
+public class AddInputButtonActionLogicListener
+	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
@@ -22,7 +21,7 @@ implements ButtonActionLogicListenerInterface
 	 * 
 	 * 
 	 */
-	public NewButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public AddInputButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
 		super();
 		
@@ -35,9 +34,8 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		this.controllerData.clearTracks();
-
-		this.controllerData.createBaseGeneratorTypes();
+		InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
+		
+		this.controllerLogic.setInput(generatorInputsData, true);
 	}
-
 }

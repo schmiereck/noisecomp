@@ -105,6 +105,11 @@ public class SoundSample
 			this.leftValue = soundSample.leftValue;
 			this.rightValue = soundSample.rightValue;
 		}
+		else
+		{	
+			this.leftValue = 0.0F;
+			this.rightValue = 0.0F;
+		}
 	}
 
 	/**
@@ -159,6 +164,11 @@ public class SoundSample
 		if (soundSample != null)
 		{	
 			this.setStereoSignals(soundSample.leftValue, soundSample.rightValue);
+		}
+		else
+		{	
+			this.leftValue = 0.0F;
+			this.rightValue = 0.0F;
 		}
 	}
 }

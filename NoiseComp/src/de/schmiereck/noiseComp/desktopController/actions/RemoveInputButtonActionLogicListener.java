@@ -4,15 +4,15 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
 
 /**
  * TODO docu
  *
  * @author smk
- * @version <p>22.02.2004: created, smk</p>
+ * @version <p>06.03.2004: created, smk</p>
  */
-public class GroupGeneratorButtonActionLogicListener
+public class RemoveInputButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
@@ -23,33 +23,24 @@ public class GroupGeneratorButtonActionLogicListener
 	 * 
 	 * 
 	 */
-	public GroupGeneratorButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public RemoveInputButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		ModulGeneratorTypeData editModulTypeData = this.controllerData.getEditModulTypeData();
+		InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
 		
-		String generatorTypeName;
-		
-		if (editModulTypeData != null)
+		if (generatorInputsData != null)
 		{	
-			generatorTypeName = editModulTypeData.getGeneratorTypeName();
+			generatorInputsData.removeSelectedInput();
 		}
-		else
-		{
-			generatorTypeName = "";
-		}
-		this.controllerData.getGroupNameInputlineData().setInputText(generatorTypeName);
-		
-		this.controllerData.setActiveDesktopPageData(this.controllerData.getGroupGeneratorPageData());
 	}
 }

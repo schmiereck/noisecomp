@@ -15,13 +15,14 @@ import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLPort;
 
 /**
- * TODO docu
+ * Load the actual generators definitions in the memory in a XML file.
  *
  * @author smk
  * @version 21.02.2004
@@ -76,6 +77,8 @@ implements ButtonActionLogicListenerInterface
 		Document xmlDoc = XMLData.createDocument();
 		
 		Node noiseNode = XMLData.appendNode(xmlDoc, xmlDoc, "noise");
+
+		XMLData.appendTextNode(xmlDoc, noiseNode, "version", "1.0.0");
 		
 		SoundData soundData = this.controllerData.getSoundData();
 		
@@ -109,7 +112,10 @@ implements ButtonActionLogicListenerInterface
 			Node generatorTypeNode = XMLData.appendNode(xmlDoc, generatorTypesNode, "generatorType");
 			
 			Node generatorTypeClassNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "generatorTypeClassName", generatorTypeData.getClass().getName());
-			Node generatorClassNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "generatorClassName", generatorTypeData.getGeneratorClass().getName());
+
+			String generatorClassName = generatorTypeData.getGeneratorTypeClassName();
+			
+			Node generatorClassNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "generatorClassName", generatorClassName);
 			Node generatorNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "name", generatorTypeData.getGeneratorTypeName());
 			Node generatorDescriptionNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "description", generatorTypeData.getGeneratorTypeDescription());
 			
@@ -130,6 +136,7 @@ implements ButtonActionLogicListenerInterface
 					XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "countMin", înputTypeData.getInputCountMin());
 					XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "countMax", înputTypeData.getInputCountMax());
 					XMLData.appendFloatNode(xmlDoc, inputTypeNode, "defaultValue", înputTypeData.getDefaultValue());
+					XMLData.appendTextNode(xmlDoc, inputTypeNode, "description", înputTypeData.getInputDescription());
 				}
 			}
 			
@@ -156,7 +163,24 @@ implements ButtonActionLogicListenerInterface
 			
 			Node generatorNode = XMLData.appendNode(xmlDoc, generatorsNode, "generator");
 			
-			Node generatorTypeNode = XMLData.appendTextNode(xmlDoc, generatorNode, "type", generator.getClass().getName());
+			String type;
+			
+			// Generator is a Module ?
+			if (generator instanceof ModulGenerator)
+			{
+				ModulGenerator modulGenerator = (ModulGenerator)generator;
+				
+				String modulTypeName = modulGenerator.getGeneratorTypeData().getGeneratorTypeName();
+
+				type = generator.getClass().getName() + "#" + modulTypeName;
+			}
+			else
+			{
+				type = generator.getClass().getName();
+			}
+			
+			Node generatorTypeNode = XMLData.appendTextNode(xmlDoc, generatorNode, "type", type);
+
 			Node generatorNameNode = XMLData.appendTextNode(xmlDoc, generatorNode, "name", generator.getName());
 			Node generatorStartTimeNode = XMLData.appendFloatNode(xmlDoc, generatorNode, "startTime", generator.getStartTimePos());
 			Node generatorEndTimeNode = XMLData.appendFloatNode(xmlDoc, generatorNode, "endTime", generator.getEndTimePos());
@@ -178,7 +202,7 @@ implements ButtonActionLogicListenerInterface
 					{	
 						Node inputGeneratorNameNode = XMLData.appendTextNode(xmlDoc, inputNode, "generatorName", inputGenerator.getName());
 					}
-					Node inputTypeNode = XMLData.appendIntegerNode(xmlDoc, inputNode, "type", înputData.getInputType());
+					Node inputTypeNode = XMLData.appendIntegerNode(xmlDoc, inputNode, "type", înputData.getInputTypeData().getInputType());
 					Node inputValueNode = XMLData.appendFloatNode(xmlDoc, inputNode, "value", înputData.getInputValue());
 				}
 			}

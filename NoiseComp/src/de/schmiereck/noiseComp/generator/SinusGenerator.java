@@ -10,8 +10,9 @@ package de.schmiereck.noiseComp.generator;
 public class SinusGenerator
 extends Generator
 {
-	public static final int	INPUT_TYPE_FREQ	= 1;
-	public static final int	INPUT_TYPE_AMPL	= 2;
+	public static final int	INPUT_TYPE_FREQ		= 1;
+	public static final int	INPUT_TYPE_AMPL		= 2;
+	public static final int	INPUT_TYPE_SHIFT	= 3;
 	
 	/**
 	 * Frequenz des generierten Sinus-Signals.
@@ -43,10 +44,13 @@ extends Generator
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample)
 	{
-		float signalFrequency = this.calcSignalFrequency(framePosition);
+		float signalFrequency = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ));
 
 		// Amplitude des gerade generierten Sinus-Siganls.
-		float signalAmplitude = this.calcSignalAmplitude(framePosition);
+		float signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL));
+		
+		// Versatz des Sinus-Siganls um eine Schwingung.
+		float signalShift = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT));
 		
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
@@ -54,125 +58,11 @@ extends Generator
 		// Länge einer Sinus-Periode in Frames.
 		int periodLengthInFrames = Math.round(this.getFrameRate() / signalFrequency);
 		float	periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
-		float value = ((float)Math.sin(periodPosition * 2.0 * Math.PI)) * signalAmplitude;
+		float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
 		
-		//float value = ((float)Math.sin(frameTime * 2.0 * Math.PI)) * amplitude;
+		//float value = ((float)Math.sin(frameTime * ((2.0F + signalShift) * Math.PI))) * amplitude;
 		
 		soundSample.setStereoValues(value, value);
-	}
-	/**
-	 * @param signalFrequency is the new value for attribute {@link #signalFrequency} to set.
-	public void setSignalFrequency(float signalFrequency)
-	{
-		this.signalFrequency = signalFrequency;
-	}
-	 */
-	/**
-	 * @return the attribute {@link #signalFrequency}.
-	public float getSignalFrequency()
-	{
-		return this.signalFrequency;
-	}
-	 */
-
-	private float calcSignalFrequency(long framePosition)
-	{
-		/*
-		float signalFrequency;
-		{
-			InputData signalFrequencyInputData = this.searchInputByType(INPUT_TYPE_FREQ);
-			
-			if (signalFrequencyInputData != null)
-			{	
-				Float signalFrequencyInputValue = signalFrequencyInputData.getInputValue();
-				
-				// Constant input value ?
-				if (signalFrequencyInputValue != null)
-				{
-					signalFrequency = signalFrequencyInputValue.floatValue();
-				}
-				else
-				{	
-					Generator inputSoundGenerator = signalFrequencyInputData.getInputGenerator();
-					
-					if (inputSoundGenerator != null)
-					{	
-						SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition);
-						
-						if (inputSoundSample != null)
-						{	
-							signalFrequency = inputSoundSample.getMonoValue();
-						}
-						else
-						{
-							signalFrequency = 1.0F;
-						}
-					}
-					else
-					{
-						signalFrequency = 1.0F;
-					}
-				}
-			}
-			else
-			{
-				signalFrequency = 1.0F;
-			}
-		}
-		return signalFrequency;
-		*/
-		return this.calcMonoValue(framePosition, INPUT_TYPE_FREQ, 1.0F);
-	}
-	
-	private float calcSignalAmplitude(long framePosition)
-	{
-		return this.calcMonoValue(framePosition, INPUT_TYPE_AMPL, 1.0F);
-	}
-
-	private float calcMonoValue(long framePosition, int inputType, float defaultValue)
-	{
-		float value;
-		
-		InputData inputData = this.searchInputByType(inputType);
-		
-		if (inputData != null)
-		{	
-			Float inputValue = inputData.getInputValue();
-			
-			// Constant input value ?
-			if (inputValue != null)
-			{
-				value = inputValue.floatValue();
-			}
-			else
-			{	
-				Generator inputSoundGenerator = inputData.getInputGenerator();
-				
-				if (inputSoundGenerator != null)
-				{	
-					SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition);
-					
-					if (inputSoundSample != null)
-					{	
-						value = inputSoundSample.getMonoValue();
-					}
-					else
-					{
-						value = defaultValue;
-					}
-				}
-				else
-				{
-					value = defaultValue;
-				}
-			}
-		}
-		else
-		{
-			value = defaultValue;
-		}
-		
-		return value;
 	}
 	
 	/* (non-Javadoc)
@@ -183,11 +73,15 @@ extends Generator
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SinusGenerator.class, "Sinus", "Generates a sinus signal with a specified frequency and amplidude.");
 		
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F));
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the signal in oscillations per second.");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_AMPL, "signalAmplitude", 1, 1, Float.valueOf(1.0F));
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_AMPL, "signalAmplitude", 1, 1, Float.valueOf(1.0F), "Amplidude of the signal between 0 and 1.");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the sinus between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		
