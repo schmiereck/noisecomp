@@ -34,6 +34,7 @@ import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGener
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectEditButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectInsertButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectMainEditButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectRemoveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
@@ -590,6 +591,7 @@ extends ControllerData
 			
 			SelectCancelButtonActionLogicListener selectCancelButtonActionLogicListener,
 			SelectAddButtonActionLogicListener selectAddButtonActionLogicListener,
+			SelectInsertButtonActionLogicListener selectInsertButtonActionLogicListener,
 			SelectEditButtonActionLogicListener selectEditButtonActionLogicListener,
 			SelectMainEditButtonActionLogicListener selectMainEditButtonActionLogicListener,
 			SelectRemoveButtonActionLogicListener selectRemoveButtonActionLogicListener,
@@ -633,6 +635,7 @@ extends ControllerData
 		
 		this.selectGeneratorPageData.setActionListeners(selectCancelButtonActionLogicListener,
 				selectAddButtonActionLogicListener,
+				selectInsertButtonActionLogicListener,
 				selectEditButtonActionLogicListener,
 				selectMainEditButtonActionLogicListener,
 				selectRemoveButtonActionLogicListener);

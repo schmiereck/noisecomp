@@ -36,6 +36,7 @@ import de.schmiereck.noiseComp.desktopController.mainPage.actions.ZoomOutButtonA
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectEditButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectInsertButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectMainEditButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectRemoveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
@@ -115,6 +116,7 @@ public class Main
 		
 		SelectCancelButtonActionLogicListener selectCancelButtonActionLogicListener = new SelectCancelButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
 		SelectAddButtonActionLogicListener selectAddButtonActionLogicListener = new SelectAddButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
+		SelectInsertButtonActionLogicListener selectInsertButtonActionLogicListener = new SelectInsertButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
 		SelectEditButtonActionLogicListener selectEditButtonActionLogicListener = new SelectEditButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData, controllerData.getSelectGeneratorPageData());
 		SelectMainEditButtonActionLogicListener selectMainEditButtonActionLogicListener = new SelectMainEditButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
 		SelectRemoveButtonActionLogicListener selectRemoveButtonActionLogicListener = new SelectRemoveButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
@@ -155,6 +157,7 @@ public class Main
 				
 				selectCancelButtonActionLogicListener,
 				selectAddButtonActionLogicListener,
+				selectInsertButtonActionLogicListener,
 				selectEditButtonActionLogicListener,
 				selectMainEditButtonActionLogicListener,
 				selectRemoveButtonActionLogicListener,

@@ -17,6 +17,7 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
@@ -299,6 +300,10 @@ extends ControllerLogic
 
 	/**
 	 * <p>
+	 * 	Add the generator to the MainGenerators (if selected for edit) or to the
+	 * 	for edit selected ModulGenerator.
+	 * </p>
+	 * <p>
 	 * 	Get the active track list and and the genarator to this list.
 	 * </p>
 	 * <p>
@@ -315,7 +320,25 @@ extends ControllerLogic
 	 */
 	public void addGenerator(Generator generator)
 	{
-		this.desktopControllerData.getMainGenerators().addGenerator(generator);
+		EditData editData = this.desktopControllerData.getEditData();
+		
+		Generators generators = editData.getEditGenerators();
+
+		generators.addGenerator(generator);
+		/*
+		ModulGeneratorTypeData modulGeneratorTypeData = editData.getEditModulTypeData();
+
+		if (modulGeneratorTypeData != null)
+		{
+			Generators generators = modulGeneratorTypeData.getGenerators();
+			
+			generators.addGenerator(generator);
+		}
+		else
+		{		
+			this.desktopControllerData.getMainGenerators().addGenerator(generator);
+		}
+		*/
 		
 		TrackData trackData = new TrackData(generator);
 		
@@ -598,25 +621,41 @@ extends ControllerLogic
 		//???this.soundSourceLogic = new SoundSourceLogic(generators.getOutputGenerator());
 		//???this.desktopControllerData.getSoundData().setSoundSourceLogic(this.soundSourceLogic);
 		
+		// TODO endlich die mainGenerators auch in einen ModulGenerator verpacken, smk
 		this.selectGeneratorsToEdit(generators);
 	}
 	
+	public void selectModulGeneratorToEdit(ModulGeneratorTypeData modulTypeData)
+	{
+		this.desktopControllerData.getEditData().setEditModulGenerator(modulTypeData);
+
+		this.selectGeneratorsToEdit();
+	}
+	
+	public void selectGeneratorsToEdit(Generators generators)
+	{
+		this.desktopControllerData.getEditData().setEditGenerators(generators);
+
+		this.selectGeneratorsToEdit();
+	}
+
 	/**
-	 * 	Make the given generators as the edited list of 
+	 * 	Make the edited generators as the edited list of 
 	 * 	tracks of the main page.<br/>
 	 * 	
 	 * @see #addTrackData(TrackData) because of the handling of the OutputGenerator.
 	 * 
-	 * @param generators
 	 */
-	public void selectGeneratorsToEdit(Generators generators)
+	public void selectGeneratorsToEdit()
 	{
+		EditData editData = this.desktopControllerData.getEditData();
+		
+		Generators generators = editData.getEditGenerators();
+		
+		//-----------------------------------------------------
 		// Clear the list with the prviouse selected generators.
 		this.mainPageLogic.clearTracks();
 
-		this.desktopControllerData.getEditData().setEditGenerators(generators);
-		this.mainPageLogic.triggerEditGeneratorChanged(this.desktopControllerData.getEditData());
-		
 		//-----------------------------------------------------
 		// Generators updating in actual View:
 		
@@ -628,6 +667,9 @@ extends ControllerLogic
 			
 			this.addTrackData(new TrackData(generator));
 		}
+
+		//-----------------------------------------------------
+		this.mainPageLogic.triggerEditGeneratorChanged(editData);
 	}
 
 	/**

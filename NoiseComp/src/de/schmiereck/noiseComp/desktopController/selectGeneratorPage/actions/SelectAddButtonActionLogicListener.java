@@ -38,7 +38,7 @@ public class SelectAddButtonActionLogicListener
 		this.controllerData = controllerData;
 		this.selectGeneratorPageData = selectGeneratorPageData;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
 	 */

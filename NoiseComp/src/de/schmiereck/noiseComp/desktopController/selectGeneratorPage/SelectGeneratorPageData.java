@@ -4,6 +4,7 @@ import de.schmiereck.noiseComp.desktop.DesktopData;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectEditButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectInsertButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectMainEditButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectRemoveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
@@ -116,6 +117,7 @@ extends DesktopPageData
 	public void setActionListeners(
 			SelectCancelButtonActionLogicListener selectCancelButtonActionLogicListener,
 			SelectAddButtonActionLogicListener selectAddButtonActionLogicListener,
+			SelectInsertButtonActionLogicListener selectInsertButtonActionLogicListener,
 			SelectEditButtonActionLogicListener selectEditButtonActionLogicListener,
 			SelectMainEditButtonActionLogicListener selectMainEditButtonActionLogicListener,
 			SelectRemoveButtonActionLogicListener selectRemoveButtonActionLogicListener
@@ -123,6 +125,7 @@ extends DesktopPageData
 	{
 		this.selectCancelButtonData.addActionLogicListener(selectCancelButtonActionLogicListener);
 		this.selectAddButtonData.addActionLogicListener(selectAddButtonActionLogicListener);
+		this.selectInsertButtonData.addActionLogicListener(selectInsertButtonActionLogicListener);
 		this.selectEditButtonData.addActionLogicListener(selectEditButtonActionLogicListener);
 		this.selectMainEditButtonData.addActionLogicListener(selectMainEditButtonActionLogicListener);
 		this.selectRemoveButtonData.addActionLogicListener(selectRemoveButtonActionLogicListener);
