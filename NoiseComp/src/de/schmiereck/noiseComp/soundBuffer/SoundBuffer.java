@@ -2,7 +2,6 @@ package de.schmiereck.noiseComp.soundBuffer;
 
 import javax.sound.sampled.AudioFormat;
 
-import de.schmiereck.noiseComp.generator.GeneratorInterface;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 

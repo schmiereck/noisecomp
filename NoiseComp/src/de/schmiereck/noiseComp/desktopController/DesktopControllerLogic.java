@@ -22,6 +22,7 @@ import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
+import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
 import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.ControllerLogic;
 import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
@@ -49,6 +50,8 @@ extends ControllerLogic
 	
 	private MainPageLogic mainPageLogic = null;
 	
+	private SoundSourceSchedulerLogic soundSourceSchedulerLogic;
+
 	/**
 	 * Constructor.
 	 * 
@@ -65,6 +68,10 @@ extends ControllerLogic
 			this.desktopControllerData = controllerData;
 			
 			//this.desktopControllerData.registerEditGeneratorChangedListener(this);
+			
+			this.soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(16);
+
+			this.soundSourceSchedulerLogic.startThread();
 			
 			//------------------------------------------------------------------
 			// main page logic: 
@@ -180,6 +187,7 @@ extends ControllerLogic
 	{
 		try
 		{
+			this.soundSourceSchedulerLogic.stopThread();
 			this.stopWaitGame();
 		}
 		catch (PopupRuntimeException ex)
@@ -340,6 +348,8 @@ extends ControllerLogic
 			
 			soundData.setSoundSourceLogic(this.soundSourceLogic);
 
+			// Start scheduled polling for the new SoundSource.
+			this.soundSourceSchedulerLogic.setSoundSourceLogic(this.soundSourceLogic);
 			//soundData.setOutputGenerator(outputGenerator);
 		}
 	}

@@ -6,8 +6,6 @@ import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.screenTools.scheduler.PipelineSchedulerLogic;
-import de.schmiereck.screenTools.scheduler.PipelineSchedulerLogicTest;
-import de.schmiereck.screenTools.scheduler.SchedulerLogic;
 
 /**
  * TODO docu

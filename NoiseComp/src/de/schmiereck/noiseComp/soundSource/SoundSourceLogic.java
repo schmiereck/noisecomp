@@ -25,11 +25,17 @@ public class SoundSourceLogic
 {
 	private OutputGenerator outputGenerator = null;
 
-	private SoundSample[]	soundSamples = null;
+	private SoundSamplesBufferData	soundSamplesBufferData;
 	
 	public SoundSourceLogic(OutputGenerator outputGenerator)
 	{
 		this.outputGenerator = outputGenerator;
+
+		this.soundSamplesBufferData = new SoundSamplesBufferData();
+		
+		float timeLen = this.outputGenerator.getEndTimePos() - this.outputGenerator.getStartTimePos();
+		
+		this.soundSamplesBufferData.createBuffer(timeLen, this.outputGenerator.getFrameRate());
 	}
 
 	/**
@@ -46,38 +52,18 @@ public class SoundSourceLogic
 	 */
 	public SoundSample generateFrameSample(long frame)
 	{
-		if (this.soundSamples == null)
-		{
-			float len = this.outputGenerator.getEndTimePos() - this.outputGenerator.getStartTimePos();
-			
-			int frames = (int)(len * this.outputGenerator.getFrameRate());
-
-			this.soundSamples = new SoundSample[frames];
-			
-			for (int pos = 0; pos < frames; pos++)
-			{
-				this.soundSamples[pos] = null;
-			}
-		}
-		
 		SoundSample soundSample;
 		
-		if (frame < this.soundSamples.length)
-		{
-			soundSample = this.soundSamples[(int)frame];
-
-			if (soundSample == null)
-			{
-				soundSample = this.outputGenerator.generateFrameSample(frame, null);
-			
-				this.soundSamples[(int)frame] = soundSample;
-			}
-		}
-		else
-		{
-			soundSample = null;
-		}
+		soundSample = this.soundSamplesBufferData.get(frame, this.outputGenerator);
 		
 		return soundSample;
+	}
+
+	/**
+	 * @param actualWaitPerFramesMillis
+	 */
+	public void pollCalcFillBuffer(long actualWaitPerFramesMillis)
+	{
+		this.soundSamplesBufferData.calcWaitingSamplesPart(actualWaitPerFramesMillis / 1000.0F, this.outputGenerator);
 	}
 }

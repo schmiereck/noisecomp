@@ -3,7 +3,6 @@ package de.schmiereck.noiseComp.soundData;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
-import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 

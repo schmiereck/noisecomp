@@ -1,15 +1,11 @@
 package de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions;
 
-import java.util.Iterator;
-
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
-import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;

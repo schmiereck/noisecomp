@@ -6,7 +6,6 @@ import java.io.IOException;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 
-import de.schmiereck.noiseComp.generator.GeneratorInterface;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
