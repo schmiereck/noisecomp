@@ -3,9 +3,10 @@ package de.schmiereck.noiseComp.desktopController.editModulPage.actions;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData;
+import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TracksListWidgetData;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
@@ -21,6 +22,7 @@ public class SaveGroupButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	private MainPageLogic mainPageLogic;
 	private DesktopControllerData controllerData;
 	private EditModulPageData editModulPageData;
 	
@@ -30,12 +32,14 @@ public class SaveGroupButtonActionLogicListener
 	 * 
 	 */
 	public SaveGroupButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			MainPageLogic mainPageLogic,
 			DesktopControllerData controllerData,
 			EditModulPageData editModulPageData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
+		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;
 		this.editModulPageData = editModulPageData;
 	}
@@ -61,8 +65,9 @@ public class SaveGroupButtonActionLogicListener
 			{	
 				editModulTypeData = new ModulGeneratorTypeData(ModulGenerator.class, modulName, modulDescription);
 
-				generators = this.controllerData.getTracksData().getGenerators();
-			
+				//generators = this.controllerData.getTracksListWidgetData().getGenerators();
+				generators = this.controllerData.getEditGenerators();
+				
 				editModulTypeData.setGenerators(generators);
 			
 				this.controllerData.getGeneratorTypesData().addGeneratorTypeData(editModulTypeData);
@@ -80,6 +85,7 @@ public class SaveGroupButtonActionLogicListener
 			}
 			
 			this.controllerData.setEditGenerators(editModulTypeData, generators);
+			this.mainPageLogic.triggerEditGeneratorChanged(editModulTypeData, generators);
 			
 			this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 		}

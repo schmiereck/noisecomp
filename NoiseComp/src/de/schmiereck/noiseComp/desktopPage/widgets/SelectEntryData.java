@@ -1,7 +1,8 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
 /**
- * TODO docu
+ * Represets the data of a entry in a select list of a 
+ * {@link de.schmiereck.noiseComp.desktopPage.widgets.SelectData}-Object.
  *
  * @author smk
  * @version 21.02.2004

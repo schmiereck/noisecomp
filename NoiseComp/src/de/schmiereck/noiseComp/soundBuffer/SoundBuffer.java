@@ -136,7 +136,7 @@ public class SoundBuffer
 			int leftSampleValue;
 			int	rightSampleValue;
 			
-			SoundSample soundSample = this.soundGenerator.generateFrameSample(frame);
+			SoundSample soundSample = this.soundGenerator.generateFrameSample(frame, null);
 			
 			if (soundSample != null)
 			{	

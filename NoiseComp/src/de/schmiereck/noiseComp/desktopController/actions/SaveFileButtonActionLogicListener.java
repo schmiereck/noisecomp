@@ -204,6 +204,13 @@ implements ButtonActionLogicListenerInterface
 					}
 					Node inputTypeNode = XMLData.appendIntegerNode(xmlDoc, inputNode, "type", înputData.getInputTypeData().getInputType());
 					Node inputValueNode = XMLData.appendFloatNode(xmlDoc, inputNode, "value", înputData.getInputValue());
+					
+					InputTypeData inputModulInputTypeData = înputData.getInputModulInputTypeData();
+					
+					if (inputModulInputTypeData != null)
+					{
+						Node inputModulInputNode = XMLData.appendIntegerNode(xmlDoc, inputNode, "inputModulInputType", inputModulInputTypeData.getInputType());
+					}
 				}
 			}
 		}

@@ -5,7 +5,7 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TracksListWidgetData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.soundData.SoundData;
@@ -53,9 +53,8 @@ public class SelectAddButtonActionLogicListener
 		}
 
 		SoundData soundData = this.controllerData.getSoundData();
-		TracksData tracksData = this.controllerData.getTracksData();
 		
-		Generator generator = selectedGeneratorTypeData.createGeneratorInstance("generator" + tracksData.getTracksCount(), 
+		Generator generator = selectedGeneratorTypeData.createGeneratorInstance("generator" + this.controllerData.getTracksCount(), 
 				soundData.getFrameRate());
 		//sinusGenerator.addInputValue(1.0F, SinusGenerator.INPUT_TYPE_FREQ);
 		

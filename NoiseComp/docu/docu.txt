@@ -1,0 +1,20 @@
+
+root
+ |
+ +--->generatores
+ |     |
+ |     `--->generator{generatorType "A"}
+ |
+ |     `--->generator{generatorType "A"}
+ |
+ |     `--->generator{generatorType "B"}
+ |
+ `--->generatorTypes
+       |
+       `--->generatorType "A"
+             |
+             `--->generators
+                   |
+                   `...
+
+                   

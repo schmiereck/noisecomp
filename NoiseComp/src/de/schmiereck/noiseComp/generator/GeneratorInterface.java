@@ -19,7 +19,7 @@ public interface GeneratorInterface
 	 * @param framePosition
 	 * @return
 	 */
-	SoundSample generateFrameSample(long framePosition);
+	SoundSample generateFrameSample(long framePosition, ModulGenerator parentModulGenerator);
 
 	/**
 	 * @return

@@ -5,7 +5,20 @@ import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 
 /**
- * TODO docu
+ * Manages the data of a scrollbar widget.
+ * 
+ * .- -
+ * |  |
+ * |  |
+ * |  |
+ * |  -scrollerPos
+ * |  -
+ * |  |
+ * |  |scrollerSize (count of entrys may visible on screen)
+ * |  |
+ * |  -
+ * |
+ * `-scrollerLength (count of entrys in the main list)
  *
  * @author smk
  * @version 26.01.2004
@@ -123,6 +136,16 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	public void setScrollerLength(float scrollerLength)
 	{
 		this.scrollerLength = scrollerLength;
+		
+		if ((this.scrollerPos + this.scrollerSize) > this.scrollerLength)
+		{
+			this.scrollerPos = this.scrollerLength - this.scrollerSize;
+			
+			if (this.scrollerPos < 0)
+			{
+				this.scrollerPos = 0;
+			}
+		}
 	}
 	/**
 	 * @return the attribute {@link #scrollerPos}.

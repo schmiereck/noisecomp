@@ -20,22 +20,23 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample sample)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample sample, ModulGenerator parentModulGenerator)
 	{
-		ModulGeneratorTypeData generatorTypeData = (ModulGeneratorTypeData)this.getGeneratorTypeData();
+		ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)this.getGeneratorTypeData();
 		
-		Generators generators = generatorTypeData.getGenerators();
+		Generators generators = modulGeneratorTypeData.getGenerators();
 		
 		OutputGenerator outputGenerator = generators.getOutputGenerator();
 		
+		// TODO let it crash, write better programs to prevent from this situation ;-) smk
 		//if (outputGenerator != null)
 		{	
 			long outputStartPos = (long)(this.getStartTimePos() * this.getFrameRate());
 			
 			//outputGenerator.calculateSoundSample(framePosition, frameTime, sample);
-			SoundSample outputSample = outputGenerator.generateFrameSample(framePosition - outputStartPos);
+			SoundSample outputSample = outputGenerator.generateFrameSample(framePosition - outputStartPos, this);
 			
 			sample.setValues(outputSample);
 		}

@@ -1,25 +1,20 @@
 package de.schmiereck.noiseComp.desktopController;
 
 import java.util.Iterator;
-import java.util.Vector;
 
+import de.schmiereck.noiseComp.PopupRuntimeException;
+import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageLogic;
+import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageLogic;
-import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface;
-import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
-import de.schmiereck.noiseComp.desktopPage.widgets.SelectEntryData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.Generators;
-import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
@@ -41,12 +36,15 @@ import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
  */
 public class DesktopControllerLogic
 extends ControllerLogic
-implements GeneratorSelectedListenerInterface, 
-GeneratorInputSelectedListenerInterface
+//implements //GeneratorSelectedListenerInterface, 
+//GeneratorInputSelectedListenerInterface,
+//EditGeneratorChangedListener
 {
 	private DesktopControllerData controllerData;
 	
 	private SoundSchedulerLogic soundSchedulerLogic = null;
+	
+	private MainPageLogic mainPageLogic = null;
 	
 	/**
 	 * Constructor.
@@ -56,21 +54,46 @@ GeneratorInputSelectedListenerInterface
 	public DesktopControllerLogic(DesktopControllerData controllerData, DesktopInputListener inputListener, SchedulerWaiter waiter, String playerName)
 	{
 		super(waiter);
-		
-		this.controllerData = controllerData;
-		
-		SoundData soundData = this.controllerData.getSoundData();
-		TracksData tracksData = this.controllerData.getTracksData();
-		
-		this.controllerData.setMainGenerators(soundData.getGenerators());
-		
-		this.createGenerators(soundData.getFrameRate(), soundData.getGenerators());
-		
-		this.controllerData.getTracksData().setGeneratorSelectedListener(this);
-		
-		this.controllerData.getGeneratorInputsData().setGeneratorInputSelectedListener(this);
-		
-		this.selectMainModul();
+
+		try
+		{
+			this.controllerData = controllerData;
+			
+			//this.controllerData.registerEditGeneratorChangedListener(this);
+			
+			//------------------------------------------------------------------
+			// main page logic: 
+			
+			this.mainPageLogic = new MainPageLogic(this.controllerData.getMainDesktopPageData());
+			
+			//------------------------------------------------------------------
+			// edit modul page logic: 
+			
+			EditModulPageLogic editModulPageLogic = new EditModulPageLogic(this.controllerData.getEditModulPageData());
+			
+			this.controllerData.getEditModulPageData().getInputTypesListWidgetData().registerInputTypeSelectedListener(editModulPageLogic);
+
+			this.mainPageLogic.registerEditGeneratorChangedListener(editModulPageLogic);
+			
+			//------------------------------------------------------------------
+			
+			SoundData soundData = this.controllerData.getSoundData();
+			//TracksListWidgetData tracksData = this.controllerData.getTracksListWidgetData();
+			
+			this.controllerData.setMainGenerators(soundData.getGenerators());
+			
+			this.createGenerators(soundData.getFrameRate(), soundData.getGenerators());
+			
+			//this.controllerData.getTracksListWidgetData().registerGeneratorSelectedListener(this);
+			
+			//this.controllerData.getGeneratorInputsData().registerGeneratorInputSelectedListener(this);
+			
+			this.selectMainModul();
+		}
+		catch (PopupRuntimeException ex)
+		{
+			this.controllerData.setPopupRuntimeException(ex);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -78,11 +101,18 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void calc(ControllerData controllerData, long actualWaitPerFramesMillis, double runSeconds)
 	{
-		controllerData.setCalcSleepMillis(actualWaitPerFramesMillis);
-		
-		DesktopControllerData desktopControllerData = (DesktopControllerData)controllerData;
-		
-		DesktopPageLogic.calcWidgets(desktopControllerData.getActiveDesktopPageData());
+		try
+		{
+			controllerData.setCalcSleepMillis(actualWaitPerFramesMillis);
+			
+			DesktopControllerData desktopControllerData = (DesktopControllerData)controllerData;
+			
+			DesktopPageLogic.calcWidgets(desktopControllerData.getActiveDesktopPageData());
+		}
+		catch (PopupRuntimeException ex)
+		{
+			this.controllerData.setPopupRuntimeException(ex);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -90,8 +120,6 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void initGameData(ControllerData controllerData)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -99,8 +127,6 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void openGameServerConnection()
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -108,8 +134,6 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void closeGameServerConnection()
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -117,8 +141,6 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void openGameClientConnection()
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -126,8 +148,6 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void closeGameClientConnection()
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -135,7 +155,6 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public boolean getIsGameClientConnected()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -144,7 +163,6 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public boolean getIsGameServerConnected()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -153,7 +171,14 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void doEndGame()
 	{
-		this.stopWaitGame();
+		try
+		{
+			this.stopWaitGame();
+		}
+		catch (PopupRuntimeException ex)
+		{
+			this.controllerData.setPopupRuntimeException(ex);
+		}
 	}
 
 	/**
@@ -161,7 +186,14 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void movePointer(int posX, int posY)
 	{
-		this.controllerData.getDesktopData().setPointerPos(posX, posY);
+		try
+		{
+			this.controllerData.getDesktopData().setPointerPos(posX, posY);
+		}
+		catch (PopupRuntimeException ex)
+		{
+			this.controllerData.setPopupRuntimeException(ex);
+		}
 	}
 
 	/**
@@ -169,49 +201,84 @@ GeneratorInputSelectedListenerInterface
 	 */
 	public void pointerPressed()
 	{
-		DesktopPageLogic.pointerPressed(this.controllerData.getActiveDesktopPageData());
+		try
+		{
+			DesktopPageLogic.pointerPressed(this.controllerData.getActiveDesktopPageData());
+		}
+		catch (PopupRuntimeException ex)
+		{
+			this.controllerData.setPopupRuntimeException(ex);
+		}
 	}
 
 	public void pointerReleased()
 	{
-		DesktopPageLogic.pointerReleased(this.controllerData.getActiveDesktopPageData());
+		try
+		{
+			DesktopPageLogic.pointerReleased(this.controllerData.getActiveDesktopPageData());
+		}
+		catch (PopupRuntimeException ex)
+		{
+			this.controllerData.setPopupRuntimeException(ex);
+		}
 	}
 
 	public void stopSound()
 	{
-		if (this.soundSchedulerLogic != null)
+		try
 		{
-			this.soundSchedulerLogic.stopPlayback();
-			
-			this.soundSchedulerLogic.stopThread();
-			
-			this.soundSchedulerLogic = null;
+			if (this.soundSchedulerLogic != null)
+			{
+				this.soundSchedulerLogic.stopPlayback();
+				
+				this.soundSchedulerLogic.stopThread();
+				
+				this.soundSchedulerLogic = null;
+			}
+		}
+		catch (PopupRuntimeException ex)
+		{
+			this.controllerData.setPopupRuntimeException(ex);
 		}
 	}
 
 	public void pauseSound()
 	{
-		if (this.soundSchedulerLogic != null)
+		try
 		{
-			this.soundSchedulerLogic.pausePlayback();
+			if (this.soundSchedulerLogic != null)
+			{
+				this.soundSchedulerLogic.pausePlayback();
+			}
+		}
+		catch (PopupRuntimeException ex)
+		{
+			this.controllerData.setPopupRuntimeException(ex);
 		}
 	}
 
 	public void playSound()
 	{
-		if (this.soundSchedulerLogic == null)
+		try
 		{
-			SoundData soundData = this.controllerData.getSoundData();
-			
-			this.soundSchedulerLogic = new SoundSchedulerLogic(20, soundData);
-			
-			this.soundSchedulerLogic.startThread();
-
-			this.soundSchedulerLogic.startPlayback();
+			if (this.soundSchedulerLogic == null)
+			{
+				SoundData soundData = this.controllerData.getSoundData();
+				
+				this.soundSchedulerLogic = new SoundSchedulerLogic(20, soundData);
+				
+				this.soundSchedulerLogic.startThread();
+	
+				this.soundSchedulerLogic.startPlayback();
+			}
+			else
+			{	
+				this.soundSchedulerLogic.resumePlayback();
+			}
 		}
-		else
-		{	
-			this.soundSchedulerLogic.resumePlayback();
+		catch (PopupRuntimeException ex)
+		{
+			this.controllerData.setPopupRuntimeException(ex);
 		}
 	}
 
@@ -220,7 +287,7 @@ GeneratorInputSelectedListenerInterface
 	 * 	Get the active track list and and the genarator to this list.
 	 * </p>
 	 * <p>
-	 * 	Put the generator into a new {@link TracksData}-Object and add the
+	 * 	Put the generator into a new {@link TracksListWidgetData}-Object and add the
 	 * 	new track to the track list.
 	 * </p>
 	 * <p>
@@ -228,7 +295,7 @@ GeneratorInputSelectedListenerInterface
 	 * 	this Object is set as output for the sound data.
 	 * </p>
 	 * 
-	 * @see #addGenerator(TracksData, Generator)
+	 * @see #addGenerator(TracksListWidgetData, Generator)
 	 * @param generator
 	 */
 	public void addGenerator(Generator generator)
@@ -242,9 +309,9 @@ GeneratorInputSelectedListenerInterface
 
 	public void addTrackData(TrackData trackData)
 	{
-		TracksData tracksData = this.controllerData.getTracksData();
-		
-		tracksData.addTrack(trackData);
+		this.mainPageLogic.addTrackData(trackData);
+		//TracksListWidgetData tracksListWidgetData = this.controllerData.getTracksListWidgetData();
+		//tracksListWidgetData.addTrack(trackData);
 
 		Generator generator = trackData.getGenerator();
 		
@@ -371,118 +438,6 @@ GeneratorInputSelectedListenerInterface
 		return outputGenerator;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface#notifyGeneratorSelected(de.schmiereck.noiseComp.desktopPage.widgets.TrackData)
-	 */
-	public void notifyGeneratorSelected(TrackData trackGraficData)
-	{
-		Generator generator;
-		GeneratorTypeData generatorTypeData;
-		String name;
-		String startTime;
-		String endTime;
-		Vector inputs;
-		
-		if (trackGraficData != null)
-		{
-			generator = trackGraficData.getGenerator();
-			
-			if (generator != null)
-			{	
-				name = generator.getName();
-				//generatorTypeData = this.controllerData.searchGeneratorTypeData(generator);
-				generatorTypeData = generator.getGeneratorTypeData();
-				startTime = Float.toString(generator.getStartTimePos());
-				endTime = Float.toString(generator.getEndTimePos());
-				inputs = generator.getInputs();
-			}
-			else
-			{
-				name = "";
-				generatorTypeData = null;
-				startTime = "";
-				endTime = "";
-				inputs = null;
-			}
-		}
-		else
-		{
-			generator = null;
-			generatorTypeData = null;
-			name = "";
-			startTime = "";
-			endTime = "";
-			inputs = null;
-		}
-		
-		this.controllerData.getGeneratorNameInputlineData().setInputText(name);
-		this.controllerData.getGeneratorStartTimeInputlineData().setInputText(startTime);
-		this.controllerData.getGeneratorEndTimeInputlineData().setInputText(endTime);
-		this.controllerData.getGeneratorInputsData().setGeneratorInputs(generator, inputs);
-
-		//--------------------------------------------------
-		// Build the Generator-Names select List:
-		{
-			SelectData inputNameSelectData = this.controllerData.getGeneratorInputNameSelectData();
-			
-			inputNameSelectData.clearSelectEntrys();
-			
-			inputNameSelectData.setUseEmptyEntry(true);
-			
-			if (generatorTypeData != null)
-			{	
-				Iterator tracksDataIterator = this.controllerData.getTracksData().getListEntrysIterator();
-				
-				while (tracksDataIterator.hasNext())
-				{
-					TrackData trackData = (TrackData)tracksDataIterator.next();
-					
-					SelectEntryData selectEntryData = new SelectEntryData(trackData.getName(), 
-							trackData.getName(),
-							trackData);
-					
-					inputNameSelectData.addSelectEntryData(selectEntryData);
-				}
-			}
-		}
-
-		//--------------------------------------------------
-		// Build the Generator-Input-Types select List:
-		{
-			SelectData inputTypeSelectData = this.controllerData.getGeneratorInputTypeSelectData();
-			
-			inputTypeSelectData.clearSelectEntrys();
-			
-			if (generatorTypeData != null)
-			{	
-				Iterator inputTypesDataIterator = generatorTypeData.getInputTypesIterator();
-				
-				while (inputTypesDataIterator.hasNext())
-				{
-					InputTypeData inputTypeData = (InputTypeData)inputTypesDataIterator.next();
-					
-					SelectEntryData selectEntryData = new SelectEntryData(Integer.valueOf(inputTypeData.getInputType()), 
-							inputTypeData.getInputTypeName(),
-							inputTypeData);
-					
-					inputTypeSelectData.addSelectEntryData(selectEntryData);
-				}
-			}	
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface#notifyGeneratorDeselected(de.schmiereck.noiseComp.desktopPage.widgets.TrackData)
-	 */
-	public void notifyGeneratorDeselected(TrackData trackData)
-	{
-		this.controllerData.getGeneratorNameInputlineData().setInputText("");
-		this.controllerData.getGeneratorInputNameSelectData().clearSelectEntrys();
-		this.controllerData.getGeneratorInputTypeSelectData().clearSelectEntrys();
-		this.controllerData.getGeneratorStartTimeInputlineData().setInputText("");
-		this.controllerData.getGeneratorEndTimeInputlineData().setInputText("");
-		this.controllerData.getGeneratorInputsData().setGeneratorInputs(null, null);
-	}
 
 	/**
 	 * @param dir 	1: 	to move right<br/>
@@ -567,288 +522,7 @@ GeneratorInputSelectedListenerInterface
 			}
 		}
 	}
-
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorTypeSelectedListenerInterface#notifyGeneratorInputSelected(InputsWidgetData, de.schmiereck.noiseComp.generator.InputData)
-	 */
-	public void notifyGeneratorInputSelected(InputsWidgetData inputsData, InputData selectedInputData)
-	{
-		String inputGeneratorName;
-		String inputGeneratorTypeDescription;
-		String inputValue;
-		int inputType;
-		
-		if (selectedInputData != null)
-		{
-			InputTypeData inputTypeData = selectedInputData.getInputTypeData();
-			inputType = inputTypeData.getInputType();
-			
-			Generator generator = selectedInputData.getInputGenerator();
-			
-			if (generator != null)
-			{	
-				inputGeneratorName = generator.getName();
-
-				GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
-				
-				inputGeneratorTypeDescription = inputTypeData.getInputTypeDescription();
-			}
-			else
-			{
-				inputGeneratorName = null;
-				inputGeneratorTypeDescription = null;
-			}
-			
-			if (selectedInputData.getInputValue() != null)
-			{	
-				inputValue = String.valueOf(selectedInputData.getInputValue());
-			}
-			else
-			{	
-				inputValue = null;
-			}
-			
-			//GeneratorTypeData generatorTypeData = this.controllerData.searchGeneratorTypeData(generator.getClass().getName());
-		}
-		else
-		{
-			inputGeneratorName = null;
-			inputGeneratorTypeDescription = null;
-			inputType = 0;
-			inputValue = null;
-		}
-		
-		//this.controllerData.getGeneratorInputNameInputlineData().setInputText(inputGeneratorName);
-		this.controllerData.getGeneratorInputNameSelectData().setInputPosByValue(inputGeneratorName);
-		
-		SelectData selectData = this.controllerData.getGeneratorInputTypeSelectData();
-		/*
-		selectData.clearSelectEntrys();
-		
-		if (generatorTypeData != null)
-		{	
-			Iterator inputTypesDataIterator = generatorTypeData.getInputTypesDataIterator();
-			
-			while (inputTypesDataIterator.hasNext())
-			{
-				InputTypeData inputTypeData = (InputTypeData)inputTypesDataIterator.next();
-				
-				SelectEntryData selectEntryData = new SelectEntryData(Integer.valueOf(inputTypeData.getInputType()), 
-						inputTypeData.getInputTypeName(),
-						inputTypeData);
-				
-				selectData.addSelectEntryData(selectEntryData);
-			}
-		}
-		*/	
-		selectData.setInputPosByValue(Integer.valueOf(inputType));
-
-		this.controllerData.getGeneratorInputValueInputlineData().setInputText(inputValue);
-		
-		this.controllerData.getGeneratorInputTypeDescriptionTextWidgetData().setLabelText(inputGeneratorTypeDescription);
-	}
-
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorTypeSelectedListenerInterface#notifyGeneratorInputDeselected(InputsWidgetData, de.schmiereck.noiseComp.generator.InputData)
-	 */
-	public void notifyGeneratorInputDeselected(InputsWidgetData inputsData, InputData deselectedInputData)
-	{
-		//this.controllerData.getGeneratorInputNameInputlineData().setInputText("");
-		this.controllerData.getGeneratorInputNameSelectData().setInputPos(0);
-		this.controllerData.getGeneratorInputTypeSelectData().setInputPos(0);
-		this.controllerData.getGeneratorInputValueInputlineData().setInputText("");
-	}
-
-	/**
-	 * Prepare Input-Setting to add a new Input.
-	 * 
-	 * @param generatorInputsData
-	 */
-	public void newInput(InputsWidgetData generatorInputsData)
-	{
-		if (generatorInputsData != null)
-		{	
-			generatorInputsData.deselectInput();
-		}
-	}
 	
-	/**
-	 * Add a new Input witn the Input-Settings.
-	 * 
-	 * TODO replace the RuntimeExceptions with Message-Boxes, smk 
-	 * @param generatorInputsData
-	 */
-	private void addInput_old(InputsWidgetData generatorInputsData)
-	{
-		if (generatorInputsData != null)
-		{	
-			//String inputGeneratorName = this.controllerData.getGeneratorInputNameInputlineData().getInputText();
-			SelectEntryData inputGeneratorSelectEntryData = this.controllerData.getGeneratorInputNameSelectData().getSelectedEntryData();
-			String inputGeneratorName = (String)inputGeneratorSelectEntryData.getValue();
-				
-			SelectEntryData selectedEntryData = this.controllerData.getGeneratorInputTypeSelectData().getSelectedEntryData();
-			InputTypeData inputTypeData = (InputTypeData)selectedEntryData.getEntry();
-			Integer inputType = (Integer)selectedEntryData.getValue();
-			
-			String inputGeneratorValueStr = this.controllerData.getGeneratorInputValueInputlineData().getInputText();
-			
-			Float inputGeneratorValue;
-			
-			if (inputGeneratorValueStr != null)
-			{
-				inputGeneratorValue = Float.valueOf(inputGeneratorValueStr);
-			}
-			else
-			{
-				inputGeneratorValue = null;
-			}
-
-			TrackData selectedTrackData = this.controllerData.getTracksData().getSelectedTrackData();
-			
-			if (selectedTrackData != null)
-			{
-				Generator selectedGenerator = selectedTrackData.getGenerator();
-				
-				InputData selectedInputData = this.controllerData.getTracksData().getGenerators().addInput(selectedGenerator, inputGeneratorName, inputTypeData, inputGeneratorValue);
-				
-				this.controllerData.getGeneratorInputsData().setSelectedInputData(selectedInputData);
-			}
-			else
-			{
-				throw new RuntimeException("no generator selected");
-			}
-		}
-	}
-	
-	/**
-	 * Set the new Input-Settings for the selected Input.
-	 * If there is no selected input, {@link #addInput(InputsWidgetData)} is called.
-	 *
-	 * TODO replace the RuntimeExceptions with Message-Boxes, smk 
-	 * @param generatorInputsData
-	 * @param insertNew	true, if the input should by inserted as a new input.<br/>
-	 * 					false, if the selected input should by updated.
-	 */
-	public void setInput(InputsWidgetData generatorInputsData, boolean insertNew)
-	{
-		if (generatorInputsData != null)
-		{	
-			TrackData selectedTrackData = this.controllerData.getTracksData().getSelectedTrackData();
-			
-			if (selectedTrackData != null)
-			{
-				//---------------------------------------------------
-				// Input-Generator-Name:
-
-				SelectEntryData inputGeneratorSelectEntryData = this.controllerData.getGeneratorInputNameSelectData().getSelectedEntryData();
-
-				String inputGeneratorName;
-
-				if (inputGeneratorSelectEntryData != null)
-				{
-					inputGeneratorName = (String)inputGeneratorSelectEntryData.getValue();
-				}
-				else
-				{
-					inputGeneratorName = null;
-				}
-				
-				//---------------------------------------------------
-				//Input-Generator:
-
-				Generator inputGenerator;
-			
-				// Select the name of a generator ?
-				if (inputGeneratorName != null)
-				{	
-					if (inputGeneratorName.length() > 0)
-					{	
-						TrackData inputTrackData;
-						inputTrackData = this.controllerData.getTracksData().searchTrackData(inputGeneratorName);
-						
-						// Found no Track with the name of the Input ?
-						if (inputTrackData == null)
-						{
-							throw new RuntimeException("input generator \"" + inputGeneratorName + "\" not found");
-						}
-						inputGenerator = inputTrackData.getGenerator();
-					}
-					else
-					{
-						inputGenerator = null;
-					}
-				}
-				else
-				{
-					inputGenerator = null;
-				}
-				
-				//---------------------------------------------------
-				// Input-Type:
-
-				SelectEntryData selectedEntryData = this.controllerData.getGeneratorInputTypeSelectData().getSelectedEntryData();
-				InputTypeData inputTypeData = (InputTypeData)selectedEntryData.getEntry();
-				Integer inputType = (Integer)selectedEntryData.getValue();
-	
-				//---------------------------------------------------
-				// Input-Value:
-
-				String inputGeneratorValueStr = this.controllerData.getGeneratorInputValueInputlineData().getInputText();
-				
-				Float inputGeneratorValue;
-				
-				if (inputGeneratorValueStr != null)
-				{
-					if (inputGeneratorValueStr.length() > 0)
-					{	
-						inputGeneratorValue = Float.valueOf(inputGeneratorValueStr);
-					}
-					else
-					{
-						inputGeneratorValue = null;
-					}
-				}
-				else
-				{
-					inputGeneratorValue = null;
-				}
-				
-				//---------------------------------------------------
-
-				if ((inputGenerator == null) && (inputGeneratorValue == null))
-				{
-					throw new RuntimeException("no input generator and no value for the input \"" + inputGeneratorName + "\"");
-				}
-
-				InputData selectedInputData = this.controllerData.getGeneratorInputsData().getSelectedInputData();
-
-				//No Input selected or a insert is requested.
-				if ((selectedInputData == null) || (insertNew == true))
-				{	
-					// Insert new input:
-
-					Generator selectedGenerator = selectedTrackData.getGenerator();
-
-					selectedInputData = this.controllerData.getTracksData().getGenerators().addInput(selectedGenerator, inputGeneratorName, inputTypeData, inputGeneratorValue);
-					
-					this.controllerData.getGeneratorInputsData().setSelectedInputData(selectedInputData);
-				}
-				else
-				{
-					// Update selected input:
-
-					selectedInputData.setInputGenerator(inputGenerator);
-					selectedInputData.setInputType(inputTypeData);
-					selectedInputData.setInputValue(inputGeneratorValue);
-				}
-			}
-			else
-			{
-				throw new RuntimeException("no generator selected");
-			}
-		}
-	}
-
 	/**
 	 * @param i
 	 */
@@ -885,42 +559,18 @@ GeneratorInputSelectedListenerInterface
 			}
 		}
 	}
-
-	/**
-	 * Changes the actual zoom factor throu the given factor.
-	 * 
-	 * @param changeZoomFactor is the factor for the zoom factor ;-)
-	 */
-	public void doChangeZoom(float changeZoomFactor)
-	{
-		float generatorScaleX = this.controllerData.getTracksData().getGeneratorScaleX();
-
-		generatorScaleX = generatorScaleX * changeZoomFactor;
-		
-		this.controllerData.getTracksData().setGeneratorScaleX(generatorScaleX);
-		
-		ScrollbarData scrollbarData = this.controllerData.getTimelineScrollbarData();
-		
-		// Anzahl Sekunden die erscrollt werden können.
-		float time = scrollbarData.getScrollerLength();
-		int visiblePoints = scrollbarData.getScreenScrollerLength();
-		
-		// Anzahl Angezeigte Sekunden berechnen.
-		float visibleTime = visiblePoints / generatorScaleX;
-		
-		scrollbarData.setScrollerSize(visibleTime);
-	}
 	
 	public void selectMainModul()
 	{
-		this.controllerData.getTracksData().clearTracks();
+		this.mainPageLogic.clearTracks();
 
 		Generators generators = this.controllerData.getMainGenerators();
 
 		this.controllerData.getSoundData().setGenerators(generators);
 		
 		this.controllerData.setEditGenerators(null, generators);
-
+		this.mainPageLogic.triggerEditGeneratorChanged(null, generators);
+		
 		//-----------------------------------------------------
 		// Generators updating in actual View:
 		
@@ -934,4 +584,11 @@ GeneratorInputSelectedListenerInterface
 		}
 	}
 	
+	/**
+	 * @return the attribute {@link #mainPageLogic}.
+	 */
+	public MainPageLogic getMainPageLogic()
+	{
+		return this.mainPageLogic;
+	}
 }

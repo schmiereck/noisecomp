@@ -1,5 +1,8 @@
-package de.schmiereck.noiseComp.desktopController;
+package de.schmiereck.noiseComp.desktopController.mainPage.actions;
 
+import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
+import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
@@ -14,6 +17,7 @@ public class AddInputButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	private MainPageLogic mainPageLogic;
 	private DesktopControllerData controllerData;
 	
 	/**
@@ -21,11 +25,14 @@ public class AddInputButtonActionLogicListener
 	 * 
 	 * 
 	 */
-	public AddInputButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public AddInputButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			MainPageLogic mainPageLogic, 
+			DesktopControllerData controllerData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
+		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;
 	}
 	
@@ -34,8 +41,6 @@ public class AddInputButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
-		
-		this.controllerLogic.setInput(generatorInputsData, true);
+		this.mainPageLogic.setInput(/* generatorInputsData, */ true);
 	}
 }

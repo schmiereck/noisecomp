@@ -9,6 +9,7 @@ import de.schmiereck.noiseComp.desktopPage.DesktopColors;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 
@@ -18,17 +19,19 @@ import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
  * @author smk
  * @version 08.02.2004
  */
-public class TracksGraphic
+public class TracksListWidgetGraphic
 extends ListWidgetGraphic
 {
 	
 	private static void drawGeneratorArea(Graphics g, ScreenGraficInterface screenGrafic, DesktopColors desktopColors,
-								   TracksData tracksData, Generator generator, 
+								   TracksListWidgetData tracksData, Generator generator, 
 								   int screenPosY, int trackHeight, 
 								   float scrollStartTime, float scrollEndTime, 
 								   boolean generatorIsActive, boolean generatorIsSelected)
 	{
 		// While calulate the scrolling, remember the part of the left row:
+		
+		ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
 		
 		float generatorStartTime;
 		
@@ -78,7 +81,7 @@ extends ListWidgetGraphic
 				// Samples:
 				g.setColor(desktopColors.getSampleColor());
 				
-				float generatorSampleScale = generator.getGeneratorSampleDrawScale();
+				float generatorSampleScale = generator.getGeneratorSampleDrawScale(parentModulGenerator);
 				
 				float frameRate = generator.getFrameRate();
 				boolean firstSample = true;
@@ -88,7 +91,7 @@ extends ListWidgetGraphic
 				//for (float timePos = 0; timePos < timeLength; timePos += (0.5F / scaleX))
 				for (float timePos = 0; timePos < timeLength; timePos += (2.0F / scaleX))
 				{
-					SoundSample soundSample = generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate));
+					SoundSample soundSample = generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate), parentModulGenerator);
 					
 					if (soundSample != null)
 					{	
@@ -153,7 +156,7 @@ extends ListWidgetGraphic
 							  float scrollStartTime, float scrollEndTime,
 							  float verticalScrollerStart, float verticalScrollerEnd)
 	{
-		TracksData tracksData = (TracksData)listWidgetData;
+		TracksListWidgetData tracksData = (TracksListWidgetData)listWidgetData;
 		TrackData trackData = (TrackData)entry;
 		
 		int posX = listWidgetData.getPosX();
@@ -168,7 +171,7 @@ extends ListWidgetGraphic
 		{
 			trackIsActive = true;
 
-			if (tracksData.getHitGeneratorPart() != TracksData.HIT_PART_NONE)
+			if (tracksData.getHitGeneratorPart() != TracksListWidgetData.HIT_PART_NONE)
 			{
 				generatorIsActive = true;
 			}
@@ -226,9 +229,10 @@ extends ListWidgetGraphic
 		{
 			screenGrafic.setColor(g, Color.BLACK);
 		}
-		screenGrafic.drawString(g, 10, screenPosY + entryHeight / 2, trackData.getName());
+		screenGrafic.drawString(g, 10, screenPosY + entryHeight / 2 - 4, trackData.getName());
+		screenGrafic.drawString(g, 10, screenPosY + entryHeight - 4, "(" + trackData.getGenerator().getGeneratorTypeData().getGeneratorTypeName() + ")");
 		
-		TracksGraphic.drawGeneratorArea(g, screenGrafic, desktopColors,
+		TracksListWidgetGraphic.drawGeneratorArea(g, screenGrafic, desktopColors,
 				tracksData, generator, screenPosY, entryHeight,
 				scrollStartTime, scrollEndTime, generatorIsActive, generatorIsSelected);
 	}
@@ -239,7 +243,7 @@ extends ListWidgetGraphic
 							   int posX, int posY, int sizeX, int sizeY, 
 							   float horizontalScrollStart, float horizontalScrollEnd)
 	{
-		TracksData tracksData = (TracksData)listWidgetData;
+		TracksListWidgetData tracksData = (TracksListWidgetData)listWidgetData;
 		
 		float scaleX = tracksData.getGeneratorScaleX();
 		int labelSizeX = tracksData.getGeneratorsLabelSizeX();
@@ -278,7 +282,7 @@ extends ListWidgetGraphic
 							  float horizontalScrollStart, float horizontalScrollEnd, 
 							  float verticalScrollerStart, float verticalScrollerEnd)
 	{
-		TracksData tracksData = (TracksData)listWidgetData;
+		TracksListWidgetData tracksData = (TracksListWidgetData)listWidgetData;
 		
 		float scaleX = tracksData.getGeneratorScaleX();
 		int labelSizeX = tracksData.getGeneratorsLabelSizeX();

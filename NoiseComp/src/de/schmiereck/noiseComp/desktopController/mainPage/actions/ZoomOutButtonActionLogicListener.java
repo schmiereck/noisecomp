@@ -1,21 +1,22 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.mainPage.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
 
 /**
  * TODO docu
  *
  * @author smk
- * @version <p>06.03.2004: created, smk</p>
+ * @version 22.02.2004
  */
-public class RemoveInputButtonActionLogicListener
-	implements ButtonActionLogicListenerInterface
+public class ZoomOutButtonActionLogicListener 
+implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	private MainPageLogic mainPageLogic;
 	private DesktopControllerData controllerData;
 	
 	/**
@@ -23,11 +24,14 @@ public class RemoveInputButtonActionLogicListener
 	 * 
 	 * 
 	 */
-	public RemoveInputButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public ZoomOutButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			MainPageLogic mainPageLogic, 
+			DesktopControllerData controllerData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
+		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;
 	}
 	
@@ -36,11 +40,7 @@ public class RemoveInputButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
-		
-		if (generatorInputsData != null)
-		{	
-			generatorInputsData.removeSelectedInput();
-		}
+		this.mainPageLogic.doChangeZoom(0.5F);
 	}
+
 }

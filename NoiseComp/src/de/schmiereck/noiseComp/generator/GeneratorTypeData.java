@@ -28,7 +28,7 @@ public class GeneratorTypeData
 	/**
 	 * List of the allowed {@link InputTypeData}-Objects of this Generator-Type.
 	 */
-	private InputTypesData inputTypes = new InputTypesData();
+	private InputTypesData inputTypesData = new InputTypesData();
 	
 	/**
 	 * Constructor.
@@ -44,11 +44,11 @@ public class GeneratorTypeData
 	}
 
 	/**
-	 * @see #inputTypes
+	 * @see #inputTypesData
 	 */
 	public void addInputTypeData(InputTypeData inputTypeData)
 	{
-		this.inputTypes.addInputTypeData(inputTypeData);
+		this.inputTypesData.addInputTypeData(inputTypeData);
 	}
 	/**
 	 * @return the attribute {@link #generatorClass}.
@@ -80,7 +80,7 @@ public class GeneratorTypeData
 	
 	public InputTypeData getInputTypeData(int inputType)
 	{
-		return this.inputTypes.getInputTypeData(inputType);
+		return this.inputTypesData.getInputTypeData(inputType);
 	}
 	/**
 	 * @return the attribute {@link #generatorTypeName}.
@@ -99,19 +99,27 @@ public class GeneratorTypeData
 	}
 	
 	/**
-	 * @see #inputTypes
+	 * @see #inputTypesData
 	 */
 	public Iterator getInputTypesIterator()
 	{
-		return this.inputTypes.getInputTypesIterator();
+		return this.inputTypesData.getInputTypesIterator();
 	}
-
+	
+	/**
+	 * @see #inputTypesData
+	 */
+	public InputTypesData getInputTypesData()
+	{
+		return this.inputTypesData;
+	}
+	
 	/**
 	 * @param generatorName
 	 * @param frameRate
 	 * @return
 	 */
-	public Generator createGeneratorInstance(String generatorName, float frameRate)
+	public Generator createGeneratorInstance(String generatorName, float frameRate)//, ModulGenerator parentModulGenerator)
 	{
 		Generator generator = null;
 		
@@ -123,6 +131,7 @@ public class GeneratorTypeData
 			params[0] = String.class;				// generatorName
 			params[1] = Float.class;				// frameRate
 			params[2] = GeneratorTypeData.class;	// generatorTypeData
+			//params[3] = ModulGenerator.class;		// parentModulGenerator
 			
 			try
 			{
@@ -132,6 +141,7 @@ public class GeneratorTypeData
 				args[0] = generatorName;
 				args[1] = Float.valueOf(frameRate);
 				args[2] = this;
+				//args[3] = parentModulGenerator;
 				
 				try
 				{

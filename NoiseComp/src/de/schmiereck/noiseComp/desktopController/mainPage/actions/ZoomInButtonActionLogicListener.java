@@ -1,21 +1,23 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.mainPage.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 
 /**
  * TODO docu
  *
  * @author smk
- * @version <p>06.03.2004: created, smk</p>
+ * @version 22.02.2004
  */
-public class NewInputButtonActionLogicListener
-	implements ButtonActionLogicListenerInterface
+public class ZoomInButtonActionLogicListener 
+implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	private MainPageLogic mainPageLogic;
 	private DesktopControllerData controllerData;
 	
 	/**
@@ -23,11 +25,14 @@ public class NewInputButtonActionLogicListener
 	 * 
 	 * 
 	 */
-	public NewInputButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public ZoomInButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			MainPageLogic mainPageLogic, 
+			DesktopControllerData controllerData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
+		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;
 	}
 	
@@ -36,8 +41,7 @@ public class NewInputButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
-		
-		this.controllerLogic.newInput(generatorInputsData);
+		this.mainPageLogic.doChangeZoom(2.0F);
 	}
+
 }

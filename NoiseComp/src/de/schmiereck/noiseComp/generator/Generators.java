@@ -139,53 +139,19 @@ public class Generators
 		return retGenerator;
 	}
 
-	public InputData addInput(Generator generator, String inputGeneratorName, InputTypeData inputTypeData, Float inputValue)
+	/**
+	 * Add a new Input to the generator 'generator'.
+	public InputData addInput(Generator generator, Generator inputGenerator, 
+			InputTypeData inputTypeData, Float inputValue, InputTypeData inputModulInputTypeData)
 	{
 		InputData inputData;
 		
-		/*
-		 TrackData inputTrackData;
-		 
-		 if (inputGeneratorName != null)
-		 {
-		 if (inputGeneratorName.length() > 0)
-		 {
-		 //inputTrackData = this.controllerData.getTracksData().searchTrackData(inputGeneratorName);
-		 inputTrackData = tracksData.searchTrackData(inputGeneratorName);
-		 
-		 // Found no Track with the name of the Input ?
-		 if (inputTrackData == null)
-		 {
-		 throw new RuntimeException("input generator \"" + inputGeneratorName + "\" not found");
-		 }
-		 }
-		 else
-		 {
-		 inputTrackData = null;
-		 }
-		 }
-		 else
-		 {
-		 inputTrackData = null;
-		 }
-		 
-		 Generator inputGenerator;
-		 
-		 // Found a Track with the name of the Input ?
-		 if (inputTrackData != null)
-		 {
-		 inputGenerator = inputTrackData.getGenerator();
-		 }
-		 else
-		 {
-		 inputGenerator = null;
-		 }
-		 */
-		Generator inputGenerator = this.searchGenerator(inputGeneratorName);
+		//Generator inputGenerator = this.searchGenerator(inputGeneratorName);
 		
-		inputData = generator.addInputGenerator(inputGenerator, inputTypeData, inputValue);
+		inputData = generator.addInputGenerator(inputGenerator, inputTypeData, 
+				inputValue, inputModulInputTypeData);
 		
 		return inputData;
 	}
-
+	*/
 }

@@ -3,10 +3,9 @@ package de.schmiereck.noiseComp.desktopPage;
 import java.awt.Graphics;
 import java.util.Iterator;
 
-import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorTypesWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonGraphic;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
@@ -21,7 +20,6 @@ import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.TextWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TextWidgetGraphic;
-import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 
@@ -149,15 +147,15 @@ public class DesktopPageGraphic
 						else
 						{
 							/*
-							if (widgetData instanceof TracksData)
+							if (widgetData instanceof TracksListWidgetData)
 							{	
-								TracksData tracksData = (TracksData)widgetData;
+								TracksListWidgetData tracksData = (TracksListWidgetData)widgetData;
 								
 								ListWidgetGraphic listWidgetGraphic = tracksData.getGraphicInstance();
 								
 								listWidgetGraphic.drawList(g, screenGrafic, desktopColors, 
 										tracksData);
-								//TracksGraphic.drawGenerators(g, screenGrafic, desktopColors, 
+								//TracksListWidgetGraphic.drawGenerators(g, screenGrafic, desktopColors, 
 								//		tracksData);
 							}
 							else

@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeIterator;
 
+import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
@@ -18,6 +19,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.Generators;
+import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -92,7 +94,7 @@ implements ButtonActionLogicListenerInterface
 				
 				Generators mainGenerators = this.controllerData.getMainGenerators();
 				
-				this.createGenerators(noiseNode, soundData, mainGenerators);
+				this.createGenerators(noiseNode, soundData, mainGenerators, null);
 
 				//-----------------------------------------------------
 				// Generators updating in actual View:
@@ -121,16 +123,24 @@ implements ButtonActionLogicListenerInterface
 		}
 	}
 
-	private void createGenerators(Node rootNode, SoundData soundData, Generators generators)
+	/**
+	 * Creates the list of generatores descripted below the 'rootNode'.
+	 * 
+	 * @param rootNode
+	 * @param soundData
+	 * @param generators
+	 * @param parentModulGenerator
+	 */
+	private void createGenerators(Node rootNode, SoundData soundData, Generators generators, ModulGeneratorTypeData modulGeneratorTypeData) //, ModulGenerator parentModulGenerator)
 	{
 		// List with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 		Vector loadFileGeneratorNodeDatas = new Vector();
 		
-		this.createGenerators(rootNode, soundData, generators, loadFileGeneratorNodeDatas);
+		this.createGenerators(rootNode, soundData, generators, loadFileGeneratorNodeDatas, modulGeneratorTypeData); //, parentModulGenerator);
 		
 		// Inserting the inputs:
 		
-		this.createGeneratorInputs(generators, loadFileGeneratorNodeDatas);
+		this.createGeneratorInputs(generators, loadFileGeneratorNodeDatas, modulGeneratorTypeData);
 	}
 
 	private void createGeneratorTypes(Node noiseNode, SoundData soundData)//, Vector loadFileGeneratorNodeDatas)
@@ -221,7 +231,7 @@ implements ButtonActionLogicListenerInterface
 					
 					Generators modulGenerators = new Generators();
 					
-					this.createGenerators(generatorTypeNode, soundData, modulGenerators);
+					this.createGenerators(generatorTypeNode, soundData, modulGenerators, modulGeneratorTypeData);
 					
 					modulGeneratorTypeData.setGenerators(modulGenerators);
 				}
@@ -299,7 +309,9 @@ implements ButtonActionLogicListenerInterface
 	 * @param soundData is the empty sound data object the generators are inserted.
 	 * @param loadFileGeneratorNodeDatas is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
-	private void createGenerators(Node noiseNode, SoundData soundData, Generators generators, Vector loadFileGeneratorNodeDatas)
+	private void createGenerators(Node noiseNode, SoundData soundData, 
+			Generators generators, Vector loadFileGeneratorNodeDatas, ModulGeneratorTypeData modulGeneratorTypeData) 
+			//ModulGenerator parentModulGenerator)
 	{
 		Node generatorsNode = XMLData.selectSingleNode(noiseNode, "generators");
 
@@ -321,7 +333,7 @@ implements ButtonActionLogicListenerInterface
 			
 			Generator generator;
 			
-			generator = generatorTypeData.createGeneratorInstance(generatorName, soundData.getFrameRate());
+			generator = generatorTypeData.createGeneratorInstance(generatorName, soundData.getFrameRate()); //, parentModulGenerator);
 
 			if (generator != null)
 			{					
@@ -351,8 +363,7 @@ implements ButtonActionLogicListenerInterface
 			}
 			else
 			{
-				// TODO show ERROR message
-				throw new RuntimeException("can't create generator by type: " + generatorTypeData);
+				throw new PopupRuntimeException("can't create generator by type: " + generatorTypeData);
 			}
 		}
 	}
@@ -362,7 +373,7 @@ implements ButtonActionLogicListenerInterface
 	 * 
 	 * @param loadFileGeneratorNodeDatas is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
-	private void createGeneratorInputs(Generators generators, Vector loadFileGeneratorNodeDatas)
+	private void createGeneratorInputs(Generators generators, Vector loadFileGeneratorNodeDatas, ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		Iterator loadFileGeneratorNodeDatasIterator = loadFileGeneratorNodeDatas.iterator();
 		
@@ -386,13 +397,27 @@ implements ButtonActionLogicListenerInterface
 					String inputGeneratorName = XMLData.selectSingleNodeText(inputNode, "generatorName");
 					Integer inputType = XMLData.selectSingleNodeInteger(inputNode, "type");
 					Float inputValue = XMLData.selectSingleNodeFloat(inputNode, "value");
+					Integer inputModulInputType = XMLData.selectSingleNodeInteger(inputNode, "inputModulInputType");
+					
+					Generator inputGenerator = generators.searchGenerator(inputGeneratorName);
 					
 					InputTypeData inputTypeData = generator.getGeneratorTypeData().getInputTypeData(inputType.intValue());
 					
-					generators.addInput(generator, inputGeneratorName, inputTypeData, inputValue);
+					InputTypeData inputModulInputTypeData;
+					
+					if (inputModulInputType != null)
+					{	
+						inputModulInputTypeData = modulGeneratorTypeData.getInputTypeData(inputModulInputType.intValue());
+					}
+					else
+					{	
+						inputModulInputTypeData = null;
+					}
+					
+					//generators.addInput(generator, inputGenerator, inputTypeData, inputValue, inputModulInputTypeData);
+					InputData inputData = generator.addInputGenerator(inputGenerator, inputTypeData, inputValue, inputModulInputTypeData);
 				}
 			}
 		}
 	}
-
 }

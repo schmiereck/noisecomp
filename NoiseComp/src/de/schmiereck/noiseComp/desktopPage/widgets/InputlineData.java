@@ -80,6 +80,70 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 		}
 	}
 
+	public synchronized Integer getInputInteger()
+	{
+		String text = this.getInputText();
+		
+		Integer ret;
+		
+		if (text != null)
+		{
+			ret = Integer.valueOf(text);
+		}
+		else
+		{	
+			ret = null;
+		}
+		return ret;
+	}
+
+	public synchronized void setInputInteger(Integer value)
+	{
+		String text;
+		
+		if (value != null)
+		{
+			text = value.toString();
+		}
+		else
+		{	
+			text = null;
+		}
+		this.setInputText(text);
+	}
+
+	public synchronized Float getInputFloat()
+	{
+		String text = this.getInputText();
+		
+		Float ret;
+		
+		if (text != null)
+		{
+			ret = Float.valueOf(text);
+		}
+		else
+		{	
+			ret = null;
+		}
+		return ret;
+	}
+
+	public synchronized void setInputFloat(Float value)
+	{
+		String text;
+		
+		if (value != null)
+		{
+			text = value.toString();
+		}
+		else
+		{	
+			text = null;
+		}
+		this.setInputText(text);
+	}
+	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface#notifyFocusedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
 	 */

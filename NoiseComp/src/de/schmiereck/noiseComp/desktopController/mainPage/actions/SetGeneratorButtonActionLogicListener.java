@@ -1,20 +1,24 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.mainPage.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
+import de.schmiereck.noiseComp.generator.Generator;
 
 /**
- * TODO docu
+ * Saves the edit data of the selected generator.
  *
  * @author smk
  * @version 22.02.2004
  */
-public class ZoomOutButtonActionLogicListener 
+public class SetGeneratorButtonActionLogicListener 
 implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	private MainPageLogic mainPageLogic;
 	private DesktopControllerData controllerData;
 	
 	/**
@@ -22,11 +26,14 @@ implements ButtonActionLogicListenerInterface
 	 * 
 	 * 
 	 */
-	public ZoomOutButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public SetGeneratorButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			MainPageLogic mainPageLogic, 
+			DesktopControllerData controllerData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
+		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;
 	}
 	
@@ -35,7 +42,7 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		this.controllerLogic.doChangeZoom(0.5F);
+		this.mainPageLogic.storeGeneratorEditData();
 	}
 
 }

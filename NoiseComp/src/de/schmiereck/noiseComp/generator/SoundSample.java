@@ -130,6 +130,23 @@ public class SoundSample
 	}
 
 	/**
+	 * @param value
+	 */
+	public void setMonoValue(Float value)
+	{
+		if (value != null)
+		{	
+			this.leftValue = value.floatValue();
+			this.rightValue = value.floatValue();
+		}
+		else
+		{	
+			this.leftValue = 0.0F;
+			this.rightValue = 0.0F;
+		}
+	}
+
+	/**
 	 * Limites the Range to -1.0 and +1.0.
 	 * 
 	 * @param value

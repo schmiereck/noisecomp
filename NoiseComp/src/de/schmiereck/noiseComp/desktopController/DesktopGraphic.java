@@ -49,6 +49,12 @@ extends MultiBufferFullScreenGraphic
 		
 		this.drawFPSInfos(g, controllerData);
 
+		if (desktopControllerData.getPopupRuntimeExceptionText() != null)
+		{
+			g.drawString("ERROR: " + desktopControllerData.getPopupRuntimeExceptionText(), 
+					9, 9);
+		}
+		
 		this.desktopPageGraphic.drawPointer(g, this, desktopPageData);
 	}
 

@@ -33,6 +33,10 @@ extends DesktopPageData
 	 */
 	private FunctionButtonData selectAddButtonData = null;
 	/**
+	 * Dialog: Select Generator: Insert-Button
+	 */
+	private FunctionButtonData selectInsertButtonData = null;
+	/**
 	 * Dialog: Select Generator: Edit-Button
 	 */
 	private FunctionButtonData selectEditButtonData = null;
@@ -85,20 +89,26 @@ extends DesktopPageData
 			this.generatorTypesListData = new GeneratorTypesWidgetData(100, 120, 680 - desktopData.getScrollbarWidth2(), 400, verticalScrollbarData, null, generatorTypesData);
 			this.addWidgetData(this.generatorTypesListData);
 		}
+		
 		{
-			this.selectAddButtonData = new FunctionButtonData("selectAdd", "Add selected", 100, 70, 100, 20);
+			this.selectAddButtonData = new FunctionButtonData("selectAdd", "Add selected...", 100, 40, 100, 20);
 			this.addWidgetData(this.selectAddButtonData);
 		}
 		{
-			this.selectMainEditButtonData = new FunctionButtonData("selectMainEdit", "Edit Main Modul", 210, 40, 220, 20);
+			this.selectMainEditButtonData = new FunctionButtonData("selectMainEdit", "Edit Main Modul...", 210, 40, 220, 20);
 			this.addWidgetData(this.selectMainEditButtonData);
 		}
+		
 		{
-			this.selectEditButtonData = new FunctionButtonData("selectEdit", "Edit Modul", 210, 70, 100, 20);
+			this.selectInsertButtonData = new FunctionButtonData("selectInsert", "Insert...", 100, 70, 100, 20);
+			this.addWidgetData(this.selectInsertButtonData);
+		}
+		{
+			this.selectEditButtonData = new FunctionButtonData("selectEdit", "Edit...", 210, 70, 100, 20);
 			this.addWidgetData(this.selectEditButtonData);
 		}
 		{
-			this.selectRemoveButtonData = new FunctionButtonData("selectRemove", "Remove Modul", 320, 70, 110, 20);
+			this.selectRemoveButtonData = new FunctionButtonData("selectRemove", "Remove", 320, 70, 110, 20);
 			this.addWidgetData(this.selectRemoveButtonData);
 		}
 	}

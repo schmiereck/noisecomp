@@ -44,7 +44,7 @@ extends Generator
 		}
 		this.volumeInputs.add(volumeInput);
 		*/
-		this.addInputGenerator(volumeInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_VOLUME));
+		this.addInputGenerator(volumeInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_VOLUME), null, null);
 	}
 
 	public void addSignalInput(Generator signalInput)
@@ -55,13 +55,13 @@ extends Generator
 		}
 		this.signalInputs.add(signalInput);
 		*/
-		this.addInputGenerator(signalInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		this.addInputGenerator(signalInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL), null, null);
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.soundGenerator.Generator#calculateSoundSample(long, de.schmiereck.soundGenerator.SoundSample)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
 		float volume = 0.0F;
 
@@ -70,122 +70,129 @@ extends Generator
 
 		SoundSample signal = new SoundSample();
 		
-		Iterator inputsIterator = this.getInputsIterator();
+		Object inputsSyncObject = this.getInputsSyncObject();
 		
-		if (inputsIterator != null)
-		{
-			while (inputsIterator.hasNext())
+		if (inputsSyncObject != null)
+		{	
+			synchronized (inputsSyncObject)
 			{
-				InputData inputData = (InputData)inputsIterator.next();
-				
-				switch (inputData.getInputTypeData().getInputType())
+				Iterator inputsIterator = this.getInputsIterator();
+			
+				if (inputsIterator != null)
 				{
-					case INPUT_TYPE_VOLUME:
+					while (inputsIterator.hasNext())
+					{
+						InputData inputData = (InputData)inputsIterator.next();
+						
+						switch (inputData.getInputTypeData().getInputType())
 						{
-							float value = this.calcInputMonoValue(framePosition, inputData);
-							/*
-							GeneratorInterface volumeInputGenerator = inputData.getInputGenerator();
-							
-							// Found Input-Generator ?
-							if (volumeInputGenerator != null)
-							{	
-								SoundSample volumeInputSample = volumeInputGenerator.generateFrameSample(framePosition);
-								
-								if (volumeInputSample != null)
+							case INPUT_TYPE_VOLUME:
 								{
-									value = volumeInputSample.getMonoValue();
-								}
-								else
-								{
-									// Found no input signal:
+									float value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
+									/*
+									GeneratorInterface volumeInputGenerator = inputData.getInputGenerator();
 									
-									value = 0.0F;
+									// Found Input-Generator ?
+									if (volumeInputGenerator != null)
+									{	
+										SoundSample volumeInputSample = volumeInputGenerator.generateFrameSample(framePosition);
+										
+										if (volumeInputSample != null)
+										{
+											value = volumeInputSample.getMonoValue();
+										}
+										else
+										{
+											// Found no input signal:
+											
+											value = 0.0F;
+										}
+									}
+									else
+									{	
+										// Found no Input-Generator:
+										
+										Float inputValue = inputData.getInputValue();
+										
+										// Found constant input value ?
+										if (inputValue != null)
+										{
+											value = inputValue.floatValue();
+										}
+										else
+										{	
+											// Found no input value:
+											// Use Default Value of Input type:
+											
+											value = this.getInputDefaultValueByInputType(inputData.getInputType());
+										}
+									}
+									*/
+									volume += value;
+									break;
 								}
-							}
-							else
-							{	
-								// Found no Input-Generator:
-								
-								Float inputValue = inputData.getInputValue();
-								
-								// Found constant input value ?
-								if (inputValue != null)
+							case INPUT_TYPE_SIGNAL:
 								{
-									value = inputValue.floatValue();
-								}
-								else
-								{	
-									// Found no input value:
-									// Use Default Value of Input type:
+									this.calcInputValue(framePosition, inputData, signal, parentModulGenerator);
+									/*
+									float valueRight;
+									float valueLeft;
+		
+									GeneratorInterface signalInputGenerator = inputData.getInputGenerator();
 									
-									value = this.getInputDefaultValueByInputType(inputData.getInputType());
+									// Found Input-Generator ?
+									if (signalInputGenerator != null)
+									{	
+										SoundSample signalInputSample = signalInputGenerator.generateFrameSample(framePosition);
+									
+										if (signalInputSample != null)
+										{
+											valueLeft = signalInputSample.getLeftValue();
+											valueRight = signalInputSample.getRightValue();
+										}
+										else
+										{
+											// Found no input signal:
+											
+											valueLeft = 0.0F;
+											valueRight = 0.0F;
+										}
+									}
+									else
+									{	
+										// Found no Input-Generator:
+										
+										Float inputValue = inputData.getInputValue();
+										
+										// Found constant input value ?
+										if (inputValue != null)
+										{
+											valueLeft = inputValue.floatValue();
+											valueRight = inputValue.floatValue();
+										}
+										else
+										{	
+											// Found no input value:
+											// Use Default Value of Input type:
+											
+											valueLeft = this.getInputDefaultValueByInputType(inputData.getInputType());
+											valueRight = valueLeft;
+										}
+									}
+									*/
+									signalLeft += signal.getLeftValue();
+									signalRight += signal.getRightValue();
+									break;
 								}
-							}
-							*/
-							volume += value;
-							break;
+							default:
+								{
+									throw new RuntimeException("unknown input type " + inputData.getInputTypeData());
+								}
 						}
-					case INPUT_TYPE_SIGNAL:
-						{
-							this.calcInputValue(framePosition, inputData, signal);
-							/*
-							float valueRight;
-							float valueLeft;
-
-							GeneratorInterface signalInputGenerator = inputData.getInputGenerator();
-							
-							// Found Input-Generator ?
-							if (signalInputGenerator != null)
-							{	
-								SoundSample signalInputSample = signalInputGenerator.generateFrameSample(framePosition);
-							
-								if (signalInputSample != null)
-								{
-									valueLeft = signalInputSample.getLeftValue();
-									valueRight = signalInputSample.getRightValue();
-								}
-								else
-								{
-									// Found no input signal:
-									
-									valueLeft = 0.0F;
-									valueRight = 0.0F;
-								}
-							}
-							else
-							{	
-								// Found no Input-Generator:
-								
-								Float inputValue = inputData.getInputValue();
-								
-								// Found constant input value ?
-								if (inputValue != null)
-								{
-									valueLeft = inputValue.floatValue();
-									valueRight = inputValue.floatValue();
-								}
-								else
-								{	
-									// Found no input value:
-									// Use Default Value of Input type:
-									
-									valueLeft = this.getInputDefaultValueByInputType(inputData.getInputType());
-									valueRight = valueLeft;
-								}
-							}
-							*/
-							signalLeft += signal.getLeftValue();
-							signalRight += signal.getRightValue();
-							break;
-						}
-					default:
-						{
-							throw new RuntimeException("unknown input type " + inputData.getInputTypeData());
-						}
+					}
 				}
 			}
 		}
-		
 		soundSample.setStereoValues(signalLeft * volume, signalRight * volume);
 	}
 

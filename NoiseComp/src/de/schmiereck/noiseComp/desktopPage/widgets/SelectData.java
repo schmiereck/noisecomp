@@ -7,7 +7,9 @@ import de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.SubmitWidgetListenerInterface;
 
 /**
- * TODO docu
+ * Manages the data of an widget to select a single entry from a list.<br/>
+ * Uses a list of 
+ * {@link de.schmiereck.noiseComp.desktopPage.widgets.SelectEntryData}-Objects.
  *
  * @author smk
  * @version 21.02.2004

@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
@@ -23,6 +24,7 @@ public class SelectEditButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	private MainPageLogic mainPageLogic;
 	private DesktopControllerData controllerData;
 	
 	private SelectGeneratorPageData selectGeneratorPageData;
@@ -33,12 +35,14 @@ public class SelectEditButtonActionLogicListener
 	 * 
 	 */
 	public SelectEditButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			MainPageLogic mainPageLogic,
 			DesktopControllerData controllerData,
 			SelectGeneratorPageData selectGeneratorPageData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
+		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;
 		this.selectGeneratorPageData = selectGeneratorPageData;
 	}
@@ -64,11 +68,12 @@ public class SelectEditButtonActionLogicListener
 		
 		Generators generators = modulTypeData.getGenerators();
 
-		this.controllerData.getTracksData().clearTracks();
+		this.mainPageLogic.clearTracks();
 		
 		this.controllerData.getSoundData().setGenerators(generators);
 		
 		this.controllerData.setEditGenerators(modulTypeData, generators);
+		this.mainPageLogic.triggerEditGeneratorChanged(modulTypeData, generators);
 		
 		//-----------------------------------------------------
 		// Generators updating in actual View:

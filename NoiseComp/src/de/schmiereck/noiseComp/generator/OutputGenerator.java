@@ -26,17 +26,17 @@ extends Generator
 	 */
 	public void setSignalInput(Generator inputSoundGenerator)
 	{
-		this.addInputGenerator(inputSoundGenerator, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		this.addInputGenerator(inputSoundGenerator, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL), null, null);
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.soundGenerator.Generator#calculateSoundSample(long, de.schmiereck.soundGenerator.SoundSample)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
-		this.calcInputSignals(framePosition, signalInputData, soundSample);
+		this.calcInputSignals(framePosition, signalInputData, soundSample, parentModulGenerator);
 		/*
 		InputData inputData = this.searchInputByType(INPUT_TYPE_SIGNAL);
 		

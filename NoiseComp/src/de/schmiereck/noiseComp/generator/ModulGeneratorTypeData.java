@@ -1,6 +1,6 @@
 package de.schmiereck.noiseComp.generator;
 
-import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TracksListWidgetData;
 
 /**
  * TODO docu

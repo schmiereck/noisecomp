@@ -7,7 +7,6 @@ import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.InputData;
 
@@ -244,9 +243,11 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		InputData inputData = null;
 
 		// Die Positionsnummer des Generators in der Liste.
-		int pos = (pointerPosY / this.getListEntryHeight()) + ((int)this.getVerticalScrollerPos());
+		int screenPos = (pointerPosY / this.getListEntryHeight());
 		
-		// Innerhalb der Anzahl der vorhandneen generatoren ?
+		int pos = screenPos + ((int)this.getVerticalScrollerPos());
+
+		// Innerhalb der Anzahl der vorhandnenen Generatoren ?
 		if (pos < this.getInputsCount())
 		{
 			inputData = this.getInputData(pos);
@@ -257,7 +258,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	/**
 	 * @param generatorInputSelectedListener is the new value for attribute {@link #generatorInputSelectedListener} to set.
 	 */
-	public void setGeneratorInputSelectedListener(GeneratorInputSelectedListenerInterface generatorInputSelectedListener)
+	public void registerGeneratorInputSelectedListener(GeneratorInputSelectedListenerInterface generatorInputSelectedListener)
 	{
 		this.generatorInputSelectedListener = generatorInputSelectedListener;
 	}

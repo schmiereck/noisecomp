@@ -25,29 +25,14 @@ extends Generator
 		super(name, frameRate, generatorTypeData);
 	}
 
-	/**
-	 * @param endFadeValue is the new value for attribute {@link #endFadeValue} to set.
-	public void setEndFadeValue(float endFadeValue)
-	{
-		this.endFadeValue = endFadeValue;
-	}
-	 */
-	/**
-	 * @param startFadeValue is the new value for attribute {@link #startFadeValue} to set.
-	public void setStartFadeValue(float startFadeValue)
-	{
-		this.startFadeValue = startFadeValue;
-	}
-	 */
-
 	/* (non-Javadoc)
-	 * @see de.schmiereck.soundGenerator.Generator#calculateSoundSample(long, float, de.schmiereck.soundGenerator.SoundSample)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
-		float startFadeValue = this.calcStartFadeValue(framePosition);
+		float startFadeValue = this.calcStartFadeValue(framePosition, parentModulGenerator);
 		
-		float endFadeValue = this.calcEndFadeValue(framePosition);
+		float endFadeValue = this.calcEndFadeValue(framePosition, parentModulGenerator);
 		
 		// Relativer Zeitpunkt im Generator.
 		float timePos = frameTime - (this.getStartTimePos());
@@ -64,9 +49,9 @@ extends Generator
 		soundSample.setStereoValues(value, value);
 	}
 	
-	private float calcEndFadeValue(long framePosition)
+	private float calcEndFadeValue(long framePosition, ModulGenerator parentModulGenerator)
 	{
-		float endFadeValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_END_VALUE));
+		float endFadeValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_END_VALUE), parentModulGenerator);
 		/*
 		{
 			InputData endFadeValueInputData = this.searchInputByType(INPUT_TYPE_END_VALUE);
@@ -114,9 +99,9 @@ extends Generator
 		return endFadeValue;
 	}
 
-	private float calcStartFadeValue(long framePosition)
+	private float calcStartFadeValue(long framePosition, ModulGenerator parentModulGenerator)
 	{
-		float startFadeValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_START_VALUE));
+		float startFadeValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_START_VALUE), parentModulGenerator);
 		/*
 		{
 			InputData startFadeValueInputData = this.searchInputByType(INPUT_TYPE_START_VALUE);
@@ -183,12 +168,12 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#getGeneratorSampleDrawScale()
 	 */
-	public float getGeneratorSampleDrawScale()
+	public float getGeneratorSampleDrawScale(ModulGenerator parentModulGenerator)
 	{
 		// Works only, if the values are constant inputs:
 		
-		float startFadeValue = this.calcStartFadeValue(0);
-		float endFadeValue = this.calcEndFadeValue(0);
+		float startFadeValue = this.calcStartFadeValue(0, parentModulGenerator);
+		float endFadeValue = this.calcEndFadeValue(0, parentModulGenerator);
 		
 		float max = Math.max(Math.abs(startFadeValue), Math.abs(endFadeValue));
 		

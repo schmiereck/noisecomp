@@ -137,10 +137,10 @@ public class DesktopPageLogic
 			
 			if (focusedWidgetData != widgetData)
 			{	
-				if (focusedWidgetData instanceof FocusedWidgetListenerInterface)
-				{
-					if (focusedWidgetData != null)
-					{	
+				if (focusedWidgetData != null)
+				{	
+					if (focusedWidgetData instanceof FocusedWidgetListenerInterface)
+					{
 						((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
 					}
 				}
@@ -159,7 +159,10 @@ public class DesktopPageLogic
 			
 			if (focusedWidgetData != null)
 			{	
-				((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
+				if (focusedWidgetData instanceof FocusedWidgetListenerInterface)
+				{	
+					((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
+				}
 			}
 			desktopPageData.setFocusedWidgetData(null);
 

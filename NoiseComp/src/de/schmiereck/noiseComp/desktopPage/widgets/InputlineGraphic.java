@@ -83,9 +83,12 @@ public class InputlineGraphic
 				inputSizeX = 0;
 			}
 		}
-		screenGrafic.drawLine(g, posX + inputSizeX, posY, 0, sizeY);
-		screenGrafic.drawLine(g, posX + inputSizeX, posY, 3, 0);
-		screenGrafic.drawLine(g, posX + inputSizeX, posY + sizeY, 3, 0);
+		if (focused == true)
+		{	
+			screenGrafic.drawLine(g, posX + inputSizeX, posY, 0, sizeY);
+			screenGrafic.drawLine(g, posX + inputSizeX, posY, 3, 0);
+			screenGrafic.drawLine(g, posX + inputSizeX, posY + sizeY, 3, 0);
+		}
 	}
 
 }

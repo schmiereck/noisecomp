@@ -19,7 +19,7 @@ import de.schmiereck.noiseComp.soundData.SoundData;
  * @author smk
  * @version 26.01.2004
  */
-public class TracksData
+public class TracksListWidgetData
 extends ListWidgetData
 implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitWidgetListenerInterface
 {
@@ -77,7 +77,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @param sizeX
 	 * @param sizeY
 	 */
-	public TracksData(int posX, int posY, int sizeX, int sizeY,
+	public TracksListWidgetData(int posX, int posY, int sizeX, int sizeY,
 								 int generatorsLabelSizeX,
 								 SoundData soundData, 
 								 ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
@@ -90,22 +90,12 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		// Momentane Anzahl Generatoren zu...
 		//this.verticalScrollbarData.setScrollerLength(this.soundData.getGeneratorsCount());
 		// ...maximal mögliche Anzahl angezeigter Generatoren.
-		this.setVerticalScrollbarRange(this.getVerticalScrollbarRange());
+		this.setVerticalScrollbarRange((float)this.getSizeY() / (float)this.getListEntryHeight());
 
 		// Momentan Breitester Generator (in Sekunden)...
 		this.setHorizontalScrollerLength(20.0F);
 		// ...zu Anzahl angezeigter Sekunden.
-		this.setHorizontalScrollbarRange(this.getHorizontalScrollbarRange());
-	}
-
-	public float getVerticalScrollbarRange()
-	{
-		return (float)this.getSizeY() / (float)this.getListEntryHeight();
-	}
-	
-	public float getHorizontalScrollbarRange()
-	{
-		return (this.getSizeX() - this.generatorsLabelSizeX) / this.generatorScaleX;
+		this.setHorizontalScrollbarRange((this.getSizeX() - this.generatorsLabelSizeX) / this.generatorScaleX);
 	}
 	
 	/**
@@ -393,7 +383,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	/**
 	 * @param generatorSelectedListener is the new value for attribute {@link #generatorSelectedListener} to set.
 	 */
-	public void setGeneratorSelectedListener(GeneratorSelectedListenerInterface generatorSelectedListener)
+	public void registerGeneratorSelectedListener(GeneratorSelectedListenerInterface generatorSelectedListener)
 	{
 		this.generatorSelectedListener = generatorSelectedListener;
 	}
@@ -403,13 +393,13 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyHitWidget(WidgetData activeWidgetData, int pointerPosX, int pointerPosY)
 	{
-		TrackData trackData = TracksData.calcHitTrack(pointerPosX, pointerPosY, this);
+		TrackData trackData = TracksListWidgetData.calcHitTrack(pointerPosX, pointerPosY, this);
 		
 		int hitGeneratorPart;
 		
 		if (trackData != null)
 		{
-			hitGeneratorPart = TracksData.calcHitGeneratorPart(pointerPosX, pointerPosY, this, trackData);
+			hitGeneratorPart = TracksListWidgetData.calcHitGeneratorPart(pointerPosX, pointerPosY, this, trackData);
 		}
 		else
 		{
@@ -419,14 +409,14 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		this.setActiveTrackData(trackData, hitGeneratorPart);
 	}
 
-	private static TrackData calcHitTrack(int pointerPosX, int pointerPosY, TracksData tracksData)
+	private static TrackData calcHitTrack(int pointerPosX, int pointerPosY, TracksListWidgetData tracksData)
 	{
 		TrackData trackData = null;
 		
-		int screenTrackPos = Math.round((float)pointerPosY / (float)tracksData.getListEntryHeight());
+		int screenTrackPos = (pointerPosY / tracksData.getListEntryHeight());
 		
 		// Die Positionsnummer des Generators in der Liste.
-		int generatorPos = screenTrackPos + (int)(tracksData.getVerticalScrollerPos() + 0.5F);
+		int generatorPos = screenTrackPos + (int)tracksData.getVerticalScrollerPos();
 		
 		// Innerhalb der Anzahl der vorhandneen generatoren ?
 		if (generatorPos >= 0)
@@ -444,22 +434,22 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * 			{@link GeneratorsGraphicData#HIT_PART_NONE}:		kein Hit.<br/>
 	 * 			{@link GeneratorsGraphicData#HIT_PART_GENERATOR}:	Generator überfahren.
 	 */
-	private static int calcHitGeneratorPart(int pointerPosX, int pointerPosY, TracksData tracksData, TrackData trackData)
+	private static int calcHitGeneratorPart(int pointerPosX, int pointerPosY, TracksListWidgetData tracksData, TrackData trackData)
 	{
 		int sizeX = tracksData.getSizeX();
 
-		int hitGeneratorPart = TracksData.HIT_PART_NONE;
+		int hitGeneratorPart = TracksListWidgetData.HIT_PART_NONE;
 
 		// Inerhalb des Trackbereichs ?
 		if ((pointerPosX >= tracksData.getGeneratorsLabelSizeX()) && (pointerPosX <= sizeX))
 		{
-			float timePos = ((pointerPosX - tracksData.getGeneratorsLabelSizeX()) / tracksData.getGeneratorScaleX()) - tracksData.getVerticalScrollerPos();
+			float timePos = ((pointerPosX - tracksData.getGeneratorsLabelSizeX()) / tracksData.getGeneratorScaleX()) + tracksData.getHorizontalScrollerPos();
 			
 			Generator generator = trackData.getGenerator();
 			
 			if ((timePos >= generator.getStartTimePos()) && (timePos <= generator.getEndTimePos()))
 			{
-				hitGeneratorPart = TracksData.HIT_PART_GENERATOR;
+				hitGeneratorPart = TracksListWidgetData.HIT_PART_GENERATOR;
 			}
 		}
 		return hitGeneratorPart;
@@ -473,7 +463,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	{
 		if (this.listWidgetGraphic == null)
 		{
-			this.listWidgetGraphic = new TracksGraphic();
+			this.listWidgetGraphic = new TracksListWidgetGraphic();
 		}
 		return this.listWidgetGraphic;
 	}
@@ -483,8 +473,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyDragWidget(WidgetData selectedWidgetData, int pointerPosX, int pointerPosY)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/**

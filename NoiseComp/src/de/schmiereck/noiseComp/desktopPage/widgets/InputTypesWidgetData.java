@@ -18,28 +18,30 @@ public class InputTypesWidgetData
 extends ListWidgetData
 implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitWidgetListenerInterface
 {
-	private InputTypesData inputTypesData;
+	private InputTypesData inputTypesData = null;
 	
 	static private InputTypesWidgetGraphic listWidgetGraphic = null;
 	
 	private InputTypeData	activeInputTypeData = null;
 
-	private InputTypeData selectedInputTypeData = null;
+	//private InputTypeData selectedInputTypeData = null;
 	
 	private InputTypeSelectedListenerInterface inputTypeSelectedListener = null;
 
+	private SelectedListEntryInterface selectedListEntry;
+	
 	/**
 	 * Constructor.
 	 * 
 	 */
 	public InputTypesWidgetData(int posX, int posY, int sizeX, int sizeY,
 			ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
-			InputTypesData inputTypesData)
+			SelectedListEntryInterface selectedListEntry)
 	{
 		super(posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
 		
-		this.inputTypesData = inputTypesData;
-
+		this.selectedListEntry = selectedListEntry;
+		
 		// Momentane Anzahl Inputs zu...
 		// ...maximal mögliche Anzahl angezeigter Inputs.
 		this.setVerticalScrollbarRange((float)this.getSizeY() / (float)this.getListEntryHeight());
@@ -144,27 +146,31 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyClickedWidget(WidgetData widgetData, int pointerPosX, int pointerPosY)
 	{
-		// Some Input is Aktive (Rollover) ?
-		if (this.activeInputTypeData != null)
-		{
-			this.setInputTypeData(this.activeInputTypeData);
-		}
-		else
-		{
-			this.deselectInputType();
-		}
-	}
+		// Use Some Aktive Input (Rollover):
+		
+		InputTypeData selectedInputTypeData = this.activeInputTypeData;
 
-	public void setInputTypeData(InputTypeData selectedInputData)
-	{
-		// Select the Input.
-		// Use this as the new selected Track.
-		this.selectedInputTypeData = selectedInputData;
+		this.setSelectedInputTypeData(selectedInputTypeData);
 		
 		if (this.inputTypeSelectedListener != null)
 		{
-			this.inputTypeSelectedListener.notifyInputTypeSelected(this, this.selectedInputTypeData);
+			if (selectedInputTypeData == null)
+			{
+				this.inputTypeSelectedListener.notifyInputTypeDeselected(this, selectedInputTypeData);
+			}
+			else
+			{	
+				this.inputTypeSelectedListener.notifyInputTypeSelected(this, selectedInputTypeData);
+			}
 		}
+	}
+	
+	public void setSelectedInputTypeData(InputTypeData selectedInputData)
+	{
+		// Select the Input.
+		// Use this as the new selected Track.
+		//this.selectedInputTypeData = selectedInputData;
+		this.selectedListEntry.setSelectedInputTypeData(selectedInputData);
 	}
 
 	/**
@@ -172,21 +178,16 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public InputTypeData getSelectedInputTypeData()
 	{
-		return this.selectedInputTypeData;
+		//return this.selectedInputTypeData;
+		return this.selectedListEntry.getSelectedInputTypeData();
 	}
-
-	public void deselectInputType()
+	
+	public void deselectInputType_old()
 	{
-		InputTypeData inputTypeData = this.selectedInputTypeData;
-
 		// Deselect the Input.
-		this.selectedInputTypeData = null;
+		//this.selectedInputTypeData = null;
 
 		this.activeInputTypeData = null;
-		if (this.inputTypeSelectedListener != null)
-		{
-			this.inputTypeSelectedListener.notifyInputTypeDeselected(this, inputTypeData);
-		}
 	}
 
 	/* (non-Javadoc)
@@ -194,8 +195,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyReleasedWidget(WidgetData selectedWidgetData)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -219,7 +218,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	/**
 	 * @param inputTypeSelectedListener is the new value for attribute {@link #inputTypeSelectedListener} to set.
 	 */
-	public void setInputTypeSelectedListener(InputTypeSelectedListenerInterface inputInputSelectedListener)
+	public void registerInputTypeSelectedListener(InputTypeSelectedListenerInterface inputInputSelectedListener)
 	{
 		this.inputTypeSelectedListener = inputInputSelectedListener;
 	}
@@ -235,7 +234,9 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			
 			if (inputTypeData != null)
 			{
-				this.deselectInputType();
+				//this.deselectInputType();
+				this.selectedListEntry.setSelectedInputTypeData(null);
+				this.activeInputTypeData = null;
 				
 				this.inputTypesData.removeInputTypeData(inputTypeData);
 				
@@ -251,5 +252,21 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * 
+	 */
+	public void notifyInputTypeAdded()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	/**
+	 * @param inputTypesData is the new value for attribute {@link #inputTypesData} to set.
+	 */
+	public void setInputTypesData(InputTypesData inputTypesData)
+	{
+		this.inputTypesData = inputTypesData;
 	}
 }

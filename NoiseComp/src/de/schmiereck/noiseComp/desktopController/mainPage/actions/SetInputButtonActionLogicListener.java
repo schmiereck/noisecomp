@@ -1,20 +1,23 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.mainPage.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
 
 /**
  * TODO docu
  *
  * @author smk
- * @version <p>22.02.2004: created, smk</p>
+ * @version 22.02.2004
  */
-public class RemoveGeneratorButtonActionLogicListener
-	implements ButtonActionLogicListenerInterface
+public class SetInputButtonActionLogicListener 
+implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	private MainPageLogic mainPageLogic;
 	private DesktopControllerData controllerData;
 	
 	/**
@@ -22,19 +25,25 @@ public class RemoveGeneratorButtonActionLogicListener
 	 * 
 	 * 
 	 */
-	public RemoveGeneratorButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public SetInputButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			MainPageLogic mainPageLogic, 
+			DesktopControllerData controllerData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
+		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		this.controllerData.getTracksData().removeSelectedTrack();
+		//InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
+		
+		this.mainPageLogic.setInput(/*generatorInputsData, */false);
 	}
+
 }
