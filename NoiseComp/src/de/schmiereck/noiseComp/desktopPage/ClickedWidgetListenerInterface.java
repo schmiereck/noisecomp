@@ -16,4 +16,9 @@ public interface ClickedWidgetListenerInterface
 	 */
 	void notifyClickedWidget(WidgetData widgetData);
 
+	/**
+	 * @param selectedWidgetData
+	 */
+	void notifyReleasedWidget(WidgetData selectedWidgetData);
+
 }

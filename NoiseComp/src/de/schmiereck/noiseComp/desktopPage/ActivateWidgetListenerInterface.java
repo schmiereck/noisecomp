@@ -11,12 +11,12 @@ import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 public interface ActivateWidgetListenerInterface
 {
 	/**
-	 * Die Maus wurde vom Widget weggefahren.
+	 * Widget wurde mit der Maus überfahren.
 	 */
 	public void notifyActivateWidget(WidgetData widgetData);
 
 	/**
-	 * Widget wurde mit der Maus überfahren.
+	 * Die Maus wurde vom Widget weggefahren.
 	 */
 	public void notifyDeactivateWidget(WidgetData widgetData);
 

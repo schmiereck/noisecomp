@@ -61,6 +61,12 @@ public class DesktopPageData
 	private WidgetData activeWidgetData = null;
 
 	/**
+	 * Contains the clicked Widget as long as the Mouse Button is hold down,
+	 * othewise null.
+	 */
+	private WidgetData selectedWidgetData = null;
+	
+	/**
 	 * Wenn ein Button angeklickt wurde ist steht hier welcher das war,<br/>
 	 * ansonsten ist der Wert null.
 	 */
@@ -79,19 +85,9 @@ public class DesktopPageData
 	 * Wenn eine Scrollbar angeklickt wurde ist steht hier welche das war,<br/>
 	 * ansonsten ist der Wert null.
 	 * 
-	 * @see #activeScrollbarPart
+	 * TODO remove this Scrollbar special stuff from this class, smk
 	 */
 	private ScrollbarData activeScrollbarData = null;
-
-	/**
-	 * Wenn eine Scrollbar angeklickt wurde steht hier, welches Element der Bar
-	 * ausgewählt wurde:<br/>
-	 * 0:	None<br/>
-	 * 1:	Up-Scroller<br/>
-	 * 2:	Scroller<br/>
-	 * 3:	Down-Scroller<br/>
-	 */
-	private int activeScrollbarPart = 0;
 
 	/**
 	 * A reference to the focused Widget or null.
@@ -237,10 +233,20 @@ public class DesktopPageData
 	 * @param hitScrollbarData
 	 * @param hitScrollbarPart
 	 */
-	public void setActiveScrollbarData(ScrollbarData hitScrollbarData, int hitScrollbarPart)
+	public void setActiveScrollbarData(ScrollbarData hitScrollbarData)
 	{
+		// Is the already some Scrollbar active ?
+		if (this.activeScrollbarData != null)
+		{	
+			// Reset active part to none.
+			//this.activeScrollbarData.setActiveScrollbarPart(ScrollbarData.SCROLLBAR_PART_NONE);
+		}
 		this.activeScrollbarData = hitScrollbarData;
-		this.activeScrollbarPart = hitScrollbarPart;
+		if (this.activeScrollbarData != null)
+		{	
+			// Set the active part to given value.
+			//this.activeScrollbarData.setActiveScrollbarPart(hitScrollbarPart);
+		}
 	}
 	/**
 	 * @return the attribute {@link #activeScrollbarData}.
@@ -248,13 +254,6 @@ public class DesktopPageData
 	public ScrollbarData getActiveScrollbarData()
 	{
 		return this.activeScrollbarData;
-	}
-	/**
-	 * @return the attribute {@link #activeScrollbarPart}.
-	 */
-	public int getActiveScrollbarPart()
-	{
-		return this.activeScrollbarPart;
 	}
 	
 	/**
@@ -275,7 +274,7 @@ public class DesktopPageData
 	/**
 	 * @param activeWidgetData is the new value for attribute {@link #activeWidgetData} to set.
 	 */
-	public void setActiveWidgetData(WidgetData activeWidgetData)
+	public void setActiveWidgetData(WidgetData activeWidgetData, int pointerPosX, int pointerPosY)
 	{
 		boolean changed;
 		if (this.activeWidgetData != activeWidgetData)
@@ -300,16 +299,34 @@ public class DesktopPageData
 		
 		this.activeWidgetData = activeWidgetData;
 		
-		if (changed == true)
-		{	
-			if (activeWidgetData != null)
-			{
+		if (activeWidgetData != null)
+		{
+			if (changed == true)
+			{	
 				if (activeWidgetData instanceof ActivateWidgetListenerInterface)
 				{
 					((ActivateWidgetListenerInterface)activeWidgetData).notifyActivateWidget(activeWidgetData);
 				}
 			}
+			if (activeWidgetData instanceof HitWidgetListenerInterface)
+			{
+				((HitWidgetListenerInterface)activeWidgetData).notifyHitWidget(activeWidgetData, pointerPosX - activeWidgetData.getPosX(), pointerPosY - activeWidgetData.getPosY());
+			}
 		}
 	}
 
+	/**
+	 * @return the attribute {@link #selectedWidgetData}.
+	 */
+	public WidgetData getSelectedWidgetData()
+	{
+		return this.selectedWidgetData;
+	}
+	/**
+	 * @param selectedWidgetData is the new value for attribute {@link #selectedWidgetData} to set.
+	 */
+	public void setSelectedWidgetData(WidgetData selectedWidgetData)
+	{
+		this.selectedWidgetData = selectedWidgetData;
+	}
 }

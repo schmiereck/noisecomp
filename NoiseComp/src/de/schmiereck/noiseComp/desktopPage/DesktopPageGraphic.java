@@ -31,21 +31,20 @@ public class DesktopPageGraphic
 	/**
 	 * Color of Mouse Pointer.
 	 */
-	private Color pointerColor = new Color(0F, 0F, 1.0F, 0.3F);
+	private Color pointerColor;
 	
-	private Color activeButtonColor = new Color(0xE0, 0xE8, 0xE4);
+	private Color activeButtonColor;
 	
-	private Color starColor = new Color(0xE0, 0xD0, 0xD0);
+	private Color starColor;
 
-	//private Color sampleColor = new Color(0xA0, 0xA0, 0xA0, 255/10);
-	private Color sampleColor = Color.BLACK; 
-	private Color timestepColor = new Color(0xF0, 0xFF, 0xF0);
+	private Color sampleColor; 
+	private Color timestepColor;
 
-	private Color activeGeneratorBackgroundColor 	= new Color(0xFF, 0xFF, 0xFF);
+	private Color activeGeneratorBackgroundColor;
 
-	private Color inactiveGeneratorBackgroundColor	= new Color(0xDF, 0xFF, 0xDF);
+	private Color inactiveGeneratorBackgroundColor;
 
-	private Color selectedGeneratorSelectorColor	= new Color(0x00, 0x00, 0xFF);
+	private Color selectedGeneratorSelectorColor;
 
 	private Color inactiveButtonColor;
 
@@ -58,6 +57,8 @@ public class DesktopPageGraphic
 	private Color inactiveButtonBorderColor;
 
 	private Color generatorsBackgroundColor;
+
+	private Color generatorBottomLineColor;
 	
 	/**
 	 * Constructor.
@@ -76,6 +77,7 @@ public class DesktopPageGraphic
 		this.activeButtonColor = new Color(0xE0, 0xE8, 0xE4);
 		this.inactiveButtonBorderColor = Color.GRAY;
 		this.starColor = new Color(0xE0, 0xD0, 0xD0);
+		//this.sampleColor = new Color(0x00, 0x00, 0x00, 255/5);
 		this.sampleColor = Color.BLACK; 
 		this.timestepColor = new Color(0xF0, 0xFF, 0xF0);
 		this.activeGeneratorBackgroundColor 	= new Color(0xFF, 0xFF, 0xFF);
@@ -84,15 +86,17 @@ public class DesktopPageGraphic
 		this.activeInputlineColor	= new Color(0xFF, 0xFF, 0xFF);
 		this.inactiveInputlineColor	= new Color(0xDF, 0xFF, 0xDF);
 		this.generatorsBackgroundColor = new Color(0xE0, 0xE0, 0xE0);
+		this.generatorBottomLineColor = Color.GRAY;
 		*/
 		// The more happy new Color Schema:
-		this.pointerColor = new Color(0F, 0F, 1.0F, 0.3F);
+		this.pointerColor = new Color(0.4F, 0.4F, 1.0F, 0.75F);
 		//this.paneBackgroundColor = new Color(0x1B, 0x12, 0xB4);
 		this.paneBackgroundColor = new Color(0xFF, 0xFF, 0xCC);
 		this.inactiveButtonColor = new Color(0xFB, 0xE2, 0x49);
 		this.activeButtonColor = new Color(0xE5, 0xEF, 0x4C);
 		this.inactiveButtonBorderColor = new Color(0xE4, 0xC4, 0x05);
 		this.starColor = new Color(0xE0, 0xD0, 0xD0);
+		//this.sampleColor = new Color(0x00, 0x00, 0x00, 255/5);
 		this.sampleColor = Color.BLACK; 
 		this.timestepColor = new Color(0xF0, 0xFF, 0xF0);
 		this.activeGeneratorBackgroundColor 	= new Color(0xFF, 0xFF, 0xFF);
@@ -101,6 +105,7 @@ public class DesktopPageGraphic
 		this.activeInputlineColor	= new Color(0xFF, 0xFF, 0xFF);
 		this.inactiveInputlineColor	= new Color(0xFF, 0xFF, 0x2E);
 		this.generatorsBackgroundColor = new Color(0xAA, 0xE0, 0xFD);
+		this.generatorBottomLineColor = new Color(0x1B, 0x12, 0xB4);
 	}
 
 	/**
@@ -116,6 +121,10 @@ public class DesktopPageGraphic
 		// Horizontale Linie:
 		screenGrafic.drawLine(g, 0, desctopPageData.getPointerPosY(), 
 				desctopPageData.getDesctopSizeX(), 0);
+
+		screenGrafic.fillRect(g, 
+				desctopPageData.getPointerPosX() - 6, desctopPageData.getPointerPosY() - 6, 
+				12, 12);
 	}
 	
 	/**
@@ -171,7 +180,7 @@ public class DesktopPageGraphic
 					if (desctopPageData.getActiveScrollbarData() == scrollbarData)
 					{
 						active = true;
-						activeScrollbarPart = desctopPageData.getActiveScrollbarPart();
+						activeScrollbarPart = desctopPageData.getActiveScrollbarData().getActiveScrollbarPart();
 					}
 					else
 					{
@@ -584,9 +593,11 @@ public class DesktopPageGraphic
 		// Zeitschritte:
 		g.setColor(this.timestepColor);
 		
-		for (float timePos = scrollStartTime; timePos < scrollEndTime; timePos += 1.0)
+		float visibleTime = scrollEndTime - scrollStartTime;
+		
+		for (float timePos = Math.round(scrollStartTime); timePos < scrollEndTime; timePos += 1.0)
 		{
-			int screenPosX = generatorsGraphicData.getGeneratorsLabelSizeX() + (int)(timePos * scaleX);
+			int screenPosX = generatorsGraphicData.getGeneratorsLabelSizeX() + (int)((timePos - scrollStartTime) * scaleX);
 			
 			screenGrafic.drawLine(g, screenPosX, posY, 0, sizeY);
 		}
@@ -661,7 +672,7 @@ public class DesktopPageGraphic
 					}
 
 					// Bottom-Line.
-					g.setColor(Color.GRAY);
+					g.setColor(this.generatorBottomLineColor);
 					screenGrafic.drawLine(g, 0, screenPosY + trackHeight, sizeX, 0);
 					
 					// Label-Text.

@@ -4,14 +4,13 @@ import java.util.Iterator;
 
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
-import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorsGraphicData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
-import de.schmiereck.noiseComp.desktopPage.widgets.TrackGraficData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
-import de.schmiereck.noiseComp.generator.Generator;
 
 /**
- * TODO docu
+ * Provides Functions to manage the functions of a normal Page with Widgets.
+ * All this Functions are static, the state of a page are manged in 
+ * {@link de.schmiereck.noiseComp.desktopPage.DesktopPageData}-Objects.
  *
  * @author smk
  * @version 31.01.2004
@@ -20,7 +19,13 @@ public class DesktopPageLogic
 {
 
 	/**
-	 * Berechnet des aktuellen zustand der Widgets anhand der angegebenen Daten.
+	 * <p>
+	 * 	Calculates the actual State of the Widgets by the actual DesctopPageData State.
+	 * </p>
+	 * <p>
+	 * 	Mainly the active state (Mouse Rollover) is calculated an the 
+	 * 	correlating functions of the Listener-Interfaces are called.
+	 * </p>
 	 * 
 	 * @param desctopPageData
 	 */
@@ -28,11 +33,11 @@ public class DesktopPageLogic
 	{
 		WidgetData hitWidgetData = null;
 		ButtonData hitButtonData = null;
-		int hitScrollbarPart = 0;
+		//int hitScrollbarPart = 0;
 		ScrollbarData hitScrollbarData = null;
 		
-		int pX = desctopPageData.getPointerPosX();
-		int pY = desctopPageData.getPointerPosY();
+		int pointerPosX = desctopPageData.getPointerPosX();
+		int pointerPosY = desctopPageData.getPointerPosY();
 		
 		Iterator widgetIterator = desctopPageData.getWidgetsIterator();
 		
@@ -47,8 +52,8 @@ public class DesktopPageLogic
 			int sizeX = widgetData.getSizeX();
 			int sizeY = widgetData.getSizeY();
 			
-			if ((pX >= posX) && (pX <= posX + sizeX) && 
-				(pY >= posY) && (pY <= posY + sizeY))
+			if ((pointerPosX >= posX) && (pointerPosX <= posX + sizeX) && 
+				(pointerPosY >= posY) && (pointerPosY <= posY + sizeY))
 			{
 				hit = true;
 				hitWidgetData = widgetData;
@@ -78,176 +83,28 @@ public class DesktopPageLogic
 						
 						hitScrollbarData = scrollbarData;
 
-						hitScrollbarPart = DesktopPageLogic.calcHitScrollbarPart(pX, pY, posX, posY, sizeX, sizeY, scrollbarData);
+						//hitScrollbarPart = DesktopPageLogic.calcHitScrollbarPart(pointerPosX, pointerPosY, posX, posY, sizeX, sizeY, scrollbarData);
 						break;
 					}
 				}
-				else
-				{
-					if (widgetData instanceof GeneratorsGraphicData)
-					{	
-						if (hit == true)
-						{
-							GeneratorsGraphicData generatorsGraphicData = (GeneratorsGraphicData)widgetData;
-							
-							//hitScrollbarData = scrollbarData;
-
-							//hitScrollbarPart = DesktopPageLogic.calcHitScrollbarPart(pX, pY, posX, posY, sizeX, sizeY, scrollbarData);
-
-							TrackGraficData trackGraficData = DesktopPageLogic.calcHitTrack(pX, pY, posX, posY, sizeX, sizeY, generatorsGraphicData);
-							
-							int hitGeneratorPart;
-							
-							if (trackGraficData != null)
-							{
-								hitGeneratorPart = DesktopPageLogic.calcHitGeneratorPart(pX, pY, posX, posY, sizeX, sizeY, generatorsGraphicData, trackGraficData);
-							}
-							else
-							{
-								hitGeneratorPart = 0;
-							}
-							
-							generatorsGraphicData.setActiveTrackGraficData(trackGraficData, hitGeneratorPart);
-							break;
-						}
-					}
-				}
 			}
 		}
 		
-		desctopPageData.setActiveWidgetData(hitWidgetData);
+		desctopPageData.setActiveWidgetData(hitWidgetData, pointerPosX, pointerPosY);
 		desctopPageData.setActiveButtonData(hitButtonData);
-		desctopPageData.setActiveScrollbarData(hitScrollbarData, hitScrollbarPart);
+		desctopPageData.setActiveScrollbarData(hitScrollbarData);
 	}
 	
-
 	/**
-	 * @param px
-	 * @param py
-	 * @param posX
-	 * @param posY
-	 * @param sizeX
-	 * @param sizeY
-	 * @param generatorsGraphicData
-	 * @param trackGraficData
-	 * @return 	Der mit der Maus überfahrene Part des Generators:<br/>
-	 * 			{@link GeneratorsGraphicData#HIT_PART_NONE}:		kein Hit.<br/>
-	 * 			{@link GeneratorsGraphicData#HIT_PART_GENERATOR}:	Generator überfahren.
+	 * <p>
+	 * 	This Function is called, if the Mouse Pointer Button is pressed down.
+	 * 	The Function checks, if there is a active (with Mouse Rollover) Widget.
+	 * 	If this Widget implements the {@link ClickedWidgetListenerInterface} or
+	 * 	the {@link FocusedWidgetListenerInterface}, the correlating functions are called.
+	 * </p>
+	 *  
+	 * @param desctopPageData
 	 */
-	private static int calcHitGeneratorPart(int px, int py, int posX, int posY, int sizeX, int sizeY, GeneratorsGraphicData generatorsGraphicData, TrackGraficData trackGraficData)
-	{
-		int hitGeneratorPart = GeneratorsGraphicData.HIT_PART_NONE;
-		int x = (px - posX);
-
-		// Inerhalb des Trackbereichs ?
-		if ((x >= generatorsGraphicData.getGeneratorsLabelSizeX()) && (x <= sizeX))
-		{
-			float timePos = ((x - generatorsGraphicData.getGeneratorsLabelSizeX()) / generatorsGraphicData.getGeneratorScaleX()) - generatorsGraphicData.getTrackScrollPos();
-			
-			Generator generator = trackGraficData.getGenerator();
-			
-			if ((timePos >= generator.getStartTimePos()) && (timePos <= generator.getEndTimePos()))
-			{
-				hitGeneratorPart = GeneratorsGraphicData.HIT_PART_GENERATOR;
-			}
-		}
-		return hitGeneratorPart;
-	}
-
-	/**
-	 * @param px
-	 * @param py
-	 * @param posX
-	 * @param posY
-	 * @param sizeX
-	 * @param sizeY
-	 * @param generatorsGraphicData
-	 * @return
-	 */
-	private static TrackGraficData calcHitTrack(int px, int py, int posX, int posY, int sizeX, int sizeY, GeneratorsGraphicData generatorsGraphicData)
-	{
-		TrackGraficData trackGraficData = null;
-		
-		// Die Positionsnummer des Generators in der Liste.
-		int generatorPos = ((py - posY) / generatorsGraphicData.getTrackHeight()) + generatorsGraphicData.getTrackScrollPos();
-		
-		// Innerhalb der Anzahl der vorhandneen generatoren ?
-		if (generatorPos < generatorsGraphicData.getTracksCount())
-		{
-			trackGraficData = generatorsGraphicData.getTrack(generatorPos);
-		}
-		
-		return trackGraficData;
-	}
-	
-	private static int calcHitScrollbarPart(int pX, int pY, int posX, int posY, int sizeX, int sizeY, ScrollbarData scrollbarData)
-	{
-		int hitScrollbarPart = 0;
-		if (scrollbarData.getDoScrollVertical() == true)
-		{	
-			int width = sizeX;
-			int y = pY - posY;
-			
-			if (y <= width)
-			{
-				// 1:	Up-Scroller
-				hitScrollbarPart = 1;
-			}
-			else
-			{	
-				if (y >= (sizeY - width))
-				{
-					// 3:	Down-Scroller
-					hitScrollbarPart = 3;
-				}
-				else
-				{	
-					int scrollerPos = scrollbarData.getScreenScrollerPos();
-					int scrollerSize = scrollbarData.getScreenScrollerSize();
-					
-					if ((y >= (scrollerPos)) &&
-							(y <= (scrollerPos + scrollerSize)))
-					{
-						// 2:	Scroller
-						hitScrollbarPart = 2;
-					}
-				}
-			}
-		}
-		else
-		{
-			int width = sizeY;
-			int x = pX - posX;
-			
-			if (x <= width)
-			{
-				// 1:	Up-Scroller
-				hitScrollbarPart = 1;
-			}
-			else
-			{	
-				if (x >= (sizeX - width))
-				{
-					// 3:	Down-Scroller
-					hitScrollbarPart = 3;
-				}
-				else
-				{	
-					int scrollerPos = scrollbarData.getScreenScrollerPos();
-					int scrollerSize = scrollbarData.getScreenScrollerSize();
-					
-					if ((x >= (scrollerPos)) &&
-							(x <= (scrollerPos + scrollerSize)))
-					{
-						// 2:	Scroller
-						hitScrollbarPart = 2;
-					}
-				}
-			}
-		}
-		return hitScrollbarPart;
-	}
-
 	public static void pointerPressed(DesktopPageData desctopPageData)
 	{
 		desctopPageData.setPointerPressed(true);
@@ -256,6 +113,8 @@ public class DesktopPageLogic
 		
 		if (widgetData != null)
 		{
+			desctopPageData.setSelectedWidgetData(widgetData);
+			
 			if (widgetData instanceof ClickedWidgetListenerInterface)
 			{
 				((ClickedWidgetListenerInterface)widgetData).notifyClickedWidget(widgetData);
@@ -280,51 +139,27 @@ public class DesktopPageLogic
 		{
 			WidgetData focusedWidgetData = desctopPageData.getFocusedWidgetData();
 			
-			((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
-			desctopPageData.setFocusedWidgetData(null);
-		}
-		
-		ScrollbarData activeScrollbarData = desctopPageData.getActiveScrollbarData();
-
-		if (activeScrollbarData != null)
-		{
-			//if ("generatorsVScroll".equals(activeScrollbarData.getName()) == true)
-			{
-				int activeScrollbarPart = desctopPageData.getActiveScrollbarPart();
-				
-				if (activeScrollbarPart == 1)
-				{				
-					float pos = activeScrollbarData.getScrollerPos();
-					
-					if (pos > 0)
-					{
-						pos -= activeScrollbarData.getScrollStep();
-						activeScrollbarData.setScrollerPos(pos);
-					}
-				}
-				else
-				{
-					if (activeScrollbarPart == 3)
-					{				
-						float pos = activeScrollbarData.getScrollerPos();
-						
-						if (pos < (activeScrollbarData.getScrollerLength() - activeScrollbarData.getScrollerSize()))
-						{
-							pos += activeScrollbarData.getScrollStep();
-							activeScrollbarData.setScrollerPos(pos);
-						}
-					}
-					else
-					{
-						if (activeScrollbarPart == 2)
-						{				
-						}
-					}
-				}
+			if (focusedWidgetData != null)
+			{	
+				((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
 			}
-		}		
+			desctopPageData.setFocusedWidgetData(null);
+
+			desctopPageData.setSelectedWidgetData(null);
+		}
 	}
 
+	/**
+	 * <p>
+	 * 	This Function is called, if the Mouse Pointer Button is released.
+	 * 	The Function checks, if there is a pressed (selected) and active Widget.
+	 * 	If this Widget implements the {@link ClickedWidgetListenerInterface} or
+	 * 	the {@link FocusedWidgetListenerInterface}, the correlating functions are called.
+	 * </p>
+	 * 
+	 * @param desctopPageData
+	 * @param buttonPressedCallback
+	 */
 	public static void pointerReleased(DesktopPageData desctopPageData, ButtonPressedCallbackInterface buttonPressedCallback)
 	{
 		ButtonData pressedButtonData = desctopPageData.getPressedButtonData();
@@ -340,5 +175,16 @@ public class DesktopPageLogic
 			}
 		}
 		
+		WidgetData selectedWidgetData = desctopPageData.getSelectedWidgetData();
+		
+		if (selectedWidgetData != null)
+		{
+			if (selectedWidgetData instanceof ClickedWidgetListenerInterface)
+			{
+				((ClickedWidgetListenerInterface)selectedWidgetData).notifyReleasedWidget(selectedWidgetData);
+			}
+			
+			desctopPageData.setSelectedWidgetData(null);
+		}
 	}
 }

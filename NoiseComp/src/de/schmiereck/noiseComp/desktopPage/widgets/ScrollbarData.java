@@ -1,5 +1,9 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
+import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
+import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
+import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
+
 /**
  * TODO docu
  *
@@ -8,6 +12,7 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
  */
 public class ScrollbarData
 extends ButtonData
+implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitWidgetListenerInterface
 {
 	/**
 	 * Position des Scrollers innerhalb von {@link #scrollerLength}.
@@ -34,6 +39,33 @@ extends ButtonData
 	 * sonst wird Horizontal gescrollt.
 	 */
 	private boolean doScrollVertical;
+
+	/**
+	 * No Part of Scrollbar.
+	 */
+	public static final int SCROLLBAR_PART_NONE		= 0;
+	/**
+	 * Scroll-Up Button of Scrollbar.
+	 */
+	public static final int SCROLLBAR_PART_UP		= 1;
+	/**
+	 * Scroller Button of Scrollbar.
+	 */
+	public static final int SCROLLBAR_PART_SCROLLER	= 2;
+	/**
+	 * Scroll-Down Button of Scrollbar.
+	 */
+	public static final int SCROLLBAR_PART_DOWN		= 3;
+	
+	/**
+	 * Wenn eine Scrollbar angeklickt wurde steht hier, welches Element der Bar
+	 * ausgewählt wurde:<br/>
+	 * 0:	{@link #SCROLLBAR_PART_NONE}:	None<br/>
+	 * 1:	{@link #SCROLLBAR_PART_UP}:	Up-Scroller<br/>
+	 * 2:	{@link #SCROLLBAR_PART_SCROLLER}:	Scroller<br/>
+	 * 3:	{@link #SCROLLBAR_PART_DOWN}:	Down-Scroller<br/>
+	 */
+	private int activeScrollbarPart = 0;
 	
 	/**
 	 * Constructor.
@@ -176,5 +208,161 @@ extends ButtonData
 	public void setScrollStep(float scrollStep)
 	{
 		this.scrollStep = scrollStep;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyClickedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
+	 */
+	public void notifyClickedWidget(WidgetData widgetData)
+	{
+		int activeScrollbarPart = this.getActiveScrollbarPart();
+		
+		if (activeScrollbarPart == ScrollbarData.SCROLLBAR_PART_UP)
+		{				
+			float pos = this.getScrollerPos();
+			
+			if (pos > 0)
+			{
+				pos -= this.getScrollStep();
+				this.setScrollerPos(pos);
+			}
+		}
+		else
+		{
+			if (activeScrollbarPart == ScrollbarData.SCROLLBAR_PART_DOWN)
+			{				
+				float pos = this.getScrollerPos();
+				
+				if (pos < (this.getScrollerLength() - this.getScrollerSize()))
+				{
+					pos += this.getScrollStep();
+					this.setScrollerPos(pos);
+				}
+			}
+			else
+			{
+				if (activeScrollbarPart == ScrollbarData.SCROLLBAR_PART_SCROLLER)
+				{				
+				}
+			}
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyReleasedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
+	 */
+	public void notifyReleasedWidget(WidgetData selectedWidgetData)
+	{
+		
+	}
+
+	/**
+	 * @return the attribute {@link #activeScrollbarPart}.
+	 */
+	public int getActiveScrollbarPart()
+	{
+		return this.activeScrollbarPart;
+	}
+	/**
+	 * @param activeScrollbarPart is the new value for attribute {@link #activeScrollbarPart} to set.
+	 */
+	public void setActiveScrollbarPart(int activeScrollbarPart)
+	{
+		this.activeScrollbarPart = activeScrollbarPart;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface#notifyActivateWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
+	 */
+	public void notifyActivateWidget(WidgetData widgetData)
+	{
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface#notifyDeactivateWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
+	 */
+	public void notifyDeactivateWidget(WidgetData widgetData)
+	{
+		this.setActiveScrollbarPart(ScrollbarData.SCROLLBAR_PART_NONE);
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface#notifyHitWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData, int, int)
+	 */
+	public void notifyHitWidget(WidgetData activeWidgetData, int pointerPosX, int pointerPosY)
+	{
+		int hitScrollbarPart = ScrollbarData.calcHitScrollbarPart(pointerPosX, pointerPosY, this);
+		
+		this.setActiveScrollbarPart(hitScrollbarPart);
+	}
+	
+	private static int calcHitScrollbarPart(int pointerPosX, int pointerPosY, ScrollbarData scrollbarData)
+	{
+		int sizeX = scrollbarData.getSizeX();
+		int sizeY = scrollbarData.getSizeY();
+		
+		int hitScrollbarPart = ScrollbarData.SCROLLBAR_PART_NONE;
+		
+		if (scrollbarData.getDoScrollVertical() == true)
+		{	
+			int width = sizeX;
+			
+			if (pointerPosY <= width)
+			{
+				// 1:	Up-Scroller
+				hitScrollbarPart = ScrollbarData.SCROLLBAR_PART_UP;
+			}
+			else
+			{	
+				if (pointerPosY >= (sizeY - width))
+				{
+					// 3:	Down-Scroller
+					hitScrollbarPart = ScrollbarData.SCROLLBAR_PART_DOWN;
+				}
+				else
+				{	
+					int scrollerPos = scrollbarData.getScreenScrollerPos();
+					int scrollerSize = scrollbarData.getScreenScrollerSize();
+					
+					if ((pointerPosY >= (scrollerPos)) &&
+						(pointerPosY <= (scrollerPos + scrollerSize)))
+					{
+						// 2:	Scroller
+						hitScrollbarPart = ScrollbarData.SCROLLBAR_PART_SCROLLER;
+					}
+				}
+			}
+		}
+		else
+		{
+			int width = sizeY;
+			
+			if (pointerPosX <= width)
+			{
+				// 1:	Up-Scroller
+				hitScrollbarPart = ScrollbarData.SCROLLBAR_PART_UP;
+			}
+			else
+			{	
+				if (pointerPosX >= (sizeX - width))
+				{
+					// 3:	Down-Scroller
+					hitScrollbarPart = ScrollbarData.SCROLLBAR_PART_DOWN;
+				}
+				else
+				{	
+					int scrollerPos = scrollbarData.getScreenScrollerPos();
+					int scrollerSize = scrollbarData.getScreenScrollerSize();
+					
+					if ((pointerPosX >= (scrollerPos)) &&
+						(pointerPosX <= (scrollerPos + scrollerSize)))
+					{
+						// 2:	Scroller
+						hitScrollbarPart = ScrollbarData.SCROLLBAR_PART_SCROLLER;
+					}
+				}
+			}
+		}
+		return hitScrollbarPart;
 	}
 }

@@ -94,7 +94,7 @@ extends AudioInputStream
 			{
 				if (this.waitingGeneratorBuffer == null)
 				{
-					throw new IOException("waiting buffer is empty");
+					throw new IOException("waiting buffer is empty (maybe you should increase the Scheduler updates ?)");
 				}
 				
 				// Der alte playbuffer ist leer, muss neu generiert werden.

@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
+import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 
@@ -19,7 +20,7 @@ import de.schmiereck.noiseComp.soundData.SoundData;
  */
 public class GeneratorsGraphicData
 extends WidgetData
-implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
+implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitWidgetListenerInterface
 {
 	public static final int HIT_PART_NONE		= 0;
 	public static final int HIT_PART_GENERATOR	= 1;
@@ -320,6 +321,15 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 			this.deselectGenerator();
 		}
 	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyReleasedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
+	 */
+	public void notifyReleasedWidget(WidgetData selectedWidgetData)
+	{
+		
+	}
+	
 	private void deselectGenerator()
 	{
 		TrackGraficData trackGraficData = this.selectedTrackGraficData;
@@ -364,5 +374,68 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 	public void setListenerLogic(GeneratorSelectedListenerInterface listenerLogic)
 	{
 		this.listenerLogic = listenerLogic;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface#notifyHitWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData, int, int)
+	 */
+	public void notifyHitWidget(WidgetData activeWidgetData, int pointerPosX, int pointerPosY)
+	{
+		TrackGraficData trackGraficData = GeneratorsGraphicData.calcHitTrack(pointerPosX, pointerPosY, this);
+		
+		int hitGeneratorPart;
+		
+		if (trackGraficData != null)
+		{
+			hitGeneratorPart = GeneratorsGraphicData.calcHitGeneratorPart(pointerPosX, pointerPosY, this, trackGraficData);
+		}
+		else
+		{
+			hitGeneratorPart = 0;
+		}
+		
+		this.setActiveTrackGraficData(trackGraficData, hitGeneratorPart);
+	}
+
+	private static TrackGraficData calcHitTrack(int pointerPosX, int pointerPosY, GeneratorsGraphicData generatorsGraphicData)
+	{
+		TrackGraficData trackGraficData = null;
+		
+		// Die Positionsnummer des Generators in der Liste.
+		int generatorPos = (pointerPosY / generatorsGraphicData.getTrackHeight()) + generatorsGraphicData.getTrackScrollPos();
+		
+		// Innerhalb der Anzahl der vorhandneen generatoren ?
+		if (generatorPos < generatorsGraphicData.getTracksCount())
+		{
+			trackGraficData = generatorsGraphicData.getTrack(generatorPos);
+		}
+		
+		return trackGraficData;
+	}
+
+	/**
+	 * @return 	Der mit der Maus überfahrene Part des Generators:<br/>
+	 * 			{@link GeneratorsGraphicData#HIT_PART_NONE}:		kein Hit.<br/>
+	 * 			{@link GeneratorsGraphicData#HIT_PART_GENERATOR}:	Generator überfahren.
+	 */
+	private static int calcHitGeneratorPart(int pointerPosX, int pointerPosY, GeneratorsGraphicData generatorsGraphicData, TrackGraficData trackGraficData)
+	{
+		int sizeX = generatorsGraphicData.getSizeX();
+
+		int hitGeneratorPart = GeneratorsGraphicData.HIT_PART_NONE;
+
+		// Inerhalb des Trackbereichs ?
+		if ((pointerPosX >= generatorsGraphicData.getGeneratorsLabelSizeX()) && (pointerPosX <= sizeX))
+		{
+			float timePos = ((pointerPosX - generatorsGraphicData.getGeneratorsLabelSizeX()) / generatorsGraphicData.getGeneratorScaleX()) - generatorsGraphicData.getTrackScrollPos();
+			
+			Generator generator = trackGraficData.getGenerator();
+			
+			if ((timePos >= generator.getStartTimePos()) && (timePos <= generator.getEndTimePos()))
+			{
+				hitGeneratorPart = GeneratorsGraphicData.HIT_PART_GENERATOR;
+			}
+		}
+		return hitGeneratorPart;
 	}
 }
