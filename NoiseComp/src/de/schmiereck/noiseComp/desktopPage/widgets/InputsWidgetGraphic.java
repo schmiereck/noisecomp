@@ -19,9 +19,8 @@ import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 public class InputsWidgetGraphic
 extends ListWidgetGraphic
 {
-
-	private int nameColumnSizeX = 150;
-	private int textOffsetSizeX = 4;
+	private int labelColumnSizeX = 90;
+	private int inputTypeOffsetSizeX = 4;
 	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetGraphic#drawBackground(java.awt.Graphics, de.schmiereck.screenTools.graphic.ScreenGraficInterface, de.schmiereck.noiseComp.desktopPage.DesktopColors, de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData, int, int, int, int, float, float)
@@ -33,7 +32,7 @@ extends ListWidgetGraphic
 		screenGrafic.fillRect(g, posX, posY, sizeX, sizeY);
 		
 		screenGrafic.setColor(g, desktopColors.getGeneratorBottomLineColor());
-		screenGrafic.drawLine(g, posX + this.nameColumnSizeX, posY, 0, sizeY);
+		screenGrafic.drawLine(g, posX + this.labelColumnSizeX, posY, 0, sizeY);
 	}
 	
 	/* (non-Javadoc)
@@ -122,8 +121,12 @@ extends ListWidgetGraphic
 			inputTypeName = "ERROR";
 		}
 		
-		screenGrafic.drawString(g, posX + this.textOffsetSizeX, screenPosY + entryHeight, label);
-		screenGrafic.drawString(g, posX + this.nameColumnSizeX + this.textOffsetSizeX, screenPosY + entryHeight, inputTypeName);
+		screenGrafic.drawString(g, 
+								posX + this.inputTypeOffsetSizeX, screenPosY + entryHeight, 
+								inputTypeName);
+		screenGrafic.drawString(g, 
+								posX + this.inputTypeOffsetSizeX + this.labelColumnSizeX, screenPosY + entryHeight, 
+								label);
 	}
 
 	/* (non-Javadoc)
@@ -131,7 +134,5 @@ extends ListWidgetGraphic
 	 */
 	public void drawSelectors(Graphics g, ScreenGraficInterface screenGrafic, DesktopColors desktopColors, ListWidgetData listWidgetData, int posX, int posY, int sizeX, int sizeY, int entryHeight, float horizontalScrollStart, float horizontalScrollEnd, float verticalScrollerStart, float verticalScrollerEnd)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 }

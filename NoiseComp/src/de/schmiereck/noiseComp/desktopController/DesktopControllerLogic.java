@@ -1,17 +1,12 @@
 package de.schmiereck.noiseComp.desktopController;
 
-import java.io.File;
 import java.util.Iterator;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import com.sun.security.auth.module.JndiLoginModule;
 
 import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageLogic;
 import de.schmiereck.noiseComp.desktopController.mainPage.MainPageLogic;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageLogic;
-import de.schmiereck.noiseComp.desktopPage.ShowMessageListener;
 import de.schmiereck.noiseComp.desktopPage.widgets.MainActionException;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
@@ -58,8 +53,6 @@ extends ControllerLogic
 	private MainPageLogic mainPageLogic = null;
 	
 	private SoundSourceSchedulerLogic soundSourceSchedulerLogic;
-
-	private ShowMessageListener showMessageListener;
 	
 	/**
 	 * Constructor.
@@ -68,7 +61,6 @@ extends ControllerLogic
 	 */
 	public DesktopControllerLogic(DesktopControllerData controllerData, 
 								  DesktopInputListener inputListener, 
-								  ShowMessageListener showMessageListener, 
 								  SchedulerWaiter waiter, 
 								  String playerName)
 	{
@@ -76,7 +68,6 @@ extends ControllerLogic
 
 		try
 		{
-			this.showMessageListener = showMessageListener;
 			this.desktopControllerData = controllerData;
 			
 			//this.desktopControllerData.registerEditGeneratorChangedListener(this);
@@ -594,11 +585,6 @@ extends ControllerLogic
 		this.desktopControllerData.getActiveDesktopPageData().focusWalk(dir);
 	}
 
-	public void showErrorMessage(String message)
-	{
-		this.showMessageListener.showErrorMessage(message);
-	}
-	
 	/**
 	 * Defaultverhalten der Seite bei einem Submit (z.B. durch ENTER) auslösen.
 	 */
@@ -611,7 +597,7 @@ extends ControllerLogic
 		}
 		catch (MainActionException ex)
 		{
-			this.showErrorMessage(ex.toString());
+			this.desktopControllerData.setPopupRuntimeException(ex);
 		}
 	}
 

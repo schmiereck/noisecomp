@@ -39,7 +39,9 @@ extends MultiBufferFullScreenGraphic
 	/* (non-Javadoc)
 	 * @see de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphic#drawGraphic(java.awt.Graphics, de.schmiereck.screenTools.controller.ControllerData, java.awt.Rectangle, long)
 	 */
-	public void drawGraphic(Graphics g, ControllerData controllerData, Rectangle bounds, long actualWaitPerFramesMillis)
+	public void drawGraphic(Graphics g, 
+							ControllerData controllerData, 
+							Rectangle bounds, long actualWaitPerFramesMillis)
 	{
 		controllerData.setGraphicSleepMillis(actualWaitPerFramesMillis);
 		
@@ -53,8 +55,7 @@ extends MultiBufferFullScreenGraphic
 
 		if (desktopControllerData.getPopupRuntimeExceptionText() != null)
 		{
-			g.drawString("ERROR: " + desktopControllerData.getPopupRuntimeExceptionText(), 
-					9, 9);
+			this.drawString(g, 9, 30, "ERROR: " + desktopControllerData.getPopupRuntimeExceptionText()); 
 		}
 		
 		this.desktopPageGraphic.drawPointer(g, this, desktopPageData);
@@ -74,11 +75,13 @@ extends MultiBufferFullScreenGraphic
 		
 		if (controllerData.getGraphicSleepMillis() != 0)
 		{	
-			g.drawString("draw: " + (1000 / controllerData.getGraphicSleepMillis()) + " fps", 4, 18);
+			this.drawString(g, 4, 18, "draw: " + (1000 / controllerData.getGraphicSleepMillis()) + " fps");
+			//g.drawString("draw: " + (1000 / controllerData.getGraphicSleepMillis()) + " fps", 4, 18);
 		}
 		if (controllerData.getCalcSleepMillis() != 0)
 		{	
-			g.drawString("calc: " + (1000 / controllerData.getCalcSleepMillis()) + " fps", 4, 34);
+			this.drawString(g, 4, 34, "calc: " + (1000 / controllerData.getCalcSleepMillis()) + " fps");
 		}
 	}
+
 }

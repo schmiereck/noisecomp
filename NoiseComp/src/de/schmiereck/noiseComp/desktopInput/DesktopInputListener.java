@@ -79,8 +79,8 @@ implements GraficInputListener
 	 */
 	public void mouseDragged(MouseEvent e)
 	{
-		int posX = (int)(e.getX() * this.graphic.getScaleX());
-		int posY = (int)(e.getY() * this.graphic.getScaleY());
+		int posX = (int)(e.getX() * this.graphic.getScaleX());// - this.graphic.getCenterX();
+		int posY = (int)(e.getY() * this.graphic.getScaleY());// - this.graphic.getCenterY();
 		
 		this.gameControllerLogic.movePointer(posX, posY);
 	}
@@ -90,8 +90,8 @@ implements GraficInputListener
 	 */
 	public void mouseMoved(MouseEvent e)
 	{
-		int posX = (int)(e.getX() * this.graphic.getScaleX());
-		int posY = (int)(e.getY() * this.graphic.getScaleY());
+		int posX = (int)(e.getX() * this.graphic.getScaleX()) - this.graphic.getCenterX();
+		int posY = (int)(e.getY() * this.graphic.getScaleY()) - this.graphic.getCenterY();
 		
 		this.gameControllerLogic.movePointer(posX, posY);
 	}

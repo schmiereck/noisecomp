@@ -528,11 +528,11 @@ extends ControllerData
 	/**
 	 * @param ex
 	 */
-	public void setPopupRuntimeException(PopupRuntimeException ex)
+	public void setPopupRuntimeException(Exception ex)
 	{
 		this.popupRuntimeExceptionText = ex.getMessage();
 		
-		throw ex;
+		throw new PopupRuntimeException("HANDELED", ex);
 	}
 	/**
 	 * @return the attribute {@link #popupRuntimeExceptionText}.

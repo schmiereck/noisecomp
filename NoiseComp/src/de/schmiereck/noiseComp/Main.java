@@ -40,7 +40,6 @@ import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.Sel
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectMainEditButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectRemoveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
-import de.schmiereck.noiseComp.desktopPage.ShowMessageListener;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.Runner;
@@ -85,17 +84,16 @@ public class Main
 		
 		multiBufferGraphic = new DesktopGraphic(useFullScreen);
 		
+		multiBufferGraphic.initGraphicBuffer();
+		
 		DesktopControllerData controllerData = new DesktopControllerData(soundData, generators);
 
 		multiBufferGraphic.initGrafic(controllerData);
 
 		DesktopInputListener inputListener = new DesktopInputListener();
 		
-		ShowMessageListener showMessageListener = new ShowMessageListener(multiBufferGraphic);
-		
 		DesktopControllerLogic controllerLogic = new DesktopControllerLogic(controllerData, 
 																			inputListener, 
-																			showMessageListener,
 																			waiter, 
 																			playerName);
 		

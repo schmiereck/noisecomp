@@ -76,7 +76,7 @@ public class SoundSamplesBufferData
 		}
 		
 		this.emptyBufferStart = framePos;
-		System.err.println("POLL framePos:" + framePos);
+		//System.err.println("POLL framePos:" + framePos);
 		
 		if (this.emptyBufferStart >= this.emptyBufferEnd)
 		{

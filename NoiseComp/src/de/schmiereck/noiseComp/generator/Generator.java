@@ -311,28 +311,32 @@ implements GeneratorInterface
 	{
 		InputData retInputData = null;
 		
-		synchronized (this.inputs)
-		{
-			if (this.inputs != null)
-			{	
-				Iterator inputGeneratorsIterator = this.inputs.iterator();
-				
-				while (inputGeneratorsIterator.hasNext())
-				{
-					InputData inputData = (InputData)inputGeneratorsIterator.next();
+		if (this.inputs != null)
+		{	
+			synchronized (this.inputs)
+			{
+				if (this.inputs != null)
+				{	
+					Iterator inputGeneratorsIterator = this.inputs.iterator();
 					
-					if (inputTypeName.equals(inputData.getInputTypeData().getInputTypeName()) == true)
+					while (inputGeneratorsIterator.hasNext())
 					{
-						if (retInputData != null)
-						{
-							throw new PopupRuntimeException("found more than one input by name \"" + inputTypeName + "\" in generator " + this.toString());
-						}
+						InputData inputData = (InputData)inputGeneratorsIterator.next();
 						
-						retInputData = inputData;
+						if (inputTypeName.equals(inputData.getInputTypeData().getInputTypeName()) == true)
+						{
+							if (retInputData != null)
+							{
+								throw new PopupRuntimeException("found more than one input by name \"" + inputTypeName + "\" in generator " + this.toString());
+							}
+							
+							retInputData = inputData;
+						}
 					}
 				}
 			}
 		}
+		
 		return retInputData;
 	}
 	
@@ -342,16 +346,24 @@ implements GeneratorInterface
 	public int getInputsCount()
 	{
 		int ret;
-		synchronized (this.inputs)
+		
+		if (this.inputs != null)
 		{
-			if (this.inputs != null)
-			{	
-				ret = this.inputs.size();
-			}
-			else
+			synchronized (this.inputs)
 			{
-				ret = 0;
+				if (this.inputs != null)
+				{	
+					ret = this.inputs.size();
+				}
+				else
+				{
+					ret = 0;
+				}
 			}
+		}
+		else
+		{
+			ret = 0;
 		}
 		return ret;
 	}
@@ -364,25 +376,28 @@ implements GeneratorInterface
 	 */
 	public void notifyRemoveGenerator(Generator removedGenerator)
 	{
-		synchronized (this.inputs)
-		{
-			if (this.inputs != null)
-			{	
-				Iterator inputGeneratorsIterator = this.inputs.iterator();
-				
-				while (inputGeneratorsIterator.hasNext())
-				{
-					InputData inputData = (InputData)inputGeneratorsIterator.next();
-	
-					Generator generator = (Generator)inputData.getInputGenerator();
+		if (this.inputs != null)
+		{	
+			synchronized (this.inputs)
+			{
+				if (this.inputs != null)
+				{	
+					Iterator inputGeneratorsIterator = this.inputs.iterator();
 					
-					if (generator == removedGenerator)
+					while (inputGeneratorsIterator.hasNext())
 					{
-						synchronized (this.inputs)
+						InputData inputData = (InputData)inputGeneratorsIterator.next();
+		
+						Generator generator = (Generator)inputData.getInputGenerator();
+						
+						if (generator == removedGenerator)
 						{
-							inputGeneratorsIterator.remove();
+							synchronized (this.inputs)
+							{
+								inputGeneratorsIterator.remove();
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}

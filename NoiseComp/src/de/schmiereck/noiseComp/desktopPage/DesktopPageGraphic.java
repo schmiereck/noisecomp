@@ -54,15 +54,18 @@ public class DesktopPageGraphic
 		screenGrafic.setColor(g, this.desktopColors.getPointerColor());
 		
 		// Vertikale Linie:
-		screenGrafic.drawLine(g, desktopPageData.getPointerPosX(), 0, 
-				0, desktopPageData.getDesktopSizeY());
+		screenGrafic.drawLine(g, 
+							  desktopPageData.getPointerPosX(), 0, 
+							  0, desktopPageData.getDesktopSizeY());
+		
 		// Horizontale Linie:
-		screenGrafic.drawLine(g, 0, desktopPageData.getPointerPosY(), 
-				desktopPageData.getDesktopSizeX(), 0);
+		screenGrafic.drawLine(g, 
+							  0, desktopPageData.getPointerPosY(), 
+							  desktopPageData.getDesktopSizeX(), 0);
 
 		screenGrafic.fillRect(g, 
-				desktopPageData.getPointerPosX() - 6, desktopPageData.getPointerPosY() - 6, 
-				12, 12);
+							  desktopPageData.getPointerPosX() - 6, desktopPageData.getPointerPosY() - 6, 
+							  12, 12);
 	}
 	
 	/**

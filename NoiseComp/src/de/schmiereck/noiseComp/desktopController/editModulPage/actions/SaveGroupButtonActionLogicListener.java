@@ -50,45 +50,52 @@ public class SaveGroupButtonActionLogicListener
 	{
 		String modulName = this.editModulPageData.getGroupNameInputlineData().getInputText();
 		
-		modulName = modulName.trim();
-		
-		if (modulName.length() > 0)
-		{	
-			String modulDescription = "Generic Modul.";
+		if (modulName != null)
+		{
+			modulName = modulName.trim();
 			
-			EditData editData = this.controllerData.getEditData();
-			
-			ModulGeneratorTypeData editModulTypeData = editData.getEditModulTypeData();
-			Generators generators;
-			
-			// Actualy no modul edited ?
-			if (editModulTypeData == null)
+			if (modulName.length() > 0)
 			{	
-				editModulTypeData = new ModulGeneratorTypeData(ModulGenerator.class, modulName, modulDescription);
-
-				//generators = this.controllerData.getTracksListWidgetData().getGenerators();
-				generators =editData.getEditGenerators();
+				String modulDescription = "Generic Modul.";
 				
-				editModulTypeData.setGenerators(generators);
-			
-				this.controllerData.getGeneratorTypesData().addGeneratorTypeData(editModulTypeData);
-			
-				this.controllerData.clearTracks();
+				EditData editData = this.controllerData.getEditData();
+				
+				ModulGeneratorTypeData editModulTypeData = editData.getEditModulTypeData();
+				Generators generators;
+				
+				// Actualy no modul edited ?
+				if (editModulTypeData == null)
+				{	
+					editModulTypeData = new ModulGeneratorTypeData(ModulGenerator.class, modulName, modulDescription);
+	
+					//generators = this.controllerData.getTracksListWidgetData().getGenerators();
+					generators =editData.getEditGenerators();
+					
+					editModulTypeData.setGenerators(generators);
+				
+					this.controllerData.getGeneratorTypesData().addGeneratorTypeData(editModulTypeData);
+				
+					this.controllerData.clearTracks();
+				}
+				else
+				{
+					// A modul is actualy edited:
+					
+					editModulTypeData.setGeneratorTypeName(modulName);
+					editModulTypeData.setGeneratorTypeDescription(modulDescription);
+					
+					generators = editData.getEditGenerators();
+				}
+				
+				editData.setEditModulGenerator(editModulTypeData);
+				this.mainPageLogic.triggerEditGeneratorChanged(editData);
+				
+				this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 			}
 			else
 			{
-				// A modul is actualy edited:
-				
-				editModulTypeData.setGeneratorTypeName(modulName);
-				editModulTypeData.setGeneratorTypeDescription(modulDescription);
-				
-				generators = editData.getEditGenerators();
+				throw new RuntimeException("no modul name");
 			}
-			
-			editData.setEditModulGenerator(editModulTypeData);
-			this.mainPageLogic.triggerEditGeneratorChanged(editData);
-			
-			this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 		}
 		else
 		{
