@@ -275,10 +275,10 @@ implements GeneratorInterface
 	{
 		InputData retInputData = null;
 		
-		synchronized (this.inputs)
-		{
-			if (this.inputs != null)
-			{	
+		if (this.inputs != null)
+		{	
+			synchronized (this.inputs)
+			{
 				Iterator inputGeneratorsIterator = this.inputs.iterator();
 				
 				while (inputGeneratorsIterator.hasNext())

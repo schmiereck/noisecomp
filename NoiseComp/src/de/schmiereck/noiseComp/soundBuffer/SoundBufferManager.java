@@ -7,13 +7,14 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 
 import de.schmiereck.noiseComp.generator.GeneratorInterface;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
  * <p>
  * 	Manages three {@link SoundBuffer}-Objects:<br/>
- * 	playing buffer:<br/>
- * 	waiting buffer:<br/>
- * 	generating buffer:<br/>
+ * 	playing buffer: {@link #playingGeneratorBuffer}<br/>
+ * 	waiting buffer: {@link #waitingGeneratorBuffer}<br/>
+ * 	generating buffer: {@link #generatingGeneratorBuffer}<br/>
  * </p>
  * <p>
  * 	{@link #pollGenerate()}:<br/>
@@ -42,7 +43,7 @@ extends AudioInputStream
 	private SoundBuffer playingGeneratorBuffer = null;
 	
 	/**
-	 * Wenn != null, sind hier bereits generierte daten enthalten, die
+	 * Wenn != null, sind hier bereits generierte Daten enthalten, die
 	 * als nächstes abgespielt werden, wenn de {@link #playingGeneratorBuffer}
 	 * leer ist.
 	 */
@@ -64,7 +65,8 @@ extends AudioInputStream
 	/**
 	 * Referenc to the actual used Generator that generates the output signal.
 	 */
-	private GeneratorInterface soundGenerator;
+	//private GeneratorInterface soundGenerator;
+	private SoundSourceLogic soundSourceLogic;
 	
 	/**
 	 * A try to prevent for: see: isPollingExceptionPoint
@@ -76,7 +78,7 @@ extends AudioInputStream
 	 * 
 	 */
 	public SoundBufferManager(AudioFormat audioFormat, float frameRate, long length, int bufferSize, 
-							  GeneratorInterface soundGenerator)
+			SoundSourceLogic soundSourceLogic)
 	{
 		super(new ByteArrayInputStream(new byte[0]), 
 			  new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
@@ -91,7 +93,8 @@ extends AudioInputStream
 		
 		this.bufferSize = bufferSize;
 		
-		this.soundGenerator = soundGenerator;
+		///this.soundGenerator = soundGenerator;
+		this.soundSourceLogic = soundSourceLogic;
 	}
 
 	/* (non-Javadoc)
@@ -116,17 +119,20 @@ extends AudioInputStream
 					if (this.waitingGeneratorBuffer == null)
 					{
 						// isPollingExceptionPoint
-						throw new IOException("waiting buffer is empty (maybe you should increase the Scheduler updates ?)");
+						//throw new IOException("waiting buffer is empty (maybe you should increase the Scheduler updates ?)");
 					}
 					
-					// Der alte Playbuffer ist leer, muss neu generiert werden.
-					this.generatingGeneratorBuffer = this.playingGeneratorBuffer;
-					
-					// der aktuellen wartebuffer wird jetzt abgespielt.
-					this.playingGeneratorBuffer = this.waitingGeneratorBuffer;
-					
-					// nichts wartet mehr.
-					this.waitingGeneratorBuffer = null;
+					if (this.waitingGeneratorBuffer != null)
+					{
+						// Der alte Playbuffer ist leer, muss neu generiert werden.
+						this.generatingGeneratorBuffer = this.playingGeneratorBuffer;
+						
+						// der aktuellen wartebuffer wird jetzt abgespielt.
+						this.playingGeneratorBuffer = this.waitingGeneratorBuffer;
+						
+						// nichts wartet mehr.
+						this.waitingGeneratorBuffer = null;
+					}
 				}
 				copyiedBytes = this.playingGeneratorBuffer.copyBytes(abData, nOffset, nLength);
 			}
@@ -150,15 +156,19 @@ extends AudioInputStream
 			// Kein gefüllter Buffer wartet mehr, das er abgespielt wird ?
 			if (this.waitingGeneratorBuffer == null)
 			{
+				//SoundBuffer generatingSoundBuffer = (SoundBuffer)this.generatingGeneratorBuffer.firstElement();
+
 				if (this.generatingGeneratorBuffer == null)
 				{
 					//this.waitingGeneratorBuffer = new GeneratorBuffer(this.bufferSize, this.getFormat());
-					this.generatingGeneratorBuffer = new SoundBuffer(this.bufferSize, this.getFormat(), this.soundGenerator);
+					this.generatingGeneratorBuffer = new SoundBuffer(this.bufferSize, 
+																	 this.getFormat(), 
+																	 this.soundSourceLogic);
 				}
 				
 				// Dann generieren wir einen.
 				int generatedFrames = this.generatingGeneratorBuffer.generate(this.actualFrame); 
-	
+				
 				this.actualFrame += generatedFrames;
 			}
 			
@@ -171,7 +181,7 @@ extends AudioInputStream
 			}
 			else
 			{	
-				// Es wartet kein Buffer darauf, abgelspielt zu werden ?
+				// Es wartet kein Buffer darauf, abgespielt zu werden ?
 				if (this.waitingGeneratorBuffer == null)
 				{	
 					// Dann stellen wir den neu generierten in die leere Warteschleife.
@@ -246,5 +256,26 @@ extends AudioInputStream
 		
 			this.generatingGeneratorBuffer = null;
 		}
+	}
+	/**
+	 * @return the attribute {@link #generatingGeneratorBuffer}.
+	 */
+	public SoundBuffer getGeneratingGeneratorBuffer()
+	{
+		return this.generatingGeneratorBuffer;
+	}
+	/**
+	 * @return the attribute {@link #playingGeneratorBuffer}.
+	 */
+	public SoundBuffer getPlayingGeneratorBuffer()
+	{
+		return this.playingGeneratorBuffer;
+	}
+	/**
+	 * @return the attribute {@link #waitingGeneratorBuffer}.
+	 */
+	public SoundBuffer getWaitingGeneratorBuffer()
+	{
+		return this.waitingGeneratorBuffer;
 	}
 }

@@ -90,6 +90,8 @@ extends ListWidgetGraphic
 				//for (float timePos = 0; timePos < timeLength; timePos += (0.5F / scaleX))
 				for (float timePos = 0; timePos < timeLength; timePos += (2.0F / scaleX))
 				{
+					// TODO hier auf den Track zugreifen, der soll einen Puffer verwalten.
+					//SoundSample soundSample = null;//XXX generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate), parentModulGenerator);
 					SoundSample soundSample = generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate), parentModulGenerator);
 					
 					if (soundSample != null)

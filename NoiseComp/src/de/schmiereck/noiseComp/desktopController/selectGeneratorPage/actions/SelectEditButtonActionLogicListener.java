@@ -15,7 +15,7 @@ import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
- * TODO docu
+ * Edit generators of the selected ModulGenerator.
  *
  * @author smk
  * @version <p>06.03.2004: created, smk</p>
@@ -68,9 +68,12 @@ public class SelectEditButtonActionLogicListener
 		
 		Generators generators = modulTypeData.getGenerators();
 
+		this.controllerLogic.selectGeneratorsToEdit(generators);
+		/*
+		// Clear the list with the prviouse selected generators.
 		this.mainPageLogic.clearTracks();
-		
-		this.controllerData.getEditData().setEditModulGenerator(modulTypeData);
+
+				this.controllerData.getEditData().setEditModulGenerator(modulTypeData);
 		this.mainPageLogic.triggerEditGeneratorChanged(this.controllerData.getEditData());
 		
 		//-----------------------------------------------------
@@ -84,7 +87,7 @@ public class SelectEditButtonActionLogicListener
 			
 			this.controllerLogic.addTrackData(new TrackData(generator));
 		}
-		
+		*/
 		this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 	}
 }

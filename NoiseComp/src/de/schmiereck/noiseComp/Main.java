@@ -59,7 +59,7 @@ public class Main
 		//------------------------------------
 		// Setup Sound:
 		
-		SourceDataLine line = createLine();
+		SourceDataLine line = Main.createLine();
 		
 		float frameRate = line.getFormat().getFrameRate();
 

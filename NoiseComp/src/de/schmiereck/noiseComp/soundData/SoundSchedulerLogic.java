@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
+import de.schmiereck.screenTools.scheduler.PipelineSchedulerLogic;
+import de.schmiereck.screenTools.scheduler.PipelineSchedulerLogicTest;
 import de.schmiereck.screenTools.scheduler.SchedulerLogic;
 
 /**
@@ -14,7 +16,7 @@ import de.schmiereck.screenTools.scheduler.SchedulerLogic;
  * @version 26.01.2004
  */
 public class SoundSchedulerLogic 
-extends SchedulerLogic
+extends PipelineSchedulerLogic
 {
 	private SoundData soundData;
 	private boolean playbackPaused = false;
@@ -32,26 +34,45 @@ extends SchedulerLogic
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.screenTools.scheduler.SchedulerLogic#notifyRunSchedul(long)
+	 * @see de.schmiereck.screenTools.scheduler.PipelineSchedulerLogic#notifyRunSchedulCalc(long)
 	 */
-	public void notifyRunSchedul(long actualWaitPerFramesMillis)
+	public void notifyRunSchedulCalc(long actualWaitPerFramesMillis)
 	{
 		if (this.playbackPaused == false)
 		{	
-			SourceDataLine line = this.soundData.getLine();
-			
-			SoundBufferManager soundBufferManager = soundData.getSoundBufferManager();
+			System.out.println("CALC: " + actualWaitPerFramesMillis);
+
+			SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
 			
 			soundBufferManager.pollGenerate();
 			//soundBufferManager.pollGenerate();
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see de.schmiereck.screenTools.scheduler.PipelineSchedulerLogic#notifyRunSchedulOut(long)
+	 */
+	public void notifyRunSchedulOut(long actualWaitPerFramesMillis)
+	{
+		if (this.playbackPaused == false)
+		{	
+			System.out.println("OUT: " + actualWaitPerFramesMillis);
+			SourceDataLine line = this.soundData.getLine();
 			
-			byte abData[] = soundData.getLineBufferData();
+			SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
 			
-			int	nRead;
+			//soundBufferManager.pollGenerate();
+			
+			byte abData[] = this.soundData.getLineBufferData();
+			
 			try
 			{
-				nRead = soundBufferManager.read(abData);
+				//int numBytesToRead = line.available();
+				//if (numBytesToRead == -1) break;
+				//int nRead = soundBufferManager.read(abData, 0, numBytesToRead);
 				
+				int nRead = soundBufferManager.read(abData);
+
 				int	nWritten = line.write(abData, 0, nRead);
 				
 				//System.out.println("actualWaitPerFramesMillis: " + actualWaitPerFramesMillis + ", nWritten:" + nWritten + ", nRead: " + nRead);

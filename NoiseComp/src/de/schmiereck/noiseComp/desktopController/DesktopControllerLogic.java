@@ -21,6 +21,7 @@ import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.ControllerLogic;
 import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
@@ -43,6 +44,8 @@ extends ControllerLogic
 	private DesktopControllerData desktopControllerData;
 	
 	private SoundSchedulerLogic soundSchedulerLogic = null;
+	
+	private SoundSourceLogic soundSourceLogic = null;
 	
 	private MainPageLogic mainPageLogic = null;
 	
@@ -311,6 +314,14 @@ extends ControllerLogic
 		this.addTrackData(trackData);
 	}
 
+	/**
+	 * 	Add the Track to the visible list of generators in the main page.<br/>
+	 * 	If the generator in the track is a {@link OutputGenerator},
+	 * 	the generator is set as as Output in a new 
+	 * 	{@link SoundSourceLogic}-Object.
+	 * 
+	 * @param trackData
+	 */
 	public void addTrackData(TrackData trackData)
 	{
 		this.mainPageLogic.addTrackData(trackData);
@@ -325,7 +336,11 @@ extends ControllerLogic
 			
 			SoundData soundData = this.desktopControllerData.getSoundData();
 			
-			soundData.setOutputGenerator(outputGenerator);
+			this.soundSourceLogic = new SoundSourceLogic(outputGenerator);
+			
+			soundData.setSoundSourceLogic(this.soundSourceLogic);
+
+			//soundData.setOutputGenerator(outputGenerator);
 		}
 	}
 
@@ -566,13 +581,29 @@ extends ControllerLogic
 	
 	public void selectMainModul()
 	{
-		this.mainPageLogic.clearTracks();
-
 		Generators generators = this.desktopControllerData.getMainGenerators();
 
 		///this.desktopControllerData.getSoundData().setGenerators(generators);
-		this.desktopControllerData.getSoundData().setOutputGenerator(generators.getOutputGenerator());
+		//this.desktopControllerData.getSoundData().setOutputGenerator(generators.getOutputGenerator());
+		//???this.soundSourceLogic = new SoundSourceLogic(generators.getOutputGenerator());
+		//???this.desktopControllerData.getSoundData().setSoundSourceLogic(this.soundSourceLogic);
 		
+		this.selectGeneratorsToEdit(generators);
+	}
+	
+	/**
+	 * 	Make the given generators as the edited list of 
+	 * 	tracks of the main page.<br/>
+	 * 	
+	 * @see #addTrackData(TrackData) because of the handling of the OutputGenerator.
+	 * 
+	 * @param generators
+	 */
+	public void selectGeneratorsToEdit(Generators generators)
+	{
+		// Clear the list with the prviouse selected generators.
+		this.mainPageLogic.clearTracks();
+
 		this.desktopControllerData.getEditData().setEditGenerators(generators);
 		this.mainPageLogic.triggerEditGeneratorChanged(this.desktopControllerData.getEditData());
 		
@@ -588,7 +619,7 @@ extends ControllerLogic
 			this.addTrackData(new TrackData(generator));
 		}
 	}
-	
+
 	/**
 	 * @return the attribute {@link #mainPageLogic}.
 	 */

@@ -5,6 +5,7 @@ import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
  * Verwaltet ein Output {@link Generator}-Objekt.
@@ -21,7 +22,8 @@ public class SoundData
 	//nur noch die setOutput() aufrufen, wenn sich dieser ändert.
 	//private Generators generators = null;
 
-	private OutputGenerator outputGenerator = null;
+	//private OutputGenerator outputGenerator = null;
+	private SoundSourceLogic	soundSourceLogic = null;
 	
 	private SourceDataLine line;
 	
@@ -48,20 +50,41 @@ public class SoundData
 	
 	/**
 	 * @return the attribute {@link #outputGenerator}.
-	 */
 	public OutputGenerator getOutputGenerator()
 	{
 		return this.outputGenerator;
 	}
+	 */
+	
 	/**
 	 * @param outputGenerator is the new value for attribute {@link #outputGenerator} to set.
-	 */
 	public void setOutputGenerator(OutputGenerator outputGenerator)
 	{
 		this.outputGenerator = outputGenerator;
 
 		this.soundBufferManager = new SoundBufferManager(this.line.getFormat(), this.frameRate,  
 				AudioSystem.NOT_SPECIFIED, SoundData.BUFFER_SIZE, outputGenerator);
+	}
+	 */
+	
+	/**
+	 * @return the attribute {@link #soundSourceLogic}.
+	 */
+	public SoundSourceLogic getSoundSourceLogic()
+	{
+		return this.soundSourceLogic;
+	}
+	/**
+	 * @param soundSourceLogic is the new value for attribute {@link #soundSourceLogic} to set.
+	 */
+	public void setSoundSourceLogic(SoundSourceLogic soundSourceLogic)
+	{
+		this.soundSourceLogic = soundSourceLogic;
+
+		//OutputGenerator outputGenerator = this.soundSourceLogic.getOutputGenerator();
+		
+		this.soundBufferManager = new SoundBufferManager(this.line.getFormat(), this.frameRate,  
+				AudioSystem.NOT_SPECIFIED, SoundData.BUFFER_SIZE, soundSourceLogic);
 	}
 
 	/**
@@ -141,5 +164,4 @@ public class SoundData
 	{
 		return this.frameRate;
 	}
-	
 }

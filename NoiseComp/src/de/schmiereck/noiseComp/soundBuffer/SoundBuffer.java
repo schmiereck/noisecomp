@@ -4,6 +4,7 @@ import javax.sound.sampled.AudioFormat;
 
 import de.schmiereck.noiseComp.generator.GeneratorInterface;
 import de.schmiereck.noiseComp.generator.SoundSample;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
  * TODO docu
@@ -26,7 +27,7 @@ public class SoundBuffer
 	/**
 	 * Maximale-Länge des Puffers.
 	 */
-	private int maxBufferSize = 32000;
+	private int maxBufferSize = 16000; //32000;
 	
 	/**
 	 * Startposition der verbliebenen Bytes im Buffer.
@@ -54,14 +55,17 @@ public class SoundBuffer
 	 * Referenz auf den Soundgenerator der die einzelnen Samples
 	 * für jeden Frame erzeugt.
 	 */
-	private GeneratorInterface soundGenerator;
+	//private GeneratorInterface soundGenerator;
+	private SoundSourceLogic soundSourceLogic;
 	
 	/**
 	 * Constructor.
 	 * 
 	 * 
 	 */
-	public SoundBuffer(int bufferSize, AudioFormat audioFormat, GeneratorInterface soundGenerator)
+	public SoundBuffer(int bufferSize, AudioFormat audioFormat, 
+			SoundSourceLogic soundSourceLogic)
+			//GeneratorInterface soundGenerator)
 	{
 		super();
 		
@@ -69,7 +73,7 @@ public class SoundBuffer
 		
 		this.audioFormat = audioFormat;
 		
-		this.soundGenerator = soundGenerator;
+		this.soundSourceLogic = soundSourceLogic;
 		
 		this.bufferData = new byte[this.maxBufferSize];
 
@@ -131,12 +135,13 @@ public class SoundBuffer
 	 */
 	private void generateFrame(long frame, int frameSize, byte bufferData[], int bufferPos)
 	{
-		if (this.soundGenerator != null)
+		if (this.soundSourceLogic != null)
 		{	
 			int leftSampleValue;
 			int	rightSampleValue;
 			
-			SoundSample soundSample = this.soundGenerator.generateFrameSample(frame, null);
+			//SoundSample soundSample = this.soundGenerator.generateFrameSample(frame, null);
+			SoundSample soundSample = this.soundSourceLogic.generateFrameSample(frame);
 			
 			if (soundSample != null)
 			{	
