@@ -83,7 +83,7 @@ public class Main
 
 		DesktopGraphic multiBufferGraphic;
 		
-		multiBufferGraphic = new DesktopGraphic();
+		multiBufferGraphic = new DesktopGraphic(useFullScreen);
 		
 		DesktopControllerData controllerData = new DesktopControllerData(soundData, generators);
 

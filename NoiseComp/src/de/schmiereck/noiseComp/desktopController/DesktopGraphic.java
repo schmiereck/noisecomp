@@ -22,8 +22,10 @@ extends MultiBufferFullScreenGraphic
 {
 	private DesktopPageGraphic desktopPageGraphic;
 	
-	public DesktopGraphic()
+	public DesktopGraphic(boolean useFullScreen)
 	{
+		super(useFullScreen);
+		
 		this.desktopPageGraphic = new DesktopPageGraphic();
 	}
 	
