@@ -2,6 +2,8 @@ package de.schmiereck.noiseComp.desktopPage;
 
 import java.util.Iterator;
 
+import com.sun.corba.se.impl.interceptors.PINoOpHandlerImpl;
+
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
@@ -90,6 +92,16 @@ public class DesktopPageLogic
 			}
 		}
 		
+		WidgetData selectedWidgetData = desktopPageData.getSelectedWidgetData();
+		
+		if (selectedWidgetData != null)
+		{
+			if (selectedWidgetData instanceof ClickedWidgetListenerInterface)
+			{
+				((ClickedWidgetListenerInterface)selectedWidgetData).notifyDragWidget(selectedWidgetData, pointerPosX, pointerPosY);
+			}
+		}
+		
 		desktopPageData.setActiveWidgetData(hitWidgetData, pointerPosX, pointerPosY);
 		desktopPageData.setActiveButtonData(hitButtonData);
 		desktopPageData.setActiveScrollbarData(hitScrollbarData);
@@ -117,7 +129,10 @@ public class DesktopPageLogic
 			
 			if (widgetData instanceof ClickedWidgetListenerInterface)
 			{
-				((ClickedWidgetListenerInterface)widgetData).notifyClickedWidget(widgetData);
+				int pointerPosX = desktopPageData.getPointerPosX();
+				int pointerPosY = desktopPageData.getPointerPosY();
+				
+				((ClickedWidgetListenerInterface)widgetData).notifyClickedWidget(widgetData, pointerPosX, pointerPosY);
 			}
 			
 			if (widgetData instanceof FocusedWidgetListenerInterface)

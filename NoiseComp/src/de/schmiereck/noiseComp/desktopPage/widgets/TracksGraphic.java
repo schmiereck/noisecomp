@@ -354,9 +354,9 @@ extends ListWidgetGraphic
 		//screenGrafic.setFont()
 		screenGrafic.drawString(g, posX + 6, posY, "time:" + playTimePos);
 		
-		if ((playTimePos >= verticalScrollerStart) && (playTimePos <= verticalScrollerEnd))
+		if ((playTimePos >= horizontalScrollStart) && (playTimePos <= horizontalScrollEnd))
 		{	
-			int soundPosX = (int)((playTimePos - verticalScrollerStart) * tracksData.getGeneratorScaleX());
+			int soundPosX = (int)((playTimePos - horizontalScrollStart) * tracksData.getGeneratorScaleX());
 			
 			screenGrafic.drawLine(g, tracksData.getGeneratorsLabelSizeX() + soundPosX, posY, 0, sizeY);
 		}

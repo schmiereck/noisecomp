@@ -66,6 +66,20 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	 * 3:	{@link #SCROLLBAR_PART_DOWN}:	Down-Scroller<br/>
 	 */
 	private int activeScrollbarPart = 0;
+
+	/**
+	 * The last screen drag pos (if x or is y depands on {@link #doScrollVertical}.
+	 * 
+	 * #see #dragMode
+	 */
+	private int lastDragPos = 0;
+
+	/**
+	 * true, if scroller is in drag mode by mouse.
+	 * 
+	 * #see #lastDragPos
+	 */
+	public boolean dragMode = false;
 	
 	/**
 	 * Constructor.
@@ -209,11 +223,11 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	{
 		this.scrollStep = scrollStep;
 	}
-
+	
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyClickedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyClickedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData, int, int)
 	 */
-	public void notifyClickedWidget(WidgetData widgetData)
+	public void notifyClickedWidget(WidgetData widgetData, int pointerPosX, int pointerPosY)
 	{
 		int activeScrollbarPart = this.getActiveScrollbarPart();
 		
@@ -242,7 +256,16 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 			else
 			{
 				if (activeScrollbarPart == ScrollbarData.SCROLLBAR_PART_SCROLLER)
-				{				
+				{
+					this.dragMode = true;
+					if (this.getDoScrollVertical() == true)
+					{	
+						this.lastDragPos = pointerPosY;
+					}
+					else
+					{	
+						this.lastDragPos = pointerPosX;
+					}
 				}
 			}
 		}
@@ -253,7 +276,7 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	 */
 	public void notifyReleasedWidget(WidgetData selectedWidgetData)
 	{
-		
+		this.dragMode = false;
 	}
 
 	/**
@@ -295,7 +318,58 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 		
 		this.setActiveScrollbarPart(hitScrollbarPart);
 	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyDragWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData, int, int)
+	 */
+	public void notifyDragWidget(WidgetData selectedWidgetData, int pointerPosX, int pointerPosY)
+	{
+		if (this.dragMode == true)
+		{	
+			int dragOffset;
+		
+			if (this.getDoScrollVertical() == true)
+			{	
+				dragOffset = pointerPosY - this.lastDragPos;
+				this.lastDragPos = pointerPosY;
+			}
+			else
+			{	
+				dragOffset = pointerPosX - this.lastDragPos;
+				this.lastDragPos = pointerPosX;
+			}
+			this.scrollByScreen(dragOffset);
+		}
+	}
 	
+	/**
+	 * @param dragOffset
+	 */
+	private void scrollByScreen(int dragOffset)
+	{
+		int sizeX = this.getSizeX();
+		int sizeY = this.getSizeY();
+		int screenSize;
+		
+		if (this.getDoScrollVertical() == true)
+		{	
+			screenSize = sizeY;
+		}
+		else
+		{	
+			screenSize = sizeX;
+		}
+
+		// this.scrollerLength          x
+		// -------------------- = ----------
+		//      screenSize        dragOffset
+		
+		float scroll = (this.scrollerLength * dragOffset) / screenSize;
+
+		float pos = this.getScrollerPos();
+		this.setScrollerPos(pos + scroll);
+	}
+
 	private static int calcHitScrollbarPart(int pointerPosX, int pointerPosY, ScrollbarData scrollbarData)
 	{
 		int sizeX = scrollbarData.getSizeX();

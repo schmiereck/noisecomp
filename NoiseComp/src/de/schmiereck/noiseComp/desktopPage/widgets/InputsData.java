@@ -154,9 +154,9 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyClickedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyClickedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData, int, int)
 	 */
-	public void notifyClickedWidget(WidgetData widgetData)
+	public void notifyClickedWidget(WidgetData widgetData, int pointerPosX, int pointerPosY)
 	{
 		// Some Input is Aktive (Rollover) ?
 		if (this.activeInputData != null)
@@ -257,5 +257,14 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 				this.setVerticalScrollerLength(this.getInputsCount());
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyDragWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData, int, int)
+	 */
+	public void notifyDragWidget(WidgetData selectedWidgetData, int pointerPosX, int pointerPosY)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -215,14 +215,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	}
 	
 	/**
-	 * @return die Anzahl Tracks um die gescrollt wurde.
-	 */
-	public int getTrackScrollPos()
-	{
-		return (int)this.getVerticalScrollerPos();
-	}
-
-	/**
 	 * @return die Zeit, um die gescrollt wurde (in Sekunden).
 	 */
 	public float getTimeScrollPos()
@@ -266,9 +258,9 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyClickedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyClickedWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData, int, int)
 	 */
-	public void notifyClickedWidget(WidgetData widgetData)
+	public void notifyClickedWidget(WidgetData widgetData, int pointerPosX, int pointerPosY)
 	{
 		// Some track is Aktive (Rollover) ?
 		if (this.activeTrackData != null)
@@ -408,15 +400,19 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	{
 		TrackData trackData = null;
 		
+		int screenTrackPos = Math.round((float)pointerPosY / (float)tracksData.getListEntryHeight());
+		
 		// Die Positionsnummer des Generators in der Liste.
-		int generatorPos = (pointerPosY / tracksData.getListEntryHeight()) + tracksData.getTrackScrollPos();
+		int generatorPos = screenTrackPos + (int)(tracksData.getVerticalScrollerPos() + 0.5F);
 		
 		// Innerhalb der Anzahl der vorhandneen generatoren ?
-		if (generatorPos < tracksData.getTracksCount())
-		{
-			trackData = tracksData.getTrack(generatorPos);
+		if (generatorPos >= 0)
+		{	
+			if (generatorPos < tracksData.getTracksCount())
+			{
+				trackData = tracksData.getTrack(generatorPos);
+			}
 		}
-		
 		return trackData;
 	}
 
@@ -457,5 +453,14 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			this.listWidgetGraphic = new TracksGraphic();
 		}
 		return this.listWidgetGraphic;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface#notifyDragWidget(de.schmiereck.noiseComp.desktopPage.widgets.WidgetData, int, int)
+	 */
+	public void notifyDragWidget(WidgetData selectedWidgetData, int pointerPosX, int pointerPosY)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
