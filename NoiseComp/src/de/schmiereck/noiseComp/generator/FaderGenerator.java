@@ -20,7 +20,7 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public FaderGenerator(String name, float frameRate)
+	public FaderGenerator(String name, Float frameRate)
 	{
 		super(name, frameRate);
 	}

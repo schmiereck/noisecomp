@@ -124,7 +124,7 @@ implements ButtonActionLogicListenerInterface
 			
 			if (generatorType.equals(FaderGenerator.class.getName()))
 			{	
-				FaderGenerator faderGenerator = new FaderGenerator(generatorName, soundData.getFrameRate());
+				FaderGenerator faderGenerator = new FaderGenerator(generatorName, Float.valueOf(soundData.getFrameRate()));
 				
 				//Float generatorStartFadeValue = XMLData.selectSingleNodeFloat(generatorNode, "startFadeValue");
 				//faderGenerator.setStartFadeValue(generatorStartFadeValue.floatValue());
@@ -138,19 +138,19 @@ implements ButtonActionLogicListenerInterface
 			{
 				if (generatorType.equals(MixerGenerator.class.getName()))
 				{	
-					generator = new MixerGenerator(generatorName, soundData.getFrameRate());
+					generator = new MixerGenerator(generatorName, Float.valueOf(soundData.getFrameRate()));
 				}
 				else
 				{
 					if (generatorType.equals(OutputGenerator.class.getName()))
 					{	
-						generator = new OutputGenerator(generatorName, soundData.getFrameRate());
+						generator = new OutputGenerator(generatorName, Float.valueOf(soundData.getFrameRate()));
 					}
 					else
 					{
 						if (generatorType.equals(SinusGenerator.class.getName()))
 						{	
-							SinusGenerator sinusGenerator = new SinusGenerator(generatorName, soundData.getFrameRate());
+							SinusGenerator sinusGenerator = new SinusGenerator(generatorName, Float.valueOf(soundData.getFrameRate()));
 							
 							//Float generatorSignalFrequency = XMLData.selectSingleNodeFloat(generatorNode, "signalFrequency");
 							//sinusGenerator.setSignalFrequency(generatorSignalFrequency.floatValue());

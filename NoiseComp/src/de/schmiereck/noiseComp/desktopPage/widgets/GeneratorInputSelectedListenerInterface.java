@@ -3,22 +3,20 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
 import de.schmiereck.noiseComp.generator.InputData;
 
 /**
- * Informs the listener object, if a input is selected or deselected.
+ * TODO docu
  *
  * @author smk
- * @version 08.02.2004
+ * @version <p>25.02.2004: created, smk</p>
  */
 public interface GeneratorInputSelectedListenerInterface
 {
-
 	/**
 	 * @param selectedInputData
 	 */
-	void notifyGeneratorInputSelected(InputsData inputsData, InputData selectedInputData);
+	void notifyGeneratorInputSelected(InputsWidgetData inputsData, InputData selectedInputData);
 
 	/**
 	 * @param deselectedInputData
 	 */
-	void notifyGeneratorInputDeselected(InputsData inputsData, InputData deselectedInputData);
-
+	void notifyGeneratorInputDeselected(InputsWidgetData inputsData, InputData deselectedInputData);
 }

@@ -97,6 +97,9 @@ extends WidgetData
 
 	public abstract Iterator getListEntrysIterator();
 	
+	/**
+	 * @return the implementation of the Grafic to view this data object.
+	 */
 	public abstract ListWidgetGraphic getGraphicInstance();
 	
 }

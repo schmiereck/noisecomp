@@ -2,7 +2,6 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Iterator;
 
 import de.schmiereck.noiseComp.desktopPage.DesktopColors;
 import de.schmiereck.noiseComp.generator.Generator;
@@ -17,7 +16,7 @@ import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
  * @author smk
  * @version 08.02.2004
  */
-public class InputsGraphic
+public class InputsWidgetGraphic
 extends ListWidgetGraphic
 {
 
@@ -37,6 +36,9 @@ extends ListWidgetGraphic
 		screenGrafic.drawLine(g, posX + this.nameColumnSizeX, posY, 0, sizeY);
 	}
 	
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetGraphic#drawListEntry(java.awt.Graphics, de.schmiereck.screenTools.graphic.ScreenGraficInterface, de.schmiereck.noiseComp.desktopPage.DesktopColors, de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData, java.lang.Object, int, int, int, float, float, float, float)
+	 */
 	public void drawListEntry(Graphics g, ScreenGraficInterface screenGrafic, 
 									  DesktopColors desktopColors, 
 									  ListWidgetData listWidgetData, 
@@ -49,7 +51,7 @@ extends ListWidgetGraphic
 		int sizeX = listWidgetData.getSizeX();
 		int sizeY = listWidgetData.getSizeY();
 
-		InputsData inputsData = (InputsData)listWidgetData;
+		InputsWidgetData inputsData = (InputsWidgetData)listWidgetData;
 		InputData inputData = (InputData)entry;
 
 		if (inputsData.getSelectedInputData() == inputData)

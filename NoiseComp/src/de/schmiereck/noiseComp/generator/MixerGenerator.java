@@ -31,7 +31,7 @@ extends Generator
 	 * @param holdLastValue
 	 * @param frameRate
 	 */
-	public MixerGenerator(String name, float frameRate)
+	public MixerGenerator(String name, Float frameRate)
 	{
 		super(name, frameRate);
 	}

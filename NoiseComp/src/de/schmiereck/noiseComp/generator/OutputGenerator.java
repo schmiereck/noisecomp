@@ -15,7 +15,7 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public OutputGenerator(String name, float frameRate)
+	public OutputGenerator(String name, Float frameRate)
 	{
 		super(name, frameRate);
 	}

@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
+import java.util.Iterator;
+
 import de.schmiereck.dataTools.VectorHash;
 
 /**
@@ -38,5 +40,29 @@ public class GeneratorTypesData
 		}
 
 		return generatorTypeData;
+	}
+	
+	public GeneratorTypeData get(int pos)
+	{
+		GeneratorTypeData generatorTypeData;
+		
+		generatorTypeData = (GeneratorTypeData)this.generatorTypes.get(pos);
+
+		return generatorTypeData;
+	}
+	
+	public void removeGeneratorType(GeneratorTypeData generatorTypeData)
+	{
+		this.generatorTypes.remove(generatorTypeData);
+	}
+	
+	public int getSize()
+	{
+		return this.generatorTypes.size();
+	}
+
+	public Iterator getGeneratorTypesIterator()
+	{
+		return this.generatorTypes.iterator();
 	}
 }

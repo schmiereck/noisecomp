@@ -52,12 +52,12 @@ implements GeneratorInterface
 	 * 						false: liefer den Default-Wert zurück.
 	 * @param frameRate		Anzahl der Frames pro Sekunde.
 	 */
-	public Generator(String name, float frameRate)
+	public Generator(String name, Float frameRate)
 	{
 		super();
 		
 		this.name = name;
-		this.frameRate = frameRate;
+		this.frameRate = frameRate.floatValue();
 	}
 
 	/**

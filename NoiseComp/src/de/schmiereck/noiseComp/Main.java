@@ -22,6 +22,7 @@ import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicLi
 import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveGroupButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetInputButtonActionLogicListener;
@@ -90,6 +91,7 @@ public class Main
 		SetInputButtonActionLogicListener setInputButtonActionLogicListener = new SetInputButtonActionLogicListener(controllerLogic, controllerData);
 		
 		SelectCancelButtonActionLogicListener selectCancelButtonActionLogicListener = new SelectCancelButtonActionLogicListener(controllerLogic, controllerData);
+		SelectAddButtonActionLogicListener selectAddButtonActionLogicListener = new SelectAddButtonActionLogicListener(controllerLogic, controllerData);
 		
 		SaveButtonActionLogicListener saveButtonActionLogicListener = new SaveButtonActionLogicListener(controllerLogic, controllerData);
 		SaveCancelButtonActionLogicListener saveCancelButtonActionLogicListener = new SaveCancelButtonActionLogicListener(controllerLogic, controllerData);
@@ -117,6 +119,7 @@ public class Main
 				setInputButtonActionLogicListener,
 				
 				selectCancelButtonActionLogicListener,
+				selectAddButtonActionLogicListener,
 										  
 				saveButtonActionLogicListener,
 				saveCancelButtonActionLogicListener,

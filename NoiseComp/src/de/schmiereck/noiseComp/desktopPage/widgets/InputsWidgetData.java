@@ -17,22 +17,25 @@ import de.schmiereck.noiseComp.generator.InputData;
  * @author smk
  * @version 08.02.2004
  */
-public class InputsData
+public class InputsWidgetData
 extends ListWidgetData
 implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitWidgetListenerInterface
 {
 	private GeneratorTypesData generatorTypesData;
 	
+	/**
+	 * List with {@link GeneratorTypeData}-Objects.
+	 */
 	private Vector inputs = null;
 
-	private ListWidgetGraphic listWidgetGraphic = null;
+	private static InputsWidgetGraphic listWidgetGraphic = null;
 	
 	private InputData	activeInputData = null;
 
 	private InputData selectedInputData = null;
 	private Generator selectedGenerator = null;
 	
-	private GeneratorInputSelectedListenerInterface generatorInputSelectedListener;
+	private GeneratorInputSelectedListenerInterface generatorInputSelectedListener = null;
 
 	/**
 	 * Constructor.
@@ -42,7 +45,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @param sizeX
 	 * @param sizeY
 	 */
-	public InputsData(int posX, int posY, int sizeX, int sizeY,
+	public InputsWidgetData(int posX, int posY, int sizeX, int sizeY,
 					  ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
 					  GeneratorTypesData generatorTypesData)
 	{
@@ -140,11 +143,11 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public ListWidgetGraphic getGraphicInstance()
 	{
-		if (this.listWidgetGraphic == null)
+		if (InputsWidgetData.listWidgetGraphic == null)
 		{
-			this.listWidgetGraphic = new InputsGraphic();
+			InputsWidgetData.listWidgetGraphic = new InputsWidgetGraphic();
 		}
-		return this.listWidgetGraphic;
+		return InputsWidgetData.listWidgetGraphic;
 	}
 
 	/* (non-Javadoc)

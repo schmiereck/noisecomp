@@ -33,11 +33,11 @@ extends Generator
 	 * 
 	 * Frames per Second
 	 */
-	public SinusGenerator(String name, float frameRate)
+	public SinusGenerator(String name, Float frameRate)
 	{
 		super(name, frameRate);
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.soundGenerator.Generator#calculateSoundSample(long, de.schmiereck.soundGenerator.SoundSample)
 	 */

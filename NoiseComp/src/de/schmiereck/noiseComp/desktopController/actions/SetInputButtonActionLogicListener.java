@@ -4,7 +4,7 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputsData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
 
 /**
  * TODO docu
@@ -37,7 +37,7 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		InputsData generatorInputsData = this.controllerData.getGeneratorInputsData();
+		InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
 		
 		this.controllerLogic.setInput(generatorInputsData, false);
 	}

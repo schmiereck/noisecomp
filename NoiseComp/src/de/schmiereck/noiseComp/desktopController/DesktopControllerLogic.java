@@ -7,9 +7,10 @@ import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.noiseComp.desktopPage.ButtonPressedCallbackInterface;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface;
+import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorTypeSelectedListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputsData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputsWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectEntryData;
@@ -39,7 +40,8 @@ import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
  */
 public class DesktopControllerLogic
 extends ControllerLogic
-implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, GeneratorInputSelectedListenerInterface
+implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, 
+GeneratorInputSelectedListenerInterface
 {
 	private DesktopControllerData controllerData;
 	
@@ -242,7 +244,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 									TracksData tracksData = this.controllerData.getTracksData();
 									
 									SinusGenerator sinusGenerator = new SinusGenerator("sinus" + tracksData.getTracksCount(), 
-											soundData.getFrameRate());
+											Float.valueOf(soundData.getFrameRate()));
 									//sinusGenerator.addInputValue(1.0F, SinusGenerator.INPUT_TYPE_FREQ);
 									
 									this.addDefaultInputs(sinusGenerator);
@@ -259,7 +261,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 										TracksData tracksData = this.controllerData.getTracksData();
 										
 										FaderGenerator faderGenerator = new FaderGenerator("fader" + tracksData.getTracksCount(), 
-												soundData.getFrameRate());
+												Float.valueOf(soundData.getFrameRate()));
 										
 										this.addDefaultInputs(faderGenerator);
 										
@@ -275,7 +277,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 											TracksData tracksData = this.controllerData.getTracksData();
 											
 											MixerGenerator mixerGenerator = new MixerGenerator("mixer" + tracksData.getTracksCount(), 
-													soundData.getFrameRate());
+													Float.valueOf(soundData.getFrameRate()));
 											
 											this.addDefaultInputs(mixerGenerator);
 											
@@ -291,7 +293,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 												TracksData tracksData = this.controllerData.getTracksData();
 												
 												OutputGenerator outputGenerator = new OutputGenerator("output" + tracksData.getTracksCount(), 
-														soundData.getFrameRate());
+														Float.valueOf(soundData.getFrameRate()));
 												
 												this.addDefaultInputs(outputGenerator);
 												
@@ -325,7 +327,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 														{
 															if ("removeInput".equals(pressedButtonData.getName()) == true)
 															{
-																InputsData generatorInputsData = this.controllerData.getGeneratorInputsData();
+																InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
 																
 																if (generatorInputsData != null)
 																{	
@@ -336,7 +338,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 															{
 																if ("newInput".equals(pressedButtonData.getName()) == true)
 																{
-																	InputsData generatorInputsData = this.controllerData.getGeneratorInputsData();
+																	InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
 																	
 																	this.newInput(generatorInputsData);
 																}
@@ -344,7 +346,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 																{
 																	if ("addInput".equals(pressedButtonData.getName()) == true)
 																	{
-																		InputsData generatorInputsData = this.controllerData.getGeneratorInputsData();
+																		InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
 																		
 																		this.setInput(generatorInputsData, true);
 																	}
@@ -353,7 +355,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 																		/*
 																		if ("setInput".equals(pressedButtonData.getName()) == true)
 																		{
-																			InputsData generatorInputsData = this.controllerData.getGeneratorInputsData();
+																			InputsWidgetData generatorInputsData = this.controllerData.getGeneratorInputsData();
 																			
 																			this.setInput(generatorInputsData);
 																		}
@@ -427,7 +429,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		// Sound-Generatoren für das Sound-Format des Ausgabekanals erzeugen:
 
 		//---------------------------------
-		FaderGenerator faderInGenerator = new FaderGenerator("faderIn", frameRate);
+		FaderGenerator faderInGenerator = new FaderGenerator("faderIn", Float.valueOf(frameRate));
 		
 		faderInGenerator.setStartTimePos(0.0F);
 		faderInGenerator.setEndTimePos(2.0F);
@@ -440,7 +442,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.addGenerator(tracksData, faderInGenerator);
 
 		//---------------------------------
-		FaderGenerator faderOutGenerator = new FaderGenerator("faderOut", frameRate);
+		FaderGenerator faderOutGenerator = new FaderGenerator("faderOut", Float.valueOf(frameRate));
 		
 		faderOutGenerator.setStartTimePos(2.0F);
 		faderOutGenerator.setEndTimePos(5.0F);
@@ -453,7 +455,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.addGenerator(tracksData, faderOutGenerator);
 		
 		//---------------------------------
-		SinusGenerator sinusGenerator = new SinusGenerator("sinus", frameRate);
+		SinusGenerator sinusGenerator = new SinusGenerator("sinus", Float.valueOf(frameRate));
 		sinusGenerator.addInputValue(262F, SinusGenerator.INPUT_TYPE_FREQ);
 		//sinusGenerator.setSignalFrequency(262F);
 		
@@ -463,7 +465,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.addGenerator(tracksData, sinusGenerator);
 		
 		//---------------------------------
-		SinusGenerator sinus2Generator = new SinusGenerator("sinus2", frameRate);
+		SinusGenerator sinus2Generator = new SinusGenerator("sinus2", Float.valueOf(frameRate));
 		sinus2Generator.addInputValue(131F, SinusGenerator.INPUT_TYPE_FREQ);
 		//sinus2Generator.setSignalFrequency(131F);
 		
@@ -473,7 +475,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.addGenerator(tracksData, sinus2Generator);
 		
 		//---------------------------------
-		SinusGenerator sinus3Generator = new SinusGenerator("sinus3", frameRate);
+		SinusGenerator sinus3Generator = new SinusGenerator("sinus3", Float.valueOf(frameRate));
 		sinus3Generator.addInputValue(70F, SinusGenerator.INPUT_TYPE_FREQ);
 		//sinus3Generator.setSignalFrequency(70F);
 		
@@ -483,7 +485,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.addGenerator(tracksData, sinus3Generator);
 		
 		//---------------------------------
-		MixerGenerator mixerGenerator = new MixerGenerator("mixer", frameRate);
+		MixerGenerator mixerGenerator = new MixerGenerator("mixer", Float.valueOf(frameRate));
 		
 		mixerGenerator.setStartTimePos(0.0F);
 		mixerGenerator.setEndTimePos(5.0F);
@@ -498,7 +500,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.addGenerator(tracksData, mixerGenerator);
 		
 		//---------------------------------
-		OutputGenerator outputGenerator = new OutputGenerator("output", frameRate);
+		OutputGenerator outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate));
 
 		outputGenerator.setStartTimePos(0.0F);
 		outputGenerator.setEndTimePos(5.0F);
@@ -707,9 +709,9 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface#notifyGeneratorInputSelected(InputsData, de.schmiereck.noiseComp.generator.InputData)
+	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorTypeSelectedListenerInterface#notifyGeneratorInputSelected(InputsWidgetData, de.schmiereck.noiseComp.generator.InputData)
 	 */
-	public void notifyGeneratorInputSelected(InputsData inputsData, InputData selectedInputData)
+	public void notifyGeneratorInputSelected(InputsWidgetData inputsData, InputData selectedInputData)
 	{
 		String inputGeneratorName;
 		String inputValue;
@@ -778,9 +780,9 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface#notifyGeneratorInputDeselected(InputsData, de.schmiereck.noiseComp.generator.InputData)
+	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorTypeSelectedListenerInterface#notifyGeneratorInputDeselected(InputsWidgetData, de.schmiereck.noiseComp.generator.InputData)
 	 */
-	public void notifyGeneratorInputDeselected(InputsData inputsData, InputData deselectedInputData)
+	public void notifyGeneratorInputDeselected(InputsWidgetData inputsData, InputData deselectedInputData)
 	{
 		//this.controllerData.getGeneratorInputNameInputlineData().setInputText("");
 		this.controllerData.getGeneratorInputNameSelectData().setInputPos(0);
@@ -793,7 +795,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	 * 
 	 * @param generatorInputsData
 	 */
-	private void newInput(InputsData generatorInputsData)
+	private void newInput(InputsWidgetData generatorInputsData)
 	{
 		if (generatorInputsData != null)
 		{	
@@ -807,7 +809,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	 * TODO replace the RuntimeExceptions with Message-Boxes, smk 
 	 * @param generatorInputsData
 	 */
-	private void addInput_old(InputsData generatorInputsData)
+	private void addInput_old(InputsWidgetData generatorInputsData)
 	{
 		if (generatorInputsData != null)
 		{	
@@ -895,14 +897,14 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 
 	/**
 	 * Set the new Input-Settings for the selected Input.
-	 * If there is no selected input, {@link #addInput(InputsData)} is called.
+	 * If there is no selected input, {@link #addInput(InputsWidgetData)} is called.
 	 *
 	 * TODO replace the RuntimeExceptions with Message-Boxes, smk 
 	 * @param generatorInputsData
 	 * @param insertNew	true, if the input should by inserted as a new input.<br/>
 	 * 					false, if the selected input should by updated.
 	 */
-	public void setInput(InputsData generatorInputsData, boolean insertNew)
+	public void setInput(InputsWidgetData generatorInputsData, boolean insertNew)
 	{
 		if (generatorInputsData != null)
 		{	
@@ -1040,7 +1042,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	/**
 	 * @param generator
 	 */
-	private void addDefaultInputs(Generator generator)
+	public void addDefaultInputs(Generator generator)
 	{
 		GeneratorTypeData generatorTypeData = this.controllerData.searchGeneratorTypeData(generator);
 		

@@ -1,7 +1,8 @@
 package de.schmiereck.noiseComp.generator;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
-import java.util.Vector;
 
 import de.schmiereck.dataTools.VectorHash;
 
@@ -69,5 +70,69 @@ public class GeneratorTypeData
 	public Iterator getInputTypesDataIterator()
 	{
 		return this.inputTypes.iterator();
+	}
+
+	/**
+	 * @param generatorName
+	 * @param frameRate
+	 * @return
+	 */
+	public Generator createGeneratorInstance(String generatorName, float frameRate)
+	{
+		Generator generator = null;
+		
+		//try
+		{
+//			Class pageViewClass = ;
+			Class[]	params		= new Class[2];
+			
+			params[0] = String.class;	// generatorName
+			params[1] = Float.class;	// frameRate
+			
+			try
+			{
+				Constructor generatorConstructor = this.generatorClass.getConstructor(params);
+				Object[]	args	= new Object[2];
+
+				args[0] = generatorName;
+				args[1] = Float.valueOf(frameRate);
+				
+				try
+				{
+					//pageView = (HTMLPageView)Class.forName(pageViewClassName).newInstance();
+					generator = (Generator)generatorConstructor.newInstance(args);
+				}
+				catch (java.lang.InstantiationException ex)
+				{
+					throw new RuntimeException("new instance: " + this.generatorClass.getName(), ex);
+				}
+				catch (java.lang.IllegalAccessException ex)
+				{
+					throw new RuntimeException("access exception for class: " + this.generatorClass.getName(), ex);
+				}
+				//catch (java.lang.ClassNotFoundException ex)
+				//{
+				//	throw new RuntimeException("class not found: " + pageViewClassName, ex);
+				//} 
+				catch (IllegalArgumentException ex)
+				{
+					throw new RuntimeException("illegal argument: " + this.generatorClass.getName(), ex);
+				} 
+				catch (InvocationTargetException ex)
+				{
+					throw new RuntimeException("invocation target: " + this.generatorClass.getName(), ex);
+				}
+			}
+			catch (java.lang.NoSuchMethodException ex)
+			{
+				throw new RuntimeException("no such method exception for class: " + this.generatorClass.getName(), ex);
+			}
+		}
+		//catch (ClassNotFoundException ex)
+		//{
+		//	throw new RuntimeException("class not found: " + this.generatorClass.getName(), ex);
+		//}
+		
+		return generator;
 	}
 }

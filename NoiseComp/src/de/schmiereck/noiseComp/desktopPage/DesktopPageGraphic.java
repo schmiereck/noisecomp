@@ -3,14 +3,15 @@ package de.schmiereck.noiseComp.desktopPage;
 import java.awt.Graphics;
 import java.util.Iterator;
 
+import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorTypesWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineGraphic;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputsData;
 import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.desktopPage.widgets.LabelGraphic;
+import de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneGraphic;
@@ -145,6 +146,7 @@ public class DesktopPageGraphic
 						}
 						else
 						{
+							/*
 							if (widgetData instanceof TracksData)
 							{	
 								TracksData tracksData = (TracksData)widgetData;
@@ -157,6 +159,7 @@ public class DesktopPageGraphic
 								//		tracksData);
 							}
 							else
+							*/
 							{
 								if (widgetData instanceof InputlineData)
 								{	
@@ -190,16 +193,18 @@ public class DesktopPageGraphic
 								}
 								else
 								{
-									if (widgetData instanceof InputsData)
+									/*
+									if (widgetData instanceof InputsWidgetData)
 									{	
-										InputsData inputsData = (InputsData)widgetData;
+										InputsWidgetData inputsWidgetData = (InputsWidgetData)widgetData;
 										
-										ListWidgetGraphic listWidgetGraphic = inputsData.getGraphicInstance();
+										ListWidgetGraphic listWidgetGraphic = inputsWidgetData.getGraphicInstance();
 										
 										listWidgetGraphic.drawList(g, screenGrafic, desktopColors, 
-																 inputsData);
+												inputsWidgetData);
 									}
 									else
+									*/
 									{
 										if (widgetData instanceof SelectData)
 										{	
@@ -230,6 +235,18 @@ public class DesktopPageGraphic
 											}
 											
 											SelectGraphic.drawWidget(g, screenGrafic, desktopColors, selectData, active, focused);
+										}
+										else
+										{
+											if (widgetData instanceof ListWidgetData)
+											{	
+												ListWidgetData listWidgetData = (ListWidgetData)widgetData;
+												
+												ListWidgetGraphic listWidgetGraphic = listWidgetData.getGraphicInstance();
+												
+												listWidgetGraphic.drawList(g, screenGrafic, desktopColors, 
+														listWidgetData);
+											}
 										}
 									}
 								}
