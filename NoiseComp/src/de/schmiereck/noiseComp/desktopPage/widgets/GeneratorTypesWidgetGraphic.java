@@ -121,8 +121,12 @@ extends ListWidgetGraphic
 
 		label = generatorTypeData.getGeneratorTypeName();
 
+		String description;
+
+		description = generatorTypeData.getGeneratorTypeDescription();
+		
 		screenGrafic.drawString(g, posX + this.textOffsetSizeX, screenPosY + entryHeight, label);
-		//screenGrafic.drawString(g, posX + this.nameColumnSizeX + this.textOffsetSizeX, screenPosY + entryHeight, inputTypeName);
+		screenGrafic.drawString(g, posX + this.nameColumnSizeX + this.textOffsetSizeX, screenPosY + entryHeight, description);
 	}
 
 	/* (non-Javadoc)

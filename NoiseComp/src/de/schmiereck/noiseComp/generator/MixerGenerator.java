@@ -140,7 +140,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MixerGenerator.class, "Mixer");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MixerGenerator.class, "Mixer", "Mixes multiple signal input lines and scale them with a volume.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VOLUME, "volume", -1, -1);

@@ -160,7 +160,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(FaderGenerator.class, "Fader");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(FaderGenerator.class, "Fader", "Fades linear from a start to a end value.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_START_VALUE, "startFadeValue", 1, 1);

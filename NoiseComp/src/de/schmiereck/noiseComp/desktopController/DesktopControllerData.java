@@ -448,7 +448,7 @@ extends ControllerData
 			this.selectCancelButtonData = new FunctionButtonData("cancel", "Cancel", 100, 10, 90, 20);
 			desktopPageData.addWidgetData(this.selectCancelButtonData);
 		}
-
+/*
 		{
 			FunctionButtonData buttonData = new FunctionButtonData("addSinus", "Add Sinus Generator", 100, 100, 250, 20);
 			desktopPageData.addWidgetData(buttonData);
@@ -465,23 +465,23 @@ extends ControllerData
 			FunctionButtonData buttonData = new FunctionButtonData("addOutput", "Add Output Generator", 100, 190, 250, 20);
 			desktopPageData.addWidgetData(buttonData);
 		}
-
+*/
 		{
-			LabelData labelData = new LabelData("Generator-Types:", 400, 100, 100, 20);
+			LabelData labelData = new LabelData("Generator-Types:", 100, 100, 100, 20);
 			desktopPageData.addWidgetData(labelData);
 		}
 		ScrollbarData verticalScrollbarData;
 		{
-			verticalScrollbarData = new ScrollbarData("generatorTypesVScroll", 800 - this.scrollbarWidth, 120, 
-					this.scrollbarWidth2, 100, true);
+			verticalScrollbarData = new ScrollbarData("generatorTypesVScroll", 800 - this.scrollbarWidth2, 120, 
+					this.scrollbarWidth2, 400, true);
 			desktopPageData.addWidgetData(verticalScrollbarData);
 		}
 		{
-			this.generatorTypesListData = new GeneratorTypesWidgetData(400, 120, 400 - this.scrollbarWidth2, 100, verticalScrollbarData, null, this.generatorTypesData);
+			this.generatorTypesListData = new GeneratorTypesWidgetData(100, 120, 700 - this.scrollbarWidth2, 400, verticalScrollbarData, null, this.generatorTypesData);
 			desktopPageData.addWidgetData(this.generatorTypesListData);
 		}
 		{
-			this.selectAddButtonData = new FunctionButtonData("selectAdd", "Add selected", 400, 70, 100, 20);
+			this.selectAddButtonData = new FunctionButtonData("selectAdd", "Add selected", 100, 70, 100, 20);
 			desktopPageData.addWidgetData(this.selectAddButtonData);
 		}
 		

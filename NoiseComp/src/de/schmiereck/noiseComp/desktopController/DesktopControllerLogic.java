@@ -236,6 +236,7 @@ GeneratorInputSelectedListenerInterface
 							else
 							*/
 							{
+								/*
 								if ("addSinus".equals(pressedButtonData.getName()) == true)
 								{
 									this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
@@ -252,7 +253,9 @@ GeneratorInputSelectedListenerInterface
 									this.addGenerator(sinusGenerator);
 								}
 								else
+								*/
 								{
+									/*
 									if ("addFader".equals(pressedButtonData.getName()) == true)
 									{
 										this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
@@ -268,7 +271,9 @@ GeneratorInputSelectedListenerInterface
 										this.addGenerator(faderGenerator);
 									}
 									else
+									*/
 									{
+										/*
 										if ("addMixer".equals(pressedButtonData.getName()) == true)
 										{
 											this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
@@ -284,7 +289,9 @@ GeneratorInputSelectedListenerInterface
 											this.addGenerator(mixerGenerator);
 										}
 										else
+										*/
 										{
+											/*
 											if ("addOutput".equals(pressedButtonData.getName()) == true)
 											{
 												this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
@@ -300,6 +307,7 @@ GeneratorInputSelectedListenerInterface
 												this.addGenerator(outputGenerator);
 											}
 											else
+											*/
 											{
 												/*
 												if ("remove".equals(pressedButtonData.getName()) == true)

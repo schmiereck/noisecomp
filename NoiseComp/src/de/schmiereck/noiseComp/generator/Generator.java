@@ -37,7 +37,7 @@ implements GeneratorInterface
 	 * Is the unique Name of the Generator Object. 
 	 */
 	private String name;
-
+	
 	/**
 	 * Liste aus {@link InputData}-Objekten (mit {@link Generator}-Objekten).
 	 */

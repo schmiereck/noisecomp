@@ -21,6 +21,11 @@ public class GeneratorTypeData
 	private String generatorTypeName;
 	
 	/**
+	 * Is the description of the generator type.
+	 */
+	private String generatorTypeDescription;
+	
+	/**
 	 * List of the allowed {@link InputTypeData}-Objects of this Generator-Type.
 	 */
 	private VectorHash inputTypes = new VectorHash();
@@ -30,11 +35,12 @@ public class GeneratorTypeData
 	 * 
 	 * @param generatorTypeName
 	 */
-	public GeneratorTypeData(Class generatorClass, String generatorTypeName)
+	public GeneratorTypeData(Class generatorClass, String generatorTypeName, String generatorTypeDescription)
 	{
 		super();
 		this.generatorClass = generatorClass;
 		this.generatorTypeName = generatorTypeName;
+		this.generatorTypeDescription = generatorTypeDescription;
 	}
 
 	/**
@@ -63,7 +69,15 @@ public class GeneratorTypeData
 	{
 		return this.generatorTypeName;
 	}
-
+	
+	/**
+	 * @see #generatorTypeDescription
+	 */
+	public String getGeneratorTypeDescription()
+	{
+		return this.generatorTypeDescription;
+	}
+	
 	/**
 	 * @return
 	 */

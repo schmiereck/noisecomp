@@ -40,6 +40,10 @@ public class SelectAddButtonActionLogicListener
 	{
 		GeneratorTypeData selectedGeneratorTypeData = this.controllerData.getGeneratorTypesListData().getSelectedGeneratorTypeData();
 
+		if (selectedGeneratorTypeData== null)
+		{
+			throw new RuntimeException("no selected type");
+		}
 		this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 
 		SoundData soundData = this.controllerData.getSoundData();
