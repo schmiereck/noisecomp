@@ -8,17 +8,34 @@ package de.schmiereck.noiseComp.generator;
  * @version <p>28.02.2004: created, smk</p>
  */
 public class ModulGenerator
-extends Generator
+extends Generator 
+//implements GeneratorChangeListenerInterface
 {
 	/**
 	 * Constructor.
 	 * 
 	 */
-	public ModulGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public ModulGenerator(String name, Float frameRate, 
+						  GeneratorTypeData generatorTypeData)
 	{
 		super(name, frameRate, generatorTypeData);
+		
+		// Fügt sich als Listener zu dem seinem Typ hinzu, um über Änderungen informiert zu werden.
+		//((ModulGeneratorTypeData)generatorTypeData).getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#finalize()
+	 */
+	protected void finalize()
+		throws Throwable
+	{
+		// Nimmt sich als Listener von seinem Typ weg, um nicht mehr über Änderungen informiert zu werden.
+		//((ModulGeneratorTypeData)this.getGeneratorTypeData()).getGeneratorChangeObserver().removeGeneratorChangeListener(this);
+
+		super.finalize();
+	}
+	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
@@ -26,9 +43,7 @@ extends Generator
 	{
 		ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)this.getGeneratorTypeData();
 		
-		Generators generators = modulGeneratorTypeData.getGenerators();
-		
-		OutputGenerator outputGenerator = generators.getOutputGenerator();
+		OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
 		
 		// TODO let it crash, write better programs to prevent from this situation ;-) smk
 		//if (outputGenerator != null)
@@ -47,8 +62,28 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		ModulGeneratorTypeData generatorTypeData = new ModulGeneratorTypeData(ModulGenerator.class, "Modul", "Manages a Group of other generators.");
+		ModulGeneratorTypeData generatorTypeData = new ModulGeneratorTypeData(ModulGenerator.class, 
+																			  "Modul", 
+																			  "Manages a Group of other generators.");
 		
 		return generatorTypeData;
 	}
+
+	/**
+	 * @see #createGeneratorTypeData() with cast to {@link ModulGeneratorTypeData}
+	 */
+	public static ModulGeneratorTypeData createModulGeneratorTypeData()
+	{
+		return (ModulGeneratorTypeData)ModulGenerator.createGeneratorTypeData();
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface#notifyGeneratorChanged(de.schmiereck.noiseComp.generator.Generator, float, float)
+	 */
+	//public void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos)
+	//{
+	//	this.getGeneratorChangeObserver().changedEvent(this, 
+	//												   this.getStartTimePos() + startTimePos, 
+	//												   this.getStartTimePos() + endTimePos);
+	//}
 }

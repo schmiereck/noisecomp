@@ -104,8 +104,8 @@ extends ListWidgetGraphic
 						}
 						else
 						{	
-							g.setColor(Color.LIGHT_GRAY);
-							screenGrafic.drawAbsLine(g, lastX, lastY, samplePosX, samplePosY);
+							//g.setColor(Color.LIGHT_GRAY);
+							//screenGrafic.drawAbsLine(g, lastX, lastY, samplePosX, samplePosY);
 							g.setColor(desktopColors.getSampleColor());
 							screenGrafic.drawPoint(g, lastX, lastY, 1);
 						}

@@ -36,15 +36,24 @@ public class SoundData
 	 * Constructor.
 	 * 
 	 */
-	public SoundData(SourceDataLine line, float frameRate)
+	public SoundData(SourceDataLine line,
+					 SoundSourceLogic soundSourceLogic)
 	{
 		super();
 		
 		this.line = line;
 		
-		this.frameRate = frameRate;
+		this.frameRate = this.line.getFormat().getFrameRate();
 
 		this.lineBufferData = new byte[BUFFER_SIZE];
+
+		this.soundSourceLogic = soundSourceLogic;
+
+		this.soundBufferManager = new SoundBufferManager(this.line.getFormat(), 
+														 this.frameRate,  
+														 AudioSystem.NOT_SPECIFIED, 
+														 SoundData.BUFFER_SIZE, 
+														 soundSourceLogic);
 	}
 	
 	/**
@@ -74,17 +83,19 @@ public class SoundData
 		return this.soundSourceLogic;
 	}
 	/**
-	 * @param soundSourceLogic is the new value for attribute {@link #soundSourceLogic} to set.
-	 */
+	 * @param soundSourceLogic 
+	 * 			is the new value for attribute {@link #soundSourceLogic} to set.
 	public void setSoundSourceLogic(SoundSourceLogic soundSourceLogic)
 	{
 		this.soundSourceLogic = soundSourceLogic;
 
-		//OutputGenerator outputGenerator = this.soundSourceLogic.getOutputGenerator();
-		
-		this.soundBufferManager = new SoundBufferManager(this.line.getFormat(), this.frameRate,  
-				AudioSystem.NOT_SPECIFIED, SoundData.BUFFER_SIZE, soundSourceLogic);
+		this.soundBufferManager = new SoundBufferManager(this.line.getFormat(), 
+														 this.frameRate,  
+														 AudioSystem.NOT_SPECIFIED, 
+														 SoundData.BUFFER_SIZE, 
+														 soundSourceLogic);
 	}
+	 */
 
 	/**
 	 * @return the attribute {@link #lineBufferData}.

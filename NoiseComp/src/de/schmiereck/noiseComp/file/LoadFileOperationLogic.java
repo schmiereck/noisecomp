@@ -1,155 +1,145 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.file;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Vector;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeIterator;
-
 import de.schmiereck.noiseComp.PopupRuntimeException;
-import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
-import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
-import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
+//import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.old.LoadFileGeneratorNodeData;
 import de.schmiereck.noiseComp.desktopPage.widgets.MainActionException;
-import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
-import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLException;
 import de.schmiereck.xmlTools.XMLPort;
+import de.schmiereck.xmlTools.XMLPortException;
 
-/**
- * Load a generators definition from a XML file into memory.
- *
- * @author smk
- * @version 21.02.2004
+/*
+ * Created on 25.03.2005, Copyright (c) schmiereck, 2005
  */
-public class LoadFileButtonActionLogicListener 
-implements ButtonActionLogicListenerInterface
+/**
+ * <p>
+ * 	Provedes functions to load and save NoiseComp XML files.
+ * </p>
+ * 
+ * @author smk
+ * @version <p>25.03.2005:	created, smk</p>
+ */
+public class LoadFileOperationLogic
 {
-	private DesktopControllerLogic controllerLogic;
-	private DesktopControllerData controllerData;
-	
+
 	/**
-	 * Constructor.
+	 * Load a NoiseComp XML File into the generator types object and the
+	 * main genrator object.
 	 * 
-	 * 
+	 * @param fileName
+	 * 			is the file name of the xml file to load.
+	 * @throws XMLPortException
+	 * @throws MainActionException
 	 */
-	public LoadFileButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public static ModulGeneratorTypeData loadNoiseCompFile(GeneratorTypesData generatorTypesData,
+														   //ModulGeneratorTypeData mainModulTypeData,
+														   String fileName,
+														   float frameRate) 
+	throws XMLPortException
 	{
-		super();
+		Document xmlDoc;
 		
-		this.controllerLogic = controllerLogic;
-		this.controllerData = controllerData;
-	}
-	
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
-	 */
-	public void notifyButtonReleased(InputWidgetData buttonData)
-	throws MainActionException
-	{
-		String fileName = this.controllerData.getLoadFileNameInputlineData().getInputText();
+		xmlDoc = XMLPort.open(fileName);
 		
-		fileName = fileName.trim();
+		Node noiseNode = XMLData.selectSingleNode(xmlDoc, "/noise");
+
+		String version = XMLData.selectSingleNodeText(noiseNode, "version");
 		
-		if (fileName.length() > 0)
-		{	
-			if (fileName.endsWith(".xml") == false)
-			{
-				fileName = fileName.concat(".xml");
-			}
-			
-			Document xmlDoc;
-			
-			try
-			{
-				xmlDoc = XMLPort.open(fileName);
-			
-				this.controllerData.clearTracks();
-				
-				SoundData soundData = this.controllerData.getSoundData();
-
-				Node noiseNode = XMLData.selectSingleNode(xmlDoc, "/noise");
-
-				String version = XMLData.selectSingleNodeText(noiseNode, "version");
-				
-				//-----------------------------------------------------
-				// GeneratorTypesData:
-				
-				this.createGeneratorTypes(noiseNode, soundData);//, loadFileGeneratorNodeDatas);
-				
-				//-----------------------------------------------------
-				// Inserting the Generators.
-				
-				Generators mainGenerators = this.controllerData.getMainGenerators();
-				
-				this.createGenerators(noiseNode, soundData, mainGenerators, null);
-
-				//-----------------------------------------------------
-				// Generators updating in actual View:
-				
-				Iterator generatorsIterator = mainGenerators.getGeneratorsIterator();
-				
-				while (generatorsIterator.hasNext())
-				{
-					Generator generator = (Generator)generatorsIterator.next();
-					
-					this.controllerLogic.addTrackData(new TrackData(generator));
-				}
-			}
-			catch (XMLException ex)
-			{
-				throw new MainActionException("while open xml file: \"" + fileName + "\"", ex);
-			}
-			
-			this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
-		}
-		else
+		//-----------------------------------------------------
+		// GeneratorTypesData:
+		
+		ModulGeneratorTypeData mainModulGeneratorTypeData;
+		
+		mainModulGeneratorTypeData = LoadFileOperationLogic.createGeneratorTypes(generatorTypesData,
+																				 noiseNode, 
+																				 frameRate);//, loadFileGeneratorNodeDatas);
+		
+		// Old file version without any main module?
+		if (mainModulGeneratorTypeData == null)
 		{
-			throw new RuntimeException("file name is empty");
+			//-----------------------------------------------------
+			// Generate a new one:
+			
+			mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+			
+			mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
+			
+			mainModulGeneratorTypeData.setGeneratorTypeName("Main-Modul");
+			
+			//-----------------------------------------------------
+			// Inserting the Generators.
+			
+			//Generators mainGenerators = mainModulGeneratorTypeData.getGenerators();
+			
+			LoadFileOperationLogic.createGenerators(generatorTypesData,
+													noiseNode, 
+													frameRate, 
+													//mainGenerators, 
+													mainModulGeneratorTypeData);
+			
+			//-----------------------------------------------------
+			// Add as new Type:
+			
+			generatorTypesData.addGeneratorTypeData(mainModulGeneratorTypeData);
 		}
+		
+		return mainModulGeneratorTypeData;
 	}
 
 	/**
 	 * Creates the list of generatores descripted below the 'rootNode'.
 	 * 
 	 * @param rootNode
-	 * @param soundData
 	 * @param generators
 	 * @param parentModulGenerator
 	 */
-	private void createGenerators(Node rootNode, SoundData soundData, Generators generators, ModulGeneratorTypeData modulGeneratorTypeData) //, ModulGenerator parentModulGenerator)
+	private static void createGenerators(GeneratorTypesData generatorTypesData,
+										 Node rootNode, float frameRate, 
+										 //Generators generators, 
+										 ModulGeneratorTypeData modulGeneratorTypeData) //, ModulGenerator parentModulGenerator)
 	{
 		// List with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 		Vector loadFileGeneratorNodeDatas = new Vector();
 		
-		this.createGenerators(rootNode, soundData, generators, loadFileGeneratorNodeDatas, modulGeneratorTypeData); //, parentModulGenerator);
+		LoadFileOperationLogic.createGenerators(generatorTypesData,
+												rootNode, frameRate, //generators, 
+												loadFileGeneratorNodeDatas, 
+												modulGeneratorTypeData); //, parentModulGenerator);
 		
 		// Inserting the inputs:
 		
-		this.createGeneratorInputs(generators, loadFileGeneratorNodeDatas, modulGeneratorTypeData);
+		LoadFileOperationLogic.createGeneratorInputs(//generators, 
+												  loadFileGeneratorNodeDatas, 
+												  modulGeneratorTypeData);
 	}
 
-	private void createGeneratorTypes(Node noiseNode, SoundData soundData)//, Vector loadFileGeneratorNodeDatas)
+	private static ModulGeneratorTypeData createGeneratorTypes(GeneratorTypesData generatorTypesData,
+															   Node noiseNode, 
+															   float frameRate)//, Vector loadFileGeneratorNodeDatas)
 	{
+		ModulGeneratorTypeData mainModulGeneratorTypeData = null;
+		
 		Node generatorTypesNode = XMLData.selectSingleNode(noiseNode, "generatorTypes");
 
 		if (generatorTypesNode != null)
 		{
-			GeneratorTypesData generatorTypesData = this.controllerData.getGeneratorTypesData();
-		
 			generatorTypesData.clear();
 			
 			NodeIterator generatorTypesNodeIterator = XMLData.selectNodeIterator(generatorTypesNode, "generatorType");
@@ -162,6 +152,7 @@ implements ButtonActionLogicListenerInterface
 				String generatorClassName = XMLData.selectSingleNodeText(generatorTypeNode, "generatorClassName");
 				String generatorTypeName = XMLData.selectSingleNodeText(generatorTypeNode, "name");
 				String generatorTypeDescription = XMLData.selectSingleNodeText(generatorTypeNode, "description");
+				
 				String generatorModulTypeName;	// Not realy needed, because 'generatorTypeName' should be the same.
 				
 				GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
@@ -193,8 +184,23 @@ implements ButtonActionLogicListenerInterface
 					throw new RuntimeException("Class not found", ex);
 				}
 				
-				generatorTypeData = this.createGeneratorTypeData(generatorTypeClassName, generatorClass, generatorTypeName, generatorTypeDescription);
+				generatorTypeData = LoadFileOperationLogic.createGeneratorTypeData(generatorTypeClassName, 
+																				   generatorClass, 
+																				   generatorTypeName, 
+																				   generatorTypeDescription);
 				
+				if (generatorTypeData instanceof ModulGeneratorTypeData)
+				{
+					String isMainName = XMLData.selectSingleNodeText(generatorTypeNode, "isMain");
+
+					if ("true".equals(isMainName) == true)
+					{
+						mainModulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+						
+						mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
+					}
+				}
+
 				generatorTypesData.addGeneratorTypeData(generatorTypeData);
 				
 				//--------------------------------------------------------
@@ -228,17 +234,25 @@ implements ButtonActionLogicListenerInterface
 				{
 					ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
 					
-					Generators modulGenerators = new Generators();
+					//Generators modulGenerators = modulGeneratorTypeData.getGenerators();
 					
-					this.createGenerators(generatorTypeNode, soundData, modulGenerators, modulGeneratorTypeData);
+					LoadFileOperationLogic.createGenerators(generatorTypesData,
+															generatorTypeNode, frameRate, 
+															//modulGenerators, 
+															modulGeneratorTypeData);
 					
-					modulGeneratorTypeData.setGenerators(modulGenerators);
+					//modulGeneratorTypeData.setGenerators(modulGenerators);
 				}
 			}
 		}
+		
+		return mainModulGeneratorTypeData;
 	}
 
-	public GeneratorTypeData createGeneratorTypeData(String generatorTypeClassName, Class generatorClass, String generatorTypeName, String generatorTypeDescription)
+	public static GeneratorTypeData createGeneratorTypeData(String generatorTypeClassName, 
+															Class generatorClass, 
+															String generatorTypeName, 
+															String generatorTypeDescription)
 	{
 		GeneratorTypeData generatorTypeData = null;
 		
@@ -304,12 +318,16 @@ implements ButtonActionLogicListenerInterface
 	
 	/**
 	 * 
-	 * @param noiseNode is the root Node of the Generators-XML.
-	 * @param soundData is the empty sound data object the generators are inserted.
-	 * @param loadFileGeneratorNodeDatas is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
+	 * @param noiseNode 
+	 * 			is the root Node of the Generators-XML.
+	 * @param loadFileGeneratorNodeDatas 
+	 * 			is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
-	private void createGenerators(Node noiseNode, SoundData soundData, 
-			Generators generators, Vector loadFileGeneratorNodeDatas, ModulGeneratorTypeData modulGeneratorTypeData) 
+	private static void createGenerators(GeneratorTypesData generatorTypesData,
+										 Node noiseNode, float frameRate, 
+										 //Generators generators, 
+										 Vector loadFileGeneratorNodeDatas, 
+										 ModulGeneratorTypeData modulGeneratorTypeData) 
 			//ModulGenerator parentModulGenerator)
 	{
 		Node generatorsNode = XMLData.selectSingleNode(noiseNode, "generators");
@@ -318,8 +336,6 @@ implements ButtonActionLogicListenerInterface
 
 		Node generatorNode;
 
-		GeneratorTypesData generatorTypesData = this.controllerData.getGeneratorTypesData();
-		
 		while ((generatorNode = generatorsNodeIterator.nextNode()) != null)
 		{
 			String generatorType = XMLData.selectSingleNodeText(generatorNode, "type");
@@ -332,7 +348,7 @@ implements ButtonActionLogicListenerInterface
 			
 			Generator generator;
 			
-			generator = generatorTypeData.createGeneratorInstance(generatorName, soundData.getFrameRate()); //, parentModulGenerator);
+			generator = generatorTypeData.createGeneratorInstance(generatorName, frameRate); //, parentModulGenerator);
 
 			if (generator != null)
 			{					
@@ -351,11 +367,11 @@ implements ButtonActionLogicListenerInterface
 				}
 				*/
 				//this.controllerLogic.addGenerator(generator);
-				generators.addGenerator(generator);
+				modulGeneratorTypeData.addGenerator(generator);
 				
 				if (generator instanceof OutputGenerator)
 				{	
-					generators.setOutputGenerator((OutputGenerator)generator);
+					modulGeneratorTypeData.setOutputGenerator((OutputGenerator)generator);
 				}
 				
 				loadFileGeneratorNodeDatas.add(new LoadFileGeneratorNodeData(generator, generatorNode));
@@ -372,7 +388,9 @@ implements ButtonActionLogicListenerInterface
 	 * 
 	 * @param loadFileGeneratorNodeDatas is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
-	private void createGeneratorInputs(Generators generators, Vector loadFileGeneratorNodeDatas, ModulGeneratorTypeData modulGeneratorTypeData)
+	private static void createGeneratorInputs(//Generators generators, 
+											  Vector loadFileGeneratorNodeDatas, 
+											  ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		Iterator loadFileGeneratorNodeDatasIterator = loadFileGeneratorNodeDatas.iterator();
 		
@@ -398,7 +416,7 @@ implements ButtonActionLogicListenerInterface
 					Float inputValue = XMLData.selectSingleNodeFloat(inputNode, "value");
 					Integer inputModulInputType = XMLData.selectSingleNodeInteger(inputNode, "inputModulInputType");
 					
-					Generator inputGenerator = generators.searchGenerator(inputGeneratorName);
+					Generator inputGenerator = modulGeneratorTypeData.searchGenerator(inputGeneratorName);
 					
 					InputTypeData inputTypeData = generator.getGeneratorTypeData().getInputTypeData(inputType.intValue());
 					

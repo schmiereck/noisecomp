@@ -48,7 +48,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	private float generatorScaleX		= 60.0F;
 	
 	/**
-	 * Wird verwaltet um Zugriff auf die Liste der Generatoren zu haben.
+	 * Wird verwaltet um Zugriff auf die aktuelle Abspielposition zu haben.
 	 * TODO Könnte man über eine etwas abstraktere Schnittstelle handeln, smk
 	 */
 	private SoundData soundData;
@@ -117,9 +117,9 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public float getSoundPlayTimePos()
 	{
-		float playTimePos = this.soundData.getSoundBufferManager().getActualTime();
+		float soundPlayTimePos = this.soundData.getSoundBufferManager().getActualTime();
 		
-		return playTimePos;
+		return soundPlayTimePos;
 	}
 
 	/**

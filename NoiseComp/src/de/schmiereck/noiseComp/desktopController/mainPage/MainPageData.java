@@ -3,13 +3,13 @@ package de.schmiereck.noiseComp.desktopController.mainPage;
 import de.schmiereck.noiseComp.desktop.DesktopData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.actions.AddGeneratorButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.GroupGeneratorButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.PauseButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.PlayButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.StopButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.mainPage.actions.AddInputButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.mainPage.actions.NewInputButtonActionLogicListener;
@@ -99,10 +99,10 @@ public class MainPageData
 	 */
 	private TextWidgetData generatorInputTypeDescriptionTextWidgetData = null;
 
-	private FunctionButtonData newButtonData	= null;
-	private FunctionButtonData exitButtonData	= null;
-	private FunctionButtonData loadButtonData	= null;
-	private FunctionButtonData saveButtonData	= null;
+	//private FunctionButtonData newButtonData	= null;
+	//private FunctionButtonData exitButtonData	= null;
+	//private FunctionButtonData loadButtonData	= null;
+	//private FunctionButtonData saveButtonData	= null;
 
 	private FunctionButtonData zoomInButtonData	= null;
 	private FunctionButtonData zoomOutButtonData	= null;
@@ -173,21 +173,21 @@ public class MainPageData
 			}
 			
 			{
-				this.newButtonData = new FunctionButtonData("new", "New", this.getDesktopSizeX() - 300, 16, 90, 20);
-				this.addWidgetData(this.newButtonData);
+				//this.newButtonData = new FunctionButtonData("new", "New", this.getDesktopSizeX() - 300, 16, 90, 20);
+				//this.addWidgetData(this.newButtonData);
 			}
 			{
-				this.loadButtonData = new FunctionButtonData("load", "Load...", this.getDesktopSizeX() - 200, 16, 90, 20);
-				this.addWidgetData(this.loadButtonData);
+				//this.loadButtonData = new FunctionButtonData("load", "Load...", this.getDesktopSizeX() - 200, 16, 90, 20);
+				//this.addWidgetData(this.loadButtonData);
 			}
 			{
-				this.saveButtonData = new FunctionButtonData("save", "Save...", this.getDesktopSizeX() - 200, 40, 90, 20);
-				this.addWidgetData(this.saveButtonData);
+				//this.saveButtonData = new FunctionButtonData("save", "Save...", this.getDesktopSizeX() - 200, 40, 90, 20);
+				//this.addWidgetData(this.saveButtonData);
 			}
 			
 			{
-				this.exitButtonData = new FunctionButtonData("exit", "Exit", this.getDesktopSizeX() - 100, 16, 90, 20);
-				this.addWidgetData(this.exitButtonData);
+				//this.exitButtonData = new FunctionButtonData("exit", "Exit", this.getDesktopSizeX() - 100, 16, 90, 20);
+				//this.addWidgetData(this.exitButtonData);
 			}
 			
 			{
@@ -224,38 +224,42 @@ public class MainPageData
 
 			{
 				{
-					LabelData generatorNameLabelData = new LabelData("Name:", 10, posY + 10, 60, 16);
+					LabelData generatorLabelData = new LabelData("Generator:", 10, posY + 10, 60, 16);
+					this.addWidgetData(generatorLabelData);
+				}
+				{
+					LabelData generatorNameLabelData = new LabelData("Name:", 10, posY + 30, 60, 16);
 					this.addWidgetData(generatorNameLabelData);
 				}
 				{
-					this.generatorNameInputlineData = new InputlineData("name", 70, posY + 10, 150, 16);
+					this.generatorNameInputlineData = new InputlineData("name", 70, posY + 30, 150, 16);
 					this.addWidgetData(this.generatorNameInputlineData);
 				}
 				
 				{
-					LabelData generatorNameLabelData = new LabelData("Start-Time:", 10, posY + 30, 60, 16);
+					LabelData generatorNameLabelData = new LabelData("Start-Time:", 10, posY + 50, 60, 16);
 					this.addWidgetData(generatorNameLabelData);
 				}
 				{
-					this.generatorStartTimeInputlineData = new InputlineData("startTime", 70, posY + 30, 150, 16);
+					this.generatorStartTimeInputlineData = new InputlineData("startTime", 70, posY + 50, 150, 16);
 					this.addWidgetData(this.generatorStartTimeInputlineData);
 				}
 				
 				{
-					LabelData generatorNameLabelData = new LabelData("End-Time:", 10, posY + 50, 60, 16);
+					LabelData generatorNameLabelData = new LabelData("End-Time:", 10, posY + 70, 60, 16);
 					this.addWidgetData(generatorNameLabelData);
 				}
 				{
-					this.generatorEndTimeInputlineData = new InputlineData("endTime", 70, posY + 50, 150, 16);
+					this.generatorEndTimeInputlineData = new InputlineData("endTime", 70, posY + 70, 150, 16);
 					this.addWidgetData(this.generatorEndTimeInputlineData);
 				}
 				
 				{
-					this.removeGeneratorbuttonData = new FunctionButtonData("remove", "Remove", 70, posY + 70, 90, 18);
+					this.removeGeneratorbuttonData = new FunctionButtonData("remove", "Remove", 70, posY + 90, 90, 18);
 					this.addWidgetData(this.removeGeneratorbuttonData);
 				}
 				{
-					this.setGeneratorButtonData = new FunctionButtonData("set", "Set", 170, posY + 70, 50, 18);
+					this.setGeneratorButtonData = new FunctionButtonData("set", "Set", 170, posY + 90, 50, 18);
 					this.addWidgetData(this.setGeneratorButtonData);
 
 					this.generatorNameInputlineData.setDefaultSubmitWidgetInterface(this.setGeneratorButtonData);
@@ -278,7 +282,7 @@ public class MainPageData
 			}
 
 			{
-				LabelData generatorInputNameLabelData = new LabelData("Name:", 590, posY + 10, 60, 16);
+				LabelData generatorInputNameLabelData = new LabelData("Input: Generator:", 590, posY + 10, 60, 16);
 				this.addWidgetData(generatorInputNameLabelData);
 			}
 			{
@@ -376,8 +380,8 @@ public class MainPageData
 			PauseButtonActionLogicListener pauseButtonActionLogicListener,
 			StopButtonActionLogicListener stopButtonActionLogicListener,
 			
-			ExitButtonActionLogicListener exitButtonActionLogicListener,
-			NewButtonActionLogicListener newButtonActionLogicListener,
+			//ExitButtonActionLogicListener exitButtonActionLogicListener,
+			//NewButtonActionLogicListener newButtonActionLogicListener,
 
 			ZoomInButtonActionLogicListener zoomInButtonActionLogicListener,
 			ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener,
@@ -386,10 +390,10 @@ public class MainPageData
 			SetInputButtonActionLogicListener setInputButtonActionLogicListener,
 			RemoveInputButtonActionLogicListener removeInputButtonActionLogicListener,
 			NewInputButtonActionLogicListener newInputButtonActionLogicListener,
-			AddInputButtonActionLogicListener addInputButtonActionLogicListener,
+			AddInputButtonActionLogicListener addInputButtonActionLogicListener
 
-			SaveButtonActionLogicListener saveButtonActionLogicListener,
-			LoadButtonActionLogicListener loadButtonActionLogicListener
+			//SaveButtonActionLogicListener saveButtonActionLogicListener,
+			//LoadButtonActionLogicListener loadButtonActionLogicListener
 			/*
 			SelectCancelButtonActionLogicListener selectCancelButtonActionLogicListener,
 			SelectAddButtonActionLogicListener selectAddButtonActionLogicListener,
@@ -418,8 +422,8 @@ public class MainPageData
 		this.pauseButtonData.addActionLogicListener(pauseButtonActionLogicListener);
 		this.stopButtonData.addActionLogicListener(stopButtonActionLogicListener);
 		
-		this.exitButtonData.addActionLogicListener(exitButtonActionLogicListener);
-		this.newButtonData.addActionLogicListener(newButtonActionLogicListener);
+		//this.exitButtonData.addActionLogicListener(exitButtonActionLogicListener);
+		//this.newButtonData.addActionLogicListener(newButtonActionLogicListener);
 		
 		this.zoomInButtonData.addActionLogicListener(zoomInButtonActionLogicListener);
 		this.zoomOutButtonData.addActionLogicListener(zoomOutButtonActionLogicListener);
@@ -430,8 +434,8 @@ public class MainPageData
 		this.newInputButtonData.addActionLogicListener(newInputButtonActionLogicListener);
 		this.addInputButtonData.addActionLogicListener(addInputButtonActionLogicListener);
 
-		this.saveButtonData.addActionLogicListener(saveButtonActionLogicListener);
-		this.loadButtonData.addActionLogicListener(loadButtonActionLogicListener);
+		//this.saveButtonData.addActionLogicListener(saveButtonActionLogicListener);
+		//this.loadButtonData.addActionLogicListener(loadButtonActionLogicListener);
 	}
 
 	/**

@@ -1,19 +1,44 @@
 
-root
+Structure im Memory (Update path)
+=================================
+
+MainModel
+	SourceDataLine
+	SoundData
+	
+	OutputGenerator
+	
+Modules
+	Modul
+
+Edited-Modul
+	TrackList
+		Tracks
+
+Structure of XML file:
+======================
+
+noise
+ |
+ +--->version
  |
  +--->generatores
  |     |
  |     `--->generator{generatorType "A"}
  |
- |     `--->generator{generatorType "A"}
- |
- |     `--->generator{generatorType "B"}
- |
  `--->generatorTypes
        |
        `--->generatorType "A"
              |
+             `--->inputTypes
+             |     |
+             |     `--->inputType
+             |
              `--->generators
                    |
-                   `...
+                   `--->generator
+                         |
+                         `--->inputs
+                               |
+                               `--->input
 

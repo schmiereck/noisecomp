@@ -1,14 +1,8 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.file;
 
 import java.util.Iterator;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
-import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
-import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
-import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
-import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
@@ -17,90 +11,53 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLPort;
+import de.schmiereck.xmlTools.XMLPortException;
 
-/**
- * Load the actual generators definitions in the memory in a XML file.
- *
- * @author smk
- * @version 21.02.2004
+/*
+ * Created on 25.03.2005, Copyright (c) schmiereck, 2005
  */
-public class SaveFileButtonActionLogicListener 
-implements ButtonActionLogicListenerInterface
+/**
+ * <p>
+ * 	TODO docu type
+ * </p>
+ * 
+ * @author smk
+ * @version <p>25.03.2005:	created, smk</p>
+ */
+public class SaveFileOperationLogic
 {
-	private DesktopControllerLogic controllerLogic;
-	private DesktopControllerData controllerData;
-	
-	/**
-	 * Constructor.
-	 * 
-	 * 
-	 */
-	public SaveFileButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
-	{
-		super();
-		
-		this.controllerLogic = controllerLogic;
-		this.controllerData = controllerData;
-	}
 
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
-	 */
-	public void notifyButtonReleased(InputWidgetData buttonData)
-	{
-		String fileName = this.controllerData.getSaveFileNameInputlineData().getInputText();
-		
-		fileName = fileName.trim();
-		
-		if (fileName.length() > 0)
-		{	
-			if (fileName.endsWith(".xml") == false)
-			{
-				fileName = fileName.concat(".xml");
-			}
-			
-			this.saveFile(fileName);
-		
-			this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
-		}
-		else
-		{
-			// TODO show ERROR message
-		}
-	}
-
-	private void saveFile(String fileName)
+	public static void saveFile(GeneratorTypesData generatorTypesData,
+								ModulGeneratorTypeData mainModulTypeData,
+								String fileName) 
+	throws XMLPortException
 	{
 		Document xmlDoc = XMLData.createDocument();
 		
 		Node noiseNode = XMLData.appendNode(xmlDoc, xmlDoc, "noise");
 
-		XMLData.appendTextNode(xmlDoc, noiseNode, "version", "1.0.0");
-		
-		SoundData soundData = this.controllerData.getSoundData();
+		XMLData.appendTextNode(xmlDoc, noiseNode, "version", "1.0.1");
 		
 		//-----------------------------------------------------
 		// GeneratorTypesData:
 		
-		GeneratorTypesData generatorTypesData = this.controllerData.getGeneratorTypesData();
-		
-		this.appendGeneratorTypes(xmlDoc, noiseNode, generatorTypesData);
+		SaveFileOperationLogic.appendGeneratorTypes(xmlDoc, noiseNode, generatorTypesData);
 		
 		//-----------------------------------------------------
 		// Generators:
+		/*
+		Generators mainGenerators = mainModulTypeData.getGenerators();
 		
-		///Generators generators = soundData.getGenerators();
-		Generators mainGenerators = this.controllerData.getMainGenerators();
+		SaveFileOperationLogic.appendGenerators(xmlDoc, noiseNode, mainGenerators);
+		*/
 		
-		this.appendGenerators(xmlDoc, noiseNode, mainGenerators);
-		
+		//-----------------------------------------------------
 		XMLPort.save(fileName, xmlDoc);
 	}
 
-	private void appendGeneratorTypes(Document xmlDoc, Node noiseNode, GeneratorTypesData generatorTypesData)
+	private static void appendGeneratorTypes(Document xmlDoc, Node noiseNode, GeneratorTypesData generatorTypesData)
 	{
 		Node generatorTypesNode = XMLData.appendNode(xmlDoc, noiseNode, "generatorTypes");
 		
@@ -119,6 +76,16 @@ implements ButtonActionLogicListenerInterface
 			Node generatorClassNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "generatorClassName", generatorClassName);
 			Node generatorNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "name", generatorTypeData.getGeneratorTypeName());
 			Node generatorDescriptionNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "description", generatorTypeData.getGeneratorTypeDescription());
+			
+			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			{	
+				ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				
+				if (modulGeneratorTypeData.getIsMainModulGeneratorType() == true)
+				{
+					Node isMainNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "isMain", "true");
+				}
+			}
 			
 			Iterator inputTypesIterator = generatorTypeData.getInputTypesIterator();
 			
@@ -145,18 +112,19 @@ implements ButtonActionLogicListenerInterface
 			{	
 				ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
 				
-				Generators modulGenerators = modulGeneratorTypeData.getGenerators();
+				//Generators modulGenerators = modulGeneratorTypeData.getGenerators();
 
-				this.appendGenerators(xmlDoc, generatorTypeNode, modulGenerators);
+				SaveFileOperationLogic.appendGenerators(modulGeneratorTypeData, xmlDoc, generatorTypeNode); //, modulGenerators);
 			}
 		}
 	}
 	
-	private void appendGenerators(Document xmlDoc, Node noiseNode, Generators generators)
+	private static void appendGenerators(ModulGeneratorTypeData modulGeneratorTypeData,
+										 Document xmlDoc, Node noiseNode)//, Generators generators)
 	{
 		Node generatorsNode = XMLData.appendNode(xmlDoc, noiseNode, "generators");
 		
-		Iterator generatorsIterator = generators.getGeneratorsIterator();
+		Iterator generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
 		
 		while (generatorsIterator.hasNext())
 		{
@@ -216,5 +184,4 @@ implements ButtonActionLogicListenerInterface
 			}
 		}
 	}
-
 }

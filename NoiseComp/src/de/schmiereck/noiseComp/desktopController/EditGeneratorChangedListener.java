@@ -15,9 +15,6 @@ public interface EditGeneratorChangedListener
 
 	/**
 	 * Called if the edited modul is changed.
-	 * 
-	 * @param editModulTypeData
-	 * @param editGenerators
 	 */
-	void notifyEditGeneratorChanged(ModulGeneratorTypeData editModulTypeData, Generators editGenerators);
+	void notifyEditGeneratorChanged(ModulGeneratorTypeData editModulTypeData);
 }

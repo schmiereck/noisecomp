@@ -24,8 +24,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	
 	/**
 	 * List with {@link GeneratorTypeData}-Objects.
-	 */
 	private Vector inputs = null;
+	 */
 
 	private static InputsWidgetGraphic listWidgetGraphic = null;
 	
@@ -39,10 +39,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	/**
 	 * Constructor.
 	 * 
-	 * @param posX
-	 * @param posY
-	 * @param sizeX
-	 * @param sizeY
 	 */
 	public InputsWidgetData(int posX, int posY, int sizeX, int sizeY,
 					  ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
@@ -59,55 +55,36 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 
 	/**
 	 * @see #selectedGenerator
-	 * @see #inputs
 	 */
-	public void setGeneratorInputs(Generator selectedGenerator, Vector inputs)
+	public void setGeneratorInputs(Generator selectedGenerator)
 	{
 		this.selectedGenerator = selectedGenerator;
 		
-		if (this.inputs != inputs)
-		{	
-			this.deselectInput();
-			
-			this.inputs = inputs;
-		}
+		this.deselectInput();
 	}
 
-	
-	/**
-	 * @param pos
-	 * @return
-	 */
 	private InputData getInputData(int pos)
 	{
 		InputData ret;
 		
-		if (this.inputs != null)
-		{
-			ret = (InputData)this.inputs.get(pos);
-		}
-		else
-		{
-			ret = null;
-		}
+		ret = this.selectedGenerator.getInputData(pos);
+
 		return ret;
 	}
 
-	/**
-	 * @return
-	 */
 	private int getInputsCount()
 	{
 		int ret;
 		
-		if (this.inputs != null)
+		if (this.selectedGenerator != null)
 		{
-			ret = this.inputs.size();
+			ret = this.selectedGenerator.getInputsCount();
 		}
 		else
 		{
 			ret = 0;
 		}
+
 		return ret;
 	}
 	/**
@@ -126,14 +103,15 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	{
 		Iterator ret;
 		
-		if (this.inputs != null)
+		if (this.selectedGenerator != null)
 		{
-			ret = this.inputs.iterator();
+			ret = this.selectedGenerator.getInputsIterator();
 		}
 		else
 		{
 			ret = null;
 		}
+
 		return ret;
 	}
 
@@ -204,9 +182,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		return this.selectedInputData;
 	}
 
-	/**
-	 * @return
-	 */
 	public Generator getSelectedGenerator()
 	{
 		return this.selectedGenerator;
@@ -263,9 +238,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		this.generatorInputSelectedListener = generatorInputSelectedListener;
 	}
 
-	/**
-	 * 
-	 */
 	public void removeSelectedInput()
 	{
 		synchronized (this)
@@ -276,7 +248,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			{
 				this.deselectInput();
 				
-				this.inputs.remove(selectedInputData);
+				this.selectedGenerator.removeInput(selectedInputData);
 				
 				//this.soundData.removeGeneratorInput(selectedInputData);
 				
@@ -290,8 +262,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyDragWidget(WidgetData selectedWidgetData, int pointerPosX, int pointerPosY)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -48,9 +48,9 @@ EditGeneratorChangedListener
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopController.EditGeneratorChangedListener#notifyEditGeneratorChanged(de.schmiereck.noiseComp.generator.ModulGeneratorTypeData, de.schmiereck.noiseComp.generator.Generators)
+	 * @see de.schmiereck.noiseComp.desktopController.EditGeneratorChangedListener#notifyEditGeneratorChanged(de.schmiereck.noiseComp.generator.ModulGeneratorTypeData)
 	 */
-	public void notifyEditGeneratorChanged(ModulGeneratorTypeData editModulTypeData, Generators editGenerators)
+	public void notifyEditGeneratorChanged(ModulGeneratorTypeData editModulTypeData)
 	{
 		InputTypesData inputTypesData;
 		
@@ -62,6 +62,7 @@ EditGeneratorChangedListener
 		{
 			inputTypesData = null;
 		}
+		
 		this.editModulPageData.getInputTypesListWidgetData().setInputTypesData(inputTypesData);
 	}
 }

@@ -10,17 +10,17 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.DesktopGraphic;
 import de.schmiereck.noiseComp.desktopController.actions.AddGeneratorButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.GroupGeneratorButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.PauseButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.PlayButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.StopButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.CancelGroupButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.InputTypeEditSaveActionListener;
@@ -43,6 +43,7 @@ import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.Runner;
+import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphicException;
 import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
 
 /**
@@ -57,181 +58,35 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		//------------------------------------
-		// Setup Sound:
-		
-		SourceDataLine line = Main.createLine();
-		
-		float frameRate = line.getFormat().getFrameRate();
-
-		SoundData soundData = new SoundData(line, frameRate);
-		
-		Generators generators = new Generators();
-
-		//------------------------------------
-		///soundData.setGenerators(generators);
-		
-		//------------------------------------
-		// Setup Desktop:
+		//----------------------------------------------------------------------
+		// Build:
 		
 		boolean useFullScreen = false;
 		//boolean useFullScreen = true;
-		String playerName = null;
-		
-		SchedulerWaiter waiter = new SchedulerWaiter();
 
-		DesktopGraphic multiBufferGraphic;
+		MainModel mainModel = new MainModel();
 		
-		multiBufferGraphic = new DesktopGraphic(useFullScreen);
-		
-		multiBufferGraphic.initGraphicBuffer();
-		
-		DesktopControllerData controllerData = new DesktopControllerData(soundData, generators);
+		MainView mainView;
+		try
+		{
+			mainView = new MainView(useFullScreen, mainModel);
 
-		multiBufferGraphic.initGrafic(controllerData);
-
-		DesktopInputListener inputListener = new DesktopInputListener();
-		
-		DesktopControllerLogic controllerLogic = new DesktopControllerLogic(controllerData, 
-																			inputListener, 
-																			waiter, 
-																			playerName);
-		
-		inputListener.setGraphic(multiBufferGraphic);
-		inputListener.setGameControllerLogic(controllerLogic);
-		
-		AddGeneratorButtonActionLogicListener addGeneratorButtonActionLogicListener	= new AddGeneratorButtonActionLogicListener(controllerLogic, controllerData);
-		RemoveGeneratorButtonActionLogicListener removeGeneratorButtonActionLogicListener = new RemoveGeneratorButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		GroupGeneratorButtonActionLogicListener groupGeneratorButtonActionLogicListener = new GroupGeneratorButtonActionLogicListener(controllerLogic, controllerData, controllerData.getEditModulPageData());
-
-		PlayButtonActionLogicListener playButtonActionLogicListener = new PlayButtonActionLogicListener(controllerLogic, controllerData);
-		PauseButtonActionLogicListener pauseButtonActionLogicListener = new PauseButtonActionLogicListener(controllerLogic, controllerData);
-		StopButtonActionLogicListener stopButtonActionLogicListener = new StopButtonActionLogicListener(controllerLogic, controllerData);
-		
-		ExitButtonActionLogicListener exitButtonActionLogicListener = new ExitButtonActionLogicListener(controllerLogic);
-		NewButtonActionLogicListener newButtonActionLogicListener = new NewButtonActionLogicListener(controllerLogic, controllerData);
-
-		ZoomInButtonActionLogicListener zoomInButtonActionLogicListener = new ZoomInButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener = new ZoomOutButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		
-		SetGeneratorButtonActionLogicListener setGeneratorButtonActionLogicListener = new SetGeneratorButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		SetInputButtonActionLogicListener setInputButtonActionLogicListener = new SetInputButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		RemoveInputButtonActionLogicListener removeInputButtonActionLogicListener = new RemoveInputButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		NewInputButtonActionLogicListener newInputButtonActionLogicListener = new NewInputButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		AddInputButtonActionLogicListener addInputButtonActionLogicListener = new AddInputButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
-		
-		SelectCancelButtonActionLogicListener selectCancelButtonActionLogicListener = new SelectCancelButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
-		SelectAddButtonActionLogicListener selectAddButtonActionLogicListener = new SelectAddButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
-		SelectInsertButtonActionLogicListener selectInsertButtonActionLogicListener = new SelectInsertButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
-		SelectEditButtonActionLogicListener selectEditButtonActionLogicListener = new SelectEditButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData, controllerData.getSelectGeneratorPageData());
-		SelectMainEditButtonActionLogicListener selectMainEditButtonActionLogicListener = new SelectMainEditButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
-		SelectRemoveButtonActionLogicListener selectRemoveButtonActionLogicListener = new SelectRemoveButtonActionLogicListener(controllerLogic, controllerData, controllerData.getSelectGeneratorPageData());
-		
-		SaveButtonActionLogicListener saveButtonActionLogicListener = new SaveButtonActionLogicListener(controllerLogic, controllerData);
-		SaveCancelButtonActionLogicListener saveCancelButtonActionLogicListener = new SaveCancelButtonActionLogicListener(controllerLogic, controllerData);
-		SaveFileButtonActionLogicListener saveFileButtonActionLogicListener = new SaveFileButtonActionLogicListener(controllerLogic, controllerData);
-		
-		LoadButtonActionLogicListener loadButtonActionLogicListener = new LoadButtonActionLogicListener(controllerLogic, controllerData);
-		LoadCancelButtonActionLogicListener loadCancelButtonActionLogicListener = new LoadCancelButtonActionLogicListener(controllerLogic, controllerData);
-		LoadFileButtonActionLogicListener loadFileButtonActionLogicListener = new LoadFileButtonActionLogicListener(controllerLogic, controllerData);
-		
-		CancelGroupButtonActionLogicListener cancelGroupButtonActionLogicListener = new CancelGroupButtonActionLogicListener(controllerLogic, controllerData);
-		SaveGroupButtonActionLogicListener saveGroupButtonActionLogicListener = new SaveGroupButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData, controllerData.getEditModulPageData());
-		
-		InputTypeEditSaveActionListener inputTypeEditSaveActionListener = new InputTypeEditSaveActionListener(controllerLogic, controllerData, controllerData.getEditModulPageData());
-		
-		controllerData.setActionListeners(
-				addGeneratorButtonActionLogicListener,
-				removeGeneratorButtonActionLogicListener,
-				groupGeneratorButtonActionLogicListener,
-				
-				playButtonActionLogicListener,
-				pauseButtonActionLogicListener,
-				stopButtonActionLogicListener,
-				
-				exitButtonActionLogicListener,
-				newButtonActionLogicListener,
-				
-				zoomInButtonActionLogicListener,
-				zoomOutButtonActionLogicListener,
-				
-				setGeneratorButtonActionLogicListener,
-				setInputButtonActionLogicListener,
-				removeInputButtonActionLogicListener,
-				newInputButtonActionLogicListener,
-				addInputButtonActionLogicListener,
-				
-				selectCancelButtonActionLogicListener,
-				selectAddButtonActionLogicListener,
-				selectInsertButtonActionLogicListener,
-				selectEditButtonActionLogicListener,
-				selectMainEditButtonActionLogicListener,
-				selectRemoveButtonActionLogicListener,
-										  
-				saveButtonActionLogicListener,
-				saveCancelButtonActionLogicListener,
-				saveFileButtonActionLogicListener,
-										  
-				loadButtonActionLogicListener,
-				loadCancelButtonActionLogicListener,
-				loadFileButtonActionLogicListener,
-				
-				cancelGroupButtonActionLogicListener,
-				saveGroupButtonActionLogicListener,
-				
-				inputTypeEditSaveActionListener);
-		
-		//------------------------------------
-		// run:
-		
-		Runner.run(controllerData, controllerLogic, 
-				   multiBufferGraphic, inputListener, 
-				   waiter, 24, 16,
-				   false, useFullScreen,
-				   -1, -1);
+			Runner.run(mainModel.getControllerData(), 
+					   mainModel.getControllerLogic(), 
+					   mainView.getMultiBufferGraphic(), 
+					   mainModel.getInputListener(), 
+					   mainModel.getWaiter(), 24, 16,
+					   false, 
+					   useFullScreen,
+					   -1, -1);
+		}
+		catch (MultiBufferFullScreenGraphicException ex)
+		{
+			ex.printStackTrace(System.err);
+		}
 		
 		// TODO das exit loswerden, alle Threads selber beenden.
 		System.exit(0);
-	}
-	
-	private static SourceDataLine createLine()
-	{
-		//SourceDataLine sourceDataLine = new SourceDataLine();
-		
-		// Gewünschtes Audioformat definieren:
-		
-		float sampleRate = 44100;
-		
-		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-												  sampleRate, 16, 2, 4, 
-												  sampleRate, false);
-		
-		DataLine.Info	info = new DataLine.Info(SourceDataLine.class, audioFormat);
-
-		// Ausgabekanal mit den gewünschten Eigenschaften holen und öffnen:
-		
-		SourceDataLine line;
-		
-		try
-		{
-			line = (SourceDataLine)AudioSystem.getLine(info);
-		}
-		catch (LineUnavailableException ex)
-		{
-			throw new RuntimeException("getLine info", ex);
-		}
-		
-		try
-		{
-			line.open(audioFormat);
-		}
-		catch (LineUnavailableException ex)
-		{
-			throw new RuntimeException("open line", ex);
-		}
-		
-		//line.start();
-		return line;
 	}
 
 }

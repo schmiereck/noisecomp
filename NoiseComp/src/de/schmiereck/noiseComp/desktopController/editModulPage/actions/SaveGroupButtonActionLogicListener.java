@@ -61,15 +61,16 @@ public class SaveGroupButtonActionLogicListener
 				EditData editData = this.controllerData.getEditData();
 				
 				ModulGeneratorTypeData editModulTypeData = editData.getEditModulTypeData();
-				Generators generators;
+				//Generators generators;
 				
 				// Actualy no modul edited ?
+				/*
 				if (editModulTypeData == null)
 				{	
 					editModulTypeData = new ModulGeneratorTypeData(ModulGenerator.class, modulName, modulDescription);
 	
 					//generators = this.controllerData.getTracksListWidgetData().getGenerators();
-					generators =editData.getEditGenerators();
+					generators = editData.getEditGenerators();
 					
 					editModulTypeData.setGenerators(generators);
 				
@@ -78,13 +79,14 @@ public class SaveGroupButtonActionLogicListener
 					this.controllerData.clearTracks();
 				}
 				else
+				*/
 				{
 					// A modul is actualy edited:
 					
 					editModulTypeData.setGeneratorTypeName(modulName);
 					editModulTypeData.setGeneratorTypeDescription(modulDescription);
 					
-					generators = editData.getEditGenerators();
+					//generators = editData.getEditGenerators();
 				}
 				
 				editData.setEditModulGenerator(editModulTypeData);

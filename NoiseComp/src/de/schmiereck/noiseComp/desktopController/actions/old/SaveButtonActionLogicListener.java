@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.actions.old;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
@@ -34,6 +34,6 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		this.controllerData.setActiveDesktopPageData(this.controllerData.getSaveDesktopPageData());
+		//this.controllerData.setActiveDesktopPageData(this.controllerData.getSaveDesktopPageData());
 	}
 }

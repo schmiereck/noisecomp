@@ -31,21 +31,24 @@ public class SoundBufferManagerTest
 		super.setUp();
 		
 		SourceDataLine line = SoundBufferManagerTest.createLine();
-		
-		float frameRate = line.getFormat().getFrameRate();
 
-		SoundData soundData = new SoundData(line, frameRate);
+		SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
+		
+		SoundData soundData = new SoundData(line, soundSourceLogic);
+		
+		//soundData.setSoundSourceLogic(soundSourceLogic);
 		
 		GeneratorTypeData generatorTypeData = OutputGenerator.createGeneratorTypeData();
 		
-		OutputGenerator outputGenerator = new OutputGenerator("out", new Float(frameRate), generatorTypeData);
+		OutputGenerator outputGenerator = new OutputGenerator("out", 
+															  new Float(line.getFormat().getFrameRate()), 
+															  generatorTypeData);
 		
-		SoundSourceLogic soundSourceLogic = new SoundSourceLogic(outputGenerator);
-		
-		soundData.setSoundSourceLogic(soundSourceLogic);
 		
 		outputGenerator.setStartTimePos(0.0F);
 		outputGenerator.setEndTimePos(3.0F);
+		
+		soundSourceLogic.setOutputGenerator(outputGenerator);
 		
 		this.soundBufferManager = soundData.getSoundBufferManager();
 	}

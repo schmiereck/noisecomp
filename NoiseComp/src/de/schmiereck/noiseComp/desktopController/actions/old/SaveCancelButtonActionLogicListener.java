@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.actions.old;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
@@ -11,7 +11,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
  * @author smk
  * @version 21.02.2004
  */
-public class LoadCancelButtonActionLogicListener 
+public class SaveCancelButtonActionLogicListener 
 implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
@@ -21,7 +21,7 @@ implements ButtonActionLogicListenerInterface
 	 * 
 	 * 
 	 */
-	public LoadCancelButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public SaveCancelButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
 		super();
 		

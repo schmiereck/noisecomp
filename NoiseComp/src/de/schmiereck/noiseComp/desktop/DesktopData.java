@@ -30,10 +30,23 @@ public class DesktopData
 	 * @see #pointerPosX
 	 * @see #pointerPosY
 	 */
-	public void setPointerPos(int posX, int posY)
+	public boolean setPointerPos(int posX, int posY)
 	{
+		boolean ret;
+
+		if ((this.pointerPosX != posX) || (this.pointerPosY != posY))
+		{
+			ret = true;
+		}
+		else
+		{
+			ret = false;
+		}
+
 		this.pointerPosX = posX;
 		this.pointerPosY = posY;
+		
+		return ret;
 	}
 
 	/**

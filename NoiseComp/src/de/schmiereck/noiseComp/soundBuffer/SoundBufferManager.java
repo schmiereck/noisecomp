@@ -76,17 +76,21 @@ extends AudioInputStream
 	 * Constructor.
 	 * 
 	 */
-	public SoundBufferManager(AudioFormat audioFormat, float frameRate, long length, int bufferSize, 
-			SoundSourceLogic soundSourceLogic)
+	public SoundBufferManager(AudioFormat audioFormat, 
+							  float frameRate, 
+							  long length, 
+							  int bufferSize, 
+							  SoundSourceLogic soundSourceLogic)
 	{
 		super(new ByteArrayInputStream(new byte[0]), 
 			  new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-				audioFormat.getSampleRate(),
-				bitsPerMonoSample,
-				bytesPerMonoSample,
-				bytesPerStereoSample,
-				frameRate,
-				audioFormat.isBigEndian()), length);
+							  audioFormat.getSampleRate(),
+							  bitsPerMonoSample,
+							  bytesPerMonoSample,
+							  bytesPerStereoSample,
+							  frameRate,
+							  audioFormat.isBigEndian()), 
+			  length);
 		
 		this.frameRate = frameRate;
 		

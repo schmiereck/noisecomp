@@ -5,17 +5,17 @@ import java.util.Iterator;
 import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.desktop.DesktopData;
 import de.schmiereck.noiseComp.desktopController.actions.AddGeneratorButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.GroupGeneratorButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.PauseButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.PlayButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
+//import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.StopButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData;
 import de.schmiereck.noiseComp.desktopController.editModulPage.actions.CancelGroupButtonActionLogicListener;
@@ -49,6 +49,7 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.RectangleGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
@@ -79,7 +80,7 @@ extends ControllerData
 	 * 
 	 * @see #createBaseGeneratorTypes()
 	 */
-	private GeneratorTypesData generatorTypesData  = new GeneratorTypesData();
+	private GeneratorTypesData generatorTypesData;
 	
 	/**
 	 * Daten der gerade angezeigte Seite.
@@ -89,11 +90,11 @@ extends ControllerData
 	/**
 	 * Dialog to save a sound file.
 	 */
-	private DesktopPageData saveDesktopPageData;
+	//private DesktopPageData saveDesktopPageData;
 	/**
 	 * Dialog to load a sound file.
 	 */
-	private DesktopPageData loadDesktopPageData;
+	//private DesktopPageData loadDesktopPageData;
 	/**
 	 * Dialog with the main sound editing controlls.
 	 */
@@ -116,29 +117,29 @@ extends ControllerData
 	/**
 	 * Dialog: Save: 
 	 */
-	private InputlineData saveFileNameInputlineData = null;
+	//private InputlineData saveFileNameInputlineData = null;
 	/**
 	 * Dialog: Save: 
 	 */
-	private FunctionButtonData saveFileButtonData = null;
+	//private FunctionButtonData saveFileButtonData = null;
 
 	/**
 	 * Dialog: Load File: fileName-Inputline
 	 */
-	private InputlineData loadFileNameInputlineData = null;
+	//private InputlineData loadFileNameInputlineData = null;
 	/**
 	 * Dialog: Load File: Load-Button
 	 */
-	private FunctionButtonData loadFileButtonData = null;
+	//private FunctionButtonData loadFileButtonData = null;
 	/**
 	 * Dialog: Load File: Cancel-Button
 	 */
-	private FunctionButtonData loadCancelButtonData = null;
+	//private FunctionButtonData loadCancelButtonData = null;
 
 	/**
 	 * Dialog: Save File: Cancel-Button
 	 */
-	private FunctionButtonData saveCancelButtonData = null;
+	//private FunctionButtonData saveCancelButtonData = null;
 	
 	/**
 	 * The main desktop data, shared for all pages.
@@ -148,8 +149,8 @@ extends ControllerData
 	/**
 	 * List of the main generators in the project.
 	 */
-	private Generators	mainGenerators = null;
-
+	//private Generators	mainGenerators = null;
+	
 	private EditData editData = new EditData();
 	
 	/**
@@ -157,12 +158,13 @@ extends ControllerData
 	 * 
 	 * @param soundData
 	 */
-	public DesktopControllerData(SoundData soundData, Generators mainGenerators)
+	public DesktopControllerData(SoundData soundData, GeneratorTypesData generatorTypesData)
 	{
-		this.soundData = soundData;
-		this.mainGenerators = mainGenerators;
+		this.generatorTypesData  = generatorTypesData;
 		
-		this.createBaseGeneratorTypes();
+		this.soundData = soundData;
+		//this.mainGenerators = mainGenerators;
+		//this.mainModulTypeData = mainModulTypeData;
 		
 		this.desktopData = new DesktopData();
 		
@@ -170,22 +172,10 @@ extends ControllerData
 		this.selectGeneratorPageData = this.createSelectGeneratorPage(desktopData);
 		this.selectNewGeneratorPageData = this.createNewSelectGeneratorPage(desktopData);
 		this.editModulPageData = this.createEditModulPage(desktopData);
-		this.saveDesktopPageData = this.createSavePage(desktopData);
-		this.loadDesktopPageData = this.createLoadPage(desktopData);
+		//this.saveDesktopPageData = this.createSavePage(desktopData);
+		//this.loadDesktopPageData = this.createLoadPage(desktopData);
 		
 		this.activeDesktopPageData = this.mainDesktopPageData;
-	}
-
-	public void createBaseGeneratorTypes()
-	{
-		this.generatorTypesData.clear();
-		
-		this.generatorTypesData.addGeneratorTypeData(FaderGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(MixerGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(OutputGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(SinusGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(RectangleGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(CutGenerator.createGeneratorTypeData());
 	}
 
 	private MainPageData createMainPage(DesktopData desktopData)
@@ -209,7 +199,7 @@ extends ControllerData
 	{
 		return new EditModulPageData(desktopData, this, this.getFieldWidth(), this.getFieldHeight());
 	}
-
+	/*
 	private DesktopPageData createSavePage(DesktopData desktopData)
 	{
 		DesktopPageData	desktopPageData = new DesktopPageData(desktopData, this.getFieldWidth(), this.getFieldHeight());
@@ -243,7 +233,8 @@ extends ControllerData
 		
 		return desktopPageData;
 	}
-	
+	*/
+	/*
 	private DesktopPageData createLoadPage(DesktopData desktopData)
 	{
 		DesktopPageData	desktopPageData = new DesktopPageData(desktopData, this.getFieldWidth(), this.getFieldHeight());
@@ -277,7 +268,7 @@ extends ControllerData
 		
 		return desktopPageData;
 	}
-	
+	*/
 	public void setActionListeners(
 			AddGeneratorButtonActionLogicListener addGeneratorButtonActionLogicListener,
 			RemoveGeneratorButtonActionLogicListener removeGeneratorButtonActionLogicListener,
@@ -287,8 +278,8 @@ extends ControllerData
 			PauseButtonActionLogicListener pauseButtonActionLogicListener,
 			StopButtonActionLogicListener stopButtonActionLogicListener,
 			
-			ExitButtonActionLogicListener exitButtonActionLogicListener,
-			NewButtonActionLogicListener newButtonActionLogicListener,
+			//ExitButtonActionLogicListener exitButtonActionLogicListener,
+			//NewButtonActionLogicListener newButtonActionLogicListener,
 
 			ZoomInButtonActionLogicListener zoomInButtonActionLogicListener,
 			ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener,
@@ -306,13 +297,13 @@ extends ControllerData
 			SelectMainEditButtonActionLogicListener selectMainEditButtonActionLogicListener,
 			SelectRemoveButtonActionLogicListener selectRemoveButtonActionLogicListener,
 			
-			SaveButtonActionLogicListener saveButtonActionLogicListener,
-			SaveCancelButtonActionLogicListener saveCancelButtonActionLogicListener,
-			SaveFileButtonActionLogicListener saveFileButtonActionLogicListener,
+			//SaveButtonActionLogicListener saveButtonActionLogicListener,
+			//SaveCancelButtonActionLogicListener saveCancelButtonActionLogicListener,
+			//SaveFileButtonActionLogicListener saveFileButtonActionLogicListener,
 		   
-			LoadButtonActionLogicListener loadButtonActionLogicListener,
-			LoadCancelButtonActionLogicListener loadCancelButtonActionLogicListener,
-			LoadFileButtonActionLogicListener loadFileButtonActionLogicListener,
+			//LoadButtonActionLogicListener loadButtonActionLogicListener,
+			//LoadCancelButtonActionLogicListener loadCancelButtonActionLogicListener,
+			//LoadFileButtonActionLogicListener loadFileButtonActionLogicListener,
 
 			CancelGroupButtonActionLogicListener cancelGroupButtonActionLogicListener,
 			SaveGroupButtonActionLogicListener saveGroupButtonActionLogicListener,
@@ -321,27 +312,28 @@ extends ControllerData
 			)
 	{
 		this.mainDesktopPageData.setActionListeners(addGeneratorButtonActionLogicListener,
-		removeGeneratorButtonActionLogicListener,
-		groupGeneratorButtonActionLogicListener,
+													removeGeneratorButtonActionLogicListener,
+													groupGeneratorButtonActionLogicListener,
 		
-		playButtonActionLogicListener,
-		pauseButtonActionLogicListener,
-		stopButtonActionLogicListener,
+													playButtonActionLogicListener,
+													pauseButtonActionLogicListener,
+													stopButtonActionLogicListener,
+			
+													//exitButtonActionLogicListener,
+													//newButtonActionLogicListener,
 		
-		exitButtonActionLogicListener,
-		newButtonActionLogicListener,
+													zoomInButtonActionLogicListener,
+													zoomOutButtonActionLogicListener,
 		
-		zoomInButtonActionLogicListener,
-		zoomOutButtonActionLogicListener,
+													setGeneratorButtonActionLogicListener,
+													setInputButtonActionLogicListener,
+													removeInputButtonActionLogicListener,
+													newInputButtonActionLogicListener,
+													addInputButtonActionLogicListener
 		
-		setGeneratorButtonActionLogicListener,
-		setInputButtonActionLogicListener,
-		removeInputButtonActionLogicListener,
-		newInputButtonActionLogicListener,
-		addInputButtonActionLogicListener,
-		
-		saveButtonActionLogicListener,
-		loadButtonActionLogicListener);
+													//saveButtonActionLogicListener,
+													//loadButtonActionLogicListener
+													);
 		
 		this.selectGeneratorPageData.setActionListeners(selectCancelButtonActionLogicListener,
 				selectAddButtonActionLogicListener,
@@ -350,11 +342,11 @@ extends ControllerData
 				selectMainEditButtonActionLogicListener,
 				selectRemoveButtonActionLogicListener);
 		
-		this.saveCancelButtonData.addActionLogicListener(saveCancelButtonActionLogicListener);
-		this.saveFileButtonData.addActionLogicListener(saveFileButtonActionLogicListener);
+		//this.saveCancelButtonData.addActionLogicListener(saveCancelButtonActionLogicListener);
+		//this.saveFileButtonData.addActionLogicListener(saveFileButtonActionLogicListener);
 
-		this.loadCancelButtonData.addActionLogicListener(loadCancelButtonActionLogicListener);
-		this.loadFileButtonData.addActionLogicListener(loadFileButtonActionLogicListener);
+		//this.loadCancelButtonData.addActionLogicListener(loadCancelButtonActionLogicListener);
+		//this.loadFileButtonData.addActionLogicListener(loadFileButtonActionLogicListener);
 
 		this.editModulPageData.setActionListeners(cancelGroupButtonActionLogicListener, 
 				saveGroupButtonActionLogicListener,
@@ -418,19 +410,19 @@ extends ControllerData
 
 	/**
 	 * @see #saveDesktopPageData
-	 */
 	public DesktopPageData getSaveDesktopPageData()
 	{
 		return this.saveDesktopPageData;
 	}
+	 */
 
 	/**
 	 * @see #loadDesktopPageData
-	 */
 	public DesktopPageData getLoadDesktopPageData()
 	{
 		return this.loadDesktopPageData;
 	}
+	 */
 	
 	/**
 	 * @param activeDesktopPageData is the new value for attribute {@link #activeDesktopPageData} to set.
@@ -448,18 +440,18 @@ extends ControllerData
 	}
 	/**
 	 * @return the attribute {@link #saveFileNameInputlineData}.
-	 */
 	public InputlineData getSaveFileNameInputlineData()
 	{
 		return this.saveFileNameInputlineData;
 	}
+	 */
 	/**
 	 * @return the attribute {@link #loadFileNameInputlineData}.
-	 */
 	public InputlineData getLoadFileNameInputlineData()
 	{
 		return this.loadFileNameInputlineData;
 	}
+	 */
 	
 	public GeneratorTypeData searchGeneratorTypeData(String generatorTypeClassName)
 	{
@@ -493,25 +485,24 @@ extends ControllerData
 	{
 		return this.generatorTypesData;
 	}
-
+	
 	/**
 	 * @return
-	 */
 	public Generators getMainGenerators()
 	{
 		return this.mainGenerators;
 	}
+	 */
 	/**
 	 * @param mainGenerators is the new value for attribute {@link #mainGenerators} to set.
-	 */
 	public void setMainGenerators(Generators mainGenerators)
 	{
 		this.mainGenerators = mainGenerators;
 	}
+	 */
 
 	/**
 	 * 
-	 */
 	public void clearTracks()
 	{
 		this.mainDesktopPageData.clearTracks();
@@ -522,6 +513,7 @@ extends ControllerData
 		
 		this.setMainGenerators(generators);
 	}
+	 */
 	
 	private String popupRuntimeExceptionText = null;
 	

@@ -19,7 +19,8 @@ import de.schmiereck.noiseComp.PopupRuntimeException;
  * @version 22.01.2004
  */
 public abstract class Generator 
-implements GeneratorInterface
+implements GeneratorInterface,
+		   GeneratorChangeListenerInterface
 {
 	private float startTimePos = 0.0F;
 	private float endTimePos = 1.0F;
@@ -39,6 +40,8 @@ implements GeneratorInterface
 	private GeneratorTypeData generatorTypeData;
 
 	//private GeneratorBuffer	generatorBuffer = null;
+	
+	private GeneratorChangeObserver generatorChangeObserver = null;
 	
 	/**
 	 * Constructor.
@@ -68,9 +71,13 @@ implements GeneratorInterface
 	 */
 	public synchronized void setStartTimePos(float startTimePos)
 	{
+		float changedStartTimePos 	= Math.min(this.startTimePos, startTimePos);
+		float changedEndTimePos		= Math.max(this.startTimePos, startTimePos);
+		
 		this.startTimePos = startTimePos;
-		//GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
-		//generatorBuffer.setStartPosition((long)(this.startTimePos * this.getFrameRate()));
+		
+		this.generateChangedEvent(changedStartTimePos,
+								  changedEndTimePos);
 	}
 
 	/**
@@ -78,9 +85,13 @@ implements GeneratorInterface
 	 */
 	public synchronized void setEndTimePos(float endTimePos)
 	{
+		float changedStartTimePos 	= Math.min(this.endTimePos, endTimePos);
+		float changedEndTimePos		= Math.max(this.endTimePos, endTimePos);
+		
 		this.endTimePos = endTimePos;
-		//GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
-		//generatorBuffer.setEndPosition((long)(this.endTimePos * this.getFrameRate()));
+		
+		this.generateChangedEvent(changedStartTimePos,
+								  changedEndTimePos);
 	}
 
 	/**
@@ -172,9 +183,14 @@ implements GeneratorInterface
 	 * @return the new created and added {@link InputData}-Object.
 	 */
 	public InputData addInputGenerator(Generator inputGenerator, 
-			InputTypeData inputTypeData, Float inputValue, InputTypeData inputModulInputTypeData)
+									   InputTypeData inputTypeData, 
+									   Float inputValue, 
+									   InputTypeData inputModulInputTypeData)
 	{
-		InputData inputData = new InputData(inputGenerator, inputTypeData, inputModulInputTypeData);
+		InputData inputData = new InputData(this,
+											inputGenerator, 
+											inputTypeData, 
+											inputModulInputTypeData);
 		
 		inputData.setInputValue(inputValue);
 		
@@ -188,6 +204,15 @@ implements GeneratorInterface
 			this.inputs.add(inputData);
 		}
 		
+		if (inputData.getInputGenerator() != null)
+		{
+			// Der Generator trägt sich als Listener bei dem Input ein, um Änderungen mitzubekommen.
+			inputData.getInputGenerator().getGeneratorChangeObserver().registerGeneratorChangeListener(this);
+		}
+		
+		this.generateChangedEvent(this.getStartTimePos(),
+								  this.getEndTimePos());
+		
 		return inputData;
 	}
 	
@@ -195,7 +220,44 @@ implements GeneratorInterface
 	{
 		InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(inputType);
 		
-		return this.addInputGenerator(null, inputTypeData, Float.valueOf(value), null);
+		InputData inputData = this.addInputGenerator(null, inputTypeData, Float.valueOf(value), null);
+		
+		return inputData;
+	}
+
+	public InputData getInputData(int pos)
+	{
+		InputData ret;
+		
+		if (this.inputs != null)
+		{
+			ret = (InputData)this.inputs.get(pos);
+		}
+		else
+		{
+			ret = null;
+		}
+
+		return ret;
+	}
+
+	public void removeInput(InputData inputData)
+	{
+		synchronized (this)
+		{
+			if (this.inputs != null)
+			{
+				this.inputs.remove(inputData);
+				
+				if (inputData.getInputGenerator() != null)
+				{
+					//Der Generator trägt sich wieder als Listener bei dem Input aus.
+					inputData.getInputGenerator().getGeneratorChangeObserver().removeGeneratorChangeListener(this);
+				}
+				
+				this.generateChangedEvent();
+			}
+		}
 	}
 
 	/**
@@ -203,7 +265,11 @@ implements GeneratorInterface
 	 */
 	public InputData addInputValue(Float value, InputTypeData inputTypeData)
 	{
-		return this.addInputGenerator(null, inputTypeData, value, null);
+		InputData inputData = this.addInputGenerator(null, inputTypeData, value, null);
+		
+		//inputData.getInputGenerator();
+
+		return inputData;
 	}
 
 	/**
@@ -245,7 +311,6 @@ implements GeneratorInterface
 
 	/**
 	 * @see #inputs
-	 */
 	public Vector getInputs()
 	{
 		Vector ret;
@@ -263,6 +328,7 @@ implements GeneratorInterface
 		}
 		return ret;
 	}
+	*/
 	
 	/**
 	 * Searches a input by type.<br/>
@@ -279,13 +345,15 @@ implements GeneratorInterface
 		{	
 			synchronized (this.inputs)
 			{
+				int inputType = inputTypeData.getInputType();
+				
 				Iterator inputGeneratorsIterator = this.inputs.iterator();
 				
 				while (inputGeneratorsIterator.hasNext())
 				{
 					InputData inputData = (InputData)inputGeneratorsIterator.next();
 					
-					if (inputData.getInputTypeData().getInputType() == inputTypeData.getInputType())
+					if (inputData.getInputTypeData().getInputType() == inputType)
 					{
 						if (retInputData != null)
 						{
@@ -396,6 +464,9 @@ implements GeneratorInterface
 							{
 								inputGeneratorsIterator.remove();
 							}
+							
+							this.generateChangedEvent(generator.getStartTimePos(),
+													  generator.getEndTimePos());
 							break;
 						}
 					}
@@ -743,4 +814,56 @@ implements GeneratorInterface
 	//	return new GeneratorSingleBuffer();
 	//}
 	
+	/**
+	 * @return returns the {@link #generatorChangeObserver}.
+	 */
+	public GeneratorChangeObserver getGeneratorChangeObserver()
+	{
+		synchronized (this)
+		{
+			if (this.generatorChangeObserver == null)
+			{
+				this.generatorChangeObserver = new GeneratorChangeObserver();
+			}
+		}
+		
+		return this.generatorChangeObserver;
+	}
+	
+	/**
+	 * @see #generatorChangeObserver
+	 */
+	public void generateChangedEvent(float startTimePos, float endTimePos)
+	{
+		synchronized (this)
+		{
+System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: " + startTimePos + ", " + endTimePos);
+			if (this.generatorChangeObserver != null)
+			{
+				this.generatorChangeObserver.changedEvent(this, 
+														  startTimePos, endTimePos);
+			}
+		}
+	}
+	
+	/**
+	 * @see #generateChangedEvent(float, float)
+	 */
+	public void generateChangedEvent()
+	{
+		this.generateChangedEvent(this.getStartTimePos(),
+								  this.getEndTimePos());
+	}
+	
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface#notifyGeneratorChanged(de.schmiereck.noiseComp.generator.Generator, float, float)
+	 */
+	public void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos)
+	{
+		// Einer der überwachten Inputs hat sich geändert:
+
+		this.getGeneratorChangeObserver().changedEvent(this, 
+													   this.getStartTimePos() + startTimePos, 
+													   this.getStartTimePos() + endTimePos);
+	}
 }

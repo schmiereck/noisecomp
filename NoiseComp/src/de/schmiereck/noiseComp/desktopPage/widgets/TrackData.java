@@ -3,7 +3,8 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
 import de.schmiereck.noiseComp.generator.Generator;
 
 /**
- * TODO docu
+ * Ein Track ist ein Eintrag in der Liste.
+ * Verwaltet einen Generator.
  *
  * @author smk
  * @version 25.01.2004

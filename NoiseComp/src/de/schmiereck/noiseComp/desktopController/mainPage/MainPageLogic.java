@@ -63,7 +63,7 @@ EditGeneratorChangedListener
 		String name;
 		String startTime;
 		String endTime;
-		Vector inputs;
+		//Vector inputs;
 		
 		if (trackGraficData != null)
 		{
@@ -76,7 +76,7 @@ EditGeneratorChangedListener
 				generatorTypeData = generator.getGeneratorTypeData();
 				startTime = Float.toString(generator.getStartTimePos());
 				endTime = Float.toString(generator.getEndTimePos());
-				inputs = generator.getInputs();
+				//inputs = generator.getInputs();
 			}
 			else
 			{
@@ -84,7 +84,7 @@ EditGeneratorChangedListener
 				generatorTypeData = null;
 				startTime = "";
 				endTime = "";
-				inputs = null;
+				//inputs = null;
 			}
 		}
 		else
@@ -94,13 +94,13 @@ EditGeneratorChangedListener
 			name = "";
 			startTime = "";
 			endTime = "";
-			inputs = null;
+			// = null;
 		}
 		
 		this.mainPageData.getGeneratorNameInputlineData().setInputText(name);
 		this.mainPageData.getGeneratorStartTimeInputlineData().setInputText(startTime);
 		this.mainPageData.getGeneratorEndTimeInputlineData().setInputText(endTime);
-		this.mainPageData.getGeneratorInputsData().setGeneratorInputs(generator, inputs);
+		this.mainPageData.getGeneratorInputsData().setGeneratorInputs(generator);
 
 		//--------------------------------------------------
 		// Build the Generator-Names select List:
@@ -195,7 +195,7 @@ EditGeneratorChangedListener
 		this.mainPageData.getGeneratorInputTypeSelectData().clearSelectEntrys();
 		this.mainPageData.getGeneratorStartTimeInputlineData().setInputText("");
 		this.mainPageData.getGeneratorEndTimeInputlineData().setInputText("");
-		this.mainPageData.getGeneratorInputsData().setGeneratorInputs(null, null);
+		this.mainPageData.getGeneratorInputsData().setGeneratorInputs(null);
 		this.mainPageData.getGeneratorInputModulInputSelectData().clearSelectEntrys();
 		
 		this.notifyInputsChanged();
@@ -424,14 +424,18 @@ EditGeneratorChangedListener
 
 					Generator selectedGenerator = selectedTrackData.getGenerator();
 
-					selectedInputData = this.addInput(selectedGenerator, inputGenerator, inputTypeData, inputGeneratorValue, inputModulInputTypeData);
+					selectedInputData = this.addInput(selectedGenerator, 
+													  inputGenerator, 
+													  inputTypeData, 
+													  inputGeneratorValue, 
+													  inputModulInputTypeData);
 				}
 				else
 				{
 					// Update selected input:
 
 					selectedInputData.setInputGenerator(inputGenerator);
-					selectedInputData.setInputTypeData(inputTypeData);
+					//selectedInputData.setInputTypeData(inputTypeData);
 					selectedInputData.setInputValue(inputGeneratorValue);
 					selectedInputData.setInputModulInputTypeData(inputModulInputTypeData);
 				}
@@ -542,25 +546,29 @@ EditGeneratorChangedListener
 	public void triggerEditGeneratorChanged(EditData editData)
 	{
 		ModulGeneratorTypeData editModulTypeData = editData.getEditModulTypeData();
-		Generators editGenerators = editData.getEditGenerators();
 		
-		if (this.editGeneratorChangedListeners != null)
+		if (editModulTypeData != null)
 		{
-			Iterator editGeneratorChangedListenersIterator = this.editGeneratorChangedListeners.iterator();
-			
-			while (editGeneratorChangedListenersIterator.hasNext())
+			//Generators editGenerators = editModulTypeData.getGenerators();
+		
+			if (this.editGeneratorChangedListeners != null)
 			{
-				EditGeneratorChangedListener editGeneratorChangedListener = (EditGeneratorChangedListener) editGeneratorChangedListenersIterator.next();
+				Iterator editGeneratorChangedListenersIterator = this.editGeneratorChangedListeners.iterator();
 				
-				editGeneratorChangedListener.notifyEditGeneratorChanged(editModulTypeData, editGenerators);
+				while (editGeneratorChangedListenersIterator.hasNext())
+				{
+					EditGeneratorChangedListener editGeneratorChangedListener = (EditGeneratorChangedListener) editGeneratorChangedListenersIterator.next();
+					
+					editGeneratorChangedListener.notifyEditGeneratorChanged(editModulTypeData);
+				}
 			}
 		}
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopController.EditGeneratorChangedListener#notifyEditGeneratorChanged(de.schmiereck.noiseComp.generator.ModulGeneratorTypeData, de.schmiereck.noiseComp.generator.Generators)
+	 * @see de.schmiereck.noiseComp.desktopController.EditGeneratorChangedListener#notifyEditGeneratorChanged(de.schmiereck.noiseComp.generator.ModulGeneratorTypeData)
 	 */
-	public void notifyEditGeneratorChanged(ModulGeneratorTypeData editModulTypeData, Generators editGenerators)
+	public void notifyEditGeneratorChanged(ModulGeneratorTypeData editModulTypeData)
 	{
 		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
 		
@@ -641,8 +649,13 @@ EditGeneratorChangedListener
 		
 		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
 
-		Generators editGenerators = desktopControllerData.getEditData().getEditGenerators();
-
-		editGenerators.removeGenerator(selectedGenerator);
+		EditData editData = desktopControllerData.getEditData();
+		
+		ModulGeneratorTypeData editModulTypeData = editData.getEditModulTypeData();
+		
+		if (editModulTypeData != null)
+		{
+			editModulTypeData.removeGenerator(selectedGenerator);
+		}
 	}
 }
