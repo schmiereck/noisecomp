@@ -11,7 +11,7 @@ import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
  * @version 26.01.2004
  */
 public class ScrollbarData
-extends ButtonData
+extends InputWidgetData
 implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitWidgetListenerInterface
 {
 	/**

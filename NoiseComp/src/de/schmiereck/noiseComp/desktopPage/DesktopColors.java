@@ -42,6 +42,8 @@ public class DesktopColors
 
 	private Color generatorBottomLineColor;
 
+	private Color generatorLabelsBackgroundColor;
+	
 	private Color focusedInputlineColor;
 	
 	/**
@@ -84,14 +86,16 @@ public class DesktopColors
 		//this.sampleColor = new Color(0x00, 0x00, 0x00, 255/5);
 		this.sampleColor = Color.BLACK; 
 		this.timestepColor = new Color(0xF0, 0xFF, 0xF0);
-		this.activeGeneratorBackgroundColor 	= new Color(0xFF, 0xFF, 0xFF);
-		this.inactiveGeneratorBackgroundColor	= new Color(0xDF, 0xFF, 0xDF);
-		this.selectedGeneratorSelectorColor	= new Color(0x00, 0x00, 0xFF);
-		this.activeInputlineColor	= new Color(0xEF, 0xEF, 0xEF);
-		this.focusedInputlineColor	= new Color(0xFF, 0xFF, 0xFF);
-		this.inactiveInputlineColor	= new Color(0xFF, 0xFF, 0x2E);
-		this.generatorsBackgroundColor = new Color(0xAA, 0xE0, 0xFD);
+		//this.generatorsBackgroundColor = new Color(0xD4, 0xE0, 0xFF);
+		this.generatorsBackgroundColor = new Color(255, 186, 127);
+		this.generatorLabelsBackgroundColor = new Color(0xD8, 0xD0, 0xD0);
 		this.generatorBottomLineColor = new Color(0x1B, 0x12, 0xB4);
+		this.activeGeneratorBackgroundColor 	= new Color(0xDF, 0xFF, 0xDF);
+		this.inactiveGeneratorBackgroundColor	= new Color(0xFF, 0xFF, 0xFF);
+		this.selectedGeneratorSelectorColor	= new Color(0x00, 0x00, 0xFF);
+		this.activeInputlineColor	= new Color(0xE5, 0xEF, 0x4C);
+		this.focusedInputlineColor	= new Color(0xEF, 0xFF, 0xD0);
+		this.inactiveInputlineColor	= new Color(0xFF, 0xFF, 0x2E);
 	}
 
 	/**
@@ -128,6 +132,13 @@ public class DesktopColors
 	public Color getGeneratorsBackgroundColor()
 	{
 		return this.generatorsBackgroundColor;
+	}
+	/**
+	 * @return
+	 */
+	public Color getGeneratorLabelsBackgroundColor()
+	{
+		return this.generatorLabelsBackgroundColor;
 	}
 	/**
 	 * @return the attribute {@link #inactiveButtonBorderColor}.
@@ -207,4 +218,5 @@ public class DesktopColors
 	{
 		return this.focusedInputlineColor;
 	}
+
 }

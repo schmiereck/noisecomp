@@ -3,7 +3,8 @@ package de.schmiereck.noiseComp.desktopPage;
 import java.util.Iterator;
 import java.util.Vector;
 
-import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktop.DesktopData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 
@@ -22,6 +23,8 @@ import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
  */
 public class DesktopPageData
 {
+	private DesktopData desktopData;
+	
 	/**
 	 * X-Größe des Desktops.
 	 * @see #desktopSizeY
@@ -33,18 +36,6 @@ public class DesktopPageData
 	 * @see #desktopSizeX
 	 */
 	private int desktopSizeY;
-	
-	/**
-	 * X-Position des Mauszeigers.
-	 * @see #pointerPosY
-	 */
-	private int pointerPosX = 0;
-
-	/**
-	 * Y-Position des Mauszeigers.
-	 * @see #pointerPosX
-	 */
-	private int pointerPosY = 0;
 
 	/**
 	 * List of {@link WidgetData}-Objects.
@@ -70,7 +61,7 @@ public class DesktopPageData
 	 * Wenn ein Button angeklickt wurde ist steht hier welcher das war,<br/>
 	 * ansonsten ist der Wert null.
 	 */
-	private ButtonData pressedButtonData = null;
+	private InputWidgetData pressedButtonData = null;
 	
 	/**
 	 * Wenn ein Button mit der Maus überfahren wird, nachdem er angeklickt wurde,
@@ -79,7 +70,7 @@ public class DesktopPageData
 	 * 
 	 * @see #pressedButtonData
 	 */
-	private ButtonData activeButtonData = null;
+	private InputWidgetData activeButtonData = null;
 	
 	/**
 	 * Wenn eine Scrollbar angeklickt wurde ist steht hier welche das war,<br/>
@@ -105,8 +96,9 @@ public class DesktopPageData
 	 * @see #desktopSizeX
 	 * @see #desktopSizeY
 	 */
-	public DesktopPageData(int desktopSizeX, int desktopSizeY)
+	public DesktopPageData(DesktopData desktopData, int desktopSizeX, int desktopSizeY)
 	{
+		this.desktopData = desktopData;
 		this.desktopSizeX = desktopSizeX;
 		this.desktopSizeY = desktopSizeY;
 	}
@@ -125,28 +117,29 @@ public class DesktopPageData
 	{
 		return this.desktopSizeY;
 	}
-	/**
+	/*
 	 * @see #pointerPosX
 	 * @see #pointerPosY
-	 */
+	 *
 	public void setPointerPos(int posX, int posY)
 	{
 		this.pointerPosX = posX;
 		this.pointerPosY = posY;
 	}
+	*/
 	/**
-	 * @return the attribute {@link #pointerPosX}.
+	 * @return the attribute {@link #desktopData}.
 	 */
 	public int getPointerPosX()
 	{
-		return this.pointerPosX;
+		return this.desktopData.getPointerPosX();
 	}
 	/**
-	 * @return the attribute {@link #pointerPosY}.
+	 * @return the attribute {@link #desktopData}.
 	 */
 	public int getPointerPosY()
 	{
-		return this.pointerPosY;
+		return this.desktopData.getPointerPosY();
 	}
 	
 	/**
@@ -192,7 +185,7 @@ public class DesktopPageData
 	/**
 	 * @see #pressedButtonData
 	 */
-	public ButtonData getPressedButtonData()
+	public InputWidgetData getPressedButtonData()
 	{
 		return this.pressedButtonData;
 	}
@@ -200,7 +193,7 @@ public class DesktopPageData
 	/**
 	 * @see #activeButtonData
 	 */
-	public void setActiveButtonData(ButtonData buttonData)
+	public void setActiveButtonData(InputWidgetData buttonData)
 	{
 		this.activeButtonData = buttonData;
 	}
@@ -208,7 +201,7 @@ public class DesktopPageData
 	/**
 	 * @see #activeButtonData
 	 */
-	public ButtonData getActiveButtonData()
+	public InputWidgetData getActiveButtonData()
 	{
 		return this.activeButtonData;
 	}
@@ -216,9 +209,42 @@ public class DesktopPageData
 	/**
 	 * @see #focusedWidgetData
 	 */
-	public void setFocusedWidgetData(WidgetData widgetData)
+	public void setFocusedWidgetData(WidgetData focusedWidgetData)
 	{
-		this.focusedWidgetData = widgetData;
+		//this.focusedWidgetData = focusedWidgetData;
+		boolean changed;
+		if (this.focusedWidgetData != focusedWidgetData)
+		{
+			changed = true;
+		}
+		else
+		{
+			changed = false;
+		}
+		
+		if (changed == true)
+		{	
+			if (this.focusedWidgetData != null)
+			{
+				if (this.focusedWidgetData instanceof FocusedWidgetListenerInterface)
+				{
+					((FocusedWidgetListenerInterface)this.focusedWidgetData).notifyDefocusedWidget(this.focusedWidgetData);
+				}
+			}
+		}
+		
+		this.focusedWidgetData = focusedWidgetData;
+		
+		if (focusedWidgetData != null)
+		{
+			if (changed == true)
+			{	
+				if (focusedWidgetData instanceof FocusedWidgetListenerInterface)
+				{
+					((FocusedWidgetListenerInterface)focusedWidgetData).notifyFocusedWidget(focusedWidgetData);
+				}
+			}
+		}
 	}
 	
 	/**
@@ -328,5 +354,128 @@ public class DesktopPageData
 	public void setSelectedWidgetData(WidgetData selectedWidgetData)
 	{
 		this.selectedWidgetData = selectedWidgetData;
+	}
+
+	/**
+	 * @param dir
+	 */
+	public void focusWalk(int dir)
+	{
+		if (this.focusedWidgetData == null)
+		{
+			this.setFocusToFirstWidget();
+		}
+		else
+		{
+			boolean foundFocusedWidget = false;
+			WidgetData prevAcceptWidgetData = null;
+			WidgetData nextAcceptWidgetData = null;
+			Iterator widgetsIterator = this.widgets.iterator();
+			
+			while (widgetsIterator.hasNext())
+			{
+				WidgetData widgetData = (WidgetData)widgetsIterator.next();
+
+				// Is this the actual focused widget ?
+				if (this.focusedWidgetData == widgetData)
+				{
+					foundFocusedWidget = true;
+				}
+				else
+				{
+					if (foundFocusedWidget == true)
+					{
+						if (widgetData.getAcceptFocus() == true)
+						{
+							nextAcceptWidgetData = widgetData;
+							break;
+						}
+					}
+					else
+					{
+						if (widgetData.getAcceptFocus() == true)
+						{
+							prevAcceptWidgetData = widgetData;
+						}
+					}
+				}
+			}
+
+			// Search next widget after actual ?
+			if (dir == 1)
+			{
+				if (nextAcceptWidgetData != null)
+				{	
+					this.setFocusedWidgetData(nextAcceptWidgetData);
+				}
+				else
+				{
+					if (prevAcceptWidgetData != null)
+					{	
+						this.setFocusedWidgetData(prevAcceptWidgetData);
+					}
+				}
+			}
+			else
+			{
+				// Search previouse widget bevor actual ?
+				
+				if (prevAcceptWidgetData != null)
+				{	
+					this.setFocusedWidgetData(prevAcceptWidgetData);
+				}
+				else
+				{
+					if (nextAcceptWidgetData != null)
+					{	
+						this.setFocusedWidgetData(nextAcceptWidgetData);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void setFocusToFirstWidget()
+	{
+		Iterator widgetsIterator = this.widgets.iterator();
+		
+		while (widgetsIterator.hasNext())
+		{
+			WidgetData widgetData = (WidgetData)widgetsIterator.next();
+			
+			if (widgetData.getAcceptFocus() == true)
+			{
+				this.setFocusedWidgetData(widgetData);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void submitPage()
+	{
+		if (this.focusedWidgetData != null)
+		{
+			/*
+			if (this.focusedWidgetData instanceof FunctionButtonData)
+			{
+				FunctionButtonData functionButtonData = (FunctionButtonData)this.focusedWidgetData;
+				
+				if (functionButtonData.getButtonActionLogicListener() != null)
+				{
+					functionButtonData.getButtonActionLogicListener().notifyButtonReleased(functionButtonData);
+				}
+			}
+			*/
+			if (this.focusedWidgetData instanceof SubmitWidgetListenerInterface)
+			{
+				((SubmitWidgetListenerInterface)this.focusedWidgetData).notifySubmit();
+			}
+		}
 	}
 }

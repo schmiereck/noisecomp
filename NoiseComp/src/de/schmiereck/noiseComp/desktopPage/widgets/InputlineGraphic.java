@@ -27,7 +27,6 @@ public class InputlineGraphic
 									 DesktopColors desktopColors,
 									 InputlineData inputlineData, boolean active, boolean focused)
 	{
-		String inputText = inputlineData.getInputText();
 		int posX = inputlineData.getPosX();
 		int posY = inputlineData.getPosY();
 		int sizeX = inputlineData.getSizeX();
@@ -57,29 +56,33 @@ public class InputlineGraphic
 		
 		screenGrafic.setFont(g, "Dialog", Font.PLAIN, sizeY - 4);
 		
-		int stringWidth;
-		
-		if (inputText != null)
-		{
-			stringWidth = screenGrafic.calcStringWidth(g, inputText);
-			
-			screenGrafic.drawString(g, posX, 
-					posY + (sizeY / 2) + 
-					(screenGrafic.calcFontAscent(g) / 2), 
-					inputText);
-		}
-
 		int inputSizeX;
 		
-		if (inputText != null)
-		{	
-			inputSizeX = screenGrafic.calcStringWidth(g, inputText.substring(0, inputlineData.getInputPos()));
-		}
-		else
+		synchronized (inputlineData)
 		{
-			inputSizeX = 0;
+			String inputText = inputlineData.getInputText();
+			
+			if (inputText != null)
+			{
+				//stringWidth = screenGrafic.calcStringWidth(g, inputText);
+				
+				screenGrafic.drawString(g, posX, 
+						posY + (sizeY / 2) + 
+						(screenGrafic.calcFontAscent(g) / 2), 
+						inputText);
+			}
+	
+			if (inputText != null)
+			{	
+				String leftInputText = inputText.substring(0, inputlineData.getInputPos());
+				
+				inputSizeX = screenGrafic.calcStringWidth(g, leftInputText);
+			}
+			else
+			{
+				inputSizeX = 0;
+			}
 		}
-		
 		screenGrafic.drawLine(g, posX + inputSizeX, posY, 0, sizeY);
 		screenGrafic.drawLine(g, posX + inputSizeX, posY, 3, 0);
 		screenGrafic.drawLine(g, posX + inputSizeX, posY + sizeY, 3, 0);

@@ -11,7 +11,8 @@ import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphic;
 
 /**
- * TODO docu
+ * Manages the full screen grafic of the desktop and calls the 
+ * nesesarry functions to draw grafic reflecting the actual application state. 
  *
  * @author smk
  * @version 08.01.2004
@@ -51,6 +52,12 @@ extends MultiBufferFullScreenGraphic
 		this.desktopPageGraphic.drawPointer(g, this, desktopPageData);
 	}
 
+	/**
+	 * Draws the frames per second informations of the graphic and calculating threads.
+	 * 
+	 * @param g
+	 * @param controllerData
+	 */
 	private void drawFPSInfos(Graphics g, ControllerData controllerData)
 	{
 		g.setColor(Color.DARK_GRAY);

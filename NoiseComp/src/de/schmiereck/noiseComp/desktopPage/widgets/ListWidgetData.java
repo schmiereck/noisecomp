@@ -28,7 +28,7 @@ extends WidgetData
 						  int listEntryHeight,
 						  ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
 	{
-		super(posX, posY, sizeX, sizeY);
+		super(posX, posY, sizeX, sizeY, true);
 
 		this.listEntryHeight = listEntryHeight;
 		this.verticalScrollbarData = verticalScrollbarData;

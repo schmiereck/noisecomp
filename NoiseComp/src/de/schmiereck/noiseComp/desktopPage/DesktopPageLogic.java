@@ -2,9 +2,7 @@ package de.schmiereck.noiseComp.desktopPage;
 
 import java.util.Iterator;
 
-import com.sun.corba.se.impl.interceptors.PINoOpHandlerImpl;
-
-import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
@@ -34,7 +32,7 @@ public class DesktopPageLogic
 	public static void calcWidgets(DesktopPageData desktopPageData)
 	{
 		WidgetData hitWidgetData = null;
-		ButtonData hitButtonData = null;
+		InputWidgetData hitButtonData = null;
 		//int hitScrollbarPart = 0;
 		ScrollbarData hitScrollbarData = null;
 		
@@ -135,17 +133,22 @@ public class DesktopPageLogic
 				((ClickedWidgetListenerInterface)widgetData).notifyClickedWidget(widgetData, pointerPosX, pointerPosY);
 			}
 			
-			if (widgetData instanceof FocusedWidgetListenerInterface)
-			{
-				WidgetData focusedWidgetData = desktopPageData.getFocusedWidgetData();
-				
-				if (focusedWidgetData != widgetData)
-				{	
+			WidgetData focusedWidgetData = desktopPageData.getFocusedWidgetData();
+			
+			if (focusedWidgetData != widgetData)
+			{	
+				if (focusedWidgetData instanceof FocusedWidgetListenerInterface)
+				{
 					if (focusedWidgetData != null)
 					{	
 						((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
 					}
-					desktopPageData.setFocusedWidgetData(widgetData);
+				}
+				
+				desktopPageData.setFocusedWidgetData(widgetData);
+				
+				if (widgetData instanceof FocusedWidgetListenerInterface)
+				{
 					((FocusedWidgetListenerInterface)widgetData).notifyFocusedWidget(widgetData);
 				}
 			}
@@ -177,7 +180,7 @@ public class DesktopPageLogic
 	 */
 	public static void pointerReleased(DesktopPageData desktopPageData, ButtonPressedCallbackInterface buttonPressedCallback)
 	{
-		ButtonData pressedButtonData = desktopPageData.getPressedButtonData();
+		InputWidgetData pressedButtonData = desktopPageData.getPressedButtonData();
 		
 		desktopPageData.setPointerPressed(false);
 		
@@ -187,6 +190,11 @@ public class DesktopPageLogic
 			if (pressedButtonData == desktopPageData.getActiveWidgetData())
 			{	
 				buttonPressedCallback.buttonPressed(pressedButtonData);
+				
+				if (pressedButtonData.getButtonActionLogicListener() != null)
+				{
+					pressedButtonData.getButtonActionLogicListener().notifyButtonReleased(pressedButtonData);
+				}
 			}
 		}
 		

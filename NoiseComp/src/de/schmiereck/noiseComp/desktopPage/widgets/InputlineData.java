@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface;
+import de.schmiereck.noiseComp.desktopPage.SubmitWidgetListenerInterface;
 
 /**
  * TODO docu
@@ -9,11 +10,17 @@ import de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface;
  * @version 07.02.2004
  */
 public class InputlineData
-extends ButtonData
-implements FocusedWidgetListenerInterface
+extends InputWidgetData
+implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 {
 	private String inputText = null;
 	private int inputPos = 0;
+	
+	/**
+	 * Default Button, if the widget is submited.<br/>
+	 * Normaly a {@link FunctionButtonData}-Object who perform the submit.
+	 */
+	private SubmitWidgetListenerInterface defaultSubmitWidgetInterface = null;
 	
 	/**
 	 * Constructor.
@@ -23,17 +30,36 @@ implements FocusedWidgetListenerInterface
 	{
 		super(name, posX, posY, sizeX, sizeY);
 	}
+	
 	/**
 	 * @return the attribute {@link #inputText}.
 	 */
-	public String getInputText()
+	public synchronized String getInputText()
 	{
-		return this.inputText;
+		String ret;
+		
+		if (this.inputText != null)
+		{
+			if (this.inputText.length() > 0)
+			{
+				ret = this.inputText;
+			}
+			else
+			{
+				ret = null;
+			}
+		}
+		else
+		{
+			ret = null;
+		}
+
+		return ret;
 	}
 	/**
 	 * @see #inputText
 	 */
-	public void setInputText(String inputText)
+	public synchronized void setInputText(String inputText)
 	{
 		this.inputText = inputText;
 
@@ -71,14 +97,14 @@ implements FocusedWidgetListenerInterface
 	/**
 	 * @return the attribute {@link #inputPos}.
 	 */
-	public int getInputPos()
+	public synchronized int getInputPos()
 	{
 		return this.inputPos;
 	}
 	/**
 	 * @param dir
 	 */
-	public void moveCursor(int dir)
+	public synchronized void moveCursor(int dir)
 	{
 		if (dir == -1)
 		{
@@ -106,10 +132,34 @@ implements FocusedWidgetListenerInterface
 			}
 		}
 	}
+
+	/**
+	 * @param dir	0:	begin<br/>
+	 * 				1:	end
+	 */
+	public synchronized void changeCursorPos(int dir)
+	{
+		if (dir == 0)
+		{	
+			this.inputPos = 0;
+		}
+		else
+		{
+			if (this.inputText != null)
+			{
+				this.inputPos = this.inputText.length();
+			}
+			else
+			{
+				this.inputPos = 0;
+			}
+		}
+	}
+
 	/**
 	 * @param dir
 	 */
-	public void deleteChar(int dir)
+	public synchronized void deleteChar(int dir)
 	{
 		if (this.inputText != null)
 		{
@@ -136,7 +186,7 @@ implements FocusedWidgetListenerInterface
 	/**
 	 * @param c
 	 */
-	public void inputChar(char c)
+	public synchronized void inputChar(char c)
 	{
 		if (this.inputText == null)
 		{
@@ -148,5 +198,24 @@ implements FocusedWidgetListenerInterface
 		}
 
 		this.moveCursor(1);
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.SubmitWidgetListenerInterface#notifySubmit()
+	 */
+	public void notifySubmit()
+	{
+		if (this.defaultSubmitWidgetInterface != null)
+		{	
+			this.defaultSubmitWidgetInterface.notifySubmit();
+		}
+	}
+	
+	/**
+	 * @param defaultSubmitWidgetInterface is the new value for attribute {@link #defaultSubmitWidgetInterface} to set.
+	 */
+	public void setDefaultSubmitWidgetInterface(SubmitWidgetListenerInterface defaultSubmitWidgetInterface)
+	{
+		this.defaultSubmitWidgetInterface = defaultSubmitWidgetInterface;
 	}
 }

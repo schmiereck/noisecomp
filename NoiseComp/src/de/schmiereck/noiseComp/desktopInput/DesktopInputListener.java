@@ -137,6 +137,26 @@ implements GraficInputListener
 					this.gameControllerLogic.doMoveCursor(1);
 					break;
 				} 
+			case KeyEvent.VK_UP:	// UP
+				{
+					this.gameControllerLogic.doScrollCursor(-1);
+					break;
+				} 
+			case KeyEvent.VK_DOWN:	// DOWN
+				{
+					this.gameControllerLogic.doScrollCursor(1);
+					break;
+				} 
+			case KeyEvent.VK_HOME:	// HOME, POS1
+				{
+					this.gameControllerLogic.doChangeCursorPos(0);
+					break;
+				} 
+			case KeyEvent.VK_END:	// END
+				{
+					this.gameControllerLogic.doChangeCursorPos(1);
+					break;
+				} 
 			case KeyEvent.VK_DELETE:	// DELETE
 				{
 					this.gameControllerLogic.doDelete(1);
@@ -147,7 +167,24 @@ implements GraficInputListener
 					this.gameControllerLogic.doDelete(-1);
 					break;
 				} 
-		}
+			case KeyEvent.VK_TAB:	// TAB
+				{
+					if ((keyEvent.getModifiersEx() & KeyEvent.SHIFT_DOWN_MASK) == KeyEvent.SHIFT_DOWN_MASK)
+					{
+						this.gameControllerLogic.doFocusWalk(-1);
+					}
+					else
+					{
+						this.gameControllerLogic.doFocusWalk(1);
+					}
+					break;
+				} 
+			case KeyEvent.VK_ENTER:	// ENTER
+				{
+					this.gameControllerLogic.doSubmitPage();
+					break;
+				} 
+			}
 	}
 
 	/* (non-Javadoc)

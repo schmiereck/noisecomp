@@ -15,7 +15,7 @@ public abstract class Generator
 implements GeneratorInterface
 {
 	private float startTimePos = 0.0F;
-	private float endTimePos = 0.0F;
+	private float endTimePos = 1.0F;
 	
 	private float frameRate;
 	
@@ -147,7 +147,7 @@ implements GeneratorInterface
 	 * @see #inputs
 	 * @return the new created and added {@link InputData}-Object.
 	 */
-	public InputData addInputGenerator(Generator inputGenerator, int inputType)
+	public InputData addInputGenerator(Generator inputGenerator, int inputType, Float inputValue)
 	{
 		if (this.inputs == null)
 		{	
@@ -156,12 +156,38 @@ implements GeneratorInterface
 		
 		InputData inputData = new InputData(inputGenerator, inputType);
 		
+		inputData.setInputValue(inputValue);
+		
 		synchronized (this.inputs)
 		{
 			this.inputs.add(inputData);
 		}
 		
 		return inputData;
+	}
+	
+	/**
+	 * @see #addInputGenerator(Generator, int, Float)
+	 */
+	public InputData addInputGenerator(Generator inputGenerator, int inputType)
+	{
+		return this.addInputGenerator(inputGenerator, inputType, null);
+	}
+
+	/**
+	 * @see #addInputGenerator(Generator, int, Float)
+	 */
+	public InputData addInputValue(Float value, int inputType)
+	{
+		return this.addInputGenerator(null, inputType, value);
+	}
+
+	/**
+	 * @see #addInputGenerator(Generator, int, Float)
+	 */
+	public InputData addInputValue(float value, int inputType)
+	{
+		return this.addInputGenerator(null, inputType, Float.valueOf(value));
 	}
 	
 	/**
@@ -189,25 +215,37 @@ implements GeneratorInterface
 		return this.inputs;
 	}
 	
-	public Generator getInputByType(int inputType)
+	/**<
+	 * Searches a input by type.<br/>
+	 * Throws a {@link RuntimeException} if there is more than one input of this type.
+	 * 
+	 * @param inputType
+	 * @return
+	 */
+	public InputData searchInputByType(int inputType)
 	{
-		Generator generator = null;
+		InputData retInputData = null;
 		
-		Iterator inputGeneratorsIterator = this.inputs.iterator();
-		
-		while (inputGeneratorsIterator.hasNext())
-		{
-			InputData inputData = (InputData)inputGeneratorsIterator.next();
+		if (this.inputs != null)
+		{	
+			Iterator inputGeneratorsIterator = this.inputs.iterator();
 			
-			if (generator != null)
+			while (inputGeneratorsIterator.hasNext())
 			{
-				throw new RuntimeException("found more than one input by type " + inputType);
+				InputData inputData = (InputData)inputGeneratorsIterator.next();
+				
+				if (inputData.getInputType() == inputType)
+				{
+					if (retInputData != null)
+					{
+						throw new RuntimeException("found more than one input by type " + inputType);
+					}
+					
+					retInputData = inputData;
+				}
 			}
-			
-			generator = inputData.getInputGenerator();
 		}
-		
-		return generator;
+		return retInputData;
 	}
 	
 	/**
@@ -264,4 +302,14 @@ implements GeneratorInterface
 	{
 		this.name = name;
 	}
+
+	/**
+	 * @return a scale factor for drawing the samples.
+	 * 			Should be a factor that normalize all samples of the generator between -1.0 and +1.0.
+	 */
+	public float getGeneratorSampleDrawScale()
+	{
+		return 1.0F;
+	}
+
 }

@@ -9,6 +9,17 @@ import javax.sound.sampled.SourceDataLine;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.DesktopGraphic;
+import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SelectCancelButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SetGeneratorButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SetInputButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.Runner;
@@ -53,15 +64,47 @@ public class Main
 
 		DesktopInputListener inputListener = new DesktopInputListener();
 		
-		DesktopControllerLogic gameControllerLogic = new DesktopControllerLogic(controllerData, inputListener, waiter, playerName);
+		DesktopControllerLogic controllerLogic = new DesktopControllerLogic(controllerData, inputListener, waiter, playerName);
 		
 		inputListener.setGraphic(multiBufferGraphic);
-		inputListener.setGameControllerLogic(gameControllerLogic);
+		inputListener.setGameControllerLogic(controllerLogic);
+		
+		ExitButtonActionLogicListener exitButtonActionLogicListener = new ExitButtonActionLogicListener(controllerLogic);
+		NewButtonActionLogicListener newButtonActionLogicListener = new NewButtonActionLogicListener(controllerLogic, controllerData);
+
+		SetGeneratorButtonActionLogicListener setGeneratorButtonActionLogicListener = new SetGeneratorButtonActionLogicListener(controllerLogic, controllerData);
+		SetInputButtonActionLogicListener setInputButtonActionLogicListener = new SetInputButtonActionLogicListener(controllerLogic, controllerData);
+		
+		SelectCancelButtonActionLogicListener selectCancelButtonActionLogicListener = new SelectCancelButtonActionLogicListener(controllerLogic, controllerData);
+		
+		SaveButtonActionLogicListener saveButtonActionLogicListener = new SaveButtonActionLogicListener(controllerLogic, controllerData);
+		SaveCancelButtonActionLogicListener saveCancelButtonActionLogicListener = new SaveCancelButtonActionLogicListener(controllerLogic, controllerData);
+		SaveFileButtonActionLogicListener saveFileButtonActionLogicListener = new SaveFileButtonActionLogicListener(controllerLogic, controllerData);
+		
+		LoadButtonActionLogicListener loadButtonActionLogicListener = new LoadButtonActionLogicListener(controllerLogic, controllerData);
+		LoadCancelButtonActionLogicListener loadCancelButtonActionLogicListener = new LoadCancelButtonActionLogicListener(controllerLogic, controllerData);
+		LoadFileButtonActionLogicListener loadFileButtonActionLogicListener = new LoadFileButtonActionLogicListener(controllerLogic, controllerData);
+		
+		controllerData.setActionListeners(exitButtonActionLogicListener,
+										  newButtonActionLogicListener,
+				
+				setGeneratorButtonActionLogicListener,
+				setInputButtonActionLogicListener,
+				
+				selectCancelButtonActionLogicListener,
+										  
+				saveButtonActionLogicListener,
+				saveCancelButtonActionLogicListener,
+				saveFileButtonActionLogicListener,
+										  
+				loadButtonActionLogicListener,
+				loadCancelButtonActionLogicListener,
+				loadFileButtonActionLogicListener);
 		
 		//------------------------------------
 		// run:
 		
-		Runner.run(controllerData, gameControllerLogic, 
+		Runner.run(controllerData, controllerLogic, 
 				multiBufferGraphic, inputListener, 
 				waiter, 24, 8,
 				false, useFullScreen,

@@ -33,7 +33,7 @@ extends AudioInputStream
 	/**
 	 * Wenn != null, wird dieser Buffer gerade abgespielt.
 	 */
-	private SoundBuffer playingGeneratorBuffer;
+	private SoundBuffer playingGeneratorBuffer = null;
 	
 	/**
 	 * Wenn != null, sind hier bereits generierte daten enthalten, die
@@ -56,6 +56,11 @@ extends AudioInputStream
 	private int bufferSize;
 	
 	private GeneratorInterface soundGenerator;
+	
+	/**
+	 * A try to prevent for: see: isPollingExceptionPoint
+	 */
+	private boolean isPolling = false;
 	
 	/**
 	 * Constructor.
@@ -88,27 +93,36 @@ extends AudioInputStream
 			throw new IOException("length must be an integer multiple of frame size");
 		}
 
+		int copyiedBytes;
+		
 		synchronized (this)
 		{
-			if (this.playingGeneratorBuffer.getIsBufferIsEmpty())
-			{
-				if (this.waitingGeneratorBuffer == null)
+			if (this.isPolling == true)
+			{	
+				if (this.playingGeneratorBuffer.getIsBufferIsEmpty())
 				{
-					throw new IOException("waiting buffer is empty (maybe you should increase the Scheduler updates ?)");
+					if (this.waitingGeneratorBuffer == null)
+					{
+						// isPollingExceptionPoint
+						throw new IOException("waiting buffer is empty (maybe you should increase the Scheduler updates ?)");
+					}
+					
+					// Der alte Playbuffer ist leer, muss neu generiert werden.
+					this.generatingGeneratorBuffer = this.playingGeneratorBuffer;
+					
+					// der aktuellen wartebuffer wird jetzt abgespielt.
+					this.playingGeneratorBuffer = this.waitingGeneratorBuffer;
+					
+					// nichts wartet mehr.
+					this.waitingGeneratorBuffer = null;
 				}
-				
-				// Der alte playbuffer ist leer, muss neu generiert werden.
-				this.generatingGeneratorBuffer = this.playingGeneratorBuffer;
-				
-				// der aktuellen wartebuffer wird jetzt abgespielt.
-				this.playingGeneratorBuffer = this.waitingGeneratorBuffer;
-				
-				// nichts wartet mehr.
-				this.waitingGeneratorBuffer = null;
+				copyiedBytes = this.playingGeneratorBuffer.copyBytes(abData, nOffset, nLength);
+			}
+			else
+			{
+				copyiedBytes = 0;
 			}
 		}
-		
-		int copyiedBytes = this.playingGeneratorBuffer.copyBytes(abData, nOffset, nLength);
 		
 		return copyiedBytes;
 	}
@@ -153,6 +167,8 @@ extends AudioInputStream
 					this.generatingGeneratorBuffer = null;
 				}
 			}
+			
+			this.isPolling = true;
 		}
 	}
 	
@@ -201,9 +217,14 @@ extends AudioInputStream
 	{
 		synchronized (this)
 		{
+			this.isPolling = false;
+			
 			this.actualFrame = 0;
 		
-			this.playingGeneratorBuffer.setBufferToEmpty();
+			if (this.playingGeneratorBuffer != null)
+			{	
+				this.playingGeneratorBuffer.setBufferToEmpty();
+			}
 			
 			this.waitingGeneratorBuffer = null;
 		

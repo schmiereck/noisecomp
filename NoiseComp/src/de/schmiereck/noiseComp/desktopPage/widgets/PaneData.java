@@ -33,7 +33,7 @@ extends WidgetData
 	 */
 	public PaneData(int posX, int posY, int sizeX, int sizeY)
 	{
-		super(posX, posY, sizeX, sizeY);
+		super(posX, posY, sizeX, sizeY, false);
 
 		for (int pos = 0; pos < PaneData.STARS_COUNT; pos++)
 		{

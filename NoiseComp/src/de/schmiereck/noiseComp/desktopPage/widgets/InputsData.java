@@ -6,6 +6,9 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
+import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.InputData;
 
 /**
@@ -18,6 +21,8 @@ public class InputsData
 extends ListWidgetData
 implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitWidgetListenerInterface
 {
+	private GeneratorTypesData generatorTypesData;
+	
 	private Vector inputs = null;
 
 	private ListWidgetGraphic listWidgetGraphic = null;
@@ -25,7 +30,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	private InputData	activeInputData = null;
 
 	private InputData selectedInputData = null;
-
+	private Generator selectedGenerator = null;
+	
 	private GeneratorInputSelectedListenerInterface generatorInputSelectedListener;
 
 	/**
@@ -37,20 +43,26 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @param sizeY
 	 */
 	public InputsData(int posX, int posY, int sizeX, int sizeY,
-					  ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
+					  ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
+					  GeneratorTypesData generatorTypesData)
 	{
 		super(posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
+		
+		this.generatorTypesData = generatorTypesData;
 
 		// Momentane Anzahl Inputs zu...
 		// ...maximal mögliche Anzahl angezeigter Inputs.
 		this.setVerticalScrollbarRange((float)this.getSizeY() / (float)this.getListEntryHeight());
 	}
-	
+
 	/**
+	 * @see #selectedGenerator
 	 * @see #inputs
 	 */
-	public void setInputs(Vector inputs)
+	public void setGeneratorInputs(Generator selectedGenerator, Vector inputs)
 	{
+		this.selectedGenerator = selectedGenerator;
+		
 		if (this.inputs != inputs)
 		{	
 			this.deselectInput();
@@ -59,6 +71,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		}
 	}
 
+	
 	/**
 	 * @param pos
 	 * @return
@@ -177,10 +190,26 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		
 		if (this.generatorInputSelectedListener != null)
 		{
-			this.generatorInputSelectedListener.notifyGeneratorInputSelected(this.selectedInputData);
+			this.generatorInputSelectedListener.notifyGeneratorInputSelected(this, this.selectedInputData);
 		}
 	}
 
+	/**
+	 * @return the attribute {@link #selectedInputData}.
+	 */
+	public InputData getSelectedInputData()
+	{
+		return this.selectedInputData;
+	}
+
+	/**
+	 * @return
+	 */
+	public Generator getSelectedGenerator()
+	{
+		return this.selectedGenerator;
+	}
+	
 	public void deselectInput()
 	{
 		InputData inputData = this.selectedInputData;
@@ -191,7 +220,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		this.activeInputData = null;
 		if (this.generatorInputSelectedListener != null)
 		{
-			this.generatorInputSelectedListener.notifyGeneratorInputDeselected(inputData);
+			this.generatorInputSelectedListener.notifyGeneratorInputDeselected(this, inputData);
 		}
 	}
 
@@ -229,13 +258,6 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	{
 		this.generatorInputSelectedListener = generatorInputSelectedListener;
 	}
-	/**
-	 * @return the attribute {@link #selectedInputData}.
-	 */
-	public InputData getSelectedInputData()
-	{
-		return this.selectedInputData;
-	}
 
 	/**
 	 * 
@@ -267,4 +289,14 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		// TODO Auto-generated method stub
 		
 	}
+
+	/**
+	 * @param generator
+	 * @return
+	 */
+	public GeneratorTypeData getGeneratorTypeData(Generator generator)
+	{
+		return this.generatorTypesData.searchGeneratorTypeData(generator);
+	}
+
 }

@@ -64,7 +64,18 @@ public class FunctionButtonGraphic
 
 		g.setColor(Color.BLACK);
 		
-		screenGrafic.setFont(g, "Dialog", Font.PLAIN, sizeY - 4);
+		int fontStyle;
+		
+		if (buttonData.getHaveFocus() == true)
+		{
+			fontStyle = Font.BOLD;
+		}
+		else
+		{
+			fontStyle = Font.PLAIN;
+		}
+
+		screenGrafic.setFont(g, "Dialog", fontStyle, sizeY - 4);
 		
 		int stringWidth = screenGrafic.calcStringWidth(g, labelText);
 		

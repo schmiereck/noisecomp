@@ -12,6 +12,8 @@ public class WidgetData
 	private int posY;
 	private int sizeX;
 	private int sizeY;
+	private boolean acceptFocus;
+	private boolean haveFocus = false;
 	
 	/**
 	 * Constructor.
@@ -21,13 +23,14 @@ public class WidgetData
 	 * @param sizeX
 	 * @param sizeY
 	 */
-	public WidgetData(int posX, int posY, int sizeX, int sizeY)
+	public WidgetData(int posX, int posY, int sizeX, int sizeY, boolean acceptFocus)
 	{
 		super();
 		this.posX = posX;
 		this.posY = posY;
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
+		this.acceptFocus = acceptFocus;
 	}
 	/**
 	 * @return the attribute {@link #sizeY}.
@@ -56,5 +59,33 @@ public class WidgetData
 	public int getSizeX()
 	{
 		return this.sizeX;
+	}
+	/**
+	 * @see #acceptFocus
+	 */
+	public boolean getAcceptFocus()
+	{
+		return this.acceptFocus;
+	}
+	/**
+	 * @see #acceptFocus
+	 */
+	public void setAcceptFocus(boolean acceptFocus)
+	{
+		this.acceptFocus = acceptFocus;
+	}
+	/**
+	 * @return the attribute {@link #haveFocus}.
+	 */
+	public boolean getHaveFocus()
+	{
+		return this.haveFocus;
+	}
+	/**
+	 * @param haveFocus is the new value for attribute {@link #haveFocus} to set.
+	 */
+	public void setHaveFocus(boolean haveFocus)
+	{
+		this.haveFocus = haveFocus;
 	}
 }

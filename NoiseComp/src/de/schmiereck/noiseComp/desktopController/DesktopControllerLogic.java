@@ -1,21 +1,26 @@
 package de.schmiereck.noiseComp.desktopController;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.noiseComp.desktopPage.ButtonPressedCallbackInterface;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageLogic;
-import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputsData;
+import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
+import de.schmiereck.noiseComp.desktopPage.widgets.SelectEntryData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
@@ -54,8 +59,6 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		TracksData tracksData = this.controllerData.getTracksData();
 		
 		OutputGenerator outputGenerator = this.createGenerators(tracksData, soundData, soundData.getFrameRate());
-		
-		soundData.setOutputGenerator(outputGenerator);
 		
 		this.controllerData.getTracksData().setGeneratorSelectedListener(this);
 		
@@ -150,7 +153,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	 */
 	public void movePointer(int posX, int posY)
 	{
-		this.controllerData.getActiveDesktopPageData().setPointerPos(posX, posY);
+		this.controllerData.getDesktopData().setPointerPos(posX, posY);
 	}
 
 	/**
@@ -165,9 +168,24 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	{
 		DesktopPageLogic.pointerReleased(this.controllerData.getActiveDesktopPageData(), this);
 	}
-	
-	public void buttonPressed(ButtonData pressedButtonData)
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.ButtonPressedCallbackInterface#buttonPressed(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
+	 */
+	public void buttonPressed(InputWidgetData pressedButtonData)
 	{
+		/*
+		Button b = new Button();
+		ActionListener l = new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				// TODO Auto-generated method stub
+
+			}
+		};
+		b.addActionListener(l);
+		*/
 		if (pressedButtonData != null)
 		{
 			if ("play".equals(pressedButtonData.getName()) == true)
@@ -217,11 +235,13 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 						}
 						else
 						{
+							/*
 							if ("cancel".equals(pressedButtonData.getName()) == true)
 							{
 								this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 							}
 							else
+							*/
 							{
 								if ("addSinus".equals(pressedButtonData.getName()) == true)
 								{
@@ -230,8 +250,13 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 									SoundData soundData = this.controllerData.getSoundData();
 									TracksData tracksData = this.controllerData.getTracksData();
 									
-									this.addGenerator(new SinusGenerator("sinus" + tracksData.getTracksCount(), 
-											1.0F, soundData.getFrameRate()));
+									SinusGenerator sinusGenerator = new SinusGenerator("sinus" + tracksData.getTracksCount(), 
+											soundData.getFrameRate());
+									//sinusGenerator.addInputValue(1.0F, SinusGenerator.INPUT_TYPE_FREQ);
+									
+									this.addDefaultInputs(sinusGenerator);
+									
+									this.addGenerator(sinusGenerator);
 								}
 								else
 								{
@@ -242,8 +267,12 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 										SoundData soundData = this.controllerData.getSoundData();
 										TracksData tracksData = this.controllerData.getTracksData();
 										
-										this.addGenerator(new FaderGenerator("fader" + tracksData.getTracksCount(), 
-												soundData.getFrameRate()));
+										FaderGenerator faderGenerator = new FaderGenerator("fader" + tracksData.getTracksCount(), 
+												soundData.getFrameRate());
+										
+										this.addDefaultInputs(faderGenerator);
+										
+										this.addGenerator(faderGenerator);
 									}
 									else
 									{
@@ -254,8 +283,12 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 											SoundData soundData = this.controllerData.getSoundData();
 											TracksData tracksData = this.controllerData.getTracksData();
 											
-											this.addGenerator(new MixerGenerator("mixer" + tracksData.getTracksCount(), 
-													soundData.getFrameRate()));
+											MixerGenerator mixerGenerator = new MixerGenerator("mixer" + tracksData.getTracksCount(), 
+													soundData.getFrameRate());
+											
+											this.addDefaultInputs(mixerGenerator);
+											
+											this.addGenerator(mixerGenerator);
 										}
 										else
 										{
@@ -266,8 +299,12 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 												SoundData soundData = this.controllerData.getSoundData();
 												TracksData tracksData = this.controllerData.getTracksData();
 												
-												this.addGenerator(new OutputGenerator("output" + tracksData.getTracksCount(), 
-														soundData.getFrameRate()));
+												OutputGenerator outputGenerator = new OutputGenerator("output" + tracksData.getTracksCount(), 
+														soundData.getFrameRate());
+												
+												this.addDefaultInputs(outputGenerator);
+												
+												this.addGenerator(outputGenerator);
 											}
 											else
 											{
@@ -277,17 +314,21 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 												}
 												else
 												{
+													/*
 													if ("set".equals(pressedButtonData.getName()) == true)
 													{
 														this.doSetGeneratorData();
 													}
 													else
+													*/
 													{
+														/*
 														if ("exit".equals(pressedButtonData.getName()) == true)
 														{
 															this.doEndGame();
 														}
 														else
+														*/
 														{
 															if ("removeInput".equals(pressedButtonData.getName()) == true)
 															{
@@ -316,12 +357,14 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 																	}
 																	else
 																	{
+																		/*
 																		if ("setInput".equals(pressedButtonData.getName()) == true)
 																		{
 																			InputsData generatorInputsData = this.controllerData.getGeneratorInputsData();
 																			
 																			this.setInput(generatorInputsData);
 																		}
+																		*/
 																	}
 																}
 															}
@@ -340,14 +383,14 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		}
 	}
 
-	private void addGenerator(Generator generator)
+	public void addGenerator(Generator generator)
 	{
 		TracksData tracksData = this.controllerData.getTracksData();
 
 		//sinusGenerator.setStartTimePos(generatorsGraphicData.getTracksCount() - 6);
 		//sinusGenerator.setEndTimePos(generatorsGraphicData.getTracksCount() - 3);
-		generator.setStartTimePos(0.0F);
-		generator.setEndTimePos(1.0F);
+		//generator.setStartTimePos(0.0F);
+		//generator.setEndTimePos(1.0F);
 		
 		this.addGenerator(tracksData, generator);
 	}
@@ -356,6 +399,14 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	{
 		tracksData.addTrack(new TrackData(generator));
 		
+		if (OutputGenerator.class.equals(generator.getClass()))
+		{	
+			OutputGenerator outputGenerator = (OutputGenerator)generator;
+			
+			SoundData soundData = this.controllerData.getSoundData();
+			
+			soundData.setOutputGenerator(outputGenerator);
+		}
 		//this.controllerData.getGeneratorsScrollbarData().setScrollerLength(generatorsGraphicData.getGeneratorsSize());
 		//this.controllerData.getGeneratorsScrollbarData().setScrollerSize(12);
 	}
@@ -370,32 +421,40 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		faderInGenerator.setStartTimePos(0.0F);
 		faderInGenerator.setEndTimePos(2.0F);
 		
-		faderInGenerator.setStartFadeValue(0.0F);
-		faderInGenerator.setEndFadeValue(1.0F);
+		faderInGenerator.addInputValue(0.0F, FaderGenerator.INPUT_TYPE_START_VALUE);
+		faderInGenerator.addInputValue(1.0F, FaderGenerator.INPUT_TYPE_END_VALUE);
+		//faderInGenerator.setStartFadeValue(0.0F);
+		//faderInGenerator.setEndFadeValue(1.0F);
 		
 		this.addGenerator(tracksData, faderInGenerator);
-		
+
 		//---------------------------------
 		FaderGenerator faderOutGenerator = new FaderGenerator("faderOut", frameRate);
 		
 		faderOutGenerator.setStartTimePos(2.0F);
 		faderOutGenerator.setEndTimePos(5.0F);
 		
-		faderOutGenerator.setStartFadeValue(1.0F);
-		faderOutGenerator.setEndFadeValue(0.0F);
+		faderOutGenerator.addInputValue(1.0F, FaderGenerator.INPUT_TYPE_START_VALUE);
+		faderOutGenerator.addInputValue(0.0F, FaderGenerator.INPUT_TYPE_END_VALUE);
+		//faderOutGenerator.setStartFadeValue(1.0F);
+		//faderOutGenerator.setEndFadeValue(0.0F);
 		
 		this.addGenerator(tracksData, faderOutGenerator);
 		
 		//---------------------------------
-		SinusGenerator sinusGenerator = new SinusGenerator("sinus", 262F, frameRate);
-
+		SinusGenerator sinusGenerator = new SinusGenerator("sinus", frameRate);
+		sinusGenerator.addInputValue(262F, SinusGenerator.INPUT_TYPE_FREQ);
+		//sinusGenerator.setSignalFrequency(262F);
+		
 		sinusGenerator.setStartTimePos(0.0F);
 		sinusGenerator.setEndTimePos(5.0F);
 		
 		this.addGenerator(tracksData, sinusGenerator);
 		
 		//---------------------------------
-		SinusGenerator sinus2Generator = new SinusGenerator("sinus2", 131F, frameRate);
+		SinusGenerator sinus2Generator = new SinusGenerator("sinus2", frameRate);
+		sinus2Generator.addInputValue(131F, SinusGenerator.INPUT_TYPE_FREQ);
+		//sinus2Generator.setSignalFrequency(131F);
 		
 		sinus2Generator.setStartTimePos(0.0F);
 		sinus2Generator.setEndTimePos(5.0F);
@@ -403,7 +462,9 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.addGenerator(tracksData, sinus2Generator);
 		
 		//---------------------------------
-		SinusGenerator sinus3Generator = new SinusGenerator("sinus3", 70F, frameRate);
+		SinusGenerator sinus3Generator = new SinusGenerator("sinus3", frameRate);
+		sinus3Generator.addInputValue(70F, SinusGenerator.INPUT_TYPE_FREQ);
+		//sinus3Generator.setSignalFrequency(70F);
 		
 		sinus3Generator.setStartTimePos(0.0F);
 		sinus3Generator.setEndTimePos(5.0F);
@@ -443,6 +504,8 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	 */
 	public void notifyGeneratorSelected(TrackData trackGraficData)
 	{
+		Generator generator;
+		GeneratorTypeData generatorTypeData;
 		String name;
 		String startTime;
 		String endTime;
@@ -450,11 +513,12 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		
 		if (trackGraficData != null)
 		{
-			Generator generator = trackGraficData.getGenerator();
+			generator = trackGraficData.getGenerator();
 			
 			if (generator != null)
 			{	
 				name = generator.getName();
+				generatorTypeData = this.controllerData.searchGeneratorTypeData(generator);
 				startTime = Float.toString(generator.getStartTimePos());
 				endTime = Float.toString(generator.getEndTimePos());
 				inputs = generator.getInputs();
@@ -462,6 +526,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 			else
 			{
 				name = "";
+				generatorTypeData = null;
 				startTime = "";
 				endTime = "";
 				inputs = null;
@@ -469,6 +534,8 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		}
 		else
 		{
+			generator = null;
+			generatorTypeData = null;
 			name = "";
 			startTime = "";
 			endTime = "";
@@ -478,7 +545,28 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.controllerData.getGeneratorNameInputlineData().setInputText(name);
 		this.controllerData.getGeneratorStartTimeInputlineData().setInputText(startTime);
 		this.controllerData.getGeneratorEndTimeInputlineData().setInputText(endTime);
-		this.controllerData.getGeneratorInputsData().setInputs(inputs);
+		this.controllerData.getGeneratorInputsData().setGeneratorInputs(generator, inputs);
+
+		SelectData selectData = this.controllerData.getGeneratorInputTypeSelectData();
+		
+		selectData.clearSelectEntrys();
+		
+		if (generatorTypeData != null)
+		{	
+			Iterator inputTypesDataIterator = generatorTypeData.getInputTypesDataIterator();
+			
+			while (inputTypesDataIterator.hasNext())
+			{
+				InputTypeData inputTypeData = (InputTypeData)inputTypesDataIterator.next();
+				
+				SelectEntryData selectEntryData = new SelectEntryData(Integer.valueOf(inputTypeData.getInputType()), 
+						inputTypeData.getInputTypeName(),
+						inputTypeData);
+				
+				selectData.addSelectEntryData(selectEntryData);
+			}
+		}	
+		//selectData.setInputPosByValue(Integer.valueOf(inputType));
 	}
 
 	/* (non-Javadoc)
@@ -487,6 +575,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	public void notifyGeneratorDeselected(TrackData trackData)
 	{
 		this.controllerData.getGeneratorNameInputlineData().setInputText("");
+		this.controllerData.getGeneratorInputTypeSelectData().clearSelectEntrys();
 		this.controllerData.getGeneratorStartTimeInputlineData().setInputText("");
 		this.controllerData.getGeneratorEndTimeInputlineData().setInputText("");
 	}
@@ -508,6 +597,40 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		}
 	}
 
+	/**
+	 * @param dir	0:	begin<br/>
+	 * 				1:	end
+	 */
+	public void doChangeCursorPos(int dir)
+	{
+		WidgetData focusedWidgetData = this.controllerData.getActiveDesktopPageData().getFocusedWidgetData();
+		
+		if (focusedWidgetData != null)
+		{
+			if (focusedWidgetData instanceof InputlineData)
+			{
+				((InputlineData)focusedWidgetData).changeCursorPos(dir);
+			}
+		}
+	}
+	
+	/**
+	 * @param dir	1:	scroll Down<br/>
+	 * 				-1:	scroll Up
+	 */
+	public void doScrollCursor(int dir)
+	{
+		WidgetData focusedWidgetData = this.controllerData.getActiveDesktopPageData().getFocusedWidgetData();
+		
+		if (focusedWidgetData != null)
+		{
+			if (focusedWidgetData instanceof SelectData)
+			{
+				((SelectData)focusedWidgetData).scrollInputPos(dir);
+			}
+		}
+	}
+	
 	/**
 	 * @param dir 	1: 	delete right from cursor<br/>
 	 * 				-1:	delete left from cursor<br/>
@@ -541,61 +664,84 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		}
 	}
 
-	/**
-	 * 
-	 */
-	private void doSetGeneratorData()
-	{
-		TrackData trackData = this.controllerData.getTracksData().getSelectedTrackData();
-		
-		if (trackData != null)
-		{	
-			Generator generator = trackData.getGenerator();
-			
-			String name = this.controllerData.getGeneratorNameInputlineData().getInputText();
-			String startTime = this.controllerData.getGeneratorStartTimeInputlineData().getInputText();
-			String endTime = this.controllerData.getGeneratorEndTimeInputlineData().getInputText();
-
-			float startTimePos = Float.parseFloat(startTime);
-			float endTimePos = Float.parseFloat(endTime);
-			
-			generator.setName(name);
-			generator.setStartTimePos(startTimePos);
-			generator.setEndTimePos(endTimePos);
-		}
-		
-	}
-
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface#notifyGeneratorInputSelected(de.schmiereck.noiseComp.generator.InputData)
+	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface#notifyGeneratorInputSelected(InputsData, de.schmiereck.noiseComp.generator.InputData)
 	 */
-	public void notifyGeneratorInputSelected(InputData selectedInputData)
+	public void notifyGeneratorInputSelected(InputsData inputsData, InputData selectedInputData)
 	{
-		String name;
-		String type;
+		String inputGeneratorName;
+		String inputValue;
+		int inputType;
+		//GeneratorTypeData generatorTypeData;
 		
 		if (selectedInputData != null)
 		{
-			name = selectedInputData.getInputGenerator().getName();
-			type = Integer.toString(selectedInputData.getInputType());
+			Generator generator = selectedInputData.getInputGenerator();
+			
+			if (generator != null)
+			{	
+				inputGeneratorName = generator.getName();
+			}
+			else
+			{
+				inputGeneratorName = null;
+			}
+			
+			inputType = selectedInputData.getInputType();
+			//generatorTypeData = this.controllerData.searchGeneratorTypeData(inputsData.getSelectedGenerator());
+			
+			if (selectedInputData.getInputValue() != null)
+			{	
+				inputValue = String.valueOf(selectedInputData.getInputValue());
+			}
+			else
+			{	
+				inputValue = null;
+			}
 		}
 		else
 		{
-			name = "";
-			type = "";
+			//generatorTypeData = null;
+			inputGeneratorName = "";
+			inputType = 0;
+			inputValue = null;
 		}
 		
-		this.controllerData.getGeneratorInputNameInputlineData().setInputText(name);
-		this.controllerData.getGeneratorInputTypeInputlineData().setInputText(type);
+		this.controllerData.getGeneratorInputNameInputlineData().setInputText(inputGeneratorName);
+		
+		SelectData selectData = this.controllerData.getGeneratorInputTypeSelectData();
+		/*
+		selectData.clearSelectEntrys();
+		
+		if (generatorTypeData != null)
+		{	
+			Iterator inputTypesDataIterator = generatorTypeData.getInputTypesDataIterator();
+			
+			while (inputTypesDataIterator.hasNext())
+			{
+				InputTypeData inputTypeData = (InputTypeData)inputTypesDataIterator.next();
+				
+				SelectEntryData selectEntryData = new SelectEntryData(Integer.valueOf(inputTypeData.getInputType()), 
+						inputTypeData.getInputTypeName(),
+						inputTypeData);
+				
+				selectData.addSelectEntryData(selectEntryData);
+			}
+		}
+		*/	
+		selectData.setInputPosByValue(Integer.valueOf(inputType));
+
+		this.controllerData.getGeneratorInputValueInputlineData().setInputText(inputValue);
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface#notifyGeneratorInputDeselected(de.schmiereck.noiseComp.generator.InputData)
+	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListenerInterface#notifyGeneratorInputDeselected(InputsData, de.schmiereck.noiseComp.generator.InputData)
 	 */
-	public void notifyGeneratorInputDeselected(InputData deselectedInputData)
+	public void notifyGeneratorInputDeselected(InputsData inputsData, InputData deselectedInputData)
 	{
 		this.controllerData.getGeneratorInputNameInputlineData().setInputText("");
-		this.controllerData.getGeneratorInputTypeInputlineData().setInputText("");
+		this.controllerData.getGeneratorInputTypeSelectData().setInputPos(0);
+		this.controllerData.getGeneratorInputValueInputlineData().setInputText("");
 	}
 
 	/**
@@ -621,32 +767,31 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	{
 		if (generatorInputsData != null)
 		{	
-			String name = this.controllerData.getGeneratorInputNameInputlineData().getInputText();
-			String type = this.controllerData.getGeneratorInputTypeInputlineData().getInputText();
+			String inputGeneratorName = this.controllerData.getGeneratorInputNameInputlineData().getInputText();
+			SelectEntryData selectedEntryData = this.controllerData.getGeneratorInputTypeSelectData().getSelectedEntryData();
+			Integer inputType = (Integer)selectedEntryData.getValue();
+			String inputGeneratorValueStr = this.controllerData.getGeneratorInputValueInputlineData().getInputText();
+			
+			Float inputGeneratorValue;
+			
+			if (inputGeneratorValueStr != null)
+			{
+				inputGeneratorValue = Float.valueOf(inputGeneratorValueStr);
+			}
+			else
+			{
+				inputGeneratorValue = null;
+			}
 
 			TrackData selectedTrackData = this.controllerData.getTracksData().getSelectedTrackData();
 			
 			if (selectedTrackData != null)
 			{
-				TrackData inputTrackData = this.controllerData.getTracksData().searchTrackData(name);
+				Generator selectedGenerator = selectedTrackData.getGenerator();
 				
-				// Found a Track with the name of the Input ?
-				if (inputTrackData != null)
-				{
-					int inputType = Integer.parseInt(type);
-					
-					Generator selectedGenerator = selectedTrackData.getGenerator();
-					
-					Generator inputGenerator = inputTrackData.getGenerator();
-					
-					InputData selectedInputData = selectedGenerator.addInputGenerator(inputGenerator, inputType);
-					
-					this.controllerData.getGeneratorInputsData().setSelectedInputData(selectedInputData);
-				}
-				else
-				{
-					throw new RuntimeException("input generator \"" + name + "\" not found");
-				}
+				InputData selectedInputData = this.addInput(selectedGenerator, inputGeneratorName, inputType, inputGeneratorValue);
+				
+				this.controllerData.getGeneratorInputsData().setSelectedInputData(selectedInputData);
 			}
 			else
 			{
@@ -655,6 +800,51 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		}
 	}
 	
+	public InputData addInput(Generator generator, String inputGeneratorName, Integer inputType, Float inputValue)
+	{
+		InputData inputData;
+		
+		TrackData inputTrackData;
+		
+		if (inputGeneratorName != null)
+		{
+			if (inputGeneratorName.length() > 0)
+			{
+				inputTrackData = this.controllerData.getTracksData().searchTrackData(inputGeneratorName);
+
+				// Found no Track with the name of the Input ?
+				if (inputTrackData == null)
+				{
+					throw new RuntimeException("input generator \"" + inputGeneratorName + "\" not found");
+				}
+			}
+			else
+			{
+				inputTrackData = null;
+			}
+		}
+		else
+		{
+			inputTrackData = null;
+		}
+		
+		Generator inputGenerator;
+		
+		// Found a Track with the name of the Input ?
+		if (inputTrackData != null)
+		{
+			inputGenerator = inputTrackData.getGenerator();
+		}
+		else
+		{
+			inputGenerator = null;
+		}
+		
+		inputData = generator.addInputGenerator(inputGenerator, inputType.intValue(), inputValue);
+		
+		return inputData;
+	}
+
 	/**
 	 * Set the new Input-Settings for the selected Input.
 	 * If there is no selected input, {@link #addInput(InputsData)} is called.
@@ -662,7 +852,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	 * TODO replace the RuntimeExceptions with Message-Boxes, smk 
 	 * @param generatorInputsData
 	 */
-	private void setInput(InputsData generatorInputsData)
+	public void setInput(InputsData generatorInputsData)
 	{
 		if (generatorInputsData != null)
 		{	
@@ -671,28 +861,69 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 			if (selectedInputData != null)
 			{	
 				String name = this.controllerData.getGeneratorInputNameInputlineData().getInputText();
-				String type = this.controllerData.getGeneratorInputTypeInputlineData().getInputText();
+				SelectEntryData selectedEntryData = this.controllerData.getGeneratorInputTypeSelectData().getSelectedEntryData();
+				Integer inputType = (Integer)selectedEntryData.getValue();
+				//String type = this.controllerData.getGeneratorInputTypeInputlineData().getInputText();
 	
+				String inputGeneratorValueStr = this.controllerData.getGeneratorInputValueInputlineData().getInputText();
+				
+				Float inputGeneratorValue;
+				
+				if (inputGeneratorValueStr != null)
+				{
+					if (inputGeneratorValueStr.length() > 0)
+					{	
+						inputGeneratorValue = Float.valueOf(inputGeneratorValueStr);
+					}
+					else
+					{
+						inputGeneratorValue = null;
+					}
+				}
+				else
+				{
+					inputGeneratorValue = null;
+				}
+				
+				Generator inputGenerator;
+				
 				TrackData selectedTrackData = this.controllerData.getTracksData().getSelectedTrackData();
 				
 				if (selectedTrackData != null)
 				{
-					TrackData inputTrackData = this.controllerData.getTracksData().searchTrackData(name);
-					
-					// Found a Track with the name of the Input ?
-					if (inputTrackData != null)
-					{
-						int inputType = Integer.parseInt(type);
-					
-						Generator inputGenerator = inputTrackData.getGenerator();
-						
-						selectedInputData.setInputGenerator(inputGenerator);
-						selectedInputData.setInputType(inputType);
+					// Select the name of a generator ?
+					if (name != null)
+					{	
+						if (name.length() > 0)
+						{	
+							TrackData inputTrackData;
+							inputTrackData = this.controllerData.getTracksData().searchTrackData(name);
+							
+							// Found no Track with the name of the Input ?
+							if (inputTrackData == null)
+							{
+								throw new RuntimeException("input generator \"" + name + "\" not found");
+							}
+							inputGenerator = inputTrackData.getGenerator();
+						}
+						else
+						{
+							inputGenerator = null;
+						}
 					}
 					else
 					{
-						throw new RuntimeException("input generator \"" + name + "\" not found");
+						inputGenerator = null;
 					}
+					
+					if ((inputGenerator == null) && (inputGeneratorValue == null))
+					{
+						throw new RuntimeException("no input generator and no value for the input \"" + name + "\"");
+					}
+					
+					selectedInputData.setInputGenerator(inputGenerator);
+					selectedInputData.setInputType(inputType);
+					selectedInputData.setInputValue(inputGeneratorValue);
 				}
 				else
 				{
@@ -702,6 +933,42 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 			else
 			{
 				this.addInput(generatorInputsData);
+			}
+		}
+	}
+
+	/**
+	 * @param i
+	 */
+	public void doFocusWalk(int dir)
+	{
+		this.controllerData.getActiveDesktopPageData().focusWalk(dir);
+	}
+
+	/**
+	 * 
+	 */
+	public void doSubmitPage()
+	{
+		this.controllerData.getActiveDesktopPageData().submitPage();
+	}
+
+	/**
+	 * @param generator
+	 */
+	private void addDefaultInputs(Generator generator)
+	{
+		GeneratorTypeData generatorTypeData = this.controllerData.searchGeneratorTypeData(generator);
+		
+		Iterator inputTypesDataIterator = generatorTypeData.getInputTypesDataIterator();
+		
+		while (inputTypesDataIterator.hasNext())
+		{
+			InputTypeData inputTypeData = (InputTypeData)inputTypesDataIterator.next();
+			
+			for (int pos = 0; pos < inputTypeData.getInputCountMin(); pos++)
+			{
+				generator.addInputValue(inputTypeData.getDefaultValue(), inputTypeData.getInputType());
 			}
 		}
 	}

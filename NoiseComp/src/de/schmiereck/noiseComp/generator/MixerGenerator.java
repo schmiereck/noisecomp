@@ -80,26 +80,47 @@ extends Generator
 				{
 					case INPUT_TYPE_VOLUME:
 						{
-							GeneratorInterface volumeInput = inputData.getInputGenerator();
+							Float inputValue = inputData.getInputValue();
 							
-							SoundSample volumeInputSample = volumeInput.generateFrameSample(framePosition);
-							
-							if (volumeInputSample != null)
+							// Constant input value ?
+							if (inputValue != null)
 							{
-								volume += volumeInputSample.getMonoValue();
+								volume += inputValue.floatValue();
+							}
+							else
+							{	
+								GeneratorInterface volumeInput = inputData.getInputGenerator();
+								
+								SoundSample volumeInputSample = volumeInput.generateFrameSample(framePosition);
+								
+								if (volumeInputSample != null)
+								{
+									volume += volumeInputSample.getMonoValue();
+								}
 							}
 							break;
 						}
 					case INPUT_TYPE_SIGNAL:
 						{
-							GeneratorInterface signalInput = inputData.getInputGenerator();
+							Float inputValue = inputData.getInputValue();
 							
-							SoundSample signalInputSample = signalInput.generateFrameSample(framePosition);
-							
-							if (signalInputSample != null)
+							// Constant input value ?
+							if (inputValue != null)
 							{
-								signalLeft += signalInputSample.getLeftValue();
-								signalRight += signalInputSample.getRightValue();
+								signalLeft += inputValue.floatValue();
+								signalRight += inputValue.floatValue();
+							}
+							else
+							{	
+								GeneratorInterface signalInput = inputData.getInputGenerator();
+								
+								SoundSample signalInputSample = signalInput.generateFrameSample(framePosition);
+								
+								if (signalInputSample != null)
+								{
+									signalLeft += signalInputSample.getLeftValue();
+									signalRight += signalInputSample.getRightValue();
+								}
 							}
 							break;
 						}
@@ -114,4 +135,23 @@ extends Generator
 		soundSample.setStereoValues(signalLeft * volume, signalRight * volume);
 	}
 
+	/**
+	 * @return
+	 */
+	public static GeneratorTypeData createGeneratorTypeData()
+	{
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MixerGenerator.class, "Mixer");
+		
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VOLUME, "volume", -1, -1);
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", -1, -1);
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		
+		return generatorTypeData;
+	}
+	
 }

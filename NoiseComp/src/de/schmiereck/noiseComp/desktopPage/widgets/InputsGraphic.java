@@ -5,7 +5,10 @@ import java.awt.Graphics;
 import java.util.Iterator;
 
 import de.schmiereck.noiseComp.desktopPage.DesktopColors;
+import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 
 /**
@@ -24,7 +27,8 @@ extends ListWidgetGraphic
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetGraphic#drawBackground(java.awt.Graphics, de.schmiereck.screenTools.graphic.ScreenGraficInterface, de.schmiereck.noiseComp.desktopPage.DesktopColors, de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData, int, int, int, int, float, float)
 	 */
-	public void drawBackground(Graphics g, ScreenGraficInterface screenGrafic, DesktopColors desktopColors, ListWidgetData listWidgetData, int posX, int posY, int sizeX, int sizeY, float horizontalScrollStart, float horizontalScrollEnd)
+	public void drawBackground(Graphics g, ScreenGraficInterface screenGrafic, DesktopColors desktopColors, 
+							   ListWidgetData listWidgetData, int posX, int posY, int sizeX, int sizeY, float horizontalScrollStart, float horizontalScrollEnd)
 	{
 		screenGrafic.setColor(g, desktopColors.getGeneratorsBackgroundColor());
 		screenGrafic.fillRect(g, posX, posY, sizeX, sizeY);
@@ -72,11 +76,50 @@ extends ListWidgetGraphic
 			screenGrafic.setColor(g, Color.BLACK);
 		}
 
-		String name = inputData.getInputGenerator().getName();
-		String type = Integer.toString(inputData.getInputType());
+		GeneratorTypeData inputGeneratorTypeData = inputsData.getGeneratorTypeData(inputData.getInputGenerator());
 		
-		screenGrafic.drawString(g, posX + this.textOffsetSizeX, screenPosY + entryHeight, name);
-		screenGrafic.drawString(g, posX + this.nameColumnSizeX + this.textOffsetSizeX, screenPosY + entryHeight, type);
+		Generator inputGenerator = inputData.getInputGenerator();
+		
+		String label;
+		
+		if (inputData.getInputValue() != null)
+		{
+			label = String.valueOf(inputData.getInputValue());
+		}
+		else
+		{
+			if (inputGenerator != null)
+			{	
+				label = inputGenerator.getName();
+			}
+			else
+			{
+				label = "--";
+			}
+			
+			if (inputGeneratorTypeData != null)
+			{
+				label += " [" + inputGeneratorTypeData.getGeneratorTypeName() + "]";
+			}
+		}
+
+		GeneratorTypeData generatorTypeData = inputsData.getGeneratorTypeData(inputsData.getSelectedGenerator());
+		
+		InputTypeData inputTypeData = generatorTypeData.getInputTypeData(inputData.getInputType());
+		
+		String inputTypeName;
+		
+		if (inputTypeData != null)
+		{	
+			inputTypeName = inputTypeData.getInputTypeName();
+		}
+		else
+		{
+			inputTypeName = "ERROR";
+		}
+		
+		screenGrafic.drawString(g, posX + this.textOffsetSizeX, screenPosY + entryHeight, label);
+		screenGrafic.drawString(g, posX + this.nameColumnSizeX + this.textOffsetSizeX, screenPosY + entryHeight, inputTypeName);
 	}
 
 	/* (non-Javadoc)

@@ -118,31 +118,45 @@ public class SoundBuffer
 		return frameCount;
 	}
 	
+	/**
+	 * Generates a stereo output for the given frame.
+	 * Uses the generatted output value for the frame position 
+	 * of the {@link #soundGenerator}-Object of the SoundBuffer.
+	 * 
+	 * @param frame			is the absolute frame position in the song-sound (depends on sampleRate).
+	 * @param frameSize		(don't remember ???)
+	 * @param bufferData	is a byte buffer for the output. 
+	 * 						His internal structure depends on the audio format of the buffer.  
+	 * @param bufferPos		Is the byte position, the next calculated frame should writen in the buffer.
+	 */
 	private void generateFrame(long frame, int frameSize, byte bufferData[], int bufferPos)
 	{
-		int leftSampleValue;
-		int	rightSampleValue;
-		
-		SoundSample soundSample = this.soundGenerator.generateFrameSample(frame);
-		
-		if (soundSample != null)
+		if (this.soundGenerator != null)
 		{	
-			leftSampleValue = Math.round(soundSample.getLeftValue() * this.intAmplitude);
-			rightSampleValue = Math.round(soundSample.getRightValue() * this.intAmplitude);
+			int leftSampleValue;
+			int	rightSampleValue;
+			
+			SoundSample soundSample = this.soundGenerator.generateFrameSample(frame);
+			
+			if (soundSample != null)
+			{	
+				leftSampleValue = Math.round(soundSample.getLeftValue() * this.intAmplitude);
+				rightSampleValue = Math.round(soundSample.getRightValue() * this.intAmplitude);
+			}
+			else
+			{	
+				leftSampleValue = 0;
+				rightSampleValue = 0;
+			}
+	
+			// this is for 16 bit stereo, little endian
+			// left:
+			bufferData[bufferPos + 0] = (byte) (leftSampleValue & 0xFF);
+			bufferData[bufferPos + 1] = (byte) ((leftSampleValue >>> 8) & 0xFF);
+			// right:
+			bufferData[bufferPos + 2] = (byte) (rightSampleValue & 0xFF);
+			bufferData[bufferPos + 3] = (byte) ((rightSampleValue >>> 8) & 0xFF);
 		}
-		else
-		{	
-			leftSampleValue = 0;
-			rightSampleValue = 0;
-		}
-
-		// this is for 16 bit stereo, little endian
-		// left:
-		bufferData[bufferPos + 0] = (byte) (leftSampleValue & 0xFF);
-		bufferData[bufferPos + 1] = (byte) ((leftSampleValue >>> 8) & 0xFF);
-		// right:
-		bufferData[bufferPos + 2] = (byte) (rightSampleValue & 0xFF);
-		bufferData[bufferPos + 3] = (byte) ((rightSampleValue >>> 8) & 0xFF);
 	}
 	
 	/**

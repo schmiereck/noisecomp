@@ -28,7 +28,7 @@ extends ListWidgetGraphic
 								   float scrollStartTime, float scrollEndTime, 
 								   boolean generatorIsActive, boolean generatorIsSelected)
 	{
-		// Beim Scrollen den links abgeschnittenenen Teil berücksichtigen:
+		// While calulate the scrolling, remember the part of the left row:
 		
 		float generatorStartTime;
 		
@@ -41,10 +41,10 @@ extends ListWidgetGraphic
 			generatorStartTime = generator.getStartTimePos();
 		}
 
-		// Ist der Generator sichtbar und liegt nichts rechts neben dem Scroll-Bereich ?
+		// Is the generator visible and is he right side by the scroll-area ?
 		if (generatorStartTime < scrollEndTime)
 		{	
-			// Beim Scrollen berücksichtigen den rechts abgeschnittenen Teil berücksichtigen.
+			// Beim Scrollen den rechts abgeschnittenen Teil berücksichtigen.
 			float timeLength;
 			
 			if (generator.getEndTimePos() < scrollEndTime)
@@ -78,6 +78,8 @@ extends ListWidgetGraphic
 				// Samples:
 				g.setColor(desktopColors.getSampleColor());
 				
+				float generatorSampleScale = generator.getGeneratorSampleDrawScale();
+				
 				float frameRate = generator.getFrameRate();
 				boolean firstSample = true;
 				int lastX = screenPosX;
@@ -86,10 +88,11 @@ extends ListWidgetGraphic
 				for (float timePos = 0; timePos < timeLength; timePos += (0.5 / scaleX))
 				{
 					SoundSample soundSample = generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate));
+					
 					if (soundSample != null)
 					{	
 						int samplePosX = screenPosX + (int)(timePos * scaleX);
-						int samplePosY = screenPosY + 16 - (int)(soundSample.getMonoValue() * 16);
+						int samplePosY = screenPosY + 16 - (int)((soundSample.getMonoValue() * generatorSampleScale) * 16);
 						if (firstSample == true)
 						{
 							firstSample = false;
@@ -238,7 +241,7 @@ extends ListWidgetGraphic
 		int labelSizeX = tracksData.getGeneratorsLabelSizeX();
 
 		// Generator Labels Background:
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(desktopColors.getGeneratorLabelsBackgroundColor());
 		
 		screenGrafic.fillRect(g, posX, posY, labelSizeX, sizeY);
 

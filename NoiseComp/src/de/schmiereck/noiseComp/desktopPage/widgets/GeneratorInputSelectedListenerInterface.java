@@ -14,11 +14,11 @@ public interface GeneratorInputSelectedListenerInterface
 	/**
 	 * @param selectedInputData
 	 */
-	void notifyGeneratorInputSelected(InputData selectedInputData);
+	void notifyGeneratorInputSelected(InputsData inputsData, InputData selectedInputData);
 
 	/**
 	 * @param deselectedInputData
 	 */
-	void notifyGeneratorInputDeselected(InputData deselectedInputData);
+	void notifyGeneratorInputDeselected(InputsData inputsData, InputData deselectedInputData);
 
 }

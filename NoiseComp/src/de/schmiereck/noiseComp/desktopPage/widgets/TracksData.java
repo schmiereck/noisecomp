@@ -214,6 +214,20 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		}
 	}
 	
+	public void clearTracks()
+	{
+		synchronized (this)
+		{
+			this.deselectGenerator();
+			
+			this.tracksVector.clear();
+			this.tracksHash.clear();
+			this.soundData.clear();
+			
+			this.setVerticalScrollerLength(this.getTracksCount());
+		}
+	}
+	
 	/**
 	 * @return die Zeit, um die gescrollt wurde (in Sekunden).
 	 */

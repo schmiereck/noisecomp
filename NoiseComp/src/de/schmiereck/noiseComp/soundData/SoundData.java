@@ -106,6 +106,12 @@ public class SoundData
 				
 				generator.notifyRemoveGenerator(removedGenerator);
 			}
+			
+			// Output removed ?
+			if (removedGenerator == outputGenerator)
+			{
+				this.setOutputGenerator(null);
+			}
 		}
 	}
 	
@@ -193,5 +199,17 @@ public class SoundData
 	public float getFrameRate()
 	{
 		return this.frameRate;
+	}
+
+	/**
+	 * 
+	 */
+	public void clear()
+	{
+		synchronized (this)
+		{
+			this.generators.clear();
+			this.setOutputGenerator(null);
+		}
 	}
 }

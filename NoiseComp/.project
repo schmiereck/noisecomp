@@ -3,7 +3,6 @@
 	<name>NoiseComp</name>
 	<comment></comment>
 	<projects>
-		<project>Ballblazer</project>
 		<project>SMKScreenTools</project>
 	</projects>
 	<buildSpec>

@@ -25,7 +25,7 @@ extends WidgetData
 	 */
 	public LabelData(String labelText, int posX, int posY, int sizeX, int sizeY)
 	{
-		super(posX, posY, sizeX, sizeY);
+		super(posX, posY, sizeX, sizeY, false);
 		this.labelText = labelText;
 	}
 

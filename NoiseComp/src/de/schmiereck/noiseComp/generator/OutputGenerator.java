@@ -34,13 +34,43 @@ extends Generator
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample)
 	{
-		Generator inputSoundGenerator = this.getInputByType(INPUT_TYPE_SIGNAL);
+		InputData inputData = this.searchInputByType(INPUT_TYPE_SIGNAL);
 		
-		if (inputSoundGenerator != null)
+		if (inputData != null)
 		{	
-			SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition);
+			Float inputValue = inputData.getInputValue();
 			
-			soundSample.setValues(inputSoundSample);
+			// Constant input value ?
+			if (inputValue != null)
+			{
+				soundSample.setMonoValue(inputValue.floatValue());
+			}
+			else
+			{	
+				Generator inputSoundGenerator = inputData.getInputGenerator();
+				
+				if (inputSoundGenerator != null)
+				{	
+					SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition);
+					
+					soundSample.setSignals(inputSoundSample);
+				}
+			}
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	public static GeneratorTypeData createGeneratorTypeData()
+	{
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(OutputGenerator.class, "Output");
+		
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1);
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		
+		return generatorTypeData;
 	}
 }

@@ -3,7 +3,7 @@ package de.schmiereck.noiseComp.desktopPage;
 import java.awt.Graphics;
 import java.util.Iterator;
 
-import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
@@ -16,6 +16,8 @@ import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarGraphic;
+import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
+import de.schmiereck.noiseComp.desktopPage.widgets.SelectGraphic;
 import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
@@ -77,7 +79,7 @@ public class DesktopPageGraphic
 			{	
 				FunctionButtonData buttonData = (FunctionButtonData)widgetData;
 				
-				ButtonData activeButtonData = desktopPageData.getActiveButtonData();
+				InputWidgetData activeButtonData = desktopPageData.getActiveButtonData();
 				
 				boolean active;
 				boolean pressed;
@@ -196,6 +198,39 @@ public class DesktopPageGraphic
 										
 										listWidgetGraphic.drawList(g, screenGrafic, desktopColors, 
 																 inputsData);
+									}
+									else
+									{
+										if (widgetData instanceof SelectData)
+										{	
+											SelectData selectData = (SelectData)widgetData;
+											
+											WidgetData activeWidgetData = desktopPageData.getActiveWidgetData();
+											
+											boolean active;
+											
+											if (activeWidgetData == selectData)
+											{
+												active = true;
+											}
+											else
+											{
+												active = false;
+											}
+
+											boolean focused;
+											
+											if (desktopPageData.getFocusedWidgetData() == selectData)
+											{
+												focused = true;
+											}
+											else
+											{
+												focused = false;
+											}
+											
+											SelectGraphic.drawWidget(g, screenGrafic, desktopColors, selectData, active, focused);
+										}
 									}
 								}
 							}
