@@ -92,6 +92,11 @@ public class DesktopPageData
 	 * 3:	Down-Scroller<br/>
 	 */
 	private int activeScrollbarPart = 0;
+
+	/**
+	 * A reference to the focused Widget or null.
+	 */
+	private WidgetData focusedWidgetData = null;
 	
 	/**
 	 * true, wenn die Maustaste gerade gedrückt gehalten wird.
@@ -212,6 +217,22 @@ public class DesktopPageData
 		return this.activeButtonData;
 	}
 
+	/**
+	 * @see #focusedWidgetData
+	 */
+	public void setFocusedWidgetData(WidgetData widgetData)
+	{
+		this.focusedWidgetData = widgetData;
+	}
+	
+	/**
+	 * @see #focusedWidgetData
+	 */
+	public WidgetData getFocusedWidgetData()
+	{
+		return this.focusedWidgetData;
+	}
+	
 	/**
 	 * @param hitScrollbarData
 	 * @param hitScrollbarPart

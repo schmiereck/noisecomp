@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
+import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 
 
@@ -29,7 +30,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 	private Vector	tracksVector = new Vector();
 
 	/**
-	 * List of {@link TrackGraficData}-Objects with the String-Name as Key.
+	 * List of {@link TrackGraficData}-Objects with the Generator as Key.
 	 */
 	private HashMap	tracksHash = new HashMap();
 	
@@ -70,6 +71,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 	private int hitGeneratorPart;
 	private TrackGraficData selectedTrackGraficData;
 	private boolean generatorIsSelected;
+	private GeneratorSelectedListenerInterface listenerLogic;
 	
 	/**
 	 * Constructor.
@@ -211,7 +213,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 			trackGraficData.setTrackPos(trackPos);
 
 			this.tracksVector.add(trackGraficData);
-			this.tracksHash.put(trackGraficData.getName(), trackGraficData);
+			//this.tracksHash.put(trackGraficData.getName(), trackGraficData);
+			this.tracksHash.put(trackGraficData.getGenerator(), trackGraficData);
 			this.soundData.addGenerator(trackGraficData.getGenerator());
 	
 			this.verticalScrollbarData.setScrollerLength(this.getTracksCount());
@@ -236,7 +239,8 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 				{
 					((TrackGraficData)this.tracksVector.get(pos)).setTrackPos(pos);
 				}
-				this.tracksHash.remove(selectedTrackGraficData.getName());
+				//this.tracksHash.remove(selectedTrackGraficData.getName());
+				this.tracksHash.remove(selectedTrackGraficData.getGenerator());
 				this.soundData.removeGenerator(trackPos);
 				
 				this.verticalScrollbarData.setScrollerLength(this.getTracksCount());
@@ -283,17 +287,32 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 	 */
 	public void notifyClickedWidget(WidgetData widgetData)
 	{
+		// Some track is Aktive (Rollover) ?
 		if (this.activeTrackGraficData != null)
 		{
+			// Use this as the new selected Track.
 			this.selectedTrackGraficData = this.activeTrackGraficData;
 			
+			// Is the Generator in the selected Track Active ?
 			if (this.hitGeneratorPart != HIT_PART_NONE)
 			{
+				// Select the Generator.
 				this.generatorIsSelected = true;
+				
+				if (this.listenerLogic != null)
+				{
+					this.listenerLogic.notifyGeneratorSelected(this.selectedTrackGraficData);
+				}
 			}
 			else
 			{
+				// Deselect the Generator.
 				this.generatorIsSelected = false;
+			
+				if (this.listenerLogic != null)
+				{
+					this.listenerLogic.notifyGeneratorDeselected(this.selectedTrackGraficData);
+				}
 			}
 		}
 		else
@@ -303,10 +322,15 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 	}
 	private void deselectGenerator()
 	{
+		TrackGraficData trackGraficData = this.selectedTrackGraficData;
 		this.hitGeneratorPart = HIT_PART_NONE;
 		this.selectedTrackGraficData = null;
 		this.generatorIsSelected = false;
 		this.activeTrackGraficData = null;
+		if (this.listenerLogic != null)
+		{
+			this.listenerLogic.notifyGeneratorDeselected(trackGraficData);
+		}
 	}
 
 	/**
@@ -325,11 +349,20 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface
 	}
 
 	/**
-	 * @param name of the Generator.
-	 * @return
+	 * @param generator Generator to search for.
+	 * @return Track of the generator or null.
 	 */
-	public TrackGraficData searchTrackGraficData(String name)
+	public TrackGraficData searchTrackGraficData(Generator generator)
 	{
-		return (TrackGraficData)this.tracksHash.get(name);
+		//String name = generator.getName();
+		//return (TrackGraficData)this.tracksHash.get(name);
+		return (TrackGraficData)this.tracksHash.get(generator);
+	}
+	/**
+	 * @param listenerLogic is the new value for attribute {@link #listenerLogic} to set.
+	 */
+	public void setListenerLogic(GeneratorSelectedListenerInterface listenerLogic)
+	{
+		this.listenerLogic = listenerLogic;
 	}
 }

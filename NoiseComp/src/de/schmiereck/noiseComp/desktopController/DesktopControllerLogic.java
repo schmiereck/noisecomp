@@ -4,8 +4,11 @@ import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.noiseComp.desktopPage.ButtonPressedCallbackInterface;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
+import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorsGraphicData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TrackGraficData;
+import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
@@ -25,7 +28,7 @@ import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
  */
 public class DesktopControllerLogic
 extends ControllerLogic
-implements ButtonPressedCallbackInterface
+implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface
 {
 	private DesktopControllerData controllerData;
 	
@@ -48,6 +51,8 @@ implements ButtonPressedCallbackInterface
 		OutputGenerator outputGenerator = this.createGenerators(generatorsGraphicData, soundData, soundData.getFrameRate());
 		
 		soundData.setOutputGenerator(outputGenerator);
+		
+		this.controllerData.getGeneratorsGraphicData().setListenerLogic(this);
 	}
 
 	/* (non-Javadoc)
@@ -265,9 +270,16 @@ implements ButtonPressedCallbackInterface
 												}
 												else
 												{
-													if ("exit".equals(pressedButtonData.getName()) == true)
+													if ("set".equals(pressedButtonData.getName()) == true)
 													{
-														this.doEndGame();
+														this.doSetGeneratorData();
+													}
+													else
+													{
+														if ("exit".equals(pressedButtonData.getName()) == true)
+														{
+															this.doEndGame();
+														}
 													}
 												}
 											}
@@ -379,4 +391,128 @@ implements ButtonPressedCallbackInterface
 		
 		return outputGenerator;
 	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface#notifyGeneratorSelected(de.schmiereck.noiseComp.desktopPage.widgets.TrackGraficData)
+	 */
+	public void notifyGeneratorSelected(TrackGraficData trackGraficData)
+	{
+		String name;
+		String startTime;
+		String endTime;
+		
+		if (trackGraficData != null)
+		{
+			Generator generator = trackGraficData.getGenerator();
+			
+			if (generator != null)
+			{	
+				name = generator.getName();
+				startTime = Float.toString(generator.getStartTimePos());
+				endTime = Float.toString(generator.getEndTimePos());
+			}
+			else
+			{
+				name = "";
+				startTime = "";
+				endTime = "";
+			}
+		}
+		else
+		{
+			name = "";
+			startTime = "";
+			endTime = "";
+		}
+		
+		this.controllerData.getGeneratorNameInputlineData().setInputText(name);
+		this.controllerData.getGeneratorStartTimeInputlineData().setInputText(startTime);
+		this.controllerData.getGeneratorEndTimeInputlineData().setInputText(endTime);
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface#notifyGeneratorDeselected(de.schmiereck.noiseComp.desktopPage.widgets.TrackGraficData)
+	 */
+	public void notifyGeneratorDeselected(TrackGraficData trackGraficData)
+	{
+		this.controllerData.getGeneratorNameInputlineData().setInputText("");
+		this.controllerData.getGeneratorStartTimeInputlineData().setInputText("");
+		this.controllerData.getGeneratorEndTimeInputlineData().setInputText("");
+	}
+
+	/**
+	 * @param dir 	1: 	to move right<br/>
+	 * 				-1:	to move left<br/>
+	 */
+	public void doMoveCursor(int dir)
+	{
+		WidgetData focusedWidgetData = this.controllerData.getActiveDesctopPageData().getFocusedWidgetData();
+		
+		if (focusedWidgetData != null)
+		{
+			if (focusedWidgetData instanceof InputlineData)
+			{
+				((InputlineData)focusedWidgetData).moveCursor(dir);
+			}
+		}
+	}
+
+	/**
+	 * @param dir 	1: 	delete right from cursor<br/>
+	 * 				-1:	delete left from cursor<br/>
+	 */
+	public void doDelete(int dir)
+	{
+		WidgetData focusedWidgetData = this.controllerData.getActiveDesctopPageData().getFocusedWidgetData();
+		
+		if (focusedWidgetData != null)
+		{
+			if (focusedWidgetData instanceof InputlineData)
+			{
+				((InputlineData)focusedWidgetData).deleteChar(dir);
+			}
+		}
+	}
+
+	/**
+	 * @param c
+	 */
+	public void doInputChar(char c)
+	{
+		WidgetData focusedWidgetData = this.controllerData.getActiveDesctopPageData().getFocusedWidgetData();
+		
+		if (focusedWidgetData != null)
+		{
+			if (focusedWidgetData instanceof InputlineData)
+			{
+				((InputlineData)focusedWidgetData).inputChar(c);
+			}
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void doSetGeneratorData()
+	{
+		TrackGraficData trackGraficData = this.controllerData.getGeneratorsGraphicData().getSelectedTrackGraficData();
+		
+		if (trackGraficData != null)
+		{	
+			Generator generator = trackGraficData.getGenerator();
+			
+			String name = this.controllerData.getGeneratorNameInputlineData().getInputText();
+			String startTime = this.controllerData.getGeneratorStartTimeInputlineData().getInputText();
+			String endTime = this.controllerData.getGeneratorEndTimeInputlineData().getInputText();
+
+			float startTimePos = Float.parseFloat(startTime);
+			float endTimePos = Float.parseFloat(endTime);
+			
+			generator.setName(name);
+			generator.setStartTimePos(startTimePos);
+			generator.setEndTimePos(endTimePos);
+		}
+		
+	}
+	
 }

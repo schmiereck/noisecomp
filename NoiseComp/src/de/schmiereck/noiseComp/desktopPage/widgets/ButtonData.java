@@ -14,11 +14,6 @@ extends WidgetData
 	/**
 	 * Constructor.
 	 * 
-	 * @param posX
-	 * @param posY
-	 * @param sizeY
-	 * @param sizeX
-	 * @param labelText
 	 */
 	public ButtonData(String name, int posX, int posY, int sizeX, int sizeY)
 	{
@@ -26,7 +21,7 @@ extends WidgetData
 		this.name = name;
 	}
 	/**
-	 * @return the attribute {@link #labelText}.
+	 * @return the attribute {@link #name}.
 	 */
 	public String getName()
 	{

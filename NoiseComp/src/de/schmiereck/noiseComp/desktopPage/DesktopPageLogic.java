@@ -48,7 +48,7 @@ public class DesktopPageLogic
 			int sizeY = widgetData.getSizeY();
 			
 			if ((pX >= posX) && (pX <= posX + sizeX) && 
-					(pY >= posY) && (pY <= posY + sizeY))
+				(pY >= posY) && (pY <= posY + sizeY))
 			{
 				hit = true;
 				hitWidgetData = widgetData;
@@ -260,6 +260,28 @@ public class DesktopPageLogic
 			{
 				((ClickedWidgetListenerInterface)widgetData).notifyClickedWidget(widgetData);
 			}
+			
+			if (widgetData instanceof FocusedWidgetListenerInterface)
+			{
+				WidgetData focusedWidgetData = desctopPageData.getFocusedWidgetData();
+				
+				if (focusedWidgetData != widgetData)
+				{	
+					if (focusedWidgetData != null)
+					{	
+						((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
+					}
+					desctopPageData.setFocusedWidgetData(widgetData);
+					((FocusedWidgetListenerInterface)widgetData).notifyFocusedWidget(widgetData);
+				}
+			}
+		}
+		else
+		{
+			WidgetData focusedWidgetData = desctopPageData.getFocusedWidgetData();
+			
+			((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
+			desctopPageData.setFocusedWidgetData(null);
 		}
 		
 		ScrollbarData activeScrollbarData = desctopPageData.getActiveScrollbarData();
@@ -311,7 +333,11 @@ public class DesktopPageLogic
 		
 		if (pressedButtonData != null)
 		{
-			buttonPressedCallback.buttonPressed(pressedButtonData);
+			// Mouse is still over the Button ?
+			if (pressedButtonData == desctopPageData.getActiveWidgetData())
+			{	
+				buttonPressedCallback.buttonPressed(pressedButtonData);
+			}
 		}
 		
 	}

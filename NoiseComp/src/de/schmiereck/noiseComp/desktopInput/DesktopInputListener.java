@@ -100,7 +100,19 @@ implements GraficInputListener
 	 */
 	public void keyTyped(KeyEvent e)
 	{
+		char c = e.getKeyChar();
 		
+		int type = Character.getType(c);
+		
+		if ((type == Character.DECIMAL_DIGIT_NUMBER) ||			// 0123456789
+			(type == Character.LOWERCASE_LETTER) ||				// a-z, öäü
+				(type == Character.UPPERCASE_LETTER) ||			// A-Z, ÖÄÜ
+				(type == Character.CONNECTOR_PUNCTUATION) ||	// 
+				(type == Character.DASH_PUNCTUATION) ||			// -_
+				(type == Character.OTHER_PUNCTUATION))			// .,
+		{		
+			this.gameControllerLogic.doInputChar(c);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -115,8 +127,28 @@ implements GraficInputListener
 					this.gameControllerLogic.doEndGame();
 					break;
 				} 
+			case KeyEvent.VK_LEFT:	// LEFT
+				{
+					this.gameControllerLogic.doMoveCursor(-1);
+					break;
+				} 
+			case KeyEvent.VK_RIGHT:	// RIGHT
+				{
+					this.gameControllerLogic.doMoveCursor(1);
+					break;
+				} 
+			case KeyEvent.VK_DELETE:	// DELETE
+				{
+					this.gameControllerLogic.doDelete(1);
+					break;
+				} 
+			case KeyEvent.VK_BACK_SPACE:	// BACK_SPACE
+				{
+					this.gameControllerLogic.doDelete(-1);
+					break;
+				} 
 		}
-		}
+	}
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)

@@ -2,13 +2,14 @@ package de.schmiereck.noiseComp.desktopPage;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.Iterator;
 
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorsGraphicData;
+import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
+import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TrackGraficData;
@@ -28,7 +29,7 @@ public class DesktopPageGraphic
 {
 
 	/**
-	 * Farbe des Mauszeigers.
+	 * Color of Mouse Pointer.
 	 */
 	private Color pointerColor = new Color(0F, 0F, 1.0F, 0.3F);
 	
@@ -45,6 +46,18 @@ public class DesktopPageGraphic
 	private Color inactiveGeneratorBackgroundColor	= new Color(0xDF, 0xFF, 0xDF);
 
 	private Color selectedGeneratorSelectorColor	= new Color(0x00, 0x00, 0xFF);
+
+	private Color inactiveButtonColor;
+
+	private Color paneBackgroundColor;
+
+	private Color activeInputlineColor;
+
+	private Color inactiveInputlineColor;
+
+	private Color inactiveButtonBorderColor;
+
+	private Color generatorsBackgroundColor;
 	
 	/**
 	 * Constructor.
@@ -54,6 +67,40 @@ public class DesktopPageGraphic
 	public DesktopPageGraphic()
 	{
 		super();
+
+		// Good old Gray-Dialog Color Schema:
+		/*
+		this.pointerColor = new Color(0F, 0F, 1.0F, 0.3F);
+		this.paneBackgroundColor = Color.LIGHT_GRAY;
+		this.inactiveButtonColor = Color.LIGHT_GRAY;
+		this.activeButtonColor = new Color(0xE0, 0xE8, 0xE4);
+		this.inactiveButtonBorderColor = Color.GRAY;
+		this.starColor = new Color(0xE0, 0xD0, 0xD0);
+		this.sampleColor = Color.BLACK; 
+		this.timestepColor = new Color(0xF0, 0xFF, 0xF0);
+		this.activeGeneratorBackgroundColor 	= new Color(0xFF, 0xFF, 0xFF);
+		this.inactiveGeneratorBackgroundColor	= new Color(0xDF, 0xFF, 0xDF);
+		this.selectedGeneratorSelectorColor	= new Color(0x00, 0x00, 0xFF);
+		this.activeInputlineColor	= new Color(0xFF, 0xFF, 0xFF);
+		this.inactiveInputlineColor	= new Color(0xDF, 0xFF, 0xDF);
+		this.generatorsBackgroundColor = new Color(0xE0, 0xE0, 0xE0);
+		*/
+		// The more happy new Color Schema:
+		this.pointerColor = new Color(0F, 0F, 1.0F, 0.3F);
+		//this.paneBackgroundColor = new Color(0x1B, 0x12, 0xB4);
+		this.paneBackgroundColor = new Color(0xFF, 0xFF, 0xCC);
+		this.inactiveButtonColor = new Color(0xFB, 0xE2, 0x49);
+		this.activeButtonColor = new Color(0xE5, 0xEF, 0x4C);
+		this.inactiveButtonBorderColor = new Color(0xE4, 0xC4, 0x05);
+		this.starColor = new Color(0xE0, 0xD0, 0xD0);
+		this.sampleColor = Color.BLACK; 
+		this.timestepColor = new Color(0xF0, 0xFF, 0xF0);
+		this.activeGeneratorBackgroundColor 	= new Color(0xFF, 0xFF, 0xFF);
+		this.inactiveGeneratorBackgroundColor	= new Color(0xDF, 0xFF, 0xDF);
+		this.selectedGeneratorSelectorColor	= new Color(0x00, 0x00, 0xFF);
+		this.activeInputlineColor	= new Color(0xFF, 0xFF, 0xFF);
+		this.inactiveInputlineColor	= new Color(0xFF, 0xFF, 0x2E);
+		this.generatorsBackgroundColor = new Color(0xAA, 0xE0, 0xFD);
 	}
 
 	/**
@@ -110,7 +157,7 @@ public class DesktopPageGraphic
 					pressed = false;
 				}
 				
-				this.drawButton(g, screenGrafic, buttonData, active, pressed);
+				this.drawFunctionButton(g, screenGrafic, buttonData, active, pressed);
 			}
 			else
 			{
@@ -144,11 +191,53 @@ public class DesktopPageGraphic
 					}
 					else
 					{
-						if (widgetData instanceof GeneratorsGraphicData)
+						if (widgetData instanceof LabelData)
 						{	
-							GeneratorsGraphicData generatorsGraphicData = (GeneratorsGraphicData)widgetData;
+							LabelData labelData = (LabelData)widgetData;
 							
-							this.drawGenerators(g, screenGrafic, generatorsGraphicData, desctopPageData);
+							this.drawLabel(g, screenGrafic, labelData);
+						}
+						else
+						{
+							if (widgetData instanceof GeneratorsGraphicData)
+							{	
+								GeneratorsGraphicData generatorsGraphicData = (GeneratorsGraphicData)widgetData;
+								
+								this.drawGenerators(g, screenGrafic, generatorsGraphicData, desctopPageData);
+							}
+							else
+							{
+								if (widgetData instanceof InputlineData)
+								{	
+									InputlineData inputlineData = (InputlineData)widgetData;
+									
+									WidgetData activeWidgetData = desctopPageData.getActiveWidgetData();
+									
+									boolean active;
+									
+									if (activeWidgetData == inputlineData)
+									{
+										active = true;
+									}
+									else
+									{
+										active = false;
+									}
+
+									boolean focused;
+									
+									if (desctopPageData.getFocusedWidgetData() == inputlineData)
+									{
+										focused = true;
+									}
+									else
+									{
+										focused = false;
+									}
+									
+									this.drawInputlineButton(g, screenGrafic, inputlineData, active, focused);
+								}
+							}
 						}
 					}
 				}
@@ -158,9 +247,100 @@ public class DesktopPageGraphic
 
 	/**
 	 * @param g
+	 * @param screenGrafic
+	 * @param labelData
+	 */
+	private void drawLabel(Graphics g, ScreenGraficInterface screenGrafic, LabelData labelData)
+	{
+		String labelText = labelData.getLabelText();
+		int posX = labelData.getPosX();
+		int posY = labelData.getPosY();
+		int sizeX = labelData.getSizeX();
+		int sizeY = labelData.getSizeY();
+		
+		g.setColor(Color.BLACK);
+		
+		screenGrafic.setFont(g, "Dialog", Font.PLAIN, sizeY - 4);
+		
+		int stringWidth;
+		
+		if (labelText != null)
+		{
+			stringWidth = screenGrafic.calcStringWidth(g, labelText);
+			//stringWidth = fontMetrics.stringWidth(labelText);
+
+			screenGrafic.drawString(g, posX + (sizeX - stringWidth), 
+					posY + (sizeY / 2) + (screenGrafic.calcFontAscent(g) / 2) + (screenGrafic.calcFontDescent(g) / 2), labelText);
+		}
+	}
+
+	/**
+	 * @param g
+	 * @param screenGrafic
+	 * @param inputlineData
+	 * @param active
+	 * @param focused
+	 */
+	private void drawInputlineButton(Graphics g, ScreenGraficInterface screenGrafic, 
+									 InputlineData inputlineData, 
+									 boolean active, boolean focused)
+	{
+		String inputText = inputlineData.getInputText();
+		int posX = inputlineData.getPosX();
+		int posY = inputlineData.getPosY();
+		int sizeX = inputlineData.getSizeX();
+		int sizeY = inputlineData.getSizeY();
+		
+		if ((active == true) || (focused == true))
+		{	
+			g.setColor(this.activeInputlineColor);
+		}
+		else
+		{
+			g.setColor(this.inactiveInputlineColor);
+		}
+		
+		screenGrafic.fillRect(g, posX, posY, sizeX, sizeY);
+		
+		screenGrafic.draw3DRect(g, posX, posY, sizeX, sizeY, false);
+		
+		g.setColor(Color.BLACK);
+		
+		screenGrafic.setFont(g, "Dialog", Font.PLAIN, sizeY - 4);
+		
+		int stringWidth;
+		
+		if (inputText != null)
+		{
+			stringWidth = screenGrafic.calcStringWidth(g, inputText);
+			
+			screenGrafic.drawString(g, posX, 
+					posY + (sizeY / 2) + 
+					(screenGrafic.calcFontAscent(g) / 2), 
+					inputText);
+		}
+
+		int inputSizeX;
+		
+		if (inputText != null)
+		{	
+			inputSizeX = screenGrafic.calcStringWidth(g, inputText.substring(0, inputlineData.getInputPos()));
+		}
+		else
+		{
+			inputSizeX = 0;
+		}
+		
+		screenGrafic.drawLine(g, posX + inputSizeX, posY, 0, sizeY);
+		screenGrafic.drawLine(g, posX + inputSizeX, posY, 3, 0);
+		screenGrafic.drawLine(g, posX + inputSizeX, posY + sizeY, 3, 0);
+	}
+
+	/**
+	 * @param g
 	 * @param buttonData
 	 */
-	private void drawButton(Graphics g, ScreenGraficInterface screenGrafic, FunctionButtonData buttonData, boolean active, boolean pressed)
+	private void drawFunctionButton(Graphics g, ScreenGraficInterface screenGrafic, FunctionButtonData buttonData, boolean active, boolean pressed)
 	{
 		String labelText = buttonData.getLabelText();
 		int posX = buttonData.getPosX();
@@ -191,11 +371,11 @@ public class DesktopPageGraphic
 		}
 		else
 		{
-			g.setColor(Color.LIGHT_GRAY);
+			g.setColor(this.inactiveButtonColor);
 			
 			screenGrafic.fillRect(g, posX, posY, sizeX, sizeY);
 
-			g.setColor(Color.GRAY);
+			g.setColor(this.inactiveButtonBorderColor);
 			
 			screenGrafic.drawRect(g, posX, posY, sizeX, sizeY);
 		}
@@ -204,12 +384,12 @@ public class DesktopPageGraphic
 		
 		screenGrafic.setFont(g, "Dialog", Font.PLAIN, sizeY - 4);
 		
-		FontMetrics fontMetrics = g.getFontMetrics();
-		
-		int stringWidth = fontMetrics.stringWidth(labelText);
+		int stringWidth = screenGrafic.calcStringWidth(g, labelText);
 		
 		screenGrafic.drawString(g, posX + offX + (sizeX / 2) - (stringWidth / 2), 
-				posY + offY + (sizeY / 2) + (fontMetrics.getAscent() / 2) + (fontMetrics.getDescent() / 2), labelText);
+				posY + offY + (sizeY / 2) + 
+				(screenGrafic.calcFontAscent(g) / 2), 
+				labelText);
 	}
 
 	/**
@@ -340,7 +520,7 @@ public class DesktopPageGraphic
 		int sizeX = paneData.getSizeX();
 		int sizeY = paneData.getSizeY();
 		
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(this.paneBackgroundColor);
 		
 		screenGrafic.fillRect(g, posX, posY, sizeX, sizeY);
 		screenGrafic.draw3DRect(g, posX, posY, sizeX, sizeY, true);
@@ -384,10 +564,17 @@ public class DesktopPageGraphic
 		
 		float scaleX = generatorsGraphicData.getGeneratorScaleX();
 		
+		int labelSizeX = generatorsGraphicData.getGeneratorsLabelSizeX();
+		
 		// Generator Labels Background:
 		g.setColor(Color.LIGHT_GRAY);
 		
-		screenGrafic.fillRect(g, posX, posY, generatorsGraphicData.getGeneratorsLabelSizeX(), sizeY);
+		screenGrafic.fillRect(g, posX, posY, labelSizeX, sizeY);
+
+		// Generators Background:
+		g.setColor(this.generatorsBackgroundColor);
+		
+		screenGrafic.fillRect(g, posX + labelSizeX, posY, sizeX - labelSizeX, sizeY);
 		
 		screenGrafic.setFont(g, "Dialog", Font.PLAIN, 12);
 		
@@ -508,7 +695,8 @@ public class DesktopPageGraphic
 			screenGrafic.drawLine(g, 0, posY, sizeX, 0);
 			screenGrafic.drawLine(g, generatorsGraphicData.getGeneratorsLabelSizeX(), posY, 0, sizeY);
 			
-			// Input Connectors:
+			// Draw Input Connectors:
+			
 			if (generatorsGraphicData.getSelectedTrackGraficData() != null)
 			{
 				g.setColor(Color.RED);
@@ -534,7 +722,7 @@ public class DesktopPageGraphic
 
 						Generator inputGenerator = (Generator)inputData.getInputGenerator();
 						
-						TrackGraficData inputTrackGraficData = generatorsGraphicData.searchTrackGraficData(inputGenerator.getName());
+						TrackGraficData inputTrackGraficData = generatorsGraphicData.searchTrackGraficData(inputGenerator);
 
 						// Generator mit diesem Namen gefunden ?
 						if (inputTrackGraficData != null)
@@ -546,9 +734,9 @@ public class DesktopPageGraphic
 							int inputScreenPosX = (int)((inputGenerator.getEndTimePos() - scrollStartTime) * scaleX);
 							
 							int inp1X = (int)(generatorsGraphicData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
-							int inp1Y = posY + selectedPos * trackHeight;
+							int inp1Y = posY - (scrollerStartPos * trackHeight) + selectedPos * trackHeight;
 							int inp2X = (int)(generatorsGraphicData.getGeneratorsLabelSizeX() + inputScreenPosX);
-							int inp2Y = posY + inputPos * trackHeight + trackHeight / 2;
+							int inp2Y = posY - (scrollerStartPos * trackHeight) + inputPos * trackHeight + trackHeight / 2;
 							
 							screenGrafic.drawAbsLine(g, 
 									inp1X, inp1Y, 
