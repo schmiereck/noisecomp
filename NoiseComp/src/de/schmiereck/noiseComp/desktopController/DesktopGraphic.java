@@ -19,11 +19,11 @@ import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphic;
 public class DesktopGraphic
 extends MultiBufferFullScreenGraphic
 {
-	private DesktopPageGraphic desctopPageGraphic;
+	private DesktopPageGraphic desktopPageGraphic;
 	
 	public DesktopGraphic()
 	{
-		this.desctopPageGraphic = new DesktopPageGraphic();
+		this.desktopPageGraphic = new DesktopPageGraphic();
 	}
 	
 	/**
@@ -40,15 +40,15 @@ extends MultiBufferFullScreenGraphic
 	{
 		controllerData.setGraphicSleepMillis(actualWaitPerFramesMillis);
 		
-		DesktopControllerData desctopControllerData = (DesktopControllerData)controllerData;
+		DesktopControllerData desktopControllerData = (DesktopControllerData)controllerData;
 		
-		DesktopPageData desctopPageData = desctopControllerData.getActiveDesctopPageData();
+		DesktopPageData desktopPageData = desktopControllerData.getActiveDesktopPageData();
 		
-		this.desctopPageGraphic.drawWidgets(g, this, desctopPageData);
+		this.desktopPageGraphic.drawWidgets(g, this, desktopPageData);
 		
 		this.drawFPSInfos(g, controllerData);
 
-		this.desctopPageGraphic.drawPointer(g, this, desctopPageData);
+		this.desktopPageGraphic.drawPointer(g, this, desktopPageData);
 	}
 
 	private void drawFPSInfos(Graphics g, ControllerData controllerData)

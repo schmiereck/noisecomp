@@ -8,7 +8,7 @@ import de.schmiereck.noiseComp.generator.Generator;
  * @author smk
  * @version 25.01.2004
  */
-public class TrackGraficData
+public class TrackData
 {
 	private Generator	generator;
 	
@@ -23,7 +23,7 @@ public class TrackGraficData
 	 * 
 	 * @param generator
 	 */
-	public TrackGraficData(Generator generator)
+	public TrackData(Generator generator)
 	{
 		super();
 		this.generator = generator;

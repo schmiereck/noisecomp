@@ -10,7 +10,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 
 /**
  * <p>
- * 	Basisklasse einer Desctop-Seite.
+ * 	Basisklasse einer Desktop-Seite.
  * </p>
  * <p>
  * 	Verwaltet eine Liste von {@link WidgetData}-Objekten die 
@@ -23,16 +23,16 @@ import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 public class DesktopPageData
 {
 	/**
-	 * X-Größe des Desctops.
-	 * @see #desctopSizeY
+	 * X-Größe des Desktops.
+	 * @see #desktopSizeY
 	 */
-	private int desctopSizeX;
+	private int desktopSizeX;
 	
 	/**
-	 * Y-Größe des Desctops.
-	 * @see #desctopSizeX
+	 * Y-Größe des Desktops.
+	 * @see #desktopSizeX
 	 */
-	private int desctopSizeY;
+	private int desktopSizeY;
 	
 	/**
 	 * X-Position des Mauszeigers.
@@ -102,28 +102,28 @@ public class DesktopPageData
 	/**
 	 * Constructor.
 	 * 
-	 * @see #desctopSizeX
-	 * @see #desctopSizeY
+	 * @see #desktopSizeX
+	 * @see #desktopSizeY
 	 */
-	public DesktopPageData(int desctopSizeX, int desctopSizeY)
+	public DesktopPageData(int desktopSizeX, int desktopSizeY)
 	{
-		this.desctopSizeX = desctopSizeX;
-		this.desctopSizeY = desctopSizeY;
+		this.desktopSizeX = desktopSizeX;
+		this.desktopSizeY = desktopSizeY;
 	}
 
 	/**
-	 * @return the attribute {@link #desctopSizeX}.
+	 * @return the attribute {@link #desktopSizeX}.
 	 */
-	public int getDesctopSizeX()
+	public int getDesktopSizeX()
 	{
-		return this.desctopSizeX;
+		return this.desktopSizeX;
 	}
 	/**
-	 * @return the attribute {@link #desctopSizeY}.
+	 * @return the attribute {@link #desktopSizeY}.
 	 */
-	public int getDesctopSizeY()
+	public int getDesktopSizeY()
 	{
-		return this.desctopSizeY;
+		return this.desktopSizeY;
 	}
 	/**
 	 * @see #pointerPosX

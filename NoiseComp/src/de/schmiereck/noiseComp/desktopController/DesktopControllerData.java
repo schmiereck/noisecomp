@@ -5,7 +5,7 @@ import java.util.Iterator;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
-import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorsGraphicData;
+import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
@@ -29,7 +29,7 @@ extends ControllerData
 	/**
 	 * Daten der gerade angezeigte Seite.
 	 */
-	private DesktopPageData activeDesctopPageData = null; 
+	private DesktopPageData activeDesktopPageData = null; 
 	
 	/**
 	 * Vertikale Scrollbar des Generator-Widgets.
@@ -41,10 +41,10 @@ extends ControllerData
 	 */
 	private ScrollbarData generatorsHScrollbarData;
 	
-	private GeneratorsGraphicData generatorsGraphicData;
+	private TracksData tracksData;
 	
-	private DesktopPageData mainDesctopPageData				= null;
-	private DesktopPageData selectGeneratorDesctopPageData	= null;
+	private DesktopPageData mainDesktopPageData				= null;
+	private DesktopPageData selectGeneratorDesktopPageData	= null;
 
 	private InputlineData generatorNameInputlineData = null;
 	private InputlineData generatorStartTimeInputlineData = null;
@@ -59,44 +59,44 @@ extends ControllerData
 	{
 		this.soundData = soundData;
 
-		this.mainDesctopPageData = this.createMainPage();
-		this.selectGeneratorDesctopPageData = this.createSelectGeneratorPage();
+		this.mainDesktopPageData = this.createMainPage();
+		this.selectGeneratorDesktopPageData = this.createSelectGeneratorPage();
 		
-		this.activeDesctopPageData = this.mainDesctopPageData;
+		this.activeDesktopPageData = this.mainDesktopPageData;
 	}
 
 	private DesktopPageData createSelectGeneratorPage()
 	{
-		DesktopPageData	desctopPageData = new DesktopPageData(this.getFieldWidth(), this.getFieldHeight());
+		DesktopPageData	desktopPageData = new DesktopPageData(this.getFieldWidth(), this.getFieldHeight());
 
 		{
 			// Add Main Page:
 			PaneData paneData = new PaneData(0, 0, this.getFieldWidth(), this.getFieldHeight());
-			desctopPageData.addWidgetData(paneData);
+			desktopPageData.addWidgetData(paneData);
 		}
 		
 		{
 			ButtonData addButtonData = new FunctionButtonData("cancel", "Cancel", 100, 10, 90, 20);
-			desctopPageData.addWidgetData(addButtonData);
+			desktopPageData.addWidgetData(addButtonData);
 		}
 
 		{
 			ButtonData addButtonData = new FunctionButtonData("addSinus", "Add Sinus Generator", 100, 100, 250, 20);
-			desctopPageData.addWidgetData(addButtonData);
+			desktopPageData.addWidgetData(addButtonData);
 		}
 		{
 			ButtonData addButtonData = new FunctionButtonData("addFader", "Add Fader Generator", 100, 130, 250, 20);
-			desctopPageData.addWidgetData(addButtonData);
+			desktopPageData.addWidgetData(addButtonData);
 		}
 		{
 			ButtonData addButtonData = new FunctionButtonData("addMixer", "Add Mixer Generator", 100, 160, 250, 20);
-			desctopPageData.addWidgetData(addButtonData);
+			desktopPageData.addWidgetData(addButtonData);
 		}
 		{
 			ButtonData addButtonData = new FunctionButtonData("addOutput", "Add Output Generator", 100, 190, 250, 20);
-			desctopPageData.addWidgetData(addButtonData);
+			desktopPageData.addWidgetData(addButtonData);
 		}
-		return desctopPageData;
+		return desktopPageData;
 	}
 	
 	private DesktopPageData createMainPage()
@@ -106,36 +106,36 @@ extends ControllerData
 		int scrollbarWidth			= 20;
 		int generatorsLabelSizeX	= 100;
 
-		DesktopPageData	desctopPageData = new DesktopPageData(this.getFieldWidth(), this.getFieldHeight());
+		DesktopPageData	desktopPageData = new DesktopPageData(this.getFieldWidth(), this.getFieldHeight());
 
 		{
 			// Add Top Pane:
 			PaneData topMenuPaneData = new PaneData(0, 0, this.getFieldWidth(), topMenuSizeY);
-			desctopPageData.addWidgetData(topMenuPaneData);
+			desktopPageData.addWidgetData(topMenuPaneData);
 
 			{
 				ButtonData addButtonData = new FunctionButtonData("add", "Add...", 100, 10, 90, 20);
-				desctopPageData.addWidgetData(addButtonData);
+				desktopPageData.addWidgetData(addButtonData);
 			}
 			{
 				ButtonData addButtonData = new FunctionButtonData("remove", "Remove", 200, 10, 90, 20);
-				desctopPageData.addWidgetData(addButtonData);
+				desktopPageData.addWidgetData(addButtonData);
 			}
 			{
 				ButtonData addButtonData = new FunctionButtonData("exit", "Exit", this.getFieldWidth() - 100, 10, 90, 20);
-				desctopPageData.addWidgetData(addButtonData);
+				desktopPageData.addWidgetData(addButtonData);
 			}
 			
 			ButtonData playButtonData = new FunctionButtonData("play", "Play", 100, 40, 90, 20);
 			
-			desctopPageData.addWidgetData(playButtonData);
+			desktopPageData.addWidgetData(playButtonData);
 
 			ButtonData pauseButtonData = new FunctionButtonData("pause", "Pause", 200, 40, 90, 20);
 			
-			desctopPageData.addWidgetData(pauseButtonData);
+			desktopPageData.addWidgetData(pauseButtonData);
 			{
 				ButtonData stopButtonData = new FunctionButtonData("stop", "Stop", 300, 40, 90, 20);
-				desctopPageData.addWidgetData(stopButtonData);
+				desktopPageData.addWidgetData(stopButtonData);
 			}
 		}
 		{
@@ -144,43 +144,43 @@ extends ControllerData
 			int posY = this.getFieldHeight() - bottomMenuSizeY;
 			
 			PaneData bottomMenuPaneData = new PaneData(0, posY, this.getFieldWidth(), bottomMenuSizeY);
-			desctopPageData.addWidgetData(bottomMenuPaneData);
+			desktopPageData.addWidgetData(bottomMenuPaneData);
 
 			{
 				LabelData generatorNameLabelData = new LabelData("Name:", 10, posY + 10, 60, 16);
-				desctopPageData.addWidgetData(generatorNameLabelData);
+				desktopPageData.addWidgetData(generatorNameLabelData);
 			}
 			{
 				this.generatorNameInputlineData = new InputlineData("name", 70, posY + 10, 150, 16);
-				desctopPageData.addWidgetData(this.generatorNameInputlineData);
+				desktopPageData.addWidgetData(this.generatorNameInputlineData);
 			}
 
 			{
 				LabelData generatorNameLabelData = new LabelData("Start-Time:", 10, posY + 30, 60, 16);
-				desctopPageData.addWidgetData(generatorNameLabelData);
+				desktopPageData.addWidgetData(generatorNameLabelData);
 			}
 			{
 				this.generatorStartTimeInputlineData = new InputlineData("startTime", 70, posY + 30, 150, 16);
-				desctopPageData.addWidgetData(this.generatorStartTimeInputlineData);
+				desktopPageData.addWidgetData(this.generatorStartTimeInputlineData);
 			}
 			
 			{
 				LabelData generatorNameLabelData = new LabelData("End-Time:", 10, posY + 50, 60, 16);
-				desctopPageData.addWidgetData(generatorNameLabelData);
+				desktopPageData.addWidgetData(generatorNameLabelData);
 			}
 			{
 				this.generatorEndTimeInputlineData = new InputlineData("endTime", 70, posY + 50, 150, 16);
-				desctopPageData.addWidgetData(this.generatorEndTimeInputlineData);
+				desktopPageData.addWidgetData(this.generatorEndTimeInputlineData);
 			}
 			
 			{
 				LabelData generatorNameLabelData = new LabelData("Inputs:", 250, posY + 10, 60, 16);
-				desctopPageData.addWidgetData(generatorNameLabelData);
+				desktopPageData.addWidgetData(generatorNameLabelData);
 			}
 			
 			{
 				ButtonData stopButtonData = new FunctionButtonData("set", "Set", 70, posY + 100, 50, 20);
-				desctopPageData.addWidgetData(stopButtonData);
+				desktopPageData.addWidgetData(stopButtonData);
 			}
 		}
 		
@@ -199,20 +199,20 @@ extends ControllerData
 			
 			this.generatorsHScrollbarData.setScrollStep(0.5F);
 			
-			this.generatorsGraphicData = 
-				new GeneratorsGraphicData(0, topMenuSizeY, 
+			this.tracksData = 
+				new TracksData(0, topMenuSizeY, 
 						this.getFieldWidth() - scrollbarWidth, generatorsSizeY, 
 						generatorsLabelSizeX,
 						this.soundData,
 						this.generatorsVScrollbarData, this.generatorsHScrollbarData);
 			
-			desctopPageData.addWidgetData(this.generatorsGraphicData);
+			desktopPageData.addWidgetData(this.tracksData);
 			
-			desctopPageData.addWidgetData(this.generatorsVScrollbarData);
+			desktopPageData.addWidgetData(this.generatorsVScrollbarData);
 			
-			desctopPageData.addWidgetData(this.generatorsHScrollbarData);
+			desktopPageData.addWidgetData(this.generatorsHScrollbarData);
 		}
-		return desctopPageData;
+		return desktopPageData;
 	}
 
 	/* (non-Javadoc)
@@ -257,11 +257,11 @@ extends ControllerData
 		return this.soundData;
 	}
 	/**
-	 * @return the attribute {@link #activeDesctopPageData}.
+	 * @return the attribute {@link #activeDesktopPageData}.
 	 */
-	public DesktopPageData getActiveDesctopPageData()
+	public DesktopPageData getActiveDesktopPageData()
 	{
-		return this.activeDesctopPageData;
+		return this.activeDesktopPageData;
 	}
 	/**
 	 * @return the attribute {@link #generatorsVScrollbarData}.
@@ -271,32 +271,32 @@ extends ControllerData
 		return this.generatorsVScrollbarData;
 	}
 	/**
-	 * @return the attribute {@link #generatorsGraphicData}.
+	 * @return the attribute {@link #tracksData}.
 	 */
-	public GeneratorsGraphicData getGeneratorsGraphicData()
+	public TracksData getTracksData()
 	{
-		return this.generatorsGraphicData;
+		return this.tracksData;
 	}
 	/**
-	 * @return the attribute {@link #mainDesctopPageData}.
+	 * @return the attribute {@link #mainDesktopPageData}.
 	 */
-	public DesktopPageData getMainDesctopPageData()
+	public DesktopPageData getMainDesktopPageData()
 	{
-		return this.mainDesctopPageData;
+		return this.mainDesktopPageData;
 	}
 	/**
-	 * @return the attribute {@link #selectGeneratorDesctopPageData}.
+	 * @return the attribute {@link #selectGeneratorDesktopPageData}.
 	 */
-	public DesktopPageData getSelectGeneratorDesctopPageData()
+	public DesktopPageData getSelectGeneratorDesktopPageData()
 	{
-		return this.selectGeneratorDesctopPageData;
+		return this.selectGeneratorDesktopPageData;
 	}
 	/**
-	 * @param activeDesctopPageData is the new value for attribute {@link #activeDesctopPageData} to set.
+	 * @param activeDesktopPageData is the new value for attribute {@link #activeDesktopPageData} to set.
 	 */
-	public void setActiveDesctopPageData(DesktopPageData activeDesctopPageData)
+	public void setActiveDesktopPageData(DesktopPageData activeDesktopPageData)
 	{
-		this.activeDesctopPageData = activeDesctopPageData;
+		this.activeDesktopPageData = activeDesktopPageData;
 	}
 	/**
 	 * @return the attribute {@link #generatorNameInputlineData}.

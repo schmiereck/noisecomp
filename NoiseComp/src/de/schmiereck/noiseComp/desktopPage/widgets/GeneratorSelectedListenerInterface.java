@@ -10,13 +10,13 @@ public interface GeneratorSelectedListenerInterface
 {
 
 	/**
-	 * @param trackGraficData
+	 * @param trackData
 	 */
-	void notifyGeneratorSelected(TrackGraficData trackGraficData);
+	void notifyGeneratorSelected(TrackData trackData);
 
 	/**
-	 * @param trackGraficData
+	 * @param trackData
 	 */
-	void notifyGeneratorDeselected(TrackGraficData trackGraficData);
+	void notifyGeneratorDeselected(TrackData trackData);
 
 }

@@ -20,26 +20,26 @@ public class DesktopPageLogic
 
 	/**
 	 * <p>
-	 * 	Calculates the actual State of the Widgets by the actual DesctopPageData State.
+	 * 	Calculates the actual State of the Widgets by the actual DesktopPageData State.
 	 * </p>
 	 * <p>
 	 * 	Mainly the active state (Mouse Rollover) is calculated an the 
 	 * 	correlating functions of the Listener-Interfaces are called.
 	 * </p>
 	 * 
-	 * @param desctopPageData
+	 * @param desktopPageData
 	 */
-	public static void calcWidgets(DesktopPageData desctopPageData)
+	public static void calcWidgets(DesktopPageData desktopPageData)
 	{
 		WidgetData hitWidgetData = null;
 		ButtonData hitButtonData = null;
 		//int hitScrollbarPart = 0;
 		ScrollbarData hitScrollbarData = null;
 		
-		int pointerPosX = desctopPageData.getPointerPosX();
-		int pointerPosY = desctopPageData.getPointerPosY();
+		int pointerPosX = desktopPageData.getPointerPosX();
+		int pointerPosY = desktopPageData.getPointerPosY();
 		
-		Iterator widgetIterator = desctopPageData.getWidgetsIterator();
+		Iterator widgetIterator = desktopPageData.getWidgetsIterator();
 		
 		while (widgetIterator.hasNext())
 		{
@@ -90,9 +90,9 @@ public class DesktopPageLogic
 			}
 		}
 		
-		desctopPageData.setActiveWidgetData(hitWidgetData, pointerPosX, pointerPosY);
-		desctopPageData.setActiveButtonData(hitButtonData);
-		desctopPageData.setActiveScrollbarData(hitScrollbarData);
+		desktopPageData.setActiveWidgetData(hitWidgetData, pointerPosX, pointerPosY);
+		desktopPageData.setActiveButtonData(hitButtonData);
+		desktopPageData.setActiveScrollbarData(hitScrollbarData);
 	}
 	
 	/**
@@ -103,17 +103,17 @@ public class DesktopPageLogic
 	 * 	the {@link FocusedWidgetListenerInterface}, the correlating functions are called.
 	 * </p>
 	 *  
-	 * @param desctopPageData
+	 * @param desktopPageData
 	 */
-	public static void pointerPressed(DesktopPageData desctopPageData)
+	public static void pointerPressed(DesktopPageData desktopPageData)
 	{
-		desctopPageData.setPointerPressed(true);
+		desktopPageData.setPointerPressed(true);
 
-		WidgetData widgetData = desctopPageData.getActiveWidgetData();
+		WidgetData widgetData = desktopPageData.getActiveWidgetData();
 		
 		if (widgetData != null)
 		{
-			desctopPageData.setSelectedWidgetData(widgetData);
+			desktopPageData.setSelectedWidgetData(widgetData);
 			
 			if (widgetData instanceof ClickedWidgetListenerInterface)
 			{
@@ -122,7 +122,7 @@ public class DesktopPageLogic
 			
 			if (widgetData instanceof FocusedWidgetListenerInterface)
 			{
-				WidgetData focusedWidgetData = desctopPageData.getFocusedWidgetData();
+				WidgetData focusedWidgetData = desktopPageData.getFocusedWidgetData();
 				
 				if (focusedWidgetData != widgetData)
 				{	
@@ -130,22 +130,22 @@ public class DesktopPageLogic
 					{	
 						((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
 					}
-					desctopPageData.setFocusedWidgetData(widgetData);
+					desktopPageData.setFocusedWidgetData(widgetData);
 					((FocusedWidgetListenerInterface)widgetData).notifyFocusedWidget(widgetData);
 				}
 			}
 		}
 		else
 		{
-			WidgetData focusedWidgetData = desctopPageData.getFocusedWidgetData();
+			WidgetData focusedWidgetData = desktopPageData.getFocusedWidgetData();
 			
 			if (focusedWidgetData != null)
 			{	
 				((FocusedWidgetListenerInterface)focusedWidgetData).notifyDefocusedWidget(focusedWidgetData);
 			}
-			desctopPageData.setFocusedWidgetData(null);
+			desktopPageData.setFocusedWidgetData(null);
 
-			desctopPageData.setSelectedWidgetData(null);
+			desktopPageData.setSelectedWidgetData(null);
 		}
 	}
 
@@ -157,25 +157,25 @@ public class DesktopPageLogic
 	 * 	the {@link FocusedWidgetListenerInterface}, the correlating functions are called.
 	 * </p>
 	 * 
-	 * @param desctopPageData
+	 * @param desktopPageData
 	 * @param buttonPressedCallback
 	 */
-	public static void pointerReleased(DesktopPageData desctopPageData, ButtonPressedCallbackInterface buttonPressedCallback)
+	public static void pointerReleased(DesktopPageData desktopPageData, ButtonPressedCallbackInterface buttonPressedCallback)
 	{
-		ButtonData pressedButtonData = desctopPageData.getPressedButtonData();
+		ButtonData pressedButtonData = desktopPageData.getPressedButtonData();
 		
-		desctopPageData.setPointerPressed(false);
+		desktopPageData.setPointerPressed(false);
 		
 		if (pressedButtonData != null)
 		{
 			// Mouse is still over the Button ?
-			if (pressedButtonData == desctopPageData.getActiveWidgetData())
+			if (pressedButtonData == desktopPageData.getActiveWidgetData())
 			{	
 				buttonPressedCallback.buttonPressed(pressedButtonData);
 			}
 		}
 		
-		WidgetData selectedWidgetData = desctopPageData.getSelectedWidgetData();
+		WidgetData selectedWidgetData = desktopPageData.getSelectedWidgetData();
 		
 		if (selectedWidgetData != null)
 		{
@@ -184,7 +184,7 @@ public class DesktopPageLogic
 				((ClickedWidgetListenerInterface)selectedWidgetData).notifyReleasedWidget(selectedWidgetData);
 			}
 			
-			desctopPageData.setSelectedWidgetData(null);
+			desktopPageData.setSelectedWidgetData(null);
 		}
 	}
 }

@@ -7,12 +7,3 @@ ausgeschlossen.
 - Florian und ich empfehlen eine BSD-style license. Mit GNU-Lizenzen 
 hatten wir schon jede Menge Ärger.
 
-- kannst du eine binary-drstibution der "SMKScreenTools" machen? Ich 
-möchte mir die Arbeit ersparen, das auch selbst zu compilieren. Es ist 
-auch hilfreich, eine derartige Abhngigkeit im readme zu erwähnen.
-
--> liegt in Verzeichnis /lib/ und ist in der "readme.txt" beschrieben.
-
-- "descTop" soll wahrscheinlich "deskTop" heißen.
-
--> Peinlich ;-) Ist behoben.

@@ -36,7 +36,7 @@ public class Main
 		SoundData soundData = new SoundData(line, frameRate);
 		
 		//------------------------------------
-		// Setup Desctop:
+		// Setup Desktop:
 		
 		boolean useFullScreen = true;
 		String playerName = null;
