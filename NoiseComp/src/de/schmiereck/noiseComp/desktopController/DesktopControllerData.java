@@ -41,6 +41,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputlineData;
 import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
+import de.schmiereck.noiseComp.generator.CutGenerator;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
@@ -48,6 +49,7 @@ import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
+import de.schmiereck.noiseComp.generator.RectangleGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.controller.ControllerData;
@@ -184,6 +186,8 @@ extends ControllerData
 		this.generatorTypesData.addGeneratorTypeData(MixerGenerator.createGeneratorTypeData());
 		this.generatorTypesData.addGeneratorTypeData(OutputGenerator.createGeneratorTypeData());
 		this.generatorTypesData.addGeneratorTypeData(SinusGenerator.createGeneratorTypeData());
+		this.generatorTypesData.addGeneratorTypeData(RectangleGenerator.createGeneratorTypeData());
+		this.generatorTypesData.addGeneratorTypeData(CutGenerator.createGeneratorTypeData());
 	}
 
 	private MainPageData createMainPage(DesktopData desktopData)

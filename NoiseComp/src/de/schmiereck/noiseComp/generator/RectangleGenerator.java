@@ -2,25 +2,13 @@ package de.schmiereck.noiseComp.generator;
 
 /**
  * <p>
- * 	Generates a sinus-signal based on the values of the input types.
+ * 	Generates a rectangle-signal based on the values of the input types.
  * </p>
- *
- * Frequenz des generierten Sinus-Signals.
- *	 Frequenz  Note  Instrument  
- *	 16.5Hz  C2  Taste C im 32' der Orgel 
- *	 33Hz  C1  C-Saite bei fünfseitigen Kontrabässen 
- *	 66Hz  C  C-Saite der Violoncelli 
- *	 131Hz  c  C-Saite der Bratschen 
- *	 262Hz  c'  tiefstes c der Geigen 
- *	 524Hz  c''  hohes c der Tenöre 
- *	 1047Hz  c'''  hohes c der Soprane 
- *	 2093Hz  c4  höchstes c der Geigen 
- *	 4185Hz  c5  höchstes c der Piccolo-Flöten
  * 
  * @author smk
- * @version 21.01.2004
+ * @version <p>13.04.2004: created, smk</p>
  */
-public class SinusGenerator
+public class RectangleGenerator
 extends Generator
 {
 	public static final int	INPUT_TYPE_FREQ		= 1;
@@ -32,7 +20,7 @@ extends Generator
 	 * 
 	 * @param frameRate	Frames per Second
 	 */
-	public SinusGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public RectangleGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
 		super(name, frameRate, generatorTypeData);
 	}
@@ -56,9 +44,19 @@ extends Generator
 		// Länge einer Sinus-Periode in Frames.
 		int periodLengthInFrames = Math.round(this.getFrameRate() / signalFrequency);
 		float	periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
-		float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
+		//float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
+
+		float value;
 		
-		//float value = ((float)Math.sin(frameTime * ((2.0F + signalShift) * Math.PI))) * amplitude;
+		if (((periodPosition + signalShift) % 1.0F) > 0.5F)
+		{
+			value = signalAmplitude;
+		}
+		else
+		{
+			value = -signalAmplitude;
+		}
+		
 		
 		soundSample.setStereoValues(value, value);
 	}
@@ -68,7 +66,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SinusGenerator.class, "Sinus", "Generates a sinus signal with a specified frequency and amplidude.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(RectangleGenerator.class, "Rectangle", "Generates a rectangle signal with a specified frequency and amplidude.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the signal in oscillations per second.");
@@ -79,7 +77,7 @@ extends Generator
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the sinus between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the rectangle between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

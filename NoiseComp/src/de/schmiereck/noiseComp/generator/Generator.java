@@ -180,14 +180,6 @@ implements GeneratorInterface
 		return inputData;
 	}
 	
-	/**
-	 * @see #addInputGenerator(Generator, InputTypeData, Float)
-	public InputData addInputGenerator(Generator inputGenerator, InputTypeData inputTypeData)
-	{
-		return this.addInputGenerator(inputGenerator, inputTypeData, null);
-	}
-	 */
-
 	public InputData addInputValue(float value, int inputType)
 	{
 		InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(inputType);
