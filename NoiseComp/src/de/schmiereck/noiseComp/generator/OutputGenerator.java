@@ -85,8 +85,8 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorBuffer()
 	 */
-	public GeneratorBuffer createGeneratorBuffer()
-	{
-		return new GeneratorFullBuffer();
-	}
+	//public GeneratorBuffer createGeneratorBuffer()
+	//{
+	//	return new GeneratorFullBuffer();
+	//}
 }

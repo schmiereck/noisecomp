@@ -38,7 +38,7 @@ implements GeneratorInterface
 	
 	private GeneratorTypeData generatorTypeData;
 
-	private GeneratorBuffer	generatorBuffer = null;
+	//private GeneratorBuffer	generatorBuffer = null;
 	
 	/**
 	 * Constructor.
@@ -69,8 +69,8 @@ implements GeneratorInterface
 	public synchronized void setStartTimePos(float startTimePos)
 	{
 		this.startTimePos = startTimePos;
-		GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
-		generatorBuffer.setStartPosition((long)(this.startTimePos * this.getFrameRate()));
+		//GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
+		//generatorBuffer.setStartPosition((long)(this.startTimePos * this.getFrameRate()));
 	}
 
 	/**
@@ -79,8 +79,8 @@ implements GeneratorInterface
 	public synchronized void setEndTimePos(float endTimePos)
 	{
 		this.endTimePos = endTimePos;
-		GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
-		generatorBuffer.setEndPosition((long)(this.endTimePos * this.getFrameRate()));
+		//GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
+		//generatorBuffer.setEndPosition((long)(this.endTimePos * this.getFrameRate()));
 	}
 
 	/**
@@ -105,24 +105,25 @@ implements GeneratorInterface
 	{
 		SoundSample soundSample;
 		
-		GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
+		//GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
+
+		// Die Frameposition in Zeit umrechnen.
+		float frameTime = (framePosition / this.getFrameRate());
 		
+		//if (generatorBuffer.checkIsInTime(framePosition) == true)
 		//if ((frameTime >= this.startTimePos) && (frameTime < this.endTimePos))
-		if (generatorBuffer.checkIsInTime(framePosition) == true)
+		if (this.checkIsInTime(frameTime) == true)
 		{	
-			soundSample = generatorBuffer.readBuffer(framePosition);
+			//soundSample = generatorBuffer.readBuffer(framePosition);
 				
-			if (soundSample == null)
-			{
+			//if (soundSample == null)
+			//{
 				soundSample = new SoundSample();
 
-				// Die Frameposition in Zeit umrechnen.
-				float frameTime = (framePosition / this.getFrameRate());
-				
 				this.calculateSoundSample(framePosition, frameTime, soundSample, parentModulGenerator);
 				
-				generatorBuffer.writeBuffer(framePosition, soundSample);
-			}
+			//	generatorBuffer.writeBuffer(framePosition, soundSample);
+			//}
 		}
 		else
 		{
@@ -131,6 +132,25 @@ implements GeneratorInterface
 		return soundSample;
 	}
 
+	/**
+	 * @param frameTime
+	 * @return true, if the frameTime is in the generator time.
+	 */
+	public boolean checkIsInTime(float frameTime)
+	{
+		boolean ret;
+		
+		if ((frameTime >= this.startTimePos) && (frameTime < this.endTimePos))
+		{
+			ret = true;
+		}
+		else
+		{
+			ret = false;
+		}
+		return ret;
+	}
+	
 	/**
 	 * Berechnen des Sample-Wertes für die angegebene Frame-Position.
 	 * 
@@ -688,14 +708,14 @@ implements GeneratorInterface
 	}
 	 */
 	
-	private synchronized GeneratorBuffer getGeneratorBuffer()
-	{
-		if (this.generatorBuffer == null)
-		{	
-			this.generatorBuffer = this.createGeneratorBuffer();
-		}
-		return this.generatorBuffer;
-	}
+	//private synchronized GeneratorBuffer getGeneratorBuffer()
+	//{
+	//	if (this.generatorBuffer == null)
+	//	{	
+	//		this.generatorBuffer = this.createGeneratorBuffer();
+	//	}
+	//	return this.generatorBuffer;
+	//}
 	
 	/**
 	 * This function is called, if the buffer for the generator is created.<br/>
@@ -703,9 +723,9 @@ implements GeneratorInterface
 	 * 
 	 * @return the default buffer for all generators, a object of the type {@link GeneratorSingleBuffer}.
 	 */
-	public synchronized GeneratorBuffer createGeneratorBuffer()
-	{
-		return new GeneratorSingleBuffer();
-	}
+	//public synchronized GeneratorBuffer createGeneratorBuffer()
+	//{
+	//	return new GeneratorSingleBuffer();
+	//}
 	
 }
