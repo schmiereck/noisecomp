@@ -82,6 +82,11 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	public boolean dragMode = false;
 	
 	/**
+	 * Is the width and height of the up- and down-button rectangle.
+	 */
+	private int buttonWidth;
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @param posX
@@ -92,7 +97,17 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	public ScrollbarData(String name, int posX, int posY, int sizeX, int sizeY, boolean doScrollVertical)
 	{
 		super(name, posX, posY, sizeX, sizeY);
+	
 		this.doScrollVertical = doScrollVertical;
+
+		if (this.getDoScrollVertical() == true)
+		{
+			this.buttonWidth = this.getSizeX();
+		}
+		else
+		{
+			this.buttonWidth = this.getSizeY();
+		}
 	}
 
 	/**
@@ -143,47 +158,25 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	 */
 	public int getScreenScrollerPos()
 	{
-		int width;
-		int screenLength;
-
-		if (this.getDoScrollVertical() == true)
-		{
-			width = this.getSizeX();
-			screenLength = this.getSizeY() - (width * 2);
-		}
-		else
-		{
-			width = this.getSizeY();
-			screenLength = this.getSizeX() - (width * 2);
-		}
-
+		int screenLength = this.getScreenScrollerLength();
+		
 		//  screenLength     screenPos
 		// -------------- = -----------
 		// scrollerLength   scrollerPos
 		
 		int screenPos = (int)((this.scrollerPos * screenLength) / this.scrollerLength);
 		
-		return screenPos + width;
+		return screenPos + this.buttonWidth;
 	}
 
 	/**
-	 * @return the attribute {@link #scrollerSize}.
+	 * @see #scrollerSize
+	 * @see #scrollerLength
+	 * @return the size of the scroller-button in points.
 	 */
 	public int getScreenScrollerSize()
 	{
-		int width;
-		int screenLength;
-
-		if (this.getDoScrollVertical() == true)
-		{
-			width = this.getSizeX();
-			screenLength = this.getSizeY() - (width * 2);
-		}
-		else
-		{
-			width = this.getSizeY();
-			screenLength = this.getSizeX() - (width * 2);
-		}
+		int screenLength = this.getScreenScrollerLength();
 
 		//  screenLength     screenSize
 		// -------------- = -----------
@@ -202,6 +195,25 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 
 		return screenSize;
 	}
+	
+	/**
+	 * @return the length of the howl scrollbar in points.
+	 */
+	public int getScreenScrollerLength() 
+	{
+		int screenLength;
+
+		if (this.getDoScrollVertical() == true)
+		{
+			screenLength = this.getSizeY() - (this.buttonWidth * 2);
+		}
+		else
+		{
+			screenLength = this.getSizeX() - (this.buttonWidth * 2);
+		}
+		return screenLength;
+	}
+
 	/**
 	 * @return the attribute {@link #doScrollVertical}.
 	 */

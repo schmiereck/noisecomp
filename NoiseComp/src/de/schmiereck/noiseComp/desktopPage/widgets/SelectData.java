@@ -1,7 +1,6 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import java.util.Iterator;
-import java.util.Vector;
 
 import de.schmiereck.dataTools.VectorHash;
 import de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface;
@@ -18,7 +17,8 @@ extends InputWidgetData
 implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 {
 	/**
-	 * Selected position in the input select list.
+	 * Selected position in the input select list.<br/>
+	 * If {@link #useEmptyEntry} is true, the value can be -1.
 	 */
 	private int inputPos = 0;
 	
@@ -32,6 +32,11 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 * Normaly a {@link FunctionButtonData}-Object who perform the submit.
 	 */
 	private SubmitWidgetListenerInterface defaultSubmitWidgetInterface = null;
+
+	/**
+	 * if this attribute is true, {@link #inputPos} may contains -1.
+	 */
+	private boolean	useEmptyEntry = false;
 	
 	/**
 	 * Constructor.
@@ -45,7 +50,6 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	public SelectData(String name, int posX, int posY, int sizeX, int sizeY)
 	{
 		super(name, posX, posY, sizeX, sizeY);
-		// TODO Auto-generated constructor stub
 	}
 
 	/* (non-Javadoc)
@@ -90,9 +94,16 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	{
 		SelectEntryData selectEntryData;
 		
-		if (inputPos < this.selectEntrys.size())
+		if (inputPos > -1)
 		{	
-			selectEntryData = (SelectEntryData)this.selectEntrys.get(inputPos);
+			if (inputPos < this.selectEntrys.size())
+			{	
+				selectEntryData = (SelectEntryData)this.selectEntrys.get(inputPos);
+			}
+			else
+			{
+				selectEntryData = null;
+			}
 		}
 		else
 		{
@@ -103,22 +114,44 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	}
 
 	/**
-	 * @param integer
+	 * @param value
 	 */
-	public void setInputPosByValue(Integer value)
+	public void setInputPosByValue(Object value)
 	{
 		int pos = 0;
-		Iterator selectEntrysIterator = this.selectEntrys.iterator();
 		
-		while (selectEntrysIterator.hasNext())
+		if (this.useEmptyEntry == true)
 		{
-			SelectEntryData selectEntryData = (SelectEntryData)selectEntrysIterator.next();
-			
-			if (value.equals(selectEntryData.getValue()) == true)
+			if (value == null)
 			{
-				break;
+				pos = -1;
 			}
-			pos++;
+		}
+		
+		if (pos != -1)
+		{	
+			Iterator selectEntrysIterator = this.selectEntrys.iterator();
+			
+			while (selectEntrysIterator.hasNext())
+			{
+				SelectEntryData selectEntryData = (SelectEntryData)selectEntrysIterator.next();
+				
+				if (value == null)
+				{
+					if (selectEntryData.getValue() == null)
+					{	
+						break;
+					}
+				}
+				else
+				{	
+					if (value.equals(selectEntryData.getValue()) == true)
+					{
+						break;
+					}
+				}
+				pos++;
+			}
 		}
 		this.setInputPos(pos);
 	}
@@ -168,6 +201,13 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 			{
 				this.inputPos--;
 			}
+			else
+			{
+				if (this.useEmptyEntry == true)
+				{
+					this.inputPos = -1;
+				}
+			}
 		}
 	}
 
@@ -196,5 +236,21 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	public void setDefaultSubmitWidgetInterface(SubmitWidgetListenerInterface defaultSubmitWidgetInterface)
 	{
 		this.defaultSubmitWidgetInterface = defaultSubmitWidgetInterface;
+	}
+
+	/**
+	 * @see #useEmptyEntry
+	 */
+	public void setUseEmptyEntry(boolean useEmptyEntry)
+	{
+		this.useEmptyEntry = useEmptyEntry;
+	}
+
+	/**
+	 * @see #useEmptyEntry
+	 */
+	public boolean getUseEmptyEntry()
+	{
+		return this.useEmptyEntry;
 	}
 }

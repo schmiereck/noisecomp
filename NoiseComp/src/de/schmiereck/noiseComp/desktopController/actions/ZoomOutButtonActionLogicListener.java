@@ -35,11 +35,7 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		float generatorScaleX = this.controllerData.getTracksData().getGeneratorScaleX();
-
-		generatorScaleX = generatorScaleX / 2.0F;
-		
-		this.controllerData.getTracksData().setGeneratorScaleX(generatorScaleX);
+		this.controllerLogic.doChangeZoom(0.5F);
 	}
 
 }

@@ -9,14 +9,19 @@ import javax.sound.sampled.SourceDataLine;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.DesktopGraphic;
+import de.schmiereck.noiseComp.desktopController.actions.AddGeneratorButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.CancelGroupButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.GroupGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.RemoveGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.SaveGroupButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetInputButtonActionLogicListener;
@@ -71,6 +76,10 @@ public class Main
 		inputListener.setGraphic(multiBufferGraphic);
 		inputListener.setGameControllerLogic(controllerLogic);
 		
+		AddGeneratorButtonActionLogicListener addGeneratorButtonActionLogicListener	= new AddGeneratorButtonActionLogicListener(controllerLogic, controllerData);
+		RemoveGeneratorButtonActionLogicListener removeGeneratorButtonActionLogicListener = new RemoveGeneratorButtonActionLogicListener(controllerLogic, controllerData);
+		GroupGeneratorButtonActionLogicListener groupGeneratorButtonActionLogicListener = new GroupGeneratorButtonActionLogicListener(controllerLogic, controllerData);
+		
 		ExitButtonActionLogicListener exitButtonActionLogicListener = new ExitButtonActionLogicListener(controllerLogic);
 		NewButtonActionLogicListener newButtonActionLogicListener = new NewButtonActionLogicListener(controllerLogic, controllerData);
 
@@ -90,8 +99,16 @@ public class Main
 		LoadCancelButtonActionLogicListener loadCancelButtonActionLogicListener = new LoadCancelButtonActionLogicListener(controllerLogic, controllerData);
 		LoadFileButtonActionLogicListener loadFileButtonActionLogicListener = new LoadFileButtonActionLogicListener(controllerLogic, controllerData);
 		
-		controllerData.setActionListeners(exitButtonActionLogicListener,
-										  newButtonActionLogicListener,
+		CancelGroupButtonActionLogicListener cancelGroupButtonActionLogicListener = new CancelGroupButtonActionLogicListener(controllerLogic, controllerData);
+		SaveGroupButtonActionLogicListener saveGroupButtonActionLogicListener = new SaveGroupButtonActionLogicListener(controllerLogic, controllerData);
+		
+		controllerData.setActionListeners(
+				addGeneratorButtonActionLogicListener,
+				removeGeneratorButtonActionLogicListener,
+				groupGeneratorButtonActionLogicListener,
+				
+				exitButtonActionLogicListener,
+				newButtonActionLogicListener,
 				
 				zoomInButtonActionLogicListener,
 				zoomOutButtonActionLogicListener,
@@ -107,7 +124,10 @@ public class Main
 										  
 				loadButtonActionLogicListener,
 				loadCancelButtonActionLogicListener,
-				loadFileButtonActionLogicListener);
+				loadFileButtonActionLogicListener,
+				
+				cancelGroupButtonActionLogicListener,
+				saveGroupButtonActionLogicListener);
 		
 		//------------------------------------
 		// run:

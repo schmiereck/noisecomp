@@ -39,7 +39,7 @@ implements ButtonActionLogicListenerInterface
 	{
 		InputsData generatorInputsData = this.controllerData.getGeneratorInputsData();
 		
-		this.controllerLogic.setInput(generatorInputsData);
+		this.controllerLogic.setInput(generatorInputsData, false);
 	}
 
 }

@@ -85,7 +85,8 @@ extends ListWidgetGraphic
 				int lastX = screenPosX;
 				int lastY = screenPosY;
 				
-				for (float timePos = 0; timePos < timeLength; timePos += (0.5 / scaleX))
+				//for (float timePos = 0; timePos < timeLength; timePos += (0.5F / scaleX))
+				for (float timePos = 0; timePos < timeLength; timePos += (2.0F / scaleX))
 				{
 					SoundSample soundSample = generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate));
 					
@@ -99,7 +100,10 @@ extends ListWidgetGraphic
 						}
 						else
 						{	
+							g.setColor(Color.LIGHT_GRAY);
 							screenGrafic.drawAbsLine(g, lastX, lastY, samplePosX, samplePosY);
+							g.setColor(desktopColors.getSampleColor());
+							screenGrafic.drawPoint(g, lastX, lastY, 1);
 						}
 						lastX = samplePosX;
 						lastY = samplePosY;

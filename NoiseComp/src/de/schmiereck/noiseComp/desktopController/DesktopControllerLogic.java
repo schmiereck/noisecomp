@@ -10,6 +10,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorInputSelectedListene
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorSelectedListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputsData;
+import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectData;
 import de.schmiereck.noiseComp.desktopPage.widgets.SelectEntryData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
@@ -217,11 +218,13 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 					}
 					else
 					{
+						/*
 						if ("add".equals(pressedButtonData.getName()) == true)
 						{
 							this.controllerData.setActiveDesktopPageData(this.controllerData.getSelectGeneratorDesktopPageData());
 						}
 						else
+						*/
 						{
 							/*
 							if ("cancel".equals(pressedButtonData.getName()) == true)
@@ -296,11 +299,13 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 											}
 											else
 											{
+												/*
 												if ("remove".equals(pressedButtonData.getName()) == true)
 												{
 													this.controllerData.getTracksData().removeSelectedTrack();
 												}
 												else
+												*/
 												{
 													/*
 													if ("set".equals(pressedButtonData.getName()) == true)
@@ -341,7 +346,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 																	{
 																		InputsData generatorInputsData = this.controllerData.getGeneratorInputsData();
 																		
-																		this.addInput(generatorInputsData);
+																		this.setInput(generatorInputsData, true);
 																	}
 																	else
 																	{
@@ -553,26 +558,55 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 		this.controllerData.getGeneratorEndTimeInputlineData().setInputText(endTime);
 		this.controllerData.getGeneratorInputsData().setGeneratorInputs(generator, inputs);
 
-		SelectData selectData = this.controllerData.getGeneratorInputTypeSelectData();
-		
-		selectData.clearSelectEntrys();
-		
-		if (generatorTypeData != null)
-		{	
-			Iterator inputTypesDataIterator = generatorTypeData.getInputTypesDataIterator();
+		//--------------------------------------------------
+		// Build the Generator-Names select List:
+		{
+			SelectData inputNameSelectData = this.controllerData.getGeneratorInputNameSelectData();
 			
-			while (inputTypesDataIterator.hasNext())
-			{
-				InputTypeData inputTypeData = (InputTypeData)inputTypesDataIterator.next();
+			inputNameSelectData.clearSelectEntrys();
+			
+			inputNameSelectData.setUseEmptyEntry(true);
+			
+			if (generatorTypeData != null)
+			{	
+				Iterator tracksDataIterator = this.controllerData.getTracksData().getListEntrysIterator();
 				
-				SelectEntryData selectEntryData = new SelectEntryData(Integer.valueOf(inputTypeData.getInputType()), 
-						inputTypeData.getInputTypeName(),
-						inputTypeData);
-				
-				selectData.addSelectEntryData(selectEntryData);
+				while (tracksDataIterator.hasNext())
+				{
+					TrackData trackData = (TrackData)tracksDataIterator.next();
+					
+					SelectEntryData selectEntryData = new SelectEntryData(trackData.getName(), 
+							trackData.getName(),
+							trackData);
+					
+					inputNameSelectData.addSelectEntryData(selectEntryData);
+				}
 			}
-		}	
-		//selectData.setInputPosByValue(Integer.valueOf(inputType));
+		}
+
+		//--------------------------------------------------
+		// Build the Generator-Input-Types select List:
+		{
+			SelectData inputTypeSelectData = this.controllerData.getGeneratorInputTypeSelectData();
+			
+			inputTypeSelectData.clearSelectEntrys();
+			
+			if (generatorTypeData != null)
+			{	
+				Iterator inputTypesDataIterator = generatorTypeData.getInputTypesDataIterator();
+				
+				while (inputTypesDataIterator.hasNext())
+				{
+					InputTypeData inputTypeData = (InputTypeData)inputTypesDataIterator.next();
+					
+					SelectEntryData selectEntryData = new SelectEntryData(Integer.valueOf(inputTypeData.getInputType()), 
+							inputTypeData.getInputTypeName(),
+							inputTypeData);
+					
+					inputTypeSelectData.addSelectEntryData(selectEntryData);
+				}
+			}	
+		}
 	}
 
 	/* (non-Javadoc)
@@ -581,6 +615,7 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	public void notifyGeneratorDeselected(TrackData trackData)
 	{
 		this.controllerData.getGeneratorNameInputlineData().setInputText("");
+		this.controllerData.getGeneratorInputNameSelectData().clearSelectEntrys();
 		this.controllerData.getGeneratorInputTypeSelectData().clearSelectEntrys();
 		this.controllerData.getGeneratorStartTimeInputlineData().setInputText("");
 		this.controllerData.getGeneratorEndTimeInputlineData().setInputText("");
@@ -714,7 +749,8 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 			inputValue = null;
 		}
 		
-		this.controllerData.getGeneratorInputNameInputlineData().setInputText(inputGeneratorName);
+		//this.controllerData.getGeneratorInputNameInputlineData().setInputText(inputGeneratorName);
+		this.controllerData.getGeneratorInputNameSelectData().setInputPosByValue(inputGeneratorName);
 		
 		SelectData selectData = this.controllerData.getGeneratorInputTypeSelectData();
 		/*
@@ -746,7 +782,8 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	 */
 	public void notifyGeneratorInputDeselected(InputsData inputsData, InputData deselectedInputData)
 	{
-		this.controllerData.getGeneratorInputNameInputlineData().setInputText("");
+		//this.controllerData.getGeneratorInputNameInputlineData().setInputText("");
+		this.controllerData.getGeneratorInputNameSelectData().setInputPos(0);
 		this.controllerData.getGeneratorInputTypeSelectData().setInputPos(0);
 		this.controllerData.getGeneratorInputValueInputlineData().setInputText("");
 	}
@@ -770,13 +807,17 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	 * TODO replace the RuntimeExceptions with Message-Boxes, smk 
 	 * @param generatorInputsData
 	 */
-	private void addInput(InputsData generatorInputsData)
+	private void addInput_old(InputsData generatorInputsData)
 	{
 		if (generatorInputsData != null)
 		{	
-			String inputGeneratorName = this.controllerData.getGeneratorInputNameInputlineData().getInputText();
+			//String inputGeneratorName = this.controllerData.getGeneratorInputNameInputlineData().getInputText();
+			SelectEntryData inputGeneratorSelectEntryData = this.controllerData.getGeneratorInputNameSelectData().getSelectedEntryData();
+			String inputGeneratorName = (String)inputGeneratorSelectEntryData.getValue();
+				
 			SelectEntryData selectedEntryData = this.controllerData.getGeneratorInputTypeSelectData().getSelectedEntryData();
 			Integer inputType = (Integer)selectedEntryData.getValue();
+			
 			String inputGeneratorValueStr = this.controllerData.getGeneratorInputValueInputlineData().getInputText();
 			
 			Float inputGeneratorValue;
@@ -858,20 +899,72 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 	 *
 	 * TODO replace the RuntimeExceptions with Message-Boxes, smk 
 	 * @param generatorInputsData
+	 * @param insertNew	true, if the input should by inserted as a new input.<br/>
+	 * 					false, if the selected input should by updated.
 	 */
-	public void setInput(InputsData generatorInputsData)
+	public void setInput(InputsData generatorInputsData, boolean insertNew)
 	{
 		if (generatorInputsData != null)
 		{	
-			InputData selectedInputData = this.controllerData.getGeneratorInputsData().getSelectedInputData();
+			TrackData selectedTrackData = this.controllerData.getTracksData().getSelectedTrackData();
 			
-			if (selectedInputData != null)
-			{	
-				String name = this.controllerData.getGeneratorInputNameInputlineData().getInputText();
+			if (selectedTrackData != null)
+			{
+				//---------------------------------------------------
+				// Input-Generator-Name:
+
+				SelectEntryData inputGeneratorSelectEntryData = this.controllerData.getGeneratorInputNameSelectData().getSelectedEntryData();
+
+				String inputGeneratorName;
+
+				if (inputGeneratorSelectEntryData != null)
+				{
+					inputGeneratorName = (String)inputGeneratorSelectEntryData.getValue();
+				}
+				else
+				{
+					inputGeneratorName = null;
+				}
+				
+				//---------------------------------------------------
+				//Input-Generator:
+
+				Generator inputGenerator;
+			
+				// Select the name of a generator ?
+				if (inputGeneratorName != null)
+				{	
+					if (inputGeneratorName.length() > 0)
+					{	
+						TrackData inputTrackData;
+						inputTrackData = this.controllerData.getTracksData().searchTrackData(inputGeneratorName);
+						
+						// Found no Track with the name of the Input ?
+						if (inputTrackData == null)
+						{
+							throw new RuntimeException("input generator \"" + inputGeneratorName + "\" not found");
+						}
+						inputGenerator = inputTrackData.getGenerator();
+					}
+					else
+					{
+						inputGenerator = null;
+					}
+				}
+				else
+				{
+					inputGenerator = null;
+				}
+				
+				//---------------------------------------------------
+				// Input-Type:
+
 				SelectEntryData selectedEntryData = this.controllerData.getGeneratorInputTypeSelectData().getSelectedEntryData();
 				Integer inputType = (Integer)selectedEntryData.getValue();
-				//String type = this.controllerData.getGeneratorInputTypeInputlineData().getInputText();
 	
+				//---------------------------------------------------
+				// Input-Value:
+
 				String inputGeneratorValueStr = this.controllerData.getGeneratorInputValueInputlineData().getInputText();
 				
 				Float inputGeneratorValue;
@@ -892,54 +985,38 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 					inputGeneratorValue = null;
 				}
 				
-				Generator inputGenerator;
-				
-				TrackData selectedTrackData = this.controllerData.getTracksData().getSelectedTrackData();
-				
-				if (selectedTrackData != null)
+				//---------------------------------------------------
+
+				if ((inputGenerator == null) && (inputGeneratorValue == null))
 				{
-					// Select the name of a generator ?
-					if (name != null)
-					{	
-						if (name.length() > 0)
-						{	
-							TrackData inputTrackData;
-							inputTrackData = this.controllerData.getTracksData().searchTrackData(name);
-							
-							// Found no Track with the name of the Input ?
-							if (inputTrackData == null)
-							{
-								throw new RuntimeException("input generator \"" + name + "\" not found");
-							}
-							inputGenerator = inputTrackData.getGenerator();
-						}
-						else
-						{
-							inputGenerator = null;
-						}
-					}
-					else
-					{
-						inputGenerator = null;
-					}
+					throw new RuntimeException("no input generator and no value for the input \"" + inputGeneratorName + "\"");
+				}
+
+				InputData selectedInputData = this.controllerData.getGeneratorInputsData().getSelectedInputData();
+
+				//No Input selected or a insert is requested.
+				if ((selectedInputData == null) || (insertNew == true))
+				{	
+					// Insert new input:
+
+					Generator selectedGenerator = selectedTrackData.getGenerator();
+
+					selectedInputData = this.addInput(selectedGenerator, inputGeneratorName, inputType, inputGeneratorValue);
 					
-					if ((inputGenerator == null) && (inputGeneratorValue == null))
-					{
-						throw new RuntimeException("no input generator and no value for the input \"" + name + "\"");
-					}
-					
+					this.controllerData.getGeneratorInputsData().setSelectedInputData(selectedInputData);
+				}
+				else
+				{
+					// Update selected input:
+
 					selectedInputData.setInputGenerator(inputGenerator);
 					selectedInputData.setInputType(inputType);
 					selectedInputData.setInputValue(inputGeneratorValue);
 				}
-				else
-				{
-					throw new RuntimeException("no generator selected");
-				}
 			}
 			else
 			{
-				this.addInput(generatorInputsData);
+				throw new RuntimeException("no generator selected");
 			}
 		}
 	}
@@ -978,6 +1055,31 @@ implements ButtonPressedCallbackInterface, GeneratorSelectedListenerInterface, G
 				generator.addInputValue(inputTypeData.getDefaultValue(), inputTypeData.getInputType());
 			}
 		}
+	}
+
+	/**
+	 * Changes the actual zoom factor throu the given factor.
+	 * 
+	 * @param changeZoomFactor is the factor for the zoom factor ;-)
+	 */
+	public void doChangeZoom(float changeZoomFactor)
+	{
+		float generatorScaleX = this.controllerData.getTracksData().getGeneratorScaleX();
+
+		generatorScaleX = generatorScaleX * changeZoomFactor;
+		
+		this.controllerData.getTracksData().setGeneratorScaleX(generatorScaleX);
+		
+		ScrollbarData scrollbarData = this.controllerData.getTimelineScrollbarData();
+		
+		// Anzahl Sekunden die erscrollt werden können.
+		float time = scrollbarData.getScrollerLength();
+		int visiblePoints = scrollbarData.getScreenScrollerLength();
+		
+		// Anzahl Angezeigte Sekunden berechnen.
+		float visibleTime = visiblePoints / generatorScaleX;
+		
+		scrollbarData.setScrollerSize(visibleTime);
 	}
 	
 }

@@ -56,20 +56,33 @@ public class SelectGraphic
 		
 		screenGrafic.setFont(g, "Dialog", Font.PLAIN, sizeY - 4);
 		
-		SelectEntryData selectEntryData = selectData.getSelectEntryData(inputPos);
+		int size = selectData.getSelectEntrysCount();
 		
-		if (selectEntryData != null)
-		{
-			int size = selectData.getSelectEntrysCount();
+		String labelText;
+		
+		if (inputPos > -1)
+		{	
+			SelectEntryData selectEntryData = selectData.getSelectEntryData(inputPos);
 			
-			String labelText = (inputPos + 1) + "/" + size + ":" + selectEntryData.getLabelText();
-			
-			screenGrafic.drawString(g, posX, 
-					posY + (sizeY / 2) + 
-					(screenGrafic.calcFontAscent(g) / 2), 
-					labelText);
+			if (selectEntryData != null)
+			{
+				labelText = (inputPos + 1) + "/" + size + ":" + selectEntryData.getLabelText();
+			}
+			else
+			{
+				labelText = "";
+			}
 		}
-
+		else
+		{
+			labelText = "0/" + size + ": --";
+		}
+		
+		screenGrafic.drawString(g, posX, 
+				posY + (sizeY / 2) + 
+				(screenGrafic.calcFontAscent(g) / 2), 
+				labelText);
+		
 		int s = sizeY;
 		int hs = s / 2;
 		

@@ -4,16 +4,15 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
-import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 
 /**
  * TODO docu
  *
  * @author smk
- * @version 22.02.2004
+ * @version <p>22.02.2004: created, smk</p>
  */
-public class ZoomInButtonActionLogicListener 
-implements ButtonActionLogicListenerInterface
+public class CancelGroupButtonActionLogicListener
+	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
@@ -23,20 +22,19 @@ implements ButtonActionLogicListenerInterface
 	 * 
 	 * 
 	 */
-	public ZoomInButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public CancelGroupButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		this.controllerLogic.doChangeZoom(2.0F);
+		this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 	}
-
 }
