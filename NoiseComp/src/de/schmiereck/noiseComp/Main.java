@@ -40,6 +40,7 @@ import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.Sel
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectMainEditButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectRemoveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
+import de.schmiereck.noiseComp.desktopPage.ShowMessageListener;
 import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.Runner;
@@ -74,7 +75,8 @@ public class Main
 		//------------------------------------
 		// Setup Desktop:
 		
-		boolean useFullScreen = true;
+		boolean useFullScreen = false;
+		//boolean useFullScreen = true;
 		String playerName = null;
 		
 		SchedulerWaiter waiter = new SchedulerWaiter();
@@ -89,7 +91,13 @@ public class Main
 
 		DesktopInputListener inputListener = new DesktopInputListener();
 		
-		DesktopControllerLogic controllerLogic = new DesktopControllerLogic(controllerData, inputListener, waiter, playerName);
+		ShowMessageListener showMessageListener = new ShowMessageListener(multiBufferGraphic);
+		
+		DesktopControllerLogic controllerLogic = new DesktopControllerLogic(controllerData, 
+																			inputListener, 
+																			showMessageListener,
+																			waiter, 
+																			playerName);
 		
 		inputListener.setGraphic(multiBufferGraphic);
 		inputListener.setGameControllerLogic(controllerLogic);
@@ -179,10 +187,10 @@ public class Main
 		// run:
 		
 		Runner.run(controllerData, controllerLogic, 
-				multiBufferGraphic, inputListener, 
-				waiter, 24, 16,
-				false, useFullScreen,
-				-1, -1);
+				   multiBufferGraphic, inputListener, 
+				   waiter, 24, 16,
+				   false, useFullScreen,
+				   -1, -1);
 		
 		// TODO das exit loswerden, alle Threads selber beenden.
 		System.exit(0);

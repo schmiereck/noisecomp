@@ -79,5 +79,4 @@ extends MultiBufferFullScreenGraphic
 			g.drawString("calc: " + (1000 / controllerData.getCalcSleepMillis()) + " fps", 4, 34);
 		}
 	}
-	
 }

@@ -14,6 +14,7 @@ import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.MainActionException;
 import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
@@ -57,6 +58,7 @@ implements ButtonActionLogicListenerInterface
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
+	throws MainActionException
 	{
 		String fileName = this.controllerData.getLoadFileNameInputlineData().getInputText();
 		
@@ -109,15 +111,13 @@ implements ButtonActionLogicListenerInterface
 			}
 			catch (XMLException ex)
 			{
-				// TODO show ERROR message
-				throw ex;
+				throw new MainActionException("while open xml file: \"" + fileName + "\"", ex);
 			}
 			
 			this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 		}
 		else
 		{
-			// TODO show ERROR message
 			throw new RuntimeException("file name is empty");
 		}
 	}

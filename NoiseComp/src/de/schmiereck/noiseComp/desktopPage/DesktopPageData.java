@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.desktop.DesktopData;
+import de.schmiereck.noiseComp.desktopPage.widgets.MainActionException;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
@@ -455,10 +456,13 @@ public class DesktopPageData
 	}
 
 	/**
-	 * 
+	 * Defaultverhalten der Seite bei einem Submit (z.B. durch ENTER) auslösen.
+	 * @throws MainActionException
 	 */
-	public void submitPage()
+	public void submitPage() 
+	throws MainActionException
 	{
+		// Hat die Seite ein reade aktives Widget?
 		if (this.focusedWidgetData != null)
 		{
 			/*
@@ -472,8 +476,10 @@ public class DesktopPageData
 				}
 			}
 			*/
+			// Hat dieses einen Submit-Listener implementiert?
 			if (this.focusedWidgetData instanceof SubmitWidgetListenerInterface)
 			{
+				// Aktion auslösen.
 				((SubmitWidgetListenerInterface)this.focusedWidgetData).notifySubmit();
 			}
 		}

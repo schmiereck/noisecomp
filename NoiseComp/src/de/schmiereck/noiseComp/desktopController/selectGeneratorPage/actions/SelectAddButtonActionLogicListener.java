@@ -10,7 +10,7 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.soundData.SoundData;
 
 /**
- * TODO docu
+ * Hinzufügen des ausgewählten Generators zu der Generator-Liste auf der Main-Page.
  *
  * @author smk
  * @version <p>25.02.2004: created, smk</p>

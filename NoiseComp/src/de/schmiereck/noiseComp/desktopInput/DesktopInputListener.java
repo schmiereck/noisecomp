@@ -182,6 +182,7 @@ implements GraficInputListener
 				} 
 			case KeyEvent.VK_ENTER:	// ENTER
 				{
+					// Defaultverhalten der Seite beim ENTER auslösen.
 					this.gameControllerLogic.doSubmitPage();
 					break;
 				} 

@@ -225,6 +225,7 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 * @see de.schmiereck.noiseComp.desktopPage.SubmitWidgetListenerInterface#notifySubmit()
 	 */
 	public void notifySubmit()
+	throws MainActionException
 	{
 		if (this.defaultSubmitWidgetInterface != null)
 		{	

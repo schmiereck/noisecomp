@@ -10,7 +10,7 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.soundData.SoundData;
 
 /**
- * TODO docu
+ * Hinzufügen eines neuen Generator-Moduls zu der Auswahl-Liste.
  *
  * @author smk
  * @version <p>22.06.2004: created, smk</p>
@@ -61,7 +61,7 @@ implements ButtonActionLogicListenerInterface
 		
 		this.controllerLogic.addGenerator(generator);
 
-		this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 		*/
+		this.controllerData.setActiveDesktopPageData(this.controllerData.getSelectNewGeneratorPageData());
 	}
 }

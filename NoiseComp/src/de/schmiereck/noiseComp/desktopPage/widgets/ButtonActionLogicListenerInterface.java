@@ -8,5 +8,6 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
  */
 public interface ButtonActionLogicListenerInterface
 {
-	void notifyButtonReleased(InputWidgetData buttonData);
+	void notifyButtonReleased(InputWidgetData buttonData) 
+	throws MainActionException;
 }

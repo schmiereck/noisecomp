@@ -2,8 +2,10 @@ package de.schmiereck.noiseComp.desktopPage;
 
 import java.util.Iterator;
 
+import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
+import de.schmiereck.noiseComp.desktopPage.widgets.MainActionException;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.desktopPage.widgets.WidgetData;
 
@@ -181,6 +183,7 @@ public class DesktopPageLogic
 	 * @param desktopPageData
 	 */
 	public static void pointerReleased(DesktopPageData desktopPageData)
+	throws PopupRuntimeException
 	{
 		InputWidgetData pressedButtonData = desktopPageData.getPressedButtonData();
 		
@@ -193,7 +196,14 @@ public class DesktopPageLogic
 			{	
 				if (pressedButtonData.getButtonActionLogicListener() != null)
 				{
-					pressedButtonData.getButtonActionLogicListener().notifyButtonReleased(pressedButtonData);
+					try
+					{
+						pressedButtonData.getButtonActionLogicListener().notifyButtonReleased(pressedButtonData);
+					}
+					catch (MainActionException ex)
+					{
+						throw new PopupRuntimeException(ex);
+					}
 				}
 			}
 		}
