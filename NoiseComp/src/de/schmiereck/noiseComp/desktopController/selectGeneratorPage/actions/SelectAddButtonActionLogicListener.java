@@ -1,7 +1,8 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
@@ -20,17 +21,23 @@ public class SelectAddButtonActionLogicListener
 {
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
+	
+	private SelectGeneratorPageData selectGeneratorPageData;
+
 	/**
 	 * Constructor.
 	 * 
 	 * 
 	 */
-	public SelectAddButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public SelectAddButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			DesktopControllerData controllerData,
+			SelectGeneratorPageData selectGeneratorPageData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
+		this.selectGeneratorPageData = selectGeneratorPageData;
 	}
 	
 	/* (non-Javadoc)
@@ -38,7 +45,7 @@ public class SelectAddButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		GeneratorTypeData selectedGeneratorTypeData = this.controllerData.getGeneratorTypesListData().getSelectedGeneratorTypeData();
+		GeneratorTypeData selectedGeneratorTypeData = this.selectGeneratorPageData.getGeneratorTypesListData().getSelectedGeneratorTypeData();
 
 		if (selectedGeneratorTypeData == null)
 		{

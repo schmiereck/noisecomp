@@ -2,12 +2,13 @@ package de.schmiereck.noiseComp.desktopController.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
- * TODO docu
+ * Bearbeiten des gerade zum bearbeiten ausgewählten Moduls.
  *
  * @author smk
  * @version <p>22.02.2004: created, smk</p>
@@ -17,18 +18,22 @@ public class GroupGeneratorButtonActionLogicListener
 {
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
+	private EditModulPageData editModulPageData;
 	
 	/**
 	 * Constructor.
 	 * 
 	 * 
 	 */
-	public GroupGeneratorButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public GroupGeneratorButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			DesktopControllerData controllerData,
+			EditModulPageData editModulPageData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
+		this.editModulPageData = editModulPageData;
 	}
 
 	/* (non-Javadoc)
@@ -48,8 +53,8 @@ public class GroupGeneratorButtonActionLogicListener
 		{
 			generatorTypeName = "";
 		}
-		this.controllerData.getGroupNameInputlineData().setInputText(generatorTypeName);
+		this.editModulPageData.getGroupNameInputlineData().setInputText(generatorTypeName);
 		
-		this.controllerData.setActiveDesktopPageData(this.controllerData.getGroupGeneratorPageData());
+		this.controllerData.setActiveDesktopPageData(this.controllerData.getEditModulPageData());
 	}
 }

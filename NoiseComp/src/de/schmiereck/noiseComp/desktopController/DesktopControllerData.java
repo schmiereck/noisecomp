@@ -3,26 +3,35 @@ package de.schmiereck.noiseComp.desktopController;
 import java.util.Iterator;
 
 import de.schmiereck.noiseComp.desktop.DesktopData;
-import de.schmiereck.noiseComp.desktopController.actions.*;
 import de.schmiereck.noiseComp.desktopController.actions.AddGeneratorButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.CancelGroupButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.ExitButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.GroupGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.LoadButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.LoadCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.LoadFileButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.NewButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.NewInputButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.PauseButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.PlayButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.RemoveGeneratorButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.RemoveInputButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SaveFileButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SaveGroupButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SelectAddButtonActionLogicListener;
-import de.schmiereck.noiseComp.desktopController.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetGeneratorButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.SetInputButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.actions.StopButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.ZoomInButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.actions.ZoomOutButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData;
+import de.schmiereck.noiseComp.desktopController.editModulPage.actions.CancelGroupButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.editModulPage.actions.SaveGroupButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGeneratorPageData;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectAddButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectCancelButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectEditButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectMainEditButtonActionLogicListener;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectRemoveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopPage.DesktopPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.desktopPage.widgets.GeneratorTypesWidgetData;
@@ -46,7 +55,9 @@ import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.controller.ControllerData;
 
 /**
- * TODO docu
+ * <p>
+ * 	Manages the data of the desctop controller {@link de.schmiereck.noiseComp.desktopController.DesktopControllerLogic}.
+ * </p>
  *
  * @author smk
  * @version 08.01.2004
@@ -59,7 +70,10 @@ extends ControllerData
 	private boolean playSound = false;
 	
 	/**
-	 * The supported generator types.
+	 * The supported generator types.<br/>
+	 * There are many references to this Object on other places.
+	 * Don't kill this object, use clear() to remove the list of types.
+	 * 
 	 * @see #createBaseGeneratorTypes()
 	 */
 	private GeneratorTypesData generatorTypesData  = new GeneratorTypesData();
@@ -96,11 +110,11 @@ extends ControllerData
 	/**
 	 * Dialog to select a new sound generator.
 	 */
-	private DesktopPageData selectGeneratorPageData	= null;
+	private SelectGeneratorPageData selectGeneratorPageData	= null;
 	/**
 	 * Dialog to edit a Generator Group == a Module.
 	 */
-	private DesktopPageData groupGeneratorPageData = null;
+	private EditModulPageData editModulPageData = null;
 	
 	private InputlineData generatorNameInputlineData = null;
 	private InputlineData generatorStartTimeInputlineData = null;
@@ -205,54 +219,9 @@ extends ControllerData
 	private FunctionButtonData saveCancelButtonData = null;
 	
 	/**
-	 * Dialog: Select Generator: Cancel-Button
-	 */
-	private FunctionButtonData selectCancelButtonData = null;
-	
-	/**
-	 * Dialog: Select Generator: Add-Button
-	 */
-	private FunctionButtonData selectAddButtonData = null;
-	/**
-	 * Dialog: Select Generator: Edit-Button
-	 */
-	private FunctionButtonData selectEditButtonData = null;
-	/**
-	 * Dialog: Select Generator: Main-Edit-Button
-	 */
-	private FunctionButtonData selectMainEditButtonData = null;
-	/**
-	 * Dialog: Select Generator: Remove-Button
-	 */
-	private FunctionButtonData selectRemoveButtonData = null;
-	
-	/**
-	 * Dialog: Select Generator: GeneratorTypes-List
-	 */
-	private GeneratorTypesWidgetData	generatorTypesListData;
-
-	/**
-	 * Dialog: Group: Cancel-Button
-	 */
-	private FunctionButtonData	cancelGroupButtonData;
-
-	/**
-	 * Dialog: Group: Name-Inputline
-	 */
-	private InputlineData	groupNameInputlineData;
-
-	/**
-	 * Dialog: Group: Save-Button
-	 */
-	private FunctionButtonData	saveGroupButtonData;
-	
-	/**
 	 * The main desktop data, shared for all pages.
 	 */
 	private DesktopData	desktopData;
-
-	private int scrollbarWidth			= 20;
-	private int scrollbarWidth2			= 15;
 
 	/**
 	 * List of the main generators in the project.
@@ -284,7 +253,7 @@ extends ControllerData
 		
 		this.mainDesktopPageData = this.createMainPage(desktopData);
 		this.selectGeneratorPageData = this.createSelectGeneratorPage(desktopData);
-		this.groupGeneratorPageData = this.createGroupGeneratorPage(desktopData);
+		this.editModulPageData = this.createEditModulPage(desktopData);
 		this.saveDesktopPageData = this.createSavePage(desktopData);
 		this.loadDesktopPageData = this.createLoadPage(desktopData);
 		
@@ -428,12 +397,12 @@ extends ControllerData
 			}
 			ScrollbarData inputsVScrollbarData;
 			{
-				inputsVScrollbarData = new ScrollbarData("inputsVScroll", 530 - this.scrollbarWidth2, posY + 10, 
-						this.scrollbarWidth2, 100, true);
+				inputsVScrollbarData = new ScrollbarData("inputsVScroll", 530 - desktopData.getScrollbarWidth2(), posY + 10, 
+						desktopData.getScrollbarWidth2(), 100, true);
 				desktopPageData.addWidgetData(inputsVScrollbarData);
 			}
 			{
-				this.generatorInputsData = new InputsWidgetData(280, posY + 10, 250 - this.scrollbarWidth2, 100, inputsVScrollbarData, null, this.generatorTypesData);
+				this.generatorInputsData = new InputsWidgetData(280, posY + 10, 250 - desktopData.getScrollbarWidth2(), 100, inputsVScrollbarData, null, this.generatorTypesData);
 				desktopPageData.addWidgetData(this.generatorInputsData);
 			}
 
@@ -491,22 +460,22 @@ extends ControllerData
 		
 		{
 			// Add Generators and Scrollbars:
-			int generatorsSizeY = this.getFieldHeight() - (topMenuSizeY + this.scrollbarWidth + bottomMenuSizeY);
+			int generatorsSizeY = this.getFieldHeight() - (topMenuSizeY + desktopData.getScrollbarWidth() + bottomMenuSizeY);
 			
 			this.generatorsVScrollbarData = 
-				new ScrollbarData("generatorsVScroll", this.getFieldWidth() - this.scrollbarWidth, topMenuSizeY, 
-						this.scrollbarWidth, generatorsSizeY, true);
+				new ScrollbarData("generatorsVScroll", this.getFieldWidth() - desktopData.getScrollbarWidth(), topMenuSizeY, 
+						desktopData.getScrollbarWidth(), generatorsSizeY, true);
 			
 			this.generatorsHScrollbarData = 
 				new ScrollbarData("generatorsHScroll", 
 						generatorsLabelSizeX, topMenuSizeY + generatorsSizeY, 
-						this.getFieldWidth() - (generatorsLabelSizeX + this.scrollbarWidth), this.scrollbarWidth, false);
+						this.getFieldWidth() - (generatorsLabelSizeX + desktopData.getScrollbarWidth()), desktopData.getScrollbarWidth(), false);
 			
 			this.generatorsHScrollbarData.setScrollStep(0.5F);
 			
 			this.tracksData = 
 				new TracksData(0, topMenuSizeY, 
-						this.getFieldWidth() - this.scrollbarWidth, generatorsSizeY, 
+						this.getFieldWidth() - desktopData.getScrollbarWidth(), generatorsSizeY, 
 						generatorsLabelSizeX,
 						this.soundData,
 						this.generatorsVScrollbarData, this.generatorsHScrollbarData);
@@ -520,8 +489,9 @@ extends ControllerData
 		return desktopPageData;
 	}
 
-	private DesktopPageData createSelectGeneratorPage(DesktopData desktopData)
+	private SelectGeneratorPageData createSelectGeneratorPage(DesktopData desktopData)
 	{
+		/*
 		DesktopPageData	desktopPageData = new DesktopPageData(desktopData, this.getFieldWidth(), this.getFieldHeight());
 
 		{
@@ -540,12 +510,12 @@ extends ControllerData
 		}
 		ScrollbarData verticalScrollbarData;
 		{
-			verticalScrollbarData = new ScrollbarData("generatorTypesVScroll", 780 - this.scrollbarWidth2, 120, 
-					this.scrollbarWidth2, 400, true);
+			verticalScrollbarData = new ScrollbarData("generatorTypesVScroll", 780 - desktopData.getScrollbarWidth()2, 120, 
+					desktopData.getScrollbarWidth()2, 400, true);
 			desktopPageData.addWidgetData(verticalScrollbarData);
 		}
 		{
-			this.generatorTypesListData = new GeneratorTypesWidgetData(100, 120, 680 - this.scrollbarWidth2, 400, verticalScrollbarData, null, this.generatorTypesData);
+			this.generatorTypesListData = new GeneratorTypesWidgetData(100, 120, 680 - desktopData.getScrollbarWidth()2, 400, verticalScrollbarData, null, this.generatorTypesData);
 			desktopPageData.addWidgetData(this.generatorTypesListData);
 		}
 		{
@@ -566,10 +536,14 @@ extends ControllerData
 		}
 		
 		return desktopPageData;
+		*/
+		return new SelectGeneratorPageData(desktopData, this.getFieldWidth(), this.getFieldHeight(),
+				this.generatorTypesData);
 	}
 
-	private DesktopPageData createGroupGeneratorPage(DesktopData desktopData)
+	private EditModulPageData createEditModulPage(DesktopData desktopData)
 	{
+		/*
 		DesktopPageData	desktopPageData = new DesktopPageData(desktopData, this.getFieldWidth(), this.getFieldHeight());
 
 		{
@@ -578,10 +552,6 @@ extends ControllerData
 			desktopPageData.addWidgetData(paneData);
 		}
 		
-		{
-			this.cancelGroupButtonData = new FunctionButtonData("cancel", "Cancel", 100, 10, 90, 20);
-			desktopPageData.addWidgetData(this.cancelGroupButtonData);
-		}
 
 		{
 			LabelData nameLabelData = new LabelData("Name:", 10, 100, 60, 16);
@@ -593,11 +563,17 @@ extends ControllerData
 		}
 		
 		{
-			this.saveGroupButtonData = new FunctionButtonData("groupSave", "Save Group", 70, 160, 250, 20);
+			this.saveGroupButtonData = new FunctionButtonData("groupSave", "Save Group", 70, 560, 250, 20);
 			desktopPageData.addWidgetData(this.saveGroupButtonData);
+		}
+		{
+			this.cancelGroupButtonData = new FunctionButtonData("cancel", "Cancel", 500, 560, 90, 20);
+			desktopPageData.addWidgetData(this.cancelGroupButtonData);
 		}
 		
 		return desktopPageData;
+		*/
+		return new EditModulPageData(desktopData, this.getFieldWidth(), this.getFieldHeight());
 	}
 
 	private DesktopPageData createSavePage(DesktopData desktopData)
@@ -727,11 +703,11 @@ extends ControllerData
 		this.newInputButtonData.addActionLogicListener(newInputButtonActionLogicListener);
 		this.addInputButtonData.addActionLogicListener(addInputButtonActionLogicListener);
 		
-		this.selectCancelButtonData.addActionLogicListener(selectCancelButtonActionLogicListener);
-		this.selectAddButtonData.addActionLogicListener(selectAddButtonActionLogicListener);
-		this.selectEditButtonData.addActionLogicListener(selectEditButtonActionLogicListener);
-		this.selectMainEditButtonData.addActionLogicListener(selectMainEditButtonActionLogicListener);
-		this.selectRemoveButtonData.addActionLogicListener(selectRemoveButtonActionLogicListener);
+		this.selectGeneratorPageData.setActionListeners(selectCancelButtonActionLogicListener,
+				selectAddButtonActionLogicListener,
+				selectEditButtonActionLogicListener,
+				selectMainEditButtonActionLogicListener,
+				selectRemoveButtonActionLogicListener);
 		
 		this.saveButtonData.addActionLogicListener(saveButtonActionLogicListener);
 		this.saveCancelButtonData.addActionLogicListener(saveCancelButtonActionLogicListener);
@@ -741,8 +717,8 @@ extends ControllerData
 		this.loadCancelButtonData.addActionLogicListener(loadCancelButtonActionLogicListener);
 		this.loadFileButtonData.addActionLogicListener(loadFileButtonActionLogicListener);
 
-		this.cancelGroupButtonData.addActionLogicListener(cancelGroupButtonActionLogicListener);
-		this.saveGroupButtonData.addActionLogicListener(saveGroupButtonActionLogicListener);
+		this.editModulPageData.setActionListeners(cancelGroupButtonActionLogicListener, 
+				saveGroupButtonActionLogicListener);
 	}
 	
 	/* (non-Javadoc)
@@ -822,13 +798,6 @@ extends ControllerData
 	public DesktopPageData getMainDesktopPageData()
 	{
 		return this.mainDesktopPageData;
-	}
-	/**
-	 * @return the attribute {@link #selectGeneratorPageData}.
-	 */
-	public DesktopPageData getSelectGeneratorPageData()
-	{
-		return this.selectGeneratorPageData;
 	}
 
 	/**
@@ -932,25 +901,18 @@ extends ControllerData
 		return this.generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
 	}
 	/**
-	 * @return the attribute {@link #groupGeneratorPageData}.
+	 * @return the attribute {@link #editModulPageData}.
 	 */
-	public DesktopPageData getGroupGeneratorPageData()
+	public EditModulPageData getEditModulPageData()
 	{
-		return this.groupGeneratorPageData;
+		return this.editModulPageData;
 	}
 	/**
-	 * @return the attribute {@link #generatorTypesListData}.
+	 * @return the attribute {@link #selectGeneratorPageData}.
 	 */
-	public GeneratorTypesWidgetData getGeneratorTypesListData()
+	public SelectGeneratorPageData getSelectGeneratorPageData()
 	{
-		return this.generatorTypesListData;
-	}
-	/**
-	 * @return the attribute {@link #groupNameInputlineData}.
-	 */
-	public InputlineData getGroupNameInputlineData()
-	{
-		return this.groupNameInputlineData;
+		return this.selectGeneratorPageData;
 	}
 	/**
 	 * @return the attribute {@link #generatorTypesData}.

@@ -31,7 +31,10 @@ import de.schmiereck.screenTools.controller.ControllerLogic;
 import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
 
 /**
- * TODO docu
+ * <p>
+ * 	Provides the logic of the desctop controller.<br/>
+ * 	The data and related objects are managed in a {@link de.schmiereck.noiseComp.desktopController.DesktopControllerData}-Object.<br/>
+ * </p>
  *
  * @author smk
  * @version 08.01.2004
@@ -452,7 +455,7 @@ GeneratorInputSelectedListenerInterface
 			
 			if (generatorTypeData != null)
 			{	
-				Iterator inputTypesDataIterator = generatorTypeData.getInputTypesDataIterator();
+				Iterator inputTypesDataIterator = generatorTypeData.getInputTypesIterator();
 				
 				while (inputTypesDataIterator.hasNext())
 				{
@@ -588,7 +591,7 @@ GeneratorInputSelectedListenerInterface
 
 				GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
 				
-				inputGeneratorTypeDescription = inputTypeData.getInputDescription();
+				inputGeneratorTypeDescription = inputTypeData.getInputTypeDescription();
 			}
 			else
 			{
@@ -870,7 +873,7 @@ GeneratorInputSelectedListenerInterface
 		//GeneratorTypeData generatorTypeData = this.controllerData.searchGeneratorTypeData(generator);
 		GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
 		
-		Iterator inputTypesDataIterator = generatorTypeData.getInputTypesDataIterator();
+		Iterator inputTypesDataIterator = generatorTypeData.getInputTypesIterator();
 		
 		while (inputTypesDataIterator.hasNext())
 		{

@@ -1,9 +1,10 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions;
 
 import java.util.Iterator;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TrackData;
@@ -21,17 +22,23 @@ implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
+	
+	private SelectGeneratorPageData selectGeneratorPageData;
+	
 	/**
 	 * Constructor.
 	 * 
 	 * 
 	 */
-	public SelectMainEditButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public SelectMainEditButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			DesktopControllerData controllerData,
+			SelectGeneratorPageData selectGeneratorPageData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
+		this.selectGeneratorPageData = selectGeneratorPageData;
 	}
 	
 	/* (non-Javadoc)

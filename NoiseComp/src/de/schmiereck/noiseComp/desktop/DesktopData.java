@@ -23,6 +23,9 @@ public class DesktopData
 	 */
 	private int pointerPosY = 0;
 
+	private int scrollbarWidth			= 20;
+	private int scrollbarWidth2			= 15;
+
 	/**
 	 * @see #pointerPosX
 	 * @see #pointerPosY
@@ -46,5 +49,19 @@ public class DesktopData
 	public int getPointerPosY()
 	{
 		return this.pointerPosY;
+	}
+	/**
+	 * @return the attribute {@link #scrollbarWidth}.
+	 */
+	public int getScrollbarWidth()
+	{
+		return this.scrollbarWidth;
+	}
+	/**
+	 * @return the attribute {@link #scrollbarWidth2}.
+	 */
+	public int getScrollbarWidth2()
+	{
+		return this.scrollbarWidth2;
 	}
 }

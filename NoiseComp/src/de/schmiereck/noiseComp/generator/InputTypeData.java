@@ -38,7 +38,7 @@ public class InputTypeData
 	/**
 	 * Description of the input type.
 	 */
-	private String inputDescription = null;
+	private String inputTypeDescription = null;
 	
 	/**
 	 * Constructor.
@@ -46,12 +46,12 @@ public class InputTypeData
 	 * @param inputType
 	 * @param inputTypeName
 	 */
-	public InputTypeData(int inputType, String inputTypeName, String inputDescription)
+	public InputTypeData(int inputType, String inputTypeName, String inputTypeDescription)
 	{
 		super();
 		this.inputType = inputType;
 		this.inputTypeName = inputTypeName;
-		this.inputDescription = inputDescription;
+		this.inputTypeDescription = inputTypeDescription;
 	}
 	
 	/**
@@ -62,14 +62,14 @@ public class InputTypeData
 	 * @param inputCountMax
 	 * @param inputCountMin
 	 */
-	public InputTypeData(int inputType, String inputTypeName, int inputCountMax, int inputCountMin, String inputDescription)
+	public InputTypeData(int inputType, String inputTypeName, int inputCountMax, int inputCountMin, String inputTypeDescription)
 	{
 		super();
 		this.inputType = inputType;
 		this.inputTypeName = inputTypeName;
 		this.inputCountMax = inputCountMax;
 		this.inputCountMin = inputCountMin;
-		this.inputDescription = inputDescription;
+		this.inputTypeDescription = inputTypeDescription;
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class InputTypeData
 	 * @param inputCountMin
 	 */
 	public InputTypeData(int inputType, String inputTypeName, int inputCountMax, int inputCountMin, 
-						 Float defaultValue, String inputDescription)
+						 Float defaultValue, String inputTypeDescription)
 	{
 		super();
 		this.inputType = inputType;
@@ -89,7 +89,7 @@ public class InputTypeData
 		this.inputCountMax = inputCountMax;
 		this.inputCountMin = inputCountMin;
 		this.defaultValue = defaultValue;
-		this.inputDescription = inputDescription;
+		this.inputTypeDescription = inputTypeDescription;
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class InputTypeData
 	 */
 	public InputTypeData(Integer inputTypeType, String inputTypeName, 
 			Integer inputTypeCountMax, Integer inputTypeCountMin, 
-			Float defaultValue, String inputDescription)
+			Float defaultValue, String inputTypeDescription)
 	{
 		super();
 		this.inputType = inputTypeType.intValue();
@@ -130,7 +130,7 @@ public class InputTypeData
 		this.inputCountMin = countMin;
 		
 		this.defaultValue = defaultValue;
-		this.inputDescription = inputDescription;
+		this.inputTypeDescription = inputTypeDescription;
 	}
 
 	/**
@@ -169,10 +169,10 @@ public class InputTypeData
 		return this.inputTypeName;
 	}
 	/**
-	 * @return the attribute {@link #inputDescription}.
+	 * @return the attribute {@link #inputTypeDescription}.
 	 */
-	public String getInputDescription()
+	public String getInputTypeDescription()
 	{
-		return this.inputDescription;
+		return this.inputTypeDescription;
 	}
 }

@@ -478,4 +478,11 @@ public class DesktopPageData
 			}
 		}
 	}
+	/**
+	 * @return the attribute {@link #desktopData}.
+	 */
+	public DesktopData getDesktopData()
+	{
+		return this.desktopData;
+	}
 }

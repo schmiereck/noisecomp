@@ -1,7 +1,8 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.editModulPage.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.desktopPage.widgets.TracksData;
@@ -21,18 +22,22 @@ public class SaveGroupButtonActionLogicListener
 {
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
+	private EditModulPageData editModulPageData;
 	
 	/**
 	 * Constructor.
 	 * 
 	 * 
 	 */
-	public SaveGroupButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public SaveGroupButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			DesktopControllerData controllerData,
+			EditModulPageData editModulPageData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
+		this.editModulPageData = editModulPageData;
 	}
 
 	/* (non-Javadoc)
@@ -40,7 +45,7 @@ public class SaveGroupButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		String modulName = this.controllerData.getGroupNameInputlineData().getInputText();
+		String modulName = this.editModulPageData.getGroupNameInputlineData().getInputText();
 		
 		modulName = modulName.trim();
 		

@@ -1,11 +1,11 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
@@ -19,17 +19,23 @@ public class SelectRemoveButtonActionLogicListener
 {
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
+	
+	private SelectGeneratorPageData selectGeneratorPageData;
+	
 	/**
 	 * Constructor.
 	 * 
 	 * 
 	 */
-	public SelectRemoveButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public SelectRemoveButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			DesktopControllerData controllerData,
+			SelectGeneratorPageData selectGeneratorPageData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
+		this.selectGeneratorPageData = selectGeneratorPageData;
 	}
 	
 	/* (non-Javadoc)
@@ -37,7 +43,7 @@ public class SelectRemoveButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		GeneratorTypeData selectedGeneratorTypeData = this.controllerData.getGeneratorTypesListData().getSelectedGeneratorTypeData();
+		GeneratorTypeData selectedGeneratorTypeData = this.selectGeneratorPageData.getGeneratorTypesListData().getSelectedGeneratorTypeData();
 
 		if (selectedGeneratorTypeData == null)
 		{
@@ -49,7 +55,7 @@ public class SelectRemoveButtonActionLogicListener
 			throw new RuntimeException("the selected type is not a modul");
 		}
 		
-		this.controllerData.getGeneratorTypesListData().removeSelectedGeneratorType();
+		this.selectGeneratorPageData.getGeneratorTypesListData().removeSelectedGeneratorType();
 		
 		//this.controllerData.getGeneratorTypesListData().removeSelectedGeneratorType();
 		

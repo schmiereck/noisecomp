@@ -28,7 +28,7 @@ public class GeneratorTypeData
 	/**
 	 * List of the allowed {@link InputTypeData}-Objects of this Generator-Type.
 	 */
-	private VectorHash inputTypes = new VectorHash();
+	private InputTypesData inputTypes = new InputTypesData();
 	
 	/**
 	 * Constructor.
@@ -48,7 +48,7 @@ public class GeneratorTypeData
 	 */
 	public void addInputTypeData(InputTypeData inputTypeData)
 	{
-		this.inputTypes.add(Integer.valueOf(inputTypeData.getInputType()), inputTypeData);
+		this.inputTypes.addInputTypeData(inputTypeData);
 	}
 	/**
 	 * @return the attribute {@link #generatorClass}.
@@ -80,7 +80,7 @@ public class GeneratorTypeData
 	
 	public InputTypeData getInputTypeData(int inputType)
 	{
-		return (InputTypeData)this.inputTypes.get(Integer.valueOf(inputType));
+		return this.inputTypes.getInputTypeData(inputType);
 	}
 	/**
 	 * @return the attribute {@link #generatorTypeName}.
@@ -99,11 +99,11 @@ public class GeneratorTypeData
 	}
 	
 	/**
-	 * @return
+	 * @see #inputTypes
 	 */
-	public Iterator getInputTypesDataIterator()
+	public Iterator getInputTypesIterator()
 	{
-		return this.inputTypes.iterator();
+		return this.inputTypes.getInputTypesIterator();
 	}
 
 	/**

@@ -119,7 +119,7 @@ implements ButtonActionLogicListenerInterface
 			Node generatorNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "name", generatorTypeData.getGeneratorTypeName());
 			Node generatorDescriptionNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "description", generatorTypeData.getGeneratorTypeDescription());
 			
-			Iterator inputTypesIterator = generatorTypeData.getInputTypesDataIterator();
+			Iterator inputTypesIterator = generatorTypeData.getInputTypesIterator();
 			
 			if (inputTypesIterator != null)
 			{
@@ -136,7 +136,7 @@ implements ButtonActionLogicListenerInterface
 					XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "countMin", înputTypeData.getInputCountMin());
 					XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "countMax", înputTypeData.getInputCountMax());
 					XMLData.appendFloatNode(xmlDoc, inputTypeNode, "defaultValue", înputTypeData.getDefaultValue());
-					XMLData.appendTextNode(xmlDoc, inputTypeNode, "description", înputTypeData.getInputDescription());
+					XMLData.appendTextNode(xmlDoc, inputTypeNode, "description", înputTypeData.getInputTypeDescription());
 				}
 			}
 			

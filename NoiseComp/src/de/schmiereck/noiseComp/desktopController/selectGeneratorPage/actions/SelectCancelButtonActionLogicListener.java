@@ -1,7 +1,8 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
+import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
 
@@ -9,27 +10,32 @@ import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
  * TODO docu
  *
  * @author smk
- * @version <p>22.02.2004: created, smk</p>
+ * @version 21.02.2004
  */
-public class CancelGroupButtonActionLogicListener
-	implements ButtonActionLogicListenerInterface
+public class SelectCancelButtonActionLogicListener 
+implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
+	
+	private SelectGeneratorPageData selectGeneratorPageData;
 	
 	/**
 	 * Constructor.
 	 * 
 	 * 
 	 */
-	public CancelGroupButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public SelectCancelButtonActionLogicListener(DesktopControllerLogic controllerLogic, 
+			DesktopControllerData controllerData,
+			SelectGeneratorPageData selectGeneratorPageData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
+		this.selectGeneratorPageData = selectGeneratorPageData;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
 	 */
@@ -37,4 +43,5 @@ public class CancelGroupButtonActionLogicListener
 	{
 		this.controllerData.setActiveDesktopPageData(this.controllerData.getMainDesktopPageData());
 	}
+
 }
