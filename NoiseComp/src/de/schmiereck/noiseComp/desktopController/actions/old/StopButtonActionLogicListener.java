@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.actions.old;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
@@ -9,9 +9,9 @@ import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
  * TODO docu
  *
  * @author smk
- * @version <p>22.02.2004: created, smk</p>
+ * @version <p>06.03.2004: created, smk</p>
  */
-public class AddGeneratorButtonActionLogicListener
+public class StopButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
@@ -22,7 +22,7 @@ public class AddGeneratorButtonActionLogicListener
 	 * 
 	 * 
 	 */
-	public AddGeneratorButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public StopButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
 		super();
 		
@@ -35,6 +35,6 @@ public class AddGeneratorButtonActionLogicListener
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		this.controllerData.setActiveDesktopPageData(this.controllerData.getSelectGeneratorPageData());
+		this.controllerLogic.stopSound();
 	}
 }

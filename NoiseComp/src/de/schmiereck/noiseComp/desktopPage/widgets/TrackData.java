@@ -4,7 +4,7 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
  */
 /**
  * <p>
- * 	TODO docu type
+ * 	TODO DELETE
  * </p>
  * 
  * @author smk

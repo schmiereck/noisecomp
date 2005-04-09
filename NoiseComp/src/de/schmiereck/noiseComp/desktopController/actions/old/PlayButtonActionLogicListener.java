@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.desktopController.actions;
+package de.schmiereck.noiseComp.desktopController.actions.old;
 
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
@@ -11,7 +11,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData;
  * @author smk
  * @version <p>06.03.2004: created, smk</p>
  */
-public class StopButtonActionLogicListener
+public class PlayButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
@@ -22,19 +22,19 @@ public class StopButtonActionLogicListener
 	 * 
 	 * 
 	 */
-	public StopButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
+	public PlayButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
 		super();
 		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ButtonActionLogicListenerInterface#notifyButtonReleased(de.schmiereck.noiseComp.desktopPage.widgets.InputWidgetData)
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
-		this.controllerLogic.stopSound();
+		this.controllerLogic.playSound();
 	}
 }
