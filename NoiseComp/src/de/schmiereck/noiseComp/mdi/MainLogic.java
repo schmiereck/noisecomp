@@ -2,12 +2,14 @@ package de.schmiereck.noiseComp.mdi;
 
 import org.bs.mdi.ActionConverter;
 import org.bs.mdi.Application;
-import org.bs.mdi.DocumentDataFactory;
-import org.bs.mdi.DocumentViewFactory;
-import org.bs.mdi.DocumentWindowFactory;
+//import org.bs.mdi.DocumentDataFactory;
+//import org.bs.mdi.DocumentViewFactory;
+//import org.bs.mdi.DocumentWindowFactory;
 import org.bs.mdi.FileIOModule;
 import org.bs.mdi.MainWindow;
 import org.bs.mdi.Resources;
+import org.bs.mdi.RootData;
+import org.bs.mdi.RootView;
 
 /*
  * Created on 25.03.2005, Copyright (c) schmiereck, 2005
@@ -96,25 +98,41 @@ extends Application
 	
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.Application#createDocumentDataFactory()
-	 */
 	protected DocumentDataFactory createDocumentDataFactory() 
 	{
 		return new NoiseCompDocumentDataFactory();
 	}
+	 */
 	
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.Application#createDocumentViewFactory()
-	 */
 	protected DocumentViewFactory createDocumentViewFactory() 
 	{
 		return new NoiseCompDocumentViewFactory();
 	}
+	 */
 	
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.Application#createDocumentWindowFactory()
-	 */
 	protected DocumentWindowFactory createDocumentWindowFactory() 
 	{
 		return new NoiseCompDocumentWindowFactory();
+	}
+	 */
+
+	/* (non-Javadoc)
+	 * @see org.bs.mdi.Application#createRootData()
+	 */
+	public RootData createRootData()
+	{
+		return new NoiseCompDocumentData();//document);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.bs.mdi.Application#createRootView()
+	 */
+	public RootView createRootView()
+	{
+		return new NoiseCompDocumentView();//doc);
 	}
 }

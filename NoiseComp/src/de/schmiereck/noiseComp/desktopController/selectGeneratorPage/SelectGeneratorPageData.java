@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.desktopController.selectGeneratorPage;
 
 import de.schmiereck.noiseComp.desktop.DesktopData;
+import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectEditButtonActionLogicListener;
@@ -55,6 +56,8 @@ extends DesktopPageData
 	 */
 	private GeneratorTypesWidgetData	generatorTypesListData;
 	
+	private GeneratorTypesData generatorTypesData;
+	
 	/**
 	 * Constructor.
 	 * 
@@ -62,56 +65,62 @@ extends DesktopPageData
 	 * @param desktopSizeX
 	 * @param desktopSizeY
 	 */
-	public SelectGeneratorPageData(DataChangedObserver dataChangedObserver, 
+	public SelectGeneratorPageData(DesktopControllerData desktopControllerData,
+								   DataChangedObserver dataChangedObserver, 
 								   DesktopData desktopData, int desktopSizeX, int desktopSizeY,
 								   GeneratorTypesData generatorTypesData)
 	{
 		super(desktopData, desktopSizeX, desktopSizeY);
 
+		this.generatorTypesData = generatorTypesData;
+		
 		{
 			// Add Main Page:
-			PaneData paneData = new PaneData(dataChangedObserver, 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
+			PaneData paneData = new PaneData(desktopControllerData, dataChangedObserver, 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
 			this.addWidgetData(paneData);
 		}
 		
 		{
-			this.selectCancelButtonData = new FunctionButtonData(dataChangedObserver, "cancel", "Cancel", 100, 10, 90, 20);
+			this.selectCancelButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "cancel", "Cancel", 100, 10, 90, 20);
 			this.addWidgetData(this.selectCancelButtonData);
 		}
 		{
-			LabelData labelData = new LabelData(dataChangedObserver, "Generator-Types:", 100, 100, 100, 20);
+			LabelData labelData = new LabelData(desktopControllerData, dataChangedObserver, "Generator-Types:", 100, 100, 100, 20);
 			this.addWidgetData(labelData);
 		}
 		ScrollbarData verticalScrollbarData;
 		{
-			verticalScrollbarData = new ScrollbarData(dataChangedObserver, "generatorTypesVScroll", 780 - desktopData.getScrollbarWidth2(), 120, 
+			verticalScrollbarData = new ScrollbarData(desktopControllerData, dataChangedObserver, "generatorTypesVScroll", 780 - desktopData.getScrollbarWidth2(), 120, 
 					desktopData.getScrollbarWidth2(), 400, true);
 			this.addWidgetData(verticalScrollbarData);
 		}
 		{
-			this.generatorTypesListData = new GeneratorTypesWidgetData(dataChangedObserver, 100, 120, 680 - desktopData.getScrollbarWidth2(), 400, verticalScrollbarData, null, generatorTypesData);
+			this.generatorTypesListData = new GeneratorTypesWidgetData(desktopControllerData, dataChangedObserver, 100, 120, 680 - desktopData.getScrollbarWidth2(), 400, 
+																	   verticalScrollbarData, 
+																	   null, 
+																	   generatorTypesData);
 			this.addWidgetData(this.generatorTypesListData);
 		}
 		
 		{
-			this.selectAddButtonData = new FunctionButtonData(dataChangedObserver, "selectAdd", "Add selected...", 100, 40, 100, 20);
+			this.selectAddButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "selectAdd", "Add selected...", 100, 40, 100, 20);
 			this.addWidgetData(this.selectAddButtonData);
 		}
 		{
-			this.selectMainEditButtonData = new FunctionButtonData(dataChangedObserver, "selectMainEdit", "Edit Main Modul...", 210, 40, 220, 20);
+			this.selectMainEditButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "selectMainEdit", "Edit Main Modul...", 210, 40, 220, 20);
 			this.addWidgetData(this.selectMainEditButtonData);
 		}
 		
 		{
-			this.selectInsertButtonData = new FunctionButtonData(dataChangedObserver, "selectInsert", "Insert...", 100, 70, 100, 20);
+			this.selectInsertButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "selectInsert", "Insert...", 100, 70, 100, 20);
 			this.addWidgetData(this.selectInsertButtonData);
 		}
 		{
-			this.selectEditButtonData = new FunctionButtonData(dataChangedObserver, "selectEdit", "Edit...", 210, 70, 100, 20);
+			this.selectEditButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "selectEdit", "Edit...", 210, 70, 100, 20);
 			this.addWidgetData(this.selectEditButtonData);
 		}
 		{
-			this.selectRemoveButtonData = new FunctionButtonData(dataChangedObserver, "selectRemove", "Remove", 320, 70, 110, 20);
+			this.selectRemoveButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "selectRemove", "Remove", 320, 70, 110, 20);
 			this.addWidgetData(this.selectRemoveButtonData);
 		}
 	}
@@ -139,5 +148,12 @@ extends DesktopPageData
 	public GeneratorTypesWidgetData getGeneratorTypesListData()
 	{
 		return this.generatorTypesListData;
+	}
+	/**
+	 * @return returns the {@link #generatorTypesData}.
+	 */
+	public GeneratorTypesData getGeneratorTypesData()
+	{
+		return this.generatorTypesData;
 	}
 }

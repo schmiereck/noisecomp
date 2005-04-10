@@ -69,142 +69,141 @@ implements SelectedListEntryInterface
 	
 	/**
 	 * Constructor.
-	 * 
 	 * @param desktopData
 	 * @param desktopSizeX
 	 * @param desktopSizeY
 	 */
-	public EditModulPageData(DataChangedObserver dataChangedObserver, 
-							 DesktopData desktopData, DesktopControllerData desktopControllerData, int desktopSizeX, int desktopSizeY)
+	public EditModulPageData(DesktopControllerData desktopControllerData, 
+							 DataChangedObserver dataChangedObserver, DesktopData desktopData, int desktopSizeX, int desktopSizeY)
 	{
 		super(desktopData, desktopSizeX, desktopSizeY);
 
 		{
 			// Add Main Panel:
-			PaneData paneData = new PaneData(dataChangedObserver,
+			PaneData paneData = new PaneData(desktopControllerData, dataChangedObserver,
 											 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
 			this.addWidgetData(paneData);
 		}
 
 		{
-			this.cancelGroupButtonData = new FunctionButtonData(dataChangedObserver,
+			this.cancelGroupButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver,
 																 "cancel", "Cancel", 100, 10, 90, 20);
 			this.addWidgetData(this.cancelGroupButtonData);
 		}
 		
 		{
-			LabelData nameLabelData = new LabelData(dataChangedObserver,
+			LabelData nameLabelData = new LabelData(desktopControllerData, dataChangedObserver,
 													 "Modul Name:", 10, 40, 90, 16);
 			this.addWidgetData(nameLabelData);
 		}
 		{
-			this.groupNameInputlineData = new InputlineData(dataChangedObserver,
+			this.groupNameInputlineData = new InputlineData(desktopControllerData, dataChangedObserver,
 															 "groupName", 100, 40, 200, 16);
 			this.addWidgetData(this.groupNameInputlineData);
 		}
 		{
-			this.saveGroupButtonData = new FunctionButtonData(dataChangedObserver,
+			this.saveGroupButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver,
 																 "groupSave", "Save Modul", 100, 60, 200, 20);
 			this.addWidgetData(this.saveGroupButtonData);
 		}
 		
 		{
-			this.editModulInsertButtonData = new FunctionButtonData(dataChangedObserver,
+			this.editModulInsertButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver,
 																	 "editModulNew", "New...", 100, 95, 100, 20);
 			this.addWidgetData(this.editModulInsertButtonData);
 		}
 		{
-			this.editModulEditButtonData = new FunctionButtonData(dataChangedObserver,
+			this.editModulEditButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver,
 																	 "editModulEdit", "Edit...", 210, 95, 100, 20);
 			this.addWidgetData(this.editModulEditButtonData);
 		}
 		{
-			this.editModulRemoveButtonData = new FunctionButtonData(dataChangedObserver,
+			this.editModulRemoveButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver,
 																	 "editModulRemove", "Remove", 320, 95, 110, 20);
 			this.addWidgetData(this.editModulRemoveButtonData);
 		}
 		
 		ScrollbarData verticalScrollbarData;
 		{
-			verticalScrollbarData = new ScrollbarData(dataChangedObserver,
+			verticalScrollbarData = new ScrollbarData(desktopControllerData, dataChangedObserver,
 														 "inputTypesVScroll", 780 - desktopData.getScrollbarWidth2(), 120, 
 					desktopData.getScrollbarWidth2(), 300, true);
 			this.addWidgetData(verticalScrollbarData);
 		}
 		{
-			LabelData nameLabelData = new LabelData(dataChangedObserver,
+			LabelData nameLabelData = new LabelData(desktopControllerData, dataChangedObserver,
 													 "Input Types:", 10, 120, 90, 16);
 			this.addWidgetData(nameLabelData);
 		}
 		{
-			this.inputTypesListWidgetData = new InputTypesWidgetData(dataChangedObserver,
+			this.inputTypesListWidgetData = new InputTypesWidgetData(desktopControllerData, dataChangedObserver,
 																	 100, 120, 680 - desktopData.getScrollbarWidth2(), 300, verticalScrollbarData, null, this);
 			this.addWidgetData(this.inputTypesListWidgetData);
 		}
 
 		{
-			LabelData nameLabelData = new LabelData(dataChangedObserver,
+			LabelData nameLabelData = new LabelData(desktopControllerData, dataChangedObserver,
 													 "Type:", 10, 440, 90, 16);
 			this.addWidgetData(nameLabelData);
 		}
 		{
-			this.inputTypeEditTypeInputlineData = new InputlineData(dataChangedObserver,
+			this.inputTypeEditTypeInputlineData = new InputlineData(desktopControllerData, dataChangedObserver,
 																	 "inputTypeEditType", 100, 440, 50, 16);
 			this.addWidgetData(this.inputTypeEditTypeInputlineData);
 		}
 		{
-			LabelData nameLabelData = new LabelData(dataChangedObserver,
+			LabelData nameLabelData = new LabelData(desktopControllerData, dataChangedObserver,
 													 "Type Name:", 10, 460, 90, 16);
 			this.addWidgetData(nameLabelData);
 		}
 		{
-			this.inputTypeEditNameInputlineData = new InputlineData(dataChangedObserver,
+			this.inputTypeEditNameInputlineData = new InputlineData(desktopControllerData, dataChangedObserver,
 																	 "inputTypeEditName", 100, 460, 150, 16);
 			this.addWidgetData(this.inputTypeEditNameInputlineData);
 		}
 		{
-			LabelData nameLabelData = new LabelData(dataChangedObserver,
+			LabelData nameLabelData = new LabelData(desktopControllerData, dataChangedObserver,
 													 "Min:", 10, 480, 90, 16);
 			this.addWidgetData(nameLabelData);
 		}
 		{
-			this.inputTypeEditCountMinInputlineData = new InputlineData(dataChangedObserver,
+			this.inputTypeEditCountMinInputlineData = new InputlineData(desktopControllerData, dataChangedObserver,
 																		 "inputTypeEditCountMin", 100, 480, 50, 16);
 			this.addWidgetData(this.inputTypeEditCountMinInputlineData);
 		}
 		{
-			LabelData nameLabelData = new LabelData(dataChangedObserver,
+			LabelData nameLabelData = new LabelData(desktopControllerData, dataChangedObserver,
 													 "Max:", 10, 500, 90, 16);
 			this.addWidgetData(nameLabelData);
 		}
 		{
-			this.inputTypeEditCountMaxInputlineData = new InputlineData(dataChangedObserver,
+			this.inputTypeEditCountMaxInputlineData = new InputlineData(desktopControllerData, dataChangedObserver,
 																		 "inputTypeEditCountMax", 100, 500, 50, 16);
 			this.addWidgetData(this.inputTypeEditCountMaxInputlineData);
 		}
 		{
-			LabelData nameLabelData = new LabelData(dataChangedObserver,
+			LabelData nameLabelData = new LabelData(desktopControllerData, dataChangedObserver,
 													 "Default Value:", 10, 520, 90, 16);
 			this.addWidgetData(nameLabelData);
 		}
 		{
-			this.inputTypeEditDefaultValueInputlineData = new InputlineData(dataChangedObserver,
+			this.inputTypeEditDefaultValueInputlineData = new InputlineData(desktopControllerData, dataChangedObserver,
 																			 "inputTypeEditDefaultValue", 100, 520, 200, 16);
 			this.addWidgetData(this.inputTypeEditDefaultValueInputlineData);
 		}
 		{
-			LabelData nameLabelData = new LabelData(dataChangedObserver,
+			LabelData nameLabelData = new LabelData(desktopControllerData, dataChangedObserver,
 													 "Description:", 10, 540, 90, 16);
 			this.addWidgetData(nameLabelData);
 		}
 		{
-			this.inputTypeEditDescriptionInputlineData = new InputlineData(dataChangedObserver,
+			this.inputTypeEditDescriptionInputlineData = new InputlineData(desktopControllerData, dataChangedObserver,
 																			 "inputTypeEditDescription", 100, 540, 200, 16);
 			this.addWidgetData(this.inputTypeEditDescriptionInputlineData);
 		}
 		
 		{
-			this.inputTypeEditSaveFunctionButtonData = new FunctionButtonData(dataChangedObserver,
+			this.inputTypeEditSaveFunctionButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver,
 																				 "inputTypeEditSave", "Save", 100, 570, 200, 20);
 			this.addWidgetData(this.inputTypeEditSaveFunctionButtonData);
 		}

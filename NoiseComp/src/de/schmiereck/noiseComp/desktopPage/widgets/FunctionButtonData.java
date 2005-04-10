@@ -2,6 +2,7 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.SubmitWidgetListenerInterface;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -20,10 +21,11 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 * Constructor.
 	 * 
 	 */
-	public FunctionButtonData(DataChangedObserver dataChangedObserver,
+	public FunctionButtonData(ControllerData controllerData,
+							  DataChangedObserver dataChangedObserver,
 							  String name, String labelText, int posX, int posY, int sizeX, int sizeY)
 	{
-		super(dataChangedObserver,
+		super(controllerData, dataChangedObserver,
 			  name, posX, posY, sizeX, sizeY);
 
 		this.labelText = labelText;

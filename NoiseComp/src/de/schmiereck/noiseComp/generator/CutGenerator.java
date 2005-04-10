@@ -28,8 +28,26 @@ extends Generator
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
-		float maxValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MAX_AMPL), parentModulGenerator);
-		float minValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MIN_AMPL), parentModulGenerator);
+		//----------------------------------------------------------------------
+		float maxValue;
+		try
+		{
+			maxValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MAX_AMPL), parentModulGenerator);
+		}
+		catch (NoInputSignalException ex)
+		{
+			maxValue = 0.0F;
+		}
+		//----------------------------------------------------------------------
+		float minValue;
+		try
+		{
+			minValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MIN_AMPL), parentModulGenerator);
+		}
+		catch (NoInputSignalException ex)
+		{
+			minValue = 0.0F;
+		}
 
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		this.calcInputValue(framePosition, signalInputData, soundSample, parentModulGenerator);

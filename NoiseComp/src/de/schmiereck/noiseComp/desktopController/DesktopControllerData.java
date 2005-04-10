@@ -167,7 +167,8 @@ extends ControllerData
 	 * @param soundData
 	 */
 	public DesktopControllerData(DataChangedObserver dataChangedObserver, 
-								 SoundData soundData, GeneratorTypesData generatorTypesData)
+								 SoundData soundData, 
+								 GeneratorTypesData generatorTypesData)
 	{
 		this.dataChangedObserver = dataChangedObserver;
 		this.generatorTypesData  = generatorTypesData;
@@ -203,22 +204,24 @@ extends ControllerData
 	private SelectGeneratorPageData createSelectGeneratorPage(DataChangedObserver dataChangedObserver, 
 															  DesktopData desktopData)
 	{
-		return new SelectGeneratorPageData(dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight(),
+		return new SelectGeneratorPageData(this,
+										   dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight(),
 										   this.generatorTypesData);
 	}
 
 	private SelectNewGeneratorPageData createNewSelectGeneratorPage(DataChangedObserver dataChangedObserver, 
 																	DesktopData desktopData)
 	{
-		return new SelectNewGeneratorPageData(dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight(),
+		return new SelectNewGeneratorPageData(this,
+											  dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight(),
 											  this.generatorTypesData);
 	}
 
 	private EditModulPageData createEditModulPage(DataChangedObserver dataChangedObserver, 
 												  DesktopData desktopData)
 	{
-		return new EditModulPageData(dataChangedObserver,
-									 desktopData, this, this.getFieldWidth(), this.getFieldHeight());
+		return new EditModulPageData(this,
+									 dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight());
 	}
 	/*
 	private DesktopPageData createSavePage(DesktopData desktopData)
@@ -452,7 +455,7 @@ extends ControllerData
 	{
 		this.activeDesktopPageData = activeDesktopPageData;
 		
-		this.dataChangedObserver.dataChanged();
+		this.dataChangedObserver.dataChanged(this);
 	}
 	/**
 	 * @return the attribute {@link #desktopData}.
@@ -476,10 +479,10 @@ extends ControllerData
 	}
 	 */
 	
-	public GeneratorTypeData searchGeneratorTypeData(String generatorTypeClassName)
-	{
-		return this.generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
-	}
+	//public GeneratorTypeData searchGeneratorTypeData(String generatorTypeClassName)
+	//{
+	//	return this.generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
+	//}
 	/**
 	 * @return the attribute {@link #editModulPageData}.
 	 */
@@ -503,11 +506,11 @@ extends ControllerData
 	}
 	/**
 	 * @return the attribute {@link #generatorTypesData}.
-	 */
 	public GeneratorTypesData getGeneratorTypesData()
 	{
 		return this.generatorTypesData;
 	}
+	 */
 	
 	/**
 	 * @return

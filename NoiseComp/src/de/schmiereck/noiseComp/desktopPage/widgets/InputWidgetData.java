@@ -1,5 +1,6 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -18,10 +19,11 @@ extends WidgetData
 	 * Constructor.
 	 * 
 	 */
-	public InputWidgetData(DataChangedObserver dataChangedObserver,
+	public InputWidgetData(ControllerData controllerData,
+							  DataChangedObserver dataChangedObserver,
 						   String name, int posX, int posY, int sizeX, int sizeY)
 	{
-		super(dataChangedObserver, 
+		super(controllerData, dataChangedObserver, 
 			  posX, posY, sizeX, sizeY, true);
 		this.name = name;
 	}

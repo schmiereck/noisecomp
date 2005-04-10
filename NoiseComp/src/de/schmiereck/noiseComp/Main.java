@@ -40,7 +40,18 @@ import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.Sel
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectMainEditButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectRemoveButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
+import de.schmiereck.noiseComp.generator.ASRPulseGenerator;
+import de.schmiereck.noiseComp.generator.CutGenerator;
+import de.schmiereck.noiseComp.generator.FaderGenerator;
+import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.Generators;
+import de.schmiereck.noiseComp.generator.MixerGenerator;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.OutputGenerator;
+import de.schmiereck.noiseComp.generator.RectangleGenerator;
+import de.schmiereck.noiseComp.generator.SinusGenerator;
+import de.schmiereck.noiseComp.generator.WaveGenerator;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.screenTools.Runner;
 import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphicException;
@@ -64,7 +75,22 @@ public class Main
 		boolean useFullScreen = false;
 		//boolean useFullScreen = true;
 
-		MainModel mainModel = new MainModel();
+		//======================================================================
+		GeneratorTypesData generatorTypesData  = new GeneratorTypesData();
+
+		Main.createBaseGeneratorTypes(generatorTypesData);
+		
+		// new ModulGeneratorTypeData(null, null, null);
+		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+
+		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
+		
+		mainModulGeneratorTypeData.setGeneratorTypeName("Main-Modul");
+
+		generatorTypesData.addGeneratorTypeData(mainModulGeneratorTypeData);
+		
+		//======================================================================
+		MainModel mainModel = new MainModel(generatorTypesData, mainModulGeneratorTypeData);
 		
 		MainView mainView;
 		try
@@ -74,7 +100,7 @@ public class Main
 			Runner.run(mainModel.getControllerData(), 
 					   mainModel.getControllerLogic(), 
 					   mainView.getMultiBufferGraphic(), 
-					   mainModel.getInputListener(), 
+					   mainView.getInputListener(), 
 					   mainModel.getWaiter(), 24, 16,
 					   false, 
 					   useFullScreen,
@@ -87,6 +113,20 @@ public class Main
 		
 		// TODO das exit loswerden, alle Threads selber beenden.
 		System.exit(0);
+	}
+
+	private static void createBaseGeneratorTypes(GeneratorTypesData generatorTypesData)
+	{
+		generatorTypesData.clear();
+		
+		generatorTypesData.addGeneratorTypeData(FaderGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(MixerGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(OutputGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(SinusGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(RectangleGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(CutGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(WaveGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(ASRPulseGenerator.createGeneratorTypeData());
 	}
 
 }

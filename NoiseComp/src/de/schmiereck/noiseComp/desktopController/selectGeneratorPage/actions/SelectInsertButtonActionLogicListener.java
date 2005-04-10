@@ -73,7 +73,7 @@ implements ButtonActionLogicListenerInterface
 		modulGeneratorTypeData.setGeneratorTypeName("unnamed");
 		modulGeneratorTypeData.setGeneratorTypeDescription("New created modul.");
 		
-		this.controllerData.getGeneratorTypesData().addGeneratorTypeData(modulGeneratorTypeData);
+		this.selectGeneratorPageData.getGeneratorTypesData().addGeneratorTypeData(modulGeneratorTypeData);
 
 		//----------------------------------------------------------------------
 		float frameRate = this.controllerData.getSoundData().getFrameRate();
@@ -81,8 +81,8 @@ implements ButtonActionLogicListenerInterface
 		//---------------------------------
 		{
 			OutputGenerator outputGenerator;
-
-			GeneratorTypeData generatorTypeData = this.controllerData.searchGeneratorTypeData(OutputGenerator.class.getName());
+			
+			GeneratorTypeData generatorTypeData = selectGeneratorPageData.getGeneratorTypesData().searchGeneratorTypeData(OutputGenerator.class.getName());
 			outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate), generatorTypeData);
 	
 			outputGenerator.setStartTimePos(0.0F);

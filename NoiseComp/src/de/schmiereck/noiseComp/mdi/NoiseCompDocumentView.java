@@ -17,10 +17,12 @@ import javax.swing.KeyStroke;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+import org.bs.mdi.Data;
 import org.bs.mdi.Document;
 import org.bs.mdi.DocumentWindow;
-import org.bs.mdi.swing.SwingDocumentView;
+//import org.bs.mdi.swing.SwingDocumentView;
 import org.bs.mdi.swing.SwingDocumentWindow;
+import org.bs.mdi.swing.SwingRootView;
 import de.schmiereck.noiseComp.MainModel;
 import de.schmiereck.noiseComp.MainView;
 import de.schmiereck.screenTools.Runner;
@@ -40,25 +42,25 @@ import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphicException;
  * @version <p>25.03.2005:	created, smk</p>
  */
 public class NoiseCompDocumentView
-extends SwingDocumentView
+extends SwingRootView
 {
-	private MainModel mainModel;
+	//private MainModel mainModel;
 	private MainView mainView;
 	private GraphicComponent graphicComponent;
 	
 	boolean listenerActive = true;	// should text events ("actions") be triggered?
 
-	public NoiseCompDocumentView(Document document) 
+	public NoiseCompDocumentView()//Document document) 
 	{
-		super(document);		
+		super();//document);		
 		
 		//this.setEnabled(true);
 		//this.enableInputMethods(true);
 		this.setFocusable(true);
+/*		
+		NoiseCompDocumentData noiseCompDocumentData = (NoiseCompDocumentData)this.getData();
 		
-		NoiseCompDocumentData noiseCompDocumentData = (NoiseCompDocumentData)document.getData();
-		
-		this.mainModel = noiseCompDocumentData.getMainModel();
+		MainModel mainModel = noiseCompDocumentData.getMainModel();
 		
 		this.setLayout(new BorderLayout());
 		
@@ -74,7 +76,8 @@ extends SwingDocumentView
 		//JApplet a = new JApplet();
 		//JTextArea t = new JTextArea();	
 		this.graphicComponent = new GraphicComponent(this.mainView.getMultiBufferGraphic(),
-																 this.mainModel.getControllerData());
+													 ///mainModel.getControllerData());
+													 600, 800);
 		JScrollPane scrollPane = new JScrollPane(this.graphicComponent);
 		this.add(scrollPane, BorderLayout.CENTER);
 
@@ -84,9 +87,9 @@ extends SwingDocumentView
 							  //AWTEvent.INPUT_METHODS_ENABLED_MASK |
 		//					  AWTEvent.MOUSE_EVENT_MASK |
 		//					  AWTEvent.MOUSE_MOTION_EVENT_MASK);
-		this.graphicComponent.addMouseListener(this.mainModel.getInputListener());
-		this.graphicComponent.addMouseMotionListener(this.mainModel.getInputListener());
-		this.graphicComponent.addKeyListener(this.mainModel.getInputListener());
+		this.graphicComponent.addMouseListener(mainModel.getInputListener());
+		this.graphicComponent.addMouseMotionListener(mainModel.getInputListener());
+		this.graphicComponent.addKeyListener(mainModel.getInputListener());
 		
 		//this.addKeyListener(new java.awt.event.KeyAdapter()
 		//					    {
@@ -98,7 +101,7 @@ extends SwingDocumentView
 
 		 //this.getRootPane().addKeyListener(this.mainModel.getInputListener());
 		
-		this.mainModel.getControllerLogic().addDataChangedListener(graphicComponent);
+		mainModel.getControllerLogic().addDataChangedListener(graphicComponent);
 		
 		//JFrame mainFrame = this.mainView.getMultiBufferGraphic().getMainFrame();
 		
@@ -108,7 +111,7 @@ extends SwingDocumentView
 		//this.add(new JScrollPane(mainFrame), BorderLayout.CENTER);
 		//this.add(new JScrollPane(mainFrame.getContentPane()), BorderLayout.CENTER);		
 		//this.add(mainFrame, BorderLayout.CENTER);		
-		
+*/		
 		//----------------------------------------------------------------------
 		// run:
 		/*
@@ -125,6 +128,88 @@ extends SwingDocumentView
 		
 		//Runner.stop(runnerSchedulers);
 		 */
+	}
+
+	
+	
+	/* (non-Javadoc)
+	 * @see org.bs.mdi.View#setData(org.bs.mdi.Data)
+	 */
+	public void setData(Data data)
+	{
+		super.setData(data);
+
+		this.setEnabled(true);
+		
+		NoiseCompDocumentData noiseCompDocumentData = (NoiseCompDocumentData)this.getData();
+		
+		MainModel mainModel = noiseCompDocumentData.getMainModel();
+		
+		this.setLayout(new BorderLayout());
+		
+		try
+		{
+			this.mainView = new MainView(false, mainModel, this);
+		}
+		catch (MultiBufferFullScreenGraphicException ex)
+		{
+			throw new RuntimeException("while init view", ex);
+		}
+		
+		//JApplet a = new JApplet();
+		//JTextArea t = new JTextArea();	
+		this.graphicComponent = new GraphicComponent(this.mainView.getMultiBufferGraphic(),
+													 ///mainModel.getControllerData());
+													 mainModel.getControllerData().getFieldWidth(), 
+													 mainModel.getControllerData().getFieldHeight());
+		JScrollPane scrollPane = new JScrollPane(this.graphicComponent);
+		this.add(scrollPane, BorderLayout.CENTER);
+
+		//this.enableEvents(AWTEvent.KEY_EVENT_MASK | 
+		//					  AWTEvent.FOCUS_EVENT_MASK | 
+		//					  AWTEvent.INPUT_METHOD_EVENT_MASK |
+							  //AWTEvent.INPUT_METHODS_ENABLED_MASK |
+		//					  AWTEvent.MOUSE_EVENT_MASK |
+		//					  AWTEvent.MOUSE_MOTION_EVENT_MASK);
+		this.graphicComponent.addMouseListener(mainView.getInputListener());
+		this.graphicComponent.addMouseMotionListener(mainView.getInputListener());
+		this.graphicComponent.addKeyListener(mainView.getInputListener());
+		
+		//this.addKeyListener(new java.awt.event.KeyAdapter()
+		//					    {
+		//					      public void keyPressed(KeyEvent e)
+		//					      {
+		//					        System.out.println("DOC-WIN FRAME KEY PRESSES");
+		//					      }
+		//					    });		
+
+		 //this.getRootPane().addKeyListener(this.mainModel.getInputListener());
+		
+		mainModel.getControllerLogic().addDataChangedListener(graphicComponent);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.bs.mdi.View#syncWithData()
+	 */
+	public void syncWithData() 
+	{	
+		this.listenerActive = false;
+		
+		/*
+		int oldCaret = textArea.getCaretPosition();
+		
+		textArea.setText(((NoiseCompDocumentData)this.getDocument().getData()).getText());
+		textArea.setCaretPosition(oldCaret);
+		*/
+
+		NoiseCompDocumentData noiseCompDocumentData = (NoiseCompDocumentData)this.getData();
+		
+		MainModel mainModel = noiseCompDocumentData.getMainModel();
+		
+		
+		this.graphicComponent.notifyDataChanged(mainModel.getControllerData());
+		
+		this.listenerActive = true;
 	}
 	
  	/* (non-Javadoc)
@@ -202,22 +287,6 @@ extends SwingDocumentView
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.DocumentView#syncWithData()
 	 */
-	public void syncWithData() 
-	{	
-		this.listenerActive = false;
-		
-		/*
-		int oldCaret = textArea.getCaretPosition();
-		
-		textArea.setText(((NoiseCompDocumentData)this.getDocument().getData()).getText());
-		textArea.setCaretPosition(oldCaret);
-		*/
-		
-		this.graphicComponent.notifyDataChanged();
-		
-		this.listenerActive = true;
-	}
-	
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.ActionProcessor#applyAction(org.bs.mdi.Action)
 	 */
@@ -397,48 +466,40 @@ extends SwingDocumentView
 
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.DocumentView#isCopyPossible()
-	 */
 	public boolean isCopyPossible() 
 	{
-		/*
-		return (textArea.getSelectedText() != null);
-		*/
+		//return (textArea.getSelectedText() != null);
 		
 		return false;
 	}
+	 */
 	
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.DocumentView#isCutPossible()
-	 */
 	public boolean isCutPossible() 
 	{
-		/*
-		return isCopyPossible();
-		*/
+		//return isCopyPossible();
 		return false;
 	}
+	*/
 	
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.DocumentView#isPastePossible()
-	 */
 	public boolean isPastePossible() 
 	{
-		/*
-		return true;
-		*/
+		//return true;
 		return false;
 	}
+	 */
 	
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.DocumentView#isDeletePossible()
-	 */
 	public boolean isDeletePossible() 
 	{
-		/*
-		return isCutPossible();
-		*/
+		//return isCutPossible();
 		return false;
 	}
+	 */
 	
 	/*
 	protected void insertText(int offset, String text) 

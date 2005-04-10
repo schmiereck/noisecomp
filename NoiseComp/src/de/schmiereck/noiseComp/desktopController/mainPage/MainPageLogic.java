@@ -211,6 +211,8 @@ EditGeneratorChangedListener
 	 */
 	public void notifyGeneratorInputSelected(InputsWidgetData inputsData, InputData selectedInputData)
 	{
+		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
+
 		String inputGeneratorName;
 		String inputGeneratorTypeDescription;
 		String inputValue;
@@ -286,7 +288,7 @@ EditGeneratorChangedListener
 		
 		this.mainPageData.getGeneratorInputTypeDescriptionTextWidgetData().setLabelText(inputGeneratorTypeDescription);
 
-		this.controllerLogic.dataChanged();
+		this.controllerLogic.dataChanged(desktopControllerData);
 	}
 
 	/* (non-Javadoc)
@@ -294,13 +296,15 @@ EditGeneratorChangedListener
 	 */
 	public void notifyGeneratorInputDeselected(InputsWidgetData inputsData, InputData deselectedInputData)
 	{
+		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
+
 		//this.mainPageData.getGeneratorInputNameInputlineData().setInputText("");
 		this.mainPageData.getGeneratorInputNameSelectData().setInputPos(0);
 		this.mainPageData.getGeneratorInputTypeSelectData().setInputPos(0);
 		this.mainPageData.getGeneratorInputValueInputlineData().setInputText("");
 		this.mainPageData.getGeneratorInputModulInputSelectData().setInputPos(-1);
 
-		this.controllerLogic.dataChanged();
+		this.controllerLogic.dataChanged(desktopControllerData);
 	}
 	/*
 	public void addTrackData(TrackData trackData)
@@ -511,6 +515,8 @@ EditGeneratorChangedListener
 	 */
 	private void notifyInputsChanged()
 	{
+		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
+
 		int len;
 		
 		TrackData selectedTrackData = this.mainPageData.getTracksListWidgetData().getSelectedTrackData();
@@ -526,7 +532,7 @@ EditGeneratorChangedListener
 		
 		this.mainPageData.getInputsVScrollbarData().setScrollerLength(len);
 
-		this.controllerLogic.dataChanged();
+		this.controllerLogic.dataChanged(desktopControllerData);
 	}
 
 	/**
@@ -536,6 +542,8 @@ EditGeneratorChangedListener
 	 */
 	public void doChangeZoom(float changeZoomFactor)
 	{
+		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
+
 		float generatorScaleX = this.mainPageData.getTracksListWidgetData().getGeneratorScaleX();
 
 		generatorScaleX = generatorScaleX * changeZoomFactor;
@@ -553,7 +561,7 @@ EditGeneratorChangedListener
 		
 		scrollbarData.setScrollerSize(visibleTime);
 
-		this.controllerLogic.dataChanged();
+		this.controllerLogic.dataChanged(desktopControllerData);
 	}
 
 	/**
@@ -616,7 +624,7 @@ EditGeneratorChangedListener
 			this.mainPageData.getModulGeneratorTextWidgetData().setLabelText("<Main Modul>");
 		}
 
-		this.controllerLogic.dataChanged();
+		this.controllerLogic.dataChanged(desktopControllerData);
 	}
 
 	/**

@@ -75,8 +75,6 @@ public class MainModel
 {
 	private SoundData soundData;
 	
-	private GeneratorTypesData generatorTypesData;
-	
 	/**
 	 * List of {@link DataChangedListener}-Objects.
 	 */
@@ -86,14 +84,13 @@ public class MainModel
 	
 	private DesktopControllerLogic controllerLogic;
 	
-	private DesktopInputListener inputListener;
-	
 	private SchedulerWaiter waiter;
 
 	//private ZoomInButtonActionLogicListener zoomInButtonActionLogicListener;
 	//private ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener;
 	
-	public MainModel()
+	public MainModel(GeneratorTypesData generatorTypesData, 
+					 ModulGeneratorTypeData mainModulGeneratorTypeData)
 	{
 		//======================================================================
 		// Setup Sound:
@@ -106,34 +103,19 @@ public class MainModel
 		this.soundData = new SoundData(line, soundSourceLogic);
 		
 		//======================================================================
-		this.generatorTypesData  = new GeneratorTypesData();
-
-		this.createBaseGeneratorTypes();
-		
-		// new ModulGeneratorTypeData(null, null, null);
-		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
-
-		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
-		
-		mainModulGeneratorTypeData.setGeneratorTypeName("Main-Modul");
-
-		this.generatorTypesData.addGeneratorTypeData(mainModulGeneratorTypeData);
-		
-		//======================================================================
 		// Setup Desktop:
 
 		String playerName = null;
 		
 		this.waiter = new SchedulerWaiter();
 
-		this.inputListener = new DesktopInputListener();
-
 		//----------------------------------------------------------------------
 		this.dataChangedObserver = new DataChangedObserver();
 		
 		//----------------------------------------------------------------------
 		this.controllerData = new DesktopControllerData(this.dataChangedObserver,
-														this.soundData, this.generatorTypesData);
+														this.soundData, 
+														generatorTypesData);
 		
 		EditData editData = this.controllerData.getEditData();
 		
@@ -145,17 +127,17 @@ public class MainModel
 		this.controllerLogic = new DesktopControllerLogic(this.dataChangedObserver,
 														  soundSourceLogic,
 														  this.controllerData, 
-														  this.inputListener, 
+														  ///this.inputListener, 
 														  this.waiter, 
 														  playerName);
 		
-		this.controllerLogic.createDemoGenerators(soundData.getFrameRate(), mainModulGeneratorTypeData);
+		this.controllerLogic.createDemoGenerators(soundData.getFrameRate(), 
+												  generatorTypesData,
+												  mainModulGeneratorTypeData);
 		
 		this.controllerLogic.selectModulGeneratorToEdit(mainModulGeneratorTypeData);
 		
 		//----------------------------------------------------------------------
-		this.inputListener.setGameControllerLogic(controllerLogic);
-		
 		//AddGeneratorButtonActionLogicListener addGeneratorButtonActionLogicListener	= new AddGeneratorButtonActionLogicListener(controllerLogic, controllerData);
 		RemoveGeneratorButtonActionLogicListener removeGeneratorButtonActionLogicListener = new RemoveGeneratorButtonActionLogicListener(controllerLogic, controllerLogic.getMainPageLogic(), controllerData);
 		//GroupGeneratorButtonActionLogicListener groupGeneratorButtonActionLogicListener = new GroupGeneratorButtonActionLogicListener(controllerLogic, controllerData, controllerData.getEditModulPageData());
@@ -236,48 +218,6 @@ public class MainModel
 				saveGroupButtonActionLogicListener,
 				
 				inputTypeEditSaveActionListener);
-		
-		//----------------------------------------------------------------------
-		// run:
-
-		int controllerTargetFramesPerSecond = 16;
-		
-		ControllerSchedulerLogic gameSchedulerLogic = new ControllerSchedulerLogic(this.controllerData, 
-																				   this.controllerLogic, 
-																				   this.waiter, 
-																				   controllerTargetFramesPerSecond);
-		
-		this.controllerLogic.initGameData(controllerData);
-
-		gameSchedulerLogic.startThread();
-		/*
-		RunnerSchedulers runnerSchedulers;
-		
-		runnerSchedulers = Runner.start(this.getControllerData(), 
-										this.mainView.getControllerLogic(), 
-										this.mainView.getMultiBufferGraphic(), 
-										this.mainView.getInputListener(), 
-										this.mainView.getWaiter(), 24, 16,
-										false, 
-										false,
-										-1, -1);
-		
-		//Runner.stop(runnerSchedulers);
-		 * 
-		 */
-	}
-
-	public void createBaseGeneratorTypes()
-	{
-		this.generatorTypesData.clear();
-		
-		this.generatorTypesData.addGeneratorTypeData(FaderGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(MixerGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(OutputGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(SinusGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(RectangleGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(CutGenerator.createGeneratorTypeData());
-		this.generatorTypesData.addGeneratorTypeData(WaveGenerator.createGeneratorTypeData());
 	}
 
 	private static SourceDataLine createLine()
@@ -346,13 +286,6 @@ public class MainModel
 	public DesktopControllerData getControllerData()
 	{
 		return this.controllerData;
-	}
-	/**
-	 * @return returns the {@link #inputListener}.
-	 */
-	public DesktopInputListener getInputListener()
-	{
-		return this.inputListener;
 	}
 	/**
 	 * @return returns the {@link #waiter}.

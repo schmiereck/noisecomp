@@ -3,6 +3,7 @@ package de.schmiereck.noiseComp.desktopPage.widgets;
 import de.schmiereck.noiseComp.desktopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -104,10 +105,11 @@ implements ClickedWidgetListenerInterface, ActivateWidgetListenerInterface, HitW
 	 * Constructor.
 	 * 
 	 */
-	public ScrollbarData(DataChangedObserver dataChangedObserver,
+	public ScrollbarData(ControllerData controllerData,
+						  DataChangedObserver dataChangedObserver,
 						 String name, int posX, int posY, int sizeX, int sizeY, boolean doScrollVertical)
 	{
-		super(dataChangedObserver,
+		super(controllerData, dataChangedObserver,
 			  name, posX, posY, sizeX, sizeY);
 	
 		this.doScrollVertical = doScrollVertical;

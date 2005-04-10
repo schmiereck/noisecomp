@@ -10,18 +10,30 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.StringReader;
 import org.bs.mdi.Action;
+import org.bs.mdi.Data;
 import org.bs.mdi.Document;
-import org.bs.mdi.DocumentData;
+//import org.bs.mdi.DocumentData;
 import org.bs.mdi.Printer;
+import org.bs.mdi.RootData;
 import org.bs.mdi_example.EditorAction;
 import de.schmiereck.noiseComp.MainModel;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.desktopController.EditData;
+import de.schmiereck.noiseComp.generator.ASRPulseGenerator;
+import de.schmiereck.noiseComp.generator.CutGenerator;
+import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.Generators;
+import de.schmiereck.noiseComp.generator.MixerGenerator;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.OutputGenerator;
+import de.schmiereck.noiseComp.generator.RectangleGenerator;
+import de.schmiereck.noiseComp.generator.SinusGenerator;
+import de.schmiereck.noiseComp.generator.WaveGenerator;
 import de.schmiereck.screenTools.Runner;
+import de.schmiereck.screenTools.controller.ControllerSchedulerLogic;
 
 /*
  * Created on 25.03.2005, Copyright (c) schmiereck, 2005
@@ -35,27 +47,89 @@ import de.schmiereck.screenTools.Runner;
  * @version <p>25.03.2005:	created, smk</p>
  */
 public class NoiseCompDocumentData
-extends DocumentData
+//extends Data 
+extends RootData
 {
 	private MainModel mainModel;
 	
-	Printer printer = new NoiseCompDocumentPrinter();
+	private ControllerSchedulerLogic gameSchedulerLogic;
 	
-	public NoiseCompDocumentData(Document document) 
+	private Printer printer = new NoiseCompDocumentPrinter();
+	
+	private GeneratorTypesData generatorTypesData;
+	
+	public NoiseCompDocumentData()//Document document) 
 	{
-		super(document);
+		super();//document);
 
+		//======================================================================
+		this.generatorTypesData  = new GeneratorTypesData();
+
+		NoiseCompDocumentData.createBaseGeneratorTypes(this.generatorTypesData);
+		
+		// new ModulGeneratorTypeData(null, null, null);
+		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+
+		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
+		
+		mainModulGeneratorTypeData.setGeneratorTypeName("Main-Modul");
+
+		this.generatorTypesData.addGeneratorTypeData(mainModulGeneratorTypeData);
+		
 		//----------------------------------------------------------------------
 		// Build:
 		
 		boolean useFullScreen = false;
 		//boolean useFullScreen = true;
 
-		this.mainModel = new MainModel();
+		this.mainModel = new MainModel(this.generatorTypesData,
+									   mainModulGeneratorTypeData);
 		
-		//this.frameRate = soundData.getFrameRate();
+		
+		//----------------------------------------------------------------------
+		// run:
+
+		int controllerTargetFramesPerSecond = 16;
+		
+		this.gameSchedulerLogic = new ControllerSchedulerLogic(this.mainModel.getControllerData(), 
+															   this.mainModel.getControllerLogic(), 
+															   this.mainModel.getWaiter(), 
+															   controllerTargetFramesPerSecond);
+		
+		this.mainModel.getControllerLogic().initGameData(this.mainModel.getControllerData());
+
+		this.gameSchedulerLogic.startThread();
+		/*
+		RunnerSchedulers runnerSchedulers;
+		
+		runnerSchedulers = Runner.start(this.getControllerData(), 
+										this.mainView.getControllerLogic(), 
+										this.mainView.getMultiBufferGraphic(), 
+										this.mainView.getInputListener(), 
+										this.mainView.getWaiter(), 24, 16,
+										false, 
+										false,
+										-1, -1);
+		
+		//Runner.stop(runnerSchedulers);
+		 * 
+		 */
 		
 		//document.setDirty(true);
+	}
+
+	private static void createBaseGeneratorTypes(GeneratorTypesData generatorTypesData)
+	{
+		generatorTypesData.clear();
+		
+		generatorTypesData.addGeneratorTypeData(FaderGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(MixerGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(OutputGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(SinusGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(RectangleGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(CutGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(WaveGenerator.createGeneratorTypeData());
+		generatorTypesData.addGeneratorTypeData(ASRPulseGenerator.createGeneratorTypeData());
 	}
 	
 	/* (non-Javadoc)
@@ -205,7 +279,7 @@ extends DocumentData
 
 	public GeneratorTypesData getGeneratorTypesData()
 	{
-		return this.mainModel.getControllerData().getGeneratorTypesData();
+		return this.generatorTypesData;
 	}
 
 	public ModulGeneratorTypeData getMainModulTypeData()

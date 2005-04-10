@@ -7,6 +7,7 @@ import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.InputTypesData;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -35,12 +36,13 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * Constructor.
 	 * 
 	 */
-	public InputTypesWidgetData(DataChangedObserver dataChangedObserver,
+	public InputTypesWidgetData(ControllerData controllerData,
+								  DataChangedObserver dataChangedObserver,
 								int posX, int posY, int sizeX, int sizeY,
 								ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
 								SelectedListEntryInterface selectedListEntry)
 	{
-		super(dataChangedObserver,
+		super(controllerData, dataChangedObserver,
 			  posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
 		
 		this.selectedListEntry = selectedListEntry;

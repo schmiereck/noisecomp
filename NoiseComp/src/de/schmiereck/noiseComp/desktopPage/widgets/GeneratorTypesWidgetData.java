@@ -7,6 +7,7 @@ import de.schmiereck.noiseComp.desktopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -33,12 +34,13 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * Constructor.
 	 * 
 	 */
-	public GeneratorTypesWidgetData(DataChangedObserver dataChangedObserver,
+	public GeneratorTypesWidgetData(ControllerData controllerData,
+									  DataChangedObserver dataChangedObserver,
 									int posX, int posY, int sizeX, int sizeY,
 									ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
 									GeneratorTypesData generatorTypesData)
 	{
-		super(dataChangedObserver,
+		super(controllerData, dataChangedObserver,
 			  posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
 		
 		this.generatorTypesData = generatorTypesData;

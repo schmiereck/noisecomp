@@ -9,6 +9,7 @@ import de.schmiereck.noiseComp.desktopPage.HitWidgetListenerInterface;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -21,7 +22,7 @@ public class InputsWidgetData
 extends ListWidgetData
 implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitWidgetListenerInterface
 {
-	private GeneratorTypesData generatorTypesData;
+	//private GeneratorTypesData generatorTypesData;
 	
 	/**
 	 * List with {@link GeneratorTypeData}-Objects.
@@ -41,15 +42,16 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * Constructor.
 	 * 
 	 */
-	public InputsWidgetData(DataChangedObserver dataChangedObserver,
+	public InputsWidgetData(ControllerData controllerData,
+							  DataChangedObserver dataChangedObserver,
 							int posX, int posY, int sizeX, int sizeY,
-							ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
-							GeneratorTypesData generatorTypesData)
+							ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
+							//GeneratorTypesData generatorTypesData)
 	{
-		super(dataChangedObserver,
+		super(controllerData, dataChangedObserver,
 			  posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
 		
-		this.generatorTypesData = generatorTypesData;
+		//this.generatorTypesData = generatorTypesData;
 
 		// Momentane Anzahl Inputs zu...
 		// ...maximal mögliche Anzahl angezeigter Inputs.

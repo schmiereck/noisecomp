@@ -13,3 +13,7 @@ http://www.cs.ubc.ca/spider/kvdoel/jass/
 
 ???
 http://akira.ruc.dk/~jludvig/jamsynth/
+
+
+MML (Music Markup Language (XML)):
+http://www.musicmarkup.info/

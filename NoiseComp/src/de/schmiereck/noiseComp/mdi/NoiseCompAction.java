@@ -3,6 +3,8 @@ package de.schmiereck.noiseComp.mdi;
 import org.bs.mdi.Action;
 import org.bs.mdi.ActionObservable;
 import org.bs.mdi.Application;
+import org.bs.mdi.Data;
+import org.bs.mdi.View;
 
 /*
  * Created on 25.03.2005, Copyright (c) schmiereck, 2005
@@ -135,5 +137,41 @@ extends Action
 	public int getEndOffset() 
 	{
 		return endoffset;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.bs.mdi.Action#applyTo(org.bs.mdi.Data)
+	 */
+	public void applyTo(Data data)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.bs.mdi.Action#applyTo(org.bs.mdi.View)
+	 */
+	public void applyTo(View view)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.bs.mdi.Action#undoFrom(org.bs.mdi.Data)
+	 */
+	public void undoFrom(Data data)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.bs.mdi.Action#undoFrom(org.bs.mdi.View)
+	 */
+	public void undoFrom(View view)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

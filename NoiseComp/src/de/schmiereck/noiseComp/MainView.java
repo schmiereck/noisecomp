@@ -3,6 +3,7 @@ package de.schmiereck.noiseComp;
 import java.awt.Container;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.DesktopGraphic;
+import de.schmiereck.noiseComp.desktopInput.DesktopInputListener;
 import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphic;
 import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphicException;
 
@@ -21,6 +22,8 @@ public class MainView
 {
 	private DesktopGraphic multiBufferGraphic;
 	
+	private DesktopInputListener inputListener;
+	
 	/**
 	 * Constructor.
 	 * @throws MultiBufferFullScreenGraphicException
@@ -38,7 +41,8 @@ public class MainView
 	 * @throws MultiBufferFullScreenGraphicException
 	 * 
 	 */
-	public MainView(boolean useFullScreen, MainModel documentModel,
+	public MainView(boolean useFullScreen, 
+					MainModel documentModel,
 					Container frameView) 
 	throws MultiBufferFullScreenGraphicException
 	{
@@ -50,8 +54,16 @@ public class MainView
 		
 		this.multiBufferGraphic.initGrafic(controllerData);
 		
-		documentModel.getInputListener().setGraphic(this.multiBufferGraphic);
-		this.multiBufferGraphic.addInputListener(documentModel.getInputListener(), useFullScreen);
+		this.inputListener = new DesktopInputListener();
+
+		this.inputListener.setGameControllerLogic(documentModel.getControllerLogic());
+		
+		this.inputListener.setGraphic(this.multiBufferGraphic.getScaleX(),
+									  this.multiBufferGraphic.getScaleY(),
+									  this.multiBufferGraphic.getCenterX(),
+									  this.multiBufferGraphic.getCenterY());
+		
+		this.multiBufferGraphic.addInputListener(this.inputListener, useFullScreen);
 	}
 
 	/**
@@ -60,5 +72,13 @@ public class MainView
 	public DesktopGraphic getMultiBufferGraphic()
 	{
 		return this.multiBufferGraphic;
+	}
+
+	/**
+	 * @return returns the {@link #inputListener}.
+	 */
+	public DesktopInputListener getInputListener()
+	{
+		return this.inputListener;
 	}
 }

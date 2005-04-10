@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import java.util.Random;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -28,10 +29,11 @@ extends WidgetData
 	 * Constructor.
 	 * 
 	 */
-	public PaneData(DataChangedObserver dataChangedObserver,
+	public PaneData(ControllerData controllerData,
+					  DataChangedObserver dataChangedObserver,
 					int posX, int posY, int sizeX, int sizeY)
 	{
-		super(dataChangedObserver,
+		super(controllerData, dataChangedObserver,
 			  posX, posY, sizeX, sizeY, false);
 
 		for (int pos = 0; pos < PaneData.STARS_COUNT; pos++)

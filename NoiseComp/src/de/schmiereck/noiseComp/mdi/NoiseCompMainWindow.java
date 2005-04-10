@@ -2,6 +2,7 @@ package de.schmiereck.noiseComp.mdi;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,13 +17,18 @@ import javax.swing.JSeparator;
 import javax.swing.JToolBar;
 import org.bs.mdi.Application;
 import org.bs.mdi.Document;
-import org.bs.mdi.DocumentData;
-import org.bs.mdi.DocumentView;
+//import org.bs.mdi.DocumentData;
+//import org.bs.mdi.DocumentView;
 import org.bs.mdi.DocumentWindow;
-import org.bs.mdi.MDIMessage;
+//import org.bs.mdi.MDIMessage;
 import org.bs.mdi.MainWindow;
+import org.bs.mdi.MessageDispatcher;
+import org.bs.mdi.swing.SwingCommandButton;
+import org.bs.mdi.swing.SwingCommandMenu;
+import org.bs.mdi.swing.SwingDefaultCommands;
 import org.bs.mdi.swing.SwingDocumentWindow;
 import org.bs.mdi.swing.SwingMainWindow;
+import org.bs.mdi_example.EditorCommands;
 import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.editModulPage.EditModulPageData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -68,7 +74,7 @@ extends SwingMainWindow
 	private JButton cmdButtonSelectGenerator;
 	private JButton cmdButtonEditModul;
 
-	private JMenuItem	cmdMenuItemDuplicateView;
+	//private JMenuItem	cmdMenuItemDuplicateView;
 
 	public NoiseCompMainWindow() 
 	{
@@ -204,19 +210,21 @@ extends SwingMainWindow
 	
 	private void createLocalMenu() 
 	{
+		/*
 		JMenuItem m;
 		
 		{
-			JMenu extraMenu = new JMenu(Application.getResources().i18n("Extras"));
+			Menu extraMenu = new Menu(Application.getResources().i18n("Extras"));
 			
-			extraMenu.setMnemonic(Application.getResources().getMnemonic("Extras"));
+			//extraMenu.setMnemonic(Application.getResources().getMnemonic("Extras"));
+			extraMenu.setLabel(Application.getResources().getMnemonic("Extras"));
 			{
 				this.cmdMenuItemDuplicateView = this.createLocalMenuItem(ACMD_DUPPLICATE_VIEW);
 				
 				extraMenu.add(this.cmdMenuItemDuplicateView);
 			}
 			
-			this.getMenubar().add(extraMenu);
+			this.getMenuBar().add(extraMenu);
 		}
 		{
 			JMenu helpMenu = new JMenu(Application.getResources().i18n("Help"));
@@ -224,8 +232,18 @@ extends SwingMainWindow
 			helpMenu.setMnemonic(Application.getResources().getMnemonic("Help"));
 			helpMenu.add(this.createLocalMenuItem(ACMD_ABOUT));				
 			
-			this.getMenubar().add(helpMenu);
+			this.getMenuBar().add(helpMenu);
 		}
+		*/
+		JMenu extrasMenu = SwingCommandMenu.createMenu(((EditorCommands)getCommands()).getShowExtrasMenuCommand());
+		
+		extrasMenu.add(SwingCommandButton.createMenuItem(((EditorCommands)getCommands()).getCloneViewCommand()));
+		getJMenuBar().add(extrasMenu);
+		
+		JMenu helpMenu = SwingCommandMenu.createMenu(((EditorCommands)getCommands()).getShowHelpMenuCommand());
+		
+		helpMenu.add(SwingCommandButton.createMenuItem(((EditorCommands)getCommands()).getHelpAboutCommand()));
+		getJMenuBar().add(helpMenu);
 	}
 
 	protected JMenuItem createLocalMenuItem(String key) 
@@ -239,9 +257,46 @@ extends SwingMainWindow
 		return item;
 	}
 
+	public void processMessage(Object source, int type, Object argument) 
+	{
+		super.processMessage(source, type, argument);
+		
+		switch (type)
+		{
+			//case MDIMessage.WINDOW_OPENED:
+			//case MDIMessage.WINDOW_CLOSED:
+			//case MDIMessage.WINDOW_CREATED:
+			case MessageDispatcher.WINDOW_SELECTED:
+			{
+				//DocumentWindow documentWindow = Application.getCurrentWindow();
+				SwingDocumentWindow documentWindow = (SwingDocumentWindow)argument;
+
+				// Fenster ist ausgewählt?
+				if (documentWindow != null)
+				{
+					//documentWindow.setFocusable(true);
+					documentWindow.setEnabled(true);
+					
+					this.updateFunctionStatus(true);
+				}
+				else
+				{
+					this.updateFunctionStatus(false);
+				}
+				break;
+			}
+			case MessageDispatcher.APP_INIT:
+			{
+				this.updateFunctionStatus(false);
+				break;
+			}
+		}
+	//	SwingDocumentWindow win;
+	//	switch (type) {
+	//	case MessageDispatcher.DOCUMENT_SELECTED:
+	}
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.MDIMessageReceiver#handleMDIMessage(org.bs.mdi.MDIMessage)
-	 */
 	public void handleMDIMessage(MDIMessage message) 
 	{
 		// Nachrichten vom MDI-System bearbeiten:
@@ -278,6 +333,7 @@ extends SwingMainWindow
 			}
 		}
 	}
+	 */
 	
 	/**
 	 * Update (enable or disable) the state of all application functions 
@@ -298,7 +354,14 @@ extends SwingMainWindow
 		this.cmdButtonSelectGenerator.setEnabled(documentIsSelected);
 		this.cmdButtonEditModul.setEnabled(documentIsSelected);
 
-		this.cmdMenuItemDuplicateView.setEnabled(documentIsSelected);
+		((EditorCommands)this.getCommands()).getCloneViewCommand().setAvailable(documentIsSelected);
+		
+		//this.cmdMenuItemDuplicateView.setEnabled(documentIsSelected);
+	}
+
+	protected SwingDefaultCommands createCommands() 
+	{
+		return new EditorCommands();
 	}
 	
 	class LocalActionMonitor 
@@ -309,7 +372,7 @@ extends SwingMainWindow
 			// Nachrichten von Applikations eigenen Menüs und Toolsbars bearbeiten:
 			
 			String acmd = ae.getActionCommand();
-			
+			/*
 			if (ACMD_ABOUT.equals(acmd)) 
 			{
 				showMessage(MainWindow.INFO, 
@@ -338,6 +401,7 @@ extends SwingMainWindow
 					}
 				}
 				else
+			*/
 				{
 					if (ACMD_ZOOM_IN.equals(acmd)) 
 					{
@@ -467,7 +531,7 @@ extends SwingMainWindow
 						}
 					}
 				}
-			}
+			//}
 		}
 	}
 

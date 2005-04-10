@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.desktopController.selectNewGeneratorPage;
 
 import de.schmiereck.noiseComp.desktop.DesktopData;
+import de.schmiereck.noiseComp.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectCancelButtonActionLogicListener;
 import de.schmiereck.noiseComp.desktopController.selectGeneratorPage.actions.SelectEditButtonActionLogicListener;
@@ -14,6 +15,7 @@ import de.schmiereck.noiseComp.desktopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.desktopPage.widgets.PaneData;
 import de.schmiereck.noiseComp.desktopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -58,7 +60,8 @@ extends DesktopPageData
 	 * Constructor.
 	 * 
 	 */
-	public SelectNewGeneratorPageData(DataChangedObserver dataChangedObserver, 
+	public SelectNewGeneratorPageData(DesktopControllerData desktopControllerData,
+									  DataChangedObserver dataChangedObserver, 
 									  DesktopData desktopData, int desktopSizeX, int desktopSizeY,
 									  GeneratorTypesData generatorTypesData)
 	{
@@ -66,21 +69,21 @@ extends DesktopPageData
 
 		{
 			// Add Main Page:
-			PaneData paneData = new PaneData(dataChangedObserver, 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
+			PaneData paneData = new PaneData(desktopControllerData, dataChangedObserver, 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
 			this.addWidgetData(paneData);
 		}
 		
 		{
-			this.selectCancelButtonData = new FunctionButtonData(dataChangedObserver, "cancel", "Cancel", 100, 10, 90, 20);
+			this.selectCancelButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "cancel", "Cancel", 100, 10, 90, 20);
 			this.addWidgetData(this.selectCancelButtonData);
 		}
 		{
-			LabelData labelData = new LabelData(dataChangedObserver, "Generator-Type:", 100, 100, 100, 20);
+			LabelData labelData = new LabelData(desktopControllerData, dataChangedObserver, "Generator-Type:", 100, 100, 100, 20);
 			this.addWidgetData(labelData);
 		}
 		
 		{
-			this.selectAddButtonData = new FunctionButtonData(dataChangedObserver, "selectAdd", "Add selected...", 100, 40, 100, 20);
+			this.selectAddButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "selectAdd", "Add selected...", 100, 40, 100, 20);
 			this.addWidgetData(this.selectAddButtonData);
 		}
 		

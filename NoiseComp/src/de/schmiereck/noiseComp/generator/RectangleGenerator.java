@@ -29,14 +29,42 @@ extends Generator
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
-		float signalFrequency = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
+		//----------------------------------------------------------------------
+		float signalFrequency;
+		try
+		{
+			signalFrequency = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
+		}
+		catch (NoInputSignalException ex)
+		{
+			signalFrequency = 0.0F;
+		}
 
-		// Amplitude des gerade generierten Sinus-Siganls.
-		float signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), parentModulGenerator);
+		//----------------------------------------------------------------------
+		float signalAmplitude;
+		try
+		{
+			// Amplitude des gerade generierten Sinus-Siganls.
+			signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), parentModulGenerator);
+		}
+		catch (NoInputSignalException ex)
+		{
+			signalAmplitude = 0.0F;
+		}
 		
-		// Versatz des Sinus-Siganls um eine Schwingung.
-		float signalShift = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), parentModulGenerator);
+		//----------------------------------------------------------------------
+		float signalShift;
+		try
+		{
+			// Versatz des Sinus-Siganls um eine Schwingung.
+			signalShift = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), parentModulGenerator);
+		}
+		catch (NoInputSignalException ex)
+		{
+			signalShift = 0.0F;
+		}
 		
+		//----------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
 		
@@ -55,7 +83,6 @@ extends Generator
 		{
 			value = -signalAmplitude;
 		}
-		
 		
 		soundSample.setStereoValues(value, value);
 	}

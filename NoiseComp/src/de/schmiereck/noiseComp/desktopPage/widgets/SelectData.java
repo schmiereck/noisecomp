@@ -5,6 +5,7 @@ import java.util.Iterator;
 import de.schmiereck.dataTools.VectorHash;
 import de.schmiereck.noiseComp.desktopPage.FocusedWidgetListenerInterface;
 import de.schmiereck.noiseComp.desktopPage.SubmitWidgetListenerInterface;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -52,10 +53,11 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	 * @param sizeX
 	 * @param sizeY
 	 */
-	public SelectData(DataChangedObserver dataChangedObserver,
+	public SelectData(ControllerData controllerData,
+					  DataChangedObserver dataChangedObserver,
 					  String name, int posX, int posY, int sizeX, int sizeY)
 	{
-		super(dataChangedObserver,
+		super(controllerData, dataChangedObserver,
 			  name, posX, posY, sizeX, sizeY);
 	}
 

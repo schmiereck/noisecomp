@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
 import java.util.Iterator;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -26,12 +27,13 @@ implements ScrollBarChangedListenerInterface
 	 * @param sizeX
 	 * @param sizeY
 	 */
-	public ListWidgetData(DataChangedObserver dataChangedObserver,
+	public ListWidgetData(ControllerData controllerData,
+						  DataChangedObserver dataChangedObserver,
 						  int posX, int posY, int sizeX, int sizeY,
 						  int listEntryHeight,
 						  ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
 	{
-		super(dataChangedObserver,
+		super(controllerData, dataChangedObserver,
 			  posX, posY, sizeX, sizeY, true);
 
 		this.listEntryHeight = listEntryHeight;

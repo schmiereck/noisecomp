@@ -1,5 +1,6 @@
 package de.schmiereck.noiseComp.desktopPage.widgets;
 
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -10,6 +11,7 @@ import de.schmiereck.screenTools.controller.DataChangedObserver;
  */
 public class WidgetData
 {
+	private ControllerData controllerData;
 	private DataChangedObserver dataChangedObserver;
 	
 	private int posX;
@@ -23,11 +25,13 @@ public class WidgetData
 	 * Constructor.
 	 * 
 	 */
-	public WidgetData(DataChangedObserver dataChangedObserver,
+	public WidgetData(ControllerData controllerData,
+					  DataChangedObserver dataChangedObserver,
 					  int posX, int posY, int sizeX, int sizeY, 
 					  boolean acceptFocus)
 	{
 		super();
+		this.controllerData = controllerData;
 		this.dataChangedObserver = dataChangedObserver;
 		this.posX = posX;
 		this.posY = posY;
@@ -102,7 +106,8 @@ public class WidgetData
 	
 	protected void dataChangedVisible()
 	{
-		this.getDataChangedObserver().dataChanged(this.getPosX(), this.getPosY(),
+		this.getDataChangedObserver().dataChanged(this.controllerData,
+												  this.getPosX(), this.getPosY(),
 												  this.getSizeX(), this.getSizeY());
 	}
 }

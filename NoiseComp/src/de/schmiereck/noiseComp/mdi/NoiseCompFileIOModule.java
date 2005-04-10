@@ -2,13 +2,14 @@ package de.schmiereck.noiseComp.mdi;
 
 import org.bs.mdi.Application;
 import org.bs.mdi.Document;
-import org.bs.mdi.DocumentData;
+//import org.bs.mdi.DocumentData;
 import org.bs.mdi.FileExporter;
 import org.bs.mdi.FileFormat;
 import org.bs.mdi.FileIOException;
 import org.bs.mdi.FileLoader;
 import org.bs.mdi.FileSaver;
 import org.bs.mdi.MainWindow;
+import org.bs.mdi.RootData;
 import de.schmiereck.noiseComp.file.LoadFileOperationLogic;
 import de.schmiereck.noiseComp.file.SaveFileOperationLogic;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
@@ -38,10 +39,11 @@ implements FileLoader, FileSaver, FileExporter
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.FileLoader#load(java.lang.String, org.bs.mdi.Document)
 	 */
-	public DocumentData load(String fileName, Document document) 
+	public RootData load(String fileName)
+	//public DocumentData load(String fileName, Document document) 
 	throws FileIOException 
 	{
-		NoiseCompDocumentData noiseCompDocumentData = new NoiseCompDocumentData(document);
+		NoiseCompDocumentData noiseCompDocumentData = new NoiseCompDocumentData();//document);
 		
 		try 
 		{
@@ -90,7 +92,8 @@ implements FileLoader, FileSaver, FileExporter
 	/* (non-Javadoc)
 	 * @see org.bs.mdi.FileSaver#save(org.bs.mdi.DocumentData, java.lang.String)
 	 */
-	public void save(DocumentData data, String fileName) 
+	//public void save(DocumentData data, String fileName) 
+	public void save(RootData data, String fileName)
 	throws FileIOException 
 	{
 		NoiseCompDocumentData noiseCompDocumentData = (NoiseCompDocumentData)data;
@@ -122,7 +125,10 @@ implements FileLoader, FileSaver, FileExporter
 		}
 	}
 	
-	public void export(DocumentData data) 
+	/* (non-Javadoc)
+	 * @see org.bs.mdi.FileExporter#export(org.bs.mdi.RootData)
+	 */
+	public void export(RootData data) 
 	{
 		Application.getMainWindow().showMessage(MainWindow.INFO, null, 
 												"This is just a dummy exporting function.");

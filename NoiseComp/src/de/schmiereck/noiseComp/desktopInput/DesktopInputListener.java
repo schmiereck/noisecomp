@@ -19,7 +19,12 @@ public class DesktopInputListener
 implements GraficInputListener
 {
 	private DesktopControllerLogic gameControllerLogic = null;
-	private DesktopGraphic graphic = null;
+	//private DesktopGraphic graphic = null;
+	
+	private double graphicScaleX;
+	private double graphicScaleY;
+	private int graphicCenterX;
+	private int graphicCenterY;
 	
 	public void setGameControllerLogic(DesktopControllerLogic gameControllerLogic)
 	{
@@ -79,8 +84,8 @@ implements GraficInputListener
 	 */
 	public void mouseDragged(MouseEvent e)
 	{
-		int posX = (int)(e.getX() * this.graphic.getScaleX());// - this.graphic.getCenterX();
-		int posY = (int)(e.getY() * this.graphic.getScaleY());// - this.graphic.getCenterY();
+		int posX = (int)(e.getX() * this.graphicScaleX);// - this.graphic.getCenterX();
+		int posY = (int)(e.getY() * this.graphicScaleY);// - this.graphic.getCenterY();
 		
 		this.gameControllerLogic.movePointer(posX, posY);
 	}
@@ -90,8 +95,8 @@ implements GraficInputListener
 	 */
 	public void mouseMoved(MouseEvent e)
 	{
-		int posX = (int)(e.getX() * this.graphic.getScaleX()) - this.graphic.getCenterX();
-		int posY = (int)(e.getY() * this.graphic.getScaleY()) - this.graphic.getCenterY();
+		int posX = (int)(e.getX() * graphicScaleX) - this.graphicCenterX;
+		int posY = (int)(e.getY() * graphicScaleY) - this.graphicCenterY;
 		
 		this.gameControllerLogic.movePointer(posX, posY);
 	}
@@ -197,12 +202,13 @@ implements GraficInputListener
 		
 	}
 
-	/**
-	 * @param multiBufferGraphic
-	 */
-	public void setGraphic(DesktopGraphic graphic)
+	public void setGraphic(double graphicScaleX, double graphicScaleY,
+						   int graphicCenterX, int graphicCenterY)
 	{
-		this.graphic = graphic;
+		this.graphicScaleX = graphicScaleX;
+		this.graphicScaleY = graphicScaleY;
+		this.graphicCenterX = graphicCenterX;
+		this.graphicCenterY = graphicCenterY;
 	}
 
 }

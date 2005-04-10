@@ -139,7 +139,8 @@ public class MainPageData
 	 * @param desktopSizeY
 	 */
 	public MainPageData(DataChangedObserver dataChangedObserver, 
-						DesktopData desktopData, DesktopControllerData desktopControllerData, 
+						DesktopData desktopData, 
+						DesktopControllerData desktopControllerData, 
 						int desktopSizeX, int desktopSizeY)
 	{
 		super(desktopData, desktopSizeX, desktopSizeY);
@@ -154,69 +155,69 @@ public class MainPageData
 
 		{
 			// Add Top Pane:
-			PaneData topMenuPaneData = new PaneData(dataChangedObserver,
+			PaneData topMenuPaneData = new PaneData(desktopControllerData, dataChangedObserver,
 													0, 0, this.getDesktopSizeX(), topMenuSizeY);
 			this.addWidgetData(topMenuPaneData);
 
 			{
-				this.modulGeneratorTextWidgetData = new TextWidgetData(dataChangedObserver,
+				this.modulGeneratorTextWidgetData = new TextWidgetData(desktopControllerData, dataChangedObserver,
 																		"---", 100, 0, 400, 16);
 				this.addWidgetData(this.modulGeneratorTextWidgetData);
 			}
 			{
-				//this.addGeneratorButtonData = new FunctionButtonData(dataChangedObserver,
+				//this.addGeneratorButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver,
 				//														"add", "Select...", 100, 16, 90, 20);
 				//this.addWidgetData(this.addGeneratorButtonData);
 			}
 			{
-				//this.removeGeneratorbuttonData = new FunctionButtonData(dataChangedObserver, "remove", "Remove", 200, 16, 90, 20);
+				//this.removeGeneratorbuttonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "remove", "Remove", 200, 16, 90, 20);
 				//this.addWidgetData(this.removeGeneratorbuttonData);
 			}
 			{
-				//this.groupGeneratorbuttonData = new FunctionButtonData(dataChangedObserver,
+				//this.groupGeneratorbuttonData = new FunctionButtonData(desktopControllerData, dataChangedObserver,
 				//														"group", "Modul Edit...", 300, 16, 90, 20);
 				//this.addWidgetData(this.groupGeneratorbuttonData);
 			}
 			
 			{
-				//this.newButtonData = new FunctionButtonData(dataChangedObserver, "new", "New", this.getDesktopSizeX() - 300, 16, 90, 20);
+				//this.newButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "new", "New", this.getDesktopSizeX() - 300, 16, 90, 20);
 				//this.addWidgetData(this.newButtonData);
 			}
 			{
-				//this.loadButtonData = new FunctionButtonData(dataChangedObserver, "load", "Load...", this.getDesktopSizeX() - 200, 16, 90, 20);
+				//this.loadButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "load", "Load...", this.getDesktopSizeX() - 200, 16, 90, 20);
 				//this.addWidgetData(this.loadButtonData);
 			}
 			{
-				//this.saveButtonData = new FunctionButtonData(dataChangedObserver, "save", "Save...", this.getDesktopSizeX() - 200, 40, 90, 20);
+				//this.saveButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "save", "Save...", this.getDesktopSizeX() - 200, 40, 90, 20);
 				//this.addWidgetData(this.saveButtonData);
 			}
 			
 			{
-				//this.exitButtonData = new FunctionButtonData(dataChangedObserver, "exit", "Exit", this.getDesktopSizeX() - 100, 16, 90, 20);
+				//this.exitButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "exit", "Exit", this.getDesktopSizeX() - 100, 16, 90, 20);
 				//this.addWidgetData(this.exitButtonData);
 			}
 			
 			{
-				//this.zoomInButtonData = new FunctionButtonData(dataChangedObserver, "zoomIn", "+", this.getDesktopSizeX() - 375, 40, 20, 20);
+				//this.zoomInButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "zoomIn", "+", this.getDesktopSizeX() - 375, 40, 20, 20);
 				//this.addWidgetData(this.zoomInButtonData);
 				//this.zoomInButtonData.setAcceptFocus(false);
 			}
 			{
-				//this.zoomOutButtonData = new FunctionButtonData(dataChangedObserver, "zoomOut", "-", this.getDesktopSizeX() - 350, 40, 20, 20);
+				//this.zoomOutButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "zoomOut", "-", this.getDesktopSizeX() - 350, 40, 20, 20);
 				//this.addWidgetData(this.zoomOutButtonData);
 				//this.zoomOutButtonData.setAcceptFocus(false);
 			}
 
 			{
-				//this.playButtonData = new FunctionButtonData(dataChangedObserver, "play", "Play", 100, 40, 90, 20);
+				//this.playButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "play", "Play", 100, 40, 90, 20);
 				//this.addWidgetData(this.playButtonData);
 			}
 			{
-				//this.pauseButtonData = new FunctionButtonData(dataChangedObserver, "pause", "Pause", 200, 40, 90, 20);
+				//this.pauseButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "pause", "Pause", 200, 40, 90, 20);
 				//this.addWidgetData(this.pauseButtonData);
 			}
 			{
-				//this.stopButtonData = new FunctionButtonData(dataChangedObserver, "stop", "Stop", 300, 40, 90, 20);
+				//this.stopButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "stop", "Stop", 300, 40, 90, 20);
 				//this.addWidgetData(this.stopButtonData);
 			}
 		}
@@ -225,48 +226,49 @@ public class MainPageData
 			
 			int posY = this.getDesktopSizeY() - bottomMenuSizeY;
 			
-			PaneData bottomMenuPaneData = new PaneData(dataChangedObserver, 
+			PaneData bottomMenuPaneData = new PaneData(desktopControllerData,
+													   dataChangedObserver, 
 													   0, posY, this.getDesktopSizeX(), bottomMenuSizeY);
 			this.addWidgetData(bottomMenuPaneData);
 
 			{
 				{
-					LabelData generatorLabelData = new LabelData(dataChangedObserver, "Generator:", 10, posY + 10, 60, 16);
+					LabelData generatorLabelData = new LabelData(desktopControllerData, dataChangedObserver, "Generator:", 10, posY + 10, 60, 16);
 					this.addWidgetData(generatorLabelData);
 				}
 				{
-					LabelData generatorNameLabelData = new LabelData(dataChangedObserver, "Name:", 10, posY + 30, 60, 16);
+					LabelData generatorNameLabelData = new LabelData(desktopControllerData, dataChangedObserver, "Name:", 10, posY + 30, 60, 16);
 					this.addWidgetData(generatorNameLabelData);
 				}
 				{
-					this.generatorNameInputlineData = new InputlineData(dataChangedObserver, "name", 70, posY + 30, 150, 16);
+					this.generatorNameInputlineData = new InputlineData(desktopControllerData, dataChangedObserver, "name", 70, posY + 30, 150, 16);
 					this.addWidgetData(this.generatorNameInputlineData);
 				}
 				
 				{
-					LabelData generatorNameLabelData = new LabelData(dataChangedObserver, "Start-Time:", 10, posY + 50, 60, 16);
+					LabelData generatorNameLabelData = new LabelData(desktopControllerData, dataChangedObserver, "Start-Time:", 10, posY + 50, 60, 16);
 					this.addWidgetData(generatorNameLabelData);
 				}
 				{
-					this.generatorStartTimeInputlineData = new InputlineData(dataChangedObserver, "startTime", 70, posY + 50, 150, 16);
+					this.generatorStartTimeInputlineData = new InputlineData(desktopControllerData, dataChangedObserver, "startTime", 70, posY + 50, 150, 16);
 					this.addWidgetData(this.generatorStartTimeInputlineData);
 				}
 				
 				{
-					LabelData generatorNameLabelData = new LabelData(dataChangedObserver, "End-Time:", 10, posY + 70, 60, 16);
+					LabelData generatorNameLabelData = new LabelData(desktopControllerData, dataChangedObserver, "End-Time:", 10, posY + 70, 60, 16);
 					this.addWidgetData(generatorNameLabelData);
 				}
 				{
-					this.generatorEndTimeInputlineData = new InputlineData(dataChangedObserver, "endTime", 70, posY + 70, 150, 16);
+					this.generatorEndTimeInputlineData = new InputlineData(desktopControllerData, dataChangedObserver, "endTime", 70, posY + 70, 150, 16);
 					this.addWidgetData(this.generatorEndTimeInputlineData);
 				}
 				
 				{
-					this.removeGeneratorbuttonData = new FunctionButtonData(dataChangedObserver, "remove", "Remove", 70, posY + 90, 90, 18);
+					this.removeGeneratorbuttonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "remove", "Remove", 70, posY + 90, 90, 18);
 					this.addWidgetData(this.removeGeneratorbuttonData);
 				}
 				{
-					this.setGeneratorButtonData = new FunctionButtonData(dataChangedObserver, "set", "Set", 170, posY + 90, 50, 18);
+					this.setGeneratorButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "set", "Set", 170, posY + 90, 50, 18);
 					this.addWidgetData(this.setGeneratorButtonData);
 
 					this.generatorNameInputlineData.setDefaultSubmitWidgetInterface(this.setGeneratorButtonData);
@@ -275,55 +277,56 @@ public class MainPageData
 				}
 			}
 			{
-				LabelData inputsLabelData = new LabelData(dataChangedObserver, "Inputs:", 250, posY + 10, 30, 16);
+				LabelData inputsLabelData = new LabelData(desktopControllerData, dataChangedObserver, "Inputs:", 250, posY + 10, 30, 16);
 				this.addWidgetData(inputsLabelData);
 			}
 			{
-				this.inputsVScrollbarData = new ScrollbarData(dataChangedObserver, "inputsVScroll", 530 - desktopData.getScrollbarWidth2(), posY + 10, 
+				this.inputsVScrollbarData = new ScrollbarData(desktopControllerData, dataChangedObserver, "inputsVScroll", 530 - desktopData.getScrollbarWidth2(), posY + 10, 
 						desktopData.getScrollbarWidth2(), 100, true);
 				this.addWidgetData(this.inputsVScrollbarData);
 			}
 			{
-				this.generatorInputsData = new InputsWidgetData(dataChangedObserver, 
-																280, posY + 10, 250 - desktopData.getScrollbarWidth2(), 100, inputsVScrollbarData, null, desktopControllerData.getGeneratorTypesData());
+				this.generatorInputsData = new InputsWidgetData(desktopControllerData, dataChangedObserver, 
+																280, posY + 10, 250 - desktopData.getScrollbarWidth2(), 100, inputsVScrollbarData, null); 
+																//desktopControllerData.getGeneratorTypesData());
 				this.addWidgetData(this.generatorInputsData);
 			}
 
 			{
-				LabelData generatorInputNameLabelData = new LabelData(dataChangedObserver, "Input: Generator:", 590, posY + 10, 60, 16);
+				LabelData generatorInputNameLabelData = new LabelData(desktopControllerData, dataChangedObserver, "Input: Generator:", 590, posY + 10, 60, 16);
 				this.addWidgetData(generatorInputNameLabelData);
 			}
 			{
-				this.generatorInputNameSelectData = new SelectData(dataChangedObserver, "inputName", 660, posY + 10, 130, 16);
+				this.generatorInputNameSelectData = new SelectData(desktopControllerData, dataChangedObserver, "inputName", 660, posY + 10, 130, 16);
 				this.addWidgetData(this.generatorInputNameSelectData);
 			}
 			{
-				LabelData generatorInputTypeLabelData = new LabelData(dataChangedObserver, "Type:", 590, posY + 30, 60, 16);
+				LabelData generatorInputTypeLabelData = new LabelData(desktopControllerData, dataChangedObserver, "Type:", 590, posY + 30, 60, 16);
 				this.addWidgetData(generatorInputTypeLabelData);
 			}
 			{
-				this.generatorInputTypeSelectData = new SelectData(dataChangedObserver, "inputType", 660, posY + 30, 130, 16);
+				this.generatorInputTypeSelectData = new SelectData(desktopControllerData, dataChangedObserver, "inputType", 660, posY + 30, 130, 16);
 				this.addWidgetData(this.generatorInputTypeSelectData);
 			}
 			{
-				LabelData generatorInputTypeLabelData = new LabelData(dataChangedObserver, "Value:", 590, posY + 50, 60, 16);
+				LabelData generatorInputTypeLabelData = new LabelData(desktopControllerData, dataChangedObserver, "Value:", 590, posY + 50, 60, 16);
 				this.addWidgetData(generatorInputTypeLabelData);
 			}
 			{
-				this.generatorInputValueInputlineData = new InputlineData(dataChangedObserver, "inputValue", 660, posY + 50, 130, 16);
+				this.generatorInputValueInputlineData = new InputlineData(desktopControllerData, dataChangedObserver, "inputValue", 660, posY + 50, 130, 16);
 				this.addWidgetData(this.generatorInputValueInputlineData);
 			}
 			{
-				LabelData labelData = new LabelData(dataChangedObserver, "Modul-Input:", 590, posY + 70, 60, 16);
+				LabelData labelData = new LabelData(desktopControllerData, dataChangedObserver, "Modul-Input:", 590, posY + 70, 60, 16);
 				this.addWidgetData(labelData);
 			}
 			{
-				this.generatorInputModulInputSelectData = new SelectData(dataChangedObserver, "inputModulInput", 660, posY + 70, 130, 16);
+				this.generatorInputModulInputSelectData = new SelectData(desktopControllerData, dataChangedObserver, "inputModulInput", 660, posY + 70, 130, 16);
 				this.addWidgetData(this.generatorInputModulInputSelectData);
 			}
 			
 			{
-				this.setInputButtonData = new FunctionButtonData(dataChangedObserver, "setInput", "Update", 625, posY + 90, 70, 18);
+				this.setInputButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "setInput", "Update", 625, posY + 90, 70, 18);
 				this.addWidgetData(this.setInputButtonData);
 
 				this.generatorInputNameSelectData.setDefaultSubmitWidgetInterface(this.setInputButtonData);
@@ -331,20 +334,20 @@ public class MainPageData
 				this.generatorInputValueInputlineData.setDefaultSubmitWidgetInterface(this.setInputButtonData);
 			}
 			{
-				this.addInputButtonData = new FunctionButtonData(dataChangedObserver, "addInput", "Add as new", 700, posY + 90, 90, 18);
+				this.addInputButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "addInput", "Add as new", 700, posY + 90, 90, 18);
 				this.addWidgetData(this.addInputButtonData);
 			}
 			
 			{
-				this.newInputButtonData = new FunctionButtonData(dataChangedObserver, "newInput", "New", 540, posY + 40, 60, 18);
+				this.newInputButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "newInput", "New", 540, posY + 40, 60, 18);
 				this.addWidgetData(this.newInputButtonData);
 			}
 			{
-				this.removeInputButtonData = new FunctionButtonData(dataChangedObserver, "removeInput", "Remove", 540, posY + 90, 60, 18);
+				this.removeInputButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "removeInput", "Remove", 540, posY + 90, 60, 18);
 				this.addWidgetData(this.removeInputButtonData);
 			}
 			{
-				this.generatorInputTypeDescriptionTextWidgetData = new TextWidgetData(dataChangedObserver, "---", 150, posY + 110, 400, 16);
+				this.generatorInputTypeDescriptionTextWidgetData = new TextWidgetData(desktopControllerData, dataChangedObserver, "---", 150, posY + 110, 400, 16);
 				this.addWidgetData(this.generatorInputTypeDescriptionTextWidgetData);
 			}
 		}
@@ -354,18 +357,18 @@ public class MainPageData
 			int generatorsSizeY = this.getDesktopSizeY() - (topMenuSizeY + desktopData.getScrollbarWidth() + bottomMenuSizeY);
 			
 			this.generatorsVScrollbarData = 
-				new ScrollbarData(dataChangedObserver, "generatorsVScroll", this.getDesktopSizeX() - desktopData.getScrollbarWidth(), topMenuSizeY, 
+				new ScrollbarData(desktopControllerData, dataChangedObserver, "generatorsVScroll", this.getDesktopSizeX() - desktopData.getScrollbarWidth(), topMenuSizeY, 
 						desktopData.getScrollbarWidth(), generatorsSizeY, true);
 			
 			this.generatorsHScrollbarData = 
-				new ScrollbarData(dataChangedObserver, "generatorsHScroll", 
+				new ScrollbarData(desktopControllerData, dataChangedObserver, "generatorsHScroll", 
 						generatorsLabelSizeX, topMenuSizeY + generatorsSizeY, 
 						this.getDesktopSizeX() - (generatorsLabelSizeX + desktopData.getScrollbarWidth()), desktopData.getScrollbarWidth(), false);
 			
 			this.generatorsHScrollbarData.setScrollStep(0.5F);
 			
 			this.tracksListWidgetData = 
-				new TracksListWidgetData(dataChangedObserver, 
+				new TracksListWidgetData(desktopControllerData, dataChangedObserver, 
 										 0, topMenuSizeY, 
 										 this.getDesktopSizeX() - desktopData.getScrollbarWidth(), generatorsSizeY, 
 										 generatorsLabelSizeX,

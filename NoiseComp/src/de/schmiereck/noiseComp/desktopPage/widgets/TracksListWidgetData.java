@@ -11,6 +11,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.TrackData;
 import de.schmiereck.noiseComp.generator.TracksData;
 import de.schmiereck.noiseComp.soundData.SoundData;
+import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 
@@ -82,13 +83,14 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @param sizeY
 	 * @param soundData	is used for getting the actual play time position.
 	 */
-	public TracksListWidgetData(DataChangedObserver dataChangedObserver,
+	public TracksListWidgetData(ControllerData controllerData,
+								  DataChangedObserver dataChangedObserver,
 								int posX, int posY, int sizeX, int sizeY,
 								int generatorsLabelSizeX,
 								SoundData soundData, 
 								ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
 	{
-		super(dataChangedObserver,
+		super(controllerData, dataChangedObserver,
 			  posX, posY, sizeX, sizeY, 32, verticalScrollbarData, horizontalScrollbarData);
 	
 		this.generatorsLabelSizeX = generatorsLabelSizeX;
