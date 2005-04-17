@@ -83,6 +83,7 @@ implements FileLoader, FileSaver, FileExporter
 		//} 
 		catch (Exception ex) 
 		{
+			ex.printStackTrace(System.err);
 			throw new FileIOException(FileIOException.ERR_UNKNOWN, fileName);
 		}
 				

@@ -66,18 +66,13 @@ public class LoadFileOperationLogic
 		//-----------------------------------------------------
 		// GeneratorTypesData:
 		
+		//LoadFileOperationLogic.createTempGeneratorTypes(generatorTypesData,
+		//												noiseNode);
+		
 		ModulGeneratorTypeData mainModulGeneratorTypeData;
 		
-		GeneratorTypeNodesData generatorTypeNodesData = new GeneratorTypeNodesData();
-		
 		mainModulGeneratorTypeData = LoadFileOperationLogic.createGeneratorTypes(generatorTypesData,
-																				 generatorTypeNodesData,
-																				 noiseNode, 
 																				 frameRate);//, loadFileGeneratorNodeDatas);
-		
-		LoadFileOperationLogic.createModulGeneratorTypesGenerators(generatorTypeNodesData, 
-																   generatorTypesData, 
-																   frameRate);
 		
 		// Old file version without any main module?
 		if (mainModulGeneratorTypeData == null)
@@ -112,38 +107,6 @@ public class LoadFileOperationLogic
 	}
 
 	/**
-	 * @param generatorTypeNodesData
-	 * @param generatorTypesData
-	 * @param frameRate
-	 */
-	private static void createModulGeneratorTypesGenerators(GeneratorTypeNodesData generatorTypeNodesData, GeneratorTypesData generatorTypesData, float frameRate)
-	{
-		Iterator generatorTypeNodesIterator = generatorTypeNodesData.getGeneratorTypeNodesIterator();
-		
-		while (generatorTypeNodesIterator.hasNext())
-		{
-			GeneratorTypeNodeData generatorTypeNodeData = (GeneratorTypeNodeData)generatorTypeNodesIterator.next();
-			
-			ModulGeneratorTypeData modulGeneratorTypeData = generatorTypeNodeData.getModulGeneratorTypeData();
-			
-			Node generatorTypeNode = generatorTypeNodeData.getGeneratorTypeNode();
-			
-			generatorTypeNodesData.addTempGeneratorTypeData(new GeneratorTypeNodeData(modulGeneratorTypeData,
-																					  generatorTypeNode));
-			
-			//Generators modulGenerators = modulGeneratorTypeData.getGenerators();
-			
-			LoadFileOperationLogic.createGenerators(generatorTypesData,
-													generatorTypeNode, frameRate, 
-													//modulGenerators, 
-													modulGeneratorTypeData);
-			
-			//modulGeneratorTypeData.setGenerators(modulGenerators);
-			LoadFileOperationLogic.createTracks(generatorTypeNode, modulGeneratorTypeData);
-		}
-	}
-
-	/**
 	 * Creates the list of generatores descripted below the 'rootNode'.
 	 * 
 	 * @param rootNode
@@ -151,7 +114,9 @@ public class LoadFileOperationLogic
 	 * @param parentModulGenerator
 	 */
 	private static void createGenerators(GeneratorTypesData generatorTypesData,
-										 Node rootNode, float frameRate, 
+										 TempGeneratorTypesData tempGeneratorTypesData,
+										 Node rootNode, 
+										 float frameRate, 
 										 //Generators generators, 
 										 ModulGeneratorTypeData modulGeneratorTypeData) //, ModulGenerator parentModulGenerator)
 	{
@@ -159,7 +124,9 @@ public class LoadFileOperationLogic
 		Vector loadFileGeneratorNodeDatas = new Vector();
 		
 		LoadFileOperationLogic.createGenerators(generatorTypesData,
-												rootNode, frameRate, //generators, 
+												tempGeneratorTypesData,
+												rootNode, 
+												frameRate, //generators, 
 												loadFileGeneratorNodeDatas, 
 												modulGeneratorTypeData); //, parentModulGenerator);
 		
@@ -170,10 +137,8 @@ public class LoadFileOperationLogic
 												  modulGeneratorTypeData);
 	}
 
-	private static ModulGeneratorTypeData createGeneratorTypes(GeneratorTypesData generatorTypesData,
-															   GeneratorTypeNodesData generatorTypeNodesData,
-															   Node noiseNode, 
-															   float frameRate)//, Vector loadFileGeneratorNodeDatas)
+	private static ModulGeneratorTypeData createTempGeneratorTypes(GeneratorTypesData tempGeneratorTypesData,
+																   Node noiseNode)
 	{
 		ModulGeneratorTypeData mainModulGeneratorTypeData = null;
 		
@@ -181,7 +146,7 @@ public class LoadFileOperationLogic
 
 		if (generatorTypesNode != null)
 		{
-			generatorTypesData.clear();
+			tempGeneratorTypesData.clear();
 			
 			NodeIterator generatorTypesNodeIterator = XMLData.selectNodeIterator(generatorTypesNode, "generatorType");
 	
@@ -189,30 +154,15 @@ public class LoadFileOperationLogic
 	
 			while ((generatorTypeNode = generatorTypesNodeIterator.nextNode()) != null)
 			{
-				GeneratorTypeData generatorTypeData = LoadFileOperationLogic.createGeneratorType(generatorTypesData,
-																								 generatorTypeNodesData,
-																								 generatorTypeNode, 
-																								 frameRate);
-				
-				if (generatorTypeData instanceof ModulGeneratorTypeData)	
-				{
-					ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
-				
-					if (modulGeneratorTypeData.getIsMainModulGeneratorType() == true)
-					{
-						mainModulGeneratorTypeData = modulGeneratorTypeData;
-					}
-				}
+				LoadFileOperationLogic.createTempGeneratorType(tempGeneratorTypesData, generatorTypeNode);
 			}
 		}
 		
 		return mainModulGeneratorTypeData;
 	}
 
-	private static GeneratorTypeData createGeneratorType(GeneratorTypesData generatorTypesData,
-														 GeneratorTypeNodesData generatorTypeNodesData,
-														 Node generatorTypeNode, 
-														 float frameRate)//, Vector loadFileGeneratorNodeDatas)
+	private static void createTempGeneratorType(GeneratorTypesData tempGeneratorTypesData,
+												Node generatorTypeNode)
 	{
 		//ModulGeneratorTypeData modulGeneratorTypeData = null;
 		
@@ -220,15 +170,18 @@ public class LoadFileOperationLogic
 		String generatorClassName = XMLData.selectSingleNodeText(generatorTypeNode, "generatorClassName");
 		String generatorTypeName = XMLData.selectSingleNodeText(generatorTypeNode, "name");
 		String generatorTypeDescription = XMLData.selectSingleNodeText(generatorTypeNode, "description");
+		String isMainName = XMLData.selectSingleNodeText(generatorTypeNode, "isMain");
+		
+		{
+			GeneratorTypeData tempGeneratorTypeData = tempGeneratorTypesData.searchGeneratorTypeData(generatorTypeClassName);
+			
+			if (tempGeneratorTypeData != null)
+			{
+				throw new RuntimeException("generator type \"" + generatorTypeClassName + "\" allready exist");
+			}
+		}
 		
 		String generatorModulTypeName;	// Not realy needed, because 'generatorTypeName' should be the same.
-		
-		GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
-		
-		if (generatorTypeData != null)
-		{
-			throw new RuntimeException("generator type \"" + generatorTypeClassName + "\" allready exist");
-		}
 		
 		Class generatorClass;
 		try
@@ -252,6 +205,19 @@ public class LoadFileOperationLogic
 			throw new RuntimeException("Class not found", ex);
 		}
 		
+		boolean isMain;
+
+		if ("true".equals(isMainName) == true)
+		{
+			isMain = true;
+		}
+		else
+		{
+			isMain = false;
+		}
+		
+		GeneratorTypeData generatorTypeData;
+		
 		generatorTypeData = LoadFileOperationLogic.createGeneratorTypeData(generatorTypeClassName, 
 																		   generatorClass, 
 																		   generatorTypeName, 
@@ -261,15 +227,70 @@ public class LoadFileOperationLogic
 		{
 			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
 			
-			String isMainName = XMLData.selectSingleNodeText(generatorTypeNode, "isMain");
+			modulGeneratorTypeData.setIsMainModulGeneratorType(isMain);
+		}
+		/*
+		tempGeneratorTypeData = new GeneratorTypeData(generatorTypeClassName,
+														  generatorTypeName,
+														  generatorClassName,
+														  generatorTypeDescription,
+														  isMain,
+														  generatorTypeNode);
+		*/
+		tempGeneratorTypesData.addGeneratorTypeData(generatorTypeData);
+	}
+	
+	private static ModulGeneratorTypeData createGeneratorTypes(GeneratorTypesData generatorTypesData,
+															   float frameRate)//, Vector loadFileGeneratorNodeDatas)
+	{
+		ModulGeneratorTypeData mainModulGeneratorTypeData = null;
+		
+		Iterator tempGeneratorTypesNodeIterator = generatorTypesData.getGeneratorTypesIterator();
+		
+		while (tempGeneratorTypesNodeIterator.hasNext())
+		{
+			TempGeneratorTypeData tempGeneratorTypeData = (TempGeneratorTypeData)tempGeneratorTypesNodeIterator.next();
 
-			if ("true".equals(isMainName) == true)
+			GeneratorTypeData generatorTypeData = LoadFileOperationLogic.createGeneratorType(generatorTypesData, 
+																							 tempGeneratorTypeData, 
+																							 frameRate);
+			
+			if (generatorTypeData instanceof ModulGeneratorTypeData)	
 			{
-				modulGeneratorTypeData.setIsMainModulGeneratorType(true);
+				ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+			
+				if (modulGeneratorTypeData.getIsMainModulGeneratorType() == true)
+				{
+					mainModulGeneratorTypeData = modulGeneratorTypeData;
+				}
 			}
+		}
+		
+		return mainModulGeneratorTypeData;
+	}
+
+	private static GeneratorTypeData createGeneratorType(GeneratorTypesData generatorTypesData,
+														 GeneratorTypeData generatorTypeData,  
+														 float frameRate)//, Vector loadFileGeneratorNodeDatas)
+	{
+		//ModulGeneratorTypeData modulGeneratorTypeData = null;
+		
+		String generatorTypeClassName = tempGeneratorTypeData.getGeneratorTypeClassName();
+		String generatorClassName = tempGeneratorTypeData.getGeneratorClassName();
+		String generatorTypeName = tempGeneratorTypeData.getGeneratorTypeName();
+		String generatorTypeDescription = tempGeneratorTypeData.getGeneratorTypeDescription();
+		
+		GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
+		
+		if (generatorTypeData != null)
+		{
+			throw new RuntimeException("generator type \"" + generatorTypeClassName + "\" allready exist");
 		}
 
 		generatorTypesData.addGeneratorTypeData(generatorTypeData);
+		
+		//----------------------------------------------------------------------
+		Node generatorTypeNode = tempGeneratorTypeData.getGeneratorTypeNode();
 		
 		//--------------------------------------------------------
 		// inputTypes:
@@ -302,20 +323,22 @@ public class LoadFileOperationLogic
 		{
 			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
 			
-			generatorTypeNodesData.addTempGeneratorTypeData(new GeneratorTypeNodeData(modulGeneratorTypeData,
-																					  generatorTypeNode));
-
-			/*
 			//Generators modulGenerators = modulGeneratorTypeData.getGenerators();
 			
+			//an der stelle hier sind noch gar nicht alle generatorTypes bekannt
+			//und es kann sein, das ein verwendeter generator-typ noch nicht
+			//eingelesen wurde.
+			//-> erst generator types einlesen, dann generatoren der typen erzeugen!
+			
 			LoadFileOperationLogic.createGenerators(generatorTypesData,
-													generatorTypeNode, frameRate, 
+													tempGeneratorTypesData,
+													generatorTypeNode, 
+													frameRate, 
 													//modulGenerators, 
 													modulGeneratorTypeData);
 			
 			//modulGeneratorTypeData.setGenerators(modulGenerators);
 			LoadFileOperationLogic.createTracks(generatorTypeNode, modulGeneratorTypeData);
-			*/
 		}
 		
 		return generatorTypeData;
@@ -396,7 +419,9 @@ public class LoadFileOperationLogic
 	 * 			is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
 	private static void createGenerators(GeneratorTypesData generatorTypesData,
-										 Node generatorTypeNode, float frameRate, 
+										 TempGeneratorTypesData tempGeneratorTypesData,
+										 Node generatorTypeNode, 
+										 float frameRate, 
 										 //Generators generators, 
 										 Vector loadFileGeneratorNodeDatas, 
 										 ModulGeneratorTypeData modulGeneratorTypeData) 
@@ -416,7 +441,12 @@ public class LoadFileOperationLogic
 			Float generatorStartTime = XMLData.selectSingleNodeFloat(generatorNode, "startTime");
 			Float generatorEndTime = XMLData.selectSingleNodeFloat(generatorNode, "endTime");
 			
-			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorType);
+			GeneratorTypeData generatorTypeData = tempGeneratorTypesData.searchGeneratorTypeData(generatorType);
+			
+			if (generatorTypeData == null)
+			{
+				throw new RuntimeException("Can't find generator type \"" + generatorType + "\" for generator \"" + generatorName + "\".");
+			}
 			
 			Generator generator;
 			

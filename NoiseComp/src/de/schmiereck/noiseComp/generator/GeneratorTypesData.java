@@ -13,7 +13,8 @@ import de.schmiereck.dataTools.VectorHash;
 public class GeneratorTypesData
 {
 	/**
-	 * List of the available {@link GeneratorTypeData}-Objects with the Class-Name-Strings as keys.<br/>
+	 * List of the available {@link GeneratorTypeData}-Objects with the Class-Name-String 
+	 * {@link GeneratorTypeData#generatorTypeClassName} as keys.<br/>
 	 * If the GeneratorType is a generic type like {@link ModulGenerator},
 	 * the name of the generic type is appendet after a &quot;#&quot; on the class name.
 	 */
@@ -25,8 +26,7 @@ public class GeneratorTypesData
 	}
 
 	/**
-	 * @param generator
-	 * @return
+	 * @see #generatorTypes
 	 */
 	public GeneratorTypeData searchGeneratorTypeData(String generatorTypeClassName)
 	{
