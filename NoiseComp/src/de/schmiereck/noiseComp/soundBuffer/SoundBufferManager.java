@@ -17,7 +17,7 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
  * </p>
  * <p>
  * 	{@link #pollGenerate()}:<br/>
- * 	Verwaltet die SoundBuffer füllt diese bei Bedarf mit neu vom
+ * 	Verwaltet die SoundBuffer fï¿½llt diese bei Bedarf mit neu vom
  * 	{@link #soundGenerator} generierten Werten.
  * </p>
  * <p>
@@ -43,15 +43,15 @@ extends AudioInputStream
 	
 	/**
 	 * Wenn != null, sind hier bereits generierte Daten enthalten, die
-	 * als nächstes abgespielt werden, wenn de {@link #playingGeneratorBuffer}
+	 * als nï¿½chstes abgespielt werden, wenn de {@link #playingGeneratorBuffer}
 	 * leer ist.
 	 */
 	private SoundBuffer waitingGeneratorBuffer = null;
 	
 	/**
 	 * Wenn der {@link #playingGeneratorBuffer} leer ist, wird er in diese
-	 * Variable eingetragen. Dieser Buffer enthält niemals Daten die
-	 * angespielt werden müssen.
+	 * Variable eingetragen. Dieser Buffer enthï¿½lt niemals Daten die
+	 * angespielt werden mï¿½ssen.
 	 */
 	private SoundBuffer generatingGeneratorBuffer = null;
 	
@@ -149,14 +149,14 @@ extends AudioInputStream
 	}
 
 	/**
-	 * Generiert den nächsten Abschnitt in den leeren Warte-Buffer
-	 * (wenn nötig, da leere Buffer warten).
+	 * Generiert den nÃ¤chsten Abschnitt in den leeren Warte-Buffer
+	 * (wenn nÃ¶tig, da leere Buffer warten).
 	 */
 	public void pollGenerate()
 	{
 		synchronized (this)
 		{
-			// Kein gefüllter Buffer wartet mehr, das er abgespielt wird ?
+			// Kein gefÃ¼llter Buffer wartet mehr, das er abgespielt wird ?
 			if (this.waitingGeneratorBuffer == null)
 			{
 				//SoundBuffer generatingSoundBuffer = (SoundBuffer)this.generatingGeneratorBuffer.firstElement();

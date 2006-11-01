@@ -2,7 +2,6 @@ package de.schmiereck.noiseComp.soundSource;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface;
-import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 
 /**
@@ -22,7 +21,7 @@ import de.schmiereck.noiseComp.generator.SoundSample;
  * pre calculated samples (by polling in a thread).
  * </p>
  * 
- * TODO Change management einbauen, wenn sich "oben" was ändert, smk
+ * TODO Change management einbauen, wenn sich "oben" was ï¿½ndert, smk
  * 
  * @author smk
  * @version <p>06.06.2004: created, smk</p>
@@ -100,7 +99,8 @@ implements GeneratorChangeListenerInterface
 		}
 	}
 	/**
-	 * @param outputGenerator to set {@link #outputGenerator}.
+	 * @param outputGenerator 
+	 * 			to set {@link #outputGenerator}.
 	 */
 	public void setOutputGenerator(Generator outputGenerator)
 	{
@@ -122,6 +122,22 @@ implements GeneratorChangeListenerInterface
 				this.outputGenerator.getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 			}
 		}
+	}
+	
+	public long getEmptyBufferStart()
+	{
+		long ret;
+		
+		if (this.soundSamplesBufferData != null)
+		{
+			ret = this.soundSamplesBufferData.getEmptyBufferStart();
+		}
+		else
+		{
+			ret = 0L;
+		}
+		
+		return ret;
 	}
 
 	/* (non-Javadoc)

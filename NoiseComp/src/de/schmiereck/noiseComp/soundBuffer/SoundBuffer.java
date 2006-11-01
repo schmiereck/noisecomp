@@ -24,7 +24,7 @@ public class SoundBuffer
 	private AudioFormat audioFormat;
 	
 	/**
-	 * Maximale-Länge des Puffers.
+	 * Maximale-Lï¿½nge des Puffers.
 	 */
 	private int maxBufferSize = 16000; //32000;
 	
@@ -52,7 +52,7 @@ public class SoundBuffer
 	
 	/**
 	 * Referenz auf den Soundgenerator der die einzelnen Samples
-	 * für jeden Frame erzeugt.
+	 * fï¿½r jeden Frame erzeugt.
 	 */
 	//private GeneratorInterface soundGenerator;
 	private SoundSourceLogic soundSourceLogic;
@@ -82,10 +82,12 @@ public class SoundBuffer
 
 	/**
 	 * Generiert ab dem startFrame soviel Sound wie in den Buffer passt und 
-	 * liefert die Anzahl generierter Frames zurück.
+	 * liefert die Anzahl generierter Frames zurÃ¼ck.
 	 * 
-	 * @param startFrame Frame der Timeline des Sounds, ab dem generiert werden soll.
-	 * @return Anzahl der in den Buffer generierten Frames.
+	 * @param startFrame 
+	 * 			ist der Frame der Timeline des Sounds, ab dem generiert werden soll.
+	 * @return 
+	 * 			die Anzahl der in den Buffer generierten Frames.
 	 */
 	public int generate(long startFrame)
 	{
@@ -182,11 +184,11 @@ public class SoundBuffer
 	
 	/**
 	 * <p>
-	 * 	Liefert die Anzahl der noch im Buffer zum abspielen übrigen Bytes.
+	 * 	Liefert die Anzahl der noch im Buffer zum abspielen ï¿½brigen Bytes.
 	 * 	Wenn 0 geliefert wird, ist der Buffer leer.
 	 * </p>
 	 * <p>
-	 * 	Nur gültig, wenn {@link #bufferIsEmpty} false ist.
+	 * 	Nur gï¿½ltig, wenn {@link #bufferIsEmpty} false ist.
 	 * </p>
 	 * 
 	 * @return the attribute {@link #generatedBytesInBuffer}.
@@ -197,10 +199,10 @@ public class SoundBuffer
 	}
 
 	/**
-	 * Copiert soviele wie möglich Bytes aus dem Buffer in abData (ab die Position offset).
+	 * Copiert soviele wie mï¿½glich Bytes aus dem Buffer in abData (ab die Position offset).
 	 * Es wird versucht maximal length bytes zu kopieren, wenn weniger vorhanden sind, 
 	 * werden nur die vorhandnen kopiert.
-	 * Es wird die Anzahl der bytes zurückgeliefert, die kopiert werden konnte.
+	 * Es wird die Anzahl der bytes zurï¿½ckgeliefert, die kopiert werden konnte.
 	 * 
 	 * @param abData
 	 * @param offset

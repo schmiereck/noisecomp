@@ -2,7 +2,6 @@ package de.schmiereck.noiseComp.file;
 
 import org.w3c.dom.Node;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.xmlTools.XMLData;
 
 /*
  * Created on 17.04.2005, Copyright (c) schmiereck, 2005

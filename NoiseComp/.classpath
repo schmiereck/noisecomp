@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/SMKScreenTools"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
-	<classpathentry kind="src" path="/jmdiframework"/>
 	<classpathentry kind="src" path="waveSrc"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/NoiseCompGUI"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

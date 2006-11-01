@@ -1,7 +1,6 @@
 package de.schmiereck.noiseComp.soundSource;
 
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 
 /**
@@ -110,5 +109,14 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 			this.emptyBufferStart = 0;
 			this.emptyBufferEnd = 0;
 		}
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #emptyBufferStart}.
+	 */
+	public long getEmptyBufferStart()
+	{
+		return this.emptyBufferStart;
 	}
 }

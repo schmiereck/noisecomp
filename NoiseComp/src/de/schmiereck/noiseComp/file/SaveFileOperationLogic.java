@@ -6,7 +6,6 @@ import org.w3c.dom.Node;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
-import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
@@ -112,16 +111,16 @@ public class SaveFileOperationLogic
 			
 			while (inputTypesIterator.hasNext())
 			{
-				InputTypeData înputTypeData = (InputTypeData)inputTypesIterator.next();
+				InputTypeData InputTypeData = (InputTypeData)inputTypesIterator.next();
 				
 				Node inputTypeNode = XMLData.appendNode(xmlDoc, inputTypesNode, "inputType");
 				
-				XMLData.appendTextNode(xmlDoc, inputTypeNode, "name", înputTypeData.getInputTypeName());
-				XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "type", înputTypeData.getInputType());
-				XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "countMin", înputTypeData.getInputCountMin());
-				XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "countMax", înputTypeData.getInputCountMax());
-				XMLData.appendFloatNode(xmlDoc, inputTypeNode, "defaultValue", înputTypeData.getDefaultValue());
-				XMLData.appendTextNode(xmlDoc, inputTypeNode, "description", înputTypeData.getInputTypeDescription());
+				XMLData.appendTextNode(xmlDoc, inputTypeNode, "name", InputTypeData.getInputTypeName());
+				XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "type", InputTypeData.getInputType());
+				XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "countMin", InputTypeData.getInputCountMin());
+				XMLData.appendIntegerNode(xmlDoc, inputTypeNode, "countMax", InputTypeData.getInputCountMax());
+				XMLData.appendFloatNode(xmlDoc, inputTypeNode, "defaultValue", InputTypeData.getDefaultValue());
+				XMLData.appendTextNode(xmlDoc, inputTypeNode, "description", InputTypeData.getInputTypeDescription());
 			}
 		}
 		
@@ -181,20 +180,20 @@ public class SaveFileOperationLogic
 				
 				while (inputsIterator.hasNext())
 				{
-					InputData înputData = (InputData)inputsIterator.next();
+					InputData InputData = (InputData)inputsIterator.next();
 				
 					Node inputNode = XMLData.appendNode(xmlDoc, inputsNode, "input");
 					
-					Generator inputGenerator = înputData.getInputGenerator();
+					Generator inputGenerator = InputData.getInputGenerator();
 					if (inputGenerator != null)
 					{	
 						Node inputGeneratorNameNode = XMLData.appendTextNode(xmlDoc, inputNode, "generatorName", inputGenerator.getName());
 					}
-					Node inputTypeNode = XMLData.appendIntegerNode(xmlDoc, inputNode, "type", înputData.getInputTypeData().getInputType());
-					Node inputValueNode = XMLData.appendFloatNode(xmlDoc, inputNode, "value", înputData.getInputValue());
-					Node inputStringValueNode = XMLData.appendTextNode(xmlDoc, inputNode, "stringValue", înputData.getInputStringValue());
+					Node inputTypeNode = XMLData.appendIntegerNode(xmlDoc, inputNode, "type", InputData.getInputTypeData().getInputType());
+					Node inputValueNode = XMLData.appendFloatNode(xmlDoc, inputNode, "value", InputData.getInputValue());
+					Node inputStringValueNode = XMLData.appendTextNode(xmlDoc, inputNode, "stringValue", InputData.getInputStringValue());
 					
-					InputTypeData inputModulInputTypeData = înputData.getInputModulInputTypeData();
+					InputTypeData inputModulInputTypeData = InputData.getInputModulInputTypeData();
 					
 					if (inputModulInputTypeData != null)
 					{

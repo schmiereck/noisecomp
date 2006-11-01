@@ -2,12 +2,11 @@ package de.schmiereck.noiseComp.generator;
 
 import java.util.Iterator;
 import java.util.Vector;
-
 import de.schmiereck.noiseComp.PopupRuntimeException;
 
 
 /**
- * Implementiert die Logik eines Generators der einen Sample für eine
+ * Implementiert die Logik eines Generators der einen Sample fï¿½r eine
  * Frameposition in einem Buffer ablegt, um ihn nicht mehrfach zu berechnen.
  * <p>
  * 	The "ouput signal" is calculated based on the internal logic of the generator 
@@ -166,7 +165,7 @@ implements GeneratorInterface,
 	}
 	
 	/**
-	 * Berechnen des Sample-Wertes für die angegebene Frame-Position.
+	 * Berechnen des Sample-Wertes fï¿½r die angegebene Frame-Position.
 	 * 
 	 * @param framePosition
 	 * 			is the position of the frame in the complete line to play.<br/>
@@ -213,7 +212,7 @@ implements GeneratorInterface,
 		
 		if (inputData.getInputGenerator() != null)
 		{
-			// Der Generator trägt sich als Listener bei dem Input ein, um Änderungen mitzubekommen.
+			// Der Generator trï¿½gt sich als Listener bei dem Input ein, um ï¿½nderungen mitzubekommen.
 			inputData.getInputGenerator().getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 		}
 		
@@ -258,7 +257,7 @@ implements GeneratorInterface,
 				
 				if (inputData.getInputGenerator() != null)
 				{
-					//Der Generator trägt sich wieder als Listener bei dem Input aus.
+					//Der Generator trï¿½gt sich wieder als Listener bei dem Input aus.
 					inputData.getInputGenerator().getGeneratorChangeObserver().removeGeneratorChangeListener(this);
 				}
 				
@@ -445,7 +444,7 @@ implements GeneratorInterface,
 
 	/**
 	 * Generator benachrichtigen 
-	 * das einer der ihren gelöscht wurde (als Input entfernen usw.):
+	 * das einer der ihren gelï¿½scht wurde (als Input entfernen usw.):
 	 * 
 	 * @param removedGenerator
 	 */
@@ -908,7 +907,7 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	 */
 	public void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos)
 	{
-		// Einer der überwachten Inputs hat sich geändert:
+		// Einer der ï¿½berwachten Inputs hat sich geï¿½ndert:
 
 		this.getGeneratorChangeObserver().changedEvent(this, 
 													   this.getStartTimePos() + startTimePos, 

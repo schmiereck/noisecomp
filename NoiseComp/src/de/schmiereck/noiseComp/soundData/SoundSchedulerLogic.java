@@ -1,14 +1,15 @@
 package de.schmiereck.noiseComp.soundData;
 
 import java.io.IOException;
-
 import javax.sound.sampled.SourceDataLine;
-
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.screenTools.scheduler.PipelineSchedulerLogic;
 
 /**
- * TODO docu
+ * Pipeline-Scheduler der angegebenen Sound 
+ * bei jedem Aufruf abspielt ({@link #notifyRunSchedulOut(long)}).<br/>
+ * Sorgt dafür, das der Sound-Buffer durch den zweiten Thread 
+ * immer gefüllt ist ({@link #notifyRunSchedulCalc(long)}).
  *
  * @author smk
  * @version 26.01.2004
@@ -22,7 +23,6 @@ extends PipelineSchedulerLogic
 	/**
 	 * Constructor.
 	 * 
-	 * @param targetFramesPerSecond
 	 */
 	public SoundSchedulerLogic(int targetFramesPerSecond, SoundData soundData)
 	{
@@ -38,12 +38,9 @@ extends PipelineSchedulerLogic
 	{
 		if (this.playbackPaused == false)
 		{	
-			System.out.println("CALC: " + actualWaitPerFramesMillis);
-
 			SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
-			
+
 			soundBufferManager.pollGenerate();
-			//soundBufferManager.pollGenerate();
 		}
 	}
 	
@@ -54,10 +51,14 @@ extends PipelineSchedulerLogic
 	{
 		if (this.playbackPaused == false)
 		{	
-			System.out.println("OUT: " + actualWaitPerFramesMillis);
+//			System.out.println("OUT: " + actualWaitPerFramesMillis);
 			SourceDataLine line = this.soundData.getLine();
 			
 			SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
+			
+			System.out.println("PLAY: " + 
+			                   soundBufferManager.getActualTime() + 
+			                   " (" + actualWaitPerFramesMillis + ")");
 			
 			//soundBufferManager.pollGenerate();
 			

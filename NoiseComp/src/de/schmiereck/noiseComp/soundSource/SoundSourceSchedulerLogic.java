@@ -3,7 +3,8 @@ package de.schmiereck.noiseComp.soundSource;
 import de.schmiereck.screenTools.scheduler.SchedulerLogic;
 
 /**
- * TODO docu
+ * Scheduler der den Puffer der angegebenen Sound-Source 
+ * bei jedem Aufruf mit berechneten Werten füllt. 
  *
  * @author smk
  * @version <p>06.06.2004: created, smk</p>
@@ -43,6 +44,9 @@ public class SoundSourceSchedulerLogic
 		{
 			if (this.soundSourceLogic != null)
 			{
+				System.out.println("CALC: " + this.soundSourceLogic.getEmptyBufferStart() + 
+				                   " (" + actualWaitPerFramesMillis + ")");
+
 				this.soundSourceLogic.pollCalcFillBuffer(actualWaitPerFramesMillis);
 			}
 		}
