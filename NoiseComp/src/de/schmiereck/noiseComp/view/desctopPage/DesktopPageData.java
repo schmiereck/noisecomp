@@ -23,16 +23,21 @@ import de.schmiereck.noiseComp.view.desktop.DesktopData;
  */
 public class DesktopPageData
 {
+	/**
+	 * Desktop Data.
+	 */
 	private DesktopData desktopData;
 	
 	/**
-	 * X-Gr��e des Desktops.
+	 * X-Größe des Desktops.
+	 * 
 	 * @see #desktopSizeY
 	 */
 	private int desktopSizeX;
 	
 	/**
-	 * Y-Gr��e des Desktops.
+	 * Y-Größe des Desktops.
+	 * 
 	 * @see #desktopSizeX
 	 */
 	private int desktopSizeY;
@@ -43,7 +48,7 @@ public class DesktopPageData
 	private Vector widgets = new Vector();
 
 	/**
-	 * Wenn ein Widget mit der Maus �berfahren wird, nachdem er angeklickt wurde,
+	 * Wenn ein Widget mit der Maus überfahren wird, nachdem er angeklickt wurde,
 	 * wurde ist steht hier welche das war,<br/>
 	 * ansonsten ist der Wert null.
 	 * 
@@ -64,7 +69,7 @@ public class DesktopPageData
 	private InputWidgetData pressedButtonData = null;
 	
 	/**
-	 * Wenn ein Button mit der Maus �berfahren wird, nachdem er angeklickt wurde,
+	 * Wenn ein Button mit der Maus überfahren wird, nachdem er angeklickt wurde,
 	 * wurde ist steht hier welche das war,<br/>
 	 * ansonsten ist der Wert null.
 	 * 
@@ -93,8 +98,12 @@ public class DesktopPageData
 	/**
 	 * Constructor.
 	 * 
-	 * @see #desktopSizeX
-	 * @see #desktopSizeY
+	 * @param desktopData 
+	 * 			to set the {@link #desktopData}.
+	 * @param desktopSizeX 
+	 * 			to set the {@link #desktopSizeX}.
+	 * @param desktopSizeY 
+	 * 			to set the {@link #desktopSizeY}.
 	 */
 	public DesktopPageData(DesktopData desktopData, int desktopSizeX, int desktopSizeY)
 	{
@@ -143,7 +152,7 @@ public class DesktopPageData
 	}
 	
 	/**
-	 * F�gt der Seite ein neues Widget hinzu.
+	 * Fügt der Seite ein neues Widget hinzu.
 	 */
 	public void addWidgetData(WidgetData widgetData)
 	{
@@ -151,7 +160,9 @@ public class DesktopPageData
 	}
 	
 	/**
-	 * Liefert einen iterator �ber alle Widgets der Seite.
+	 * Liefert einen iterator über alle Widgets der Seite.
+	 * 
+	 * @return the iterator of {@link #widgets}.
 	 */
 	public Iterator getWidgetsIterator()
 	{
@@ -183,7 +194,7 @@ public class DesktopPageData
 	}
 	
 	/**
-	 * @see #pressedButtonData
+	 * @return the attribute {@link #pressedButtonData}.
 	 */
 	public InputWidgetData getPressedButtonData()
 	{
@@ -199,7 +210,7 @@ public class DesktopPageData
 	}
 
 	/**
-	 * @see #activeButtonData
+	 * @return the attribute {@link #activeButtonData}.
 	 */
 	public InputWidgetData getActiveButtonData()
 	{
@@ -248,7 +259,7 @@ public class DesktopPageData
 	}
 	
 	/**
-	 * @see #focusedWidgetData
+	 * @return the attribute {@link #focusedWidgetData}.
 	 */
 	public WidgetData getFocusedWidgetData()
 	{
@@ -256,8 +267,10 @@ public class DesktopPageData
 	}
 	
 	/**
+	 * Setzt die aktive Scroll-Bar.
+	 * 
 	 * @param hitScrollbarData
-	 * @param hitScrollbarPart
+	 * 			ist die Scroll-Bar.
 	 */
 	public void setActiveScrollbarData(ScrollbarData hitScrollbarData)
 	{
@@ -283,7 +296,7 @@ public class DesktopPageData
 	}
 	
 	/**
-	 * @see #pointerPressed
+	 * @return the attribute {@link #pointerPressed}.
 	 */
 	public boolean getPointerPressed()
 	{

@@ -212,7 +212,12 @@ extends ControllerLogic
 	}
 
 	/**
-	 * Wird vom Input-Listener aufgerufen, wenn sich die Mausposition ge�ndert hat.
+	 * Wird vom Input-Listener aufgerufen, wenn sich die Mausposition geändert hat.
+	 * 
+	 * @param posX
+	 * 			ist die X-Position der Maus. 
+	 * @param posY 
+	 * 			ist die Y-Position der Maus. 
 	 */
 	public void movePointer(int posX, int posY)
 	{
@@ -231,7 +236,7 @@ extends ControllerLogic
 	}
 
 	/**
-	 * Wird vom Input-Listener aufgerufen, wenn die Maustaste gedr�ckt wurde.
+	 * Wird vom Input-Listener aufgerufen, wenn die Maustaste gedrückt wurde.
 	 */
 	public void pointerPressed()
 	{

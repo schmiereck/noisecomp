@@ -27,8 +27,12 @@ public class DesktopData
 	private int scrollbarWidth2			= 15;
 
 	/**
-	 * @see #pointerPosX
-	 * @see #pointerPosY
+	 * @param posX
+	 * 			to set {@link #pointerPosX}. 
+	 * @param posY 
+	 * 			to set {@link #pointerPosY}. 
+	 * @return
+	 *  		<code>true</code> if position is changed.
 	 */
 	public boolean setPointerPos(int posX, int posY)
 	{
@@ -43,6 +47,8 @@ public class DesktopData
 			ret = false;
 		}
 
+		hier den offset aus MultiBufferFullScreenGraphic#initScreen der bounds abziehen
+		
 		this.pointerPosX = posX;
 		this.pointerPosY = posY;
 		

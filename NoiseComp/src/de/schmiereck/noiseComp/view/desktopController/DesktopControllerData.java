@@ -104,8 +104,6 @@ extends ControllerData
 	 */
 	private SelectNewGeneratorPageData selectNewGeneratorPageData	= null;
 	
-	
-	
 	/**
 	 * Dialog: Save: 
 	 */
@@ -152,9 +150,13 @@ extends ControllerData
 	
 	/**
 	 * Constructor.
-	 * @param observer
 	 * 
+	 * @param dataChangedObserver
+	 * 			is the Observer.
 	 * @param soundData
+	 * 			is the Sound Data.
+	 * @param generatorTypesData
+	 * 			are the generator types.
 	 */
 	public DesktopControllerData(DataChangedObserver dataChangedObserver, 
 								 SoundData soundData, 

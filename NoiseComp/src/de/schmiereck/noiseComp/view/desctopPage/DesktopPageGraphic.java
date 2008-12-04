@@ -46,7 +46,12 @@ public class DesktopPageGraphic
 	}
 
 	/**
-	 * Zeichnet den Mauszeiger.
+	 * @param g
+	 * 			ist die Grafik.
+	 * @param screenGrafic
+	 * 			sind die Funktionen zum Zeichnen.
+	 * @param desktopPageData
+	 * 			sind die Daten des Desktops.
 	 */
 	public void drawPointer(Graphics g, ScreenGraficInterface screenGrafic, DesktopPageData desktopPageData)
 	{
@@ -69,8 +74,17 @@ public class DesktopPageGraphic
 	
 	/**
 	 * Zeichnet die Eingabeelemente.
+	 * 
+	 * @param g
+	 * 			ist die Grafik.
+	 * @param screenGrafic
+	 * 			sind die Funktionen zum Zeichnen.
+	 * @param desktopPageData
+	 * 			sind die Daten des Desktops.
 	 */
-	public void drawWidgets(Graphics g, ScreenGraficInterface screenGrafic, DesktopPageData desktopPageData)
+	public void drawWidgets(Graphics g, 
+	                        ScreenGraficInterface screenGrafic, 
+	                        DesktopPageData desktopPageData)
 	{
 		Iterator widgetIterator = desktopPageData.getWidgetsIterator();
 		

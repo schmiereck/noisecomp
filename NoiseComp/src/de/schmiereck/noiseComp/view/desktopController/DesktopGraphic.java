@@ -40,7 +40,8 @@ extends MultiBufferFullScreenGraphic
 	 */
 	public void drawGraphic(Graphics g, 
 							ControllerData controllerData, 
-							Rectangle bounds, long actualWaitPerFramesMillis)
+							Rectangle bounds, 
+							long actualWaitPerFramesMillis)
 	{
 		controllerData.setGraphicSleepMillis(actualWaitPerFramesMillis);
 		
