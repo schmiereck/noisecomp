@@ -12,6 +12,7 @@ import de.schmiereck.noiseComp.generator.RectangleGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.generator.WaveGenerator;
 import de.schmiereck.screenTools.Runner;
+import de.schmiereck.screenTools.graphic.GraphicMediator;
 import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphicException;
 
 /**
@@ -47,12 +48,17 @@ public class Main
 		generatorTypesData.addGeneratorTypeData(mainModulGeneratorTypeData);
 		
 		//======================================================================
-		MainModel mainModel = new MainModel(generatorTypesData, mainModulGeneratorTypeData);
+		GraphicMediator graphicMediator = new GraphicMediator();
+		
+		MainModel mainModel = new MainModel(generatorTypesData, mainModulGeneratorTypeData,
+		                                    graphicMediator);
 		
 		MainView mainView;
 		try
 		{
 			mainView = new MainView(useFullScreen, mainModel);
+
+			graphicMediator.setScreenGraphic(mainView.getMultiBufferGraphic());
 
 			Runner.run(mainModel.getControllerData(), 
 					   mainModel.getControllerLogic(), 

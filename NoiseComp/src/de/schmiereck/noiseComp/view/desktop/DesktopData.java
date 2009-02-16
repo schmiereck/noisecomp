@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.view.desktop;
 
+import de.schmiereck.screenTools.graphic.GraphicMediator;
+
 /**
  * Manages the date of the desktop.<br/>
  * Specialy:<br/>
@@ -23,8 +25,29 @@ public class DesktopData
 	 */
 	private int pointerPosY = 0;
 
+	/**
+	 * Breite 1 der Scrollbars.
+	 */
 	private int scrollbarWidth			= 20;
+
+	/**
+	 * Breite 2 der Scrollbars.
+	 */
 	private int scrollbarWidth2			= 15;
+
+	/**
+	 * Daten der Screen Grafik.
+	 */
+	private GraphicMediator graphicMediator;
+	
+	/**
+	 * Constructor.
+	 * 
+	 */
+	public DesktopData(GraphicMediator graphicMediator)
+	{
+		this.graphicMediator = graphicMediator;
+	}
 
 	/**
 	 * @param posX
@@ -47,10 +70,10 @@ public class DesktopData
 			ret = false;
 		}
 
-		hier den offset aus MultiBufferFullScreenGraphic#initScreen der bounds abziehen
+		// hier den offset aus MultiBufferFullScreenGraphic#initScreen der bounds abziehen
 		
-		this.pointerPosX = posX;
-		this.pointerPosY = posY;
+		this.pointerPosX = posX - this.graphicMediator.getPointerOffsetX();
+		this.pointerPosY = posY - this.graphicMediator.getPointerOffsetY();
 		
 		return ret;
 	}

@@ -47,6 +47,7 @@ import de.schmiereck.noiseComp.view.desktopController.selectNewGeneratorPage.Sel
 import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedListener;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
+import de.schmiereck.screenTools.graphic.GraphicMediator;
 
 /**
  * <p>
@@ -160,7 +161,8 @@ extends ControllerData
 	 */
 	public DesktopControllerData(DataChangedObserver dataChangedObserver, 
 								 SoundData soundData, 
-								 GeneratorTypesData generatorTypesData)
+								 GeneratorTypesData generatorTypesData,
+								 GraphicMediator graphicMediator)
 	{
 		this.dataChangedObserver = dataChangedObserver;
 		this.generatorTypesData  = generatorTypesData;
@@ -169,7 +171,7 @@ extends ControllerData
 		//this.mainGenerators = mainGenerators;
 		//this.mainModulTypeData = mainModulTypeData;
 		
-		this.desktopData = new DesktopData();
+		this.desktopData = new DesktopData(graphicMediator);
 		
 		this.editData = new EditData(this);
 		

@@ -44,6 +44,7 @@ import de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.action
 import de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.actions.SelectRemoveButtonActionLogicListener;
 import de.schmiereck.screenTools.controller.DataChangedListener;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
+import de.schmiereck.screenTools.graphic.GraphicMediator;
 import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
 
 /*
@@ -76,7 +77,8 @@ public class MainModel
 	private ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener;
 	
 	public MainModel(GeneratorTypesData generatorTypesData, 
-					 ModulGeneratorTypeData mainModulGeneratorTypeData)
+					 ModulGeneratorTypeData mainModulGeneratorTypeData,
+					 GraphicMediator graphicMediator)
 	{
 		//======================================================================
 		// Setup Sound:
@@ -101,7 +103,8 @@ public class MainModel
 		//----------------------------------------------------------------------
 		this.controllerData = new DesktopControllerData(this.dataChangedObserver,
 														this.soundData, 
-														generatorTypesData);
+														generatorTypesData,
+														graphicMediator);
 		
 		EditData editData = this.controllerData.getEditData();
 		
