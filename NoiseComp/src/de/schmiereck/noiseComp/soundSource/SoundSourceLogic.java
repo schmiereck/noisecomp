@@ -21,7 +21,7 @@ import de.schmiereck.noiseComp.generator.SoundSample;
  * pre calculated samples (by polling in a thread).
  * </p>
  * 
- * TODO Change management einbauen, wenn sich "oben" was �ndert, smk
+ * TODO Change management einbauen, wenn sich "oben" was ändert, smk
  * 
  * @author smk
  * @version <p>06.06.2004: created, smk</p>
@@ -51,7 +51,8 @@ implements GeneratorChangeListenerInterface
 	}
 
 	/**
-	 * @return the attribute {@link #outputGenerator}.
+	 * @return 
+	 * 			the attribute {@link #outputGenerator}.
 	 */
 	public Generator getOutputGenerator()
 	{

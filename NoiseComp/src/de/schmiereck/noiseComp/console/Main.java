@@ -1,10 +1,11 @@
-package de.schmiereck.noiseComp;
+package de.schmiereck.noiseComp.console;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
+
 import de.schmiereck.noiseComp.generator.ASRPulseGenerator;
 import de.schmiereck.noiseComp.generator.CutGenerator;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
@@ -21,7 +22,6 @@ import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
-import de.schmiereck.noiseComp.view.MainModel;
 
 
 /*
@@ -29,7 +29,7 @@ import de.schmiereck.noiseComp.view.MainModel;
  */
 /**
  * <p>
- * 	TODO docu type
+ * 	Main Function of Sound generator loaded from command line.
  * </p>
  * 
  * @author smk
@@ -63,7 +63,7 @@ public class Main
 		//======================================================================
 		// Setup Sound:
 		
-		SourceDataLine line = createLine();
+		SourceDataLine line = Main.createLine();
 		
 		//----------------------------------------------------------------------
 		SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
@@ -73,9 +73,9 @@ public class Main
 		//----------------------------------------------------------------------
 		OutputGenerator outputGenerator;
 		
-		outputGenerator = createDemoGenerators(soundData.getFrameRate(), 
-		                                       generatorTypesData,
-		                                       mainModulGeneratorTypeData);
+		outputGenerator = Main.createDemoGenerators(soundData.getFrameRate(), 
+		                                            generatorTypesData,
+		                                            mainModulGeneratorTypeData);
 
 		soundSourceLogic.setOutputGenerator(outputGenerator);
 		
@@ -175,20 +175,25 @@ public class Main
 	/**
 	 * Creates a demo list of generators with different types.
 	 * It's only for developing.
+	 * 
 	 * @param generatorTypesData
+	 * 			are the generator types.
+	 * @return
+	 * 			the output generator.
 	 */
 	public static OutputGenerator createDemoGenerators(float frameRate, 
 	                                                   GeneratorTypesData generatorTypesData, 
 	                                                   ModulGeneratorTypeData mainModulTypeData)
 	{
-		// Sound-Generatoren f�r das Sound-Format des Ausgabekanals erzeugen:
+		// Sound-Generatoren für das Sound-Format des Ausgabekanals erzeugen:
 		
 		//Generators generators = mainModulTypeData.getGenerators();
 
 		//---------------------------------
 		FaderGenerator faderInGenerator;
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(FaderGenerator.class.getName());
+			GeneratorTypeData generatorTypeData = 
+				generatorTypesData.searchGeneratorTypeData(FaderGenerator.class.getName());
 			faderInGenerator = new FaderGenerator("faderIn", Float.valueOf(frameRate), generatorTypeData);
 			
 			faderInGenerator.setStartTimePos(0.0F);
@@ -204,7 +209,8 @@ public class Main
 		//---------------------------------
 		FaderGenerator faderOutGenerator;
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(FaderGenerator.class.getName());
+			GeneratorTypeData generatorTypeData = 
+				generatorTypesData.searchGeneratorTypeData(FaderGenerator.class.getName());
 			faderOutGenerator = new FaderGenerator("faderOut", Float.valueOf(frameRate), generatorTypeData);
 			
 			faderOutGenerator.setStartTimePos(2.0F);
@@ -220,7 +226,8 @@ public class Main
 		//---------------------------------
 		SinusGenerator sinusGenerator;
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(SinusGenerator.class.getName());
+			GeneratorTypeData generatorTypeData = 
+				generatorTypesData.searchGeneratorTypeData(SinusGenerator.class.getName());
 			sinusGenerator = new SinusGenerator("sinus", Float.valueOf(frameRate), generatorTypeData);
 			sinusGenerator.addInputValue(262F, SinusGenerator.INPUT_TYPE_FREQ);
 			//sinusGenerator.setSignalFrequency(262F);
@@ -233,7 +240,8 @@ public class Main
 		//---------------------------------
 		SinusGenerator sinus2Generator;
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(SinusGenerator.class.getName());
+			GeneratorTypeData generatorTypeData = 
+				generatorTypesData.searchGeneratorTypeData(SinusGenerator.class.getName());
 			sinus2Generator = new SinusGenerator("sinus2", Float.valueOf(frameRate), generatorTypeData);
 			sinus2Generator.addInputValue(131F, SinusGenerator.INPUT_TYPE_FREQ);
 			//sinus2Generator.setSignalFrequency(131F);
@@ -246,7 +254,8 @@ public class Main
 		//---------------------------------
 		SinusGenerator sinus3Generator;
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(SinusGenerator.class.getName());
+			GeneratorTypeData generatorTypeData = 
+				generatorTypesData.searchGeneratorTypeData(SinusGenerator.class.getName());
 			sinus3Generator = new SinusGenerator("sinus3", Float.valueOf(frameRate), generatorTypeData);
 			sinus3Generator.addInputValue(70F, SinusGenerator.INPUT_TYPE_FREQ);
 			//sinus3Generator.setSignalFrequency(70F);
@@ -259,7 +268,8 @@ public class Main
 		//---------------------------------
 		MixerGenerator mixerGenerator;
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(MixerGenerator.class.getName());
+			GeneratorTypeData generatorTypeData = 
+				generatorTypesData.searchGeneratorTypeData(MixerGenerator.class.getName());
 			mixerGenerator = new MixerGenerator("mixer", Float.valueOf(frameRate), generatorTypeData);
 		
 			mixerGenerator.setStartTimePos(0.0F);
@@ -277,7 +287,8 @@ public class Main
 		//---------------------------------
 		OutputGenerator outputGenerator;
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(OutputGenerator.class.getName());
+			GeneratorTypeData generatorTypeData = 
+				generatorTypesData.searchGeneratorTypeData(OutputGenerator.class.getName());
 			outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate), generatorTypeData);
 	
 			outputGenerator.setStartTimePos(0.0F);

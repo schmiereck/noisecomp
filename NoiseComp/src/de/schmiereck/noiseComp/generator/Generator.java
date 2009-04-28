@@ -37,7 +37,7 @@ implements GeneratorInterface,
 	/**
 	 * Liste aus {@link InputData}-Objekten (mit {@link Generator}-Objekten).
 	 */
-	private Vector inputs = null;
+	private Vector<InputData> inputs = null;
 	
 	private GeneratorTypeData generatorTypeData;
 
@@ -48,7 +48,8 @@ implements GeneratorInterface,
 	/**
 	 * Constructor.
 	 * 
-	 * @param soundFrameRate		Frames per Second.
+	 * @param soundFrameRate		
+	 * 			are the Frames per Second.
 	 */
 	public Generator(String name, Float soundFrameRate, GeneratorTypeData generatorTypeData)
 	{
@@ -61,7 +62,8 @@ implements GeneratorInterface,
 	}
 
 	/**
-	 * @return the attribute {@link #soundFrameRate}.
+	 * @return 
+	 * 			the attribute {@link #soundFrameRate}.
 	 */
 	public float getSoundFrameRate()
 	{
@@ -147,7 +149,10 @@ implements GeneratorInterface,
 
 	/**
 	 * @param frameTime
-	 * @return true, if the frameTime is in the generator time.
+	 * 			is the frame time in milli seconds.
+	 * @return 
+	 * 			<code>true</code> if the frameTime is in the generator time 
+	 * 			(between {@link #startTimePos} and {@link #endTimePos}).
 	 */
 	public boolean checkIsInTime(float frameTime)
 	{
@@ -165,7 +170,7 @@ implements GeneratorInterface,
 	}
 	
 	/**
-	 * Berechnen des Sample-Wertes f�r die angegebene Frame-Position.
+	 * Berechnen des Sample-Wertes für die angegebene Frame-Position.
 	 * 
 	 * @param framePosition
 	 * 			is the position of the frame in the complete line to play.<br/>
@@ -173,7 +178,10 @@ implements GeneratorInterface,
 	 * 			soundFramePosition = framePosition - {@link #getStartTimePos()}!)
 	 * @param sample
 	 */
-	public abstract void calculateSoundSample(long framePosition, float frameTime, SoundSample sample, ModulGenerator parentModulGenerator);
+	public abstract void calculateSoundSample(long framePosition, 
+	                                          float frameTime, 
+	                                          SoundSample sample, 
+	                                          ModulGenerator parentModulGenerator);
 
 	/**
 	 * @see #name
@@ -187,7 +195,7 @@ implements GeneratorInterface,
 	 * @see #inputs
 	 * @return the new created and added {@link InputData}-Object.
 	 */
-	public InputData addInputGenerator(Generator inputGenerator, 
+	public synchronized InputData addInputGenerator(Generator inputGenerator, 
 									   InputTypeData inputTypeData, 
 									   Float inputValue, 
 									   String inputStringValue, 
@@ -202,17 +210,14 @@ implements GeneratorInterface,
 		
 		if (this.inputs == null)
 		{	
-			this.inputs = new Vector();
+			this.inputs = new Vector<InputData>();
 		}
-			
-		synchronized (this.inputs)
-		{
-			this.inputs.add(inputData);
-		}
+		
+		this.inputs.add(inputData);
 		
 		if (inputData.getInputGenerator() != null)
 		{
-			// Der Generator tr�gt sich als Listener bei dem Input ein, um �nderungen mitzubekommen.
+			// Der Generator trägt sich als Listener bei dem Input ein, um �nderungen mitzubekommen.
 			inputData.getInputGenerator().getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 		}
 		
@@ -289,9 +294,9 @@ implements GeneratorInterface,
 	/**
 	 * @see #inputs
 	 */
-	public Iterator getInputsIterator()
+	public Iterator<InputData> getInputsIterator()
 	{
-		Iterator ret;
+		Iterator<InputData> ret;
 		
 		if (this.inputs != null)
 		{	
@@ -353,11 +358,11 @@ implements GeneratorInterface,
 			{
 				int inputType = inputTypeData.getInputType();
 				
-				Iterator inputGeneratorsIterator = this.inputs.iterator();
+				Iterator<InputData> inputGeneratorsIterator = this.inputs.iterator();
 				
 				while (inputGeneratorsIterator.hasNext())
 				{
-					InputData inputData = (InputData)inputGeneratorsIterator.next();
+					InputData inputData = inputGeneratorsIterator.next();
 					
 					if (inputData.getInputTypeData().getInputType() == inputType)
 					{
@@ -391,11 +396,11 @@ implements GeneratorInterface,
 			{
 				if (this.inputs != null)
 				{	
-					Iterator inputGeneratorsIterator = this.inputs.iterator();
+					Iterator<InputData> inputGeneratorsIterator = this.inputs.iterator();
 					
 					while (inputGeneratorsIterator.hasNext())
 					{
-						InputData inputData = (InputData)inputGeneratorsIterator.next();
+						InputData inputData = inputGeneratorsIterator.next();
 						
 						if (inputTypeName.equals(inputData.getInputTypeData().getInputTypeName()) == true)
 						{
@@ -416,29 +421,21 @@ implements GeneratorInterface,
 	
 	/**
 	 * @return
+	 * 			the size of the {@link #inputs}.
 	 */
-	public int getInputsCount()
+	public synchronized int getInputsCount()
 	{
 		int ret;
 		
 		if (this.inputs != null)
-		{
-			synchronized (this.inputs)
-			{
-				if (this.inputs != null)
-				{	
-					ret = this.inputs.size();
-				}
-				else
-				{
-					ret = 0;
-				}
-			}
+		{	
+			ret = this.inputs.size();
 		}
 		else
 		{
 			ret = 0;
 		}
+
 		return ret;
 	}
 
@@ -448,36 +445,30 @@ implements GeneratorInterface,
 	 * 
 	 * @param removedGenerator
 	 */
-	public void notifyRemoveGenerator(Generator removedGenerator)
+	public synchronized void notifyRemoveGenerator(Generator removedGenerator)
 	{
 		if (removedGenerator != null)
 		{
 			if (this.inputs != null)
 			{	
-				synchronized (this.inputs)
+				Iterator<InputData> inputGeneratorsIterator = this.inputs.iterator();
+				
+				while (inputGeneratorsIterator.hasNext())
 				{
-					if (this.inputs != null)
-					{	
-						Iterator inputGeneratorsIterator = this.inputs.iterator();
-						
-						while (inputGeneratorsIterator.hasNext())
+					InputData inputData = inputGeneratorsIterator.next();
+	
+					Generator generator = (Generator)inputData.getInputGenerator();
+					
+					if (generator == removedGenerator)
+					{
+						synchronized (this.inputs)
 						{
-							InputData inputData = (InputData)inputGeneratorsIterator.next();
-			
-							Generator generator = (Generator)inputData.getInputGenerator();
-							
-							if (generator == removedGenerator)
-							{
-								synchronized (this.inputs)
-								{
-									inputGeneratorsIterator.remove();
-								}
-								
-								this.generateChangedEvent(generator.getStartTimePos(),
-														  generator.getEndTimePos());
-								break;
-							}
+							inputGeneratorsIterator.remove();
 						}
+						
+						this.generateChangedEvent(generator.getStartTimePos(),
+												  generator.getEndTimePos());
+						break;
 					}
 				}
 			}
@@ -558,13 +549,13 @@ implements GeneratorInterface,
 	
 						// ALTERNATIVE: irgenendwie an den ModulGenerator drannkommen, in dem dieser Generator benutzt wird und dann in dem nach dem input suchen.
 						//InputData modulInputData = this.getParentModulGenerator().searchInputByTypeName(inputModulInput);
-						Iterator modulInputsIterator = parentModulGenerator.getInputsIterator();
+						Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
 						
 						if (modulInputsIterator != null)
 						{
 							while (modulInputsIterator.hasNext())
 							{
-								InputData modulInputData = (InputData)modulInputsIterator.next();
+								InputData modulInputData = modulInputsIterator.next();
 								
 								if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
 								{
@@ -628,13 +619,13 @@ implements GeneratorInterface,
 
 						// ALTERNATIVE: irgenendwie an den ModulGenerator drannkommen, in dem dieser Generator benutzt wird und dann in dem nach dem input suchen.
 						//InputData modulInputData = this.getParentModulGenerator().searchInputByTypeName(inputModulInput);
-						Iterator modulInputsIterator = parentModulGenerator.getInputsIterator();
+						Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
 						
 						if (modulInputsIterator != null)
 						{
 							while (modulInputsIterator.hasNext())
 							{
-								InputData modulInputData = (InputData)modulInputsIterator.next();
+								InputData modulInputData = modulInputsIterator.next();
 								
 								if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
 								{
@@ -727,7 +718,7 @@ implements GeneratorInterface,
 				{
 					// Use Value from this input:
 
-					Iterator modulInputsIterator = parentModulGenerator.getInputsIterator();
+					Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
 					
 					value = 0.0F;
 					
@@ -735,7 +726,7 @@ implements GeneratorInterface,
 					{
 						while (modulInputsIterator.hasNext())
 						{
-							InputData modulInputData = (InputData)modulInputsIterator.next();
+							InputData modulInputData = modulInputsIterator.next();
 							
 							if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
 							{
@@ -864,14 +855,11 @@ implements GeneratorInterface,
 	/**
 	 * @return returns the {@link #generatorChangeObserver}.
 	 */
-	public GeneratorChangeObserver getGeneratorChangeObserver()
+	public synchronized GeneratorChangeObserver getGeneratorChangeObserver()
 	{
-		synchronized (this)
+		if (this.generatorChangeObserver == null)
 		{
-			if (this.generatorChangeObserver == null)
-			{
-				this.generatorChangeObserver = new GeneratorChangeObserver();
-			}
+			this.generatorChangeObserver = new GeneratorChangeObserver();
 		}
 		
 		return this.generatorChangeObserver;
@@ -907,7 +895,7 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	 */
 	public void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos)
 	{
-		// Einer der �berwachten Inputs hat sich ge�ndert:
+		// Einer der überwachten Inputs hat sich ge�ndert:
 
 		this.getGeneratorChangeObserver().changedEvent(this, 
 													   this.getStartTimePos() + startTimePos, 

@@ -17,7 +17,7 @@ import de.schmiereck.noiseComp.view.desctopPage.widgets.InputsWidgetData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.SelectData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.SelectEntryData;
-import de.schmiereck.noiseComp.view.desctopPage.widgets.TracksListWidgetData;
+import de.schmiereck.noiseComp.view.desctopPage.widgets.trackList.TracksListWidgetData;
 import de.schmiereck.noiseComp.view.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.view.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.view.desktopController.EditData;

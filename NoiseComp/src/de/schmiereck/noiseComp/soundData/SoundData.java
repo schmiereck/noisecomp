@@ -7,9 +7,9 @@ import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
- * Verwaltet ein Output {@link Generator}-Objekt.
- * Stellt Funktionen zur Echtzeit Wiedergabe des Signals des Output-Generators zur Verfügung.
- * Verwaltet die für die Ausgabe nötigen Puffer-Objekte.
+ * Verwaltet ein Output eines {@link Generator}-Objekt.
+ * Stellt Funktionen zur Echtzeit Wiedergabe des Signals des Output-Generators zur VerfÃ¼gung.
+ * Verwaltet die fÃ¼r die Ausgabe nÃ¶tigen Puffer-Objekte.
  *
  * @author smk
  * @version 25.01.2004
@@ -18,7 +18,7 @@ public class SoundData
 {
 	private static final int BUFFER_SIZE = 32000; //16000; 
 
-	//nur noch die setOutput() aufrufen, wenn sich dieser ändert.
+	//nur noch die setOutput() aufrufen, wenn sich dieser Ã¤ndert.
 	//private Generators generators = null;
 
 	//private OutputGenerator outputGenerator = null;
@@ -120,27 +120,27 @@ public class SoundData
 	}
 
 	/**
-	 * 
+	 * Start Playback of {@link #line}
 	 */
 	public void startPlayback()
 	{
-		SourceDataLine line = this.getLine();
+		SourceDataLine line = this.line;
 		
 		line.start();
 	}
 
 	/**
-	 * 
+	 * Pause Playback of {@link #line}
 	 */
 	public void pausePlayback()
 	{
-		SourceDataLine line = this.getLine();
+		SourceDataLine line = this.line;
 		
 		line.stop();
 	}
 
 	/**
-	 * 
+	 * Resume Playback of {@link #line}
 	 */
 	public void resumePlayback()
 	{
@@ -150,7 +150,7 @@ public class SoundData
 	}
 	
 	/**
-	 * 
+	 * Stop Playback of {@link #line}
 	 */
 	public void stopPlayback()
 	{

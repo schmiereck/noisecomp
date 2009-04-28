@@ -21,7 +21,7 @@ import de.schmiereck.noiseComp.view.desctopPage.widgets.PaneData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.SelectData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.TextWidgetData;
-import de.schmiereck.noiseComp.view.desctopPage.widgets.TracksListWidgetData;
+import de.schmiereck.noiseComp.view.desctopPage.widgets.trackList.TracksListWidgetData;
 import de.schmiereck.noiseComp.view.desktop.DesktopData;
 import de.schmiereck.noiseComp.view.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.view.desktopController.actions.old.AddGeneratorButtonActionLogicListener;

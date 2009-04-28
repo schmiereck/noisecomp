@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.view.desctopPage.widgets;
+package de.schmiereck.noiseComp.view.desctopPage.widgets.trackList;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +10,8 @@ import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.generator.TrackData;
 import de.schmiereck.noiseComp.view.desctopPage.DesktopColors;
+import de.schmiereck.noiseComp.view.desctopPage.widgets.ListWidgetData;
+import de.schmiereck.noiseComp.view.desctopPage.widgets.ListWidgetGraphic;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 
 /**
@@ -27,10 +29,10 @@ extends ListWidgetGraphic
 	private static Color dragColor2 = new Color(120, 120, 120);
 	
 	private static void drawGeneratorArea(Graphics g, ScreenGraficInterface screenGrafic, DesktopColors desktopColors,
-								   TracksListWidgetData tracksData, Generator generator, 
-								   int screenPosY, int trackHeight, 
-								   float scrollStartTime, float scrollEndTime, 
-								   boolean generatorIsActive, boolean generatorIsSelected)
+	                                      TracksListWidgetData tracksData, Generator generator, 
+	                                      int screenPosY, int trackHeight, 
+	                                      float scrollStartTime, float scrollEndTime, 
+	                                      boolean generatorIsActive, boolean generatorIsSelected)
 	{
 		// While calulate the scrolling, remember the part of the left row:
 		

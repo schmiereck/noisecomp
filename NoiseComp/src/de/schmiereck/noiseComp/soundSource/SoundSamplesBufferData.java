@@ -4,7 +4,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 
 /**
- * TODO docu
+ * Buffer of the calculated Samples.
  *
  * @author smk
  * @version <p>06.06.2004: created, smk</p>

@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.view.desctopPage.widgets;
+package de.schmiereck.noiseComp.view.desctopPage.widgets.trackList;
 
 import java.util.Iterator;
 import de.schmiereck.noiseComp.generator.Generator;
@@ -8,13 +8,18 @@ import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.view.desctopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.view.desctopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.view.desctopPage.HitWidgetListenerInterface;
+import de.schmiereck.noiseComp.view.desctopPage.widgets.GeneratorSelectedListenerInterface;
+import de.schmiereck.noiseComp.view.desctopPage.widgets.ListWidgetData;
+import de.schmiereck.noiseComp.view.desctopPage.widgets.ListWidgetGraphic;
+import de.schmiereck.noiseComp.view.desctopPage.widgets.ScrollbarData;
+import de.schmiereck.noiseComp.view.desctopPage.widgets.WidgetData;
 import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 
 /**
  * Verwaltet eine Liste aus {@link TrackData}-Objekten.
- * Jeder Track enth�lt einen Generator.
+ * Jeder Track enthält einen Generator.
  *
  * @author smk
  * @version 26.01.2004
@@ -43,26 +48,27 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	
 	/**
 	 * Wird verwaltet um Zugriff auf die aktuelle Abspielposition zu haben.
-	 * TODO K�nnte man �ber eine etwas abstraktere Schnittstelle handeln, smk
+	 * TODO Könnte man über eine etwas abstraktere Schnittstelle handeln, smk
 	 */
 	private SoundData soundData;
 
 	/**
-	 * Enth�lt einen Verweiss auf den gerade mit der Maus �berfahrenen Generator.
+	 * Enthält einen Verweiss auf den gerade mit der Maus überfahrenen Generator.
 	 */
 	private TrackData activeTrackData = null;
 
 	/**
-	 * true, if a track is dragged with the mouse.
+	 * <code>true</code> if a track is dragged with the mouse.
 	 */
 	private boolean doDragging = false;
 
 	/**
-	 * Der mit der Maus �berfahrene Part des Generators.
+	 * Der mit der Maus überfahrene Part des Generators.
 	 * @see #HIT_PART_NONE
 	 * @see #HIT_PART_GENERATOR
 	 */
 	private int hitGeneratorPart = HIT_PART_NONE;
+	
 	private TrackData selectedTrackData = null;
 	private boolean generatorIsSelected = false;
 	private GeneratorSelectedListenerInterface generatorSelectedListener = null;
