@@ -61,7 +61,9 @@ implements GeneratorChangeListenerInterface
 
 	/**
 	 * @param frame
+	 * 			ist the sound sample frame.
 	 * @return
+	 * 			the sound sample.
 	 */
 	public SoundSample generateFrameSample(long frame)
 	{
@@ -71,7 +73,32 @@ implements GeneratorChangeListenerInterface
 		{
 			if (this.outputGenerator != null)
 			{
-				soundSample = this.soundSamplesBufferData.get(frame, this.outputGenerator);
+				soundSample = this.soundSamplesBufferData.generateSoundSample(frame, this.outputGenerator);
+			}
+			else
+			{
+				soundSample = null;
+			}
+		}
+		
+		return soundSample;
+	}
+	
+	/**
+	 * @param frame
+	 * 			ist the sound sample frame.
+	 * @return
+	 * 			the sound sample.
+	 */
+	public SoundSample getFrameSample(long frame)
+	{
+		SoundSample soundSample;
+		
+		//synchronized (this)
+		{
+			if (this.outputGenerator != null)
+			{
+				soundSample = this.soundSamplesBufferData.getSoundSample(frame);
 			}
 			else
 			{

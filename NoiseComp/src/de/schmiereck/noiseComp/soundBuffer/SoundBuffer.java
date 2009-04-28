@@ -6,7 +6,7 @@ import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
- * TODO docu
+ * Manges a Buffer of generated sound samples to play it.
  *
  * @author smk
  * @version 21.01.2004
@@ -24,7 +24,7 @@ public class SoundBuffer
 	private AudioFormat audioFormat;
 	
 	/**
-	 * Maximale-L�nge des Puffers.
+	 * Maximale-Länge des Puffers.
 	 */
 	private int maxBufferSize = 16000; //32000;
 	
@@ -39,7 +39,7 @@ public class SoundBuffer
 	private int generatedBytesInBuffer = 0;
 	
 	/**
-	 * true, wenn genrate() aufgerufen werden kann, 
+	 * <code>true</code> wenn genrate() aufgerufen werden kann, 
 	 * da der Buffer leer ist.
 	 */
 	private boolean bufferIsEmpty = true;
@@ -52,7 +52,7 @@ public class SoundBuffer
 	
 	/**
 	 * Referenz auf den Soundgenerator der die einzelnen Samples
-	 * f�r jeden Frame erzeugt.
+	 * für jeden Frame erzeugt.
 	 */
 	//private GeneratorInterface soundGenerator;
 	private SoundSourceLogic soundSourceLogic;

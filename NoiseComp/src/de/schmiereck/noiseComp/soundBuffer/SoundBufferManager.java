@@ -17,13 +17,11 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
  * </p>
  * <p>
  * 	{@link #pollGenerate()}:<br/>
- * 	Verwaltet die SoundBuffer f�llt diese bei Bedarf mit neu vom
- * 	{@link #soundGenerator} generierten Werten.
+ * 	Verwaltet die SoundBuffer füllt diese bei Bedarf mit neu vom {@link #soundGenerator} generierten Werten.
  * </p>
  * <p>
  * 	{@link #read(byte[], int, int)}:<br/>
- * 	Schreibt bei jedem Aufruf Buffer-Inhalte raus und markiert diese als 
- * 	ausgegeben.
+ * 	Schreibt bei jedem Aufruf Buffer-Inhalte raus und markiert diese als ausgegeben.
  * </p>
  *
  * @author smk
@@ -37,21 +35,21 @@ extends AudioInputStream
 	private static int bytesPerStereoSample = 4;
 	
 	/**
-	 * Wenn != null, wird dieser Buffer gerade abgespielt.
+	 * Wenn != <code>null</code>, wird dieser Buffer gerade abgespielt.
 	 */
 	private SoundBuffer playingGeneratorBuffer = null;
 	
 	/**
 	 * Wenn != null, sind hier bereits generierte Daten enthalten, die
-	 * als n�chstes abgespielt werden, wenn de {@link #playingGeneratorBuffer}
+	 * als nächstes abgespielt werden, wenn de {@link #playingGeneratorBuffer}
 	 * leer ist.
 	 */
 	private SoundBuffer waitingGeneratorBuffer = null;
 	
 	/**
 	 * Wenn der {@link #playingGeneratorBuffer} leer ist, wird er in diese
-	 * Variable eingetragen. Dieser Buffer enth�lt niemals Daten die
-	 * angespielt werden m�ssen.
+	 * Variable eingetragen. Dieser Buffer enthält niemals Daten die
+	 * angespielt werden müssen.
 	 */
 	private SoundBuffer generatingGeneratorBuffer = null;
 	

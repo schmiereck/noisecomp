@@ -9,6 +9,8 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.generator.TrackData;
+import de.schmiereck.noiseComp.soundData.SoundData;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.view.desctopPage.DesktopColors;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.ListWidgetData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.ListWidgetGraphic;
@@ -28,8 +30,11 @@ extends ListWidgetGraphic
 	private static Color dragColor1 = new Color(100, 100, 100, 75);
 	private static Color dragColor2 = new Color(120, 120, 120);
 	
-	private static void drawGeneratorArea(Graphics g, ScreenGraficInterface screenGrafic, DesktopColors desktopColors,
-	                                      TracksListWidgetData tracksData, Generator generator, 
+	private static void drawGeneratorArea(Graphics g, 
+	                                      ScreenGraficInterface screenGrafic, 
+	                                      DesktopColors desktopColors,
+	                                      TracksListWidgetData tracksData, 
+	                                      Generator generator, 
 	                                      int screenPosY, int trackHeight, 
 	                                      float scrollStartTime, float scrollEndTime, 
 	                                      boolean generatorIsActive, boolean generatorIsSelected)
@@ -103,9 +108,12 @@ extends ListWidgetGraphic
 				//for (float timePos = 0; timePos < timeLength; timePos += (0.5F / scaleX))
 				for (float timePos = 0; timePos < timeLength; timePos += (2.0F / scaleX))
 				{
+					long sampleFrame = (long)((generatorStartTime + timePos) * frameRate);
+					
 					// TODO hier auf den Track zugreifen, der soll einen Puffer verwalten.
 					//SoundSample soundSample = null;//XXX generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate), parentModulGenerator);
-					SoundSample soundSample = generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate), parentModulGenerator);
+					SoundSample soundSample = generator.generateFrameSample(sampleFrame, 
+					                                                        parentModulGenerator);
 					
 					if (soundSample != null)
 					{	
@@ -161,6 +169,8 @@ extends ListWidgetGraphic
 		}
 	}
 
+	private static final Color bufferStatusColor = new Color(0XFF, 0x00, 0x00);
+	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetGraphic#drawListEntry(java.awt.Graphics, de.schmiereck.screenTools.graphic.ScreenGraficInterface, de.schmiereck.noiseComp.desktopPage.DesktopColors, de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData, java.lang.Object, int, int, int)
 	 */
@@ -247,8 +257,9 @@ extends ListWidgetGraphic
 		screenGrafic.drawString(g, 10, screenPosY + entryHeight - 4, "(" + trackData.getGenerator().getGeneratorTypeData().getGeneratorTypeName() + ")");
 		
 		TracksListWidgetGraphic.drawGeneratorArea(g, screenGrafic, desktopColors,
-				tracksData, generator, screenPosY, entryHeight,
-				scrollStartTime, scrollEndTime, generatorIsActive, generatorIsSelected);
+		                                          tracksData, generator, screenPosY, entryHeight,
+		                                          scrollStartTime, scrollEndTime, generatorIsActive, 
+		                                          generatorIsSelected);
 	}
 	
 
@@ -307,7 +318,7 @@ extends ListWidgetGraphic
 		screenGrafic.drawLine(g, 0, posY, sizeX, 0);
 		screenGrafic.drawLine(g, tracksData.getGeneratorsLabelSizeX(), posY, 0, sizeY);
 		
-		//----------------------------------------------------------------------
+		//==========================================================================================
 		// Draw Input Connectors:
 		
 		if (tracksData.getSelectedTrackData() != null)
@@ -321,7 +332,7 @@ extends ListWidgetGraphic
 			
 			Generator generator = selectedTrackGraficData.getGenerator();
 			
-			Iterator inputsIterator = generator.getInputsIterator();
+			Iterator<InputData> inputsIterator = generator.getInputsIterator();
 			
 			if (inputsIterator != null)
 			{
@@ -329,11 +340,12 @@ extends ListWidgetGraphic
 				int selectedScreenInputOffset = (int)(((selectedGenerator.getEndTimePos() - selectedGenerator.getStartTimePos()) * scaleX) / (generator.getInputsCount() + 1));
 				
 				int inputNr = 1;
+				
 				while (inputsIterator.hasNext())
 				{
-					InputData inputData = (InputData)inputsIterator.next();
+					InputData inputData = inputsIterator.next();
 
-					Generator inputGenerator = (Generator)inputData.getInputGenerator();
+					Generator inputGenerator = inputData.getInputGenerator();
 					
 					TrackData inputTrackData = tracksData.searchTrackData(inputGenerator);
 
@@ -372,23 +384,26 @@ extends ListWidgetGraphic
 			}
 		}
 		
-		//----------------------------------------------------------------------
+		//==========================================================================================
 		// Play Sound Pos:
-		g.setColor(Color.RED);
-		
-		float playTimePos = tracksData.getSoundPlayTimePos();
-		
-		//screenGrafic.setFont()
-		screenGrafic.drawString(g, posX + 6, posY, "time:" + playTimePos);
-		
-		if ((playTimePos >= horizontalScrollStart) && (playTimePos <= horizontalScrollEnd))
-		{	
-			int soundPosX = (int)((playTimePos - horizontalScrollStart) * tracksData.getGeneratorScaleX());
+		{
+			g.setColor(Color.RED);
 			
-			screenGrafic.drawLine(g, tracksData.getGeneratorsLabelSizeX() + soundPosX, posY, 0, sizeY);
+			float playTimePos = tracksData.getSoundPlayTimePos();
+			
+			//screenGrafic.setFont()
+			screenGrafic.drawString(g, posX + 6, posY, "time:" + playTimePos);
+			
+			if ((playTimePos >= horizontalScrollStart) && (playTimePos <= horizontalScrollEnd))
+			{	
+				int soundPosX = (int)((playTimePos - horizontalScrollStart) * tracksData.getGeneratorScaleX());
+				
+				screenGrafic.drawLine(g, 
+				                      tracksData.getGeneratorsLabelSizeX() + soundPosX, posY, 
+				                      0, sizeY);
+			}
 		}
-		
-		//----------------------------------------------------------------------
+		//==========================================================================================
 		// Drag-Border:
 
 		if (tracksData.getDoDragging() == true)
@@ -403,6 +418,42 @@ extends ListWidgetGraphic
 								  sizeX, tracksData.getListEntryHeight());
 
 			//g.setXORMode(Color.WHITE);
+		}
+		//==========================================================================================
+		// Buffer status:
+		{
+			screenGrafic.setColor(g, bufferStatusColor);
+			
+//			TrackData trackData = tracksData.getTrack(0);
+//			
+//			Generator generator = trackData.getGenerator();
+			
+			SoundData soundData = tracksData.getSoundData();
+			
+			float frameRate = soundData.getFrameRate();
+
+			SoundSourceLogic soundSourceLogic = soundData.getSoundSourceLogic();
+			
+			int screenPosX = tracksData.getGeneratorsLabelSizeX();
+			
+			for (float timePos = horizontalScrollStart; timePos < horizontalScrollEnd; timePos += (3.0F / scaleX))
+			{
+				long sampleFrame = (long)((timePos) * frameRate);
+//			for (long sampleFrame = 0; sampleFrame < 64000 * 10; sampleFrame++)
+//			{
+				SoundSample soundSample = soundSourceLogic.getFrameSample(sampleFrame);
+
+				if (soundSample != null)
+				{
+					int soundPosX = (int)((timePos - horizontalScrollStart) * scaleX);
+//					int soundPosX = (int)((sampleFrame * scaleX) / 100000);
+
+					screenGrafic.drawPoint(g, 
+					                       screenPosX + soundPosX, 
+					                       posY + 2, 
+					                       2);
+				}
+			}
 		}
 	}
 }

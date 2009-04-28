@@ -53,7 +53,37 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 		}
 	}
 
-	public SoundSample get(long frame, Generator outputGenerator)
+	/**
+	 * @param frame
+	 * 			is the sound sample frame.
+	 * @return
+	 * 			the sound sample.
+	 */
+	public SoundSample getSoundSample(long frame)
+	{
+		SoundSample soundSample;
+		
+		if (frame < this.bufferSoundSamples.length)
+		{
+			soundSample = this.bufferSoundSamples[(int)frame];
+		}
+		else
+		{
+			soundSample = null;
+		}
+		
+		return soundSample;
+	}
+
+	/**
+	 * @param frame
+	 * 			is the sound sample frame.
+	 * @param outputGenerator
+	 * 			is the output generator.
+	 * @return
+	 * 			the sound sample.
+	 */
+	public SoundSample generateSoundSample(long frame, Generator outputGenerator)
 	{
 		SoundSample soundSample;
 		

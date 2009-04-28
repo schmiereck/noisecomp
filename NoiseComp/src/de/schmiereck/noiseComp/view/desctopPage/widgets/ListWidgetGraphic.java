@@ -49,7 +49,8 @@ public abstract class ListWidgetGraphic
 		}
 
 		this.drawBackground(g, screenGrafic, desktopColors, listWidgetData, 
-				posX, posY, sizeX, sizeY, horizontalScrollStart, horizontalScrollEnd);
+		                    posX, posY, sizeX, sizeY, 
+		                    horizontalScrollStart, horizontalScrollEnd);
 		
 		ScrollbarData verticalScrollbarData = listWidgetData.getVerticalScrollbarData();
 
@@ -108,10 +109,10 @@ public abstract class ListWidgetGraphic
 		}
 		
 		this.drawSelectors(g, screenGrafic, desktopColors, 
-				listWidgetData, 
-				posX, posY, sizeX, sizeY, entryHeight, 
-				horizontalScrollStart, horizontalScrollEnd,
-				verticalScrollerStart, verticalScrollerEnd);
+		                   listWidgetData, 
+		                   posX, posY, sizeX, sizeY, entryHeight, 
+		                   horizontalScrollStart, horizontalScrollEnd,
+		                   verticalScrollerStart, verticalScrollerEnd);
 	}
 
 

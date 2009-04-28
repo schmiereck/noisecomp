@@ -613,4 +613,13 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 		this.activeTrackData = null;
 		this.doDragging = false;
 	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #soundData}.
+	 */
+	public SoundData getSoundData()
+	{
+		return this.soundData;
+	}
 }
