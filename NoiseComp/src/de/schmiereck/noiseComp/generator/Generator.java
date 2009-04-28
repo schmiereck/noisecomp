@@ -30,7 +30,7 @@ implements GeneratorInterface,
 	private float soundFrameRate;
 	
 	/**
-	 * Is the unique Name of the Generator Object. 
+	 * Is the unique Name of the Generator. 
 	 */
 	private String name;
 	
@@ -39,6 +39,9 @@ implements GeneratorInterface,
 	 */
 	private Vector<InputData> inputs = null;
 	
+	/**
+	 * Type of the Generator.
+	 */
 	private GeneratorTypeData generatorTypeData;
 
 	//private GeneratorBuffer	generatorBuffer = null;
@@ -48,8 +51,12 @@ implements GeneratorInterface,
 	/**
 	 * Constructor.
 	 * 
+	 * @param name
+	 * 			is the unique name of the generator.
 	 * @param soundFrameRate		
 	 * 			are the Frames per Second.
+	 * @param generatorTypeData
+	 * 			is the Type of the Generator.
 	 */
 	public Generator(String name, Float soundFrameRate, GeneratorTypeData generatorTypeData)
 	{
@@ -193,13 +200,14 @@ implements GeneratorInterface,
 	
 	/**
 	 * @see #inputs
-	 * @return the new created and added {@link InputData}-Object.
+	 * @return 
+	 * 			the new created and added {@link InputData}-Object.
 	 */
 	public synchronized InputData addInputGenerator(Generator inputGenerator, 
-									   InputTypeData inputTypeData, 
-									   Float inputValue, 
-									   String inputStringValue, 
-									   InputTypeData inputModulInputTypeData)
+	                                                InputTypeData inputTypeData, 
+	                                                Float inputValue, 
+	                                                String inputStringValue, 
+	                                                InputTypeData inputModulInputTypeData)
 	{
 		InputData inputData = new InputData(this,
 											inputGenerator, 
@@ -217,7 +225,7 @@ implements GeneratorInterface,
 		
 		if (inputData.getInputGenerator() != null)
 		{
-			// Der Generator trägt sich als Listener bei dem Input ein, um �nderungen mitzubekommen.
+			// Der Generator trägt sich als Listener bei dem Input ein, um Änderungen mitzubekommen.
 			inputData.getInputGenerator().getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 		}
 		
@@ -866,23 +874,20 @@ implements GeneratorInterface,
 	}
 	
 	/**
-	 * @see #generatorChangeObserver
+	 * Send a change Event to {@link #generatorChangeObserver}.
 	 */
-	public void generateChangedEvent(float startTimePos, float endTimePos)
+	public synchronized void generateChangedEvent(float startTimePos, float endTimePos)
 	{
-		synchronized (this)
-		{
 System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: " + startTimePos + ", " + endTimePos);
-			if (this.generatorChangeObserver != null)
-			{
-				this.generatorChangeObserver.changedEvent(this, 
-														  startTimePos, endTimePos);
-			}
+		if (this.generatorChangeObserver != null)
+		{
+			this.generatorChangeObserver.changedEvent(this, 
+													  startTimePos, endTimePos);
 		}
 	}
 	
 	/**
-	 * @see #generateChangedEvent(float, float)
+	 * {@link #generateChangedEvent(float, float)} for {@link #startTimePos} and {@link #endTimePos}.
 	 */
 	public void generateChangedEvent()
 	{
@@ -895,7 +900,7 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	 */
 	public void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos)
 	{
-		// Einer der überwachten Inputs hat sich ge�ndert:
+		// Einer der überwachten Inputs hat sich geändert:
 
 		this.getGeneratorChangeObserver().changedEvent(this, 
 													   this.getStartTimePos() + startTimePos, 

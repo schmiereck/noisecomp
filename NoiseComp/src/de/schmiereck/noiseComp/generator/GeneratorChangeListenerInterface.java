@@ -5,8 +5,8 @@ package de.schmiereck.noiseComp.generator;
 /**
  * <p>
  * 	Interface das von Objekten implementiert werden muss, die vom
- * 	{@link de.schmiereck.noiseComp.generator.GeneratorChangeObserver} über 
- * 	Änderungen an dem überwachten Generator benachrichtigt werden wollen.
+ * 	{@link de.schmiereck.noiseComp.generator.GeneratorChangeObserver} Ã¼ber 
+ * 	Ã„nderungen an dem Ã¼berwachten Generator benachrichtigt werden wollen.
  * </p>
  * 
  * @author smk
@@ -16,14 +16,14 @@ public interface GeneratorChangeListenerInterface
 {
 
 	/**
-	 * Wird aufgerufen, wenn sich der angegebene Genrator geändert hat.
+	 * Wird aufgerufen, wenn sich der angegebene Genrator geÃ¤ndert hat.
 	 * 
 	 * @param generator
-	 * 			ist der Generator, der die Veränderung meldet.
+	 * 			ist der Generator, der die VerÃ¤nderung meldet.
 	 * @param startTimePos
-	 * 			ist der Zeitpunkt ab dem sich Daten im angegebenen Generator geändert haben.
+	 * 			ist der Zeitpunkt ab dem sich Daten im angegebenen Generator geÃ¤ndert haben.
 	 * @param endTimePos
-	 * 			ist der Zeitpunkt bis zu dem sich Daten im angegebenen Generator geändert haben.
+	 * 			ist der Zeitpunkt bis zu dem sich Daten im angegebenen Generator geÃ¤ï¿½ndert haben.
 	 */
 	void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos);
 }

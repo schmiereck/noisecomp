@@ -68,14 +68,16 @@ public class InputData
 		this.inputModulInputTypeData = inputModulInputTypeData;
 	}
 	/**
-	 * @return the attribute {@link #inputGenerator}.
+	 * @return 
+	 * 			the {@link #inputGenerator}.
 	 */
 	public Generator getInputGenerator()
 	{
 		return this.inputGenerator;
 	}
 	/**
-	 * @param inputGenerator is the new value for attribute {@link #inputGenerator} to set.
+	 * @param inputGenerator 
+	 * 			is the new value for attribute {@link #inputGenerator} to set.
 	 */
 	public void setInputGenerator(Generator inputGenerator)
 	{

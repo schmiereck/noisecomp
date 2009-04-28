@@ -9,7 +9,7 @@ import java.util.Vector;
 /**
  * <p>
  * 	Verwaltet eine Liste von Objekten die das {@link GeneratorChangeListenerInterface}-Interface
- * 	implementieren. Diese werden Benachrichtigt, wenn der �berwachte Generator
+ * 	implementieren. Diese werden Benachrichtigt, wenn der überwachte Generator
  * 	einen changeEvent() meldet.
  * </p>
  * 
@@ -20,48 +20,41 @@ public class GeneratorChangeObserver
 {
 	/**
 	 * Liste aus Objekten die das {@link GeneratorChangeListenerInterface}-Interface
-	 * implementieren.
+	 * implementieren.<br/>
+	 * Werden beachrichtigt wenn sich im {@link Generator} etwas ändert.
 	 */
-	private Vector generatorChangeListeners = null;
+	private Vector<GeneratorChangeListenerInterface> generatorChangeListeners = null;
 	
-	public void registerGeneratorChangeListener(GeneratorChangeListenerInterface generatorChangeListener)
+	public synchronized void registerGeneratorChangeListener(GeneratorChangeListenerInterface generatorChangeListener)
 	{
-		synchronized (this)
+		if (this.generatorChangeListeners == null)
 		{
-			if (this.generatorChangeListeners == null)
-			{
-				this.generatorChangeListeners = new Vector();
-			}
+			this.generatorChangeListeners = new Vector<GeneratorChangeListenerInterface>();
 		}
 		
 		this.generatorChangeListeners.add(generatorChangeListener);
 	}
 	
-	public void removeGeneratorChangeListener(GeneratorChangeListenerInterface generatorChangeListener)
+	public synchronized void removeGeneratorChangeListener(GeneratorChangeListenerInterface generatorChangeListener)
 	{
-		synchronized (this)
+		if (this.generatorChangeListeners != null)
 		{
-			if (this.generatorChangeListeners != null)
-			{
-				this.generatorChangeListeners.remove(generatorChangeListener);
-			}
+			this.generatorChangeListeners.remove(generatorChangeListener);
 		}
 	}
 	
-	public void changedEvent(Generator generator, float startTimePos, float endTimePos)
+	public synchronized void changedEvent(Generator generator, float startTimePos, float endTimePos)
 	{
-		synchronized (this)
+		if (this.generatorChangeListeners != null)
 		{
-			if (this.generatorChangeListeners != null)
+			Iterator<GeneratorChangeListenerInterface> generatorChangeListenersIterator = 
+				this.generatorChangeListeners.iterator();
+			
+			while (generatorChangeListenersIterator.hasNext())
 			{
-				Iterator generatorChangeListenersIterator = this.generatorChangeListeners.iterator();
+				GeneratorChangeListenerInterface generatorChangeListener = generatorChangeListenersIterator.next();
 				
-				while (generatorChangeListenersIterator.hasNext())
-				{
-					GeneratorChangeListenerInterface generatorChangeListener = (GeneratorChangeListenerInterface)generatorChangeListenersIterator.next();
-					
-					generatorChangeListener.notifyGeneratorChanged(generator, startTimePos, endTimePos);
-				}
+				generatorChangeListener.notifyGeneratorChanged(generator, startTimePos, endTimePos);
 			}
 		}
 	}
