@@ -50,21 +50,21 @@ public class Main
 		//======================================================================
 		GraphicMediator graphicMediator = new GraphicMediator();
 		
-		MainModel mainModel = new MainModel(generatorTypesData, mainModulGeneratorTypeData,
+		MainController mainController = new MainController(generatorTypesData, mainModulGeneratorTypeData,
 		                                    graphicMediator);
 		
 		MainView mainView;
 		try
 		{
-			mainView = new MainView(useFullScreen, mainModel);
+			mainView = new MainView(useFullScreen, mainController);
 
 			graphicMediator.setScreenGraphic(mainView.getMultiBufferGraphic());
 
-			Runner.run(mainModel.getControllerData(), 
-					   mainModel.getControllerLogic(), 
+			Runner.run(mainController.getControllerData(), 
+					   mainController.getControllerLogic(), 
 					   mainView.getMultiBufferGraphic(), 
 					   mainView.getInputListener(), 
-					   mainModel.getWaiter(), 
+					   mainController.getWaiter(), 
 					   24, 16,
 					   false, 
 					   useFullScreen,

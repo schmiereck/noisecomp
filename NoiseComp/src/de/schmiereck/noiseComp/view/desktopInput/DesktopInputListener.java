@@ -109,13 +109,15 @@ implements GraficInputListener
 		int type = Character.getType(c);
 		
 		if ((type == Character.DECIMAL_DIGIT_NUMBER) ||			// 0123456789
-			(type == Character.LOWERCASE_LETTER) ||				// a-z, ���
-				(type == Character.UPPERCASE_LETTER) ||			// A-Z, ���
+			(type == Character.LOWERCASE_LETTER) ||				// a-z, öäü
+				(type == Character.UPPERCASE_LETTER) ||			// A-Z, ÖÄÜ
 				(type == Character.CONNECTOR_PUNCTUATION) ||	// 
 				(type == Character.DASH_PUNCTUATION) ||			// -_
 				(type == Character.OTHER_PUNCTUATION))			// .,
 		{		
 			this.gameControllerLogic.doInputChar(c);
+			
+			e.consume();
 		}
 	}
 

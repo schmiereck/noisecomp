@@ -52,13 +52,13 @@ import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
  */
 /**
  * <p>
- * 	TODO docu type
+ * 	Main-Controller.
  * </p>
  * 
  * @author smk
  * @version <p>25.03.2005:	created, smk</p>
  */
-public class MainModel
+public class MainController
 {
 	private SoundData soundData;
 	
@@ -76,14 +76,14 @@ public class MainModel
 	private ZoomInButtonActionLogicListener zoomInButtonActionLogicListener;
 	private ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener;
 	
-	public MainModel(GeneratorTypesData generatorTypesData, 
+	public MainController(GeneratorTypesData generatorTypesData, 
 					 ModulGeneratorTypeData mainModulGeneratorTypeData,
 					 GraphicMediator graphicMediator)
 	{
 		//======================================================================
 		// Setup Sound:
 		
-		SourceDataLine line = MainModel.createLine();
+		SourceDataLine line = MainController.createLine();
 		
 		//----------------------------------------------------------------------
 		SoundSourceLogic soundSourceLogic = new SoundSourceLogic();

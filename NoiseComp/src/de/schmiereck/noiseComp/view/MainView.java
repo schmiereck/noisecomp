@@ -29,25 +29,28 @@ public class MainView
 	 * @throws MultiBufferFullScreenGraphicException
 	 * 
 	 */
-	public MainView(boolean useFullScreen, MainModel documentModel) 
+	public MainView(boolean useFullScreen, MainController documentController) 
 	throws MultiBufferFullScreenGraphicException
 	{
 		this(useFullScreen, 
-		     documentModel, 
+		     documentController, 
 			 MultiBufferFullScreenGraphic.createFrameView(useFullScreen));
 	}
 	
 	/**
 	 * Constructor.
-	 * @throws MultiBufferFullScreenGraphicException
 	 * 
+	 * @param useFullScreen
+	 * 			<code>true</code>: Fullscreen benutzen.
+	 * 
+	 * @throws MultiBufferFullScreenGraphicException
 	 */
 	public MainView(boolean useFullScreen, 
-					MainModel documentModel,
+					MainController documentController,
 					Container frameView) 
 	throws MultiBufferFullScreenGraphicException
 	{
-		DesktopControllerData controllerData = documentModel.getControllerData();
+		DesktopControllerData controllerData = documentController.getControllerData();
 		
 		this.multiBufferGraphic = new DesktopGraphic(useFullScreen);
 		
@@ -57,14 +60,14 @@ public class MainView
 		
 		this.inputListener = new DesktopInputListener();
 
-		this.inputListener.setGameControllerLogic(documentModel.getControllerLogic());
+		this.inputListener.setGameControllerLogic(documentController.getControllerLogic());
 		
 		this.inputListener.setGraphic(this.multiBufferGraphic.getScaleX(),
 									  this.multiBufferGraphic.getScaleY(),
 									  this.multiBufferGraphic.getCenterX(),
 									  this.multiBufferGraphic.getCenterY());
 		
-		this.multiBufferGraphic.addInputListener(this.inputListener, useFullScreen);
+//		this.multiBufferGraphic.addInputListener(this.inputListener, useFullScreen);
 	}
 
 	/**

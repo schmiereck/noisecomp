@@ -21,6 +21,13 @@ extends MultiBufferFullScreenGraphic
 {
 	private DesktopPageGraphic desktopPageGraphic;
 	
+	/**
+	 * 
+	 * Constructor.
+	 * 
+	 * @param useFullScreen
+	 * 			<code>true</code>: Fullscreen benutzen.
+	 */
 	public DesktopGraphic(boolean useFullScreen)
 	{
 		super(useFullScreen);
