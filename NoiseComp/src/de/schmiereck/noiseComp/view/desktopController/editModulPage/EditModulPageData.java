@@ -81,7 +81,7 @@ implements SelectedListEntryInterface
 		super(desktopData, desktopSizeX, desktopSizeY);
 
 		{
-			// Add Main Panel:
+			// Add ConsoleMain Panel:
 			PaneData paneData = new PaneData(desktopControllerData, dataChangedObserver,
 											 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
 			this.addWidgetData(paneData);

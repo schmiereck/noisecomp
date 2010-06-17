@@ -621,7 +621,7 @@ EditGeneratorChangedListener
 		}
 		else
 		{
-			this.mainPageData.getModulGeneratorTextWidgetData().setLabelText("<Main Modul>");
+			this.mainPageData.getModulGeneratorTextWidgetData().setLabelText("<ConsoleMain Modul>");
 		}
 
 		this.controllerLogic.dataChanged(desktopControllerData);

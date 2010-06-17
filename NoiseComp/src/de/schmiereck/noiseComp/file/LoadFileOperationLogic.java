@@ -84,7 +84,7 @@ public class LoadFileOperationLogic
 			
 			mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
 			
-			mainModulGeneratorTypeData.setGeneratorTypeName("Main-Modul");
+			mainModulGeneratorTypeData.setGeneratorTypeName("ConsoleMain-Modul");
 			
 			//-----------------------------------------------------
 			// Inserting the Generators.

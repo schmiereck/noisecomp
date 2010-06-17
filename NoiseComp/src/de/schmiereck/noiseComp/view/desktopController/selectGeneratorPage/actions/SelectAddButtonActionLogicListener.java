@@ -10,7 +10,7 @@ import de.schmiereck.noiseComp.view.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 
 /**
- * Hinzuf�gen des ausgew�hlten Generators zu der Generator-Liste auf der Main-Page.
+ * Hinzuf�gen des ausgew�hlten Generators zu der Generator-Liste auf der ConsoleMain-Page.
  *
  * @author smk
  * @version <p>25.02.2004: created, smk</p>

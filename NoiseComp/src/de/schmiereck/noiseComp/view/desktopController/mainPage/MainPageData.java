@@ -44,7 +44,7 @@ import de.schmiereck.noiseComp.view.desktopController.mainPage.actions.old.ZoomO
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
- * Main Page-Data.
+ * ConsoleMain Page-Data.
  *
  * @author smk
  * @version <p>12.04.2004: created, smk</p>
@@ -53,61 +53,61 @@ public class MainPageData
 	extends DesktopPageData
 {
 	/**
-	 * Dialog:	Main:	Edited Modul-Generator-Name.
+	 * Dialog:	ConsoleMain:	Edited Modul-Generator-Name.
 	 */
 	private TextWidgetData	modulGeneratorTextWidgetData = null;
 	
 	/**
-	 * Dialog:	Main:	Add-Generator-Button.
+	 * Dialog:	ConsoleMain:	Add-Generator-Button.
 	 */
 	private FunctionButtonData	addGeneratorButtonData	= 	null;
 
 	/**
-	 * Dialog:	Main:	Remove-Generator-Button.
+	 * Dialog:	ConsoleMain:	Remove-Generator-Button.
 	 */
 	private FunctionButtonData	removeGeneratorbuttonData	= 	null;
 	
 	/**
-	 * Dialog:	Main:	Play-Button.
+	 * Dialog:	ConsoleMain:	Play-Button.
 	 */
 	private FunctionButtonData playButtonData	= null;
 	/**
-	 * Dialog:	Main:	Pause-Button.
+	 * Dialog:	ConsoleMain:	Pause-Button.
 	 */
 	private FunctionButtonData pauseButtonData	= null;
 	/**
-	 * Dialog:	Main:	Stop-Button.
+	 * Dialog:	ConsoleMain:	Stop-Button.
 	 */
 	private FunctionButtonData stopButtonData	= null;
 	
 	/**
-	 * Dialog:	Main:	Group-Generators-Button.
+	 * Dialog:	ConsoleMain:	Group-Generators-Button.
 	 */
 	private FunctionButtonData	groupGeneratorbuttonData	= 	null;
 
 	/**
-	 * Dialog:	Main:	Set-Generator-Button.
+	 * Dialog:	ConsoleMain:	Set-Generator-Button.
 	 */
 	private FunctionButtonData setGeneratorButtonData	= null;
 	
 	/**
-	 * Dialog:	Main:	Set-Generator-Input-Button.
+	 * Dialog:	ConsoleMain:	Set-Generator-Input-Button.
 	 */
 	private FunctionButtonData setInputButtonData	= null;
 	/**
-	 * Dialog:	Main:	Remove-Generator-Input-Button.
+	 * Dialog:	ConsoleMain:	Remove-Generator-Input-Button.
 	 */
 	private FunctionButtonData removeInputButtonData	= null;
 	/**
-	 * Dialog:	Main:	New-Generator-Input-Button.
+	 * Dialog:	ConsoleMain:	New-Generator-Input-Button.
 	 */
 	private FunctionButtonData newInputButtonData	= null;
 	/**
-	 * Dialog:	Main:	Add-Generator-Input-Button.
+	 * Dialog:	ConsoleMain:	Add-Generator-Input-Button.
 	 */
 	private FunctionButtonData addInputButtonData	= null;
 	/**
-	 * Dialog:	Main:	Generator-Input-Type-Description.
+	 * Dialog:	ConsoleMain:	Generator-Input-Type-Description.
 	 */
 	private TextWidgetData generatorInputTypeDescriptionTextWidgetData = null;
 

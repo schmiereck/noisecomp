@@ -1,21 +1,13 @@
 package de.schmiereck.noiseComp.view.desktopController.selectNewGeneratorPage;
 
-import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.view.desctopPage.DesktopPageData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.FunctionButtonData;
-import de.schmiereck.noiseComp.view.desctopPage.widgets.GeneratorTypesWidgetData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.LabelData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.PaneData;
-import de.schmiereck.noiseComp.view.desctopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.view.desktop.DesktopData;
 import de.schmiereck.noiseComp.view.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.actions.SelectAddButtonActionLogicListener;
 import de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.actions.SelectCancelButtonActionLogicListener;
-import de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.actions.SelectEditButtonActionLogicListener;
-import de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.actions.SelectInsertButtonActionLogicListener;
-import de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.actions.SelectMainEditButtonActionLogicListener;
-import de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.actions.SelectRemoveButtonActionLogicListener;
-import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
@@ -48,7 +40,7 @@ extends DesktopPageData
 	 */
 	private FunctionButtonData selectEditButtonData = null;
 	/**
-	 * Dialog: Select Generator: Main-Edit-Button
+	 * Dialog: Select Generator: ConsoleMain-Edit-Button
 	 */
 	private FunctionButtonData selectMainEditButtonData = null;
 	/**
@@ -62,13 +54,12 @@ extends DesktopPageData
 	 */
 	public SelectNewGeneratorPageData(DesktopControllerData desktopControllerData,
 									  DataChangedObserver dataChangedObserver, 
-									  DesktopData desktopData, int desktopSizeX, int desktopSizeY,
-									  GeneratorTypesData generatorTypesData)
+									  DesktopData desktopData, int desktopSizeX, int desktopSizeY)
 	{
 		super(desktopData, desktopSizeX, desktopSizeY);
 
 		{
-			// Add Main Page:
+			// Add ConsoleMain Page:
 			PaneData paneData = new PaneData(desktopControllerData, dataChangedObserver, 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
 			this.addWidgetData(paneData);
 		}

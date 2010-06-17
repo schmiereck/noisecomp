@@ -102,7 +102,7 @@ public class EditData
 		editModulPageData.getGroupNameInputlineData().setInputText(generatorTypeName);
 
 		//----------------------------------------------------------------------
-		// Init Main-Page:
+		// Init ConsoleMain-Page:
 		
 		MainPageData mainPageData = this.controllerData.getMainDesktopPageData();
 		

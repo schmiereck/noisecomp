@@ -5,7 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
-import de.schmiereck.noiseComp.generator.GeneratorTypesData;
+
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
@@ -52,7 +52,7 @@ import de.schmiereck.screenTools.scheduler.SchedulerWaiter;
  */
 /**
  * <p>
- * 	Main-Controller.
+ * 	ConsoleMain-Controller.
  * </p>
  * 
  * @author smk
@@ -76,9 +76,8 @@ public class MainController
 	private ZoomInButtonActionLogicListener zoomInButtonActionLogicListener;
 	private ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener;
 	
-	public MainController(GeneratorTypesData generatorTypesData, 
-					 ModulGeneratorTypeData mainModulGeneratorTypeData,
-					 GraphicMediator graphicMediator)
+	public MainController(ModulGeneratorTypeData mainModulGeneratorTypeData,
+	                      GraphicMediator graphicMediator)
 	{
 		//======================================================================
 		// Setup Sound:
@@ -103,7 +102,6 @@ public class MainController
 		//----------------------------------------------------------------------
 		this.controllerData = new DesktopControllerData(this.dataChangedObserver,
 														this.soundData, 
-														generatorTypesData,
 														graphicMediator);
 		
 		EditData editData = this.controllerData.getEditData();
@@ -121,7 +119,6 @@ public class MainController
 														  playerName);
 		
 		this.controllerLogic.createDemoGenerators(soundData.getFrameRate(), 
-												  generatorTypesData,
 												  mainModulGeneratorTypeData);
 		
 		this.controllerLogic.selectModulGeneratorToEdit(mainModulGeneratorTypeData);

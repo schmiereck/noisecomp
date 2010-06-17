@@ -1,8 +1,8 @@
 package de.schmiereck.noiseComp.view.desktopController;
 
 import java.util.Iterator;
+
 import de.schmiereck.noiseComp.PopupRuntimeException;
-import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.view.desctopPage.DesktopPageData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.FunctionButtonData;
@@ -66,14 +66,14 @@ extends ControllerData
 
 	private boolean playSound = false;
 	
-	/**
-	 * The supported generator types.<br/>
-	 * There are many references to this Object on other places.
-	 * Don't kill this object, use clear() to remove the list of types.
-	 * 
-	 * @see #createBaseGeneratorTypes()
-	 */
-	private GeneratorTypesData generatorTypesData;
+//	/**
+//	 * The supported generator types.<br/>
+//	 * There are many references to this Object on other places.
+//	 * Don't kill this object, use clear() to remove the list of types.
+//	 * 
+//	 * @see #createBaseGeneratorTypes()
+//	 */
+//	private GeneratorTypesData generatorTypesData;
 	
 	/**
 	 * Daten der gerade angezeigte Seite.
@@ -156,16 +156,13 @@ extends ControllerData
 	 * 			is the Observer.
 	 * @param soundData
 	 * 			is the Sound Data.
-	 * @param generatorTypesData
-	 * 			are the generator types.
 	 */
 	public DesktopControllerData(DataChangedObserver dataChangedObserver, 
 								 SoundData soundData, 
-								 GeneratorTypesData generatorTypesData,
 								 GraphicMediator graphicMediator)
 	{
 		this.dataChangedObserver = dataChangedObserver;
-		this.generatorTypesData  = generatorTypesData;
+//		this.generatorTypesData  = generatorTypesData;
 		
 		this.soundData = soundData;
 		//this.mainGenerators = mainGenerators;
@@ -199,16 +196,14 @@ extends ControllerData
 															  DesktopData desktopData)
 	{
 		return new SelectGeneratorPageData(this,
-										   dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight(),
-										   this.generatorTypesData);
+										   dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight());
 	}
 
 	private SelectNewGeneratorPageData createNewSelectGeneratorPage(DataChangedObserver dataChangedObserver, 
 																	DesktopData desktopData)
 	{
 		return new SelectNewGeneratorPageData(this,
-											  dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight(),
-											  this.generatorTypesData);
+											  dataChangedObserver, desktopData, this.getFieldWidth(), this.getFieldHeight());
 	}
 
 	private EditModulPageData createEditModulPage(DataChangedObserver dataChangedObserver, 
@@ -223,7 +218,7 @@ extends ControllerData
 		DesktopPageData	desktopPageData = new DesktopPageData(desktopData, this.getFieldWidth(), this.getFieldHeight());
 
 		{
-			// Add Main Page:
+			// Add ConsoleMain Page:
 			PaneData paneData = new PaneData(this, dataChangedObserver, 0, 0, this.getFieldWidth(), this.getFieldHeight());
 			desktopPageData.addWidgetData(paneData);
 		}
@@ -257,7 +252,7 @@ extends ControllerData
 		DesktopPageData	desktopPageData = new DesktopPageData(desktopData, this.getFieldWidth(), this.getFieldHeight());
 
 		{
-			// Add Main Page:
+			// Add ConsoleMain Page:
 			PaneData paneData = new PaneData(this, dataChangedObserver, 0, 0, this.getFieldWidth(), this.getFieldHeight());
 			desktopPageData.addWidgetData(paneData);
 		}

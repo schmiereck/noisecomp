@@ -4,20 +4,37 @@ import java.util.Iterator;
 import de.schmiereck.dataTools.VectorHash;
 
 /**
- * TODO docu
+ * <p>
+ * 	Generator-Types Data.
+ * </p>
  *
  * @author smk
  * @version 21.02.2004
  */
 public class GeneratorTypesData
 {
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * List of the available {@link GeneratorTypeData}-Objects with the Class-Name-String 
 	 * {@link GeneratorTypeData#generatorTypeClassName} as keys.<br/>
 	 * If the GeneratorType is a generic type like {@link ModulGenerator},
 	 * the name of the generic type is appendet after a &quot;#&quot; on the class name.
 	 */
-	private VectorHash generatorTypes = new VectorHash();
+	private VectorHash<String, GeneratorTypeData> generatorTypes;
+	
+	//**********************************************************************************************
+	// Functions:
+
+	/**
+	 * Constructor.
+	 * 
+	 */
+	public GeneratorTypesData()
+	{
+		this.generatorTypes = new VectorHash<String, GeneratorTypeData>();
+	}
 	
 	public void addGeneratorTypeData(GeneratorTypeData generatorTypeData)
 	{
@@ -33,7 +50,7 @@ public class GeneratorTypesData
 		
 		if (generatorTypeClassName != null)
 		{	
-			generatorTypeData = (GeneratorTypeData)this.generatorTypes.get(generatorTypeClassName);
+			generatorTypeData = this.generatorTypes.get(generatorTypeClassName);
 		}
 		else
 		{	
@@ -47,7 +64,7 @@ public class GeneratorTypesData
 	{
 		GeneratorTypeData generatorTypeData;
 		
-		generatorTypeData = (GeneratorTypeData)this.generatorTypes.get(pos);
+		generatorTypeData = this.generatorTypes.get(pos);
 
 		return generatorTypeData;
 	}
@@ -62,7 +79,7 @@ public class GeneratorTypesData
 		return this.generatorTypes.size();
 	}
 
-	public Iterator getGeneratorTypesIterator()
+	public Iterator<GeneratorTypeData> getGeneratorTypesIterator()
 	{
 		return this.generatorTypes.iterator();
 	}

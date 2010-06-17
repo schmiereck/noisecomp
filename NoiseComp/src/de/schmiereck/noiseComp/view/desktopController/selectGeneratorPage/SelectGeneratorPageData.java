@@ -1,6 +1,5 @@
 package de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage;
 
-import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.view.desctopPage.DesktopPageData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.FunctionButtonData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.GeneratorTypesWidgetData;
@@ -44,7 +43,7 @@ extends DesktopPageData
 	 */
 	private FunctionButtonData selectEditButtonData = null;
 	/**
-	 * Dialog: Select Generator: Main-Edit-Button
+	 * Dialog: Select Generator: ConsoleMain-Edit-Button
 	 */
 	private FunctionButtonData selectMainEditButtonData = null;
 	/**
@@ -56,7 +55,7 @@ extends DesktopPageData
 	 */
 	private GeneratorTypesWidgetData	generatorTypesListData;
 	
-	private GeneratorTypesData generatorTypesData;
+//	private GeneratorTypesData generatorTypesData;
 	
 	/**
 	 * Constructor.
@@ -67,15 +66,14 @@ extends DesktopPageData
 	 */
 	public SelectGeneratorPageData(DesktopControllerData desktopControllerData,
 								   DataChangedObserver dataChangedObserver, 
-								   DesktopData desktopData, int desktopSizeX, int desktopSizeY,
-								   GeneratorTypesData generatorTypesData)
+								   DesktopData desktopData, int desktopSizeX, int desktopSizeY)
 	{
 		super(desktopData, desktopSizeX, desktopSizeY);
 
-		this.generatorTypesData = generatorTypesData;
+//		this.generatorTypesData = generatorTypesData;
 		
 		{
-			// Add Main Page:
+			// Add ConsoleMain Page:
 			PaneData paneData = new PaneData(desktopControllerData, dataChangedObserver, 0, 0, this.getDesktopSizeX(), this.getDesktopSizeY());
 			this.addWidgetData(paneData);
 		}
@@ -97,8 +95,7 @@ extends DesktopPageData
 		{
 			this.generatorTypesListData = new GeneratorTypesWidgetData(desktopControllerData, dataChangedObserver, 100, 120, 680 - desktopData.getScrollbarWidth2(), 400, 
 																	   verticalScrollbarData, 
-																	   null, 
-																	   generatorTypesData);
+																	   null);
 			this.addWidgetData(this.generatorTypesListData);
 		}
 		
@@ -107,7 +104,7 @@ extends DesktopPageData
 			this.addWidgetData(this.selectAddButtonData);
 		}
 		{
-			this.selectMainEditButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "selectMainEdit", "Edit Main Modul...", 210, 40, 220, 20);
+			this.selectMainEditButtonData = new FunctionButtonData(desktopControllerData, dataChangedObserver, "selectMainEdit", "Edit ConsoleMain Modul...", 210, 40, 220, 20);
 			this.addWidgetData(this.selectMainEditButtonData);
 		}
 		
@@ -149,11 +146,11 @@ extends DesktopPageData
 	{
 		return this.generatorTypesListData;
 	}
-	/**
-	 * @return returns the {@link #generatorTypesData}.
-	 */
-	public GeneratorTypesData getGeneratorTypesData()
-	{
-		return this.generatorTypesData;
-	}
+//	/**
+//	 * @return returns the {@link #generatorTypesData}.
+//	 */
+//	public GeneratorTypesData getGeneratorTypesData()
+//	{
+//		return this.generatorTypesData;
+//	}
 }

@@ -12,7 +12,7 @@ import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphicException;
  */
 /**
  * <p>
- * 	Main View.
+ * 	ConsoleMain View.
  * </p>
  * <p>
  * 	Manages multi buffered grafik and input listeners.

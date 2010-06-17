@@ -1,11 +1,10 @@
 package de.schmiereck.noiseComp.view.desktopController.selectGeneratorPage.actions;
 
-import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
-import de.schmiereck.noiseComp.soundData.SoundData;
+import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.view.desktopController.DesktopControllerData;
@@ -47,6 +46,10 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public void notifyButtonReleased(InputWidgetData buttonData)
 	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
 		GeneratorTypeData selectedGeneratorTypeData = this.selectGeneratorPageData.getGeneratorTypesListData().getSelectedGeneratorTypeData();
 		/*
 		if (selectedGeneratorTypeData == null)
@@ -73,7 +76,7 @@ implements ButtonActionLogicListenerInterface
 		modulGeneratorTypeData.setGeneratorTypeName("unnamed");
 		modulGeneratorTypeData.setGeneratorTypeDescription("New created modul.");
 		
-		this.selectGeneratorPageData.getGeneratorTypesData().addGeneratorTypeData(modulGeneratorTypeData);
+		soundService.addGeneratorType(modulGeneratorTypeData);
 
 		//----------------------------------------------------------------------
 		float frameRate = this.controllerData.getSoundData().getFrameRate();
@@ -82,7 +85,7 @@ implements ButtonActionLogicListenerInterface
 		{
 			OutputGenerator outputGenerator;
 			
-			GeneratorTypeData generatorTypeData = selectGeneratorPageData.getGeneratorTypesData().searchGeneratorTypeData(OutputGenerator.class.getName());
+			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(OutputGenerator.class.getName());
 			outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate), generatorTypeData);
 	
 			outputGenerator.setStartTimePos(0.0F);
@@ -97,5 +100,7 @@ implements ButtonActionLogicListenerInterface
 		this.controllerData.getEditData().setEditModulGenerator(modulGeneratorTypeData);
 		
 		this.controllerData.setActiveDesktopPageData(this.controllerData.getEditModulPageData());
+		
+		//==========================================================================================
 	}
 }

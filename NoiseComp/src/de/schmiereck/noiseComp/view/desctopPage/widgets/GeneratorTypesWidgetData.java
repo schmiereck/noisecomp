@@ -1,8 +1,9 @@
 package de.schmiereck.noiseComp.view.desctopPage.widgets;
 
 import java.util.Iterator;
+
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.GeneratorTypesData;
+import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.view.desctopPage.ActivateWidgetListenerInterface;
 import de.schmiereck.noiseComp.view.desctopPage.ClickedWidgetListenerInterface;
 import de.schmiereck.noiseComp.view.desctopPage.HitWidgetListenerInterface;
@@ -19,7 +20,7 @@ public class GeneratorTypesWidgetData
 extends ListWidgetData
 implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitWidgetListenerInterface
 {
-	private GeneratorTypesData generatorTypesData;
+//	private GeneratorTypesData generatorTypesData;
 	
 	static private GeneratorTypesWidgetGraphic listWidgetGraphic = null;
 	
@@ -34,57 +35,20 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * 
 	 */
 	public GeneratorTypesWidgetData(ControllerData controllerData,
-									  DataChangedObserver dataChangedObserver,
+	                                DataChangedObserver dataChangedObserver,
 									int posX, int posY, int sizeX, int sizeY,
-									ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData,
-									GeneratorTypesData generatorTypesData)
+									ScrollbarData verticalScrollbarData, ScrollbarData horizontalScrollbarData)
 	{
 		super(controllerData, dataChangedObserver,
 			  posX, posY, sizeX, sizeY, 16, verticalScrollbarData, horizontalScrollbarData);
 		
-		this.generatorTypesData = generatorTypesData;
+//		this.generatorTypesData = generatorTypesData;
 
 		// Momentane Anzahl Inputs zu...
 		// ...maximal m�gliche Anzahl angezeigter Inputs.
 		this.setVerticalScrollbarRange((float)this.getSizeY() / (float)this.getListEntryHeight());
 	}
 
-	/**
-	 * @param pos
-	 * @return
-	 */
-	private GeneratorTypeData getGeneratorTypeData(int pos)
-	{
-		GeneratorTypeData ret;
-		
-		if (this.generatorTypesData != null)
-		{
-			ret = (GeneratorTypeData)this.generatorTypesData.get(pos);
-		}
-		else
-		{
-			ret = null;
-		}
-		return ret;
-	}
-
-	/**
-	 * @return
-	 */
-	private int getGeneratorTypesCount()
-	{
-		int ret;
-		
-		if (this.generatorTypesData != null)
-		{
-			ret = this.generatorTypesData.getSize();
-		}
-		else
-		{
-			ret = 0;
-		}
-		return ret;
-	}
 	/**
 	 * @return the attribute {@link #activeGeneratorTypeData}.
 	 */
@@ -99,16 +63,14 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public Iterator getListEntrysIterator()
 	{
-		Iterator ret;
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
 		
-		if (this.generatorTypesData != null)
-		{
-			ret = this.generatorTypesData.getGeneratorTypesIterator();
-		}
-		else
-		{
-			ret = null;
-		}
+		//==========================================================================================
+		Iterator<GeneratorTypeData> ret;
+		
+		ret = soundService.retrieveGeneratorTypesIterator();
+
 		return ret;
 	}
 
@@ -211,20 +173,25 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void notifyHitWidget(WidgetData activeWidgetData, int pointerPosX, int pointerPosY)
 	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
 		GeneratorTypeData generatorTypeData = null;
 
 		// Die Positionsnummer des Generators in der Liste.
 		int pos = (pointerPosY / this.getListEntryHeight()) + ((int)this.getVerticalScrollerPos());
 		
 		// Innerhalb der Anzahl der vorhandneen generatoren ?
-		if (pos < this.getGeneratorTypesCount())
+		if (pos < soundService.getGeneratorTypesCount())
 		{
-			generatorTypeData = this.getGeneratorTypeData(pos);
+			generatorTypeData = soundService.getGeneratorTypeData(pos);
 		}
 		
 		this.activeGeneratorTypeData = generatorTypeData;
 
 		this.dataChangedVisible();
+		//==========================================================================================
 	}
 
 	/**
@@ -240,6 +207,10 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 */
 	public void removeSelectedGeneratorType()
 	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
 		synchronized (this)
 		{
 			GeneratorTypeData generatorTypeData = this.getSelectedGeneratorTypeData();
@@ -248,13 +219,14 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 			{
 				this.deselectGeneratorType();
 				
-				this.generatorTypesData.removeGeneratorType(generatorTypeData);
+				soundService.removeGeneratorType(generatorTypeData);
 				
-				this.setVerticalScrollerLength(this.getGeneratorTypesCount());
+				this.setVerticalScrollerLength(soundService.getGeneratorTypesCount());
 
 				this.dataChangedVisible();
 			}
 		}
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
