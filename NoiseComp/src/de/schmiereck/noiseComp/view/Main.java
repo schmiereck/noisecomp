@@ -25,15 +25,19 @@ import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphicException;
  */
 public class Main
 {
+	/**
+	 * @param args
+	 * 			are the command line arguments.
+	 */
 	public static void main(String[] args)
 	{
-		//----------------------------------------------------------------------
+		//==========================================================================================
 		// Build:
 		
 		boolean useFullScreen = false;
 		//boolean useFullScreen = true;
 
-		//======================================================================
+		//==========================================================================================
 		GeneratorTypesData generatorTypesData  = new GeneratorTypesData();
 
 		Main.createBaseGeneratorTypes(generatorTypesData);
@@ -47,7 +51,7 @@ public class Main
 
 		generatorTypesData.addGeneratorTypeData(mainModulGeneratorTypeData);
 		
-		//======================================================================
+		//==========================================================================================
 		GraphicMediator graphicMediator = new GraphicMediator();
 		
 		MainController mainController = new MainController(generatorTypesData, mainModulGeneratorTypeData,
@@ -75,12 +79,15 @@ public class Main
 			ex.printStackTrace(System.err);
 		}
 		
+		//==========================================================================================
 		// TODO das exit loswerden, alle Threads selber beenden.
 		System.exit(0);
+		//==========================================================================================
 	}
 
 	private static void createBaseGeneratorTypes(GeneratorTypesData generatorTypesData)
 	{
+		//==========================================================================================
 		generatorTypesData.clear();
 		
 		generatorTypesData.addGeneratorTypeData(FaderGenerator.createGeneratorTypeData());
@@ -91,6 +98,7 @@ public class Main
 		generatorTypesData.addGeneratorTypeData(CutGenerator.createGeneratorTypeData());
 		generatorTypesData.addGeneratorTypeData(WaveGenerator.createGeneratorTypeData());
 		generatorTypesData.addGeneratorTypeData(ASRPulseGenerator.createGeneratorTypeData());
+		//==========================================================================================
 	}
 
 }

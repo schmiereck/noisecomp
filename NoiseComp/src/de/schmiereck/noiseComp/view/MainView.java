@@ -12,7 +12,10 @@ import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphicException;
  */
 /**
  * <p>
- * 	TODO docu type
+ * 	Main View.
+ * </p>
+ * <p>
+ * 	Manages multi buffered grafik and input listeners.
  * </p>
  * 
  * @author smk
@@ -26,8 +29,8 @@ public class MainView
 	
 	/**
 	 * Constructor.
-	 * @throws MultiBufferFullScreenGraphicException
 	 * 
+	 * @throws MultiBufferFullScreenGraphicException
 	 */
 	public MainView(boolean useFullScreen, MainController documentController) 
 	throws MultiBufferFullScreenGraphicException
