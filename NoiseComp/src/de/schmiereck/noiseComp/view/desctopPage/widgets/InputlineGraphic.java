@@ -7,7 +7,7 @@ import de.schmiereck.noiseComp.view.desctopPage.DesktopColors;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 
 /**
- * TODO docu
+ * Inputline Graphic.
  *
  * @author smk
  * @version 08.02.2004

@@ -65,13 +65,15 @@ public abstract class GeneratorBuffer
 	
 	/**
 	 * @param framePosition
-	 * @return null, wenn im Buffer für diese Position kein Wert vorliegt.
+	 * @return 
+	 * 			<code>null</code> wenn im Buffer fÃ¼r diese Position kein Wert vorliegt.
 	 */
 	public abstract SoundSample readBuffer(long framePosition);
 
 	/**
 	 * @param framePosition
-	 * @return null, wenn im Buffer für diese Position kein Wert vorliegt.
+	 * @return 
+	 * 			<code>null</code> wenn im Buffer fÃ¼r diese Position kein Wert vorliegt.
 	 */
 	public abstract void writeBuffer(long framePosition, SoundSample soundSample);
 }

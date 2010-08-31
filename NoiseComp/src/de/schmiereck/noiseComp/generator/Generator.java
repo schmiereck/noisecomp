@@ -6,14 +6,17 @@ import de.schmiereck.noiseComp.PopupRuntimeException;
 
 
 /**
- * Implementiert die Logik eines Generators der einen Sample f�r eine
- * Frameposition in einem Buffer ablegt, um ihn nicht mehrfach zu berechnen.
  * <p>
+ * 	Implementiert die Logik eines Generators der einen Sample f�r eine
+ * 	Frameposition in einem Buffer ablegt, um ihn nicht mehrfach zu berechnen.
+ * <p>
+ * </p>
  * 	The "ouput signal" is calculated based on the internal logic of the generator 
  * 	and the values of differnet inputs.<br/>
  * 	The the count and types of the acceped inputs are defined by the generator type
  * 	returned by the function {@link #createGeneratorTypeData()}.
  * </p>
+ * 
  * @author smk
  * @version 22.01.2004
  */
@@ -127,6 +130,7 @@ implements GeneratorInterface,
 	{
 		SoundSample soundSample;
 		
+		// TODO Implements Buffer for SoundSamples.
 		//GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
 
 		// Die Frameposition in Zeit umrechnen.

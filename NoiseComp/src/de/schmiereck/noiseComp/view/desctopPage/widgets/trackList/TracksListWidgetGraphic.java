@@ -28,7 +28,7 @@ public class TracksListWidgetGraphic
 extends ListWidgetGraphic
 {
 	private static Color dragColor1 = new Color(100, 100, 100, 75);
-	private static Color dragColor2 = new Color(120, 120, 120);
+//	private static Color dragColor2 = new Color(120, 120, 120);
 	
 	private static void drawGeneratorArea(Graphics g, 
 	                                      ScreenGraficInterface screenGrafic, 
@@ -104,9 +104,9 @@ extends ListWidgetGraphic
 				boolean firstSample = true;
 				int lastX = screenPosX;
 				int lastY = screenPosY;
+				float timePosStep = (0.2F / scaleX);
 				
-				//for (float timePos = 0; timePos < timeLength; timePos += (0.5F / scaleX))
-				for (float timePos = 0; timePos < timeLength; timePos += (2.0F / scaleX))
+				for (float timePos = 0.0F; timePos < timeLength; timePos += timePosStep)
 				{
 					long sampleFrame = (long)((generatorStartTime + timePos) * frameRate);
 					
