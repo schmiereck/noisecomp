@@ -5,16 +5,22 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 
 /**
- * TODO docu
+ * <p>
+ * 	Generator-Type Data.
+ * </p>
  *
  * @author smk
  * @version 21.02.2004
  */
 public class GeneratorTypeData
 {
-	private Class generatorClass;
+	//**********************************************************************************************
+	// Fields:
+	
+	private Class<? extends Generator> generatorClass;
+	
 	/**
-	 * Name of the generator type.
+	 * {@link GeneratorTypeData#generatorTypeName} of the generator type.
 	 */
 	private String generatorTypeName;
 	
@@ -28,12 +34,16 @@ public class GeneratorTypeData
 	 */
 	private InputTypesData inputTypesData = new InputTypesData();
 	
+	//**********************************************************************************************
+	// Functions:
+	
 	/**
 	 * Constructor.
 	 * 
 	 * @param generatorTypeName
+	 * 			is the {@link GeneratorTypeData#generatorTypeName} of the generator type.
 	 */
-	public GeneratorTypeData(Class generatorClass, String generatorTypeName, String generatorTypeDescription)
+	public GeneratorTypeData(Class<? extends Generator> generatorClass, String generatorTypeName, String generatorTypeDescription)
 	{
 		super();
 		this.generatorClass = generatorClass;
@@ -49,9 +59,10 @@ public class GeneratorTypeData
 		this.inputTypesData.addInputTypeData(inputTypeData);
 	}
 	/**
-	 * @return the attribute {@link #generatorClass}.
+	 * @return 
+	 * 			the attribute {@link #generatorClass}.
 	 */
-	public Class getGeneratorClass()
+	public Class<? extends Generator> getGeneratorClass()
 	{
 		return this.generatorClass;
 	}
@@ -124,7 +135,7 @@ public class GeneratorTypeData
 		//try
 		{
 //			Class pageViewClass = ;
-			Class[]	params		= new Class[3];
+			Class<?>[]	params		= new Class[3];
 			
 			params[0] = String.class;				// generatorName
 			params[1] = Float.class;				// frameRate
@@ -133,7 +144,7 @@ public class GeneratorTypeData
 			
 			try
 			{
-				Constructor generatorConstructor = this.generatorClass.getConstructor(params);
+				Constructor<? extends Generator> generatorConstructor = this.generatorClass.getConstructor(params);
 				Object[]	args	= new Object[3];
 
 				args[0] = generatorName;
@@ -148,11 +159,11 @@ public class GeneratorTypeData
 				}
 				catch (java.lang.InstantiationException ex)
 				{
-					throw new RuntimeException("new instance: " + this.generatorClass.getName(), ex);
+					throw new RuntimeException("New instance \"" + this.generatorClass.getName() + "\".", ex);
 				}
 				catch (java.lang.IllegalAccessException ex)
 				{
-					throw new RuntimeException("access exception for class: " + this.generatorClass.getName(), ex);
+					throw new RuntimeException("Access exception for class \"" + this.generatorClass.getName() + "\".", ex);
 				}
 				//catch (java.lang.ClassNotFoundException ex)
 				//{
@@ -160,16 +171,16 @@ public class GeneratorTypeData
 				//} 
 				catch (IllegalArgumentException ex)
 				{
-					throw new RuntimeException("illegal argument: " + this.generatorClass.getName(), ex);
+					throw new RuntimeException("Illegal argument \"" + this.generatorClass.getName() + "\".", ex);
 				} 
 				catch (InvocationTargetException ex)
 				{
-					throw new RuntimeException("invocation target: " + this.generatorClass.getName(), ex);
+					throw new RuntimeException("Invocation target \"" + this.generatorClass.getName() + "\".", ex);
 				}
 			}
 			catch (java.lang.NoSuchMethodException ex)
 			{
-				throw new RuntimeException("no such method exception for class: " + this.generatorClass.getName(), ex);
+				throw new RuntimeException("No such method exception for class \"" + this.generatorClass.getName() + "\".", ex);
 			}
 		}
 		//catch (ClassNotFoundException ex)

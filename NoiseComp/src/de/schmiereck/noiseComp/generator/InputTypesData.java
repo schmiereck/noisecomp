@@ -11,19 +11,32 @@ import de.schmiereck.dataTools.VectorHash;
  */
 public class InputTypesData
 {
+	//**********************************************************************************************
+	// Fields:
+	
 	/**
 	 * List of the allowed {@link InputTypeData}-Objects of this Generator-Type.
 	 */
-	private VectorHash inputTypes = new VectorHash();
+	private VectorHash<Integer, InputTypeData> inputTypes = new VectorHash<Integer, InputTypeData>();
 
+	//**********************************************************************************************
+	// Functions:
+	
 	/**
-	 * @see #inputTypes
+	 * @param inputTypeData
+	 * 			is the input type to add to {@link #inputTypes}.
 	 */
 	public void addInputTypeData(InputTypeData inputTypeData)
 	{
 		this.inputTypes.add(Integer.valueOf(inputTypeData.getInputType()), inputTypeData);
 	}
 
+	/**
+	 * @param inputType
+	 * 			is the {@link InputTypeData#getInputType()}.
+	 * @return
+	 * 			the input type of given type.
+	 */
 	public InputTypeData getInputTypeData(int inputType)
 	{
 		return (InputTypeData)this.inputTypes.get(Integer.valueOf(inputType));
@@ -31,6 +44,7 @@ public class InputTypesData
 
 	/**
 	 * @param inputTypeData
+	 * 			the input type to remove from {@link #inputTypes}.
 	 */
 	public void removeInputTypeData(InputTypeData inputTypeData)
 	{
@@ -39,23 +53,27 @@ public class InputTypesData
 	
 	/**
 	 * @return
+	 * 			the iterator of {@link #inputTypes}.
 	 */
-	public Iterator getInputTypesIterator()
+	public Iterator<InputTypeData> getInputTypesIterator()
 	{
 		return this.inputTypes.iterator();
 	}
 
 	/**
 	 * @param pos
+	 * 			is the position.
 	 * @return
+	 * 			the input type of {@link #inputTypes} at given position.
 	 */
 	public InputTypeData getInputTypeDataByPos(int pos)
 	{
-		return (InputTypeData)this.inputTypes.get(pos);
+		return this.inputTypes.get(pos);
 	}
 
 	/**
 	 * @return
+	 * 			the size of {@link #inputTypes}.
 	 */
 	public int getInputTypesSize()
 	{

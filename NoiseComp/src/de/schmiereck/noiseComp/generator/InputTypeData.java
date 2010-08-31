@@ -1,13 +1,18 @@
 package de.schmiereck.noiseComp.generator;
 
 /**
- * TODO docu
+ * <p>
+ * 	Input-Type Data.
+ * </p>
  *
  * @author smk
  * @version 21.02.2004
  */
 public class InputTypeData
 {
+	//**********************************************************************************************
+	// Fields:
+	
 	/**
 	 * ID of the input type.
 	 */
@@ -40,6 +45,9 @@ public class InputTypeData
 	 */
 	private String inputTypeDescription = null;
 
+	//**********************************************************************************************
+	// Functions:
+	
 	/**
 	 * Constructor.
 	 * 
@@ -84,7 +92,6 @@ public class InputTypeData
 			Integer inputCountMax, Integer inputCountMin, 
 			Float defaultValue, String inputTypeDescription)
 	{
-		super();
 		this.inputType = inputType;
 		this.inputTypeName = inputTypeName;
 		if (inputCountMax != null)
