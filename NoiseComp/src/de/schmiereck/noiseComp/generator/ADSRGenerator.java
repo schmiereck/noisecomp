@@ -5,21 +5,21 @@ package de.schmiereck.noiseComp.generator;
 /**
  * <p>
  * 	EG
-Hüllkurvengenerator zur Manipulation der Hüllkurve einer Voice (Attack, Delay, Sustain, Release)
+Hï¿½llkurvengenerator zur Manipulation der HÃ¼llkurve einer Voice (Attack, Delay, Sustain, Release)
 
 ADSR:
 
 Attack
-Zeit die ein Signal benötigt, um von Wert Null auf die max. Amplitude (Lautstärke) zu gelangen; Einschwingphase einer Voice
+Zeit die ein Signal benÃ¶tigt, um von Wert Null auf die max. Amplitude (Lautstï¿½rke) zu gelangen; Einschwingphase einer Voice
 Anschlag: Ansteigen auf hohen Wert.
 
 Delay
-Verzögerungseffekt 
+VerzÃ¶gerungseffekt 
 Schnelles Absinken auf den Sustain Wert.
 
 Sustain
 Voice aushalten
-Halten des Tones auf Lautstärke.
+Halten des Tones auf Lautstï¿½rke.
 
 Release
 Loslassen der Taste, Nachklingen einer Voice
