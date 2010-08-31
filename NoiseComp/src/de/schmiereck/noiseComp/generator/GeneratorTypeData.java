@@ -110,7 +110,7 @@ public class GeneratorTypeData
 	/**
 	 * @see #inputTypesData
 	 */
-	public Iterator getInputTypesIterator()
+	public Iterator<InputTypeData> getInputTypesIterator()
 	{
 		return this.inputTypesData.getInputTypesIterator();
 	}
