@@ -1,16 +1,9 @@
 package de.schmiereck.noiseComp.view;
 
-import de.schmiereck.noiseComp.generator.ASRPulseGenerator;
-import de.schmiereck.noiseComp.generator.CutGenerator;
-import de.schmiereck.noiseComp.generator.FaderGenerator;
-import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.OutputGenerator;
-import de.schmiereck.noiseComp.generator.RectangleGenerator;
-import de.schmiereck.noiseComp.generator.SinusGenerator;
-import de.schmiereck.noiseComp.generator.WaveGenerator;
 import de.schmiereck.noiseComp.service.SoundService;
+import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.screenTools.Runner;
 import de.schmiereck.screenTools.graphic.GraphicMediator;
 import de.schmiereck.screenTools.graphic.MultiBufferFullScreenGraphicException;
@@ -41,14 +34,14 @@ public class ViewMain
 		//boolean useFullScreen = true;
 
 		//==========================================================================================
-		ViewMain.createBaseGeneratorTypes();
+		StartupService.createBaseGeneratorTypes();
 		
 		// new ModulGeneratorTypeData(null, null, null);
 		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
 
 		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
 		
-		mainModulGeneratorTypeData.setGeneratorTypeName("ConsoleMain-Modul");
+		mainModulGeneratorTypeData.setGeneratorTypeName("Main-Modul");
 
 		soundService.addGeneratorType(mainModulGeneratorTypeData);
 		
@@ -83,25 +76,6 @@ public class ViewMain
 		//==========================================================================================
 		// TODO das exit loswerden, alle Threads selber beenden.
 		System.exit(0);
-		//==========================================================================================
-	}
-
-	private static void createBaseGeneratorTypes()
-	{
-		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
-		soundService.removeAllGeneratorTypes();
-		
-		soundService.addGeneratorType(FaderGenerator.createGeneratorTypeData());
-		soundService.addGeneratorType(MixerGenerator.createGeneratorTypeData());
-		soundService.addGeneratorType(OutputGenerator.createGeneratorTypeData());
-		soundService.addGeneratorType(SinusGenerator.createGeneratorTypeData());
-		soundService.addGeneratorType(RectangleGenerator.createGeneratorTypeData());
-		soundService.addGeneratorType(CutGenerator.createGeneratorTypeData());
-		soundService.addGeneratorType(WaveGenerator.createGeneratorTypeData());
-		soundService.addGeneratorType(ASRPulseGenerator.createGeneratorTypeData());
 		//==========================================================================================
 	}
 

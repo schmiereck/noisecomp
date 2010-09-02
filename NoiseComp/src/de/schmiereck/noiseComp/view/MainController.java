@@ -1,12 +1,9 @@
 package de.schmiereck.noiseComp.view;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.view.desktopController.DesktopControllerData;
@@ -82,7 +79,7 @@ public class MainController
 		//======================================================================
 		// Setup Sound:
 		
-		SourceDataLine line = MainController.createLine();
+		SourceDataLine line = StartupService.createLine();
 		
 		//----------------------------------------------------------------------
 		SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
@@ -118,8 +115,8 @@ public class MainController
 														  this.waiter, 
 														  playerName);
 		
-		this.controllerLogic.createDemoGenerators(soundData.getFrameRate(), 
-												  mainModulGeneratorTypeData);
+		StartupService.createDemoGenerators(soundData.getFrameRate(), 
+		                                    mainModulGeneratorTypeData);
 		
 		this.controllerLogic.selectModulGeneratorToEdit(mainModulGeneratorTypeData);
 		
@@ -204,59 +201,6 @@ public class MainController
 				saveGroupButtonActionLogicListener,
 				
 				inputTypeEditSaveActionListener);
-	}
-
-	private static SourceDataLine createLine()
-	{
-		//SourceDataLine sourceDataLine = new SourceDataLine();
-		
-		// Gew�nschtes Audioformat definieren:
-		
-		float sampleRate 		= 44100;		// the number of samples per second
-		int sampleSizeInBits 	= 16;			// the number of bits in each sample
-		int channels 			= 2;			// the number of channels (1 for mono, 2 for stereo, and so on)
-		int frameSize 			= 4;			// the number of bytes in each frame
-		float frameRate 		= sampleRate;	// the number of frames per second
-		boolean bigEndian 		= true; 		// indicates whether the data for a single sample is stored in big-endian byte order 
-												// (false means little-endian)
-												// Because Java inherently creates big-endian data, 
-												// you must do a lot of extra work to create little-endian audio data in Java.  
-												// Therefore, I elected to create all of the synthetic sounds in this lesson in big-endian order.
-
-		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,	// encoding the audio encoding technique
-												  sampleRate, 
-												  sampleSizeInBits, 
-												  channels, 
-												  frameSize, 
-												  frameRate, 
-												  bigEndian);
-		
-		DataLine.Info	info = new DataLine.Info(SourceDataLine.class, audioFormat);
-
-		// Ausgabekanal mit den gew�nschten Eigenschaften holen und �ffnen:
-		
-		SourceDataLine line;
-		
-		try
-		{
-			line = (SourceDataLine)AudioSystem.getLine(info);
-		}
-		catch (LineUnavailableException ex)
-		{
-			throw new RuntimeException("getLine info", ex);
-		}
-		
-		try
-		{
-			line.open(audioFormat);
-		}
-		catch (LineUnavailableException ex)
-		{
-			throw new RuntimeException("open line", ex);
-		}
-		
-		//line.start();
-		return line;
 	}
 	
 	/**

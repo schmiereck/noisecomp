@@ -30,9 +30,9 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 public class SoundBufferManager 
 extends AudioInputStream
 {
-	private static int bitsPerMonoSample = 16;
-	private static int bytesPerMonoSample = 2;
-	private static int bytesPerStereoSample = 4;
+//	private static int bitsPerMonoSample = 16;
+//	private static int bytesPerMonoSample = 2;
+//	private static int bytesPerStereoSample = 4;
 	
 	/**
 	 * Wenn != <code>null</code>, wird dieser Buffer gerade abgespielt.
@@ -75,22 +75,21 @@ extends AudioInputStream
 	 * 
 	 */
 	public SoundBufferManager(AudioFormat audioFormat, 
-							  float frameRate, 
 							  long length, 
 							  int bufferSize, 
 							  SoundSourceLogic soundSourceLogic)
 	{
 		super(new ByteArrayInputStream(new byte[0]), 
-			  new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
+			  new AudioFormat(audioFormat.getEncoding(),
 							  audioFormat.getSampleRate(),
-							  bitsPerMonoSample,
-							  bytesPerMonoSample,
-							  bytesPerStereoSample,
-							  frameRate,
+							  audioFormat.getSampleSizeInBits(), //bitsPerMonoSample,
+							  audioFormat.getChannels(), //bytesPerMonoSample,
+							  audioFormat.getFrameSize(), //bytesPerStereoSample,
+							  audioFormat.getFrameRate(),
 							  audioFormat.isBigEndian()), 
-			  length);
+							  length);
 		
-		this.frameRate = frameRate;
+		this.frameRate = audioFormat.getFrameRate();
 		
 		this.bufferSize = bufferSize;
 		

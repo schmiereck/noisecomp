@@ -50,7 +50,6 @@ public class SoundData
 		this.soundSourceLogic = soundSourceLogic;
 
 		this.soundBufferManager = new SoundBufferManager(this.line.getFormat(), 
-														 this.frameRate,  
 														 AudioSystem.NOT_SPECIFIED, 
 														 SoundData.BUFFER_SIZE, 
 														 soundSourceLogic);

@@ -3,16 +3,12 @@ package de.schmiereck.noiseComp.view.desktopController;
 import java.util.Iterator;
 
 import de.schmiereck.noiseComp.PopupRuntimeException;
-import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
-import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.generator.TrackData;
-import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
@@ -352,7 +348,7 @@ extends ControllerLogic
 		
 		if (editModulTypeData != null)
 		{
-			TrackData trackData = editModulTypeData.addGenerator(generator);
+			//TrackData trackData = editModulTypeData.addGenerator(generator);
 
 			//----------------------------------------------------------------------
 			// Manage a new Output-Generator specialy:
@@ -433,128 +429,6 @@ extends ControllerLogic
 		}
 	}
 	 */
-
-	/**
-	 * Creates a demo list of generators with different types.
-	 * It's only for developing.
-	 * @param generatorTypesData
-	 */
-	public OutputGenerator createDemoGenerators(float frameRate, 
-												ModulGeneratorTypeData mainModulTypeData)
-	{
-		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
-		// Sound-Generatoren für das Sound-Format des Ausgabekanals erzeugen:
-		
-		//Generators generators = mainModulTypeData.getGenerators();
-
-		//---------------------------------
-		FaderGenerator faderInGenerator;
-		{
-			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(FaderGenerator.class.getName());
-			faderInGenerator = new FaderGenerator("faderIn", Float.valueOf(frameRate), generatorTypeData);
-			
-			faderInGenerator.setStartTimePos(0.0F);
-			faderInGenerator.setEndTimePos(2.0F);
-			
-			faderInGenerator.addInputValue(0.0F, FaderGenerator.INPUT_TYPE_START_VALUE);
-			faderInGenerator.addInputValue(0.5F, FaderGenerator.INPUT_TYPE_END_VALUE);
-			//faderInGenerator.setStartFadeValue(0.0F);
-			//faderInGenerator.setEndFadeValue(1.0F);
-			
-			mainModulTypeData.addGenerator(faderInGenerator);
-		}
-		//---------------------------------
-		FaderGenerator faderOutGenerator;
-		{
-			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(FaderGenerator.class.getName());
-			faderOutGenerator = new FaderGenerator("faderOut", Float.valueOf(frameRate), generatorTypeData);
-			
-			faderOutGenerator.setStartTimePos(2.0F);
-			faderOutGenerator.setEndTimePos(5.0F);
-			
-			faderOutGenerator.addInputValue(0.5F, FaderGenerator.INPUT_TYPE_START_VALUE);
-			faderOutGenerator.addInputValue(0.0F, FaderGenerator.INPUT_TYPE_END_VALUE);
-			//faderOutGenerator.setStartFadeValue(1.0F);
-			//faderOutGenerator.setEndFadeValue(0.0F);
-			
-			mainModulTypeData.addGenerator(faderOutGenerator);
-		}
-		//---------------------------------
-		SinusGenerator sinusGenerator;
-		{
-			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
-			sinusGenerator = new SinusGenerator("sinus", Float.valueOf(frameRate), generatorTypeData);
-			sinusGenerator.addInputValue(262F, SinusGenerator.INPUT_TYPE_FREQ);
-			//sinusGenerator.setSignalFrequency(262F);
-			
-			sinusGenerator.setStartTimePos(0.0F);
-			sinusGenerator.setEndTimePos(5.0F);
-			
-			mainModulTypeData.addGenerator(sinusGenerator);
-		}
-		//---------------------------------
-		SinusGenerator sinus2Generator;
-		{
-			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
-			sinus2Generator = new SinusGenerator("sinus2", Float.valueOf(frameRate), generatorTypeData);
-			sinus2Generator.addInputValue(131F, SinusGenerator.INPUT_TYPE_FREQ);
-			//sinus2Generator.setSignalFrequency(131F);
-			
-			sinus2Generator.setStartTimePos(0.0F);
-			sinus2Generator.setEndTimePos(5.0F);
-			
-			mainModulTypeData.addGenerator(sinus2Generator);
-		}
-		//---------------------------------
-		SinusGenerator sinus3Generator;
-		{
-			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
-			sinus3Generator = new SinusGenerator("sinus3", Float.valueOf(frameRate), generatorTypeData);
-			sinus3Generator.addInputValue(70F, SinusGenerator.INPUT_TYPE_FREQ);
-			//sinus3Generator.setSignalFrequency(70F);
-			
-			sinus3Generator.setStartTimePos(0.0F);
-			sinus3Generator.setEndTimePos(5.0F);
-			
-			mainModulTypeData.addGenerator(sinus3Generator);
-		}
-		//---------------------------------
-		MixerGenerator mixerGenerator;
-		{
-			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(MixerGenerator.class.getName());
-			mixerGenerator = new MixerGenerator("mixer", Float.valueOf(frameRate), generatorTypeData);
-		
-			mixerGenerator.setStartTimePos(0.0F);
-			mixerGenerator.setEndTimePos(5.0F);
-			
-			mixerGenerator.addVolumeInput(faderInGenerator);
-			mixerGenerator.addVolumeInput(faderOutGenerator);
-			
-			mixerGenerator.addSignalInput(sinusGenerator);
-			mixerGenerator.addSignalInput(sinus2Generator);
-			mixerGenerator.addSignalInput(sinus3Generator);
-			
-			mainModulTypeData.addGenerator(mixerGenerator);
-		}
-		//---------------------------------
-		OutputGenerator outputGenerator;
-		{
-			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(OutputGenerator.class.getName());
-			outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate), generatorTypeData);
-	
-			outputGenerator.setStartTimePos(0.0F);
-			outputGenerator.setEndTimePos(5.0F);
-			
-			outputGenerator.setSignalInput(mixerGenerator);
-			
-			mainModulTypeData.addGenerator(outputGenerator);
-		}		
-		return outputGenerator;
-	}
-
 
 	/**
 	 * @param dir 	1: 	to move right<br/>
@@ -672,11 +546,11 @@ extends ControllerLogic
 		//GeneratorTypeData generatorTypeData = this.desktopControllerData.searchGeneratorTypeData(generator);
 		GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
 		
-		Iterator inputTypesDataIterator = generatorTypeData.getInputTypesIterator();
+		Iterator<InputTypeData> inputTypesDataIterator = generatorTypeData.getInputTypesIterator();
 		
 		while (inputTypesDataIterator.hasNext())
 		{
-			InputTypeData inputTypeData = (InputTypeData)inputTypesDataIterator.next();
+			InputTypeData inputTypeData = inputTypesDataIterator.next();
 			
 			for (int pos = 0; pos < inputTypeData.getInputCountMin(); pos++)
 			{

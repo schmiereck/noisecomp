@@ -1,14 +1,11 @@
 package de.schmiereck.noiseComp.soundBuffer;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
 import junit.framework.TestCase;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
+import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
@@ -30,7 +27,7 @@ public class SoundBufferManagerTest
 	{
 		super.setUp();
 		
-		SourceDataLine line = SoundBufferManagerTest.createLine();
+		SourceDataLine line = StartupService.createLine();
 
 		SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
 		
@@ -82,48 +79,5 @@ public class SoundBufferManagerTest
 		assertNotNull(this.soundBufferManager.getPlayingGeneratorBuffer());
 		assertNotNull(this.soundBufferManager.getWaitingGeneratorBuffer());
 		assertNull(this.soundBufferManager.getGeneratingGeneratorBuffer());
-	}
-
-	private static SourceDataLine createLine()
-	{
-		//SourceDataLine sourceDataLine = new SourceDataLine();
-		
-		// Gewünschtes Audioformat definieren:
-		
-		float sampleRate = 44100;
-		
-		// Because Java inherently creates big-endian data, 
-		// you must do a lot of extra work to create little-endian audio data in Java.  
-		// Therefore, I elected to create all of the synthetic sounds in this lesson in big-endian order.
-		AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,
-												  sampleRate, 16, 2, 4, 
-												  sampleRate, true);
-		
-		DataLine.Info	info = new DataLine.Info(SourceDataLine.class, audioFormat);
-
-		// Ausgabekanal mit den gewünschten Eigenschaften holen und öffnen:
-		
-		SourceDataLine line;
-		
-		try
-		{
-			line = (SourceDataLine)AudioSystem.getLine(info);
-		}
-		catch (LineUnavailableException ex)
-		{
-			throw new RuntimeException("getLine info", ex);
-		}
-		
-		try
-		{
-			line.open(audioFormat);
-		}
-		catch (LineUnavailableException ex)
-		{
-			throw new RuntimeException("open line", ex);
-		}
-		
-		//line.start();
-		return line;
 	}
 }

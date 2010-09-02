@@ -121,6 +121,15 @@ public class SoundService
 	 * @return
 	 * 			the iterator of {@link #generatorTypesData}.
 	 */
+	public Iterator<GeneratorTypeData> getGeneratorTypesIterator()
+	{
+		return this.generatorTypesData.getGeneratorTypesIterator();
+	}
+
+	/**
+	 * @return
+	 * 			the iterator of {@link #generatorTypesData}.
+	 */
 	public Iterator<GeneratorTypeData> retrieveGeneratorTypesIterator()
 	{
 		Iterator<GeneratorTypeData> ret;
