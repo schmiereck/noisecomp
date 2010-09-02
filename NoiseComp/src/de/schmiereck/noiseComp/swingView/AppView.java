@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView;
 
+import java.awt.Component;
 import java.awt.HeadlessException;
 import java.util.Iterator;
 
@@ -13,7 +14,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
@@ -89,6 +92,36 @@ extends JFrame
 		    
 		    this.modulesTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
+		    this.modulesTree.setCellRenderer(new DefaultTreeCellRenderer()
+		    {
+
+				@Override
+				public Component getTreeCellRendererComponent(JTree tree, 
+				                                              Object value, 
+				                                              boolean selected,
+				                                              boolean expanded, 
+				                                              boolean leaf, 
+				                                              int row,
+				                                              boolean hasFocus)
+				{
+			        // Die Originalmethode die Standardeinstellungen machen lassen
+			        super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+			        
+			        // Den Wert des Knotens abfragen
+			        DefaultMutableTreeNode node = (DefaultMutableTreeNode)value;
+			        Object userObject = node.getUserObject();
+			        
+			        if (userObject instanceof GeneratorTypeData)
+			        {
+			        	GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
+			        	
+			        	this.setText(generatorTypeData.getGeneratorTypeName());
+			        }
+			        
+					return this;
+				}
+			});
+		    
 		    this.createNodes(this.modulesTree);
 		    
 		    this.modulesTreeScrollPane = new JScrollPane(this.modulesTree);
@@ -179,7 +212,8 @@ extends JFrame
 		{
 			GeneratorTypeData generatorTypeData = (GeneratorTypeData)generatorTypesIterator.next();
 			
-	    	DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(generatorTypeData.getGeneratorTypeName());
+			//benutzt toString() für das Label, also eine eigene Funktion dafür schreiben
+	    	DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(generatorTypeData);
 	    	modulesTreeNode.add(modulTreeNode);
 		}
 		
