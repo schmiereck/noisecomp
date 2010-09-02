@@ -86,7 +86,7 @@ implements GeneratorInterface,
 	public synchronized void setStartTimePos(float startTimePos)
 	{
 		float changedStartTimePos 	= Math.min(this.startTimePos, startTimePos);
-		float changedEndTimePos		= Math.max(this.startTimePos, startTimePos);
+		float changedEndTimePos		= this.endTimePos;
 		
 		this.startTimePos = startTimePos;
 		
@@ -99,11 +99,11 @@ implements GeneratorInterface,
 	 */
 	public synchronized void setEndTimePos(float endTimePos)
 	{
-		float changedStartTimePos 	= Math.min(this.endTimePos, endTimePos);
+		float changedStartTimePos 	= this.startTimePos;
 		float changedEndTimePos		= Math.max(this.endTimePos, endTimePos);
 		
 		this.endTimePos = endTimePos;
-		
+		//XXX
 		this.generateChangedEvent(changedStartTimePos,
 								  changedEndTimePos);
 	}
@@ -880,13 +880,14 @@ implements GeneratorInterface,
 	/**
 	 * Send a change Event to {@link #generatorChangeObserver}.
 	 */
-	public synchronized void generateChangedEvent(float startTimePos, float endTimePos)
+	public synchronized void generateChangedEvent(float changedStartTimePos, 
+	                                              float changedEndTimePos)
 	{
-System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: " + startTimePos + ", " + endTimePos);
+System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: " + changedStartTimePos + ", " + changedEndTimePos);
 		if (this.generatorChangeObserver != null)
 		{
 			this.generatorChangeObserver.changedEvent(this, 
-													  startTimePos, endTimePos);
+													  changedStartTimePos, changedEndTimePos);
 		}
 	}
 	
@@ -907,7 +908,9 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 		// Einer der überwachten Inputs hat sich geändert:
 
 		this.getGeneratorChangeObserver().changedEvent(this, 
-													   this.getStartTimePos() + startTimePos, 
-													   this.getStartTimePos() + endTimePos);
+//		                                    		   this.getStartTimePos() + startTimePos, 
+//		                                    		   this.getStartTimePos() + endTimePos);
+													   startTimePos, 
+													   endTimePos);
 	}
 }

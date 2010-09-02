@@ -17,9 +17,7 @@ import de.schmiereck.noiseComp.view.desctopPage.widgets.InputsWidgetData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.ScrollbarData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.SelectData;
 import de.schmiereck.noiseComp.view.desctopPage.widgets.SelectEntryData;
-import de.schmiereck.noiseComp.view.desctopPage.widgets.trackList.TracksListWidgetData;
 import de.schmiereck.noiseComp.view.desktopController.DesktopControllerData;
-import de.schmiereck.noiseComp.view.desktopController.DesktopControllerLogic;
 import de.schmiereck.noiseComp.view.desktopController.EditData;
 import de.schmiereck.noiseComp.view.desktopController.EditGeneratorChangedListener;
 import de.schmiereck.screenTools.controller.ControllerLogic;
@@ -478,6 +476,8 @@ EditGeneratorChangedListener
 		{
 			throw new PopupRuntimeException("no generator selected");
 		}
+		
+//		this.notifyInputsChanged();
 	}
 
 	/**
@@ -490,11 +490,11 @@ EditGeneratorChangedListener
 	 * @return
 	 */
 	public InputData addInput(Generator selectedGenerator, 
-			Generator inputGenerator, 
-			InputTypeData inputTypeData, 
-			Float inputGeneratorValue, 
-			String inputGeneratorValueStr,
-			InputTypeData inputModulInputTypeData)
+	                          Generator inputGenerator, 
+	                          InputTypeData inputTypeData, 
+	                          Float inputGeneratorValue, 
+	                          String inputGeneratorValueStr,
+	                          InputTypeData inputModulInputTypeData)
 	{
 		//Generators generators = this.mainPageData.getTracksListWidgetData().getGenerators();
 		
@@ -511,28 +511,32 @@ EditGeneratorChangedListener
 	}
 
 	/**
+	 * Notify that inputs changed.
 	 * Recalculates the scrollbar length of the inputs select list.
 	 */
 	private void notifyInputsChanged()
 	{
-		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
-
-		int len;
-		
-		TrackData selectedTrackData = this.mainPageData.getTracksListWidgetData().getSelectedTrackData();
-		
-		if (selectedTrackData != null)
 		{
-			len = selectedTrackData.getGenerator().getInputsCount();
+			int len;
+			
+			TrackData selectedTrackData = this.mainPageData.getTracksListWidgetData().getSelectedTrackData();
+			
+			if (selectedTrackData != null)
+			{
+				len = selectedTrackData.getGenerator().getInputsCount();
+			}
+			else
+			{
+				len = 0;
+			}
+			
+			this.mainPageData.getInputsVScrollbarData().setScrollerLength(len);
 		}
-		else
 		{
-			len = 0;
+			DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
+	
+			this.controllerLogic.dataChanged(desktopControllerData);
 		}
-		
-		this.mainPageData.getInputsVScrollbarData().setScrollerLength(len);
-
-		this.controllerLogic.dataChanged(desktopControllerData);
 	}
 
 	/**
@@ -653,6 +657,9 @@ EditGeneratorChangedListener
 			generator.setName(name);
 			generator.setStartTimePos(startTimePos);
 			generator.setEndTimePos(endTimePos);
+			
+			//XXX 
+			//this.notifyInputsChanged();
 		}
 	}
 

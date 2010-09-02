@@ -57,7 +57,7 @@ public class SelectEditButtonActionLogicListener
 		
 		if (!(selectedGeneratorTypeData instanceof ModulGeneratorTypeData))
 		{
-			throw new RuntimeException("the selected type is not a modul");
+			throw new RuntimeException("The selected type \"" + selectedGeneratorTypeData.getGeneratorTypeName() + "\" is not a modul.");
 		}
 		
 		ModulGeneratorTypeData modulTypeData = (ModulGeneratorTypeData)selectedGeneratorTypeData;

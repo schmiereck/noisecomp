@@ -43,7 +43,8 @@ public class GeneratorChangeObserver
 		}
 	}
 	
-	public synchronized void changedEvent(Generator generator, float startTimePos, float endTimePos)
+	public synchronized void changedEvent(Generator generator, 
+	                                      float changedStartTimePos, float changedEndTimePos)
 	{
 		if (this.generatorChangeListeners != null)
 		{
@@ -54,7 +55,8 @@ public class GeneratorChangeObserver
 			{
 				GeneratorChangeListenerInterface generatorChangeListener = generatorChangeListenersIterator.next();
 				
-				generatorChangeListener.notifyGeneratorChanged(generator, startTimePos, endTimePos);
+				generatorChangeListener.notifyGeneratorChanged(generator, 
+				                                               changedStartTimePos, changedEndTimePos);
 			}
 		}
 	}

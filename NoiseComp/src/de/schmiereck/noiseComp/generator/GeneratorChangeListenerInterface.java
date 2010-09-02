@@ -20,10 +20,11 @@ public interface GeneratorChangeListenerInterface
 	 * 
 	 * @param generator
 	 * 			ist der Generator, der die Veränderung meldet.
-	 * @param startTimePos
+	 * @param changedStartTimePos
 	 * 			ist der Zeitpunkt ab dem sich Daten im angegebenen Generator geändert haben.
-	 * @param endTimePos
-	 * 			ist der Zeitpunkt bis zu dem sich Daten im angegebenen Generator geä�ndert haben.
+	 * @param changedEndTimePos
+	 * 			ist der Zeitpunkt bis zu dem sich Daten im angegebenen Generator geäändert haben.
 	 */
-	void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos);
+	void notifyGeneratorChanged(Generator generator, 
+	                            float changedStartTimePos, float changedEndTimePos);
 }
