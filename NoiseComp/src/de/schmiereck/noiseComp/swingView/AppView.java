@@ -5,6 +5,7 @@ package de.schmiereck.noiseComp.swingView;
 
 import java.awt.Component;
 import java.awt.HeadlessException;
+import java.awt.event.MouseListener;
 import java.util.Iterator;
 
 import javax.swing.JFrame;
@@ -16,7 +17,6 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeSelectionModel;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
@@ -94,7 +94,6 @@ extends JFrame
 
 		    this.modulesTree.setCellRenderer(new DefaultTreeCellRenderer()
 		    {
-
 				@Override
 				public Component getTreeCellRendererComponent(JTree tree, 
 				                                              Object value, 
@@ -108,8 +107,8 @@ extends JFrame
 			        super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
 			        
 			        // Den Wert des Knotens abfragen
-			        DefaultMutableTreeNode node = (DefaultMutableTreeNode)value;
-			        Object userObject = node.getUserObject();
+			        DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)value;
+			        Object userObject = treeNode.getUserObject();
 			        
 			        if (userObject instanceof GeneratorTypeData)
 			        {
@@ -163,6 +162,14 @@ extends JFrame
 		this.modulSplitPane.setDividerLocation(200);
 		
 	    //------------------------------------------------------------------------------------------
+		{
+		    // Add listener to components that can bring up popup menus.
+		    MouseListener popupListener = new ModulPopupMenuListener(this.modulesTree);
+		    //output.addMouseListener(popupListener);
+		    //menuBar.addMouseListener(popupListener);
+		    this.modulesTree.addMouseListener(popupListener);
+		}
+	    //------------------------------------------------------------------------------------------
 //	    this.add(this.timelinePanel);
 	    
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -171,7 +178,8 @@ extends JFrame
 	}
 
 	/**
-	 * @param modulesTree2
+	 * @param tree
+	 * 			is the Tree.
 	 */
 	private void createNodes(JTree tree)
 	{
