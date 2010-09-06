@@ -26,6 +26,8 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.timelines.TimelineDrawPanelModel;
+import de.schmiereck.noiseComp.swingView.timelines.TimelineDrawPanelView;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineScrollPanelView;
 
 /**
@@ -142,7 +144,11 @@ implements EditModuleChangedListener
 			//--------------------------------------------------------------------------------------
 			// Timeline View:
 			
-			this.timelineView = new TimelineScrollPanelView();
+			TimelineDrawPanelModel timelineDrawPanelModel = new TimelineDrawPanelModel();
+			
+		    TimelineDrawPanelView timelineDrawPanelView = new TimelineDrawPanelView(timelineDrawPanelModel);
+		    
+			this.timelineView = new TimelineScrollPanelView(timelineDrawPanelView);
 	
 			//--------------------------------------------------------------------------------------
 			// Timeline Edit Panel:

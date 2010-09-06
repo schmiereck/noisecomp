@@ -11,16 +11,14 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.util.List;
-import java.util.Vector;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 
 /**
  * <p>
- * 	Timeline Scroll-Panel-View.
+ * 	Timeline Draw-Panel View.
  * </p>
  * 
  * see: http://java.sun.com/docs/books/tutorial/uiswing/components/scrollpane.html
@@ -38,14 +36,12 @@ implements Scrollable//, MouseMotionListener
 	private int maxUnitIncrementX = 1;
 	private int maxUnitIncrementY = 16;
 
-	private List<Rectangle> rects = new Vector<Rectangle>();
-	 
-	private Color[] colors = 
-	{
-		Color.RED, Color.ORANGE, Color.CYAN, Color.GREEN,
-		Color.MAGENTA, Color.PINK,
-		Color.GREEN, Color.RED, Color.ORANGE, Color.black
-	};
+	private Dimension dimension;
+	
+	/**
+	 * Timeline Draw Panel Model.
+	 */
+	private TimelineDrawPanelModel timelineDrawPanelModel;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -54,18 +50,24 @@ implements Scrollable//, MouseMotionListener
 	* Constructor.
 	* 
 	*/
-	public TimelineDrawPanelView() 
+	public TimelineDrawPanelView(TimelineDrawPanelModel timelineDrawPanelModel) 
 	{
-		this.rects.add(new Rectangle(0, 0, 100, 100));
-		this.rects.add(new Rectangle(100, 100, 100, 100));
-		this.rects.add(new Rectangle(200, 200, 100, 100));
-		this.rects.add(new Rectangle(300, 300, 100, 100));
-		this.rects.add(new Rectangle(200, 0, 50, 50));
-		this.rects.add(new Rectangle(250, 50, 50, 50));
-		this.rects.add(new Rectangle(500, 200, 100, 100));
-		this.rects.add(new Rectangle(600, 300, 100, 100));
-		this.rects.add(new Rectangle(500, 0, 50, 50));
-		this.rects.add(new Rectangle(650, 50, 50, 50));
+		this.timelineDrawPanelModel = timelineDrawPanelModel;
+		
+//		this.timelineGeneratorModels.add(new Rectangle(0, 0, 100, 100));
+//		this.timelineGeneratorModels.add(new Rectangle(100, 100, 100, 100));
+//		this.timelineGeneratorModels.add(new Rectangle(200, 200, 100, 100));
+//		this.timelineGeneratorModels.add(new Rectangle(300, 300, 100, 100));
+//		this.timelineGeneratorModels.add(new Rectangle(200, 0, 50, 50));
+//		this.timelineGeneratorModels.add(new Rectangle(250, 50, 50, 50));
+//		this.timelineGeneratorModels.add(new Rectangle(500, 200, 100, 100));
+//		this.timelineGeneratorModels.add(new Rectangle(600, 300, 100, 100));
+//		this.timelineGeneratorModels.add(new Rectangle(500, 0, 50, 50));
+//		this.timelineGeneratorModels.add(new Rectangle(650, 50, 50, 50));
+		
+		this.dimension = new Dimension(2000, 400);
+		
+	    this.setPreferredSize(this.dimension);
 		
 		this.setBackground(Color.LIGHT_GRAY);
 
@@ -74,7 +76,6 @@ implements Scrollable//, MouseMotionListener
 //		this.addMouseMotionListener(this); //handle mouse drags
 		
 		//------------------------------------------------------------------------------------------
-		TimelineGeneratorModel generatorModel = new TimelineGeneratorModel();
 		
 		//------------------------------------------------------------------------------------------
 	}
@@ -93,10 +94,16 @@ implements Scrollable//, MouseMotionListener
 	   
 		AffineTransform at = AffineTransform.getScaleInstance(1.0D, 1.0D);
 	   
-		for (Rectangle rectangle : this.rects)
+		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelineDrawPanelModel.getTimelineGeneratorModels(); 
+		
+		for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
 		{
-//			g2.setPaint(this.colors[j]);
 			g2.setPaint(Color.BLACK);
+			
+			//timelineGeneratorModel
+
+			Rectangle rectangle = new Rectangle();
+			
 			g2.fill(at.createTransformedShape(rectangle));
 		}
 		
@@ -191,6 +198,15 @@ implements Scrollable//, MouseMotionListener
 	public boolean getScrollableTracksViewportHeight() 
 	{
 		return false;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #dimension}.
+	 */
+	public Dimension getDimension()
+	{
+		return this.dimension;
 	}
 
 }
