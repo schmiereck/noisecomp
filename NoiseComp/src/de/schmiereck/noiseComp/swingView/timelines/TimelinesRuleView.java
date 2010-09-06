@@ -38,7 +38,7 @@ extends JComponent
 	 * @param orientation
 	 * 			is the orientation.
 	 * @param isMetric
-	 * 			true if is Metric.
+	 * 			<code>true</code> if is Metric.
 	 */
 	public TimelinesRuleView(int orientation, boolean isMetric)
 	{
