@@ -14,7 +14,7 @@ import javax.swing.JComponent;
 
 /**
  * <p>
- * 	Rule View.
+ * 	Timelines-Rule View.
  * </p>
  * 
  * @author smk
