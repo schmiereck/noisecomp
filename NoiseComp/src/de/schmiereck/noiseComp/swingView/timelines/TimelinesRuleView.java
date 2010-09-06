@@ -23,14 +23,24 @@ import javax.swing.JComponent;
 public class TimelinesRuleView
 extends JComponent
 {
+	//**********************************************************************************************
+	// Constats:
+
 	public static final int	INCH		= Toolkit.getDefaultToolkit().getScreenResolution();
 	public static final int	HORIZONTAL	= 0;
 	public static final int	VERTICAL	= 1;
 	public static final int	SIZE		= 35;
+	
+	//**********************************************************************************************
+	// Fields:
+	
 	public int				orientation;
 	public boolean			isMetric;
 	private int				increment;
 	private int				units;
+
+	//**********************************************************************************************
+	// Functions:
 
 	/**
 	 * Constructor.
