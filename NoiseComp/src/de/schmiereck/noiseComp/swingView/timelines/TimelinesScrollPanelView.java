@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
  * @author smk
  * @version <p>17.06.2010:	created, smk</p>
  */
-public class TimelineScrollPanelView
+public class TimelinesScrollPanelView
 extends JPanel
 {
 	//**********************************************************************************************
@@ -38,10 +38,10 @@ extends JPanel
 	/**
 	 * Constructor.
 	 * 
-	 * @param timelineDrawPanelView 
+	 * @param timelinesDrawPanelView 
 	 * 			is the Timeline Draw-Panel View.
 	 */
-	public TimelineScrollPanelView(TimelineDrawPanelView timelineDrawPanelView)
+	public TimelinesScrollPanelView(TimelinesDrawPanelView timelinesDrawPanelView)
 		throws HeadlessException
 	{
 		//==========================================================================================
@@ -53,13 +53,13 @@ extends JPanel
 	    this.columnView = new TimelinesRuleView(TimelinesRuleView.HORIZONTAL, true);
 	    this.rowView = new TimelinesRuleView(TimelinesRuleView.VERTICAL, true);
 	    
-	    Dimension dimension = timelineDrawPanelView.getDimension();
+	    Dimension dimension = timelinesDrawPanelView.getDimension();
 	    
 	    this.columnView.setPreferredWidth((int)dimension.getWidth());
 	    this.rowView.setPreferredHeight((int)dimension.getHeight());
 
 	    //------------------------------------------------------------------------------------------
-	    JScrollPane scrollPane = new JScrollPane(timelineDrawPanelView);
+	    JScrollPane scrollPane = new JScrollPane(timelinesDrawPanelView);
 	    
 //	    scrollPane.getViewport().add(scroll);
 	    

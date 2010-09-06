@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
  * @author smk
  * @version <p>17.06.2010:	created, smk</p>
  */
-public class TimelineDrawPanelView
+public class TimelinesDrawPanelView
 extends JPanel 
 implements Scrollable//, MouseMotionListener
 {
@@ -41,7 +41,7 @@ implements Scrollable//, MouseMotionListener
 	/**
 	 * Timeline Draw Panel Model.
 	 */
-	private TimelineDrawPanelModel timelineDrawPanelModel;
+	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -50,9 +50,9 @@ implements Scrollable//, MouseMotionListener
 	* Constructor.
 	* 
 	*/
-	public TimelineDrawPanelView(TimelineDrawPanelModel timelineDrawPanelModel) 
+	public TimelinesDrawPanelView(TimelinesDrawPanelModel timelinesDrawPanelModel) 
 	{
-		this.timelineDrawPanelModel = timelineDrawPanelModel;
+		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
 //		this.timelineGeneratorModels.add(new Rectangle(0, 0, 100, 100));
 //		this.timelineGeneratorModels.add(new Rectangle(100, 100, 100, 100));
@@ -94,7 +94,7 @@ implements Scrollable//, MouseMotionListener
 	   
 		AffineTransform at = AffineTransform.getScaleInstance(1.0D, 1.0D);
 	   
-		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelineDrawPanelModel.getTimelineGeneratorModels(); 
+		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels(); 
 		
 		for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
 		{

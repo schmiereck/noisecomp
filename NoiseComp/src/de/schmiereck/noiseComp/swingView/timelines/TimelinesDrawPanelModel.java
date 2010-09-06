@@ -14,7 +14,7 @@ import java.util.Vector;
  * @author smk
  * @version <p>06.09.2010:	created, smk</p>
  */
-public class TimelineDrawPanelModel
+public class TimelinesDrawPanelModel
 {
 	//**********************************************************************************************
 	// Fields:
