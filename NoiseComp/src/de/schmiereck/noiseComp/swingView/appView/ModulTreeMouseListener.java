@@ -117,7 +117,7 @@ extends MouseAdapter
 						
 						GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 
-						appView.notifyEditGeneratorListeners(generatorTypeData);
+						appView.notifyDoEditGeneratorListeners(generatorTypeData);
 					}
 			 		
 			 	}

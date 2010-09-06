@@ -99,6 +99,8 @@ public class SwingViewMain
 					
 					AppView appView = createAndShowGUI();
 					
+					appModel.addEditModuleChangedListener(appView);
+					
 					AppController appController = new AppController(appModel, appView);
 					
 					appController.selectEditModule(mainModulGeneratorTypeData);

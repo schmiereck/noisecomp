@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView;
+package de.schmiereck.noiseComp.swingView.timelines;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
 
 /**
  * <p>
@@ -30,8 +31,8 @@ extends JPanel
 	
 	private Dimension dimension;
 	
-	private RuleView columnView;
-	private RuleView rowView;
+	private TimelinesRuleView columnView;
+	private TimelinesRuleView rowView;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -51,8 +52,8 @@ extends JPanel
 		
 	    //------------------------------------------------------------------------------------------
 		// Create the row and column headers.
-	    this.columnView = new RuleView(RuleView.HORIZONTAL, true);
-	    this.rowView = new RuleView(RuleView.VERTICAL, true);
+	    this.columnView = new TimelinesRuleView(TimelinesRuleView.HORIZONTAL, true);
+	    this.rowView = new TimelinesRuleView(TimelinesRuleView.VERTICAL, true);
 	    
 	    this.columnView.setPreferredWidth((int)this.dimension.getWidth());
 	    this.rowView.setPreferredHeight((int)this.dimension.getHeight());

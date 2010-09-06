@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView;
+package de.schmiereck.noiseComp.swingView.timelines;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,7 +20,7 @@ import javax.swing.JComponent;
  * @author smk
  * @version <p>17.06.2010:	created, smk</p>
  */
-public class RuleView
+public class TimelinesRuleView
 extends JComponent
 {
 	public static final int	INCH		= Toolkit.getDefaultToolkit().getScreenResolution();
@@ -40,7 +40,7 @@ extends JComponent
 	 * @param isMetric
 	 * 			true if is Metric.
 	 */
-	public RuleView(int orientation, boolean isMetric)
+	public TimelinesRuleView(int orientation, boolean isMetric)
 	{
 		this.orientation = orientation;
 		this.isMetric = isMetric;

@@ -24,7 +24,9 @@ import javax.swing.tree.TreeSelectionModel;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
-import de.schmiereck.noiseComp.swingView.TimelineScrollPanelView;
+import de.schmiereck.noiseComp.swingView.appModel.AppModel;
+import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.timelines.TimelineScrollPanelView;
 
 /**
  * <p>
@@ -39,7 +41,8 @@ import de.schmiereck.noiseComp.swingView.TimelineScrollPanelView;
  * @version <p>17.06.2010:	created, smk</p>
  */
 public class AppView
-extends JFrame
+extends JFrame 
+implements EditModuleChangedListener
 {
 	//**********************************************************************************************
 	// Fields:
@@ -274,9 +277,17 @@ extends JFrame
 	 * @param generatorTypeData
 	 * 			is the generator to edit.
 	 */
-	public void notifyEditGeneratorListeners(GeneratorTypeData generatorTypeData)
+	public void notifyDoEditGeneratorListeners(GeneratorTypeData generatorTypeData)
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener#notifyEditModulChanged(de.schmiereck.noiseComp.swingView.appModel.AppModel)
+	 */
+	@Override
+	public void notifyEditModulChanged(AppModel appModel)
+	{
 	}
 }

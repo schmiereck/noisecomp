@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.swingView.appView.AppView;
 
 /**
  * <p>
@@ -52,6 +53,15 @@ public class AppModel
 		{
 			editModuleChangedListener.notifyEditModulChanged(this);
 		}
+	}
+
+	/**
+	 * @param editModuleChangedListener 
+	 * 			to add to {@link #editModuleChangedListeners}.
+	 */
+	public void addEditModuleChangedListener(EditModuleChangedListener editModuleChangedListener)
+	{
+		this.editModuleChangedListeners.add(editModuleChangedListener);
 	}
 
 }
