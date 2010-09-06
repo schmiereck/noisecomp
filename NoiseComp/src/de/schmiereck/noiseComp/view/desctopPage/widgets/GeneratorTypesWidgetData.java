@@ -11,7 +11,7 @@ import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
- * TODO docu
+ * Generator-Types Widget Data.
  *
  * @author smk
  * @version <p>25.02.2004: created, smk</p>
@@ -20,15 +20,21 @@ public class GeneratorTypesWidgetData
 extends ListWidgetData
 implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitWidgetListenerInterface
 {
+	//**********************************************************************************************
+	// Fields:
+	
 //	private GeneratorTypesData generatorTypesData;
 	
 	static private GeneratorTypesWidgetGraphic listWidgetGraphic = null;
 	
-	private GeneratorTypeData	activeGeneratorTypeData = null;
+	private GeneratorTypeData activeGeneratorTypeData = null;
 
 	private GeneratorTypeData selectedGeneratorTypeData = null;
 	
 	private GeneratorTypeSelectedListenerInterface generatorTypeSelectedListener = null;
+
+	//**********************************************************************************************
+	// Functions:
 
 	/**
 	 * Constructor.

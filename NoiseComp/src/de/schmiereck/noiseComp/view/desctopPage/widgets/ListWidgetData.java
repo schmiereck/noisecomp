@@ -14,11 +14,17 @@ public abstract class ListWidgetData
 extends WidgetData
 implements ScrollBarChangedListenerInterface
 {
+	//**********************************************************************************************
+	// Fields:
+	
 	private int listEntryHeight;
 	
 	private ScrollbarData verticalScrollbarData;
 	private ScrollbarData horizontalScrollbarData;
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 

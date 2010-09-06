@@ -16,6 +16,9 @@ public class ModulGeneratorTypeData
 	extends GeneratorTypeData
 //	implements GeneratorChangeListenerInterface
 {
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * The Output-Object of the Sound-Generators.
 	 */
@@ -39,6 +42,9 @@ public class ModulGeneratorTypeData
 	 */
 	private TracksData tracksData = new TracksData();
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
@@ -98,7 +104,7 @@ public class ModulGeneratorTypeData
 
 	/**
 	 * Alle Generatoren durchlaufen und benachrichtigen 
-	 * das einer der ihren gelöscht wurde (als Input entfernen usw.):
+	 * das einer der ihren gelï¿½scht wurde (als Input entfernen usw.):
 	 * @param removedGenerator
 	 */
 	private void notifyGeneratorsOfRemoving(Generator removedGenerator)
@@ -284,7 +290,7 @@ public class ModulGeneratorTypeData
 	 * @see de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface#notifyGeneratorChanged(de.schmiereck.noiseComp.generator.Generator, float, float)
 	public void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos)
 	{
-		// Meldet die Änderung an einem seiner Generatoren,
+		// Meldet die ï¿½nderung an einem seiner Generatoren,
 		// an die beim Modul angemeldeten Listener-Objekten.
 		this.generateChangedEvent(startTimePos, endTimePos);
 	}

@@ -11,6 +11,9 @@ import de.schmiereck.screenTools.controller.DataChangedObserver;
  */
 public class WidgetData
 {
+	//**********************************************************************************************
+	// Fields:
+	
 	private ControllerData controllerData;
 	private DataChangedObserver dataChangedObserver;
 	
@@ -21,6 +24,9 @@ public class WidgetData
 	private boolean acceptFocus;
 	private boolean haveFocus = false;
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 

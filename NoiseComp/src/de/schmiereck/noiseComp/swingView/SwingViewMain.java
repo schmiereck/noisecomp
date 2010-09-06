@@ -14,6 +14,9 @@ import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
+import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.appModel.AppModel;
+import de.schmiereck.noiseComp.swingView.appView.AppView;
 
 /**
  * <p>
@@ -46,7 +49,7 @@ public class SwingViewMain
 		StartupService.createBaseGeneratorTypes();
 		
 		// new ModulGeneratorTypeData(null, null, null);
-		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+		final ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
 
 		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
 		
@@ -67,7 +70,7 @@ public class SwingViewMain
 		//------------------------------------------------------------------------------------------
 		OutputGenerator outputGenerator = 
 			StartupService.createDemoGenerators(soundData.getFrameRate(), 
-			                                    mainModulGeneratorTypeData);
+												mainModulGeneratorTypeData);
 
 		soundSourceLogic.setOutputGenerator(outputGenerator);
 		
@@ -82,24 +85,30 @@ public class SwingViewMain
 	
 		//==========================================================================================
 		//Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() 
-        {
-        	/* (non-Javadoc)
-        	 * @see java.lang.Runnable#run()
-        	 */
-        	public void run()
-        	{
-        		try
+		//creating and showing this application's GUI.
+		javax.swing.SwingUtilities.invokeLater(new Runnable() 
+		{
+			/* (non-Javadoc)
+			 * @see java.lang.Runnable#run()
+			 */
+			public void run()
+			{
+				try
 				{
-					createAndShowGUI();
+					AppModel appModel = new AppModel();
+					
+					AppView appView = createAndShowGUI();
+					
+					AppController appController = new AppController(appModel, appView);
+					
+					appController.selectEditModule(mainModulGeneratorTypeData);
 				}
 				catch (Exception ex)
 				{
 					ex.printStackTrace();
 				}
-            }
-        });
+			}
+		});
 		//==========================================================================================
 	}
 	
@@ -107,25 +116,26 @@ public class SwingViewMain
 	 * @throws Exception
 	 * 			if there is an Error in View. 
  	 */
-	private static void createAndShowGUI() 
+	private static AppView createAndShowGUI() 
 	throws Exception
 	{
 		//==========================================================================================
-    	//UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-    	//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        //UIManager.setLookAndFeel("com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    	
-    	AppView appView = new AppView();
-        
-        appView.setTitle("NoiseComp V2.0");
-        
-        appView.setSize(800, 600);
-        
-        appView.setLocationRelativeTo(null);
-        
-        appView.setVisible(true);
-        
+		//UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		//UIManager.setLookAndFeel("com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		
+		AppView appView = new AppView();
+		
+		appView.setTitle("NoiseComp V2.0");
+		
+		appView.setSize(800, 600);
+		
+		appView.setLocationRelativeTo(null);
+		
+		appView.setVisible(true);
+		
 		//==========================================================================================
+		return appView;
 	}
 }
