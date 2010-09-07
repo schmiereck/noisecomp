@@ -26,9 +26,6 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelView;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesScrollPanelView;
 
 /**
  * <p>
@@ -50,6 +47,16 @@ implements EditModuleChangedListener
 	// Fields:
 
 	/**
+	 * App Model
+	 */
+	private AppModel appModel;
+	
+//	/**
+//	 * Timeline Draw Panel Model.
+//	 */
+//	private TimelinesDrawPanelModel timelinesDrawPanelModel;
+	
+	/**
 	 * Modules Tree.
 	 */
 	private JTree modulesTree;
@@ -67,7 +74,7 @@ implements EditModuleChangedListener
 	/**
 	 * Timeline View.
 	 */
-	private TimelinesScrollPanelView timelineView;
+//	private TimelinesScrollPanelView timelineView;
 
 	/**
 	 * Timeline-Edit Split Pane.
@@ -80,7 +87,7 @@ implements EditModuleChangedListener
 	private JPanel timelineEditPanel;
 	
 	/**
-	 * 
+	 * Do Edit-Module Listeners.
 	 */
 	private List<DoEditModuleListener> doEditModuleListeners = new Vector<DoEditModuleListener>();
 	
@@ -90,12 +97,18 @@ implements EditModuleChangedListener
 	/**
 	 * Constructor.
 	 * 
+	 * @param appModel
+	 * 			is the App Model.
 	 * @throws HeadlessException
 	 * 			if an Error occurse.
 	 */
-	public AppView()
+	public AppView(AppModel appModel)
 		throws HeadlessException
 	{
+		//==========================================================================================
+		this.appModel = appModel;
+//		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
+		
 		//==========================================================================================
 		// Modul Select Panel:
 		
@@ -141,14 +154,10 @@ implements EditModuleChangedListener
 		}
 		
 		{
-			//--------------------------------------------------------------------------------------
-			// Timeline View:
-			
-			TimelinesDrawPanelModel timelinesDrawPanelModel = new TimelinesDrawPanelModel();
-			
-		    TimelinesDrawPanelView timelinesDrawPanelView = new TimelinesDrawPanelView(timelinesDrawPanelModel);
-		    
-			this.timelineView = new TimelinesScrollPanelView(timelinesDrawPanelView);
+//			//--------------------------------------------------------------------------------------
+//			// Timeline View:
+//			
+//			this.timelineView = new TimelinesScrollPanelView(timelinesDrawPanelView);
 	
 			//--------------------------------------------------------------------------------------
 			// Timeline Edit Panel:
@@ -159,9 +168,9 @@ implements EditModuleChangedListener
 			//--------------------------------------------------------------------------------------
 			// Timeline Split Pane:
 			
-			this.timelineSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
-													this.timelineView,
-													this.timelineEditPanel);
+			this.timelineSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+			
+			this.timelineSplitPane.setRightComponent(this.timelineEditPanel);
 			
 			this.timelineSplitPane.setOneTouchExpandable(true);
 	
@@ -195,6 +204,11 @@ implements EditModuleChangedListener
 		//==========================================================================================
 	}
 
+	public void setTimelineComponent(Component timelineComponent)
+	{
+		this.timelineSplitPane.setLeftComponent(timelineComponent);
+	}
+	
 	/**
 	 * @param tree
 	 * 			is the Tree.

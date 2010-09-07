@@ -3,10 +3,16 @@
  */
 package de.schmiereck.noiseComp.swingView.appController;
 
+import java.util.Iterator;
+
+import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.appView.DoEditModuleListener;
+import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
+import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.swingView.timelines.TimelinesScrollPanelController;
 
 
 /**
@@ -22,6 +28,13 @@ public class AppController
 	//**********************************************************************************************
 	// Fields:
 
+	private TimelinesScrollPanelController timelinesScrollPanelController;
+	
+	/**
+	 * Timelines Draw-Panel Controller.
+	 */
+	private TimelinesDrawPanelController timelinesDrawPanelController;
+	
 	/**
 	 * App Model
 	 */
@@ -38,16 +51,30 @@ public class AppController
 	/**
 	 * Constructor.
 	 * 
-	 * @param appModel
-	 * 			is the App Model.
-	 * @param appView
-	 * 			is the App View.
 	 */
-	public AppController(AppModel appModel, AppView appView)
+	public AppController()
 	{
-		this.appModel = appModel;
-		this.appView = appView;
+		//==========================================================================================
+		this.timelinesDrawPanelController = new TimelinesDrawPanelController();
 		
+		this.timelinesScrollPanelController = new TimelinesScrollPanelController(this.timelinesDrawPanelController);
+		
+		//==========================================================================================
+		this.appModel = new AppModel();
+		
+		//------------------------------------------------------------------------------------------
+		this.appView = new AppView(this.appModel);
+		
+		this.appView.setTitle("NoiseComp V2.0");
+		this.appView.setSize(800, 600);
+		this.appView.setLocationRelativeTo(null);
+		this.appView.setVisible(true);
+		
+		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView());
+		
+		this.appModel.addEditModuleChangedListener(this.appView);
+		
+		//==========================================================================================
 		this.appView.addDoEditModuleListener
 		(
 		 	new DoEditModuleListener()
@@ -59,6 +86,7 @@ public class AppController
 				}
 		 	}
 		);
+		//==========================================================================================
 	}
 
 	/**
@@ -67,6 +95,16 @@ public class AppController
 	 */
 	public void selectEditModule(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
+		//==========================================================================================
 		this.appModel.setEditedModulGeneratorTypeData(modulGeneratorTypeData);
+		
+		Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
+		
+		while (generatorsIterator.hasNext())
+		{
+			Generator generator = generatorsIterator.next();
+			
+		}
+		//==========================================================================================
 	}
 }

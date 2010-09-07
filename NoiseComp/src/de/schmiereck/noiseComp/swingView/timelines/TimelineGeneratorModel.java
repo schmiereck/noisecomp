@@ -3,10 +3,6 @@
  */
 package de.schmiereck.noiseComp.swingView.timelines;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import javax.swing.JComponent;
 
 /**
  * <p>

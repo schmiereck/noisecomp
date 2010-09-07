@@ -29,8 +29,17 @@ extends JPanel
 	//**********************************************************************************************
 	// Fields:
 	
+	/**
+	 * Timelines Scroll-Panel Model.
+	 */
+	private TimelinesScrollPanelModel timelinesScrollPanelModel;
+	
 	private TimelinesRuleView columnView;
 	private TimelinesRuleView rowView;
+
+	private JScrollPane scrollPane;
+	
+	private TimelinesDrawPanelView timelinesDrawPanelView = null;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -38,12 +47,15 @@ extends JPanel
 	/**
 	 * Constructor.
 	 * 
-	 * @param timelinesDrawPanelView 
-	 * 			is the Timeline Draw-Panel View.
+	 * @param timelinesScrollPanelModel
+	 * 			is the Timelines Scroll-Panel Model.
 	 */
-	public TimelinesScrollPanelView(TimelinesDrawPanelView timelinesDrawPanelView)
+	public TimelinesScrollPanelView(TimelinesScrollPanelModel timelinesScrollPanelModel)
 		throws HeadlessException
 	{
+		//==========================================================================================
+		this.timelinesScrollPanelModel = timelinesScrollPanelModel;
+		
 		//==========================================================================================
 //		this.setLayout(new BorderLayout());
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -53,20 +65,13 @@ extends JPanel
 	    this.columnView = new TimelinesRuleView(TimelinesRuleView.HORIZONTAL, true);
 	    this.rowView = new TimelinesRuleView(TimelinesRuleView.VERTICAL, true);
 	    
-	    Dimension dimension = timelinesDrawPanelView.getDimension();
-	    
-	    this.columnView.setPreferredWidth((int)dimension.getWidth());
-	    this.rowView.setPreferredHeight((int)dimension.getHeight());
-
 	    //------------------------------------------------------------------------------------------
-	    JScrollPane scrollPane = new JScrollPane(timelinesDrawPanelView);
+	    this.scrollPane = new JScrollPane();
 	    
 //	    scrollPane.getViewport().add(scroll);
 	    
 	    scrollPane.setColumnHeaderView(this.columnView);
 	    scrollPane.setRowHeaderView(this.rowView);
-	    
-	    scrollPane.getViewport().revalidate();
 	    
 	    scrollPane.setOpaque(true); //content panes must be opaque
 	    
@@ -75,6 +80,28 @@ extends JPanel
 	    //------------------------------------------------------------------------------------------
 	    this.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 
+		//==========================================================================================
+	}
+	
+	/**
+	 * @param timelinesDrawPanelView 
+	 * 			is the Timeline Draw-Panel View.
+	 */
+	public void setTimelinesDrawPanelView(TimelinesDrawPanelView timelinesDrawPanelView)
+	{
+		//==========================================================================================
+		this.timelinesDrawPanelView = timelinesDrawPanelView;
+	    
+		this.scrollPane.setViewportView(this.timelinesDrawPanelView);
+		
+	    Dimension dimension = this.timelinesDrawPanelView.getDimension();
+
+	    this.columnView.setPreferredWidth((int)dimension.getWidth());
+	    this.rowView.setPreferredHeight((int)dimension.getHeight());
+	    
+	    this.scrollPane.getViewport().revalidate();
+	    this.scrollPane.revalidate();
+	    
 		//==========================================================================================
 	}
 }		

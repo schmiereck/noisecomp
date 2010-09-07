@@ -49,7 +49,7 @@ public class ModulGeneratorTypeData
 	 * Constructor.
 	 * 
 	 */
-	public ModulGeneratorTypeData(Class generatorClass, 
+	public ModulGeneratorTypeData(Class<? extends Generator> generatorClass, 
 								  String generatorTypeName, 
 								  String generatorTypeDescription)
 	{
@@ -111,11 +111,11 @@ public class ModulGeneratorTypeData
 	{
 		if (removedGenerator != null)
 		{
-			Iterator generatorsIterator = this.generators.getGeneratorsIterator();
+			Iterator<Generator> generatorsIterator = this.generators.getGeneratorsIterator();
 			
 			while (generatorsIterator.hasNext())
 			{
-				Generator generator = (Generator)generatorsIterator.next();
+				Generator generator = generatorsIterator.next();
 				
 				generator.notifyRemoveGenerator(removedGenerator);
 			}
@@ -135,11 +135,11 @@ public class ModulGeneratorTypeData
 	{
 		synchronized (this)
 		{
-			Iterator generatorsIterator = this.generators.getGeneratorsIterator();
+			Iterator<Generator> generatorsIterator = this.generators.getGeneratorsIterator();
 			
 			while (generatorsIterator.hasNext())
 			{
-				Generator generator = (Generator)generatorsIterator.next();
+				Generator generator = generatorsIterator.next();
 				
 				this.removeGenerator(generator);
 			}
@@ -231,9 +231,9 @@ public class ModulGeneratorTypeData
 		}
 	}
 	
-	public Iterator getGeneratorsIterator()
+	public Iterator<Generator> getGeneratorsIterator()
 	{
-		Iterator generatorsIterator;
+		Iterator<Generator> generatorsIterator;
 		
 		synchronized (this)
 		{
@@ -314,7 +314,7 @@ public class ModulGeneratorTypeData
 	/**
 	 * @see TracksData#getTracksIterator()
 	 */
-	public Iterator getTracksIterator()
+	public Iterator<TrackData> getTracksIterator()
 	{
 		return this.tracksData.getTracksIterator();
 	}

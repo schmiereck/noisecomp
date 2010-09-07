@@ -8,7 +8,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
  * <p>
- * 	Edit-Module Listener.
+ * 	Do Edit-Module Listener.
  * </p>
  * 
  * @author smk
@@ -18,7 +18,7 @@ public interface DoEditModuleListener
 {
 
 	/**
-	 * Edit Modul performed.
+	 * Do Edit Modul performed.
 	 * 
 	 * @param modulGeneratorTypeData
 	 * 			is the edited modul.

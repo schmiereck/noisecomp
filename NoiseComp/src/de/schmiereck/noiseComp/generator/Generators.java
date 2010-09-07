@@ -12,11 +12,17 @@ import java.util.Vector;
  */
 public class Generators
 {
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * List of {@link Generator}-Objects with an
 	 * Integer-Position-Number as Key.
 	 */
-	private Vector	generators = new Vector();
+	private Vector<Generator>	generators = new Vector<Generator>();
+
+	//**********************************************************************************************
+	// Functions:
 
 	/**
 	 * Constructor.
@@ -54,7 +60,7 @@ public class Generators
 	 * @see #generators
 	 * @return a Iterator over the {@link Generator}-Objects.
 	 */
-	public Iterator getGeneratorsIterator()
+	public Iterator<Generator> getGeneratorsIterator()
 	{
 		return this.generators.iterator();
 	}

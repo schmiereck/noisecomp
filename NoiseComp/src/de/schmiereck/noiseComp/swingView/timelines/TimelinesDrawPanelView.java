@@ -94,7 +94,8 @@ implements Scrollable//, MouseMotionListener
 	   
 		AffineTransform at = AffineTransform.getScaleInstance(1.0D, 1.0D);
 	   
-		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels(); 
+		List<TimelineGeneratorModel> timelineGeneratorModels = 
+			this.timelinesDrawPanelModel.getTimelineGeneratorModels(); 
 		
 		for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
 		{

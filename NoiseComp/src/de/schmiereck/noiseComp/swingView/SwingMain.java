@@ -15,18 +15,16 @@ import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.appModel.AppModel;
-import de.schmiereck.noiseComp.swingView.appView.AppView;
 
 /**
  * <p>
- * 	Swing-View ConsoleMain.
+ * 	Swing Main.
  * </p>
  * 
  * @author smk
  * @version <p>17.06.2010:	created, smk</p>
  */
-public class SwingViewMain
+public class SwingMain
 {
 	//**********************************************************************************************
 	// Fields:
@@ -95,13 +93,9 @@ public class SwingViewMain
 			{
 				try
 				{
-					AppModel appModel = new AppModel();
+					createAndShowGUI();
 					
-					AppView appView = createAndShowGUI();
-					
-					appModel.addEditModuleChangedListener(appView);
-					
-					AppController appController = new AppController(appModel, appView);
+					AppController appController = new AppController();
 					
 					appController.selectEditModule(mainModulGeneratorTypeData);
 				}
@@ -118,7 +112,7 @@ public class SwingViewMain
 	 * @throws Exception
 	 * 			if there is an Error in View. 
  	 */
-	private static AppView createAndShowGUI() 
+	private static void createAndShowGUI() 
 	throws Exception
 	{
 		//==========================================================================================
@@ -127,17 +121,6 @@ public class SwingViewMain
 		//UIManager.setLookAndFeel("com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		
-		AppView appView = new AppView();
-		
-		appView.setTitle("NoiseComp V2.0");
-		
-		appView.setSize(800, 600);
-		
-		appView.setLocationRelativeTo(null);
-		
-		appView.setVisible(true);
-		
 		//==========================================================================================
-		return appView;
 	}
 }
