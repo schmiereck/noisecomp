@@ -24,7 +24,14 @@ public abstract class Generator
 implements GeneratorInterface,
 		   GeneratorChangeListenerInterface
 {
+	/**
+	 * Start time position in milli seconds.
+	 */
 	private float startTimePos = 0.0F;
+
+	/**
+	 * End time position in milli seconds.
+	 */
 	private float endTimePos = 1.0F;
 	
 	/**
@@ -103,7 +110,7 @@ implements GeneratorInterface,
 		float changedEndTimePos		= Math.max(this.endTimePos, endTimePos);
 		
 		this.endTimePos = endTimePos;
-		//XXX
+		
 		this.generateChangedEvent(changedStartTimePos,
 								  changedEndTimePos);
 	}

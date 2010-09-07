@@ -54,4 +54,21 @@ public class TimelinesDrawPanelController
 	{
 		return this.timelinesDrawPanelView;
 	}
+
+	/**
+	 * Clear Timeline-Generators.
+	 */
+	public void clearTimelineGenerators()
+	{
+		this.timelinesDrawPanelModel.clearTimelineGenerators();
+	}
+
+	/**
+	 * @param timelineGeneratorModel
+	 * 			is a Timeline-Generator Model.
+	 */
+	public void addTimelineGeneratorModel(TimelineGeneratorModel timelineGeneratorModel)
+	{
+		this.timelinesDrawPanelModel.addTimelineGeneratorModel(timelineGeneratorModel);
+	}
 }

@@ -32,4 +32,25 @@ public class TimelinesDrawPanelModel
 	{
 		return this.timelineGeneratorModels;
 	}
+
+	/**
+	 * Clear Timeline-Generators.
+	 */
+	public void clearTimelineGenerators()
+	{
+		this.timelineGeneratorModels.clear();
+		
+		// TODO notify timelineGeneratorModels changed
+	}
+
+	/**
+	 * @param timelineGeneratorModel
+	 * 			is a Timeline-Generator Model.
+	 */
+	public void addTimelineGeneratorModel(TimelineGeneratorModel timelineGeneratorModel)
+	{
+		this.timelineGeneratorModels.add(timelineGeneratorModel);
+		
+		// TODO notify timelineGeneratorModels changed
+	}
 }

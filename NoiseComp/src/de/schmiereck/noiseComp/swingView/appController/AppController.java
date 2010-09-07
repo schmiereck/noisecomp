@@ -11,6 +11,7 @@ import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.appView.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
+import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesScrollPanelController;
 
@@ -111,12 +112,19 @@ public class AppController
 		//==========================================================================================
 		this.appModel.setEditedModulGeneratorTypeData(modulGeneratorTypeData);
 		
+		this.timelinesDrawPanelController.clearTimelineGenerators();
+		
 		Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
 		
 		while (generatorsIterator.hasNext())
 		{
 			Generator generator = generatorsIterator.next();
 			
+			TimelineGeneratorModel timelineGeneratorModel = 
+				new TimelineGeneratorModel(generator.getStartTimePos(),
+				                           generator.getEndTimePos());
+			
+			this.timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
 		}
 		//==========================================================================================
 	}

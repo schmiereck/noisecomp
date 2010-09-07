@@ -92,8 +92,10 @@ implements Scrollable//, MouseMotionListener
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
 	   
-		AffineTransform at = AffineTransform.getScaleInstance(1.0D, 1.0D);
+		AffineTransform at = AffineTransform.getScaleInstance(10.0D, 1.0D);
 	   
+		int timelineGeneratorPos = 0;
+		
 		List<TimelineGeneratorModel> timelineGeneratorModels = 
 			this.timelinesDrawPanelModel.getTimelineGeneratorModels(); 
 		
@@ -101,11 +103,19 @@ implements Scrollable//, MouseMotionListener
 		{
 			g2.setPaint(Color.BLACK);
 			
-			//timelineGeneratorModel
-
-			Rectangle rectangle = new Rectangle();
+			float startTimePos = timelineGeneratorModel.getStartTimePos();
+			float endTimePos = timelineGeneratorModel.getEndTimePos();
+			
+			float timeLength = endTimePos - startTimePos;
+			
+			Rectangle rectangle = new Rectangle((int)startTimePos,
+			                                    timelineGeneratorPos * this.maxUnitIncrementY,
+			                                    (int)timeLength,
+			                                    this.maxUnitIncrementY);
 			
 			g2.fill(at.createTransformedShape(rectangle));
+			
+			timelineGeneratorPos++;
 		}
 		
 		g2.setPaint(Color.red);
