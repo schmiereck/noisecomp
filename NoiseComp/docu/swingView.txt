@@ -5,4 +5,4 @@ AppView
 		modulesTreeScrollPane
 		timelineSplitPane
 			TimelinesScrollPanelView
-			Timeline Edit View
+			TimelineEditView

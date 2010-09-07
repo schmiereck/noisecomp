@@ -26,6 +26,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView;
 
 /**
  * <p>
@@ -84,7 +85,7 @@ implements EditModuleChangedListener
 	/**
 	 * Timeline Edit Panel.
 	 */
-	private JPanel timelineEditPanel;
+	private TimelineEditView timelineEditView;
 	
 	/**
 	 * Do Edit-Module Listeners.
@@ -162,15 +163,12 @@ implements EditModuleChangedListener
 			//--------------------------------------------------------------------------------------
 			// Timeline Edit Panel:
 			
-			this.timelineEditPanel = new JPanel();
-			this.timelineEditPanel.add(new JLabel("Timeline Edit"));
+			this.timelineEditView = new TimelineEditView();
 			
 			//--------------------------------------------------------------------------------------
 			// Timeline Split Pane:
 			
 			this.timelineSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-			
-			this.timelineSplitPane.setRightComponent(this.timelineEditPanel);
 			
 			this.timelineSplitPane.setOneTouchExpandable(true);
 		}
@@ -310,5 +308,25 @@ implements EditModuleChangedListener
 	@Override
 	public void notifyEditModulChanged(AppModel appModel)
 	{
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineEditView}.
+	 */
+	public TimelineEditView getTimelineEditView()
+	{
+		return this.timelineEditView;
+	}
+
+	/**
+	 * @param timelineEditView 
+	 * 			to set {@link #timelineEditView}.
+	 */
+	public void setTimelineEditView(TimelineEditView timelineEditView)
+	{
+		this.timelineEditView = timelineEditView;
+		
+		this.timelineSplitPane.setRightComponent(this.timelineEditView);
 	}
 }

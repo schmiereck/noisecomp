@@ -10,6 +10,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.appView.DoEditModuleListener;
+import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesScrollPanelController;
 
@@ -33,6 +34,11 @@ public class AppController
 	 * Timelines Draw-Panel Controller.
 	 */
 	private TimelinesDrawPanelController timelinesDrawPanelController;
+	
+	/**
+	 * Timeline-Edit Controller.
+	 */
+	private TimelineEditController timelineEditController;
 	
 	/**
 	 * App Model
@@ -62,6 +68,11 @@ public class AppController
 		this.appView.setSize(800, 600);
 		this.appView.setLocationRelativeTo(null);
 		this.appView.setVisible(true);
+		
+		//------------------------------------------------------------------------------------------
+		this.timelineEditController = new TimelineEditController();
+		
+		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesScrollPanelController = new TimelinesScrollPanelController();
