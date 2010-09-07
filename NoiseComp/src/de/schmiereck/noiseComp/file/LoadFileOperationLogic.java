@@ -4,9 +4,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Vector;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeIterator;
+
 import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
@@ -113,11 +115,11 @@ public class LoadFileOperationLogic
 	 */
 	private static void createModulGeneratorTypesGenerators(GeneratorTypeNodesData generatorTypeNodesData, GeneratorTypesData generatorTypesData, float frameRate)
 	{
-		Iterator generatorTypeNodesIterator = generatorTypeNodesData.getGeneratorTypeNodesIterator();
+		Iterator<GeneratorTypeNodeData> generatorTypeNodesIterator = generatorTypeNodesData.getGeneratorTypeNodesIterator();
 		
 		while (generatorTypeNodesIterator.hasNext())
 		{
-			GeneratorTypeNodeData generatorTypeNodeData = (GeneratorTypeNodeData)generatorTypeNodesIterator.next();
+			GeneratorTypeNodeData generatorTypeNodeData = generatorTypeNodesIterator.next();
 			
 			ModulGeneratorTypeData modulGeneratorTypeData = generatorTypeNodeData.getModulGeneratorTypeData();
 			
@@ -161,8 +163,8 @@ public class LoadFileOperationLogic
 		// Inserting the inputs:
 		
 		LoadFileOperationLogic.createGeneratorInputs(//generators, 
-												  loadFileGeneratorNodeDatas, 
-												  modulGeneratorTypeData);
+		                                             loadFileGeneratorNodeDatas, 
+		                                             modulGeneratorTypeData);
 	}
 
 	private static ModulGeneratorTypeData createGeneratorTypes(GeneratorTypesData generatorTypesData,
@@ -488,14 +490,14 @@ public class LoadFileOperationLogic
 	 * @param loadFileGeneratorNodeDatas is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
 	private static void createGeneratorInputs(//Generators generators, 
-											  Vector loadFileGeneratorNodeDatas, 
+											  Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas, 
 											  ModulGeneratorTypeData modulGeneratorTypeData)
 	{
-		Iterator loadFileGeneratorNodeDatasIterator = loadFileGeneratorNodeDatas.iterator();
+		Iterator<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatasIterator = loadFileGeneratorNodeDatas.iterator();
 		
 		while (loadFileGeneratorNodeDatasIterator.hasNext())
 		{
-			LoadFileGeneratorNodeData loadFileGeneratorNodeData = (LoadFileGeneratorNodeData)loadFileGeneratorNodeDatasIterator.next();
+			LoadFileGeneratorNodeData loadFileGeneratorNodeData = loadFileGeneratorNodeDatasIterator.next();
 			
 			Generator generator = loadFileGeneratorNodeData.getGenerator();
 			Node generatorNode = loadFileGeneratorNodeData.getGeneratorNode();

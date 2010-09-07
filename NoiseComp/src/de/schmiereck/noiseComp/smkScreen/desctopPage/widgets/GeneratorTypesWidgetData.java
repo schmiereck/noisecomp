@@ -67,7 +67,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData#getListEntrysIterator()
 	 * @return the attribute {@link #inputs}.
 	 */
-	public Iterator getListEntrysIterator()
+	public Iterator<GeneratorTypeData> getListEntrysIterator()
 	{
 		//==========================================================================================
 		SoundService soundService = SoundService.getInstance();

@@ -8,7 +8,7 @@ import java.util.Iterator;
  */
 /**
  * <p>
- * 	Verwaltet eine Liste von {@link {@link GeneratorTypeNodeData}-Objekten.
+ * 	Verwaltet eine Liste von {@link GeneratorTypeNodeData}-Objekten.
  * </p>
  * 
  * @author smk
@@ -20,7 +20,7 @@ public class GeneratorTypeNodesData
 	 * Verwaltet eine Liste von {@link GeneratorTypeNodeData}-Objekten
 	 * mit ihrem {@link GeneratorTypeNodeData#generatorTypeClassName} als Key.
 	 */
-	private HashMap generatorTypeNodes = new HashMap();
+	private HashMap<String, GeneratorTypeNodeData> generatorTypeNodes = new HashMap<String, GeneratorTypeNodeData>();
 
 	/**
 	 * @see #generatorTypeNodes
@@ -46,7 +46,7 @@ public class GeneratorTypeNodesData
 	 */
 	public GeneratorTypeNodeData searchGeneratorTypeData(String generatorTypeClassName)
 	{
-		return (GeneratorTypeNodeData)this.generatorTypeNodes.get(generatorTypeClassName);
+		return this.generatorTypeNodes.get(generatorTypeClassName);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class GeneratorTypeNodesData
 	 * @return
 	 * 		a iterator about the list of {@link GeneratorTypeNodeData} objects.
 	 */
-	public Iterator getGeneratorTypeNodesIterator()
+	public Iterator<GeneratorTypeNodeData> getGeneratorTypeNodesIterator()
 	{
 		return this.generatorTypeNodes.values().iterator();
 	}

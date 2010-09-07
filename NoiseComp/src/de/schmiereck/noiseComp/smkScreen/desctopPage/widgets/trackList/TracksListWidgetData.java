@@ -276,7 +276,7 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData#getListEntrysIterator()
 	 * @return a Iterator over the {@link TrackData}-Objects.
 	 */
-	public Iterator getListEntrysIterator()
+	public Iterator<TrackData> getListEntrysIterator()
 	{
 		return this.tracksData.getTracksIterator();
 	}
