@@ -25,16 +25,24 @@ public class TimelinesScrollPanelController
 	
 	/**
 	 * Constructor.
-	 * @param timelinesDrawPanelController 
 	 * 
 	 */
-	public TimelinesScrollPanelController(TimelinesDrawPanelController timelinesDrawPanelController)
+	public TimelinesScrollPanelController()
 	{
 		//==========================================================================================
 		this.timelinesScrollPanelModel = new TimelinesScrollPanelModel();
 		
 	    this.timelinesScrollPanelView = new TimelinesScrollPanelView(this.timelinesScrollPanelModel);
 	    
+		//==========================================================================================
+	}
+
+	/**
+	 * @param timelinesDrawPanelController 
+	 * 			is the Timelines Draw-Panel Controller.
+	 */
+	public void setTimelinesScrollPanelController(TimelinesDrawPanelController timelinesDrawPanelController)
+	{
 		//==========================================================================================
 	    TimelinesDrawPanelView timelinesDrawPanelView = timelinesDrawPanelController.getTimelinesDrawPanelView();
 	    

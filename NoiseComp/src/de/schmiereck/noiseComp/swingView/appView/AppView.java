@@ -173,8 +173,6 @@ implements EditModuleChangedListener
 			this.timelineSplitPane.setRightComponent(this.timelineEditPanel);
 			
 			this.timelineSplitPane.setOneTouchExpandable(true);
-	
-			this.timelineSplitPane.setDividerLocation(400);
 		}
 		
 		//------------------------------------------------------------------------------------------
@@ -207,6 +205,9 @@ implements EditModuleChangedListener
 	public void setTimelineComponent(Component timelineComponent)
 	{
 		this.timelineSplitPane.setLeftComponent(timelineComponent);
+		
+		this.timelineSplitPane.setDividerLocation(400);
+//		this.timelineSplitPane.revalidate();
 	}
 	
 	/**

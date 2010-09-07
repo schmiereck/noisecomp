@@ -68,14 +68,14 @@ extends JPanel
 	    //------------------------------------------------------------------------------------------
 	    this.scrollPane = new JScrollPane();
 	    
-//	    scrollPane.getViewport().add(scroll);
+//	    this.scrollPane.getViewport().add(scroll);
 	    
-	    scrollPane.setColumnHeaderView(this.columnView);
-	    scrollPane.setRowHeaderView(this.rowView);
+	    this.scrollPane.setColumnHeaderView(this.columnView);
+	    this.scrollPane.setRowHeaderView(this.rowView);
 	    
-	    scrollPane.setOpaque(true); //content panes must be opaque
+	    this.scrollPane.setOpaque(true); //content panes must be opaque
 	    
-	    this.add(scrollPane, BorderLayout.CENTER);
+	    this.add(this.scrollPane, BorderLayout.CENTER);
 		
 	    //------------------------------------------------------------------------------------------
 	    this.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
@@ -99,8 +99,8 @@ extends JPanel
 	    this.columnView.setPreferredWidth((int)dimension.getWidth());
 	    this.rowView.setPreferredHeight((int)dimension.getHeight());
 	    
-	    this.scrollPane.getViewport().revalidate();
-	    this.scrollPane.revalidate();
+//	    this.scrollPane.getViewport().revalidate();
+//	    this.scrollPane.revalidate();
 	    
 		//==========================================================================================
 	}

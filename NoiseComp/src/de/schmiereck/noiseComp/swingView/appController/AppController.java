@@ -11,7 +11,6 @@ import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.appView.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesScrollPanelController;
 
 
@@ -55,14 +54,8 @@ public class AppController
 	public AppController()
 	{
 		//==========================================================================================
-		this.timelinesDrawPanelController = new TimelinesDrawPanelController();
-		
-		this.timelinesScrollPanelController = new TimelinesScrollPanelController(this.timelinesDrawPanelController);
-		
-		//==========================================================================================
 		this.appModel = new AppModel();
 		
-		//------------------------------------------------------------------------------------------
 		this.appView = new AppView(this.appModel);
 		
 		this.appView.setTitle("NoiseComp V2.0");
@@ -70,8 +63,17 @@ public class AppController
 		this.appView.setLocationRelativeTo(null);
 		this.appView.setVisible(true);
 		
+		//------------------------------------------------------------------------------------------
+		this.timelinesScrollPanelController = new TimelinesScrollPanelController();
+		
 		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView());
 		
+		//------------------------------------------------------------------------------------------
+		this.timelinesDrawPanelController = new TimelinesDrawPanelController();
+		
+		this.timelinesScrollPanelController.setTimelinesScrollPanelController(this.timelinesDrawPanelController);
+		
+		//------------------------------------------------------------------------------------------
 		this.appModel.addEditModuleChangedListener(this.appView);
 		
 		//==========================================================================================

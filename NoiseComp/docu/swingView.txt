@@ -1,0 +1,8 @@
+
+
+AppView
+	modulSplitPane
+		modulesTreeScrollPane
+		timelineSplitPane
+			TimelinesScrollPanelView
+			Timeline Edit View
