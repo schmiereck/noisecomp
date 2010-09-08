@@ -9,7 +9,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -43,6 +47,8 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
+	private AffineTransform at = AffineTransform.getScaleInstance(10.0D, 2.0D);
+	   
 	//**********************************************************************************************
 	// Functions:
 
@@ -76,7 +82,56 @@ implements Scrollable//, MouseMotionListener
 //		this.addMouseMotionListener(this); //handle mouse drags
 		
 		//------------------------------------------------------------------------------------------
-		
+		this.addMouseListener
+		(
+		 	new MouseListener()
+		 	{
+
+				@Override
+				public void mouseClicked(MouseEvent e)
+				{
+					Point2D point2D;
+					try
+					{
+						point2D = at.inverseTransform(e.getPoint(), null);
+					}
+					catch (NoninvertibleTransformException ex)
+					{
+						throw new RuntimeException(ex);
+					}
+					
+					TimelineGeneratorModel timelineGeneratorModel = searchGenerator(point2D);
+					
+					if (timelineGeneratorModel != null)
+					{
+						timelineGeneratorModel.setSelected(true);
+						
+						repaint();
+					}
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e)
+				{
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e)
+				{
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e)
+				{
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e)
+				{
+				}
+		 		
+		 	}
+		);
 		//------------------------------------------------------------------------------------------
 	}
 	
@@ -92,8 +147,6 @@ implements Scrollable//, MouseMotionListener
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
 	   
-		AffineTransform at = AffineTransform.getScaleInstance(10.0D, 1.0D);
-	   
 		int timelineGeneratorPos = 0;
 		
 		List<TimelineGeneratorModel> timelineGeneratorModels = 
@@ -101,7 +154,14 @@ implements Scrollable//, MouseMotionListener
 		
 		for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
 		{
-			g2.setPaint(Color.BLACK);
+			if (timelineGeneratorModel.getSelected() == true)
+			{
+				g2.setPaint(Color.GREEN);
+			}
+			else
+			{
+				g2.setPaint(Color.BLACK);
+			}
 			
 			float startTimePos = timelineGeneratorModel.getStartTimePos();
 			float endTimePos = timelineGeneratorModel.getEndTimePos();
@@ -113,7 +173,7 @@ implements Scrollable//, MouseMotionListener
 			                                    (int)timeLength,
 			                                    this.maxUnitIncrementY);
 			
-			g2.fill(at.createTransformedShape(rectangle));
+			g2.fill(this.at.createTransformedShape(rectangle));
 			
 			timelineGeneratorPos++;
 		}
@@ -220,4 +280,32 @@ implements Scrollable//, MouseMotionListener
 		return this.dimension;
 	}
 
+
+	private TimelineGeneratorModel searchGenerator(Point2D point2D)
+	{
+		TimelineGeneratorModel retTimelineGeneratorModel;
+		
+		retTimelineGeneratorModel = null;
+		
+		double generatorPosY = 0.0D;
+		
+		for (TimelineGeneratorModel timelineGeneratorModel : this.timelinesDrawPanelModel.getTimelineGeneratorModels())
+		{
+			float startTimePos = timelineGeneratorModel.getStartTimePos();
+			float endTimePos = timelineGeneratorModel.getEndTimePos();
+			
+			if ((point2D.getX() >= startTimePos) &&
+				(point2D.getX() <= endTimePos) &&
+				(point2D.getY() >= generatorPosY) &&
+				(point2D.getY() <= (generatorPosY + this.maxUnitIncrementY)))
+			{
+				retTimelineGeneratorModel = timelineGeneratorModel;
+				break;
+			}
+			
+			generatorPosY += this.maxUnitIncrementY;
+		}
+		
+		return retTimelineGeneratorModel;
+	}
 }

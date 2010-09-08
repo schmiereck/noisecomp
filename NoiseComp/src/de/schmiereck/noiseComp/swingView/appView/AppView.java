@@ -150,6 +150,8 @@ implements EditModuleChangedListener
 			this.createNodes(this.modulesTree);
 			
 			this.modulesTreeScrollPane = new JScrollPane(this.modulesTree);
+			
+			this.pack();
 		}
 		
 		{

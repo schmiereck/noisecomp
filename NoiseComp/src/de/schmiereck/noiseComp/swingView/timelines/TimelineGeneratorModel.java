@@ -27,6 +27,8 @@ public class TimelineGeneratorModel
 	 */
 	private float endTimePos;
 	
+	private boolean selected = false;
+	
 	//**********************************************************************************************
 	// Functions:
 	
@@ -78,6 +80,24 @@ public class TimelineGeneratorModel
 	public void setEndTimePos(float endTimePos)
 	{
 		this.endTimePos = endTimePos;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selected}.
+	 */
+	public boolean getSelected()
+	{
+		return this.selected;
+	}
+
+	/**
+	 * @param selected 
+	 * 			to set {@link #selected}.
+	 */
+	public void setSelected(boolean selected)
+	{
+		this.selected = selected;
 	}
 	
 }
