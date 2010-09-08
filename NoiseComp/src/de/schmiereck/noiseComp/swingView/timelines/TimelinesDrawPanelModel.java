@@ -21,6 +21,16 @@ public class TimelinesDrawPanelModel
 	
 	private List<TimelineGeneratorModel> timelineGeneratorModels = new Vector<TimelineGeneratorModel>();
 
+	/**
+	 * Selected Timeline Generator Model.
+	 */
+	private TimelineGeneratorModel selectedTimelineGeneratorModel = null;
+	
+	/**
+	 * Selected Timeline Changed Listeners.
+	 */
+	private List<SelectedTimelineChangedListenerInterface> selectedTimelineChangedListeners = new Vector<SelectedTimelineChangedListenerInterface>();
+	
 	//**********************************************************************************************
 	// Functions:
 	
@@ -52,5 +62,45 @@ public class TimelinesDrawPanelModel
 		this.timelineGeneratorModels.add(timelineGeneratorModel);
 		
 		// TODO notify timelineGeneratorModels changed
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedTimelineGeneratorModel}.
+	 */
+	public TimelineGeneratorModel getSelectedTimelineGeneratorModel()
+	{
+		return this.selectedTimelineGeneratorModel;
+	}
+
+	/**
+	 * @param selectedTimelineGeneratorModel 
+	 * 			to set {@link #selectedTimelineGeneratorModel}.
+	 */
+	public void setSelectedTimelineGeneratorModel(TimelineGeneratorModel selectedTimelineGeneratorModel)
+	{
+		this.selectedTimelineGeneratorModel = selectedTimelineGeneratorModel;
+		
+		this.notifySelectedTimelineChangedListeners();
+	}
+
+	/**
+	 * Notify the {@link #selectedTimelineChangedListeners}.
+	 */
+	public void notifySelectedTimelineChangedListeners()
+	{
+		for (SelectedTimelineChangedListenerInterface selectedTimelineChangedListener : this.selectedTimelineChangedListeners)
+		{
+			selectedTimelineChangedListener.selectedTimelineChanged();
+		}
+	}
+
+	/**
+	 * @param selectedTimelineChangedListener 
+	 * 			to add to {@link #selectedTimelineChangedListeners}.
+	 */
+	public void addSelectedTimelineChangedListener(SelectedTimelineChangedListenerInterface selectedTimelineChangedListener)
+	{
+		this.selectedTimelineChangedListeners.add(selectedTimelineChangedListener);
 	}
 }

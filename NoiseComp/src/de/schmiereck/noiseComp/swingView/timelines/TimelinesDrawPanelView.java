@@ -15,6 +15,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.Scrollable;
@@ -48,7 +49,12 @@ implements Scrollable//, MouseMotionListener
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	private AffineTransform at = AffineTransform.getScaleInstance(10.0D, 2.0D);
-	   
+	
+	/**
+	 * Do Timeline Selected Listeners.
+	 */
+	private List<DoTimelineSelectedListenerInterface> doTimelineSelectedListeners = new Vector<DoTimelineSelectedListenerInterface>();
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -104,9 +110,7 @@ implements Scrollable//, MouseMotionListener
 					
 					if (timelineGeneratorModel != null)
 					{
-						timelineGeneratorModel.setSelected(true);
-						
-						repaint();
+						notifyDoTimelineSelectedListeners(timelineGeneratorModel);
 					}
 				}
 
@@ -133,6 +137,18 @@ implements Scrollable//, MouseMotionListener
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
+		this.timelinesDrawPanelModel.addSelectedTimelineChangedListener
+		(
+		 	new SelectedTimelineChangedListenerInterface()
+		 	{
+				@Override
+				public void selectedTimelineChanged()
+				{
+					repaint();
+				}
+		 		
+		 	}
+		);
 	}
 	
 	/* (non-Javadoc)
@@ -154,7 +170,7 @@ implements Scrollable//, MouseMotionListener
 		
 		for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
 		{
-			if (timelineGeneratorModel.getSelected() == true)
+			if (timelinesDrawPanelModel.getSelectedTimelineGeneratorModel() == timelineGeneratorModel)
 			{
 				g2.setPaint(Color.GREEN);
 			}
@@ -307,5 +323,25 @@ implements Scrollable//, MouseMotionListener
 		}
 		
 		return retTimelineGeneratorModel;
+	}
+
+	/**
+	 * Notify the {@link #doTimelineSelectedListeners}.
+	 */
+	public void notifyDoTimelineSelectedListeners(TimelineGeneratorModel timelineGeneratorModel)
+	{
+		for (DoTimelineSelectedListenerInterface doTimelineSelectedListener : this.doTimelineSelectedListeners)
+		{
+			doTimelineSelectedListener.timelineSelected(timelineGeneratorModel);
+		};
+	}
+
+	/**
+	 * @param doTimelineSelectedListener 
+	 * 			to add to {@link #doTimelineSelectedListeners}.
+	 */
+	public void addDoTimelineSelectedListeners(DoTimelineSelectedListenerInterface doTimelineSelectedListener)
+	{
+		this.doTimelineSelectedListeners.add(doTimelineSelectedListener);
 	}
 }

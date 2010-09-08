@@ -34,6 +34,19 @@ public class TimelinesDrawPanelController
 		
 	    this.timelinesDrawPanelView = new TimelinesDrawPanelView(this.timelinesDrawPanelModel);
 	    
+	    //------------------------------------------------------------------------------------------
+	    this.timelinesDrawPanelView.addDoTimelineSelectedListeners
+	    (
+	     	new DoTimelineSelectedListenerInterface()
+	     	{
+				@Override
+				public void timelineSelected(TimelineGeneratorModel timelineGeneratorModel)
+				{
+					timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
+				}
+	     	}
+	    );
+	    
 		//==========================================================================================
 	}
 
