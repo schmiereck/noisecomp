@@ -7,7 +7,7 @@ import de.schmiereck.noiseComp.smkScreen.desctopPage.DesktopColors;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 
 /**
- * TODO docu
+ * Input-Types Widget-Graphic.
  *
  * @author smk
  * @version <p>21.03.2004: created, smk</p>
@@ -91,7 +91,5 @@ extends ListWidgetGraphic
 	 */
 	public void drawSelectors(Graphics g, ScreenGraficInterface screenGrafic, DesktopColors desktopColors, ListWidgetData listWidgetData, int posX, int posY, int sizeX, int sizeY, int entryHeight, float horizontalScrollStart, float horizontalScrollEnd, float verticalScrollerStart, float verticalScrollerEnd)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 }

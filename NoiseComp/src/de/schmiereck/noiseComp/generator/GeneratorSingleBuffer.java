@@ -1,7 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
 /**
- * TODO docu
+ * Generator Single Buffer.
  *
  * @author smk
  * @version <p>14.04.2004: created, smk</p>
@@ -12,7 +12,7 @@ extends GeneratorBuffer
 	/**
 	 * Wenn der Wert eines Samples berechnet wurde,
 	 * wird er in {@link #bufferedSoundSample} abgelegt und der
-	 * Frame zu dem er gehört in dieser Varaiablen abgelegt.<br/>
+	 * Frame zu dem er gehï¿½rt in dieser Varaiablen abgelegt.<br/>
 	 * Die Berechnung wird nur angestossen, wenn die nachgefragte Frame-Position
 	 * nicht der hier abgelegten entspricht.
 	 */

@@ -1,6 +1,5 @@
 package de.schmiereck.noiseComp.smkScreen.desktopController.editModulPage;
 
-import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.InputTypesData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -10,7 +9,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.EditGeneratorChangedL
 import de.schmiereck.screenTools.controller.ControllerLogic;
 
 /**
- * TODO docu
+ * Edit-Modul Page Logic.
  *
  * @author smk
  * @version <p>11.04.2004: created, smk</p>

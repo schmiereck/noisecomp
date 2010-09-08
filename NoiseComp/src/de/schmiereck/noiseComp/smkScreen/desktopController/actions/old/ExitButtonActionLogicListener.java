@@ -5,7 +5,7 @@ import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogic;
 
 /**
- * TODO docu
+ * Exit-Button Action Logic Listener.
  *
  * @author smk
  * @version 21.02.2004

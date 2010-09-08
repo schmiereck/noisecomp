@@ -10,7 +10,7 @@ import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
- * TODO docu
+ * Input-Types Widget-Data.
  *
  * @author smk
  * @version <p>21.03.2004: created, smk</p>

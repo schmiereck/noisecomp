@@ -8,7 +8,7 @@ import java.util.Vector;
 
 /**
  * <p>
- * 	Timeline Draw Panel Model.
+ * 	Timeline Draw-Panel Model.
  * </p>
  * 
  * @author smk

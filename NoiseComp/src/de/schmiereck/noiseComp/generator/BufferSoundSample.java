@@ -1,7 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
 /**
- * TODO docu
+ * Buffer Sound Sample.
  *
  * @author smk
  * @version <p>14.04.2004: created, smk</p>

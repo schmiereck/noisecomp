@@ -1,7 +1,7 @@
 package de.schmiereck.noiseComp.smkScreen.desctopPage.widgets;
 
 /**
- * TODO docu
+ * Button Action Logic Listener Interface.
  *
  * @author smk
  * @version 21.02.2004

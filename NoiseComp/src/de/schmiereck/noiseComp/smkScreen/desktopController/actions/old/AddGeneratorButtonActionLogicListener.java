@@ -6,7 +6,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerData
 import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogic;
 
 /**
- * TODO docu
+ * Add Generator-Button Action Logic Listener.
  *
  * @author smk
  * @version <p>22.02.2004: created, smk</p>

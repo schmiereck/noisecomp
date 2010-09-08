@@ -2,7 +2,7 @@ package de.schmiereck.noiseComp.generator;
 
 
 /**
- * TODO docu
+ * Fader Generator.
  *
  * @author smk
  * @version 22.01.2004
@@ -37,7 +37,7 @@ extends Generator
 		// Relativer Zeitpunkt im Generator.
 		float timePos = frameTime - (this.getStartTimePos());
 		
-		// Länge des Generators.
+		// Lï¿½nge des Generators.
 		float timeLen = this.getEndTimePos() - this.getStartTimePos();
 		
 		// Different zwischen End- und Startwert des Faders.

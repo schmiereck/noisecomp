@@ -6,7 +6,7 @@ import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
- * TODO docu
+ * Function-Button Data.
  *
  * @author smk
  * @version 29.01.2004

@@ -3,7 +3,7 @@ package de.schmiereck.noiseComp.smkScreen.desctopPage.widgets;
 import de.schmiereck.noiseComp.generator.InputData;
 
 /**
- * TODO docu
+ * Generator-Input Selected Listener Interface.
  *
  * @author smk
  * @version <p>25.02.2004: created, smk</p>

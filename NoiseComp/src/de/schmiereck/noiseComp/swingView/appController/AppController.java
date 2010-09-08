@@ -13,6 +13,7 @@ import de.schmiereck.noiseComp.swingView.appView.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
+import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesScrollPanelController;
 
 
@@ -71,11 +72,6 @@ public class AppController
 		this.appView.setVisible(true);
 		
 		//------------------------------------------------------------------------------------------
-		this.timelineEditController = new TimelineEditController();
-		
-		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
-		
-		//------------------------------------------------------------------------------------------
 		this.timelinesScrollPanelController = new TimelinesScrollPanelController();
 		
 		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView());
@@ -84,6 +80,11 @@ public class AppController
 		this.timelinesDrawPanelController = new TimelinesDrawPanelController();
 		
 		this.timelinesScrollPanelController.setTimelinesScrollPanelController(this.timelinesDrawPanelController);
+		
+		//------------------------------------------------------------------------------------------
+		this.timelineEditController = new TimelineEditController(this.timelinesDrawPanelController.getTimelinesDrawPanelModel());
+		
+		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
 		
 		//------------------------------------------------------------------------------------------
 		this.appModel.addEditModuleChangedListener(this.appView);
@@ -100,7 +101,7 @@ public class AppController
 				}
 		 	}
 		);
-		//==========================================================================================
+		//------------------------------------------------------------------------------------------
 	}
 
 	/**
