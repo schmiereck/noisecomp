@@ -32,8 +32,10 @@ extends JPanel
 	/**
 	 * Constructor.
 	 * 
+	 * @param timelineEditModel
+	 * 			is the Timeline-Edit Model.
 	 */
-	public TimelineEditView()
+	public TimelineEditView(final TimelineEditModel timelineEditModel)
 	{
 		//==========================================================================================
 		this.setLayout(new GridBagLayout());
@@ -41,16 +43,49 @@ extends JPanel
 		this.setBorder(BorderFactory.createTitledBorder("Generator:"));
 		
 		{
-			JTextField textField = this.addTextField(0, "Name:");
-			textField.setText("xxx");
+			final JTextField textField = this.addTextField(0, "Name:");
+			
+			timelineEditModel.getGeneratorNameChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						textField.setText(timelineEditModel.getGeneratorName());
+					}
+			 	}
+			);
 		}
 		{
-			JTextField textField = this.addTextField(1, "Start-Time:");
-			textField.setText("1.0");
+			final JTextField textField = this.addTextField(1, "Start-Time:");
+			
+			timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						textField.setText(Float.toString(timelineEditModel.getGeneratorStartTimePos()));
+					}
+			 	}
+			);
 		}
 		{
-			JTextField textField = this.addTextField(2, "End-Time:");
-			textField.setText("2.0");
+			final JTextField textField = this.addTextField(2, "End-Time:");
+			
+			timelineEditModel.getGeneratorEndTimePosChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						textField.setText(Float.toString(timelineEditModel.getGeneratorEndTimePos()));
+					}
+			 	}
+			);
 		}
 		{
 			this.addLabel(3, "Inputs:");

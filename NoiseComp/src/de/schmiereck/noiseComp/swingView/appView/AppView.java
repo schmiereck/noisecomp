@@ -80,10 +80,10 @@ implements EditModuleChangedListener
 	 */
 	private JSplitPane timelineSplitPane;
 
-	/**
-	 * Timeline Edit Panel.
-	 */
-	private TimelineEditView timelineEditView;
+//	/**
+//	 * Timeline-Edit Panel.
+//	 */
+//	private TimelineEditView timelineEditView = null;
 	
 	/**
 	 * Do Edit-Module Listeners.
@@ -160,11 +160,11 @@ implements EditModuleChangedListener
 //			
 //			this.timelineView = new TimelinesScrollPanelView(timelinesDrawPanelView);
 	
-			//--------------------------------------------------------------------------------------
-			// Timeline Edit Panel:
-			
-			this.timelineEditView = new TimelineEditView();
-			
+//			//--------------------------------------------------------------------------------------
+//			// Timeline Edit Panel:
+//			
+//			this.timelineEditView = new TimelineEditView();
+//			
 			//--------------------------------------------------------------------------------------
 			// Timeline Split Pane:
 			
@@ -310,14 +310,14 @@ implements EditModuleChangedListener
 	{
 	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #timelineEditView}.
-	 */
-	public TimelineEditView getTimelineEditView()
-	{
-		return this.timelineEditView;
-	}
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #timelineEditView}.
+//	 */
+//	public TimelineEditView getTimelineEditView()
+//	{
+//		return this.timelineEditView;
+//	}
 
 	/**
 	 * @param timelineEditView 
@@ -325,8 +325,8 @@ implements EditModuleChangedListener
 	 */
 	public void setTimelineEditView(TimelineEditView timelineEditView)
 	{
-		this.timelineEditView = timelineEditView;
+//		this.timelineEditView = timelineEditView;
 		
-		this.timelineSplitPane.setRightComponent(this.timelineEditView);
+		this.timelineSplitPane.setRightComponent(timelineEditView);
 	}
 }

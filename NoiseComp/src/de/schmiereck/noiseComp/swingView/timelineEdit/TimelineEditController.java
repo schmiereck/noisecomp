@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelines.SelectedTimelineChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
@@ -23,6 +24,8 @@ public class TimelineEditController
 
 	private TimelineEditView	timelineEditView;
 
+	private TimelineEditModel	timelineEditModel;
+
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	//**********************************************************************************************
@@ -32,12 +35,16 @@ public class TimelineEditController
 	 * Constructor.
 	 * 
 	 * @param timelinesDrawPanelModel 
+	 * 			is the App Controller.
+	 * @param timelinesDrawPanelModel 
 	 * 			is the Timeline Draw-Panel Model.
 	 */
-	public TimelineEditController(final TimelinesDrawPanelModel timelinesDrawPanelModel)
+	public TimelineEditController(final AppController appController,
+	                              final TimelinesDrawPanelModel timelinesDrawPanelModel)
 	{
 		//==========================================================================================
-		this.timelineEditView = new TimelineEditView();
+		this.timelineEditModel = new TimelineEditModel();
+		this.timelineEditView = new TimelineEditView(this.timelineEditModel);
 
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
@@ -53,13 +60,12 @@ public class TimelineEditController
 					
 					String generatorName = timelineGeneratorModel.getGeneratorName();
 					
-					Generator generator = xyzService.getGenerator(generatorName);
+					Generator generator = appController.retrieveGeneratorOfEditedModul(generatorName);
 					
-					this.timelineEditModel.setGeneratorName(generator.getName());
-					this.timelineEditModel.setGeneratorStartTime(generator.getStartTimePos());
-					this.timelineEditModel.setGeneratorEndTime(generator.getStartTimePos());
+					timelineEditModel.setGeneratorName(generator.getName());
+					timelineEditModel.setGeneratorStartTimePos(generator.getStartTimePos());
+					timelineEditModel.setGeneratorEndTimePos(generator.getEndTimePos());
 				}
-		 		
 		 	}
 		);
 		

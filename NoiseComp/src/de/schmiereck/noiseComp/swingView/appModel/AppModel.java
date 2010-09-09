@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.swingView.appView.AppView;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
-import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 
 /**
  * <p>

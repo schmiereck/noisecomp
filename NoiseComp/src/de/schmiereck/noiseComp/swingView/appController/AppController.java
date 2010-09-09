@@ -82,7 +82,9 @@ public class AppController
 		this.timelinesScrollPanelController.setTimelinesScrollPanelController(this.timelinesDrawPanelController);
 		
 		//------------------------------------------------------------------------------------------
-		this.timelineEditController = new TimelineEditController(this.timelinesDrawPanelController.getTimelinesDrawPanelModel());
+		this.timelineEditController = 
+			new TimelineEditController(this,
+			                           this.timelinesDrawPanelController.getTimelinesDrawPanelModel());
 		
 		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
 		
@@ -122,11 +124,29 @@ public class AppController
 			Generator generator = generatorsIterator.next();
 			
 			TimelineGeneratorModel timelineGeneratorModel = 
-				new TimelineGeneratorModel(generator.getStartTimePos(),
+				new TimelineGeneratorModel(generator.getName(),
+				                           generator.getStartTimePos(),
 				                           generator.getEndTimePos());
 			
 			this.timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
 		}
 		//==========================================================================================
+	}
+
+	/**
+	 * @param generatorName
+	 * 			is the Name of Generator.
+	 * @return
+	 * 			the genaror with given name.
+	 */
+	public Generator retrieveGeneratorOfEditedModul(String generatorName)
+	{
+		//==========================================================================================
+		ModulGeneratorTypeData modulGeneratorTypeData = this.appModel.getEditedModulGeneratorTypeData();
+		
+		Generator generator = modulGeneratorTypeData.searchGenerator(generatorName);
+		
+		//==========================================================================================
+		return generator;
 	}
 }
