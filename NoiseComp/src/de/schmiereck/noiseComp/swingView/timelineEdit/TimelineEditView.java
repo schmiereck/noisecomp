@@ -19,6 +19,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.OutputUtils;
 
 /**
  * <p>
@@ -69,7 +70,7 @@ extends JPanel
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						generatorNameTextField.setText(timelineEditModel.getGeneratorName());
+						generatorNameTextField.setText(OutputUtils.makeStringText(timelineEditModel.getGeneratorName()));
 					}
 			 	}
 			);
@@ -84,7 +85,7 @@ extends JPanel
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						generatorStartTimePosTextField.setText(Float.toString(timelineEditModel.getGeneratorStartTimePos()));
+						generatorStartTimePosTextField.setText(OutputUtils.makeFloatText(timelineEditModel.getGeneratorStartTimePos()));
 					}
 			 	}
 			);
@@ -99,7 +100,7 @@ extends JPanel
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						generatorEndTimePosTextField.setText(Float.toString(timelineEditModel.getGeneratorEndTimePos()));
+						generatorEndTimePosTextField.setText(OutputUtils.makeFloatText(timelineEditModel.getGeneratorEndTimePos()));
 					}
 			 	}
 			);

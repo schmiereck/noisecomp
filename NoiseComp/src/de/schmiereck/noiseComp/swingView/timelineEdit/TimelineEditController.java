@@ -109,11 +109,21 @@ public class TimelineEditController
 					
 					if (timelineGeneratorModel != null)
 					{
-						timelineGeneratorModel.setName(timelineEditView.getGeneratorNameTextField().getText());
-						timelineGeneratorModel.setStartTimePos(Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText()));
-						timelineGeneratorModel.setEndTimePos(Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText()));
+						Generator generator = 
+							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
+
+						String generatorName = timelineEditView.getGeneratorNameTextField().getText();
+						Float generatorStartTimePos = Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText());
+						Float generatorEndTimePos = Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText());
 						
-						// TODO Update Generator.
+						timelineGeneratorModel.setName(generatorName);
+						timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
+						timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
+						
+						// Update Generator.
+						generator.setName(generatorName);
+						generator.setStartTimePos(generatorStartTimePos);
+						generator.setEndTimePos(generatorEndTimePos);
 					}
 				}
 		 	}
