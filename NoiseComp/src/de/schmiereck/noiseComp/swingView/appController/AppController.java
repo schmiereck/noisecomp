@@ -128,6 +128,8 @@ public class AppController
 				                           generator.getEndTimePos());
 			
 			this.timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
+			
+			
 		}
 		//==========================================================================================
 	}

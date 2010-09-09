@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.timelines;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+
 
 /**
  * <p>
@@ -21,16 +23,31 @@ public class TimelineGeneratorModel
 	 * Name of Generator.
 	 */
 	private String name;
+
+	/**
+	 * {@link #name} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier nameChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	/**
 	 * Start time position in milli seconds.
 	 */
 	private float startTimePos;
+
+	/**
+	 * {@link #startTimePos} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier startTimePosChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	/**
 	 * End time position in milli seconds.
 	 */
 	private float endTimePos;
+
+	/**
+	 * {@link #endTimePos} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier endTimePosChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -69,6 +86,8 @@ public class TimelineGeneratorModel
 	public void setStartTimePos(float startTimePos)
 	{
 		this.startTimePos = startTimePos;
+		
+		this.startTimePosChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
 	/**
@@ -87,6 +106,8 @@ public class TimelineGeneratorModel
 	public void setEndTimePos(float endTimePos)
 	{
 		this.endTimePos = endTimePos;
+		
+		this.endTimePosChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
 	/**
@@ -105,6 +126,35 @@ public class TimelineGeneratorModel
 	public void setName(String generatorName)
 	{
 		this.name = generatorName;
+		
+		this.nameChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #nameChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getNameChangedNotifier()
+	{
+		return this.nameChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #startTimePosChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getStartTimePosChangedNotifier()
+	{
+		return this.startTimePosChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #endTimePosChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getEndTimePosChangedNotifier()
+	{
+		return this.endTimePosChangedNotifier;
 	}
 	
 }

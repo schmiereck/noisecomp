@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineEdit;
+package de.schmiereck.noiseComp.swingView;
 
 /**
  * <p>

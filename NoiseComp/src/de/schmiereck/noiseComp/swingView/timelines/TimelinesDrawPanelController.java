@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.timelines;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+
 /**
  * <p>
  * 	Timelines Draw-Panel Controller.
@@ -18,7 +20,17 @@ public class TimelinesDrawPanelController
 	
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
-	private TimelinesDrawPanelView timelinesDrawPanelView;
+	final private TimelinesDrawPanelView timelinesDrawPanelView;
+	
+	private final ModelPropertyChangedListener timelineGeneratorModelChangedListener =
+	 	new ModelPropertyChangedListener()
+ 	{
+		@Override
+		public void notifyModelPropertyChanged()
+		{
+			timelinesDrawPanelView.repaint();
+		}
+ 	};
 	
 	//**********************************************************************************************
 	// Functions:
@@ -83,5 +95,9 @@ public class TimelinesDrawPanelController
 	public void addTimelineGeneratorModel(TimelineGeneratorModel timelineGeneratorModel)
 	{
 		this.timelinesDrawPanelModel.addTimelineGeneratorModel(timelineGeneratorModel);
+		
+		timelineGeneratorModel.getNameChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
+		timelineGeneratorModel.getStartTimePosChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
+		timelineGeneratorModel.getEndTimePosChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
 	}
 }

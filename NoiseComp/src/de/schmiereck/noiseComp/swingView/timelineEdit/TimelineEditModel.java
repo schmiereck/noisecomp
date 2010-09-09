@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+
 
 /**
  * <p>
@@ -25,7 +27,7 @@ public class TimelineEditModel
 	/**
 	 * {@link #generatorName} changed listeners.
 	 */
-	private ModelPropertyChangedNotifier generatorNameChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier generatorNameChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	/**
 	 * Generator StartTimePos.
@@ -35,7 +37,7 @@ public class TimelineEditModel
 	/**
 	 * {@link #generatorStartTimePos} changed listeners.
 	 */
-	private ModelPropertyChangedNotifier generatorStartTimePosChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier generatorStartTimePosChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	/**
 	 * Generator EndTimePos.
@@ -45,7 +47,7 @@ public class TimelineEditModel
 	/**
 	 * {@link #generatorEndTimePos} changed listeners.
 	 */
-	private ModelPropertyChangedNotifier generatorEndTimePosChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier generatorEndTimePosChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//**********************************************************************************************
 	// Functions:

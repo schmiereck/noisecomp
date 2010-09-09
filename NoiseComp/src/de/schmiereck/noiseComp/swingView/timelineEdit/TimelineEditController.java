@@ -112,6 +112,8 @@ public class TimelineEditController
 						timelineGeneratorModel.setName(timelineEditView.getGeneratorNameTextField().getText());
 						timelineGeneratorModel.setStartTimePos(Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText()));
 						timelineGeneratorModel.setEndTimePos(Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText()));
+						
+						// TODO Update Generator.
 					}
 				}
 		 	}

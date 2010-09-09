@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+
 /**
  * <p>
  * 	Timeline-Edit View.
