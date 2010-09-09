@@ -10,6 +10,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.appView.DoEditModuleListener;
+import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
@@ -29,27 +30,35 @@ public class AppController
 	//**********************************************************************************************
 	// Fields:
 
-	private TimelinesScrollPanelController timelinesScrollPanelController;
+	/**
+	 * Modul-Edit Controller.
+	 */
+	private final ModulEditController modulEditController;
+	
+	/**
+	 * Timelines Scroll-Panel Controller.
+	 */
+	private final TimelinesScrollPanelController timelinesScrollPanelController;
 	
 	/**
 	 * Timelines Draw-Panel Controller.
 	 */
-	private TimelinesDrawPanelController timelinesDrawPanelController;
+	private final TimelinesDrawPanelController timelinesDrawPanelController;
 	
 	/**
 	 * Timeline-Edit Controller.
 	 */
-	private TimelineEditController timelineEditController;
+	private final TimelineEditController timelineEditController;
 	
 	/**
 	 * App Model
 	 */
-	private AppModel appModel;
+	private final AppModel appModel;
 	
 	/**
 	 * App View
 	 */
-	private AppView appView;
+	private final AppView appView;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -69,6 +78,11 @@ public class AppController
 		this.appView.setSize(800, 600);
 		this.appView.setLocationRelativeTo(null);
 		this.appView.setVisible(true);
+		
+		//------------------------------------------------------------------------------------------
+		this.modulEditController = new ModulEditController(this);
+		
+		this.appView.setModulEditController(this.modulEditController.getModulEditView());
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesScrollPanelController = new TimelinesScrollPanelController();

@@ -28,17 +28,17 @@ public class TimelineEditController
 	/**
 	 * Timeline-Edit View.
 	 */
-	private TimelineEditView	timelineEditView;
+	private final TimelineEditView	timelineEditView;
 
 	/**
 	 * Timeline-Edit Model.
 	 */
-	private TimelineEditModel	timelineEditModel;
+	private final TimelineEditModel	timelineEditModel;
 
 	/**
 	 * Timelines-Draw-Panel Model.
 	 */
-	private TimelinesDrawPanelModel timelinesDrawPanelModel;
+	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	//**********************************************************************************************
 	// Functions:
