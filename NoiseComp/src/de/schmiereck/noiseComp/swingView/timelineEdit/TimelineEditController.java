@@ -3,6 +3,9 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelines.SelectedTimelineChangedListenerInterface;
@@ -22,10 +25,19 @@ public class TimelineEditController
 	//**********************************************************************************************
 	// Fields:
 
+	/**
+	 * Timeline-Edit View.
+	 */
 	private TimelineEditView	timelineEditView;
 
+	/**
+	 * Timeline-Edit Model.
+	 */
 	private TimelineEditModel	timelineEditModel;
 
+	/**
+	 * Timelines-Draw-Panel Model.
+	 */
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	//**********************************************************************************************
@@ -56,19 +68,54 @@ public class TimelineEditController
 				@Override
 				public void selectedTimelineChanged()
 				{
+					String generatorName;
+					Float generatorStartTimePos;
+					Float generatorEndTimePos;
+
 					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
 					
-					String generatorName = timelineGeneratorModel.getGeneratorName();
-					
-					Generator generator = appController.retrieveGeneratorOfEditedModul(generatorName);
-					
-					timelineEditModel.setGeneratorName(generator.getName());
-					timelineEditModel.setGeneratorStartTimePos(generator.getStartTimePos());
-					timelineEditModel.setGeneratorEndTimePos(generator.getEndTimePos());
+					if (timelineGeneratorModel != null)
+					{
+						Generator generator = 
+							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
+						
+						generatorName = generator.getName();
+						generatorStartTimePos = generator.getStartTimePos();
+						generatorEndTimePos = generator.getEndTimePos();
+					}
+					else
+					{
+						generatorName = null;
+						generatorStartTimePos = null;
+						generatorEndTimePos = null;
+					}
+
+					timelineEditModel.setGeneratorName(generatorName);
+					timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
+					timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
 				}
 		 	}
 		);
 		
+		//------------------------------------------------------------------------------------------
+		this.timelineEditView.getUpdateButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+					
+					if (timelineGeneratorModel != null)
+					{
+						timelineGeneratorModel.setName(timelineEditView.getGeneratorNameTextField().getText());
+						timelineGeneratorModel.setStartTimePos(Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText()));
+						timelineGeneratorModel.setEndTimePos(Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText()));
+					}
+				}
+		 	}
+		);
 		//==========================================================================================
 	}
 

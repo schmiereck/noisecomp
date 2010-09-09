@@ -13,7 +13,6 @@ import de.schmiereck.noiseComp.swingView.appView.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesScrollPanelController;
 
 

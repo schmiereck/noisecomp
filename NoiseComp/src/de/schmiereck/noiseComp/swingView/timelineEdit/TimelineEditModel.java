@@ -18,7 +18,7 @@ public class TimelineEditModel
 	// Fields:
 
 	/**
-	 * Genaror Name.
+	 * Generator Name.
 	 */
 	private String generatorName = null;
 
@@ -27,6 +27,9 @@ public class TimelineEditModel
 	 */
 	private ModelPropertyChangedNotifier generatorNameChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	/**
+	 * Generator StartTimePos.
+	 */
 	private Float generatorStartTimePos = null;
 
 	/**
@@ -34,6 +37,9 @@ public class TimelineEditModel
 	 */
 	private ModelPropertyChangedNotifier generatorStartTimePosChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	/**
+	 * Generator EndTimePos.
+	 */
 	private Float generatorEndTimePos = null;
 
 	/**

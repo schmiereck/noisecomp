@@ -108,7 +108,7 @@ implements Scrollable//, MouseMotionListener
 					
 					TimelineGeneratorModel timelineGeneratorModel = searchGenerator(point2D);
 					
-					if (timelineGeneratorModel != null)
+					//if (timelineGeneratorModel != null)
 					{
 						notifyDoTimelineSelectedListeners(timelineGeneratorModel);
 					}

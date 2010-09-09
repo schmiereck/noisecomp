@@ -29,6 +29,21 @@ import javax.swing.table.TableModel;
 public class TimelineEditView
 extends JPanel
 {
+	//**********************************************************************************************
+	// Fields:
+
+	private final JTextField generatorNameTextField;
+	private final JTextField generatorStartTimePosTextField;
+	private final JTextField generatorEndTimePosTextField;
+	
+	/**
+	 * Update Button.
+	 */
+	private JButton updateButton;
+	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
@@ -43,7 +58,7 @@ extends JPanel
 		this.setBorder(BorderFactory.createTitledBorder("Generator:"));
 		
 		{
-			final JTextField textField = this.addTextField(0, "Name:");
+			this.generatorNameTextField = this.addTextField(0, "Name:");
 			
 			timelineEditModel.getGeneratorNameChangedNotifier().addModelPropertyChangedListener
 			(
@@ -52,13 +67,13 @@ extends JPanel
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						textField.setText(timelineEditModel.getGeneratorName());
+						generatorNameTextField.setText(timelineEditModel.getGeneratorName());
 					}
 			 	}
 			);
 		}
 		{
-			final JTextField textField = this.addTextField(1, "Start-Time:");
+			this.generatorStartTimePosTextField = this.addTextField(1, "Start-Time:");
 			
 			timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
 			(
@@ -67,13 +82,13 @@ extends JPanel
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						textField.setText(Float.toString(timelineEditModel.getGeneratorStartTimePos()));
+						generatorStartTimePosTextField.setText(Float.toString(timelineEditModel.getGeneratorStartTimePos()));
 					}
 			 	}
 			);
 		}
 		{
-			final JTextField textField = this.addTextField(2, "End-Time:");
+			this.generatorEndTimePosTextField = this.addTextField(2, "End-Time:");
 			
 			timelineEditModel.getGeneratorEndTimePosChangedNotifier().addModelPropertyChangedListener
 			(
@@ -82,7 +97,7 @@ extends JPanel
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						textField.setText(Float.toString(timelineEditModel.getGeneratorEndTimePos()));
+						generatorEndTimePosTextField.setText(Float.toString(timelineEditModel.getGeneratorEndTimePos()));
 					}
 			 	}
 			);
@@ -132,15 +147,16 @@ extends JPanel
 			this.addField(3, scrollpane);
 		}
 		{
-			JButton button = new JButton("Update");
+			this.updateButton = new JButton("Update");
 			
-			this.addField(4, button);
+			this.addField(4, this.updateButton);
 		}
 		//==========================================================================================
 	}
 
 	/**
 	 * @param labelText
+	 * 			is the Label Text.
 	 * @return
 	 */
 	private JTextField addTextField(int gridy, String labelText)
@@ -197,5 +213,41 @@ extends JPanel
 		this.add(new JLabel(labelText), constraints);
 		
 		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #updateButton}.
+	 */
+	public JButton getUpdateButton()
+	{
+		return this.updateButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorEndTimePosTextField}.
+	 */
+	public JTextField getGeneratorEndTimePosTextField()
+	{
+		return this.generatorEndTimePosTextField;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorNameTextField}.
+	 */
+	public JTextField getGeneratorNameTextField()
+	{
+		return this.generatorNameTextField;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorStartTimePosTextField}.
+	 */
+	public JTextField getGeneratorStartTimePosTextField()
+	{
+		return this.generatorStartTimePosTextField;
 	}
 }

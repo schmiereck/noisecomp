@@ -20,7 +20,7 @@ public class TimelineGeneratorModel
 	/**
 	 * Name of Generator.
 	 */
-	private String generatorName;
+	private String name;
 	
 	/**
 	 * Start time position in milli seconds.
@@ -38,7 +38,7 @@ public class TimelineGeneratorModel
 	/**
 	 * Constructor.
 	 * 
-	 * @param generatorName
+	 * @param name
 	 * 			is the Name of Generator.
 	 * @param startTimePos
 	 * 			is the Start time position in milli seconds.
@@ -48,7 +48,7 @@ public class TimelineGeneratorModel
 	public TimelineGeneratorModel(String generatorName,
 	                              float startTimePos, float endTimePos)
 	{
-		this.generatorName = generatorName;
+		this.name = generatorName;
 		this.startTimePos = startTimePos;
 		this.endTimePos = endTimePos;
 	}
@@ -91,20 +91,20 @@ public class TimelineGeneratorModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #generatorName}.
+	 * 			returns the {@link #name}.
 	 */
-	public String getGeneratorName()
+	public String getName()
 	{
-		return this.generatorName;
+		return this.name;
 	}
 
 	/**
-	 * @param generatorName 
-	 * 			to set {@link #generatorName}.
+	 * @param name 
+	 * 			to set {@link #name}.
 	 */
-	public void setGeneratorName(String generatorName)
+	public void setName(String generatorName)
 	{
-		this.generatorName = generatorName;
+		this.name = generatorName;
 	}
 	
 }
