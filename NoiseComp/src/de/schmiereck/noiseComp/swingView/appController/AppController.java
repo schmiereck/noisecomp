@@ -82,7 +82,7 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		this.modulEditController = new ModulEditController(this);
 		
-		this.appView.setModulEditController(this.modulEditController.getModulEditView());
+		this.appView.setModulEditView(this.modulEditController.getModulEditView());
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesScrollPanelController = new TimelinesScrollPanelController();

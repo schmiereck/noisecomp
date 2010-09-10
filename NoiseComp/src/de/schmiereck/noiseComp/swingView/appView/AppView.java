@@ -24,6 +24,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditView;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView;
 
 /**
@@ -71,19 +72,14 @@ implements EditModuleChangedListener
 	private JSplitPane modulSplitPane;
 	
 	/**
-	 * Timeline View.
+	 * Modul-Edit Split Pane.
 	 */
-//	private TimelinesScrollPanelView timelineView;
-
+	private JSplitPane modulEditSplitPane;
+	
 	/**
 	 * Timeline-Edit Split Pane.
 	 */
 	private JSplitPane timelineSplitPane;
-
-//	/**
-//	 * Timeline-Edit Panel.
-//	 */
-//	private TimelineEditView timelineEditView = null;
 	
 	/**
 	 * Do Edit-Module Listeners.
@@ -97,22 +93,23 @@ implements EditModuleChangedListener
 	 * Constructor.
 	 * 
 	 * <pre>
-	 * .-AppView------------------------------------------------------------------------.
-	 * | .-modulSplitPane-------------------------------------------------------------. |
-	 * | | .-modulesTreeScrollPane-. .-modulSplitPane---------------------------
-	 * | | | .-modulesTree---.     | | .-modulEditPane--------------------
-	 * | | | |               |     | | |
-	 * | | | |               |     | | `-------------------------
-	 * | | | |               |     | | ,-timelineSplitPane-----------------------------. | |
-	 * | | | |               |     | | | .-TimelinesScrollPanel-. .-timelineEditView-. | | |
-	 * | | | |               |     | | | |.-TimelinesDrawPanel-.| |                  | | | |
-	 * | | | |               |     | | | ||                    || |                  | | | |
-	 * | | | |               |     | | | ||                    || |                  | | | |
-	 * | | | |               |     | | | |`--------------------´| `------------------´ | | |
-	 * | | | `--------------´      | | | `----------------------´----------------------´ | |
-	 * | | '-----------------------´ `---------------------------------------------------´ |
-	 * | `-------------------------------------------------------------------------------´ |
-	 * `-----------------------------------------------------------------------------------´
+	 * .-AppView-----------------------------------------------------------------------------.
+	 * | .-modulSplitPane------------------------------------------------------------------. |
+	 * | | .-modulesTreeScrollPane-. .-modulEditSplitPane--------------------------------. | |
+	 * | | |.-modulesTree---------.| | .-modulEditPane---------------------------------. | | | 
+	 * | | ||                     || | |                                               | | | |
+	 * | | ||                     || | `-----------------------------------------------´ | | |
+	 * | | ||                     || | ,-timelineSplitPane-----------------------------. | | |
+	 * | | ||                     || | | .-TimelinesScrollPanel-. .-timelineEditView-. | | | |
+	 * | | ||                     || | | |.-TimelinesDrawPanel-.| |                  | | | | |
+	 * | | ||                     || | | ||                    || |                  | | | | |
+	 * | | ||                     || | | ||                    || |                  | | | | |
+	 * | | ||                     || | | |`--------------------´| |                  | | | | |
+	 * | | ||                     || | | `----------------------´ `------------------´ | | | |
+	 * | | |`---------------------´| | `-----------------------------------------------´ | | | 
+	 * | | '-----------------------´ `---------------------------------------------------´ | |
+	 * | `---------------------------------------------------------------------------------´ |
+	 * `-------------------------------------------------------------------------------------´
 	 * </pre>
 	 * 
 	 * @param appModel
@@ -130,78 +127,41 @@ implements EditModuleChangedListener
 		//==========================================================================================
 		// Modul Select Panel:
 		
-		{
-			// http://download.oracle.com/javase/tutorial/uiswing/components/tree.html
-			
-			this.modulesTree = new JTree();
-			
-			this.modulesTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-
-			this.modulesTree.setCellRenderer(new DefaultTreeCellRenderer()
-			{
-				@Override
-				public Component getTreeCellRendererComponent(JTree tree, 
-															  Object value, 
-															  boolean selected,
-															  boolean expanded, 
-															  boolean leaf, 
-															  int row,
-															  boolean hasFocus)
-				{
-					// Die Originalmethode die Standardeinstellungen machen lassen
-					super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
-					
-					// Den Wert des Knotens abfragen
-					DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)value;
-					Object userObject = treeNode.getUserObject();
-					
-					if (userObject instanceof GeneratorTypeData)
-					{
-						GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
-						
-						this.setText(generatorTypeData.getGeneratorTypeName());
-					}
-					
-					return this;
-				}
-			});
-			
-			this.createNodes(this.modulesTree);
-			
-			this.modulesTreeScrollPane = new JScrollPane(this.modulesTree);
-			
-			this.pack();
-		}
+		this.modulesTree = createModulesTree();
 		
-		{
-//			//--------------------------------------------------------------------------------------
-//			// Timeline View:
-//			
-//			this.timelineView = new TimelinesScrollPanelView(timelinesDrawPanelView);
-	
-//			//--------------------------------------------------------------------------------------
-//			// Timeline Edit Panel:
-//			
-//			this.timelineEditView = new TimelineEditView();
-//			
-			//--------------------------------------------------------------------------------------
-			// Timeline Split Pane:
+		this.modulesTreeScrollPane = new JScrollPane(this.modulesTree);
+		
+		this.pack();
+
+		//------------------------------------------------------------------------------------------
+		// Timeline Split-Pane:
+		
+		this.timelineSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 			
-			this.timelineSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-			
-			this.timelineSplitPane.setOneTouchExpandable(true);
-		}
+		this.timelineSplitPane.setOneTouchExpandable(true);
 		
 		//------------------------------------------------------------------------------------------
-		this.modulSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
-											 this.modulesTreeScrollPane, //this.modulSelectPanel,
-											 this.timelineSplitPane);
-		  
-		this.modulSplitPane.setOneTouchExpandable(true);
-
-		this.add(this.modulSplitPane);
+		// Modul-Edit Split-Pane:
 		
-		this.modulSplitPane.setDividerLocation(200);
+		this.modulEditSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		
+		this.modulEditSplitPane.setOneTouchExpandable(true);
+		
+//		this.modulEditSplitPane.setTopComponent(new JLabel("modulEditPane"));
+		this.modulEditSplitPane.setBottomComponent(this.timelineSplitPane);
+		
+		//------------------------------------------------------------------------------------------
+		// Modul Split-Pane:
+		
+		this.modulSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		
+		this.modulSplitPane.setOneTouchExpandable(true);
+		this.modulSplitPane.setDividerLocation(150);
+		
+		this.add(this.modulSplitPane);
+
+		this.modulSplitPane.setLeftComponent(this.modulesTreeScrollPane);
+		this.modulSplitPane.setRightComponent(this.modulEditSplitPane);
 		
 		//------------------------------------------------------------------------------------------
 		{
@@ -219,19 +179,65 @@ implements EditModuleChangedListener
 		//==========================================================================================
 	}
 
+	/**
+	 * http://download.oracle.com/javase/tutorial/uiswing/components/tree.html
+	 * 
+	 * @return
+	 * 			the module tree.
+	 */
+	private static JTree createModulesTree()
+	{
+		JTree modulesTree = new JTree();
+		
+		modulesTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+
+		modulesTree.setCellRenderer(new DefaultTreeCellRenderer()
+		{
+			@Override
+			public Component getTreeCellRendererComponent(JTree tree, 
+														  Object value, 
+														  boolean selected,
+														  boolean expanded, 
+														  boolean leaf, 
+														  int row,
+														  boolean hasFocus)
+			{
+				// Die Originalmethode die Standardeinstellungen machen lassen
+				super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+				
+				// Den Wert des Knotens abfragen
+				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)value;
+				Object userObject = treeNode.getUserObject();
+				
+				if (userObject instanceof GeneratorTypeData)
+				{
+					GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
+					
+					this.setText(generatorTypeData.getGeneratorTypeName());
+				}
+				
+				return this;
+			}
+		});
+		
+		createNodes(modulesTree);
+		
+		return modulesTree;
+	}
+
 	public void setTimelineComponent(Component timelineComponent)
 	{
 		this.timelineSplitPane.setLeftComponent(timelineComponent);
-		
-		this.timelineSplitPane.setDividerLocation(400);
-//		this.timelineSplitPane.revalidate();
+
+//		this.timelineSplitPane.setDividerLocation(timelineComponent.getPreferredSize().width);
+		this.timelineSplitPane.setDividerLocation(350);
 	}
 	
 	/**
 	 * @param tree
 	 * 			is the Tree.
 	 */
-	private void createNodes(JTree tree)
+	private static void createNodes(JTree tree)
 	{
 		DefaultMutableTreeNode modulesTreeNode = new DefaultMutableTreeNode("Modules");
 
@@ -317,8 +323,6 @@ implements EditModuleChangedListener
 	 */
 	public void notifyDoEditGeneratorListeners(GeneratorTypeData generatorTypeData)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -329,15 +333,6 @@ implements EditModuleChangedListener
 	{
 	}
 
-//	/**
-//	 * @return 
-//	 * 			returns the {@link #timelineEditView}.
-//	 */
-//	public TimelineEditView getTimelineEditView()
-//	{
-//		return this.timelineEditView;
-//	}
-
 	/**
 	 * @param timelineEditView 
 	 * 			to set {@link #timelineEditView}.
@@ -347,5 +342,14 @@ implements EditModuleChangedListener
 //		this.timelineEditView = timelineEditView;
 		
 		this.timelineSplitPane.setRightComponent(timelineEditView);
+	}
+
+	/**
+	 * @param modulEditView 
+	 * 			to set {@link #modulEditView}.
+	 */
+	public void setModulEditView(ModulEditView modulEditView)
+	{
+		this.modulEditSplitPane.setTopComponent(modulEditView);
 	}
 }
