@@ -80,7 +80,8 @@ public class AppController
 		this.appView.setVisible(true);
 		
 		//------------------------------------------------------------------------------------------
-		this.modulEditController = new ModulEditController(this);
+		this.modulEditController = new ModulEditController(this,
+		                                                   this.appModel);
 		
 		this.appView.setModulEditView(this.modulEditController.getModulEditView());
 		

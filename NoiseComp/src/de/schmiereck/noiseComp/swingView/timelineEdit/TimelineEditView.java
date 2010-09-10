@@ -4,14 +4,10 @@
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -20,6 +16,7 @@ import javax.swing.table.TableModel;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
+import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
 
 /**
  * <p>
@@ -30,7 +27,7 @@ import de.schmiereck.noiseComp.swingView.OutputUtils;
  * @version <p>07.09.2010:	created, smk</p>
  */
 public class TimelineEditView
-extends JPanel
+extends BasicEditView
 {
 	//**********************************************************************************************
 	// Fields:
@@ -154,67 +151,6 @@ extends JPanel
 			
 			this.addField(4, this.updateButton);
 		}
-		//==========================================================================================
-	}
-
-	/**
-	 * @param labelText
-	 * 			is the Label Text.
-	 * @return
-	 */
-	private JTextField addTextField(int gridy, String labelText)
-	{
-		//==========================================================================================
-		this.addLabel(gridy, labelText);
-
-		//------------------------------------------------------------------------------------------
-		JTextField textField = new JTextField(30);
-
-		this.addField(gridy, textField);
-		
-		//==========================================================================================
-		return textField;
-	}
-
-	/**
-	 * @param gridy
-	 * @param component
-	 */
-	private void addField(int gridy, JComponent component)
-	{
-		GridBagConstraints constraints = new GridBagConstraints();
-		
-		constraints.gridx = 1;
-		constraints.gridy = gridy;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		constraints.weightx = 1.0D;
-		constraints.weighty = 0.0D;
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-
-		this.add(component, constraints);
-	}
-
-	/**
-	 * @param gridy
-	 * @param labelText
-	 */
-	private void addLabel(int gridy, String labelText)
-	{
-		//==========================================================================================
-		GridBagConstraints constraints = new GridBagConstraints();
-		
-		constraints.gridx = 0;
-		constraints.gridy = gridy;
-		constraints.gridwidth = 1;
-		constraints.gridheight = 1;
-		constraints.weightx = 0.1D;
-		constraints.weighty = 0.0D;
-		constraints.anchor = GridBagConstraints.EAST;
-		
-		this.add(new JLabel(labelText), constraints);
-		
 		//==========================================================================================
 	}
 

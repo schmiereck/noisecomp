@@ -84,6 +84,15 @@ public class TimelineEditModel
 
 	/**
 	 * @return 
+	 * 			returns the {@link #generatorNameChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getGeneratorNameChangedNotifier()
+	{
+		return this.generatorNameChangedNotifier;
+	}
+
+	/**
+	 * @return 
 	 * 			returns the {@link #generatorStartTimePos}.
 	 */
 	public Float getGeneratorStartTimePos()
@@ -122,15 +131,6 @@ public class TimelineEditModel
 		
 		// Notify listeners.
 		this.generatorEndTimePosChangedNotifier.notifyModelPropertyChangedListeners();
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #generatorNameChangedNotifier}.
-	 */
-	public ModelPropertyChangedNotifier getGeneratorNameChangedNotifier()
-	{
-		return this.generatorNameChangedNotifier;
 	}
 
 	/**

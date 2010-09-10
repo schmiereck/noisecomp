@@ -3,7 +3,11 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
-import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.OutputUtils;
+import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
 
 /**
  * <p>
@@ -14,15 +18,17 @@ import javax.swing.JPanel;
  * @version <p>09.09.2010:	created, smk</p>
  */
 public class ModulEditView
-extends JPanel
+extends BasicEditView
 {
 	//**********************************************************************************************
 	// Fields:
-
+	
 	/**
 	 * Modul-Edit Model.
 	 */
 	private ModulEditModel	modulEditModel;
+
+	private final JTextField modulNameTextField;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -32,10 +38,27 @@ extends JPanel
 	 * 
 	 * @param modulEditModel
 	 */
-	public ModulEditView(ModulEditModel modulEditModel)
+	public ModulEditView(final ModulEditModel modulEditModel)
 	{
 		//==========================================================================================
 		this.modulEditModel = modulEditModel;
+		
+		//------------------------------------------------------------------------------------------
+		{
+			this.modulNameTextField = this.addTextField(0, "Modul-Name:");
+			
+			this.modulEditModel.getModulNameChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						modulNameTextField.setText(OutputUtils.makeStringText(modulEditModel.getModulName()));
+					}
+			 	}
+			);
+		}
 		
 		//==========================================================================================
 	}

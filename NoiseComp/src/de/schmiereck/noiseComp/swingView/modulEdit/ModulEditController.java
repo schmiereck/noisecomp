@@ -3,7 +3,12 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
+import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.appModel.AppModel;
+import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 
 
 /**
@@ -38,11 +43,38 @@ public class ModulEditController
 	 * @param timelinesDrawPanelModel 
 	 * 			is the App Controller.
 	 */
-	public ModulEditController(final AppController appController)
+	public ModulEditController(final AppController appController,
+	                           final AppModel appModel)
 	{
 		//==========================================================================================
 		this.modulEditModel = new ModulEditModel();
 		this.modulEditView = new ModulEditView(this.modulEditModel);
+		
+		//------------------------------------------------------------------------------------------
+		appModel.addEditModuleChangedListener
+		(
+		 	new EditModuleChangedListener()
+		 	{
+				@Override
+				public void notifyEditModulChanged(AppModel appModel)
+				{
+					String generatorTypeName;
+
+					ModulGeneratorTypeData modulGeneratorTypeData = appModel.getEditedModulGeneratorTypeData();
+					
+					if (modulGeneratorTypeData != null)
+					{
+						generatorTypeName = modulGeneratorTypeData.getGeneratorTypeName();
+					}
+					else
+					{
+						generatorTypeName = null;
+					}
+
+					modulEditModel.setModulName(generatorTypeName);
+				}
+		 	}
+		);
 		
 		//==========================================================================================
 	}

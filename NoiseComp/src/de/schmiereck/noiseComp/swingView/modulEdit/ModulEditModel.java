@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+
 /**
  * <p>
  * 	Modul-Edit Model.
@@ -16,7 +18,47 @@ public class ModulEditModel
 	//**********************************************************************************************
 	// Fields:
 
+	/**
+	 * Generator Name.
+	 */
+	private String modulName = null;
+
+	/**
+	 * {@link #modulName} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier modulNameChangedNotifier = new ModelPropertyChangedNotifier();
+
 	//**********************************************************************************************
 	// Functions:
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulName}.
+	 */
+	public String getModulName()
+	{
+		return this.modulName;
+	}
+
+	/**
+	 * @param modulName 
+	 * 			to set {@link #modulName}.
+	 */
+	public void setModulName(String modulName)
+	{
+		this.modulName = modulName;
+		
+		// Notify listeners.
+		this.modulNameChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulNameChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getModulNameChangedNotifier()
+	{
+		return this.modulNameChangedNotifier;
+	}
 
 }
