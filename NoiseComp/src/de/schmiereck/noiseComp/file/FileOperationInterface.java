@@ -4,7 +4,7 @@ package de.schmiereck.noiseComp.file;
  */
 /**
  * <p>
- * 	TODO docu type
+ * 	File-Operation Interface.
  * </p>
  * 
  * @author smk

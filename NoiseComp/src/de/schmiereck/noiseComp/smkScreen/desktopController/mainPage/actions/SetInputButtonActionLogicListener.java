@@ -7,7 +7,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogi
 import de.schmiereck.noiseComp.smkScreen.desktopController.mainPage.MainPageLogic;
 
 /**
- * TODO docu
+ * Set-Input-Button Action-Logic Listener.
  *
  * @author smk
  * @version 22.02.2004

@@ -8,7 +8,7 @@ import java.net.URL;
  */
 /**
  * <p>
- * 	TODO docu type
+ * 	Wave-Resource Loader.
  * </p>
  * 
  * @author smk

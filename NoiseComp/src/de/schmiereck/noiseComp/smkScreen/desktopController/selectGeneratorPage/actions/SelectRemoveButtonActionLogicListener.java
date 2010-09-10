@@ -9,7 +9,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogi
 import de.schmiereck.noiseComp.smkScreen.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 
 /**
- * TODO docu
+ * Select-Remove-Button Action-Logic Listener.
  *
  * @author smk
  * @version <p>06.03.2004: created, smk</p>

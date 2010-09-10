@@ -5,7 +5,7 @@ import org.w3c.dom.Node;
 import de.schmiereck.noiseComp.generator.Generator;
 
 /**
- * TODO docu
+ * Load-File-Generator Node Data.
  *
  * @author smk
  * @version 21.02.2004

@@ -23,7 +23,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.EditGeneratorChangedL
 import de.schmiereck.screenTools.controller.ControllerLogic;
 
 /**
- * TODO docu
+ * Main Page Logic.
  *
  * @author smk
  * @version <p>12.04.2004: created, smk</p>

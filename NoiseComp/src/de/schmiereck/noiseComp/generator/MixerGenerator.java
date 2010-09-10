@@ -3,7 +3,7 @@ package de.schmiereck.noiseComp.generator;
 import java.util.Iterator;
 
 /**
- * TODO docu
+ * Mixer Generator.
  *
  * @author smk
  * @version 22.01.2004

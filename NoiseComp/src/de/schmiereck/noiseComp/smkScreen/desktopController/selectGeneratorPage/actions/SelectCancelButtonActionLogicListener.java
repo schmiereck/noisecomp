@@ -7,7 +7,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogi
 import de.schmiereck.noiseComp.smkScreen.desktopController.selectGeneratorPage.SelectGeneratorPageData;
 
 /**
- * TODO docu
+ * Select-Cancel-Button Action-Logic Listener.
  *
  * @author smk
  * @version 21.02.2004

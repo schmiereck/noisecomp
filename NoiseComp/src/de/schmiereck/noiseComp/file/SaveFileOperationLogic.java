@@ -21,7 +21,7 @@ import de.schmiereck.xmlTools.XMLRuntimeException;
  */
 /**
  * <p>
- * 	TODO docu type
+ * 	Save-File-Operation Logic.
  * </p>
  * 
  * @author smk

@@ -5,7 +5,7 @@ import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 
 /**
- * TODO docu
+ * Text-Widget Data.
  *
  * @author smk
  * @version <p>06.03.2004: created, smk</p>

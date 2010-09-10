@@ -10,7 +10,7 @@ import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
- * TODO docu
+ * Sound-Buffer-Manager Test.
  *
  * @author smk
  * @version <p>31.05.2004: created, smk</p>

@@ -6,7 +6,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerData
 import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogic;
 
 /**
- * TODO docu
+ * Pause-Button Action-Logic Listener.
  *
  * @author smk
  * @version <p>06.03.2004: created, smk</p>

@@ -5,7 +5,7 @@ import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
 /**
- * TODO docu
+ * Pane Data.
  *
  * @author smk
  * @version 26.01.2004

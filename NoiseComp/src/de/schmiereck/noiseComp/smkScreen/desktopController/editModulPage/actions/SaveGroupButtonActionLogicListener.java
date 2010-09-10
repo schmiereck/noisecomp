@@ -12,7 +12,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.editModulPage.EditMod
 import de.schmiereck.noiseComp.smkScreen.desktopController.mainPage.MainPageLogic;
 
 /**
- * TODO docu
+ * Save-Group-Button Action-Logic Listener.
  *
  * @author smk
  * @version <p>22.02.2004: created, smk</p>

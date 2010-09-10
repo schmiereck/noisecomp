@@ -8,7 +8,7 @@ import de.schmiereck.noiseComp.smkScreen.desctopPage.DesktopColors;
 import de.schmiereck.screenTools.graphic.ScreenGraficInterface;
 
 /**
- * TODO docu
+ * Select Graphic.
  *
  * @author smk
  * @version 21.02.2004

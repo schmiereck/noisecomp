@@ -7,7 +7,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogi
 import de.schmiereck.noiseComp.smkScreen.desktopController.mainPage.MainPageLogic;
 
 /**
- * TODO docu
+ * Remove-Generator-Button Action-Logic Listener.
  *
  * @author smk
  * @version <p>22.02.2004: created, smk</p>

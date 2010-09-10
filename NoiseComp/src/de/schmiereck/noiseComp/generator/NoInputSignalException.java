@@ -4,7 +4,7 @@ package de.schmiereck.noiseComp.generator;
  */
 /**
  * <p>
- * 	TODO docu type
+ * 	No-Input-Signal Exception.
  * </p>
  * 
  * @author smk

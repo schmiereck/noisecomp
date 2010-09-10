@@ -3,7 +3,7 @@ package de.schmiereck.noiseComp.smkScreen.desctopPage;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.MainActionException;
 
 /**
- * TODO docu
+ * Submit-Widget Listener Interface.
  *
  * @author smk
  * @version 21.02.2004

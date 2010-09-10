@@ -95,7 +95,7 @@ implements GraficInputListener
 	public void mouseMoved(MouseEvent e)
 	{
 		int posX = (int)(e.getX() * this.graphicScaleX) - this.graphicCenterX;
-		int posY = (int)(e.getY() * this.graphicScaleY) - this.graphicCenterY;//XXX
+		int posY = (int)(e.getY() * this.graphicScaleY) - this.graphicCenterY;
 		
 		this.gameControllerLogic.movePointer(posX, posY);
 	}
