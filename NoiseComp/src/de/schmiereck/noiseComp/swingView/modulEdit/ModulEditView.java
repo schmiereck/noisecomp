@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
+import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
@@ -29,6 +30,11 @@ extends BasicEditView
 	private ModulEditModel	modulEditModel;
 
 	private final JTextField modulNameTextField;
+	
+	/**
+	 * Update Button.
+	 */
+	private JButton updateButton;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -58,6 +64,12 @@ extends BasicEditView
 					}
 			 	}
 			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.updateButton = new JButton("Update");
+			
+			this.addField(1, this.updateButton);
 		}
 		
 		//==========================================================================================

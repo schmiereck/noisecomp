@@ -14,6 +14,7 @@ import de.schmiereck.noiseComp.generator.CutGenerator;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.RectangleGenerator;
@@ -108,11 +109,13 @@ public class StartupService
 	/**
 	 * Creates a demo list of generators with different types.
 	 * It's only for developing.
-	 * @param generatorTypesData
+	 * 
+	 * @param frameRate
+	 * 			is the frame rate.
+	 * 
 	 */
 	public static 
-	OutputGenerator createDemoGenerators(float frameRate, 
-	                                     ModulGeneratorTypeData mainModulTypeData)
+	ModulGeneratorTypeData createDemoGenerators(float frameRate)
 	{
 		//==========================================================================================
 		SoundService soundService = SoundService.getInstance();
@@ -122,6 +125,14 @@ public class StartupService
 		
 		//Generators generators = mainModulTypeData.getGenerators();
 
+		final ModulGeneratorTypeData mainModulTypeData = ModulGenerator.createModulGeneratorTypeData();
+
+		mainModulTypeData.setIsMainModulGeneratorType(true);
+		
+		mainModulTypeData.setGeneratorTypeName("Main-Modul");
+
+		soundService.addGeneratorType(mainModulTypeData);
+		
 		//---------------------------------
 		FaderGenerator faderInGenerator;
 		{
@@ -224,6 +235,6 @@ public class StartupService
 			
 			mainModulTypeData.addGenerator(outputGenerator);
 		}		
-		return outputGenerator;
+		return mainModulTypeData;
 	}
 }

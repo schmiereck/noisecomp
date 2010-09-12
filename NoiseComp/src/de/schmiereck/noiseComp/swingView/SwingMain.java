@@ -6,10 +6,8 @@ package de.schmiereck.noiseComp.swingView;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.UIManager;
 
-import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
-import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
@@ -41,19 +39,7 @@ public class SwingMain
 	public static void main(String[] args)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
 		StartupService.createBaseGeneratorTypes();
-		
-		// new ModulGeneratorTypeData(null, null, null);
-		final ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
-
-		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
-		
-		mainModulGeneratorTypeData.setGeneratorTypeName("Swing-Main-Modul");
-
-		soundService.addGeneratorType(mainModulGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		// Setup Sound:
@@ -66,10 +52,11 @@ public class SwingMain
 		SoundData soundData = new SoundData(line, soundSourceLogic);
 		
 		//------------------------------------------------------------------------------------------
-		OutputGenerator outputGenerator = 
-			StartupService.createDemoGenerators(soundData.getFrameRate(), 
-												mainModulGeneratorTypeData);
+		final ModulGeneratorTypeData mainModulGeneratorTypeData = 
+			StartupService.createDemoGenerators(soundData.getFrameRate());
 
+		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
+		
 		soundSourceLogic.setOutputGenerator(outputGenerator);
 		
 		//------------------------------------------------------------------------------------------

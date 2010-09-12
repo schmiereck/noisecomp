@@ -3,6 +3,7 @@ package de.schmiereck.noiseComp.smkScreen;
 import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogic;
@@ -73,7 +74,7 @@ public class MainController
 	private ZoomInButtonActionLogicListener zoomInButtonActionLogicListener;
 	private ZoomOutButtonActionLogicListener zoomOutButtonActionLogicListener;
 	
-	public MainController(ModulGeneratorTypeData mainModulGeneratorTypeData,
+	public MainController(//ModulGeneratorTypeData mainModulGeneratorTypeData,
 	                      GraphicMediator graphicMediator)
 	{
 		//======================================================================
@@ -85,6 +86,12 @@ public class MainController
 		SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
 		
 		this.soundData = new SoundData(line, soundSourceLogic);
+		
+		//----------------------------------------------------------------------
+		ModulGeneratorTypeData mainModulGeneratorTypeData = 
+			StartupService.createDemoGenerators(soundData.getFrameRate());
+
+		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
 		
 		//======================================================================
 		// Setup Desktop:
@@ -115,8 +122,8 @@ public class MainController
 														  this.waiter, 
 														  playerName);
 		
-		StartupService.createDemoGenerators(soundData.getFrameRate(), 
-		                                    mainModulGeneratorTypeData);
+		StartupService.createDemoGenerators(soundData.getFrameRate()); 
+		                                    //mainModulGeneratorTypeData);
 		
 		this.controllerLogic.selectModulGeneratorToEdit(mainModulGeneratorTypeData);
 		

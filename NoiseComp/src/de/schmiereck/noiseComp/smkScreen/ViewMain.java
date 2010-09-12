@@ -1,7 +1,5 @@
 package de.schmiereck.noiseComp.smkScreen;
 
-import de.schmiereck.noiseComp.generator.ModulGenerator;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.screenTools.Runner;
@@ -36,19 +34,19 @@ public class ViewMain
 		//==========================================================================================
 		StartupService.createBaseGeneratorTypes();
 		
-		// new ModulGeneratorTypeData(null, null, null);
-		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
-
-		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
-		
-		mainModulGeneratorTypeData.setGeneratorTypeName("Main-Modul");
-
-		soundService.addGeneratorType(mainModulGeneratorTypeData);
+//		// new ModulGeneratorTypeData(null, null, null);
+//		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+//
+//		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
+//		
+//		mainModulGeneratorTypeData.setGeneratorTypeName("Main-Modul");
+//
+//		soundService.addGeneratorType(mainModulGeneratorTypeData);
 		
 		//==========================================================================================
 		GraphicMediator graphicMediator = new GraphicMediator();
 		
-		MainController mainController = new MainController(mainModulGeneratorTypeData,
+		MainController mainController = new MainController(//mainModulGeneratorTypeData,
 		                                                   graphicMediator);
 		
 		MainView mainView;

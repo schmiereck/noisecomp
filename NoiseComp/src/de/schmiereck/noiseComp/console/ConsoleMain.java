@@ -2,7 +2,6 @@ package de.schmiereck.noiseComp.console;
 
 import javax.sound.sampled.SourceDataLine;
 
-import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.service.SoundService;
@@ -44,14 +43,14 @@ public class ConsoleMain
 		//==========================================================================================
 		StartupService.createBaseGeneratorTypes();
 		
-		// new ModulGeneratorTypeData(null, null, null);
-		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
-
-		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
-		
-		mainModulGeneratorTypeData.setGeneratorTypeName("Console-Main-Modul");
-
-		soundService.addGeneratorType(mainModulGeneratorTypeData);
+//		// new ModulGeneratorTypeData(null, null, null);
+//		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+//
+//		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
+//		
+//		mainModulGeneratorTypeData.setGeneratorTypeName("Console-Main-Modul");
+//
+//		soundService.addGeneratorType(mainModulGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		// Setup Sound:
@@ -64,12 +63,13 @@ public class ConsoleMain
 		SoundData soundData = new SoundData(line, soundSourceLogic);
 		
 		//------------------------------------------------------------------------------------------
-		OutputGenerator outputGenerator = 
-			StartupService.createDemoGenerators(soundData.getFrameRate(), 
-			                                    mainModulGeneratorTypeData);
+		ModulGeneratorTypeData mainModulGeneratorTypeData = 
+			StartupService.createDemoGenerators(soundData.getFrameRate());
 
-		soundSourceLogic.setOutputGenerator(outputGenerator);
+		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
 		
+		soundSourceLogic.setOutputGenerator(outputGenerator);
+
 		//------------------------------------------------------------------------------------------
 	
 		soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(32);
