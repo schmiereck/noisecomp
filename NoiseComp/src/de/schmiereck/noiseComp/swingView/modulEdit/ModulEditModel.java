@@ -28,6 +28,11 @@ public class ModulEditModel
 	 */
 	private final ModelPropertyChangedNotifier modulNameChangedNotifier = new ModelPropertyChangedNotifier();
 
+	/**
+	 * {@link ModulEditModel} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier modulEditModelChangedNotifier = new ModelPropertyChangedNotifier();
+
 	//**********************************************************************************************
 	// Functions:
 
@@ -50,6 +55,8 @@ public class ModulEditModel
 		
 		// Notify listeners.
 		this.modulNameChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		this.modulEditModelChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
 	/**
@@ -59,6 +66,15 @@ public class ModulEditModel
 	public ModelPropertyChangedNotifier getModulNameChangedNotifier()
 	{
 		return this.modulNameChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulEditModelChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getModulEditModelChangedNotifier()
+	{
+		return this.modulEditModelChangedNotifier;
 	}
 
 }

@@ -3,14 +3,19 @@
  */
 package de.schmiereck.noiseComp.swingView.appController;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
-import de.schmiereck.noiseComp.swingView.appView.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
+import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputsController;
+import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
+import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
@@ -31,6 +36,11 @@ public class AppController
 	// Fields:
 
 	/**
+	 * Modules Tree Controller.
+	 */
+	private final ModulesTreeController modulesTreeController;
+	
+	/**
 	 * Modul-Edit Controller.
 	 */
 	private final ModulEditController modulEditController;
@@ -49,6 +59,11 @@ public class AppController
 	 * Timeline-Edit Controller.
 	 */
 	private final TimelineEditController timelineEditController;
+	
+	/**
+	 * Modul-Inputs Controller.
+	 */
+	private final ModulInputsController modulInputsController;
 	
 	/**
 	 * App Model
@@ -80,8 +95,13 @@ public class AppController
 		this.appView.setVisible(true);
 		
 		//------------------------------------------------------------------------------------------
+		this.modulesTreeController = new ModulesTreeController(this);
+		
+		this.appView.setModulesTreeView(this.modulesTreeController.getModulesTreeView());
+		
+		//------------------------------------------------------------------------------------------
 		this.modulEditController = new ModulEditController(this,
-		                                                   this.appModel);
+		                                                   this.modulesTreeController.getModulesTreeModel());
 		
 		this.appView.setModulEditView(this.modulEditController.getModulEditView());
 		
@@ -103,10 +123,15 @@ public class AppController
 		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
 		
 		//------------------------------------------------------------------------------------------
-		this.appModel.addEditModuleChangedListener(this.appView);
+		this.modulInputsController = new ModulInputsController(this);
 		
+//		this.appView.add(this.modulInputsController.getModulInputsView());
+		
+//		//------------------------------------------------------------------------------------------
+//		this.appModel.addEditModuleChangedListener(this.appView);
+//		
 		//==========================================================================================
-		this.appView.addDoEditModuleListener
+		this.modulesTreeController.getModulesTreeView().addDoEditModuleListener
 		(
 		 	new DoEditModuleListener()
 		 	{
@@ -118,6 +143,35 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
+		this.modulEditController.getModulEditView().getEditInputsButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					modulInputsController.getModulInputsView().setVisible(true);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Edit-Modul Model changed: Update Tree-View:
+		
+		this.modulEditController.getModulEditModel().getModulEditModelChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					ModulGeneratorTypeData editedModulGeneratorTypeData = 
+						modulesTreeController.getModulesTreeModel().getEditedModulGeneratorTypeData();
+					
+					modulesTreeController.updateEditedModulTreeEntry(editedModulGeneratorTypeData);
+				}
+		 	}
+		);
+		//==========================================================================================
 	}
 
 	/**
@@ -127,7 +181,7 @@ public class AppController
 	public void selectEditModule(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		//==========================================================================================
-		this.appModel.setEditedModulGeneratorTypeData(modulGeneratorTypeData);
+		this.modulesTreeController.getModulesTreeModel().setEditedModulGeneratorTypeData(modulGeneratorTypeData);
 		
 		this.timelinesDrawPanelController.clearTimelineGenerators();
 		
@@ -143,8 +197,6 @@ public class AppController
 				                           generator.getEndTimePos());
 			
 			this.timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
-			
-			
 		}
 		//==========================================================================================
 	}
@@ -158,11 +210,21 @@ public class AppController
 	public Generator retrieveGeneratorOfEditedModul(String generatorName)
 	{
 		//==========================================================================================
-		ModulGeneratorTypeData modulGeneratorTypeData = this.appModel.getEditedModulGeneratorTypeData();
+		ModulGeneratorTypeData modulGeneratorTypeData = 
+			modulesTreeController.getModulesTreeModel().getEditedModulGeneratorTypeData();
 		
 		Generator generator = modulGeneratorTypeData.searchGenerator(generatorName);
 		
 		//==========================================================================================
 		return generator;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #appView}.
+	 */
+	public AppView getAppView()
+	{
+		return this.appView;
 	}
 }

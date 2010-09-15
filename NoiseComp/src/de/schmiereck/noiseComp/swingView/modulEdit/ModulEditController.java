@@ -3,10 +3,13 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 
 
 /**
@@ -30,7 +33,7 @@ public class ModulEditController
 	/**
 	 * Modul-Edit Model.
 	 */
-	private final ModulEditModel	modulEditModel;
+	private final ModulEditModel modulEditModel;
 
 	//**********************************************************************************************
 	// Functions:
@@ -40,27 +43,29 @@ public class ModulEditController
 	 * 
 	 * @param timelinesDrawPanelModel 
 	 * 			is the App Controller.
-	 * @param appModel
-	 * 			is the App Model.
+	 * @param modulesTreeModel
+	 * 			is the Modules Tree Model.
 	 */
 	public ModulEditController(final AppController appController,
-	                           final AppModel appModel)
+	                           final ModulesTreeModel modulesTreeModel)
 	{
 		//==========================================================================================
 		this.modulEditModel = new ModulEditModel();
 		this.modulEditView = new ModulEditView(this.modulEditModel);
 		
 		//------------------------------------------------------------------------------------------
-		appModel.addEditModuleChangedListener
+		// Edited Model changed -> updated model:
+		
+		modulesTreeModel.addEditModuleChangedListener
 		(
 		 	new EditModuleChangedListener()
 		 	{
 				@Override
-				public void notifyEditModulChanged(AppModel appModel)
+				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel)
 				{
 					String generatorTypeName;
 
-					ModulGeneratorTypeData modulGeneratorTypeData = appModel.getEditedModulGeneratorTypeData();
+					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
 					
 					if (modulGeneratorTypeData != null)
 					{
@@ -75,7 +80,30 @@ public class ModulEditController
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		// Update-Button: Update Modul:
 		
+		this.modulEditView.getUpdateButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					
+					if (modulGeneratorTypeData != null)
+					{
+						String generatorTypeName = modulEditView.getModulNameTextField().getText();
+
+						modulEditModel.setModulName(generatorTypeName);
+						
+						// Update Modul.
+						modulGeneratorTypeData.setGeneratorTypeName(generatorTypeName);
+					}
+				}
+		 	}
+		);
 		//==========================================================================================
 	}
 
@@ -86,5 +114,14 @@ public class ModulEditController
 	public ModulEditView getModulEditView()
 	{
 		return this.modulEditView;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulEditModel}.
+	 */
+	public ModulEditModel getModulEditModel()
+	{
+		return this.modulEditModel;
 	}
 }

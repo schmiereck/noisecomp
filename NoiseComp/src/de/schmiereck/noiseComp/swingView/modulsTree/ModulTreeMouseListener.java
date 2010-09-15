@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.appView;
+package de.schmiereck.noiseComp.swingView.modulsTree;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -33,7 +32,7 @@ extends MouseAdapter
 	//**********************************************************************************************
 	// Fields:
 
-	private AppView appView;
+	private final ModulesTreeView modulesTreeView;
 	
 	/**
 	 * Modules popup menu.
@@ -51,12 +50,13 @@ extends MouseAdapter
 	/**
 	 * Constructor.
 	 * 
-	 * @param appView
-	 * 			is the app View.
+	 * @param modulesTreeView
+	 * 			is the Modules Tree View.
 	 */
-	public ModulTreeMouseListener(final AppView appView)
+	public ModulTreeMouseListener(final ModulesTreeView modulesTreeView)
 	{
-		this.appView = appView;
+		//==========================================================================================
+		this.modulesTreeView = modulesTreeView;
 		
 		//==========================================================================================
 		// Modul Popup Menu:
@@ -74,9 +74,7 @@ extends MouseAdapter
 						// Notify edit modul event to listeners.
 						//JMenuItem jMenuItem = (JMenuItem)e.getSource();
 						
-						JTree modulesTree = appView.getModulesTree();
-						
-						TreePath selectionPath = modulesTree.getSelectionPath();
+						TreePath selectionPath = modulesTreeView.getSelectionPath();
 						
 						DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
 						
@@ -84,7 +82,7 @@ extends MouseAdapter
 						
 						ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
 
-						appView.notifyEditModulListeners(modulGeneratorTypeData);
+						modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
 					}
 			 		
 			 	}
@@ -107,9 +105,7 @@ extends MouseAdapter
 						// Notify edit modul event to listeners.
 						//JMenuItem jMenuItem = (JMenuItem)e.getSource();
 						
-						JTree modulesTree = appView.getModulesTree();
-						
-						TreePath selectionPath = modulesTree.getSelectionPath();
+						TreePath selectionPath = modulesTreeView.getSelectionPath();
 						
 						DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
 						
@@ -117,7 +113,7 @@ extends MouseAdapter
 						
 						GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 
-						appView.notifyDoEditGeneratorListeners(generatorTypeData);
+						modulesTreeView.notifyDoEditGeneratorListeners(generatorTypeData);
 					}
 			 		
 			 	}
@@ -131,15 +127,13 @@ extends MouseAdapter
 	 */
 	public void mouseReleased(MouseEvent e) 
 	{
-		JTree modulesTree = this.appView.getModulesTree();
-		
-		int row = modulesTree.getRowForLocation(e.getX(), e.getY());
+		int row = modulesTreeView.getRowForLocation(e.getX(), e.getY());
 
 		if (row != -1)
 		{
-			modulesTree.setSelectionRow(row);
+			modulesTreeView.setSelectionRow(row);
 			
-			TreePath selectionPath = modulesTree.getSelectionPath();
+			TreePath selectionPath = modulesTreeView.getSelectionPath();
 			
 			DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
 			
@@ -170,7 +164,7 @@ extends MouseAdapter
 				// Doubleclick?
 				if (e.getClickCount() == 2)
 				{
-					modulesTree.setSelectionRow(row);
+					modulesTreeView.setSelectionRow(row);
 					
 					Object userObject = treeNode.getUserObject();
 					
@@ -179,7 +173,7 @@ extends MouseAdapter
 						ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
 					
 						// Notify edit modul event to listeners.
-						this.appView.notifyEditModulListeners(modulGeneratorTypeData);
+						this.modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
 					}
 					else
 					{

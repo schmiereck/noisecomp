@@ -5,8 +5,10 @@ package de.schmiereck.noiseComp.swingView.timelineEdit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelines.SelectedTimelineChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
@@ -61,6 +63,9 @@ public class TimelineEditController
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
+		//------------------------------------------------------------------------------------------
+		// Selected Timeline changed -> updated model:
+		
 		this.timelinesDrawPanelModel.addSelectedTimelineChangedListener
 		(
 		 	new SelectedTimelineChangedListenerInterface()
@@ -72,6 +77,8 @@ public class TimelineEditController
 					Float generatorStartTimePos;
 					Float generatorEndTimePos;
 
+					Iterator<InputData> inputsIterator;
+					
 					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
 					
 					if (timelineGeneratorModel != null)
@@ -82,22 +89,40 @@ public class TimelineEditController
 						generatorName = generator.getName();
 						generatorStartTimePos = generator.getStartTimePos();
 						generatorEndTimePos = generator.getEndTimePos();
+						
+						inputsIterator = generator.getInputsIterator();
 					}
 					else
 					{
 						generatorName = null;
 						generatorStartTimePos = null;
 						generatorEndTimePos = null;
+						
+						inputsIterator = null;
 					}
 
 					timelineEditModel.setGeneratorName(generatorName);
 					timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
 					timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
+					
+					timelineEditModel.clearInputs();
+					
+					if (inputsIterator != null)
+					{
+						while (inputsIterator.hasNext())
+						{
+							InputData inputData = (InputData)inputsIterator.next();
+							
+							timelineEditModel.addInputData(inputData);
+						}
+					}
 				}
 		 	}
 		);
 		
 		//------------------------------------------------------------------------------------------
+		// Update-Button: Update Timeline-Generator-Model and Generator:
+		
 		this.timelineEditView.getUpdateButton().addActionListener
 		(
 		 	new ActionListener()

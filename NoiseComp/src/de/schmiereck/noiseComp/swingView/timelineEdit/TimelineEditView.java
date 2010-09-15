@@ -102,22 +102,12 @@ extends BasicEditView
 			 	}
 			);
 		}
+//		TODO Inputs in einen eigenes Split-View auslagern
+//		TODO das Edit-Input ebenfalls.
 		{
 			this.addLabel(3, "Inputs:");
 			
-			TableModel dataModel = new AbstractTableModel() 
-			{
-				private String columnNames[] = new String[]{"Name", "Value"};
-				
-				public int getColumnCount() { return 2; }
-				public int getRowCount() { return 5;}
-				public String getColumnName(int column)
-				{
-					return this.columnNames[column];
-				}
-				public Object getValueAt(int row, int col) { return new Integer(row*col); }
-			};
-			JTable table = new JTable(dataModel);
+			JTable table = new JTable(timelineEditModel.getInputsTabelModel());
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 //			JTableHeader tableHeader = table.getTableHeader();

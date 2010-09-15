@@ -3,6 +3,10 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+
+import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 
@@ -19,6 +23,7 @@ public class TimelineEditModel
 	//**********************************************************************************************
 	// Fields:
 
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
 	 * Generator Name.
 	 */
@@ -29,6 +34,7 @@ public class TimelineEditModel
 	 */
 	private final ModelPropertyChangedNotifier generatorNameChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
 	 * Generator StartTimePos.
 	 */
@@ -39,6 +45,7 @@ public class TimelineEditModel
 	 */
 	private final ModelPropertyChangedNotifier generatorStartTimePosChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
 	 * Generator EndTimePos.
 	 */
@@ -48,6 +55,9 @@ public class TimelineEditModel
 	 * {@link #generatorEndTimePos} changed listeners.
 	 */
 	private final ModelPropertyChangedNotifier generatorEndTimePosChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	private final InputsTabelModel inputsTabelModel = new InputsTabelModel();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -149,5 +159,31 @@ public class TimelineEditModel
 	public ModelPropertyChangedNotifier getGeneratorEndTimePosChangedNotifier()
 	{
 		return this.generatorEndTimePosChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputsTabelModel}.
+	 */
+	public TableModel getInputsTabelModel()
+	{
+		return this.inputsTabelModel;
+	}
+
+	/**
+	 * Clear Inputs.
+	 */
+	public void clearInputs()
+	{
+		this.inputsTabelModel.clearInputs();
+	}
+
+	/**
+	 * @param inputData
+	 * 			is the Input Data.
+	 */
+	public void addInputData(InputData inputData)
+	{
+		this.inputsTabelModel.addInputData(inputData);
 	}
 }

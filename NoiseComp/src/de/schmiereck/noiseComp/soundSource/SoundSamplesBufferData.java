@@ -149,4 +149,22 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 	{
 		return this.emptyBufferStart;
 	}
+	
+	/**
+	 * @return
+	 * 			the count of sound buffer samples.
+	 */
+	public long getBufferSamplesCount()
+	{
+		return this.bufferSoundSamples.length;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #frameRate}.
+	 */
+	public float getFrameRate()
+	{
+		return this.frameRate;
+	}
 }

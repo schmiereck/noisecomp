@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.appView;
+package de.schmiereck.noiseComp.swingView.modulsTree;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 

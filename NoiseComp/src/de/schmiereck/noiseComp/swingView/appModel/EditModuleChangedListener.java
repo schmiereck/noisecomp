@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.appModel;
 
+import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
+
 
 
 /**
@@ -19,8 +21,8 @@ public interface EditModuleChangedListener
 	/**
 	 * Edit Modul performed.
 	 * 
-	 * @param modulGeneratorTypeData
-	 * 			is the edited modul.
+	 * @param modulesTreeModel
+	 * 			is the Modules Tree Model.
 	 */
-	public void notifyEditModulChanged(AppModel appModel);
+	public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel);
 }

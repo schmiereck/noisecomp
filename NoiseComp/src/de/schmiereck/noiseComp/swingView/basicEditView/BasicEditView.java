@@ -23,6 +23,16 @@ extends JPanel
 {
 
 	/**
+	 * Constructor.
+	 * 
+	 */
+	public BasicEditView()
+	{
+//		this.setLayout(new GridBagLayout());
+		
+	}
+
+	/**
 	 * @param gridy
 	 * @param component
 	 */

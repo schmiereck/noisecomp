@@ -76,6 +76,41 @@ extends ListWidgetGraphic
 			screenGrafic.setColor(g, Color.BLACK);
 		}
 
+		String label = this.makeInputLabel(inputData);
+
+		//Generator selectedGenerator = inputsData.getSelectedGenerator();
+		
+		//GeneratorTypeData selectedGeneratorTypeData = selectedGenerator.getGeneratorTypeData();
+		
+		InputTypeData inputTypeData = inputData.getInputTypeData();
+		
+		String inputTypeName;
+		
+		if (inputTypeData != null)
+		{	
+			inputTypeName = inputTypeData.getInputTypeName();
+		}
+		else
+		{
+			inputTypeName = "ERROR";
+		}
+		
+		screenGrafic.drawString(g, 
+								posX + this.inputTypeOffsetSizeX, screenPosY + entryHeight, 
+								inputTypeName);
+		screenGrafic.drawString(g, 
+								posX + this.inputTypeOffsetSizeX + this.labelColumnSizeX, screenPosY + entryHeight, 
+								label);
+	}
+
+	/**
+	 * @param inputData
+	 * 			is the input.
+	 * @return
+	 * 			the label.
+	 */
+	private String makeInputLabel(InputData inputData)
+	{
 		Generator inputGenerator = inputData.getInputGenerator();
 		
 		String label;
@@ -109,30 +144,7 @@ extends ListWidgetGraphic
 				}
 			}
 		}
-
-		//Generator selectedGenerator = inputsData.getSelectedGenerator();
-		
-		//GeneratorTypeData selectedGeneratorTypeData = selectedGenerator.getGeneratorTypeData();
-		
-		InputTypeData inputTypeData = inputData.getInputTypeData();
-		
-		String inputTypeName;
-		
-		if (inputTypeData != null)
-		{	
-			inputTypeName = inputTypeData.getInputTypeName();
-		}
-		else
-		{
-			inputTypeName = "ERROR";
-		}
-		
-		screenGrafic.drawString(g, 
-								posX + this.inputTypeOffsetSizeX, screenPosY + entryHeight, 
-								inputTypeName);
-		screenGrafic.drawString(g, 
-								posX + this.inputTypeOffsetSizeX + this.labelColumnSizeX, screenPosY + entryHeight, 
-								label);
+		return label;
 	}
 
 	/* (non-Javadoc)

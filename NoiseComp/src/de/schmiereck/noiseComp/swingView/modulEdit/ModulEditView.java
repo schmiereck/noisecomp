@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
+import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -27,14 +29,22 @@ extends BasicEditView
 	/**
 	 * Modul-Edit Model.
 	 */
-	private ModulEditModel	modulEditModel;
+	private final ModulEditModel modulEditModel;
 
+	/**
+	 * Modul-Name Text-Field
+	 */
 	private final JTextField modulNameTextField;
 	
 	/**
 	 * Update Button.
 	 */
-	private JButton updateButton;
+	private final JButton updateButton;
+	
+	/**
+	 * Inputs Button.
+	 */
+	private final JButton editInputsButton;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -43,10 +53,13 @@ extends BasicEditView
 	 * Constructor.
 	 * 
 	 * @param modulEditModel
+	 * 			is the Modul-Edit Model.
 	 */
 	public ModulEditView(final ModulEditModel modulEditModel)
 	{
 		//==========================================================================================
+		this.setLayout(new FlowLayout());
+		
 		this.modulEditModel = modulEditModel;
 		
 		//------------------------------------------------------------------------------------------
@@ -67,11 +80,43 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
+			this.editInputsButton = new JButton("Edit Inputs...");
+			
+			this.addField(1, this.editInputsButton);
+		}
+		//------------------------------------------------------------------------------------------
+		{
 			this.updateButton = new JButton("Update");
 			
-			this.addField(1, this.updateButton);
+			this.addField(2, this.updateButton);
 		}
-		
 		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #editInputsButton}.
+	 */
+	public JButton getEditInputsButton()
+	{
+		return this.editInputsButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #updateButton}.
+	 */
+	public JButton getUpdateButton()
+	{
+		return this.updateButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulNameTextField}.
+	 */
+	public JTextField getModulNameTextField()
+	{
+		return this.modulNameTextField;
 	}
 }
