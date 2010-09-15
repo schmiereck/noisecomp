@@ -136,4 +136,40 @@ extends BasicEditView
 	{
 		return this.updateButton;
 	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorComboBox}.
+	 */
+	public JComboBox getGeneratorComboBox()
+	{
+		return this.generatorComboBox;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #typeComboBox}.
+	 */
+	public JComboBox getTypeComboBox()
+	{
+		return this.typeComboBox;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #valueTextField}.
+	 */
+	public JTextField getValueTextField()
+	{
+		return this.valueTextField;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulInputComboBox}.
+	 */
+	public JComboBox getModulInputComboBox()
+	{
+		return this.modulInputComboBox;
+	}
 }

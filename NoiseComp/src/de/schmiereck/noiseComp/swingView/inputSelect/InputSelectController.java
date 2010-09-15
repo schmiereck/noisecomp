@@ -7,7 +7,9 @@ import java.util.Iterator;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
 import de.schmiereck.noiseComp.swingView.timelines.SelectedTimelineChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
@@ -47,7 +49,8 @@ public class InputSelectController
 	 * 			is the Timeline Draw-Panel Model.
 	 */
 	public InputSelectController(final AppController appController,
-	                             final TimelinesDrawPanelModel timelinesDrawPanelModel)
+	                             final TimelinesDrawPanelModel timelinesDrawPanelModel,
+	                             final InputEditModel inputEditModel)
 	{
 		//==========================================================================================
 		this.inputSelectModel = new InputSelectModel();
@@ -90,6 +93,27 @@ public class InputSelectController
 							
 							inputSelectModel.addInputData(inputData);
 						}
+					}
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Input-Model Value changed: Update ???:
+		
+		inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+					
+					if (selectedRowNo != null)
+					{
+						InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+						
+						inputsTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
 					}
 				}
 		 	}

@@ -14,6 +14,8 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
+import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
+import de.schmiereck.noiseComp.swingView.inputEdit.InputEditView;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
@@ -116,7 +118,14 @@ public class AppController
 		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView());
 		
 		//------------------------------------------------------------------------------------------
-		this.timelinesDrawPanelController = new TimelinesDrawPanelController();
+		final InputEditController inputEditController = 
+			new InputEditController();
+		
+		this.appView.setInputEditView(inputEditController.getInputEditView());
+		
+		//------------------------------------------------------------------------------------------
+		this.timelinesDrawPanelController = 
+			new TimelinesDrawPanelController(inputEditController.getInputEditModel());
 		
 		this.timelinesScrollPanelController.setTimelinesScrollPanelController(this.timelinesDrawPanelController);
 		
@@ -139,15 +148,10 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		final InputSelectController inputSelectController = 
 			new InputSelectController(this,
-			                          this.timelinesDrawPanelController.getTimelinesDrawPanelModel());
+			                          this.timelinesDrawPanelController.getTimelinesDrawPanelModel(),
+			                          inputEditController.getInputEditModel());
 		
 		this.appView.setInputSelectView(inputSelectController.getInputSelectView());
-		
-		//------------------------------------------------------------------------------------------
-		final InputEditController inputEditController = 
-			new InputEditController();
-		
-		this.appView.setInputEditView(inputEditController.getInputEditView());
 		
 		//==========================================================================================
 		this.modulesTreeController.getModulesTreeView().addDoEditModuleListener
@@ -222,38 +226,57 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		// Input-Edit Update-Button: Update Timelines-Model, Input-Select-Model and Input:
+		// Input-Edit Update-Button: Update Input-Edit-Model and Input-Data:
 		
-//		inputEditController.getInputEditView().getUpdateButton().addActionListener
-//		(
-//		 	new ActionListener()
-//		 	{
-//				@Override
-//				public void actionPerformed(ActionEvent e)
-//				{
-//					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
-//					
-//					if (timelineGeneratorModel != null)
-//					{
-//						Generator generator = 
-//							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
-//
-//						String generatorName = timelineEditView.getGeneratorNameTextField().getText();
-//						Float generatorStartTimePos = Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText());
-//						Float generatorEndTimePos = Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText());
-//						
-//						timelineGeneratorModel.setName(generatorName);
-//						timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
-//						timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
-//						
-//						// Update Generator.
-//						generator.setName(generatorName);
-//						generator.setStartTimePos(generatorStartTimePos);
-//						generator.setEndTimePos(generatorEndTimePos);
-//					}
-//				}
-//		 	}
-//		);
+		inputEditController.getInputEditView().getUpdateButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					InputEditModel inputEditModel = inputEditController.getInputEditModel();
+					InputEditView inputEditView = inputEditController.getInputEditView();
+					
+					String value = inputEditView.getValueTextField().getText();
+					
+					inputEditModel.setValue(value);
+					
+					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
+					
+					Float floatValue;
+					String stringValue;
+					
+					try
+					{
+						floatValue = Float.parseFloat(value);
+						stringValue = null;
+					}
+					catch (NumberFormatException ex)
+					{
+						floatValue = null;
+						stringValue = value;
+					}
+					
+					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+					
+					if (selectedRowNo != null)
+					{
+						InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+						
+						InputData inputData = inputsTabelModel.getRow(selectedRowNo);
+						
+						inputData.setInputValue(floatValue, stringValue);
+					}
+					else
+					{
+						// Insert new Input:
+					}
+					
+					inputEditModel.setValue(value);
+				}
+		 	}
+		);
 		//==========================================================================================
 	}
 

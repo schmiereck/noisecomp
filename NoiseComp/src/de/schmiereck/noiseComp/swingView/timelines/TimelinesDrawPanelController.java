@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.timelines;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
 
 /**
  * <p>
@@ -38,8 +39,10 @@ public class TimelinesDrawPanelController
 	/**
 	 * Constructor.
 	 * 
+	 * @param inputEditModel 
+	 * 			is the Input-Edit Model.
 	 */
-	public TimelinesDrawPanelController()
+	public TimelinesDrawPanelController(InputEditModel inputEditModel)
 	{
 		//==========================================================================================
 		this.timelinesDrawPanelModel = new TimelinesDrawPanelModel();
@@ -59,7 +62,12 @@ public class TimelinesDrawPanelController
 	     	}
 	    );
 	    
-		//==========================================================================================
+	    //------------------------------------------------------------------------------------------
+	    inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
+	    (
+	     	this.timelineGeneratorModelChangedListener
+	    );
+	    //==========================================================================================
 	}
 
 	/**
@@ -99,5 +107,14 @@ public class TimelinesDrawPanelController
 		timelineGeneratorModel.getNameChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
 		timelineGeneratorModel.getStartTimePosChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
 		timelineGeneratorModel.getEndTimePosChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineGeneratorModelChangedListener}.
+	 */
+	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener()
+	{
+		return this.timelineGeneratorModelChangedListener;
 	}
 }

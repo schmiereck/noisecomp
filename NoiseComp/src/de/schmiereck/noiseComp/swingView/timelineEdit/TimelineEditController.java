@@ -99,18 +99,19 @@ public class TimelineEditController
 				}
 		 	}
 		);
-		
 		//------------------------------------------------------------------------------------------
-		// Update-Button: Update Timeline-Generator-Model and Generator:
+		// Timeline-Edit Update-Button: Update Timeline-Generator-Model and Generator:
 		
-		this.timelineEditView.getUpdateButton().addActionListener
+		timelineEditView.getUpdateButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
+//					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+//					TimelineEditView timelineEditView = timelineEditController.getTimelineEditView();
 					
 					if (timelineGeneratorModel != null)
 					{
@@ -121,14 +122,15 @@ public class TimelineEditController
 						Float generatorStartTimePos = Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText());
 						Float generatorEndTimePos = Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText());
 						
-						timelineGeneratorModel.setName(generatorName);
-						timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
-						timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
-						
 						// Update Generator.
 						generator.setName(generatorName);
 						generator.setStartTimePos(generatorStartTimePos);
 						generator.setEndTimePos(generatorEndTimePos);
+
+						// Update Timeline-Model.
+						timelineGeneratorModel.setName(generatorName);
+						timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
+						timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
 					}
 				}
 		 	}
