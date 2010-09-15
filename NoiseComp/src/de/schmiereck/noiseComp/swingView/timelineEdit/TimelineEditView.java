@@ -3,16 +3,11 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
@@ -105,41 +100,27 @@ extends BasicEditView
 //		TODO Inputs in einen eigenes Split-View auslagern
 //		TODO das Edit-Input ebenfalls.
 		{
-			this.addLabel(3, "Inputs:");
-			
-			JTable table = new JTable(timelineEditModel.getInputsTabelModel());
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-//			JTableHeader tableHeader = table.getTableHeader();
-//		      
-//			TableColumnModel columnModel = tableHeader.getColumnModel();
-//		      
-//			{
-//				TableColumn column = columnModel.getColumn(0);
-//				column.setHeaderValue("Name");
-//			}
-//			{
-//				TableColumn column = columnModel.getColumn(1);
-//				column.setHeaderValue("Value");
-//			}
+//			this.addLabel(3, "Inputs:");
+//			
+//			InputSelectView inputSelectView = new InputSelectView(timelineEditModel);
 		      
-			JScrollPane scrollpane = new JScrollPane(table);
+//			JScrollPane scrollpane = new JScrollPane(inputSelectView);
+//
+//			int vScrollBarWidth = scrollpane.getVerticalScrollBar().getPreferredSize().width;
+//			Dimension dimTable = inputSelectView.getPreferredSize();
+//			dimTable.setSize(dimTable.getWidth() + vScrollBarWidth, 
+//			                 dimTable.getHeight());
+//
+//			scrollpane.setPreferredSize(new Dimension(dimTable.width, 100));
+//			scrollpane.setMaximumSize(new Dimension(dimTable.width, 100));
+//			scrollpane.setMinimumSize(new Dimension(dimTable.width, 100));
 
-			int vScrollBarWidth = scrollpane.getVerticalScrollBar().getPreferredSize().width;
-			Dimension dimTable = table.getPreferredSize();
-			dimTable.setSize(dimTable.getWidth() + vScrollBarWidth, 
-			                 dimTable.getHeight());
-
-			scrollpane.setPreferredSize(new Dimension(dimTable.width, 100));
-			scrollpane.setMaximumSize(new Dimension(dimTable.width, 100));
-			scrollpane.setMinimumSize(new Dimension(dimTable.width, 100));
-
-			this.addField(3, scrollpane);
+//			this.addField(3, scrollpane);
 		}
 		{
 			this.updateButton = new JButton("Update");
 			
-			this.addField(4, this.updateButton);
+			this.addField(3, this.updateButton);
 		}
 		//==========================================================================================
 	}

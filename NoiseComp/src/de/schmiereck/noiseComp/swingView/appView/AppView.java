@@ -4,14 +4,17 @@
 package de.schmiereck.noiseComp.swingView.appView;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.HeadlessException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
-import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.inputEdit.InputEditView;
+import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditView;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView;
@@ -37,32 +40,42 @@ extends JFrame
 	/**
 	 * App Model
 	 */
-	private AppModel appModel;
+	private final AppModel appModel;
 	
 //	/**
 //	 * Timeline Draw Panel Model.
 //	 */
-//	private TimelinesDrawPanelModel timelinesDrawPanelModel;
+//	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	/**
 	 * Modules-Tree Scroll-Pane.
 	 */
-	private JScrollPane modulesTreeScrollPane;
+	private final JScrollPane modulesTreeScrollPane;
 	
 	/**
-	 * Modul-Timeline Split Pane.
+	 * Timeline-Edit Split-Pane.
 	 */
-	private JSplitPane modulSplitPane;
+	private final JSplitPane timelineEditSplitPane;
 	
 	/**
-	 * Modul-Edit Split Pane.
+	 * Input Split-Pane.
 	 */
-	private JSplitPane modulEditSplitPane;
+	private final JSplitPane inputSplitPane;
 	
 	/**
-	 * Timeline-Edit Split Pane.
+	 * Modul-Timeline Split-Pane.
 	 */
-	private JSplitPane timelineSplitPane;
+	private final JSplitPane modulSplitPane;
+	
+	/**
+	 * Modul-Edit Split-Pane.
+	 */
+	private final JSplitPane modulEditSplitPane;
+	
+	/**
+	 * Timeline-Edit Split-Pane.
+	 */
+	private final JSplitPane timelineSplitPane;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -80,8 +93,8 @@ extends JFrame
 	 * | | ||                     || | ,-timelineSplitPane-----------------------------. | | |
 	 * | | ||                     || | | .-TimelinesScrollPanel-. .-timelineEditView-. | | | |
 	 * | | ||                     || | | |.-TimelinesDrawPanel-.| |                  | | | | |
-	 * | | ||                     || | | ||                    || |                  | | | | |
-	 * | | ||                     || | | ||                    || |                  | | | | |
+	 * | | ||                     || | | ||                    || | inputSelect      | | | | |
+	 * | | ||                     || | | ||                    || | inputEdit        | | | | |
 	 * | | ||                     || | | |`--------------------´| |                  | | | | |
 	 * | | ||                     || | | `----------------------´ `------------------´ | | | |
 	 * | | |`---------------------´| | `-----------------------------------------------´ | | | 
@@ -108,17 +121,31 @@ extends JFrame
 		this.modulesTreeScrollPane = new JScrollPane();
 		
 		//------------------------------------------------------------------------------------------
+		// Input Split-Pane:
+		
+		this.inputSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		this.inputSplitPane.setOneTouchExpandable(true);
+		
+		//------------------------------------------------------------------------------------------
+		// Timeline-Edit Split-Pane:
+		
+		this.timelineEditSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		this.timelineEditSplitPane.setOneTouchExpandable(true);
+		
+		this.timelineEditSplitPane.setBottomComponent(this.inputSplitPane);
+		
+		//------------------------------------------------------------------------------------------
 		// Timeline Split-Pane:
 		
 		this.timelineSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-			
 		this.timelineSplitPane.setOneTouchExpandable(true);
+		
+		this.timelineSplitPane.setRightComponent(this.timelineEditSplitPane);
 		
 		//------------------------------------------------------------------------------------------
 		// Modul-Edit Split-Pane:
 		
 		this.modulEditSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		
 		this.modulEditSplitPane.setOneTouchExpandable(true);
 		
 //		this.modulEditSplitPane.setTopComponent(new JLabel("modulEditPane"));
@@ -159,9 +186,7 @@ extends JFrame
 	 */
 	public void setTimelineEditView(TimelineEditView timelineEditView)
 	{
-//		this.timelineEditView = timelineEditView;
-		
-		this.timelineSplitPane.setRightComponent(timelineEditView);
+		this.timelineEditSplitPane.setTopComponent(timelineEditView);
 	}
 
 	/**
@@ -173,6 +198,37 @@ extends JFrame
 		this.modulEditSplitPane.setTopComponent(modulEditView);
 	}
 
+	/**
+	 * @param inputSelectView 
+	 * 			to set {@link #inputSelectView}.
+	 */
+	public void setInputSelectView(InputSelectView inputSelectView)
+	{
+		JScrollPane scrollpane = new JScrollPane(inputSelectView);
+
+		int vScrollBarWidth = scrollpane.getVerticalScrollBar().getPreferredSize().width;
+		Dimension dimTable = inputSelectView.getPreferredSize();
+		dimTable.setSize(dimTable.getWidth() + vScrollBarWidth, 
+		                 dimTable.getHeight());
+
+		scrollpane.setPreferredSize(new Dimension(dimTable.width, 100));
+		scrollpane.setMaximumSize(new Dimension(dimTable.width, 100));
+		scrollpane.setMinimumSize(new Dimension(dimTable.width, 100));
+		
+		scrollpane.setBorder(BorderFactory.createTitledBorder("Inputs:"));
+		
+		this.inputSplitPane.setTopComponent(scrollpane);
+	}
+
+	/**
+	 * @param inputEditView 
+	 * 			to set {@link #inputEditView}.
+	 */
+	public void setInputEditView(InputEditView inputEditView)
+	{
+		this.inputSplitPane.setBottomComponent(inputEditView);
+	}
+	
 	/**
 	 * @param modulesTreeView
 	 */

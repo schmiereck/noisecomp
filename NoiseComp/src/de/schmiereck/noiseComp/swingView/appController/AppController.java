@@ -12,6 +12,8 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
+import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
+import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputsController;
 import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
@@ -130,6 +132,18 @@ public class AppController
 //		//------------------------------------------------------------------------------------------
 //		this.appModel.addEditModuleChangedListener(this.appView);
 //		
+		
+		//------------------------------------------------------------------------------------------
+		InputSelectController inputSelectController = new InputSelectController(this,
+		                                                                        this.timelinesDrawPanelController.getTimelinesDrawPanelModel());
+		
+		this.appView.setInputSelectView(inputSelectController.getInputSelectView());
+		
+		//------------------------------------------------------------------------------------------
+		InputEditController inputEditController = new InputEditController();
+		
+		this.appView.setInputEditView(inputEditController.getInputEditView());
+		
 		//==========================================================================================
 		this.modulesTreeController.getModulesTreeView().addDoEditModuleListener
 		(
