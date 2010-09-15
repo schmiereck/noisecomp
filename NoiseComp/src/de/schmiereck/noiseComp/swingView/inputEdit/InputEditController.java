@@ -3,6 +3,9 @@
  */
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
+import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.swingView.OutputUtils;
+
 /**
  * <p>
  * 	Input-Edit Controller.
@@ -59,6 +62,29 @@ public class InputEditController
 	public InputEditView getInputEditView()
 	{
 		return this.inputEditView;
+	}
+
+	/**
+	 * @param inputData
+	 * 			is the edited input data.
+	 */
+	public void updateEditedInput(InputData inputData)
+	{
+		//==========================================================================================
+		String value;
+
+		if (inputData != null)
+		{
+			value = OutputUtils.makeFloatText(inputData.getInputValue());
+		}
+		else
+		{
+			value = null;
+		}
+
+		inputEditModel.setValue(value);
+		
+		//==========================================================================================
 	}
 
 }

@@ -8,12 +8,15 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
+import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
+import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputsController;
 import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
@@ -134,13 +137,15 @@ public class AppController
 //		
 		
 		//------------------------------------------------------------------------------------------
-		InputSelectController inputSelectController = new InputSelectController(this,
-		                                                                        this.timelinesDrawPanelController.getTimelinesDrawPanelModel());
+		final InputSelectController inputSelectController = 
+			new InputSelectController(this,
+			                          this.timelinesDrawPanelController.getTimelinesDrawPanelModel());
 		
 		this.appView.setInputSelectView(inputSelectController.getInputSelectView());
 		
 		//------------------------------------------------------------------------------------------
-		InputEditController inputEditController = new InputEditController();
+		final InputEditController inputEditController = 
+			new InputEditController();
 		
 		this.appView.setInputEditView(inputEditController.getInputEditView());
 		
@@ -185,6 +190,70 @@ public class AppController
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		// Selected Input changed: Update Input-Edit:
+		
+		inputSelectController.getInputSelectModel().getSelectedRowNoChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
+					
+					InputData inputData;
+					
+					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+					
+					if (selectedRowNo != null)
+					{
+						InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+					
+						inputData = inputsTabelModel.getRow(selectedRowNo);
+					}
+					else
+					{
+						inputData = null;
+					}
+					
+					inputEditController.updateEditedInput(inputData);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Input-Edit Update-Button: Update Timelines-Model, Input-Select-Model and Input:
+		
+//		inputEditController.getInputEditView().getUpdateButton().addActionListener
+//		(
+//		 	new ActionListener()
+//		 	{
+//				@Override
+//				public void actionPerformed(ActionEvent e)
+//				{
+//					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+//					
+//					if (timelineGeneratorModel != null)
+//					{
+//						Generator generator = 
+//							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
+//
+//						String generatorName = timelineEditView.getGeneratorNameTextField().getText();
+//						Float generatorStartTimePos = Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText());
+//						Float generatorEndTimePos = Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText());
+//						
+//						timelineGeneratorModel.setName(generatorName);
+//						timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
+//						timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
+//						
+//						// Update Generator.
+//						generator.setName(generatorName);
+//						generator.setStartTimePos(generatorStartTimePos);
+//						generator.setEndTimePos(generatorEndTimePos);
+//					}
+//				}
+//		 	}
+//		);
 		//==========================================================================================
 	}
 

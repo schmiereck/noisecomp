@@ -3,13 +3,16 @@
  */
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
-import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.OutputUtils;
 import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
-import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 
 /**
  * <p>
@@ -27,6 +30,16 @@ extends BasicEditView
 
 	private final InputEditModel inputEditModel;
 	
+	private final JComboBox generatorComboBox;
+	private final JComboBox typeComboBox;
+	private final JTextField valueTextField;
+	private final JComboBox modulInputComboBox;
+	
+	/**
+	 * Update Button.
+	 */
+	private final JButton updateButton;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -39,13 +52,88 @@ extends BasicEditView
 	public InputEditView(final InputEditModel inputEditModel)
 	{
 		//==========================================================================================
-		this.setLayout(new FlowLayout());
-		this.setBorder(BorderFactory.createTitledBorder("Input:"));
-		
 		this.inputEditModel = inputEditModel;
 		
-		//------------------------------------------------------------------------------------------
+		this.setLayout(new GridBagLayout());
+		this.setBorder(BorderFactory.createTitledBorder("Input:"));
 		
+		//------------------------------------------------------------------------------------------
+		{
+			this.generatorComboBox = this.addComboBox(0, "Generator:");
+			
+			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						//generatorComboBox.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
+					}
+			 	}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.typeComboBox = this.addComboBox(1, "Type:");
+			
+			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						//typeComboBox.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
+					}
+			 	}
+			);
+		}
+		{
+			this.valueTextField = this.addTextField(2, "Value:");
+			
+			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						valueTextField.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
+					}
+			 	}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.modulInputComboBox = this.addComboBox(3, "Modul-Input:");
+			
+			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						//modulInputComboBox.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
+					}
+			 	}
+			);
+		}
+		{
+			this.updateButton = new JButton("Update");
+			
+			this.addField(4, this.updateButton);
+		}
 		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #updateButton}.
+	 */
+	public JButton getUpdateButton()
+	{
+		return this.updateButton;
 	}
 }

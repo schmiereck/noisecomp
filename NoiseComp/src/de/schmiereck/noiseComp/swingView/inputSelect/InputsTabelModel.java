@@ -47,6 +47,11 @@ extends AbstractTableModel
 		return this.inputs.size();
 	}
 	
+	public InputData getRow(int rowNo) 
+	{ 
+		return this.inputs.get(rowNo);
+	}
+	
 	@Override
 	public String getColumnName(int column)
 	{

@@ -5,6 +5,7 @@ package de.schmiereck.noiseComp.swingView.basicEditView;
 
 import java.awt.GridBagConstraints;
 
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,6 +35,7 @@ extends JPanel
 
 	/**
 	 * @param gridy
+	 * 			is the Y-Position in grid.
 	 * @param component
 	 */
 	public void addField(int gridy, JComponent component)
@@ -54,7 +56,9 @@ extends JPanel
 
 	/**
 	 * @param gridy
+	 * 			is the Y-Position in grid.
 	 * @param labelText
+	 * 			is the Label Text.
 	 */
 	public void addLabel(int gridy, String labelText)
 	{
@@ -73,10 +77,14 @@ extends JPanel
 		
 		//==========================================================================================
 	}
+	
 	/**
+	 * @param gridy
+	 * 			is the Y-Position in grid.
 	 * @param labelText
 	 * 			is the Label Text.
 	 * @return
+	 * 			the Text-Field.
 	 */
 	public JTextField addTextField(int gridy, String labelText)
 	{
@@ -90,5 +98,29 @@ extends JPanel
 		
 		//==========================================================================================
 		return textField;
+	}
+	
+	/**
+	 * see: http://download.oracle.com/javase/tutorial/uiswing/components/combobox.html
+	 * 
+	 * @param gridy
+	 * 			is the Y-Position in grid.
+	 * @param labelText
+	 * 			is the Label Text.
+	 * @return
+	 * 			the Combo-Box.
+	 */
+	public JComboBox addComboBox(int gridy, String labelText)
+	{
+		//==========================================================================================
+		this.addLabel(gridy, labelText);
+
+		//------------------------------------------------------------------------------------------
+		JComboBox comboBox = new JComboBox();
+
+		this.addField(gridy, comboBox);
+		
+		//==========================================================================================
+		return comboBox;
 	}
 }

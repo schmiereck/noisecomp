@@ -4,6 +4,9 @@
 package de.schmiereck.noiseComp.swingView.inputSelect;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * <p>
@@ -28,11 +31,46 @@ extends JTable
 	 * @param inputSelectModel
 	 * 			is the Input-Select Model.
 	 */
-	public InputSelectView(InputSelectModel inputSelectModel)
+	public InputSelectView(final InputSelectModel inputSelectModel)
 	{
+		//==========================================================================================
 		super(inputSelectModel.getInputsTabelModel());
 		
+		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+		//------------------------------------------------------------------------------------------
+		ListSelectionModel selectionModel = this.getSelectionModel();
+		
+		selectionModel.addListSelectionListener
+		(
+		 	new ListSelectionListener()
+		 	{
+				@Override
+				public void valueChanged(ListSelectionEvent e)
+				{
+					if (e.getValueIsAdjusting() == false) 
+					{
+						Integer selectedRowNo;
+						
+						if (getRowCount() > 0)
+						{
+							int[] selectedRows = getSelectedRows();
+							
+							selectedRowNo = selectedRows[0];
+						}
+						else
+						{
+							selectedRowNo = null;
+						}
+						
+						inputSelectModel.setSelectedRowNo(selectedRowNo);
+		            }
+				}
+		 	}
+		);
+		
+		//==========================================================================================
 	}
 
 }
