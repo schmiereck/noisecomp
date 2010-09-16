@@ -3,7 +3,13 @@
  */
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
 
 /**
@@ -65,23 +71,46 @@ public class InputEditController
 	}
 
 	/**
+	 * @param editedModulGeneratorTypeData 
+	 * 			is the edited Modul-Generator-Type Data.
 	 * @param inputData
 	 * 			is the edited input data.
 	 */
-	public void updateEditedInput(InputData inputData)
+	public void updateEditedInput(ModulGeneratorTypeData editedModulGeneratorTypeData, 
+	                              InputData inputData)
 	{
 		//==========================================================================================
+		List<GeneratorSelectItem> generatorSelectItems;
+		Generator inputGenerator;
 		String value;
-
+		
 		if (inputData != null)
 		{
+			generatorSelectItems = new Vector<GeneratorSelectItem>();
+			Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
+			if (generatorsIterator != null)
+			{
+				GeneratorSelectItem noSelectItem = new GeneratorSelectItem(null);
+				generatorSelectItems.add(noSelectItem);
+				while (generatorsIterator.hasNext())
+				{
+					Generator generator = generatorsIterator.next();
+					
+					generatorSelectItems.add(new GeneratorSelectItem(generator));
+				}
+			}
+			inputGenerator = inputData.getInputGenerator();
 			value = OutputUtils.makeFloatText(inputData.getInputValue());
 		}
 		else
 		{
+			generatorSelectItems = null;
+			inputGenerator = null;
 			value = null;
 		}
 
+		inputEditModel.setGeneratorSelectItems(generatorSelectItems);
+		inputEditModel.setInputGenerator(inputGenerator);
 		inputEditModel.setValue(value);
 		
 		//==========================================================================================

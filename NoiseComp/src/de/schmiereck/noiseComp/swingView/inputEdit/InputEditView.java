@@ -4,12 +4,14 @@
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
 import java.awt.GridBagLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
 import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
@@ -61,7 +63,7 @@ extends BasicEditView
 		{
 			this.generatorComboBox = this.addComboBox(0, "Generator:");
 			
-			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
+			inputEditModel.getGeneratorSelectItemsChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
@@ -69,6 +71,42 @@ extends BasicEditView
 					public void notifyModelPropertyChanged()
 					{
 						//generatorComboBox.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
+						generatorComboBox.removeAllItems();
+						
+						if (inputEditModel.getGeneratorSelectItems() != null)
+						{
+							for (GeneratorSelectItem generatorSelectItem : inputEditModel.getGeneratorSelectItems())
+							{
+								generatorComboBox.addItem(generatorSelectItem);
+							}
+						}
+					}
+			 	}
+			);
+			inputEditModel.getInputGeneratorChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						GeneratorSelectItem inputGeneratorSelectItem = null;
+						
+						Generator inputGenerator = inputEditModel.getInputGenerator();
+
+						List<GeneratorSelectItem> generatorSelectItems = inputEditModel.getGeneratorSelectItems();
+						if (generatorSelectItems != null)
+						{
+							for (GeneratorSelectItem generatorSelectItem : generatorSelectItems)
+							{
+								if (generatorSelectItem.getGenerator() == inputGenerator)
+								{
+									inputGeneratorSelectItem = generatorSelectItem;
+									break;
+								}
+							}
+						}
+						generatorComboBox.setSelectedItem(inputGeneratorSelectItem);
 					}
 			 	}
 			);

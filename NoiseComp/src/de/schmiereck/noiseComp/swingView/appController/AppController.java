@@ -23,6 +23,7 @@ import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesController;
 import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
+import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
@@ -221,7 +222,12 @@ public class AppController
 						inputData = null;
 					}
 					
-					inputEditController.updateEditedInput(inputData);
+					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
+					
+					ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					
+					inputEditController.updateEditedInput(editedModulGeneratorTypeData,
+					                                      inputData);
 				}
 		 	}
 		);
