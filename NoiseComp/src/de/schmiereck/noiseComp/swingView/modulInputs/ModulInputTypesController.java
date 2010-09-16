@@ -7,13 +7,13 @@ import de.schmiereck.noiseComp.swingView.appController.AppController;
 
 /**
  * <p>
- * 	Modul-Inputs Controller.
+ * 	Modul-Input-Types Controller.
  * </p>
  * 
  * @author smk
  * @version <p>12.09.2010:	created, smk</p>
  */
-public class ModulInputsController
+public class ModulInputTypesController
 {
 	//**********************************************************************************************
 	// Fields:
@@ -21,12 +21,12 @@ public class ModulInputsController
 	/**
 	 * Modul-Inputs Model.
 	 */
-	private final ModulInputsModel modulInputsModel;
+	private final ModulInputTypesModel modulInputTypesModel;
 
 	/**
-	 * Modul-Inputs View.
+	 * Modul-Input-Types View.
 	 */
-	private final ModulInputsView modulInputsView;
+	private final ModulInputTypesView modulInputTypesView;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -37,31 +37,31 @@ public class ModulInputsController
 	 * @param appController
 	 * 			is the App Controller.
 	 */
-	public ModulInputsController(AppController appController)
+	public ModulInputTypesController(AppController appController)
 	{
 		//==========================================================================================
-		this.modulInputsModel = new ModulInputsModel();
+		this.modulInputTypesModel = new ModulInputTypesModel();
 		
-		this.modulInputsView = new ModulInputsView(appController.getAppView());
+		this.modulInputTypesView = new ModulInputTypesView(appController.getAppView());
 		
 		//==========================================================================================
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputsView}.
+	 * 			returns the {@link #modulInputTypesView}.
 	 */
-	public ModulInputsView getModulInputsView()
+	public ModulInputTypesView getModulInputTypesView()
 	{
-		return this.modulInputsView;
+		return this.modulInputTypesView;
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputsModel}.
+	 * 			returns the {@link #modulInputTypesModel}.
 	 */
-	public ModulInputsModel getModulInputsModel()
+	public ModulInputTypesModel getModulInputTypesModel()
 	{
-		return this.modulInputsModel;
+		return this.modulInputTypesModel;
 	}
 }

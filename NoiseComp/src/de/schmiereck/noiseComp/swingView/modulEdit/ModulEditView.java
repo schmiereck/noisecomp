@@ -42,9 +42,9 @@ extends BasicEditView
 	private final JButton updateButton;
 	
 	/**
-	 * Inputs Button.
+	 * Input-Types Button.
 	 */
-	private final JButton editInputsButton;
+	private final JButton editInputTypesButton;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -80,9 +80,9 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.editInputsButton = new JButton("Edit Inputs...");
+			this.editInputTypesButton = new JButton("Edit Input-Types...");
 			
-			this.addField(1, this.editInputsButton);
+			this.addField(1, this.editInputTypesButton);
 		}
 		//------------------------------------------------------------------------------------------
 		{
@@ -95,11 +95,11 @@ extends BasicEditView
 
 	/**
 	 * @return 
-	 * 			returns the {@link #editInputsButton}.
+	 * 			returns the {@link #editInputTypesButton}.
 	 */
-	public JButton getEditInputsButton()
+	public JButton getEditInputTypesButton()
 	{
-		return this.editInputsButton;
+		return this.editInputTypesButton;
 	}
 
 	/**

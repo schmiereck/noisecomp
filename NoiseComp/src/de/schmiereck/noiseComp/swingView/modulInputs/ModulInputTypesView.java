@@ -16,7 +16,7 @@ import de.schmiereck.noiseComp.swingView.appView.AppView;
  * @author smk
  * @version <p>12.09.2010:	created, smk</p>
  */
-public class ModulInputsView
+public class ModulInputTypesView
 extends JDialog
 {
 	/**
@@ -27,7 +27,7 @@ extends JDialog
 	 * @param appView 
 	 * 			this is the App View.
 	 */
-	public ModulInputsView(AppView appView)
+	public ModulInputTypesView(AppView appView)
 	{
 		super(appView, false);
 		this.setVisible(false);

@@ -20,7 +20,7 @@ import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
-import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputsController;
+import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesController;
 import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
@@ -70,7 +70,7 @@ public class AppController
 	/**
 	 * Modul-Inputs Controller.
 	 */
-	private final ModulInputsController modulInputsController;
+	private final ModulInputTypesController modulInputTypesController;
 	
 	/**
 	 * App Model
@@ -137,7 +137,7 @@ public class AppController
 		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
 		
 		//------------------------------------------------------------------------------------------
-		this.modulInputsController = new ModulInputsController(this);
+		this.modulInputTypesController = new ModulInputTypesController(this);
 		
 //		this.appView.add(this.modulInputsController.getModulInputsView());
 		
@@ -166,14 +166,14 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		this.modulEditController.getModulEditView().getEditInputsButton().addActionListener
+		this.modulEditController.getModulEditView().getEditInputTypesButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					modulInputsController.getModulInputsView().setVisible(true);
+					modulInputTypesController.getModulInputTypesView().setVisible(true);
 				}
 		 	}
 		);
