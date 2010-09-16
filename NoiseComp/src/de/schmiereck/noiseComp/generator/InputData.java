@@ -16,7 +16,7 @@ public class InputData
 	
 	/**
 	 * The generator generates the input value (see {@link #inputModulInputTypeData} ???).<br/>
-	 * null if {@link #inputValue} is used.
+	 * <code>null</code> if {@link #inputValue} is used.
 	 */
 	private Generator 	inputGenerator;
 	
@@ -28,7 +28,7 @@ public class InputData
 	
 	/**
 	 * Constant Value of the input.<br/>
-	 * null, if no input value is used, otherwise {@link #inputGenerator} is used. 
+	 * <code>null</code> if no input value is used, otherwise {@link #inputGenerator} is used. 
 	 */
 	private Float 		inputValue;
 	
