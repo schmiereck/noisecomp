@@ -95,7 +95,10 @@ public class InputData
 	{
 		return this.inputTypeData;
 	}
+	
 	/**
+	 * Only supported for new Inputs. Don't know why...
+	 * 
 	 * @param inputTypeData is the new value for attribute {@link #inputTypeData} to set.
 	public void setInputTypeData(InputTypeData inputTypeData)
 	{
