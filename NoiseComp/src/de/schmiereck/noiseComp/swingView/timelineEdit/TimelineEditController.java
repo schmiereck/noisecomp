@@ -102,7 +102,7 @@ public class TimelineEditController
 		//------------------------------------------------------------------------------------------
 		// Timeline-Edit Update-Button: Update Timeline-Generator-Model and Generator:
 		
-		timelineEditView.getUpdateButton().addActionListener
+		this.timelineEditView.getUpdateButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{

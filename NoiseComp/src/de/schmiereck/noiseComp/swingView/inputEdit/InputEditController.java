@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -13,6 +15,8 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
+import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
+import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 
 /**
  * <p>
@@ -44,13 +48,85 @@ public class InputEditController
 	 * Constructor.
 	 * 
 	 */
-	public InputEditController()
+	public InputEditController(final InputSelectModel inputSelectModel)
 	{
 		//==========================================================================================
 		this.inputEditModel = new InputEditModel();
 		
 		this.inputEditView = new InputEditView(this.inputEditModel);
 		
+		//------------------------------------------------------------------------------------------
+		// Timeline-Edit Update-Button: Update Timeline-Generator-Model and Generator:
+		
+		this.inputEditView.getUpdateButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					InputData inputData = inputSelectModel.getSelectedRow();
+//					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+					
+					InputTypeData inputTypeData = inputEditModel.getInputTypeData();
+					Generator inputGenerator = inputEditModel.getInputGenerator();
+					String valueStr = inputEditModel.getValue();
+					Float value = this.makeInputValue(valueStr);
+					InputTypeData modulInputTypeData = inputEditModel.getModulInputTypeData();
+					
+					if (inputData != null)
+					{
+						// Update Input.
+						//inputData.setInputTypeData(inputTypeData);
+						inputData.setInputGenerator(inputGenerator);
+						inputData.setInputValue(value, valueStr);
+						inputData.setInputModulInputTypeData(modulInputTypeData);
+
+						// Update Timeline-Model.
+//						timelineGeneratorModel.setName(generatorName);
+//						timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
+//						timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
+					}
+					else
+					{
+//						InputData inputData = selectedGenerator.addInputGenerator(inputGenerator, inputTypeData, 
+//																				  inputGeneratorValue, inputGeneratorValueStr,
+//																				  inputModulInputTypeData);
+//						
+//						this.mainPageData.getGeneratorInputsData().setSelectedInputData(inputData);
+					}
+				}
+
+				private Float makeInputValue(String valueStr)
+				{
+					Float value;
+					if (valueStr != null)
+					{
+						if (valueStr.length() > 0)
+						{	
+							try
+							{
+								value = Float.valueOf(valueStr);
+							}
+							catch (java.lang.NumberFormatException ex)
+							{
+								// Ignore and use String.
+								value = null;
+							}
+						}
+						else
+						{
+							value = null;
+						}
+					}
+					else
+					{
+						value = null;
+					}
+					return value;
+				}
+		 	}
+		);
 		//==========================================================================================
 	}
 

@@ -115,4 +115,28 @@ public class InputSelectModel
 		return this.selectedRowNoChangedNotifier;
 	}
 
+	/**
+	 * @return
+	 * 			the selected Input Data.
+	 */
+	public InputData getSelectedRow()
+	{
+		InputData inputData;
+		
+		Integer selectedRowNo = this.getSelectedRowNo();
+		
+		if (selectedRowNo != null)
+		{
+			InputsTabelModel inputsTabelModel = this.getInputsTabelModel();
+		
+			inputData = inputsTabelModel.getRow(selectedRowNo);
+		}
+		else
+		{
+			inputData = null;
+		}
+		
+		return inputData;
+	}
+
 }

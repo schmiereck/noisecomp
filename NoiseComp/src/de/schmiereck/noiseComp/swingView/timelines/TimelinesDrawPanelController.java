@@ -8,7 +8,6 @@ import java.util.Iterator;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
-import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 
 /**
@@ -51,8 +50,8 @@ public class TimelinesDrawPanelController
 	 * @param inputEditModel 
 	 * 			is the Input-Edit Model.
 	 */
-	public TimelinesDrawPanelController(ModulesTreeModel modulesTreeModel,
-	                                    InputEditModel inputEditModel)
+	public TimelinesDrawPanelController(ModulesTreeModel modulesTreeModel)
+	                                    //InputEditModel inputEditModel)
 	{
 		//==========================================================================================
 		this.modulesTreeModel = modulesTreeModel;
@@ -73,12 +72,11 @@ public class TimelinesDrawPanelController
 				}
 	     	}
 	    );
-	    
-	    //------------------------------------------------------------------------------------------
-	    inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
-	    (
-	     	this.timelineGeneratorModelChangedListener
-	    );
+//	    //------------------------------------------------------------------------------------------
+//	    inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
+//	    (
+//	     	this.timelineGeneratorModelChangedListener
+//	    );
 	    //==========================================================================================
 	}
 
