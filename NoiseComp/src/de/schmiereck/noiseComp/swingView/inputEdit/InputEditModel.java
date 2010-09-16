@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 /**
@@ -24,23 +25,23 @@ public class InputEditModel
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
-	 * Generator Name.
+	 * Input Generator.
 	 */
-	private String value = null;
+	private InputTypeData inputTypeData = null;
 
 	/**
-	 * {@link #value} changed listeners.
+	 * {@link #inputTypeData} changed listeners.
 	 */
-	private final ModelPropertyChangedNotifier valueChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier inputTypeDataChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	private List<GeneratorSelectItem> generatorSelectItems = new Vector<GeneratorSelectItem>();
+	private List<InputTypeSelectItem> inputTypeSelectItems = new Vector<InputTypeSelectItem>();
 
 	/**
-	 * {@link #generatorSelectItems} changed listeners.
+	 * {@link #inputTypeSelectItems} changed listeners.
 	 */
-	private final ModelPropertyChangedNotifier generatorSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
-	
+	private final ModelPropertyChangedNotifier inputTypeSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
+
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
 	 * Input Generator.
@@ -52,6 +53,44 @@ public class InputEditModel
 	 */
 	private final ModelPropertyChangedNotifier inputGeneratorChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	private List<GeneratorSelectItem> generatorSelectItems = new Vector<GeneratorSelectItem>();
+
+	/**
+	 * {@link #generatorSelectItems} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier generatorSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	/**
+	 * Generator Name.
+	 */
+	private String value = null;
+
+	/**
+	 * {@link #value} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier valueChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	/**
+	 * Modul-Input Generator.
+	 */
+	private InputTypeData modulInputTypeData = null;
+
+	/**
+	 * {@link #modulInputTypeData} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier modulInputTypeDataChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	private List<ModulInputTypeSelectItem> modulInputTypeSelectItems = new Vector<ModulInputTypeSelectItem>();
+
+	/**
+	 * {@link #modulInputTypeSelectItems} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier modulInputTypeSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
+
 	//**********************************************************************************************
 	// Functions:
 
@@ -143,5 +182,143 @@ public class InputEditModel
 	public ModelPropertyChangedNotifier getInputGeneratorChangedNotifier()
 	{
 		return this.inputGeneratorChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputTypeSelectItems}.
+	 */
+	public List<InputTypeSelectItem> getInputTypeSelectItems()
+	{
+		return this.inputTypeSelectItems;
+	}
+
+	/**
+	 * @param inputTypeSelectItems 
+	 * 			to set {@link #inputTypeSelectItems}.
+	 */
+	public void setInputTypeSelectItems(List<InputTypeSelectItem> inputTypeSelectItems)
+	{
+		this.inputTypeSelectItems = inputTypeSelectItems;
+		
+		// Notify Listeners.
+		this.inputTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputTypeSelectItemsChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getInputTypeSelectItemsChangedNotifier()
+	{
+		return this.inputTypeSelectItemsChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputTypeData}.
+	 */
+	public InputTypeData getInputTypeData()
+	{
+		return this.inputTypeData;
+	}
+
+	/**
+	 * @param inputTypeData 
+	 * 			to set {@link #inputTypeData}.
+	 */
+	public void setInputTypeData(InputTypeData inputTypeData)
+	{
+		this.inputTypeData = inputTypeData;
+		
+		// Notify Listeners.
+		this.inputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputTypeDataChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getInputTypeDataChangedNotifier()
+	{
+		return this.inputTypeDataChangedNotifier;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulInputTypeSelectItems}.
+	 */
+	public List<ModulInputTypeSelectItem> getModulInputTypeSelectItems()
+	{
+		return this.modulInputTypeSelectItems;
+	}
+
+	/**
+	 * @param modulInputTypeSelectItems 
+	 * 			to set {@link #modulInputTypeSelectItems}.
+	 */
+	public void setModulInputTypeSelectItems(List<ModulInputTypeSelectItem> modulInputTypeSelectItems)
+	{
+		this.modulInputTypeSelectItems = modulInputTypeSelectItems;
+		
+		// Notify Listeners.
+		this.modulInputTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulInputTypeSelectItemsChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getModulInputTypeSelectItemsChangedNotifier()
+	{
+		return this.modulInputTypeSelectItemsChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulInputTypeData}.
+	 */
+	public InputTypeData getModulInputTypeData()
+	{
+		return this.modulInputTypeData;
+	}
+
+	/**
+	 * @param modulInputTypeData 
+	 * 			to set {@link #modulInputTypeData}.
+	 */
+	public void setModulInputTypeData(InputTypeData modulInputTypeData)
+	{
+		this.modulInputTypeData = modulInputTypeData;
+		
+		// Notify Listeners.
+		this.modulInputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulInputTypeDataChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getModulInputTypeDataChangedNotifier()
+	{
+		return this.modulInputTypeDataChangedNotifier;
 	}
 }

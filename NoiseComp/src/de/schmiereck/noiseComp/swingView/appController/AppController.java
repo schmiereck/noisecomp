@@ -126,7 +126,8 @@ public class AppController
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelController = 
-			new TimelinesDrawPanelController(inputEditController.getInputEditModel());
+			new TimelinesDrawPanelController(modulesTreeController.getModulesTreeModel(), 
+			                                 inputEditController.getInputEditModel());
 		
 		this.timelinesScrollPanelController.setTimelinesScrollPanelController(this.timelinesDrawPanelController);
 		
@@ -226,7 +227,10 @@ public class AppController
 					
 					ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
 					
+					Generator selectedTimelineGenerator = timelinesDrawPanelController.getSelectedTimelineGenerator();
+					
 					inputEditController.updateEditedInput(editedModulGeneratorTypeData,
+					                                      selectedTimelineGenerator,
 					                                      inputData);
 				}
 		 	}

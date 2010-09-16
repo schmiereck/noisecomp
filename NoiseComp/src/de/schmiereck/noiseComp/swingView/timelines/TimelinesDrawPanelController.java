@@ -3,8 +3,13 @@
  */
 package de.schmiereck.noiseComp.swingView.timelines;
 
+import java.util.Iterator;
+
+import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
+import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 
 /**
  * <p>
@@ -18,6 +23,8 @@ public class TimelinesDrawPanelController
 {
 	//**********************************************************************************************
 	// Fields:
+	
+	private final ModulesTreeModel modulesTreeModel;
 	
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
@@ -39,12 +46,17 @@ public class TimelinesDrawPanelController
 	/**
 	 * Constructor.
 	 * 
+	 * @param modulesTreeModel 
+	 * 			is the Modules-Tree Model.
 	 * @param inputEditModel 
 	 * 			is the Input-Edit Model.
 	 */
-	public TimelinesDrawPanelController(InputEditModel inputEditModel)
+	public TimelinesDrawPanelController(ModulesTreeModel modulesTreeModel,
+	                                    InputEditModel inputEditModel)
 	{
 		//==========================================================================================
+		this.modulesTreeModel = modulesTreeModel;
+		
 		this.timelinesDrawPanelModel = new TimelinesDrawPanelModel();
 		
 	    this.timelinesDrawPanelView = new TimelinesDrawPanelView(this.timelinesDrawPanelModel);
@@ -116,5 +128,37 @@ public class TimelinesDrawPanelController
 	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener()
 	{
 		return this.timelineGeneratorModelChangedListener;
+	}
+
+	/**
+	 * @return
+	 * 			the Selected Timeline Generator.
+	 */
+	public Generator getSelectedTimelineGenerator()
+	{
+		Generator selectedGenerator;
+		
+		TimelineGeneratorModel selectedTimelineGeneratorModel = this.timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+		
+		String selectedTimelineGeneratorName = selectedTimelineGeneratorModel.getName();
+		
+		ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
+		
+		selectedGenerator = null;
+		
+		Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
+		
+		while (generatorsIterator.hasNext())
+		{
+			Generator generator = generatorsIterator.next();
+			
+			if (generator.getName().equals(selectedTimelineGeneratorName))
+			{
+				selectedGenerator = generator;
+				break;
+			}
+		}
+		
+		return selectedGenerator;
 	}
 }

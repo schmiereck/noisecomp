@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
 import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
@@ -33,9 +34,9 @@ extends BasicEditView
 	private final InputEditModel inputEditModel;
 	
 	private final JComboBox generatorComboBox;
-	private final JComboBox typeComboBox;
+	private final JComboBox inputTypeComboBox;
 	private final JTextField valueTextField;
-	private final JComboBox modulInputComboBox;
+	private final JComboBox modulInputTypeComboBox;
 	
 	/**
 	 * Update Button.
@@ -61,7 +62,58 @@ extends BasicEditView
 		
 		//------------------------------------------------------------------------------------------
 		{
-			this.generatorComboBox = this.addComboBox(0, "Generator:");
+			this.inputTypeComboBox = this.addComboBox(0, "Input-Type:");
+			
+			inputEditModel.getInputTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						inputTypeComboBox.removeAllItems();
+						
+						if (inputEditModel.getInputTypeSelectItems() != null)
+						{
+							for (InputTypeSelectItem inputTypeSelectItem : inputEditModel.getInputTypeSelectItems())
+							{
+								inputTypeComboBox.addItem(inputTypeSelectItem);
+							}
+						}
+					}
+			 	}
+			);
+			inputEditModel.getInputTypeDataChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						InputTypeSelectItem inputTypeSelectItem = null;
+						
+						InputTypeData inputTypeData = inputEditModel.getInputTypeData();
+
+						List<InputTypeSelectItem> inputTypeSelectItems = inputEditModel.getInputTypeSelectItems();
+						if (inputTypeSelectItems != null)
+						{
+							for (InputTypeSelectItem inputTypeSelectItem2 : inputTypeSelectItems)
+							{
+								if (inputTypeSelectItem2.getInputTypeData() == inputTypeData)
+								{
+									inputTypeSelectItem = inputTypeSelectItem2;
+									break;
+								}
+							}
+						}
+						inputTypeComboBox.setSelectedItem(inputTypeSelectItem);
+					}
+			 	}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.generatorComboBox = this.addComboBox(1, "Generator:");
 			
 			inputEditModel.getGeneratorSelectItemsChangedNotifier().addModelPropertyChangedListener
 			(
@@ -113,21 +165,6 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.typeComboBox = this.addComboBox(1, "Type:");
-			
-			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
-			(
-			 	new ModelPropertyChangedListener()
-			 	{
-					@Override
-					public void notifyModelPropertyChanged()
-					{
-						//typeComboBox.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
-					}
-			 	}
-			);
-		}
-		{
 			this.valueTextField = this.addTextField(2, "Value:");
 			
 			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
@@ -144,20 +181,56 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.modulInputComboBox = this.addComboBox(3, "Modul-Input:");
+			this.modulInputTypeComboBox = this.addComboBox(3, "Modul-Input-Type:");
 			
-			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
+			inputEditModel.getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						//modulInputComboBox.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
+						modulInputTypeComboBox.removeAllItems();
+						
+						if (inputEditModel.getModulInputTypeSelectItems() != null)
+						{
+							for (ModulInputTypeSelectItem modulInputTypeSelectItem : inputEditModel.getModulInputTypeSelectItems())
+							{
+								modulInputTypeComboBox.addItem(modulInputTypeSelectItem);
+							}
+						}
+					}
+			 	}
+			);
+			inputEditModel.getModulInputTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						ModulInputTypeSelectItem modulInputTypeSelectItem = null;
+						
+						InputTypeData inputTypeData = inputEditModel.getModulInputTypeData();
+
+						List<ModulInputTypeSelectItem> modulInputTypeSelectItems = inputEditModel.getModulInputTypeSelectItems();
+						if (modulInputTypeSelectItem != null)
+						{
+							for (ModulInputTypeSelectItem modulInputTypeSelectItem2 : modulInputTypeSelectItems)
+							{
+								if (modulInputTypeSelectItem2.getInputTypeData() == inputTypeData)
+								{
+									modulInputTypeSelectItem = modulInputTypeSelectItem2;
+									break;
+								}
+							}
+						}
+						modulInputTypeComboBox.setSelectedItem(modulInputTypeSelectItem);
 					}
 			 	}
 			);
 		}
+		//------------------------------------------------------------------------------------------
 		{
 			this.updateButton = new JButton("Update");
 			
@@ -186,11 +259,11 @@ extends BasicEditView
 
 	/**
 	 * @return 
-	 * 			returns the {@link #typeComboBox}.
+	 * 			returns the {@link #inputTypeComboBox}.
 	 */
-	public JComboBox getTypeComboBox()
+	public JComboBox getInputTypeComboBox()
 	{
-		return this.typeComboBox;
+		return this.inputTypeComboBox;
 	}
 
 	/**
@@ -204,10 +277,10 @@ extends BasicEditView
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputComboBox}.
+	 * 			returns the {@link #modulInputTypeComboBox}.
 	 */
-	public JComboBox getModulInputComboBox()
+	public JComboBox getModulInputTypeComboBox()
 	{
-		return this.modulInputComboBox;
+		return this.modulInputTypeComboBox;
 	}
 }
