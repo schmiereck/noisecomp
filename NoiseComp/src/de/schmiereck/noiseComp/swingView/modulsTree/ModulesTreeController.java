@@ -8,6 +8,7 @@ import java.util.Iterator;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -49,8 +50,8 @@ public class ModulesTreeController
 	public ModulesTreeController(final AppController appController)
 	{
 		//==========================================================================================
-		this.modulesTreeView = new ModulesTreeView();
 		this.modulesTreeModel = new ModulesTreeModel();
+		this.modulesTreeView = new ModulesTreeView(this.modulesTreeModel);
 		
 		createNodes(this.modulesTreeView);
 		
@@ -131,11 +132,11 @@ public class ModulesTreeController
 		//==========================================================================================
 //		ModulGeneratorTypeData editedModulGeneratorTypeData = this.appModel.getEditedModulGeneratorTypeData();
 		
+		TreePath treePath = this.modulesTreeView.searchModulTreeNode(editedModulGeneratorTypeData);
+		
+		DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)treePath.getLastPathComponent();
+		
 		DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
-		
-		DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)treeModel.getRoot();
-		
-		DefaultMutableTreeNode treeNode = this.searchModulTreeNode(rootTreeNode, editedModulGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		treeModel.nodeChanged(treeNode);
@@ -144,36 +145,6 @@ public class ModulesTreeController
 //		this.modulesTree.repaint();
 		
 		//==========================================================================================
-	}
-
-	/**
-	 * @param rootTreeNode
-	 * @param modulGeneratorTypeData
-	 */
-	private DefaultMutableTreeNode searchModulTreeNode(DefaultMutableTreeNode rootTreeNode, 
-	                                                   ModulGeneratorTypeData modulGeneratorTypeData)
-	{
-		DefaultMutableTreeNode retTreeNode;
-		
-		Object userObject = rootTreeNode.getUserObject();
-		
-		if (modulGeneratorTypeData == userObject)
-		{
-			retTreeNode = rootTreeNode;
-		}
-		else
-		{
-			retTreeNode = null;
-			
-			for (int childPos = 0; childPos < rootTreeNode.getChildCount(); childPos++)
-			{
-				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)rootTreeNode.getChildAt(childPos);
-				
-				retTreeNode = this.searchModulTreeNode(treeNode, modulGeneratorTypeData);
-			}
-		}
-		
-		return retTreeNode;
 	}
 
 	/**

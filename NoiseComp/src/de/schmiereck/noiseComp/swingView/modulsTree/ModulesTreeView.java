@@ -11,11 +11,12 @@ import java.util.Vector;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 
 /**
@@ -36,6 +37,11 @@ implements EditModuleChangedListener
 	// Fields:
 	
 	/**
+	 * Modules Tree Model.
+	 */
+	private final ModulesTreeModel modulesTreeModel;
+	
+	/**
 	 * Do Edit-Module Listeners.
 	 */
 	private List<DoEditModuleListener> doEditModuleListeners = new Vector<DoEditModuleListener>();
@@ -46,10 +52,14 @@ implements EditModuleChangedListener
 	/**
 	 * Constructor.
 	 * 
+	 * @param modulesTreeModel
+	 * 			is the Modules Tree Model.
 	 */
-	public ModulesTreeView()
+	public ModulesTreeView(final ModulesTreeModel modulesTreeModel)
 	{
 		//==========================================================================================
+		this.modulesTreeModel = modulesTreeModel;
+		
 		this.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
 		this.setCellRenderer(new DefaultTreeCellRenderer()
@@ -74,7 +84,19 @@ implements EditModuleChangedListener
 				{
 					GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 					
-					this.setText(generatorTypeData.getGeneratorTypeName());
+					String labelDecoration;
+					
+					// Edited?
+					if (modulesTreeModel.getEditedModulGeneratorTypeData() == generatorTypeData)
+					{
+						labelDecoration = " *";
+					}	
+					else
+					{
+						labelDecoration = "";
+					}	
+					
+					this.setText(generatorTypeData.getGeneratorTypeName() + labelDecoration);
 				}
 				
 				return this;
@@ -127,6 +149,72 @@ implements EditModuleChangedListener
 	@Override
 	public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel)
 	{
+		ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+		
+		TreePath treePath = this.searchModulTreeNode(editedModulGeneratorTypeData);
+		
+//		DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)treePath.getLastPathComponent();
+			
+		this.setSelectionPath(treePath);
+	}
+
+	/**
+	 * @param editedModulGeneratorTypeData
+	 * @return
+	 */
+	public TreePath searchModulTreeNode(ModulGeneratorTypeData editedModulGeneratorTypeData)
+	{
+		DefaultTreeModel treeModel = (DefaultTreeModel)this.getModel();
+		
+		DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)treeModel.getRoot();
+		
+		ModulTreePath modulTreePath = this.searchModulTreeNode(rootTreeNode, editedModulGeneratorTypeData);
+		
+		TreePath treePath = modulTreePath.createTreePath();
+		
+		return treePath;
+	}
+
+	/**
+	 * Search given generator starting from given node.
+	 * 
+	 * @param rootTreeNode
+	 * 			is the node.
+	 * @param modulGeneratorTypeData
+	 * 			is the generator.
+	 * @return
+	 * 			the path or <code>null</code>.
+	 */
+	private ModulTreePath searchModulTreeNode(DefaultMutableTreeNode rootTreeNode, 
+	                                          ModulGeneratorTypeData modulGeneratorTypeData)
+	{
+		ModulTreePath retTreePath;
+		
+		Object userObject = rootTreeNode.getUserObject();
+		
+		if (modulGeneratorTypeData == userObject)
+		{
+			retTreePath = new ModulTreePath(rootTreeNode);//rootTreePath.pathByAddingChild(userObject);
+		}
+		else
+		{
+			retTreePath = null;
+			
+			for (int childPos = 0; childPos < rootTreeNode.getChildCount(); childPos++)
+			{
+				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)rootTreeNode.getChildAt(childPos);
+				
+				ModulTreePath treePath = this.searchModulTreeNode(treeNode, modulGeneratorTypeData);
+				
+				if (treePath != null)
+				{
+					retTreePath = new ModulTreePath(rootTreeNode, treePath);
+					break;
+				}
+			}
+		}
+		
+		return retTreePath;
 	}
 	
 }

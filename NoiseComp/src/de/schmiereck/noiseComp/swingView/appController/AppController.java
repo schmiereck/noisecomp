@@ -147,12 +147,6 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		this.modulInputTypesController = new ModulInputTypesController(this);
 		
-//		this.appView.add(this.modulInputsController.getModulInputsView());
-		
-//		//------------------------------------------------------------------------------------------
-//		this.appModel.addEditModuleChangedListener(this.appView);
-//		
-		
 		//==========================================================================================
 		this.modulesTreeController.getModulesTreeView().addDoEditModuleListener
 		(
