@@ -10,7 +10,10 @@ import java.util.Iterator;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.soundData.SoundData;
+import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
@@ -82,6 +85,8 @@ public class AppController
 	 * App View
 	 */
 	private final AppView appView;
+	
+	private SoundSchedulerLogic soundSchedulerLogic = null;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -294,6 +299,43 @@ public class AppController
 	    (
 	    	timelinesDrawPanelController.getTimelineGeneratorModelChangedListener()
 	    );
+	    //------------------------------------------------------------------------------------------
+		// http://download.oracle.com/javase/tutorial/uiswing/misc/action.html
+		this.appView.getPlayButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					playSound();
+				}
+		 	}
+		);
+	    //------------------------------------------------------------------------------------------
+		this.appView.getPauseButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					pauseSound();
+				}
+		 	}
+		);
+	    //------------------------------------------------------------------------------------------
+		this.appView.getStopButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					stopSound();
+				}
+		 	}
+		);
 		//==========================================================================================
 	}
 
@@ -349,5 +391,43 @@ public class AppController
 	public AppView getAppView()
 	{
 		return this.appView;
+	}
+
+	public void playSound()
+	{
+		if (this.soundSchedulerLogic == null)
+		{
+			SoundData soundData = SwingMain.getSoundData();
+			
+			this.soundSchedulerLogic = new SoundSchedulerLogic(25, soundData);
+			
+			this.soundSchedulerLogic.startThread();
+
+			this.soundSchedulerLogic.startPlayback();
+		}
+		else
+		{	
+			this.soundSchedulerLogic.resumePlayback();
+		}
+	}
+
+	public void stopSound()
+	{
+		if (this.soundSchedulerLogic != null)
+		{
+			this.soundSchedulerLogic.stopPlayback();
+			
+			this.soundSchedulerLogic.stopThread();
+			
+			this.soundSchedulerLogic = null;
+		}
+	}
+
+	public void pauseSound()
+	{
+		if (this.soundSchedulerLogic != null)
+		{
+			this.soundSchedulerLogic.pausePlayback();
+		}
 	}
 }

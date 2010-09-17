@@ -3,14 +3,19 @@
  */
 package de.schmiereck.noiseComp.swingView.appView;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.net.URL;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
 
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditView;
@@ -76,6 +81,12 @@ extends JFrame
 	 * Timeline-Edit Split-Pane.
 	 */
 	private final JSplitPane timelineSplitPane;
+
+	private JButton playButton;
+
+	private JButton	pauseButton;
+
+	private JButton	stopButton;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -116,6 +127,15 @@ extends JFrame
 //		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
 		//==========================================================================================
+		// http://download.oracle.com/javase/tutorial/uiswing/components/toolbar.html
+		
+		JToolBar playToolBar = new JToolBar("Play");
+        
+		this.addPlayButtons(playToolBar);
+	    
+		this.add(playToolBar, BorderLayout.PAGE_START);
+
+		//------------------------------------------------------------------------------------------
 		// Modul Select Panel:
 		
 		this.modulesTreeScrollPane = new JScrollPane();
@@ -236,5 +256,95 @@ extends JFrame
 	{
 //		this.modulesTreeScrollPane = new JScrollPane(this.modulesTreeView);
 		this.modulesTreeScrollPane.setViewportView(modulesTreeView);
+	}
+
+	/**
+	 * @param toolBar
+	 * 			is the play Tool-bar.
+	 */
+	private final void addPlayButtons(JToolBar toolBar)
+	{
+		//==========================================================================================
+		// Play-Button:
+		{
+			this.playButton = 
+				this.makeNavigationButton("playIcon", 
+				                          //"PLAY_CMD",
+				                          "Play edited modul.",
+				                          "Play");
+			
+		    toolBar.add(this.playButton);
+		}
+		//------------------------------------------------------------------------------------------
+		// Pause-Button:
+		{
+			this.pauseButton = 
+				this.makeNavigationButton("pauseIcon", 
+				                          //"PAUSE_CMD",
+				                          "Pause edited modul.",
+				                          "Pause");
+			
+		    toolBar.add(this.pauseButton);
+		}
+		//------------------------------------------------------------------------------------------
+		// Stop-Button:
+		{
+			this.stopButton = 
+				this.makeNavigationButton("stopIcon", 
+				                          //"STOP_CMD",
+				                          "Stop edited modul.",
+				                          "Stop");
+			
+		    toolBar.add(this.stopButton);
+		}
+		//==========================================================================================
+	}
+	
+	private JButton makeNavigationButton(String imageName,
+	                                     //String actionCommand,
+	                                     String toolTipText,
+	                                     String altText) 
+	{
+		//==========================================================================================
+	    // Look for the image.
+	    String imgLocation = "images/" + imageName + ".gif";
+	    
+	    URL imageURL = AppView.class.getResource(imgLocation);
+
+	    // Create and initialize the button.
+	    JButton button = new JButton();
+	    //button.setActionCommand(actionCommand);
+	    button.setToolTipText(toolTipText);
+	    //button.addActionListener(this);
+
+	    // Image found?
+	    if (imageURL != null) 
+	    {
+	    	button.setIcon(new ImageIcon(imageURL, altText));
+	    } 
+	    else 
+	    {
+	    	// No Image found:
+	        button.setText(altText);
+	        System.err.println("Resource not found: " + imgLocation);
+	    }
+
+		//==========================================================================================
+	    return button;
+	}
+
+	public JButton getPlayButton()
+	{
+		return this.playButton;
+	}
+
+	public JButton getPauseButton()
+	{
+		return this.pauseButton;
+	}
+
+	public JButton getStopButton()
+	{
+		return this.stopButton;
 	}
 }

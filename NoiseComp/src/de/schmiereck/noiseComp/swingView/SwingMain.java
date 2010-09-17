@@ -27,7 +27,9 @@ public class SwingMain
 	//**********************************************************************************************
 	// Fields:
 
-	private static SoundSourceSchedulerLogic soundSourceSchedulerLogic = null;
+	private static SoundData soundData;
+	
+	private static SoundSourceSchedulerLogic soundSourceSchedulerLogic;
 
 	//**********************************************************************************************
 	// Functions:
@@ -49,7 +51,7 @@ public class SwingMain
 		//------------------------------------------------------------------------------------------
 		SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
 		
-		SoundData soundData = new SoundData(line, soundSourceLogic);
+		soundData = new SoundData(line, soundSourceLogic);
 		
 		//------------------------------------------------------------------------------------------
 		final ModulGeneratorTypeData mainModulGeneratorTypeData = 
@@ -61,7 +63,7 @@ public class SwingMain
 		
 		//------------------------------------------------------------------------------------------
 	
-		soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(16);
+		soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(32);
 		
 		// Start scheduled polling with the new SoundSource.
 		soundSourceSchedulerLogic.setSoundSourceLogic(soundSourceLogic);
@@ -109,5 +111,10 @@ public class SwingMain
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		
 		//==========================================================================================
+	}
+
+	public static SoundData getSoundData()
+	{
+		return soundData;
 	}
 }

@@ -72,7 +72,8 @@ extends PipelineSchedulerLogic
 				
 				int nRead = soundBufferManager.read(abData);
 
-				int	nWritten = line.write(abData, 0, nRead);
+				//int	nWritten = 
+					line.write(abData, 0, nRead);
 				
 				//System.out.println("actualWaitPerFramesMillis: " + actualWaitPerFramesMillis + ", nWritten:" + nWritten + ", nRead: " + nRead);
 				//System.out.println("nRead:" + nRead);

@@ -11,6 +11,8 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
  * Stellt Funktionen zur Echtzeit Wiedergabe des Signals des Output-Generators zur Verfügung.
  * Verwaltet die für die Ausgabe nötigen Puffer-Objekte.
  *
+ * TODO Knacksen bei pause und resume: http://code.google.com/p/pulpcore/source/browse/src/pulpcore/platform/applet/JavaSound.java?spec=svn904fbee4f0e91c96a9e983eb6dd98f8a99d11039&r=e4d270059719429e66f7fd1a53a445a1b2101f2d#472
+ *
  * @author smk
  * @version 25.01.2004
  */
@@ -134,6 +136,8 @@ public class SoundData
 	public void pausePlayback()
 	{
 		SourceDataLine line = this.line;
+
+		line.flush();
 		
 		line.stop();
 	}
