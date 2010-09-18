@@ -145,6 +145,8 @@ extends JFrame
 		
 		this.inputSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		this.inputSplitPane.setOneTouchExpandable(true);
+		// All Space for Input-Select.
+		this.inputSplitPane.setResizeWeight(1.0D);
 		
 		//------------------------------------------------------------------------------------------
 		// Timeline-Edit Split-Pane:
@@ -231,12 +233,28 @@ extends JFrame
 		dimTable.setSize(dimTable.getWidth() + vScrollBarWidth, 
 		                 dimTable.getHeight());
 
-		scrollpane.setPreferredSize(new Dimension(dimTable.width, 100));
-		scrollpane.setMaximumSize(new Dimension(dimTable.width, 100));
-		scrollpane.setMinimumSize(new Dimension(dimTable.width, 100));
+//		scrollpane.setPreferredSize(new Dimension(dimTable.width, 100));
+//		scrollpane.setMaximumSize(new Dimension(dimTable.width, 100));
+//		scrollpane.setMinimumSize(new Dimension(dimTable.width, 100));
 		
 		scrollpane.setBorder(BorderFactory.createTitledBorder("Inputs:"));
 		
+//		JToolBar toolBar = new JToolBar();
+//		
+//		JButton button = this.makeNavigationButton("playIcon", 
+//		                          //"PLAY_CMD",
+//		                          "Play edited modul.",
+//		                          "Play");
+//	
+//		toolBar.add(button);
+//		
+//		inputSelectView.add(toolBar, BorderLayout.PAGE_START);
+		
+		//------------------------------------------------------------------------------------------
+//		JPanel panel = new JPanel();
+//		
+//		panel.add(scrollpane, BorderLayout.WEST);
+				
 		this.inputSplitPane.setTopComponent(scrollpane);
 	}
 

@@ -24,10 +24,16 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 public class InputsTabelModel
 extends AbstractTableModel
 {
+	//**********************************************************************************************
+	// Fields:
+
 	private String columnNames[] = new String[]{"Name", "Value"};
 	
 	private List<InputData> inputs = new Vector<InputData>();
 	
+	//**********************************************************************************************
+	// Functions:
+
 	@Override
 	public int getColumnCount() 
 	{ 
@@ -39,6 +45,13 @@ extends AbstractTableModel
 		this.inputs.clear();
 		
 		this.fireTableDataChanged();
+	}
+	
+	public void removeInput(int rowNo) 
+	{ 
+		this.inputs.remove(rowNo);
+		
+		this.fireTableRowsDeleted(rowNo, rowNo);
 	}
 	
 	@Override

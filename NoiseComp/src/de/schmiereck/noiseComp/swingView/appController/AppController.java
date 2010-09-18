@@ -12,7 +12,9 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
+import de.schmiereck.noiseComp.swingView.InputUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.MultiValue;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
@@ -21,6 +23,7 @@ import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditView;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
+import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesController;
@@ -238,19 +241,7 @@ public class AppController
 					
 					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
 					
-					Float floatValue;
-					String stringValue;
-					
-					try
-					{
-						floatValue = Float.parseFloat(value);
-						stringValue = null;
-					}
-					catch (NumberFormatException ex)
-					{
-						floatValue = null;
-						stringValue = value;
-					}
+					MultiValue multiValue = InputUtils.makeMultiValue(value);
 					
 					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
 					
@@ -260,7 +251,7 @@ public class AppController
 						
 						InputData inputData = inputsTabelModel.getRow(selectedRowNo);
 						
-						inputData.setInputValue(floatValue, stringValue);
+						inputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
 					}
 					else
 					{
@@ -269,6 +260,44 @@ public class AppController
 					
 					inputEditModel.setValue(value);
 				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Input-Edit Remove-Input-Button: Update Input-Select-Model and Generator-Input-Data:
+		
+		inputEditController.getInputEditView().getRemoveInputButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+					
+					if (selectedRowNo != null)
+					{
+						InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+					
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Generator-Input-Data:
+						
+						InputData inputData = inputsTabelModel.getRow(selectedRowNo);
+						
+						Generator ownerGenerator = inputData.getOwnerGenerator();
+						
+						ownerGenerator.removeInput(inputData);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Input-Select-Model:
+						
+						inputsTabelModel.removeInput(selectedRowNo);
+
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+			 	}
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
