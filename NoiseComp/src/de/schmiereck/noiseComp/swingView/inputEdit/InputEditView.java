@@ -38,7 +38,7 @@ extends BasicEditView
 
 	private final InputEditModel inputEditModel;
 	
-	private final JComboBox generatorComboBox;
+	private final JComboBox inputGeneratorComboBox;
 	private final JComboBox inputTypeComboBox;
 	private final JTextField valueTextField;
 	private final JComboBox modulInputTypeComboBox;
@@ -140,7 +140,7 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.generatorComboBox = this.addComboBox(3, "Generator:");
+			this.inputGeneratorComboBox = this.addComboBox(3, "Generator:");
 			
 			inputEditModel.getGeneratorSelectItemsChangedNotifier().addModelPropertyChangedListener
 			(
@@ -149,14 +149,14 @@ extends BasicEditView
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						//generatorComboBox.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
-						generatorComboBox.removeAllItems();
+						//inputGeneratorComboBox.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
+						inputGeneratorComboBox.removeAllItems();
 						
 						if (inputEditModel.getGeneratorSelectItems() != null)
 						{
 							for (GeneratorSelectItem generatorSelectItem : inputEditModel.getGeneratorSelectItems())
 							{
-								generatorComboBox.addItem(generatorSelectItem);
+								inputGeneratorComboBox.addItem(generatorSelectItem);
 							}
 						}
 					}
@@ -185,7 +185,7 @@ extends BasicEditView
 								}
 							}
 						}
-						generatorComboBox.setSelectedItem(inputGeneratorSelectItem);
+						inputGeneratorComboBox.setSelectedItem(inputGeneratorSelectItem);
 					}
 			 	}
 			);
@@ -277,11 +277,11 @@ extends BasicEditView
 
 	/**
 	 * @return 
-	 * 			returns the {@link #generatorComboBox}.
+	 * 			returns the {@link #inputGeneratorComboBox}.
 	 */
-	public JComboBox getGeneratorComboBox()
+	public JComboBox getInputGeneratorComboBox()
 	{
-		return this.generatorComboBox;
+		return this.inputGeneratorComboBox;
 	}
 
 	/**

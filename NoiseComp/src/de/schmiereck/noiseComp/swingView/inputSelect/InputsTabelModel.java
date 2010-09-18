@@ -52,6 +52,23 @@ extends AbstractTableModel
 		
 		this.fireTableRowsDeleted(rowNo, rowNo);
 	}
+
+	/**
+	 * @param inputSelectEntryModel
+	 * 			is the Input-Select-Entry Model.
+	 * @return
+	 * 			the row number.
+	 */
+	public int addInputData(InputSelectEntryModel inputSelectEntryModel)
+	{
+		this.inputs.add(inputSelectEntryModel);
+		
+		int rowNo = this.inputs.size() - 1;
+		
+		this.fireTableRowsInserted(rowNo, rowNo);
+		
+		return rowNo;
+	}
 	
 	@Override
 	public int getRowCount() 
@@ -97,14 +114,5 @@ extends AbstractTableModel
 		}
 		
 		return value; //new Integer(row * col); 
-	}
-
-	/**
-	 * @param inputSelectEntryModel
-	 * 			is the Input-Select-Entry Model.
-	 */
-	public void addInputData(InputSelectEntryModel inputSelectEntryModel)
-	{
-		this.inputs.add(inputSelectEntryModel);
 	}
 }

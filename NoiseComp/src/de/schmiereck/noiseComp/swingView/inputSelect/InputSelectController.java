@@ -5,8 +5,11 @@ package de.schmiereck.noiseComp.swingView.inputSelect;
 
 import java.util.Iterator;
 
+import javax.swing.ListSelectionModel;
+
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelines.SelectedTimelineChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
@@ -51,11 +54,10 @@ public class InputSelectController
 	{
 		//==========================================================================================
 		this.inputSelectModel = new InputSelectModel();
-
 		this.inputSelectView = new InputSelectView(this.inputSelectModel);
 
 		//------------------------------------------------------------------------------------------
-		// Selected Timeline changed -> updated model:
+		// Selected Timeline changed -> update Input-Select-Model:
 		
 		timelinesDrawPanelModel.addSelectedTimelineChangedListener
 		(
@@ -93,6 +95,31 @@ public class InputSelectController
 							
 							inputSelectModel.addInputData(inputSelectEntryModel);
 						}
+					}
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Input-Select-Model Selected-Row changed -> update Input-Select-View:
+		
+		this.inputSelectModel.getSelectedRowNoChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+					
+					ListSelectionModel selectionModel = inputSelectView.getSelectionModel();
+					
+					if (selectedRowNo != null)
+					{
+						selectionModel.setSelectionInterval(selectedRowNo, selectedRowNo);
+					}
+					else
+					{
+						selectionModel.clearSelection();
 					}
 				}
 		 	}

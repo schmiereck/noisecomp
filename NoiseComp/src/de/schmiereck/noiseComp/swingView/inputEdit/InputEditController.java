@@ -155,10 +155,13 @@ public class InputEditController
 	 * 			is the Selected Timeline Generator.
 	 * @param inputData
 	 * 			is the edited input data.
+	 * @param editInput
+	 * 			<code>true</code> if a input edited.
 	 */
 	public void updateEditedInput(ModulGeneratorTypeData editedModulGeneratorTypeData, 
 	                              Generator selectedTimelineGenerator, 
-	                              InputData inputData)
+	                              InputData inputData,
+	                              boolean editInput)
 	{
 		//==========================================================================================
 		List<InputTypeSelectItem> inputTypeSelectItems;
@@ -169,7 +172,7 @@ public class InputEditController
 		List<ModulInputTypeSelectItem> modulInputTypeSelectItems;
 		InputTypeData modulInputTypeData;
 		
-		if (inputData != null)
+		if (editInput == true)
 		{
 			{
 				inputTypeSelectItems = new Vector<InputTypeSelectItem>();
@@ -187,7 +190,14 @@ public class InputEditController
 					}
 				}
 			}
-			inputTypeData = inputData.getInputTypeData();
+			if (inputData != null)
+			{
+				inputTypeData = inputData.getInputTypeData();
+			}
+			else
+			{
+				inputTypeData = null;
+			}
 			{
 				generatorSelectItems = new Vector<GeneratorSelectItem>();
 				Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
@@ -203,8 +213,16 @@ public class InputEditController
 					}
 				}
 			}
-			inputGenerator = inputData.getInputGenerator();
-			value = OutputUtils.makeFloatText(inputData.getInputValue());
+			if (inputData != null)
+			{
+				inputGenerator = inputData.getInputGenerator();
+				value = OutputUtils.makeFloatText(inputData.getInputValue());
+			}
+			else
+			{
+				inputGenerator = null;
+				value = null;
+			}
 			{
 				modulInputTypeSelectItems = new Vector<ModulInputTypeSelectItem>();
 				Iterator<InputTypeData> modulInputTypeIterator = editedModulGeneratorTypeData.getInputTypesIterator();
@@ -220,7 +238,14 @@ public class InputEditController
 					}
 				}
 			}
-			modulInputTypeData = inputData.getInputModulInputTypeData();
+			if (inputData != null)
+			{
+				modulInputTypeData = inputData.getInputModulInputTypeData();
+			}
+			else
+			{
+				modulInputTypeData = null;
+			}
 		}
 		else
 		{

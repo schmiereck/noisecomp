@@ -43,10 +43,7 @@ public class InputSelectEntryModel
 	{
 		this.inputData = inputData;
 		
-		InputTypeData inputTypeData = inputData.getInputTypeData();
-		this.inputTypeName = inputTypeData.getInputTypeName();
-
-		this.inputLabel = this.makeInputLabel(inputData);
+		this.updateInputData();
 	}
 
 	/**
@@ -145,6 +142,28 @@ public class InputSelectEntryModel
 	public void setInputData(InputData inputData)
 	{
 		this.inputData = inputData;
+	}
+	
+	public void updateInputData()
+	{
+		String inputTypeName;
+		String inputLabel;
+		
+		if (inputData != null)
+		{
+			InputTypeData inputTypeData = inputData.getInputTypeData();
+			inputTypeName = inputTypeData.getInputTypeName();
+			
+			inputLabel = this.makeInputLabel(inputData);
+		}
+		else
+		{
+			inputTypeName = null;
+			inputLabel = null;
+		}
+
+		this.inputTypeName = inputTypeName;
+		this.inputLabel = inputLabel;
 	}
 
 }

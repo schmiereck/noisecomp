@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.inputSelect;
 
+import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 
@@ -99,10 +100,13 @@ public class InputSelectModel
 	 */
 	public void setSelectedRowNo(Integer selectedRowNo)
 	{
-		this.selectedRowNo = selectedRowNo;
-		
-		// Notify listeners.
-		this.selectedRowNoChangedNotifier.notifyModelPropertyChangedListeners();
+		if (CompareUtils.compareWithNull(this.selectedRowNo, selectedRowNo) == false)
+		{
+			this.selectedRowNo = selectedRowNo;
+			
+			// Notify listeners.
+			this.selectedRowNoChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**

@@ -35,15 +35,15 @@ public class InputUtils
 	{
 		MultiValue multiValue = new MultiValue();
 		
+		multiValue.stringValue = value;
+
 		try
 		{
 			multiValue.floatValue = InputUtils.makeFloatValue(value);
-			multiValue.stringValue = null;
 		}
 		catch (NumberFormatException ex)
 		{
 			multiValue.floatValue = null;
-			multiValue.stringValue = value;
 		}
 		return multiValue;
 	}
