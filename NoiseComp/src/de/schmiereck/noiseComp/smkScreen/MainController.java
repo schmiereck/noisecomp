@@ -3,7 +3,6 @@ package de.schmiereck.noiseComp.smkScreen;
 import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogic;
@@ -91,7 +90,7 @@ public class MainController
 		ModulGeneratorTypeData mainModulGeneratorTypeData = 
 			StartupService.createDemoGenerators(soundData.getFrameRate());
 
-		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
+//		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
 		
 		//======================================================================
 		// Setup Desktop:

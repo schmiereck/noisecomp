@@ -18,6 +18,7 @@ public class SelectRemoveButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	@SuppressWarnings("unused")
 	private DesktopControllerData controllerData;
 	
 	private SelectGeneratorPageData selectGeneratorPageData;
@@ -31,8 +32,6 @@ public class SelectRemoveButtonActionLogicListener
 			DesktopControllerData controllerData,
 			SelectGeneratorPageData selectGeneratorPageData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 		this.selectGeneratorPageData = selectGeneratorPageData;

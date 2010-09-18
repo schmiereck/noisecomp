@@ -14,7 +14,10 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogi
 public class NewButtonActionLogicListener 
 implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
+	
+	@SuppressWarnings("unused")
 	private DesktopControllerData controllerData;
 	
 	/**
@@ -24,8 +27,6 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public NewButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 	}

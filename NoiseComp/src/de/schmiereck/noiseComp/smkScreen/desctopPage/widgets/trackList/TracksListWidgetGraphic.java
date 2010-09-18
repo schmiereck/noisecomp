@@ -183,10 +183,10 @@ extends ListWidgetGraphic
 		TracksListWidgetData tracksData = (TracksListWidgetData)listWidgetData;
 		TrackData trackData = (TrackData)entry;
 		
-		int posX = listWidgetData.getPosX();
-		int posY = listWidgetData.getPosY();
+//		int posX = listWidgetData.getPosX();
+//		int posY = listWidgetData.getPosY();
 		int sizeX = listWidgetData.getSizeX();
-		int sizeY = listWidgetData.getSizeY();
+//		int sizeY = listWidgetData.getSizeY();
 
 		boolean trackIsActive;
 		boolean generatorIsActive;
@@ -288,7 +288,7 @@ extends ListWidgetGraphic
 		// Zeitschritte:
 		g.setColor(desktopColors.getTimestepColor());
 		
-		float visibleTime = horizontalScrollEnd - horizontalScrollStart;
+//		float visibleTime = horizontalScrollEnd - horizontalScrollStart;
 		
 		for (float timePos = Math.round(horizontalScrollStart); timePos < horizontalScrollEnd; timePos += 1.0)
 		{
@@ -310,7 +310,7 @@ extends ListWidgetGraphic
 		TracksListWidgetData tracksData = (TracksListWidgetData)listWidgetData;
 		
 		float scaleX = tracksData.getGeneratorScaleX();
-		int labelSizeX = tracksData.getGeneratorsLabelSizeX();
+//		int labelSizeX = tracksData.getGeneratorsLabelSizeX();
 
 		// Generator Labels Lines:
 		g.setColor(Color.GRAY);

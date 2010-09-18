@@ -99,9 +99,9 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData#getListEntrysIterator()
 	 * @return the attribute {@link #inputs}.
 	 */
-	public Iterator getListEntrysIterator()
+	public Iterator<InputTypeData> getListEntrysIterator()
 	{
-		Iterator ret;
+		Iterator<InputTypeData> ret;
 		
 		if (this.inputTypesData != null)
 		{

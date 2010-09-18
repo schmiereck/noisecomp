@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.smkScreen.desctopPage.widgets;
 
 import java.util.Iterator;
+
 import de.schmiereck.dataTools.VectorHash;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.FocusedWidgetListenerInterface;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.SubmitWidgetListenerInterface;
@@ -30,7 +31,7 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 	/**
 	 * List of {@link SelectEntryData}-Objects.
 	 */
-	private VectorHash selectEntrys	= new VectorHash();
+	private VectorHash<Object, SelectEntryData> selectEntrys = new VectorHash<Object, SelectEntryData>();
 	
 	/**
 	 * Default Button, if the widget is submited.<br/>
@@ -106,7 +107,7 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 		{	
 			if (inputPos < this.selectEntrys.size())
 			{	
-				selectEntryData = (SelectEntryData)this.selectEntrys.get(inputPos);
+				selectEntryData = this.selectEntrys.get(inputPos);
 			}
 			else
 			{
@@ -138,11 +139,11 @@ implements FocusedWidgetListenerInterface, SubmitWidgetListenerInterface
 		
 		if (pos != -1)
 		{	
-			Iterator selectEntrysIterator = this.selectEntrys.iterator();
+			Iterator<SelectEntryData> selectEntrysIterator = this.selectEntrys.iterator();
 			
 			while (selectEntrysIterator.hasNext())
 			{
-				SelectEntryData selectEntryData = (SelectEntryData)selectEntrysIterator.next();
+				SelectEntryData selectEntryData = selectEntrysIterator.next();
 				
 				if (value == null)
 				{

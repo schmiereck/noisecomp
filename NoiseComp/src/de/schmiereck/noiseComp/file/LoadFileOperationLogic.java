@@ -13,7 +13,6 @@ import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
-import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -58,7 +57,7 @@ public class LoadFileOperationLogic
 		
 		Node noiseNode = XMLData.selectSingleNode(xmlDoc, "/noise");
 
-		String version = XMLData.selectSingleNodeText(noiseNode, "version");
+//		String version = XMLData.selectSingleNodeText(noiseNode, "version");
 		
 		//-----------------------------------------------------
 		// GeneratorTypesData:
@@ -153,7 +152,7 @@ public class LoadFileOperationLogic
 										 ModulGeneratorTypeData modulGeneratorTypeData) //, ModulGenerator parentModulGenerator)
 	{
 		// List with temporarely {@link LoadFileGeneratorNodeData}-Objects.
-		Vector loadFileGeneratorNodeDatas = new Vector();
+		Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas = new Vector<LoadFileGeneratorNodeData>();
 		
 		LoadFileOperationLogic.createGenerators(generatorTypesData,
 												rootNode, frameRate, //generators, 
@@ -206,6 +205,7 @@ public class LoadFileOperationLogic
 		return mainModulGeneratorTypeData;
 	}
 
+	@SuppressWarnings("unchecked")
 	private static GeneratorTypeData createGeneratorType(GeneratorTypesData generatorTypesData,
 														 GeneratorTypeNodesData generatorTypeNodesData,
 														 Node generatorTypeNode, 
@@ -218,7 +218,7 @@ public class LoadFileOperationLogic
 		String generatorTypeName = XMLData.selectSingleNodeText(generatorTypeNode, "name");
 		String generatorTypeDescription = XMLData.selectSingleNodeText(generatorTypeNode, "description");
 		
-		String generatorModulTypeName;	// Not realy needed, because 'generatorTypeName' should be the same.
+//		String generatorModulTypeName;	// Not realy needed, because 'generatorTypeName' should be the same.
 		
 		GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
 		
@@ -227,7 +227,7 @@ public class LoadFileOperationLogic
 			throw new RuntimeException("generator type \"" + generatorTypeClassName + "\" allready exist");
 		}
 		
-		Class generatorClass;
+		Class<? extends Generator> generatorClass;
 		try
 		{
 			int namePartPos = generatorClassName.indexOf("#");
@@ -235,14 +235,14 @@ public class LoadFileOperationLogic
 			// Class name with appended name of a generic modul type ?
 			if (namePartPos != -1)
 			{
-				generatorModulTypeName = generatorClassName.substring(namePartPos + 1);
+//				generatorModulTypeName = generatorClassName.substring(namePartPos + 1);
 				generatorClassName = generatorClassName.substring(0, namePartPos);
 			}
 			else
 			{
-				generatorModulTypeName = null;
+//				generatorModulTypeName = null;
 			}
-			generatorClass = Class.forName(generatorClassName);
+			generatorClass = (Class< ? extends Generator>)Class.forName(generatorClassName);
 		}
 		catch (ClassNotFoundException ex)
 		{
@@ -318,25 +318,26 @@ public class LoadFileOperationLogic
 		return generatorTypeData;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static GeneratorTypeData createGeneratorTypeData(String generatorTypeClassName, 
-															Class generatorClass, 
+															Class<? extends Generator> generatorClass, 
 															String generatorTypeName, 
 															String generatorTypeDescription)
 	{
 		GeneratorTypeData generatorTypeData = null;
 		
-		Class generatorTypeDataClass;
+		Class<? extends GeneratorTypeData> generatorTypeDataClass;
 		
 		try
 		{
-			generatorTypeDataClass = Class.forName(generatorTypeClassName);
+			generatorTypeDataClass = (Class< ? extends GeneratorTypeData>)Class.forName(generatorTypeClassName);
 		}
 		catch (ClassNotFoundException ex)
 		{
 			throw new RuntimeException("class not found: " + generatorTypeClassName, ex);
 		}
 		
-		Class[]	params		= new Class[3];
+		Class<?>[]	params		= new Class[3];
 		
 		params[0] = Class.class;	// generatorClass
 		params[1] = String.class;	// generatorTypeName
@@ -344,7 +345,7 @@ public class LoadFileOperationLogic
 		
 		try
 		{
-			Constructor generatorConstructor = generatorTypeDataClass.getConstructor(params);
+			Constructor<?> generatorConstructor = generatorTypeDataClass.getConstructor(params);
 			Object[]	args	= new Object[3];
 
 			args[0] = generatorClass;
@@ -395,7 +396,7 @@ public class LoadFileOperationLogic
 	private static void createGenerators(GeneratorTypesData generatorTypesData,
 										 Node generatorTypeNode, float frameRate, 
 										 //Generators generators, 
-										 Vector loadFileGeneratorNodeDatas, 
+										 Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas, 
 										 ModulGeneratorTypeData modulGeneratorTypeData) 
 			//ModulGenerator parentModulGenerator)
 	{
@@ -473,11 +474,11 @@ public class LoadFileOperationLogic
 		}
 		else
 		{
-			Iterator generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
+			Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
 			
 			while (generatorsIterator.hasNext())
 			{
-				Generator generator = (Generator)generatorsIterator.next();
+				Generator generator = generatorsIterator.next();
 				
 				modulGeneratorTypeData.addTrackForExistingGenerator(generator);
 			}
@@ -534,9 +535,10 @@ public class LoadFileOperationLogic
 					}
 					
 					//generators.addInput(generator, inputGenerator, inputTypeData, inputValue, inputModulInputTypeData);
-					InputData inputData = generator.addInputGenerator(inputGenerator, inputTypeData, 
-																	  inputValue, inputStringValue,
-																	  inputModulInputTypeData);
+//					InputData inputData = 
+						generator.addInputGenerator(inputGenerator, inputTypeData, 
+						                            inputValue, inputStringValue,
+						                            inputModulInputTypeData);
 				}
 			}
 		}

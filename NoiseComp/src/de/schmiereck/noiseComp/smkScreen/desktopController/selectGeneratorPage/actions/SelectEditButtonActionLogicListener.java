@@ -1,7 +1,6 @@
 package de.schmiereck.noiseComp.smkScreen.desktopController.selectGeneratorPage.actions;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.Generators;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.InputWidgetData;
@@ -20,6 +19,7 @@ public class SelectEditButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	@SuppressWarnings("unused")
 	private MainPageLogic mainPageLogic;
 	private DesktopControllerData controllerData;
 	
@@ -35,8 +35,6 @@ public class SelectEditButtonActionLogicListener
 			DesktopControllerData controllerData,
 			SelectGeneratorPageData selectGeneratorPageData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;

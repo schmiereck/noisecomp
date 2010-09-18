@@ -4,7 +4,6 @@ import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
-import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
@@ -38,7 +37,7 @@ public class ConsoleMain
 	public static void main(String[] args)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
+//		SoundService soundService = SoundService.getInstance();
 		
 		//==========================================================================================
 		StartupService.createBaseGeneratorTypes();

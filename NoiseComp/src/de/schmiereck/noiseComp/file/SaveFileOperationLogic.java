@@ -62,11 +62,11 @@ public class SaveFileOperationLogic
 	{
 		Node generatorTypesNode = XMLData.appendNode(xmlDoc, noiseNode, "generatorTypes");
 		
-		Iterator generatorTypesIterator = generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeData> generatorTypesIterator = generatorTypesData.getGeneratorTypesIterator();
 
 		while (generatorTypesIterator.hasNext())
 		{
-			GeneratorTypeData generatorTypeData = (GeneratorTypeData)generatorTypesIterator.next();
+			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
 			
 			SaveFileOperationLogic.appendGeneratorType(xmlDoc, generatorTypesNode, generatorTypeData);
 		}
@@ -85,13 +85,17 @@ public class SaveFileOperationLogic
 	{
 		Node generatorTypeNode = XMLData.appendNode(xmlDoc, generatorTypesNode, "generatorType");
 		
-		Node generatorTypeClassNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "generatorTypeClassName", generatorTypeData.getClass().getName());
+//		Node generatorTypeClassNameNode = 
+			XMLData.appendTextNode(xmlDoc, generatorTypeNode, "generatorTypeClassName", generatorTypeData.getClass().getName());
 
 		String generatorClassName = generatorTypeData.getGeneratorTypeClassName();
 		
-		Node generatorClassNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "generatorClassName", generatorClassName);
-		Node generatorNameNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "name", generatorTypeData.getGeneratorTypeName());
-		Node generatorDescriptionNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "description", generatorTypeData.getGeneratorTypeDescription());
+//		Node generatorClassNameNode = 
+			XMLData.appendTextNode(xmlDoc, generatorTypeNode, "generatorClassName", generatorClassName);
+//		Node generatorNameNode = 
+			XMLData.appendTextNode(xmlDoc, generatorTypeNode, "name", generatorTypeData.getGeneratorTypeName());
+//		Node generatorDescriptionNode = 
+			XMLData.appendTextNode(xmlDoc, generatorTypeNode, "description", generatorTypeData.getGeneratorTypeDescription());
 		
 		if (generatorTypeData instanceof ModulGeneratorTypeData)
 		{	
@@ -99,11 +103,12 @@ public class SaveFileOperationLogic
 			
 			if (modulGeneratorTypeData.getIsMainModulGeneratorType() == true)
 			{
-				Node isMainNode = XMLData.appendTextNode(xmlDoc, generatorTypeNode, "isMain", "true");
+//				Node isMainNode = 
+					XMLData.appendTextNode(xmlDoc, generatorTypeNode, "isMain", "true");
 			}
 		}
 		
-		Iterator inputTypesIterator = generatorTypeData.getInputTypesIterator();
+		Iterator<InputTypeData> inputTypesIterator = generatorTypeData.getInputTypesIterator();
 		
 		if (inputTypesIterator != null)
 		{
@@ -111,7 +116,7 @@ public class SaveFileOperationLogic
 			
 			while (inputTypesIterator.hasNext())
 			{
-				InputTypeData InputTypeData = (InputTypeData)inputTypesIterator.next();
+				InputTypeData InputTypeData = inputTypesIterator.next();
 				
 				Node inputTypeNode = XMLData.appendNode(xmlDoc, inputTypesNode, "inputType");
 				
@@ -142,11 +147,11 @@ public class SaveFileOperationLogic
 	{
 		Node generatorsNode = XMLData.appendNode(xmlDoc, generatorTypeNode, "generators");
 		
-		Iterator generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
+		Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
 		
 		while (generatorsIterator.hasNext())
 		{
-			Generator generator = (Generator)generatorsIterator.next();
+			Generator generator = generatorsIterator.next();
 			
 			Node generatorNode = XMLData.appendNode(xmlDoc, generatorsNode, "generator");
 			
@@ -166,13 +171,17 @@ public class SaveFileOperationLogic
 				type = generator.getClass().getName();
 			}
 			
-			Node generatorTypeTypeNode = XMLData.appendTextNode(xmlDoc, generatorNode, "type", type);
+//			Node generatorTypeTypeNode = 
+				XMLData.appendTextNode(xmlDoc, generatorNode, "type", type);
 
-			Node generatorNameNode = XMLData.appendTextNode(xmlDoc, generatorNode, "name", generator.getName());
-			Node generatorStartTimeNode = XMLData.appendFloatNode(xmlDoc, generatorNode, "startTime", generator.getStartTimePos());
-			Node generatorEndTimeNode = XMLData.appendFloatNode(xmlDoc, generatorNode, "endTime", generator.getEndTimePos());
+//			Node generatorNameNode = 
+				XMLData.appendTextNode(xmlDoc, generatorNode, "name", generator.getName());
+//			Node generatorStartTimeNode = 
+				XMLData.appendFloatNode(xmlDoc, generatorNode, "startTime", generator.getStartTimePos());
+//			Node generatorEndTimeNode = 
+				XMLData.appendFloatNode(xmlDoc, generatorNode, "endTime", generator.getEndTimePos());
 			
-			Iterator inputsIterator = generator.getInputsIterator();
+			Iterator<InputData> inputsIterator = generator.getInputsIterator();
 			
 			if (inputsIterator != null)
 			{	
@@ -180,24 +189,29 @@ public class SaveFileOperationLogic
 				
 				while (inputsIterator.hasNext())
 				{
-					InputData InputData = (InputData)inputsIterator.next();
+					InputData InputData = inputsIterator.next();
 				
 					Node inputNode = XMLData.appendNode(xmlDoc, inputsNode, "input");
 					
 					Generator inputGenerator = InputData.getInputGenerator();
 					if (inputGenerator != null)
 					{	
-						Node inputGeneratorNameNode = XMLData.appendTextNode(xmlDoc, inputNode, "generatorName", inputGenerator.getName());
+//						Node inputGeneratorNameNode = 
+							XMLData.appendTextNode(xmlDoc, inputNode, "generatorName", inputGenerator.getName());
 					}
-					Node inputTypeNode = XMLData.appendIntegerNode(xmlDoc, inputNode, "type", InputData.getInputTypeData().getInputType());
-					Node inputValueNode = XMLData.appendFloatNode(xmlDoc, inputNode, "value", InputData.getInputValue());
-					Node inputStringValueNode = XMLData.appendTextNode(xmlDoc, inputNode, "stringValue", InputData.getInputStringValue());
+//					Node inputTypeNode = 
+						XMLData.appendIntegerNode(xmlDoc, inputNode, "type", InputData.getInputTypeData().getInputType());
+//					Node inputValueNode = 
+						XMLData.appendFloatNode(xmlDoc, inputNode, "value", InputData.getInputValue());
+//					Node inputStringValueNode = 
+						XMLData.appendTextNode(xmlDoc, inputNode, "stringValue", InputData.getInputStringValue());
 					
 					InputTypeData inputModulInputTypeData = InputData.getInputModulInputTypeData();
 					
 					if (inputModulInputTypeData != null)
 					{
-						Node inputModulInputNode = XMLData.appendIntegerNode(xmlDoc, inputNode, "inputModulInputType", inputModulInputTypeData.getInputType());
+//						Node inputModulInputNode = 
+							XMLData.appendIntegerNode(xmlDoc, inputNode, "inputModulInputType", inputModulInputTypeData.getInputType());
 					}
 				}
 			}
@@ -214,15 +228,16 @@ public class SaveFileOperationLogic
 	{
 		Node tracksNode = XMLData.appendNode(xmlDoc, generatorTypeNode, "tracks");
 		
-		Iterator tracksIterator = modulGeneratorTypeData.getTracksIterator();
+		Iterator<TrackData> tracksIterator = modulGeneratorTypeData.getTracksIterator();
 		
 		while (tracksIterator.hasNext())
 		{
-			TrackData trackData = (TrackData)tracksIterator.next();
+			TrackData trackData = tracksIterator.next();
 			
 			Node trackNode = XMLData.appendNode(xmlDoc, tracksNode, "track");
 			
-			Node generatorNameNode = XMLData.appendTextNode(xmlDoc, trackNode, "generatorName", trackData.getGenerator().getName());
+//			Node generatorNameNode = 
+				XMLData.appendTextNode(xmlDoc, trackNode, "generatorName", trackData.getGenerator().getName());
 			
 		}
 	}

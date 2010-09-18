@@ -19,6 +19,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.editModulPage.EditMod
 public class InputTypeEditSaveActionListener
 implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
 	private EditModulPageData editModulPageData;
@@ -29,11 +30,9 @@ implements ButtonActionLogicListenerInterface
 	 * 
 	 */
 	public InputTypeEditSaveActionListener(DesktopControllerLogic controllerLogic, 
-			DesktopControllerData controllerData,
-			EditModulPageData editModulPageData)
+	                                       DesktopControllerData controllerData,
+	                                       EditModulPageData editModulPageData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 		this.editModulPageData = editModulPageData;

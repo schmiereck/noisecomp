@@ -87,11 +87,11 @@ public class DesktopPageGraphic
 	                        ScreenGraficInterface screenGrafic, 
 	                        DesktopPageData desktopPageData)
 	{
-		Iterator widgetIterator = desktopPageData.getWidgetsIterator();
+		Iterator<WidgetData> widgetIterator = desktopPageData.getWidgetsIterator();
 		
 		while (widgetIterator.hasNext())
 		{
-			WidgetData widgetData = (WidgetData)widgetIterator.next();
+			WidgetData widgetData = widgetIterator.next();
 			
 			if (widgetData instanceof FunctionButtonData)
 			{	

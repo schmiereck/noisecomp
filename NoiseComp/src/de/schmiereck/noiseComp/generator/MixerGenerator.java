@@ -79,13 +79,13 @@ extends Generator
 		{	
 			synchronized (inputsSyncObject)
 			{
-				Iterator inputsIterator = this.getInputsIterator();
+				Iterator<InputData> inputsIterator = this.getInputsIterator();
 			
 				if (inputsIterator != null)
 				{
 					while (inputsIterator.hasNext())
 					{
-						InputData inputData = (InputData)inputsIterator.next();
+						InputData inputData = inputsIterator.next();
 						
 						switch (inputData.getInputTypeData().getInputType())
 						{

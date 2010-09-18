@@ -22,14 +22,14 @@ public class TextWidgetGraphic
 		String labelText = textWidgetData.getLabelText();
 		int posX = textWidgetData.getPosX();
 		int posY = textWidgetData.getPosY();
-		int sizeX = textWidgetData.getSizeX();
+//		int sizeX = textWidgetData.getSizeX();
 		int sizeY = textWidgetData.getSizeY();
 		
 		g.setColor(Color.BLACK);
 		
 		screenGrafic.setFont(g, "Dialog", Font.PLAIN, sizeY - 4);
 		
-		int stringWidth;
+//		int stringWidth;
 		
 		if (labelText != null)
 		{

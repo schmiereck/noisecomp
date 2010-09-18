@@ -116,11 +116,11 @@ EditGeneratorChangedListener
 			
 			if (generatorTypeData != null)
 			{	
-				Iterator tracksDataIterator = this.mainPageData.getTracksListWidgetData().getListEntrysIterator();
+				Iterator<TrackData> tracksDataIterator = this.mainPageData.getTracksListWidgetData().getListEntrysIterator();
 				
 				while (tracksDataIterator.hasNext())
 				{
-					TrackData trackData = (TrackData)tracksDataIterator.next();
+					TrackData trackData = tracksDataIterator.next();
 					
 					SelectEntryData selectEntryData = new SelectEntryData(trackData.getName(), 
 							trackData.getName(),
@@ -140,11 +140,11 @@ EditGeneratorChangedListener
 			
 			if (generatorTypeData != null)
 			{	
-				Iterator inputTypesDataIterator = generatorTypeData.getInputTypesIterator();
+				Iterator<InputTypeData> inputTypesDataIterator = generatorTypeData.getInputTypesIterator();
 				
 				while (inputTypesDataIterator.hasNext())
 				{
-					InputTypeData inputTypeData = (InputTypeData)inputTypesDataIterator.next();
+					InputTypeData inputTypeData = inputTypesDataIterator.next();
 					
 					SelectEntryData selectEntryData = new SelectEntryData(Integer.valueOf(inputTypeData.getInputType()), 
 							inputTypeData.getInputTypeName(),
@@ -167,13 +167,13 @@ EditGeneratorChangedListener
 			
 			if (modulGeneratorTypeData != null)
 			{
-				Iterator inputTypesIterator = modulGeneratorTypeData.getInputTypesIterator();
+				Iterator<InputTypeData> inputTypesIterator = modulGeneratorTypeData.getInputTypesIterator();
 				
 				if (inputTypesIterator != null)
 				{	
 					while (inputTypesIterator.hasNext())
 					{
-						InputTypeData inputTypeData = (InputTypeData)inputTypesIterator.next();
+						InputTypeData inputTypeData = inputTypesIterator.next();
 						
 						SelectEntryData selectEntryData = new SelectEntryData(inputTypeData.getInputTypeName(), 
 								inputTypeData.getInputTypeName(),
@@ -228,7 +228,7 @@ EditGeneratorChangedListener
 			{	
 				inputGeneratorName = generator.getName();
 
-				GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
+//				GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
 				
 				inputGeneratorTypeDescription = inputTypeData.getInputTypeDescription();
 			}
@@ -382,7 +382,7 @@ EditGeneratorChangedListener
 
 				SelectEntryData selectedEntryData = this.mainPageData.getGeneratorInputTypeSelectData().getSelectedEntryData();
 				InputTypeData inputTypeData = (InputTypeData)selectedEntryData.getEntry();
-				Integer inputType = (Integer)selectedEntryData.getValue();
+//				Integer inputType = (Integer)selectedEntryData.getValue();
 				
 				//---------------------------------------------------
 				// Input-Value:
@@ -556,8 +556,8 @@ EditGeneratorChangedListener
 		
 		ScrollbarData scrollbarData = this.mainPageData.getTimelineScrollbarData();
 		
-		// Anzahl Sekunden die erscrollt werden k�nnen.
-		float time = scrollbarData.getScrollerLength();
+		// Anzahl Sekunden die erscrollt werden können.
+//		float time = scrollbarData.getScrollerLength();
 		int visiblePoints = scrollbarData.getScreenScrollerLength();
 		
 		// Anzahl Angezeigte Sekunden berechnen.
@@ -572,13 +572,13 @@ EditGeneratorChangedListener
 	 * List of {@link EditGeneratorChangedListener}-Interface Objects
 	 * that are notifyed if {@link #setEditGenerators(ModulGeneratorTypeData, Generators)} is called.
 	 */
-	private Vector editGeneratorChangedListeners	= null;
+	private Vector<EditGeneratorChangedListener> editGeneratorChangedListeners	= null;
 	
 	public void registerEditGeneratorChangedListener(EditGeneratorChangedListener editGeneratorChangedListener)
 	{
 		if (this.editGeneratorChangedListeners == null)
 		{
-			this.editGeneratorChangedListeners = new Vector();
+			this.editGeneratorChangedListeners = new Vector<EditGeneratorChangedListener>();
 		}
 		
 		this.editGeneratorChangedListeners.add(editGeneratorChangedListener);
@@ -598,11 +598,11 @@ EditGeneratorChangedListener
 		
 			if (this.editGeneratorChangedListeners != null)
 			{
-				Iterator editGeneratorChangedListenersIterator = this.editGeneratorChangedListeners.iterator();
+				Iterator<EditGeneratorChangedListener> editGeneratorChangedListenersIterator = this.editGeneratorChangedListeners.iterator();
 				
 				while (editGeneratorChangedListenersIterator.hasNext())
 				{
-					EditGeneratorChangedListener editGeneratorChangedListener = (EditGeneratorChangedListener) editGeneratorChangedListenersIterator.next();
+					EditGeneratorChangedListener editGeneratorChangedListener = editGeneratorChangedListenersIterator.next();
 					
 					editGeneratorChangedListener.notifyEditGeneratorChanged(editModulTypeData);
 				}
@@ -695,7 +695,8 @@ EditGeneratorChangedListener
 	 */
 	public void removeSelectedTrack()
 	{
-		Generator selectedGenerator = this.mainPageData.getTracksListWidgetData().removeSelectedTrack();
+//		Generator selectedGenerator = 
+			this.mainPageData.getTracksListWidgetData().removeSelectedTrack();
 		/*
 		DesktopControllerData desktopControllerData = this.mainPageData.getDesktopControllerData();
 

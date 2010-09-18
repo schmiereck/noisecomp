@@ -39,6 +39,7 @@ implements EditModuleChangedListener
 	/**
 	 * Modules Tree Model.
 	 */
+	@SuppressWarnings("unused")
 	private final ModulesTreeModel modulesTreeModel;
 	
 	/**

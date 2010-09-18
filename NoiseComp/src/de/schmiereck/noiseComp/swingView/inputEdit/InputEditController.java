@@ -3,8 +3,6 @@
  */
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -16,7 +14,6 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
-import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 
 /**
  * <p>

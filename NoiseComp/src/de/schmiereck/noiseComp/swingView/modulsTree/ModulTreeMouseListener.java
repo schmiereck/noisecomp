@@ -143,16 +143,16 @@ extends MouseAdapter
 				
 				if (userObject instanceof ModulGeneratorTypeData)
 				{
-					ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+//					ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
 
 					this.modulePopupMenu.show(e.getComponent(),
-											   e.getX(), e.getY());
+					                          e.getX(), e.getY());
 				}
 				else
 				{
 					if (userObject instanceof GeneratorTypeData)
 					{
-						GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
+//						GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 	
 						this.generatorPopupMenu.show(e.getComponent(),
 						                             e.getX(), e.getY());

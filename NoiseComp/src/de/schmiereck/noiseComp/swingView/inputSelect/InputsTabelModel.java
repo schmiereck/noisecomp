@@ -8,10 +8,6 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.InputData;
-
 /**
  * <p>
  * 	Inputs Tabel Model.

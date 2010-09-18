@@ -32,6 +32,7 @@ extends JPanel
 	/**
 	 * Timelines Scroll-Panel Model.
 	 */
+	@SuppressWarnings("unused")
 	private TimelinesScrollPanelModel timelinesScrollPanelModel;
 	
 	private TimelinesRuleView columnView;

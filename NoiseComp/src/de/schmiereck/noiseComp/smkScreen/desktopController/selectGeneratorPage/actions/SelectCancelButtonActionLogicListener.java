@@ -15,9 +15,11 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.selectGeneratorPage.S
 public class SelectCancelButtonActionLogicListener 
 implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
 	
+	@SuppressWarnings("unused")
 	private SelectGeneratorPageData selectGeneratorPageData;
 	
 	/**
@@ -29,8 +31,6 @@ implements ButtonActionLogicListenerInterface
 			DesktopControllerData controllerData,
 			SelectGeneratorPageData selectGeneratorPageData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 		this.selectGeneratorPageData = selectGeneratorPageData;

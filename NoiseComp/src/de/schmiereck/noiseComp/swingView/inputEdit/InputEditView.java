@@ -3,23 +3,18 @@
  */
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
-import java.net.URL;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-import javax.swing.JToolBar;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
-import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
 
 /**
@@ -36,6 +31,7 @@ extends BasicEditView
 	//**********************************************************************************************
 	// Fields:
 
+	@SuppressWarnings("unused")
 	private final InputEditModel inputEditModel;
 	
 	private final JComboBox inputGeneratorComboBox;

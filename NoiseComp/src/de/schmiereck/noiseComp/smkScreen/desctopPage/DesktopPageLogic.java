@@ -40,11 +40,11 @@ public class DesktopPageLogic
 		int pointerPosX = desktopPageData.getPointerPosX();
 		int pointerPosY = desktopPageData.getPointerPosY();
 		
-		Iterator widgetIterator = desktopPageData.getWidgetsIterator();
+		Iterator<WidgetData> widgetIterator = desktopPageData.getWidgetsIterator();
 		
 		while (widgetIterator.hasNext())
 		{
-			WidgetData widgetData = (WidgetData)widgetIterator.next();
+			WidgetData widgetData = widgetIterator.next();
 
 			boolean hit;
 			

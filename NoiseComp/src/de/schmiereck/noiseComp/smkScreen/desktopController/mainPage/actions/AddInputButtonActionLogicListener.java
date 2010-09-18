@@ -15,8 +15,10 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.mainPage.MainPageLogi
 public class AddInputButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
 	private MainPageLogic mainPageLogic;
+	@SuppressWarnings("unused")
 	private DesktopControllerData controllerData;
 	
 	/**

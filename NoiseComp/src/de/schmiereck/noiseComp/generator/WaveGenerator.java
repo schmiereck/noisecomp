@@ -107,9 +107,7 @@ extends Generator
 						long lastSoundFramePosition = 0;
 						SoundSample lastSoundSample = new SoundSample();
 						
-						int available;
-						
-						while ((available = audioInputStream.available()) > 0)
+						while (audioInputStream.available() > 0)
 						{
 							int readBytes = audioInputStream.read(bytesBuf);
 							

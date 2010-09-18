@@ -16,6 +16,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.editModulPage.EditMod
 public class GroupGeneratorButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
 	private EditModulPageData editModulPageData;

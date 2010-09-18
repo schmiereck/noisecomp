@@ -14,6 +14,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogi
 public class LoadCancelButtonActionLogicListener 
 implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
 	/**
@@ -23,8 +24,6 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public LoadCancelButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 	}

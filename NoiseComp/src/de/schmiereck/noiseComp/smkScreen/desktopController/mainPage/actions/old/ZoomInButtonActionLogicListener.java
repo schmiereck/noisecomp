@@ -15,8 +15,10 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.mainPage.MainPageLogi
 public class ZoomInButtonActionLogicListener 
 implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
 	private MainPageLogic mainPageLogic;
+	@SuppressWarnings("unused")
 	private DesktopControllerData controllerData;
 	
 	/**
@@ -28,8 +30,6 @@ implements ButtonActionLogicListenerInterface
 			MainPageLogic mainPageLogic, 
 			DesktopControllerData controllerData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;

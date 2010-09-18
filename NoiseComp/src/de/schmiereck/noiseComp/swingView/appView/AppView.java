@@ -45,6 +45,7 @@ extends JFrame
 	/**
 	 * App Model
 	 */
+	@SuppressWarnings("unused")
 	private final AppModel appModel;
 	
 //	/**

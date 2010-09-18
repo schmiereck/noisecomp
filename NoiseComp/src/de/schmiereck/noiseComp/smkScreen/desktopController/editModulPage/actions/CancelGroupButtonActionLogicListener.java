@@ -14,6 +14,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogi
 public class CancelGroupButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
 	

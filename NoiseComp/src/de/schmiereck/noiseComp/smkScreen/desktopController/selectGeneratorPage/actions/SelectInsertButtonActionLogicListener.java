@@ -20,6 +20,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.selectGeneratorPage.S
 public class SelectInsertButtonActionLogicListener
 implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
 	private DesktopControllerData controllerData;
 	
@@ -34,8 +35,6 @@ implements ButtonActionLogicListenerInterface
 			DesktopControllerData controllerData,
 			SelectGeneratorPageData selectGeneratorPageData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 		this.selectGeneratorPageData = selectGeneratorPageData;
@@ -50,7 +49,8 @@ implements ButtonActionLogicListenerInterface
 		SoundService soundService = SoundService.getInstance();
 		
 		//==========================================================================================
-		GeneratorTypeData selectedGeneratorTypeData = this.selectGeneratorPageData.getGeneratorTypesListData().getSelectedGeneratorTypeData();
+//		GeneratorTypeData selectedGeneratorTypeData = 
+			this.selectGeneratorPageData.getGeneratorTypesListData().getSelectedGeneratorTypeData();
 		/*
 		if (selectedGeneratorTypeData == null)
 		{

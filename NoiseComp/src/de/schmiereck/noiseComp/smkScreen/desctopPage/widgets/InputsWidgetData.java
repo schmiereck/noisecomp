@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.smkScreen.desctopPage.widgets;
 
 import java.util.Iterator;
+
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
@@ -102,9 +103,9 @@ implements ActivateWidgetListenerInterface, ClickedWidgetListenerInterface, HitW
 	 * @see de.schmiereck.noiseComp.desktopPage.widgets.ListWidgetData#getListEntrysIterator()
 	 * @return the attribute {@link #inputs}.
 	 */
-	public Iterator getListEntrysIterator()
+	public Iterator<InputData> getListEntrysIterator()
 	{
-		Iterator ret;
+		Iterator<InputData> ret;
 		
 		if (this.selectedGenerator != null)
 		{

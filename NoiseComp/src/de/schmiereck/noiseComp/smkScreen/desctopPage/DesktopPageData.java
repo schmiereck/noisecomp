@@ -46,7 +46,7 @@ public class DesktopPageData
 	/**
 	 * List of {@link WidgetData}-Objects.
 	 */
-	private Vector widgets = new Vector();
+	private Vector<WidgetData> widgets = new Vector<WidgetData>();
 
 	/**
 	 * Wenn ein Widget mit der Maus überfahren wird, nachdem er angeklickt wurde,
@@ -165,7 +165,7 @@ public class DesktopPageData
 	 * 
 	 * @return the iterator of {@link #widgets}.
 	 */
-	public Iterator getWidgetsIterator()
+	public Iterator<WidgetData> getWidgetsIterator()
 	{
 		return this.widgets.iterator();
 	}
@@ -384,11 +384,11 @@ public class DesktopPageData
 			boolean foundFocusedWidget = false;
 			WidgetData prevAcceptWidgetData = null;
 			WidgetData nextAcceptWidgetData = null;
-			Iterator widgetsIterator = this.widgets.iterator();
+			Iterator<WidgetData> widgetsIterator = this.widgets.iterator();
 			
 			while (widgetsIterator.hasNext())
 			{
-				WidgetData widgetData = (WidgetData)widgetsIterator.next();
+				WidgetData widgetData = widgetsIterator.next();
 
 				// Is this the actual focused widget ?
 				if (this.focusedWidgetData == widgetData)
@@ -454,11 +454,11 @@ public class DesktopPageData
 	 */
 	private void setFocusToFirstWidget()
 	{
-		Iterator widgetsIterator = this.widgets.iterator();
+		Iterator<WidgetData> widgetsIterator = this.widgets.iterator();
 		
 		while (widgetsIterator.hasNext())
 		{
-			WidgetData widgetData = (WidgetData)widgetsIterator.next();
+			WidgetData widgetData = widgetsIterator.next();
 			
 			if (widgetData.getAcceptFocus() == true)
 			{

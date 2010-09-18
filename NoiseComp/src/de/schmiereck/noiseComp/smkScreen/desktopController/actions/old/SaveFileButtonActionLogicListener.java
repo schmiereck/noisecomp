@@ -1,29 +1,10 @@
 package de.schmiereck.noiseComp.smkScreen.desktopController.actions.old;
 
-import java.util.Iterator;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
-import de.schmiereck.noiseComp.file.FileOperationInterface;
-import de.schmiereck.noiseComp.file.SaveFileOperationLogic;
-import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.GeneratorTypesData;
-import de.schmiereck.noiseComp.generator.Generators;
-import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.InputWidgetData;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.MainActionException;
 import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerData;
 import de.schmiereck.noiseComp.smkScreen.desktopController.DesktopControllerLogic;
-import de.schmiereck.noiseComp.soundData.SoundData;
-import de.schmiereck.xmlTools.XMLData;
-import de.schmiereck.xmlTools.XMLPort;
-import de.schmiereck.xmlTools.XMLPortException;
 
 /**
  * Load the actual generators definitions in the memory in a XML file.
@@ -34,7 +15,9 @@ import de.schmiereck.xmlTools.XMLPortException;
 public class SaveFileButtonActionLogicListener 
 implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
+	@SuppressWarnings("unused")
 	private DesktopControllerData controllerData;
 	
 	/**
@@ -44,8 +27,6 @@ implements ButtonActionLogicListenerInterface
 	 */
 	public SaveFileButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 	}

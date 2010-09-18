@@ -34,18 +34,22 @@ extends DesktopPageData
 	/**
 	 * Dialog: Select Generator: Insert-Button
 	 */
+	@SuppressWarnings("unused")
 	private FunctionButtonData selectInsertButtonData = null;
 	/**
 	 * Dialog: Select Generator: Edit-Button
 	 */
+	@SuppressWarnings("unused")
 	private FunctionButtonData selectEditButtonData = null;
 	/**
 	 * Dialog: Select Generator: ConsoleMain-Edit-Button
 	 */
+	@SuppressWarnings("unused")
 	private FunctionButtonData selectMainEditButtonData = null;
 	/**
 	 * Dialog: Select Generator: Remove-Button
 	 */
+	@SuppressWarnings("unused")
 	private FunctionButtonData selectRemoveButtonData = null;
 	
 	/**

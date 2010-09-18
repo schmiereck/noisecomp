@@ -1,7 +1,5 @@
 package de.schmiereck.noiseComp.smkScreen.desktopController.editModulPage.actions;
 
-import de.schmiereck.noiseComp.generator.Generators;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.ButtonActionLogicListenerInterface;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.InputWidgetData;
@@ -20,6 +18,7 @@ import de.schmiereck.noiseComp.smkScreen.desktopController.mainPage.MainPageLogi
 public class SaveGroupButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
+	@SuppressWarnings("unused")
 	private DesktopControllerLogic controllerLogic;
 	private MainPageLogic mainPageLogic;
 	private DesktopControllerData controllerData;
@@ -35,8 +34,6 @@ public class SaveGroupButtonActionLogicListener
 			DesktopControllerData controllerData,
 			EditModulPageData editModulPageData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.mainPageLogic = mainPageLogic;
 		this.controllerData = controllerData;

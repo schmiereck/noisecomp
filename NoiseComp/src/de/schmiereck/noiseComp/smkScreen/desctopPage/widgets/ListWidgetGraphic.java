@@ -70,7 +70,7 @@ public abstract class ListWidgetGraphic
 			verticalScrollerEnd = 0.0F;
 		}
 
-		Iterator entrysIterator = listWidgetData.getListEntrysIterator();
+		Iterator<?> entrysIterator = listWidgetData.getListEntrysIterator();
 		
 		if (entrysIterator != null)
 		{	

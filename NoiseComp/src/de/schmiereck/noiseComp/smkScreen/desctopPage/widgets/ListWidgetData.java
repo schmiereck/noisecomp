@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.smkScreen.desctopPage.widgets;
 
 import java.util.Iterator;
+
 import de.schmiereck.screenTools.controller.ControllerData;
 import de.schmiereck.screenTools.controller.DataChangedObserver;
 
@@ -121,7 +122,7 @@ implements ScrollBarChangedListenerInterface
 		return this.listEntryHeight;
 	}
 
-	public abstract Iterator getListEntrysIterator();
+	public abstract Iterator<?> getListEntrysIterator();
 	
 	/**
 	 * @return the implementation of the Grafic to view this data object.

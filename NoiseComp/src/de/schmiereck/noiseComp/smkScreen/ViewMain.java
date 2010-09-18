@@ -1,6 +1,5 @@
 package de.schmiereck.noiseComp.smkScreen;
 
-import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.screenTools.Runner;
 import de.schmiereck.screenTools.graphic.GraphicMediator;
@@ -23,7 +22,7 @@ public class ViewMain
 	public static void main(String[] args)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
+//		SoundService soundService = SoundService.getInstance();
 		
 		//==========================================================================================
 		// Build:

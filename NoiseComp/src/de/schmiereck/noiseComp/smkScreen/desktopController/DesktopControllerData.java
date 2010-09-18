@@ -64,7 +64,7 @@ extends ControllerData
 {
 	private SoundData	soundData = null;
 
-	private boolean playSound = false;
+//	private boolean playSound = false;
 	
 //	/**
 //	 * The supported generator types.<br/>
@@ -376,7 +376,7 @@ extends ControllerData
 	/* (non-Javadoc)
 	 * @see de.schmiereck.screenTools.controller.ControllerData#getObjectsIterator()
 	 */
-	public Iterator getObjectsIterator()
+	public Iterator<?> getObjectsIterator()
 	{
 		return null;
 	}

@@ -15,6 +15,7 @@ public class PauseButtonActionLogicListener
 	implements ButtonActionLogicListenerInterface
 {
 	private DesktopControllerLogic controllerLogic;
+	@SuppressWarnings("unused")
 	private DesktopControllerData controllerData;
 	
 	/**
@@ -24,8 +25,6 @@ public class PauseButtonActionLogicListener
 	 */
 	public PauseButtonActionLogicListener(DesktopControllerLogic controllerLogic, DesktopControllerData controllerData)
 	{
-		super();
-		
 		this.controllerLogic = controllerLogic;
 		this.controllerData = controllerData;
 	}

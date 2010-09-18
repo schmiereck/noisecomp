@@ -18,6 +18,7 @@ public class EditModulPageLogic
 implements InputTypeSelectedListenerInterface,
 EditGeneratorChangedListener
 {
+	@SuppressWarnings("unused")
 	private ControllerLogic controllerLogic;
 	private EditModulPageData editModulPageData;
 	

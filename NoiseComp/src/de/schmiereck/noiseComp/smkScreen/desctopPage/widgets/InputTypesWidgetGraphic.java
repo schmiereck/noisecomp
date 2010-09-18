@@ -43,9 +43,9 @@ extends ListWidgetGraphic
 			float verticalScrollerStart, float verticalScrollerEnd)
 	{
 		int posX = listWidgetData.getPosX();
-		int posY = listWidgetData.getPosY();
+//		int posY = listWidgetData.getPosY();
 		int sizeX = listWidgetData.getSizeX();
-		int sizeY = listWidgetData.getSizeY();
+//		int sizeY = listWidgetData.getSizeY();
 
 		InputTypesWidgetData inputTypesWidgetData = (InputTypesWidgetData)listWidgetData;
 		InputTypeData inputTypeData = (InputTypeData)entry;

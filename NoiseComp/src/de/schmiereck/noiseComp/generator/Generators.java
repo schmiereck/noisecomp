@@ -91,11 +91,11 @@ public class Generators
 	{
 		Generator retGenerator = null;
 		
-		Iterator generatorsIterator = this.generators.iterator();
+		Iterator<Generator> generatorsIterator = this.generators.iterator();
 		
 		while (generatorsIterator.hasNext())
 		{
-			Generator generator = (Generator)generatorsIterator.next();
+			Generator generator = generatorsIterator.next();
 			
 			if (generator.getName().equals(generatorName) == true)
 			{
