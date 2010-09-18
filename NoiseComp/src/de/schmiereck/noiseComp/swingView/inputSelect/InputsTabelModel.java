@@ -11,7 +11,6 @@ import javax.swing.table.AbstractTableModel;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.InputTypeData;
 
 /**
  * <p>
@@ -29,7 +28,7 @@ extends AbstractTableModel
 
 	private String columnNames[] = new String[]{"Name", "Value"};
 	
-	private List<InputData> inputs = new Vector<InputData>();
+	private List<InputSelectEntryModel> inputs = new Vector<InputSelectEntryModel>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -60,7 +59,7 @@ extends AbstractTableModel
 		return this.inputs.size();
 	}
 	
-	public InputData getRow(int rowNo) 
+	public InputSelectEntryModel getRow(int rowNo) 
 	{ 
 		return this.inputs.get(rowNo);
 	}
@@ -76,19 +75,19 @@ extends AbstractTableModel
 	{
 		String value;
 		
-		InputData inputData = this.inputs.get(row);
+		InputSelectEntryModel inputSelectEntryModel = this.inputs.get(row);
 		
 		switch (col)
 		{
 			case 0:		// Type name.
 			{
-				InputTypeData inputTypeData = inputData.getInputTypeData();
-				value = inputTypeData.getInputTypeName();
+				value = inputSelectEntryModel.getInputTypeName();
 				break;
 			}
 			case 1:		// Label.
 			{
-				value = this.makeInputLabel(inputData);
+				value = inputSelectEntryModel.getInputLabel();
+//				value = this.makeInputLabel(inputData);
 				break;
 			}
 			default:
@@ -101,55 +100,11 @@ extends AbstractTableModel
 	}
 
 	/**
-	 * @param inputData
-	 * 			is the input.
-	 * @return
-	 * 			the label.
+	 * @param inputSelectEntryModel
+	 * 			is the Input-Select-Entry Model.
 	 */
-	private String makeInputLabel(InputData inputData)
+	public void addInputData(InputSelectEntryModel inputSelectEntryModel)
 	{
-		Generator inputGenerator = inputData.getInputGenerator();
-		
-		String label;
-		
-		if (inputData.getInputValue() != null)
-		{
-			label = String.valueOf(inputData.getInputValue());
-		}
-		else
-		{
-			if (inputData.getInputStringValue() != null)
-			{
-				label = String.valueOf(inputData.getInputStringValue());
-			}
-			else
-			{
-				if (inputGenerator != null)
-				{	
-					label = inputGenerator.getName();
-
-					GeneratorTypeData inputGeneratorTypeData = inputGenerator.getGeneratorTypeData();
-					
-					if (inputGeneratorTypeData != null)
-					{
-						label += " [" + inputGeneratorTypeData.getGeneratorTypeName() + "]";
-					}
-				}
-				else
-				{
-					label = "--";
-				}
-			}
-		}
-		return label;
-	}
-
-	/**
-	 * @param inputData
-	 * 			is the Input Data.
-	 */
-	public void addInputData(InputData inputData)
-	{
-		this.inputs.add(inputData);
+		this.inputs.add(inputSelectEntryModel);
 	}
 }

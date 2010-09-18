@@ -3,7 +3,6 @@
  */
 package de.schmiereck.noiseComp.swingView.inputSelect;
 
-import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 
@@ -22,15 +21,6 @@ public class InputSelectModel
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	private final InputsTabelModel inputsTabelModel = new InputsTabelModel();
-
-	/**
-	 * @return 
-	 * 			returns the {@link #inputsTabelModel}.
-	 */
-	public InputsTabelModel getInputsTabelModel()
-	{
-		return this.inputsTabelModel;
-	}
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
@@ -77,12 +67,21 @@ public class InputSelectModel
 	}
 
 	/**
-	 * @param inputData
-	 * 			is the Input Data.
+	 * @param inputSelectEntryModel
+	 * 			is the Input-Select-Entry Model.
 	 */
-	public void addInputData(InputData inputData)
+	public void addInputData(InputSelectEntryModel inputSelectEntryModel)
 	{
-		this.inputsTabelModel.addInputData(inputData);
+		this.inputsTabelModel.addInputData(inputSelectEntryModel);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputsTabelModel}.
+	 */
+	public InputsTabelModel getInputsTabelModel()
+	{
+		return this.inputsTabelModel;
 	}
 
 	/**
@@ -117,26 +116,26 @@ public class InputSelectModel
 
 	/**
 	 * @return
-	 * 			the selected Input Data.
+	 * 			the selected Input-Select-Entry Model.
 	 */
-	public InputData getSelectedRow()
+	public InputSelectEntryModel getSelectedRow()
 	{
-		InputData inputData;
+		InputSelectEntryModel inputSelectEntryModel;
 		
 		Integer selectedRowNo = this.getSelectedRowNo();
 		
 		if (selectedRowNo != null)
 		{
 			InputsTabelModel inputsTabelModel = this.getInputsTabelModel();
-		
-			inputData = inputsTabelModel.getRow(selectedRowNo);
+			
+			inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
 		}
 		else
 		{
-			inputData = null;
+			inputSelectEntryModel = null;
 		}
 		
-		return inputData;
+		return inputSelectEntryModel;
 	}
 
 }

@@ -88,7 +88,10 @@ public class InputSelectController
 						{
 							InputData inputData = (InputData)inputsIterator.next();
 							
-							inputSelectModel.addInputData(inputData);
+							InputSelectEntryModel inputSelectEntryModel = 
+								new InputSelectEntryModel(inputData);
+							
+							inputSelectModel.addInputData(inputSelectEntryModel);
 						}
 					}
 				}
