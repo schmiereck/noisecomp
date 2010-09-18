@@ -22,6 +22,8 @@ extends JTable
 	//**********************************************************************************************
 	// Fields:
 
+	private final JTable table;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -35,6 +37,8 @@ extends JTable
 	{
 		//==========================================================================================
 		super(inputSelectModel.getInputsTabelModel());
+		
+		this.table = new JTable();
 		
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -57,7 +61,14 @@ extends JTable
 						{
 							int[] selectedRows = getSelectedRows();
 							
-							selectedRowNo = selectedRows[0];
+							if (selectedRows.length > 0)
+							{
+								selectedRowNo = selectedRows[0];
+							}
+							else
+							{
+								selectedRowNo = null;
+							}
 						}
 						else
 						{
