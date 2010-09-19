@@ -61,7 +61,8 @@ public class TimelinesDrawPanelModel
 	{
 		this.timelineGeneratorModels.clear();
 		
-		// TODO notify timelineGeneratorModels changed
+		// Notify listeners.
+		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
 	/**
@@ -72,7 +73,29 @@ public class TimelinesDrawPanelModel
 	{
 		this.timelineGeneratorModels.add(timelineGeneratorModel);
 		
-		// TODO notify timelineGeneratorModels changed
+		// Notify listeners.
+		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @param timelineGeneratorModel
+	 * 			is the Generator.
+	 */
+	public void removeTimelineGeneratorModel(TimelineGeneratorModel timelineGeneratorModel)
+	{
+		this.timelineGeneratorModels.remove(timelineGeneratorModel);
+		
+		// Notify listeners.
+		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineGeneratorModelsChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getTimelineGeneratorModelsChangedNotifier()
+	{
+		return this.timelineGeneratorModelsChangedNotifier;
 	}
 
 	/**
@@ -113,26 +136,5 @@ public class TimelinesDrawPanelModel
 	public void addSelectedTimelineChangedListener(SelectedTimelineChangedListenerInterface selectedTimelineChangedListener)
 	{
 		this.selectedTimelineChangedListeners.add(selectedTimelineChangedListener);
-	}
-
-	/**
-	 * @param timelineGeneratorModel
-	 * 			is the Generator.
-	 */
-	public void removeTimelineGeneratorModel(TimelineGeneratorModel timelineGeneratorModel)
-	{
-		this.timelineGeneratorModels.remove(timelineGeneratorModel);
-		
-		// Notify listeners.
-		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #timelineGeneratorModelsChangedNotifier}.
-	 */
-	public ModelPropertyChangedNotifier getTimelineGeneratorModelsChangedNotifier()
-	{
-		return this.timelineGeneratorModelsChangedNotifier;
 	}
 }

@@ -79,12 +79,9 @@ public class TimelineEditController
 					
 					if (timelineGeneratorModel != null)
 					{
-						Generator generator = 
-							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
-						
-						generatorName = generator.getName();
-						generatorStartTimePos = generator.getStartTimePos();
-						generatorEndTimePos = generator.getEndTimePos();
+						generatorName = timelineGeneratorModel.getName();
+						generatorStartTimePos = timelineGeneratorModel.getStartTimePos();
+						generatorEndTimePos = timelineGeneratorModel.getEndTimePos();
 					}
 					else
 					{

@@ -238,6 +238,34 @@ public class AppController
 		 	}
 		);	
 		//------------------------------------------------------------------------------------------
+		// Timeline-Edit Create-New-Timeline-Button: Timeline-Select-Model:
+		
+		this.timelineEditController.getTimelineEditView().getCreateNewTimelineButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					// Update Timeline-Select-Model:
+					
+					TimelineGeneratorModel timelineGeneratorModel = 
+						new TimelineGeneratorModel("(new)",
+						                           0.0F,
+						                           1.0F);
+					
+					timelinesDrawPanelModel.addTimelineGeneratorModel(timelineGeneratorModel);
+					
+					timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+		 	}
+		);	
+		//------------------------------------------------------------------------------------------
 		// Selected Input changed: Update Input-Edit:
 		
 		inputSelectController.getInputSelectModel().getSelectedRowNoChangedNotifier().addModelPropertyChangedListener

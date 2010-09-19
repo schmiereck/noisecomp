@@ -75,7 +75,14 @@ public class InputSelectController
 						Generator generator = 
 							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
 						
-						inputsIterator = generator.getInputsIterator();
+						if (generator != null)
+						{
+							inputsIterator = generator.getInputsIterator();
+						}
+						else
+						{
+							inputsIterator = null;
+						}
 					}
 					else
 					{
