@@ -6,6 +6,8 @@ package de.schmiereck.noiseComp.swingView.timelines;
 import java.util.List;
 import java.util.Vector;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+
 /**
  * <p>
  * 	Timeline Draw-Panel Model.
@@ -19,8 +21,17 @@ public class TimelinesDrawPanelModel
 	//**********************************************************************************************
 	// Fields:
 	
+	/**
+	 * Timeline-Generator Models.
+	 */
 	private List<TimelineGeneratorModel> timelineGeneratorModels = new Vector<TimelineGeneratorModel>();
 
+	/**
+	 * {@link #timelineGeneratorModels} changed (insert or remove) listeners.
+	 */
+	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	//----------------------------------------------------------------------------------------------
 	/**
 	 * Selected Timeline Generator Model.
 	 */
@@ -102,5 +113,26 @@ public class TimelinesDrawPanelModel
 	public void addSelectedTimelineChangedListener(SelectedTimelineChangedListenerInterface selectedTimelineChangedListener)
 	{
 		this.selectedTimelineChangedListeners.add(selectedTimelineChangedListener);
+	}
+
+	/**
+	 * @param timelineGeneratorModel
+	 * 			is the Generator.
+	 */
+	public void removeTimelineGeneratorModel(TimelineGeneratorModel timelineGeneratorModel)
+	{
+		this.timelineGeneratorModels.remove(timelineGeneratorModel);
+		
+		// Notify listeners.
+		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineGeneratorModelsChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getTimelineGeneratorModelsChangedNotifier()
+	{
+		return this.timelineGeneratorModelsChangedNotifier;
 	}
 }

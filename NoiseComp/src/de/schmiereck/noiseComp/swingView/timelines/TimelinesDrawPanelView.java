@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+
 /**
  * <p>
  * 	Timeline Draw-Panel View.
@@ -64,6 +66,7 @@ implements Scrollable//, MouseMotionListener
 	*/
 	public TimelinesDrawPanelView(TimelinesDrawPanelModel timelinesDrawPanelModel) 
 	{
+		//==========================================================================================
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
 //		this.timelineGeneratorModels.add(new Rectangle(0, 0, 100, 100));
@@ -133,7 +136,6 @@ implements Scrollable//, MouseMotionListener
 				public void mouseReleased(MouseEvent e)
 				{
 				}
-		 		
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
@@ -149,6 +151,19 @@ implements Scrollable//, MouseMotionListener
 		 		
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		this.timelinesDrawPanelModel.getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					repaint();
+				}
+		 	}
+		);
+		//==========================================================================================
 	}
 	
 	/* (non-Javadoc)

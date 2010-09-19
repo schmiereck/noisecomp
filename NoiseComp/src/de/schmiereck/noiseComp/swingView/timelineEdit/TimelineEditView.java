@@ -32,6 +32,16 @@ extends BasicEditView
 	private final JTextField generatorEndTimePosTextField;
 	
 	/**
+	 * Create-New-Timeline Button.
+	 */
+	private final JButton	createNewTimelineButton;
+
+	/**
+	 * Remove-Timeline Button.
+	 */
+	private final JButton	removeTimelineButton;
+	
+	/**
 	 * Update Button.
 	 */
 	private final JButton updateButton;
@@ -49,11 +59,23 @@ extends BasicEditView
 	{
 		//==========================================================================================
 		this.setLayout(new GridBagLayout());
+		this.setBorder(BorderFactory.createTitledBorder("Timelines:"));
 		
-		this.setBorder(BorderFactory.createTitledBorder("Generator:"));
-		
+		//------------------------------------------------------------------------------------------
 		{
-			this.generatorNameTextField = this.addTextField(0, "Name:");
+			this.createNewTimelineButton = new JButton("Create new Timeline");
+			
+			this.addField(0, this.createNewTimelineButton);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.removeTimelineButton = new JButton("Remove Timeline");
+			
+			this.addField(1, this.removeTimelineButton);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.generatorNameTextField = this.addTextField(2, "Name:");
 			
 			timelineEditModel.getGeneratorNameChangedNotifier().addModelPropertyChangedListener
 			(
@@ -67,8 +89,9 @@ extends BasicEditView
 			 	}
 			);
 		}
+		//------------------------------------------------------------------------------------------
 		{
-			this.generatorStartTimePosTextField = this.addTextField(1, "Start-Time:");
+			this.generatorStartTimePosTextField = this.addTextField(3, "Start-Time:");
 			
 			timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
 			(
@@ -82,8 +105,9 @@ extends BasicEditView
 			 	}
 			);
 		}
+		//------------------------------------------------------------------------------------------
 		{
-			this.generatorEndTimePosTextField = this.addTextField(2, "End-Time:");
+			this.generatorEndTimePosTextField = this.addTextField(4, "End-Time:");
 			
 			timelineEditModel.getGeneratorEndTimePosChangedNotifier().addModelPropertyChangedListener
 			(
@@ -97,10 +121,11 @@ extends BasicEditView
 			 	}
 			);
 		}
+		//------------------------------------------------------------------------------------------
 		{
 			this.updateButton = new JButton("Update");
 			
-			this.addField(3, this.updateButton);
+			this.addField(5, this.updateButton);
 		}
 		//==========================================================================================
 	}
@@ -139,5 +164,23 @@ extends BasicEditView
 	public JTextField getGeneratorStartTimePosTextField()
 	{
 		return this.generatorStartTimePosTextField;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #createNewTimelineButton}.
+	 */
+	public JButton getCreateNewTimelineButton()
+	{
+		return this.createNewTimelineButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #removeTimelineButton}.
+	 */
+	public JButton getRemoveTimelineButton()
+	{
+		return this.removeTimelineButton;
 	}
 }

@@ -38,21 +38,21 @@ extends BasicEditView
 	private final JComboBox inputTypeComboBox;
 	private final JTextField valueTextField;
 	private final JComboBox modulInputTypeComboBox;
-	
-	/**
-	 * Update Button.
-	 */
-	private final JButton updateButton;
-
-	/**
-	 * Remove-Input Button.
-	 */
-	private final JButton	removeInputButton;
 
 	/**
 	 * Create-New-Input Button.
 	 */
 	private final JButton	createNewInputButton;
+
+	/**
+	 * Remove-Input Button.
+	 */
+	private final JButton	removeInputButton;
+	
+	/**
+	 * Update Button.
+	 */
+	private final JButton updateButton;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -73,15 +73,15 @@ extends BasicEditView
 		
 		//------------------------------------------------------------------------------------------
 		{
-			this.removeInputButton = new JButton("Remove input");
+			this.createNewInputButton = new JButton("Create new input");
 			
-			this.addField(0, this.removeInputButton);
+			this.addField(0, this.createNewInputButton);
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.createNewInputButton = new JButton("Create new input");
+			this.removeInputButton = new JButton("Remove input");
 			
-			this.addField(1, this.createNewInputButton);
+			this.addField(1, this.removeInputButton);
 		}
 		//------------------------------------------------------------------------------------------
 		{
@@ -307,11 +307,19 @@ extends BasicEditView
 		return this.modulInputTypeComboBox;
 	}
 
+	/**
+	 * @return 
+	 * 			returns the {@link #removeInputButton}.
+	 */
 	public JButton getRemoveInputButton()
 	{
 		return this.removeInputButton;
 	}
 
+	/**
+	 * @return 
+	 * 			returns the {@link #createNewInputButton}.
+	 */
 	public JButton getCreateNewInputButton()
 	{
 		return this.createNewInputButton;

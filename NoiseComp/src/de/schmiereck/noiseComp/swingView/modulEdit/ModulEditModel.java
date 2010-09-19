@@ -23,6 +23,7 @@ public class ModulEditModel
 	 */
 	private String modulName = null;
 
+	//----------------------------------------------------------------------------------------------
 	/**
 	 * {@link #modulName} changed listeners.
 	 */
