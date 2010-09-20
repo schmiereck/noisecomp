@@ -4,14 +4,18 @@
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
 import java.awt.GridBagLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
 import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
+import de.schmiereck.noiseComp.swingView.timelineEdit.GeneratorTypeSelectItem;
 
 /**
  * <p>
@@ -27,6 +31,7 @@ extends BasicEditView
 	//**********************************************************************************************
 	// Fields:
 
+	private final JComboBox generatorTypeComboBox;
 	private final JTextField generatorNameTextField;
 	private final JTextField generatorStartTimePosTextField;
 	private final JTextField generatorEndTimePosTextField;
@@ -75,7 +80,58 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.generatorNameTextField = this.addTextField(2, "Name:");
+			this.generatorTypeComboBox = this.addComboBox(2, "Input-Type:");
+			
+			timelineEditModel.getGeneratorTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						generatorTypeComboBox.removeAllItems();
+						
+						if (timelineEditModel.getGeneratorTypeSelectItems() != null)
+						{
+							for (GeneratorTypeSelectItem generatorTypeSelectItem : timelineEditModel.getGeneratorTypeSelectItems())
+							{
+								generatorTypeComboBox.addItem(generatorTypeSelectItem);
+							}
+						}
+					}
+			 	}
+			);
+			timelineEditModel.getGeneratorTypeDataChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						GeneratorTypeSelectItem generatorTypeSelectItem = null;
+						
+						GeneratorTypeData generatorTypeData = timelineEditModel.getGeneratorTypeData();
+
+						List<GeneratorTypeSelectItem> generatorTypeSelectItems = timelineEditModel.getGeneratorTypeSelectItems();
+						if (generatorTypeSelectItems != null)
+						{
+							for (GeneratorTypeSelectItem generatorTypeSelectItem2 : generatorTypeSelectItems)
+							{
+								if (generatorTypeSelectItem2.getGeneratorTypeData() == generatorTypeData)
+								{
+									generatorTypeSelectItem = generatorTypeSelectItem2;
+									break;
+								}
+							}
+						}
+						generatorTypeComboBox.setSelectedItem(generatorTypeSelectItem);
+					}
+			 	}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.generatorNameTextField = this.addTextField(3, "Name:");
 			
 			timelineEditModel.getGeneratorNameChangedNotifier().addModelPropertyChangedListener
 			(
@@ -91,7 +147,7 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.generatorStartTimePosTextField = this.addTextField(3, "Start-Time:");
+			this.generatorStartTimePosTextField = this.addTextField(4, "Start-Time:");
 			
 			timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
 			(
@@ -107,7 +163,7 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.generatorEndTimePosTextField = this.addTextField(4, "End-Time:");
+			this.generatorEndTimePosTextField = this.addTextField(5, "End-Time:");
 			
 			timelineEditModel.getGeneratorEndTimePosChangedNotifier().addModelPropertyChangedListener
 			(
@@ -125,7 +181,7 @@ extends BasicEditView
 		{
 			this.updateButton = new JButton("Update");
 			
-			this.addField(5, this.updateButton);
+			this.addField(6, this.updateButton);
 		}
 		//==========================================================================================
 	}
@@ -182,5 +238,14 @@ extends BasicEditView
 	public JButton getRemoveTimelineButton()
 	{
 		return this.removeTimelineButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorTypeComboBox}.
+	 */
+	public JComboBox getGeneratorTypeComboBox()
+	{
+		return this.generatorTypeComboBox;
 	}
 }

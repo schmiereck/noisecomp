@@ -6,11 +6,14 @@ package de.schmiereck.noiseComp.swingView.appController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
+import java.util.List;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.swingView.InputUtils;
@@ -619,5 +622,31 @@ public class AppController
 		{
 			this.soundSchedulerLogic.pausePlayback();
 		}
+	}
+
+	/**
+	 * @return
+	 * 			the generator types.
+	 */
+	public List<GeneratorTypeData> retrieveGeneratorTypesForSelect()
+	{
+		SoundService soundService = SoundService.getInstance();
+		
+		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+
+		return generatorTypes;
+	}
+	
+	/**
+	 * @return
+	 * 			the edited Modul-Generator-Type Data.
+	 */
+	public ModulGeneratorTypeData getEditedModulGeneratorTypeData()
+	{
+		ModulesTreeModel modulesTreeModel = this.modulesTreeController.getModulesTreeModel();
+		
+		ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+		
+		return editedModulGeneratorTypeData;
 	}
 }

@@ -4,6 +4,8 @@
 package de.schmiereck.noiseComp.service;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
@@ -38,12 +40,23 @@ public class SoundService
 	}
 
 	/**
-	 * @return 
-	 * 			returns the {@link #generatorTypesData}.
+	 * @return
+	 * 			the list of {@link #generatorTypesData}.
 	 */
-	public GeneratorTypesData retievesGeneratorTypes()
+	public List<GeneratorTypeData> retrieveGeneratorTypes()
 	{
-		return this.generatorTypesData;
+		List<GeneratorTypeData> generatorTypes = new Vector<GeneratorTypeData>();
+		
+		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		
+		while (generatorTypesIterator.hasNext())
+		{
+			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			
+			generatorTypes.add(generatorTypeData);
+		}
+		
+		return generatorTypes;
 	}
 
 	/**
@@ -115,15 +128,6 @@ public class SoundService
 			ret = 0;
 		}
 		return ret;
-	}
-
-	/**
-	 * @return
-	 * 			the iterator of {@link #generatorTypesData}.
-	 */
-	public Iterator<GeneratorTypeData> getGeneratorTypesIterator()
-	{
-		return this.generatorTypesData.getGeneratorTypesIterator();
 	}
 
 	/**

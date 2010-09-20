@@ -3,6 +3,10 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
+import java.util.List;
+import java.util.Vector;
+
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 
@@ -18,6 +22,25 @@ public class TimelineEditModel
 {
 	//**********************************************************************************************
 	// Fields:
+
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	/**
+	 * Input Generator.
+	 */
+	private GeneratorTypeData generatorTypeData = null;
+
+	/**
+	 * {@link #generatorTypeData} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier generatorTypeDataChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	private List<GeneratorTypeSelectItem> generatorTypeSelectItems = new Vector<GeneratorTypeSelectItem>();
+
+	/**
+	 * {@link #generatorTypeSelectItems} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier generatorTypeSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
@@ -152,5 +175,65 @@ public class TimelineEditModel
 	public ModelPropertyChangedNotifier getGeneratorEndTimePosChangedNotifier()
 	{
 		return this.generatorEndTimePosChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorTypeSelectItems}.
+	 */
+	public List<GeneratorTypeSelectItem> getGeneratorTypeSelectItems()
+	{
+		return this.generatorTypeSelectItems;
+	}
+
+	/**
+	 * @param generatorTypeSelectItems 
+	 * 			to set {@link #generatorTypeSelectItems}.
+	 */
+	public void setGeneratorTypeSelectItems(List<GeneratorTypeSelectItem> generatorTypeSelectItems)
+	{
+		this.generatorTypeSelectItems = generatorTypeSelectItems;
+		
+		// Notify Listeners.
+		this.generatorTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorTypeSelectItemsChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getGeneratorTypeSelectItemsChangedNotifier()
+	{
+		return this.generatorTypeSelectItemsChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorTypeData}.
+	 */
+	public GeneratorTypeData getGeneratorTypeData()
+	{
+		return this.generatorTypeData;
+	}
+
+	/**
+	 * @param generatorTypeData 
+	 * 			to set {@link #generatorTypeData}.
+	 */
+	public void setGeneratorTypeData(GeneratorTypeData generatorTypeData)
+	{
+		this.generatorTypeData = generatorTypeData;
+		
+		// Notify Listeners.
+		this.generatorTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorTypeDataChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getGeneratorTypeDataChangedNotifier()
+	{
+		return this.generatorTypeDataChangedNotifier;
 	}
 }

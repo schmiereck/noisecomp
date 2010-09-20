@@ -3,7 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.modulsTree;
 
-import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -98,12 +98,10 @@ public class ModulesTreeController
 		//==========================================================================================
 		SoundService soundService = SoundService.getInstance();
 		
-		Iterator<GeneratorTypeData> generatorTypesIterator = soundService.getGeneratorTypesIterator();
-		
-		while (generatorTypesIterator.hasNext())
+		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+
+		for (GeneratorTypeData generatorTypeData : generatorTypes)
 		{
-			GeneratorTypeData generatorTypeData = (GeneratorTypeData)generatorTypesIterator.next();
-			
 			//benutzt toString() für das Label, also eine eigene Funktion dafür schreiben
 			DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(generatorTypeData);
 			modulesTreeNode.add(modulTreeNode);

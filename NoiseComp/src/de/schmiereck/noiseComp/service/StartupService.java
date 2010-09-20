@@ -123,6 +123,8 @@ public class StartupService
 		//==========================================================================================
 		// Sound-Generatoren für das Sound-Format des Ausgabekanals erzeugen:
 		
+		Float frameRateFloat = Float.valueOf(frameRate);
+		
 		//Generators generators = mainModulTypeData.getGenerators();
 
 		final ModulGeneratorTypeData mainModulTypeData = ModulGenerator.createModulGeneratorTypeData();
@@ -137,7 +139,8 @@ public class StartupService
 		FaderGenerator faderInGenerator;
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(FaderGenerator.class.getName());
-			faderInGenerator = new FaderGenerator("faderIn", Float.valueOf(frameRate), generatorTypeData);
+			// or generatorTypeData.createGeneratorInstance("faderIn", Float.valueOf(frameRate))
+			faderInGenerator = new FaderGenerator("faderIn", frameRateFloat, generatorTypeData);
 			
 			faderInGenerator.setStartTimePos(0.0F);
 			faderInGenerator.setEndTimePos(2.0F);
@@ -153,7 +156,7 @@ public class StartupService
 		FaderGenerator faderOutGenerator;
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(FaderGenerator.class.getName());
-			faderOutGenerator = new FaderGenerator("faderOut", Float.valueOf(frameRate), generatorTypeData);
+			faderOutGenerator = new FaderGenerator("faderOut", frameRateFloat, generatorTypeData);
 			
 			faderOutGenerator.setStartTimePos(2.0F);
 			faderOutGenerator.setEndTimePos(5.0F);
@@ -169,7 +172,7 @@ public class StartupService
 		SinusGenerator sinusGenerator;
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
-			sinusGenerator = new SinusGenerator("sinus", Float.valueOf(frameRate), generatorTypeData);
+			sinusGenerator = new SinusGenerator("sinus", frameRateFloat, generatorTypeData);
 			sinusGenerator.addInputValue(262F, SinusGenerator.INPUT_TYPE_FREQ);
 			//sinusGenerator.setSignalFrequency(262F);
 			
@@ -182,7 +185,7 @@ public class StartupService
 		SinusGenerator sinus2Generator;
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
-			sinus2Generator = new SinusGenerator("sinus2", Float.valueOf(frameRate), generatorTypeData);
+			sinus2Generator = new SinusGenerator("sinus2", frameRateFloat, generatorTypeData);
 			sinus2Generator.addInputValue(131F, SinusGenerator.INPUT_TYPE_FREQ);
 			//sinus2Generator.setSignalFrequency(131F);
 			
@@ -195,7 +198,7 @@ public class StartupService
 		SinusGenerator sinus3Generator;
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
-			sinus3Generator = new SinusGenerator("sinus3", Float.valueOf(frameRate), generatorTypeData);
+			sinus3Generator = new SinusGenerator("sinus3", frameRateFloat, generatorTypeData);
 			sinus3Generator.addInputValue(70F, SinusGenerator.INPUT_TYPE_FREQ);
 			//sinus3Generator.setSignalFrequency(70F);
 			
@@ -208,7 +211,7 @@ public class StartupService
 		MixerGenerator mixerGenerator;
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(MixerGenerator.class.getName());
-			mixerGenerator = new MixerGenerator("mixer", Float.valueOf(frameRate), generatorTypeData);
+			mixerGenerator = new MixerGenerator("mixer", frameRateFloat, generatorTypeData);
 		
 			mixerGenerator.setStartTimePos(0.0F);
 			mixerGenerator.setEndTimePos(5.0F);
@@ -226,7 +229,7 @@ public class StartupService
 		OutputGenerator outputGenerator;
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(OutputGenerator.class.getName());
-			outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate), generatorTypeData);
+			outputGenerator = new OutputGenerator("output", frameRateFloat, generatorTypeData);
 	
 			outputGenerator.setStartTimePos(0.0F);
 			outputGenerator.setEndTimePos(5.0F);
