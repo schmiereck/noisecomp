@@ -29,22 +29,59 @@ public class InputUtils
 	 * @param value
 	 * 			is the string.
 	 * @return
+	 * 			the string value (<code>null</code> if string is empty).
+	 */
+	public static String makeStringValue(String value)
+	{
+		String stringValue;
+		
+		if (value != null)
+		{
+			if (value.length() > 0)
+			{
+				stringValue = value;
+			}
+			else
+			{
+				stringValue = null;
+			}
+		}
+		else
+		{
+			stringValue = null;
+		}
+		
+		return stringValue;
+	}
+	
+	/**
+	 * @param value
+	 * 			is the string.
+	 * @return
 	 * 			the Multi-Value.
 	 */
 	public static MultiValue makeMultiValue(String value)
 	{
 		MultiValue multiValue = new MultiValue();
 		
-		multiValue.stringValue = value;
-
-		try
+		multiValue.stringValue = makeStringValue(value);
+		
+		if (multiValue.stringValue != null)
 		{
-			multiValue.floatValue = InputUtils.makeFloatValue(value);
+			try
+			{
+				multiValue.floatValue = InputUtils.makeFloatValue(value);
+			}
+			catch (NumberFormatException ex)
+			{
+				multiValue.floatValue = null;
+			}
 		}
-		catch (NumberFormatException ex)
+		else
 		{
 			multiValue.floatValue = null;
 		}
+		
 		return multiValue;
 	}
 }
