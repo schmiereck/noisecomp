@@ -539,9 +539,14 @@ public class AppController
 	public void selectEditModule(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		//==========================================================================================
-		this.modulesTreeController.getModulesTreeModel().setEditedModulGeneratorTypeData(modulGeneratorTypeData);
+		TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
 		
+		timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(null);
+
 		this.timelinesDrawPanelController.clearTimelineGenerators();
+		
+		//------------------------------------------------------------------------------------------
+		this.modulesTreeController.getModulesTreeModel().setEditedModulGeneratorTypeData(modulGeneratorTypeData);
 		
 		Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
 		

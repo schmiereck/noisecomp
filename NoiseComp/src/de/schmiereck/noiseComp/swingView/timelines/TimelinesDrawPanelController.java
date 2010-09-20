@@ -138,23 +138,30 @@ public class TimelinesDrawPanelController
 		
 		TimelineGeneratorModel selectedTimelineGeneratorModel = this.timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
 		
-		String selectedTimelineGeneratorName = selectedTimelineGeneratorModel.getName();
-		
-		ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
-		
-		selectedGenerator = null;
-		
-		Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
-		
-		while (generatorsIterator.hasNext())
+		if (selectedTimelineGeneratorModel != null)
 		{
-			Generator generator = generatorsIterator.next();
+			String selectedTimelineGeneratorName = selectedTimelineGeneratorModel.getName();
 			
-			if (generator.getName().equals(selectedTimelineGeneratorName))
+			ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
+			
+			selectedGenerator = null;
+			
+			Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
+			
+			while (generatorsIterator.hasNext())
 			{
-				selectedGenerator = generator;
-				break;
+				Generator generator = generatorsIterator.next();
+				
+				if (generator.getName().equals(selectedTimelineGeneratorName))
+				{
+					selectedGenerator = generator;
+					break;
+				}
 			}
+		}
+		else
+		{
+			selectedGenerator = null;
 		}
 		
 		return selectedGenerator;

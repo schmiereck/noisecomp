@@ -4,6 +4,8 @@
 package de.schmiereck.noiseComp.swingView.modulsTree;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Vector;
@@ -85,23 +87,64 @@ implements EditModuleChangedListener
 				{
 					GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 					
-					String labelDecoration;
+					String labelDecoration = "";
+					
+					if (userObject instanceof ModulGeneratorTypeData)
+					{
+						ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+						
+						boolean isMainModul = modulGeneratorTypeData.getIsMainModulGeneratorType();
+						
+						if (isMainModul == true)
+						{
+							labelDecoration += " (Main)";
+						}
+					}
 					
 					// Edited?
 					if (modulesTreeModel.getEditedModulGeneratorTypeData() == generatorTypeData)
 					{
-						labelDecoration = " *";
-					}	
-					else
-					{
-						labelDecoration = "";
+						labelDecoration += " *";
 					}	
 					
 					this.setText(generatorTypeData.getGeneratorTypeName() + labelDecoration);
+					
+					// Update changed text width.
+					//this.revalidate();
+				}
+				else
+				{
+					this.setText(userObject.toString());
 				}
 				
 				return this;
 			}
+			
+			/**
+	          Add this override to recalculate the width of this JLabel.
+	           The super class default behaviour miscalculates the width, and so the 
+	           '...'  can appear. Instead, we 'simulate' the FontMetrics'                   
+	           stringWidth() method, by using charWidth(), plus some initialization 
+	           and padding
+	         */
+	    	public Dimension getPreferredSize() 
+	    	{
+	    		Dimension dim = super.getPreferredSize();
+	    		FontMetrics fm = getFontMetrics(getFont());
+	    		char[] chars = getText().toCharArray();
+	 
+	    		int w = getIconTextGap() + 16;
+	    	
+	    		for (char ch : chars)  
+	    		{
+	    			w += fm.charWidth(ch);
+	    		}
+	    		
+	    		w += getText().length();
+	    		dim.width = w;
+			
+	    		return dim;
+	    	}
 		});
 		//------------------------------------------------------------------------------------------
 		{

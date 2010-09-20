@@ -11,10 +11,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.service.SoundService;
 
 /**
  * <p>
@@ -35,7 +38,12 @@ extends MouseAdapter
 	private final ModulesTreeView modulesTreeView;
 	
 	/**
-	 * Modules popup menu.
+	 * Modules-Category popup menu.
+	 */
+	private JPopupMenu modulesCategoryPopupMenu;
+	
+	/**
+	 * Module popup menu.
 	 */
 	private JPopupMenu modulePopupMenu;
 	
@@ -58,6 +66,53 @@ extends MouseAdapter
 		//==========================================================================================
 		this.modulesTreeView = modulesTreeView;
 		
+		//==========================================================================================
+		// Modules-Category Popup Menu:
+		
+		this.modulesCategoryPopupMenu = new JPopupMenu();
+		{
+			JMenuItem menuItem = new JMenuItem("Insert Modul");
+			menuItem.addActionListener
+			(
+			 	new ActionListener()
+			 	{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						//--------------------------------------------------------------------------
+						SoundService soundService = SoundService.getInstance();
+						
+						//--------------------------------------------------------------------------
+						final ModulGeneratorTypeData modulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+
+						//modulGeneratorTypeData.setIsMainModulGeneratorType(true);
+						
+						modulGeneratorTypeData.setGeneratorTypeName("(new)");
+
+						soundService.addGeneratorType(modulGeneratorTypeData);
+						
+						//--------------------------------------------------------------------------
+						DefaultTreeModel treeModel = (DefaultTreeModel)modulesTreeView.getModel();
+						
+						DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(modulGeneratorTypeData);
+
+						TreePath selectionPath = modulesTreeView.getSelectionPath();
+						
+						DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
+
+						int parentChildCount = parentTreeNode.getChildCount();
+						
+						treeModel.insertNodeInto(modulTreeNode, parentTreeNode, parentChildCount);
+						
+						modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
+						
+						//--------------------------------------------------------------------------
+					}
+			 		
+			 	}
+			);
+			this.modulesCategoryPopupMenu.add(menuItem);
+		}
 		//==========================================================================================
 		// Modul Popup Menu:
 		
@@ -131,6 +186,9 @@ extends MouseAdapter
 
 		if (row != -1)
 		{
+//			TreePath oldSelectionPath = modulesTreeView.getSelectionPath();
+//			DefaultMutableTreeNode oldTreeNode = (DefaultMutableTreeNode)oldSelectionPath.getLastPathComponent();
+			
 			modulesTreeView.setSelectionRow(row);
 			
 			TreePath selectionPath = modulesTreeView.getSelectionPath();
@@ -157,6 +215,11 @@ extends MouseAdapter
 						this.generatorPopupMenu.show(e.getComponent(),
 						                             e.getX(), e.getY());
 					}
+					else
+					{
+						this.modulesCategoryPopupMenu.show(e.getComponent(),
+						                                   e.getX(), e.getY());
+					}
 				}
 			}
 			else
@@ -170,6 +233,10 @@ extends MouseAdapter
 					
 					if (userObject instanceof ModulGeneratorTypeData)
 					{
+//						// Update the node edited bevor: 
+//						DefaultTreeModel treeModel = (DefaultTreeModel)modulesTreeView.getModel();
+//						treeModel.nodeChanged(oldTreeNode);
+						
 						ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
 					
 						// Notify edit modul event to listeners.
