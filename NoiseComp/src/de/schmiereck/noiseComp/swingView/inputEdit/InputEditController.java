@@ -12,8 +12,12 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.swingView.InputUtils;
+import de.schmiereck.noiseComp.swingView.MultiValue;
 import de.schmiereck.noiseComp.swingView.OutputUtils;
+import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
+import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 
 /**
  * <p>
@@ -264,6 +268,76 @@ public class InputEditController
 		inputEditModel.setModulInputTypeData(modulInputTypeData);
 		
 		//==========================================================================================
+	}
+
+	/**
+	 * @param selectModel
+	 * 			is the Select Model.
+	 * @param selectedGenerator
+	 * 			is the selected Generator.
+	 */
+	public void doUpdate(final InputSelectModel selectModel,
+	                     final Generator selectedGenerator)
+	{
+		InputEditModel inputEditModel = this.getInputEditModel();
+		InputEditView inputEditView = this.getInputEditView();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)inputEditView.getInputTypeComboBox().getSelectedItem();
+		GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)inputEditView.getInputGeneratorComboBox().getSelectedItem();
+		String valueStr = inputEditView.getValueTextField().getText();
+		ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)inputEditView.getModulInputTypeComboBox().getSelectedItem();
+			
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
+		Generator inputGenerator = inputGeneratorSelectItem.getGenerator();
+		MultiValue multiValue = InputUtils.makeMultiValue(valueStr);
+		InputTypeData modulInputTypeData = modulInputTypeSelectItem.getInputTypeData();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Input-Data:
+		
+		Integer selectedRowNo = selectModel.getSelectedRowNo();
+		
+		// Input selected?
+		if (selectedRowNo != null)
+		{
+			InputsTabelModel inputsTabelModel = selectModel.getInputsTabelModel();
+			
+			InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
+			
+			InputData inputData = inputSelectEntryModel.getInputData();
+			
+			// Existing Input selected?
+			if (inputData != null)
+			{
+				// Update selected Input:
+				
+				inputData.setInputGenerator(inputGenerator);
+				inputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
+				inputData.setInputModulInputTypeData(modulInputTypeData);
+			}
+			else
+			{
+				// Insert new Input:
+				
+				inputData = 
+					selectedGenerator.addInputGenerator(inputGenerator, 
+					                                    inputTypeData, 
+					                                    multiValue.floatValue, multiValue.stringValue,
+					                                    modulInputTypeData);
+				
+				inputSelectEntryModel.setInputData(inputData);
+			}
+		}
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Update Input-Edit-Model:
+		
+		inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
+		inputEditModel.setInputGenerator(inputGeneratorSelectItem.getGenerator());
+		inputEditModel.setValue(valueStr);
+		inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
 	}
 
 }

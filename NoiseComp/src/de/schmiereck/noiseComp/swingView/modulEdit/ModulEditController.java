@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 
 
@@ -54,33 +53,6 @@ public class ModulEditController
 		this.modulEditView = new ModulEditView(this.modulEditModel);
 		
 		//------------------------------------------------------------------------------------------
-		// Edited Model changed -> updated model:
-		
-		modulesTreeModel.addEditModuleChangedListener
-		(
-		 	new EditModuleChangedListener()
-		 	{
-				@Override
-				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel)
-				{
-					String generatorTypeName;
-
-					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
-					
-					if (modulGeneratorTypeData != null)
-					{
-						generatorTypeName = modulGeneratorTypeData.getGeneratorTypeName();
-					}
-					else
-					{
-						generatorTypeName = null;
-					}
-
-					modulEditModel.setModulName(generatorTypeName);
-				}
-		 	}
-		);
-		//------------------------------------------------------------------------------------------
 		// Update-Button: Update Modul:
 		
 		this.modulEditView.getUpdateButton().addActionListener
@@ -123,5 +95,25 @@ public class ModulEditController
 	public ModulEditModel getModulEditModel()
 	{
 		return this.modulEditModel;
+	}
+
+	/**
+	 * @param modulGeneratorTypeData
+	 * 			is the Modul-Generator-Type Data.
+	 */
+	public void doEditModuleChanged(ModulGeneratorTypeData modulGeneratorTypeData)
+	{
+		String generatorTypeName;
+		
+		if (modulGeneratorTypeData != null)
+		{
+			generatorTypeName = modulGeneratorTypeData.getGeneratorTypeName();
+		}
+		else
+		{
+			generatorTypeName = null;
+		}
+
+		modulEditModel.setModulName(generatorTypeName);
 	}
 }

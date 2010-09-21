@@ -39,12 +39,12 @@ extends BasicEditView
 	/**
 	 * Create-New-Timeline Button.
 	 */
-	private final JButton	createNewTimelineButton;
+	private final JButton	createNewButton;
 
 	/**
 	 * Remove-Timeline Button.
 	 */
-	private final JButton	removeTimelineButton;
+	private final JButton	removeButton;
 	
 	/**
 	 * Update Button.
@@ -68,15 +68,15 @@ extends BasicEditView
 		
 		//------------------------------------------------------------------------------------------
 		{
-			this.createNewTimelineButton = new JButton("Create new Timeline");
+			this.createNewButton = new JButton("Create new Timeline");
 			
-			this.addField(0, this.createNewTimelineButton);
+			this.addField(0, this.createNewButton);
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.removeTimelineButton = new JButton("Remove Timeline");
+			this.removeButton = new JButton("Remove Timeline");
 			
-			this.addField(1, this.removeTimelineButton);
+			this.addField(1, this.removeButton);
 		}
 		//------------------------------------------------------------------------------------------
 		{
@@ -224,20 +224,20 @@ extends BasicEditView
 
 	/**
 	 * @return 
-	 * 			returns the {@link #createNewTimelineButton}.
+	 * 			returns the {@link #createNewButton}.
 	 */
-	public JButton getCreateNewTimelineButton()
+	public JButton getCreateNewButton()
 	{
-		return this.createNewTimelineButton;
+		return this.createNewButton;
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #removeTimelineButton}.
+	 * 			returns the {@link #removeButton}.
 	 */
-	public JButton getRemoveTimelineButton()
+	public JButton getRemoveButton()
 	{
-		return this.removeTimelineButton;
+		return this.removeButton;
 	}
 
 	/**

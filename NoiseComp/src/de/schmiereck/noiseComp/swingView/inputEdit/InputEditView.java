@@ -42,12 +42,12 @@ extends BasicEditView
 	/**
 	 * Create-New-Input Button.
 	 */
-	private final JButton	createNewInputButton;
+	private final JButton	createNewButton;
 
 	/**
 	 * Remove-Input Button.
 	 */
-	private final JButton	removeInputButton;
+	private final JButton	removeButton;
 	
 	/**
 	 * Update Button.
@@ -73,15 +73,15 @@ extends BasicEditView
 		
 		//------------------------------------------------------------------------------------------
 		{
-			this.createNewInputButton = new JButton("Create new input");
+			this.createNewButton = new JButton("Create new input");
 			
-			this.addField(0, this.createNewInputButton);
+			this.addField(0, this.createNewButton);
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.removeInputButton = new JButton("Remove input");
+			this.removeButton = new JButton("Remove input");
 			
-			this.addField(1, this.removeInputButton);
+			this.addField(1, this.removeButton);
 		}
 		//------------------------------------------------------------------------------------------
 		{
@@ -309,19 +309,19 @@ extends BasicEditView
 
 	/**
 	 * @return 
-	 * 			returns the {@link #removeInputButton}.
+	 * 			returns the {@link #removeButton}.
 	 */
-	public JButton getRemoveInputButton()
+	public JButton getRemoveButton()
 	{
-		return this.removeInputButton;
+		return this.removeButton;
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #createNewInputButton}.
+	 * 			returns the {@link #createNewButton}.
 	 */
-	public JButton getCreateNewInputButton()
+	public JButton getCreateNewButton()
 	{
-		return this.createNewInputButton;
+		return this.createNewButton;
 	}
 }

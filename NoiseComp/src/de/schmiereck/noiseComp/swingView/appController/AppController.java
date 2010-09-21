@@ -16,23 +16,22 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
-import de.schmiereck.noiseComp.swingView.InputUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
-import de.schmiereck.noiseComp.swingView.MultiValue;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
+import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
-import de.schmiereck.noiseComp.swingView.inputEdit.GeneratorSelectItem;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
-import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
-import de.schmiereck.noiseComp.swingView.inputEdit.InputEditView;
-import de.schmiereck.noiseComp.swingView.inputEdit.InputTypeSelectItem;
-import de.schmiereck.noiseComp.swingView.inputEdit.ModulInputTypeSelectItem;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
+import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeTabelModel;
 import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesController;
 import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
@@ -130,6 +129,12 @@ public class AppController
 		this.appView.setModulEditView(this.modulEditController.getModulEditView());
 		
 		//------------------------------------------------------------------------------------------
+		this.modulInputTypesController = new ModulInputTypesController(this);
+		
+		final ModulInputTypeEditController modulInputTypeEditController = modulInputTypesController.getModulInputTypeEditController();
+		final ModulInputTypeSelectController modulInputTypeSelectController = modulInputTypesController.getModulInputTypeSelectController();
+		
+		//------------------------------------------------------------------------------------------
 		this.timelinesScrollPanelController = new TimelinesScrollPanelController();
 		
 		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView());
@@ -160,9 +165,6 @@ public class AppController
 		
 		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
 		
-		//------------------------------------------------------------------------------------------
-		this.modulInputTypesController = new ModulInputTypesController(this);
-		
 		//==========================================================================================
 		this.modulesTreeController.getModulesTreeView().addDoEditModuleListener
 		(
@@ -172,6 +174,40 @@ public class AppController
 				public void notifyEditModul(ModulGeneratorTypeData modulGeneratorTypeData)
 				{
 					selectEditModule(modulGeneratorTypeData);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Modules-Tree Edited Model changed -> updated Modul-Edit Model:
+		
+		this.modulesTreeController.getModulesTreeModel().addEditModuleChangedListener
+		(
+		 	new EditModuleChangedListener()
+		 	{
+				@Override
+				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel)
+				{
+					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					
+					modulEditController.doEditModuleChanged(modulGeneratorTypeData);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Modules-Tree Edited Model changed -> updated Modul-Input-Type Select Model:
+		
+		this.modulesTreeController.getModulesTreeModel().addEditModuleChangedListener
+		(
+		 	new EditModuleChangedListener()
+		 	{
+				@Override
+				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel)
+				{
+					ModulInputTypeSelectController modulInputTypeSelectController = modulInputTypesController.getModulInputTypeSelectController();
+					
+					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					
+					modulInputTypeSelectController.doEditModuleChanged(modulGeneratorTypeData);
 				}
 		 	}
 		);
@@ -205,9 +241,91 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
+		// Modul-Input-Type Edit: Create-New Button: Update Modul-Input-Type Select Model:
+		
+		modulInputTypeEditController.getModulInputTypeEditView().getCreateNewButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ModulInputTypeSelectModel modulInputTypeSelectModel = modulInputTypeSelectController.getInputTypeSelectModel();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					doCreateNew(modulInputTypeSelectModel);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			 	}
+
+				/**
+				 * @param inputSelectModel
+				 * 			is the Modul-Input-Type Select Model. 
+				 */
+				private void doCreateNew(ModulInputTypeSelectModel modulInputTypeSelectModel)
+				{
+					ModulInputTypeTabelModel tabelModel = modulInputTypeSelectModel.getModulInputTypeTabelModel();
+					
+					ModulInputTypeSelectEntryModel selectEntryModel = new ModulInputTypeSelectEntryModel(null);
+					
+					int rowNo = tabelModel.addInputData(selectEntryModel);
+					
+					modulInputTypeSelectModel.setSelectedRowNo(rowNo);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Modul-Input-Type Edit Update-Button: Update Modul-Input-Type Data and Modul-Input-Type Edit-Model:
+		
+		modulInputTypeEditController.getModulInputTypeEditView().getUpdateButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					ModulInputTypeSelectModel selectModel = modulInputTypeSelectController.getInputTypeSelectModel();
+					
+					InputTypeData inputTypeData = modulInputTypeSelectController.getSelectedModulInputType();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					modulInputTypeEditController.doUpdate(selectModel, 
+					                                      inputTypeData,
+					                                      editedModulGeneratorTypeData);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Modul-Input-Type Edit Model Value changed: Update Input-Select:
+		
+		modulInputTypeEditController.getModulInputTypeEditModel().getInputTypeIDChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					ModulInputTypeSelectModel selectModel = modulInputTypeSelectController.getInputTypeSelectModel();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					// Update Input-Select:
+						
+					modulInputTypeSelectController.doInputTypeUpdated(selectModel);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
 		// Timeline-Edit Remove-Timeline-Button: Update Modul-Data and Timeline-Select-Model:
 		
-		this.timelineEditController.getTimelineEditView().getRemoveTimelineButton().addActionListener
+		this.timelineEditController.getTimelineEditView().getRemoveButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -243,7 +361,7 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		// Timeline-Edit Create-New-Timeline-Button: Timeline-Select-Model:
 		
-		this.timelineEditController.getTimelineEditView().getCreateNewTimelineButton().addActionListener
+		this.timelineEditController.getTimelineEditView().getCreateNewButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -319,69 +437,12 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					InputEditModel inputEditModel = inputEditController.getInputEditModel();
-					InputEditView inputEditView = inputEditController.getInputEditView();
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)inputEditView.getInputTypeComboBox().getSelectedItem();
-					GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)inputEditView.getInputGeneratorComboBox().getSelectedItem();
-					String valueStr = inputEditView.getValueTextField().getText();
-					ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)inputEditView.getModulInputTypeComboBox().getSelectedItem();
-						
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
-					Generator inputGenerator = inputGeneratorSelectItem.getGenerator();
-					MultiValue multiValue = InputUtils.makeMultiValue(valueStr);
-					InputTypeData modulInputTypeData = modulInputTypeSelectItem.getInputTypeData();
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					// Input-Data:
-					
 					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
 					
-					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
-					
-					// Input selected?
-					if (selectedRowNo != null)
-					{
-						InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
-						
-						InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
-						
-						InputData inputData = inputSelectEntryModel.getInputData();
-						
-						// Existing Input selected?
-						if (inputData != null)
-						{
-							// Update selected Input:
-							
-							inputData.setInputGenerator(inputGenerator);
-							inputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
-							inputData.setInputModulInputTypeData(modulInputTypeData);
-						}
-						else
-						{
-							// Insert new Input:
-							
-							Generator selectedGenerator = timelinesDrawPanelController.getSelectedTimelineGenerator();
-							
-							inputData = 
-								selectedGenerator.addInputGenerator(inputGenerator, 
-								                                    inputTypeData, 
-								                                    multiValue.floatValue, multiValue.stringValue,
-								                                    modulInputTypeData);
-							
-							inputSelectEntryModel.setInputData(inputData);
-						}
-					}
+					Generator selectedGenerator = timelinesDrawPanelController.getSelectedTimelineGenerator();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					// Update Input-Edit-Model:
-					
-					inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
-					inputEditModel.setInputGenerator(inputGeneratorSelectItem.getGenerator());
-					inputEditModel.setValue(valueStr);
-					inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
+					inputEditController.doUpdate(inputSelectModel, selectedGenerator);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
@@ -390,7 +451,7 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		// Input-Edit Remove-Input-Button: Update Input-Select-Model and Generator-Input-Data:
 		
-		inputEditController.getInputEditView().getRemoveInputButton().addActionListener
+		inputEditController.getInputEditView().getRemoveButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -430,7 +491,7 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		// Input-Edit Create-New-Input-Button: Update Input-Select-Model // and Generator-Input-Data:
 		
-		inputEditController.getInputEditView().getCreateNewInputButton().addActionListener
+		inputEditController.getInputEditView().getCreateNewButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -440,6 +501,17 @@ public class AppController
 					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					doCreateNewInput(inputSelectModel);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			 	}
+
+				/**
+				 * @param inputSelectModel
+				 * 			is the Input-Select Model. 
+				 */
+				private void doCreateNewInput(InputSelectModel inputSelectModel)
+				{
 					InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
 					
 					InputSelectEntryModel inputSelectEntryModel = new InputSelectEntryModel(null);
@@ -447,9 +519,7 @@ public class AppController
 					int rowNo = inputsTabelModel.addInputData(inputSelectEntryModel);
 					
 					inputSelectModel.setSelectedRowNo(rowNo);
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			 	}
+				}
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
@@ -462,23 +532,11 @@ public class AppController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
-					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Input-Select:
 						
-					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+					inputSelectController.doInputUpdated();
 					
-					if (selectedRowNo != null)
-					{
-						InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
-						
-						InputSelectEntryModel selectedRow = inputSelectModel.getSelectedRow();
-						
-						selectedRow.updateInputData();
-						
-						inputsTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
-					}
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Timeline-Select: See below.
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

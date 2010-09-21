@@ -4,6 +4,8 @@
 package de.schmiereck.noiseComp.swingView.modulInputs;
 
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
 
 /**
  * <p>
@@ -28,6 +30,9 @@ public class ModulInputTypesController
 	 */
 	private final ModulInputTypesView modulInputTypesView;
 	
+	private final ModulInputTypeSelectController modulInputTypeSelectController;
+	private final ModulInputTypeEditController modulInputTypeEditController;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -41,8 +46,17 @@ public class ModulInputTypesController
 	{
 		//==========================================================================================
 		this.modulInputTypesModel = new ModulInputTypesModel();
-		
 		this.modulInputTypesView = new ModulInputTypesView(appController.getAppView());
+		
+		//------------------------------------------------------------------------------------------
+		this.modulInputTypeSelectController = new ModulInputTypeSelectController();
+		
+		this.modulInputTypesView.setModulInputTypeSelectView(this.modulInputTypeSelectController.getInputTypeSelectView());
+		
+		//------------------------------------------------------------------------------------------
+		this.modulInputTypeEditController = new ModulInputTypeEditController();
+		
+		this.modulInputTypesView.setModulInputTypeEditView(this.modulInputTypeEditController.getModulInputTypeEditView());
 		
 		//==========================================================================================
 	}
@@ -63,5 +77,23 @@ public class ModulInputTypesController
 	public ModulInputTypesModel getModulInputTypesModel()
 	{
 		return this.modulInputTypesModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulInputTypeSelectController}.
+	 */
+	public ModulInputTypeSelectController getModulInputTypeSelectController()
+	{
+		return this.modulInputTypeSelectController;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulInputTypeEditController}.
+	 */
+	public ModulInputTypeEditController getModulInputTypeEditController()
+	{
+		return this.modulInputTypeEditController;
 	}
 }

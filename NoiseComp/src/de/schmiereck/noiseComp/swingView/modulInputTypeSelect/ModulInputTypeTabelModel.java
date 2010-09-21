@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.inputSelect;
+package de.schmiereck.noiseComp.swingView.modulInputTypeSelect;
 
 import java.util.List;
 import java.util.Vector;
@@ -10,13 +10,13 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  * <p>
- * 	Inputs Tabel-Model.
+ * 	Modul-Input-Type Tabel-Model.
  * </p>
  * 
  * @author smk
- * @version <p>14.09.2010:	created, smk</p>
+ * @version <p>20.09.2010:	created, smk</p>
  */
-public class InputsTabelModel
+public class ModulInputTypeTabelModel
 extends AbstractTableModel
 {
 	//**********************************************************************************************
@@ -24,7 +24,7 @@ extends AbstractTableModel
 
 	private String columnNames[] = new String[]{"Name", "Value"};
 	
-	private List<InputSelectEntryModel> inputs = new Vector<InputSelectEntryModel>();
+	private List<ModulInputTypeSelectEntryModel> inputs = new Vector<ModulInputTypeSelectEntryModel>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -50,14 +50,14 @@ extends AbstractTableModel
 	}
 
 	/**
-	 * @param inputSelectEntryModel
-	 * 			is the Input-Select-Entry Model.
+	 * @param modulInputTypeSelectEntryModel
+	 * 			is the Modul-Input-Type Select-Entry Model
 	 * @return
 	 * 			the row number.
 	 */
-	public int addInputData(InputSelectEntryModel inputSelectEntryModel)
+	public int addInputData(ModulInputTypeSelectEntryModel modulInputTypeSelectEntryModel)
 	{
-		this.inputs.add(inputSelectEntryModel);
+		this.inputs.add(modulInputTypeSelectEntryModel);
 		
 		int rowNo = this.inputs.size() - 1;
 		
@@ -72,7 +72,7 @@ extends AbstractTableModel
 		return this.inputs.size();
 	}
 	
-	public InputSelectEntryModel getRow(int rowNo) 
+	public ModulInputTypeSelectEntryModel getRow(int rowNo) 
 	{ 
 		return this.inputs.get(rowNo);
 	}
@@ -88,18 +88,18 @@ extends AbstractTableModel
 	{
 		String value;
 		
-		InputSelectEntryModel inputSelectEntryModel = this.inputs.get(row);
+		ModulInputTypeSelectEntryModel modulInputTypeSelectEntryModel = this.inputs.get(row);
 		
 		switch (col)
 		{
 			case 0:		// Type name.
 			{
-				value = inputSelectEntryModel.getInputTypeName();
+				value = modulInputTypeSelectEntryModel.getInputTypeName();
 				break;
 			}
 			case 1:		// Label.
 			{
-				value = inputSelectEntryModel.getInputLabel();
+				value = modulInputTypeSelectEntryModel.getInputTypeLabel();
 //				value = this.makeInputLabel(inputData);
 				break;
 			}

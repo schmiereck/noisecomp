@@ -63,7 +63,7 @@ public class InputEditModel
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
-	 * Generator Name.
+	 * Value.
 	 */
 	private String value = null;
 

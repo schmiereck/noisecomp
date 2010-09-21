@@ -152,4 +152,22 @@ public class InputSelectController
 		return this.inputSelectView;
 	}
 
+	/**
+	 */
+	public void doInputUpdated()
+	{
+		Integer selectedRowNo = this.inputSelectModel.getSelectedRowNo();
+		
+		if (selectedRowNo != null)
+		{
+			InputsTabelModel inputsTabelModel = this.inputSelectModel.getInputsTabelModel();
+			
+			InputSelectEntryModel selectedRow = this.inputSelectModel.getSelectedRow();
+			
+			selectedRow.updateInputData();
+			
+			inputsTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
+		}
+	}
+
 }

@@ -20,6 +20,17 @@ public class InputUtils
 	 * @return
 	 * 			the float value.
 	 */
+	public static Integer makeIntegerValue(String value)
+	{
+		return Integer.parseInt(value);
+	}
+
+	/**
+	 * @param value
+	 * 			is the string.
+	 * @return
+	 * 			the float value.
+	 */
 	public static Float makeFloatValue(String value)
 	{
 		return Float.parseFloat(value);

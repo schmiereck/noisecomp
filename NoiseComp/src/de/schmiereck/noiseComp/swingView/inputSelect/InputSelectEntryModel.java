@@ -10,7 +10,7 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 
 /**
  * <p>
- * 	Input-Select-Entry Model.
+ * 	Input Select-Entry Model.
  * </p>
  * 
  * @author smk
@@ -22,7 +22,7 @@ public class InputSelectEntryModel
 	// Fields:
 	
 	/**
-	 * Input-Data.
+	 * Input Data.
 	 */
 	private InputData inputData;
 	
@@ -37,7 +37,7 @@ public class InputSelectEntryModel
 	 * Constructor.
 	 * 
 	 * @param inputData
-	 * 			is the Input-Data.
+	 * 			is the Input Data.
 	 */
 	public InputSelectEntryModel(InputData inputData)
 	{
@@ -149,12 +149,12 @@ public class InputSelectEntryModel
 		String inputTypeName;
 		String inputLabel;
 		
-		if (inputData != null)
+		if (this.inputData != null)
 		{
-			InputTypeData inputTypeData = inputData.getInputTypeData();
+			InputTypeData inputTypeData = this.inputData.getInputTypeData();
 			inputTypeName = inputTypeData.getInputTypeName();
 			
-			inputLabel = this.makeInputLabel(inputData);
+			inputLabel = this.makeInputLabel(this.inputData);
 		}
 		else
 		{

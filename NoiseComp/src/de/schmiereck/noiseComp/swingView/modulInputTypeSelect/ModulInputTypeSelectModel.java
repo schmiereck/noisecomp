@@ -1,27 +1,26 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.inputSelect;
+package de.schmiereck.noiseComp.swingView.modulInputTypeSelect;
 
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
-
 /**
  * <p>
- * 	Input-Select Model.
+ * 	Modul-Input-Type Select Model.
  * </p>
  * 
  * @author smk
- * @version <p>15.09.2010:	created, smk</p>
+ * @version <p>20.09.2010:	created, smk</p>
  */
-public class InputSelectModel
+public class ModulInputTypeSelectModel
 {
 	//**********************************************************************************************
 	// Fields:
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	private final InputsTabelModel inputsTabelModel = new InputsTabelModel();
+	private final ModulInputTypeTabelModel modulInputTypeTabelModel = new ModulInputTypeTabelModel();
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
@@ -41,21 +40,10 @@ public class InputSelectModel
 	 * Constructor.
 	 * 
 	 */
-	public InputSelectModel()
+	public ModulInputTypeSelectModel()
 	{
 		//==========================================================================================
-//		this.inputsTabelModel.addTableModelListener
-//		(
-//		 	new TableModelListener()
-//		 	{
-//				@Override
-//				public void tableChanged(TableModelEvent e)
-//				{
-//				}
-//		 	}
-//		);
 		//------------------------------------------------------------------------------------------
-
 		//==========================================================================================
 	}
 
@@ -64,25 +52,25 @@ public class InputSelectModel
 	 */
 	public void clearInputs()
 	{
-		this.inputsTabelModel.clearInputs();
+		this.modulInputTypeTabelModel.clearInputs();
 	}
 
 	/**
-	 * @param inputSelectEntryModel
-	 * 			is the Input-Select-Entry Model.
+	 * @param modulInputTypeSelectEntryModel
+	 * 			is the Modul-Input-Type Select-Entry Model.
 	 */
-	public void addInputData(InputSelectEntryModel inputSelectEntryModel)
+	public void addInputData(ModulInputTypeSelectEntryModel modulInputTypeSelectEntryModel)
 	{
-		this.inputsTabelModel.addInputData(inputSelectEntryModel);
+		this.modulInputTypeTabelModel.addInputData(modulInputTypeSelectEntryModel);
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #inputsTabelModel}.
+	 * 			returns the {@link #modulInputTypeTabelModel}.
 	 */
-	public InputsTabelModel getInputsTabelModel()
+	public ModulInputTypeTabelModel getModulInputTypeTabelModel()
 	{
-		return this.inputsTabelModel;
+		return this.modulInputTypeTabelModel;
 	}
 
 	/**
@@ -120,17 +108,17 @@ public class InputSelectModel
 
 	/**
 	 * @return
-	 * 			the selected Input Select-Entry Model.
+	 * 			the selected Modul-Input-Type Select-Entry Model.
 	 */
-	public InputSelectEntryModel getSelectedRow()
+	public ModulInputTypeSelectEntryModel getSelectedRow()
 	{
-		InputSelectEntryModel selectEntryModel;
+		ModulInputTypeSelectEntryModel selectEntryModel;
 		
 		Integer selectedRowNo = this.getSelectedRowNo();
 		
 		if (selectedRowNo != null)
 		{
-			InputsTabelModel tabelModel = this.getInputsTabelModel();
+			ModulInputTypeTabelModel tabelModel = this.getModulInputTypeTabelModel();
 			
 			selectEntryModel = tabelModel.getRow(selectedRowNo);
 		}

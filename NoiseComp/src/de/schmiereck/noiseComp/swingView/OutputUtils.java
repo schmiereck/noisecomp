@@ -29,6 +29,22 @@ public class OutputUtils
 		
 		return ret;
 	}
+	
+	public static String makeIntegerText(Integer value)
+	{
+		String ret;
+		
+		if (value != null)
+		{
+			ret = Integer.toString(value);
+		}
+		else
+		{
+			ret = "";
+		}
+		
+		return ret;
+	}
 
 	public static String makeFloatText(Float value)
 	{
