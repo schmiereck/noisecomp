@@ -194,7 +194,7 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		// Modules-Tree Edited Model changed -> updated Modul-Input-Type Select Model:
+		// Modules-Tree Edited Model changed: Update Modul-Input-Type Select Model:
 		
 		this.modulesTreeController.getModulesTreeModel().addEditModuleChangedListener
 		(
@@ -212,6 +212,8 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
+		// Edit-Modul: Edit-Input-Types Button: Update Modules-Tree-View:
+		
 		this.modulEditController.getModulEditView().getEditInputTypesButton().addActionListener
 		(
 		 	new ActionListener()
@@ -378,7 +380,7 @@ public class AppController
 						                           0.0F,
 						                           1.0F);
 					
-					timelinesDrawPanelModel.addTimelineGeneratorModel(timelineGeneratorModel);
+					timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
 					
 					timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
 					

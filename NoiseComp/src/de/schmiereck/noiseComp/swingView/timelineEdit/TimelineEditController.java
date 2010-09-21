@@ -67,7 +67,7 @@ public class TimelineEditController
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
 		//------------------------------------------------------------------------------------------
-		// Selected Timeline changed -> updated model:
+		// Selected Timeline changed: Update Timeline-Edit Model:
 		
 		this.timelinesDrawPanelModel.addSelectedTimelineChangedListener
 		(
@@ -137,7 +137,7 @@ public class TimelineEditController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		// Timeline-Edit Update-Button: Update Timeline-Generator-Model and Generator:
+		// Timeline-Edit Update-Button: Generator, Update Timeline-Edit Model and Timeline-Generator Model:
 		
 		this.timelineEditView.getUpdateButton().addActionListener
 		(
@@ -152,9 +152,7 @@ public class TimelineEditController
 					
 					if (timelineGeneratorModel != null)
 					{
-						Generator generator = 
-							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
-
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						GeneratorTypeData generatorTypeData;
 						{
 							GeneratorTypeSelectItem generatorTypeSelectItem = 
@@ -165,8 +163,12 @@ public class TimelineEditController
 						Float generatorStartTimePos = Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText());
 						Float generatorEndTimePos = Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText());
 						
-						// Update Generator.
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Generator:
 						
+						Generator generator = 
+							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
+
 						// Create new generator?
 						if (generator == null)
 						{
@@ -190,11 +192,23 @@ public class TimelineEditController
 						generator.setStartTimePos(generatorStartTimePos);
 						generator.setEndTimePos(generatorEndTimePos);
 
-						// Update Timeline-Model.
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Timeline-Edit Model:
+						
+						timelineEditModel.setGeneratorTypeData(generatorTypeData);
+						timelineEditModel.setGeneratorName(generatorName);
+						timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
+						timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Timeline-Model:
+						
 //						timelineGeneratorModel.setGeneratorTypeData(generatorTypeData);
 						timelineGeneratorModel.setName(generatorName);
 						timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
 						timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}
 				}
 		 	}

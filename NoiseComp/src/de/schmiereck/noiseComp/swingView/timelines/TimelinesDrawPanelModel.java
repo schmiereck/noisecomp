@@ -66,6 +66,9 @@ public class TimelinesDrawPanelModel
 	}
 
 	/**
+	 * Do not use this directly, use {@link TimelinesDrawPanelController#addTimelineGeneratorModel(TimelineGeneratorModel)}
+	 * because of registering change listeners for TimelineGeneratorModel changes.
+	 * 
 	 * @param timelineGeneratorModel
 	 * 			is a Timeline-Generator Model.
 	 */

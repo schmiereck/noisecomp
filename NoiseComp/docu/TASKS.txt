@@ -1,0 +1,23 @@
+TASKS
+*****
+
+TODO:
+=====
+#2:		Florian und ich empfehlen eine BSD-style license. 
+		Mit GNU-Lizenzen hatten wir schon jede Menge Ärger.
+#4:		Disable change Input-Type of existing Timeline-Generator.
+#5:		Implements obligate input fields.
+#6:		Disable unreachable functions (buttons).
+#7:		Add "Realy Exit?" dialog.
+#8:		Add file operations.
+
+WORK:
+=====
+
+DONE:
+=====
+#1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
+		Deutsch sind ein größteil der möglichen Mitwirkenden von vorneherein ausgeschlossen.
+		-> I will try...
+#3:		No timeline repaint after Update Timeline-Edit for new insertet timelines (works after a new "Edit Modul").
+		
