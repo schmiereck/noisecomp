@@ -5,19 +5,35 @@ package de.schmiereck.noiseComp.swingView.appController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.prefs.Preferences;
 
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import de.schmiereck.noiseComp.Version;
+import de.schmiereck.noiseComp.file.LoadFileOperationLogic;
+import de.schmiereck.noiseComp.file.SaveFileOperationLogic;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
+import de.schmiereck.noiseComp.swingView.about.AboutController;
+import de.schmiereck.noiseComp.swingView.about.AboutDialogView;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
@@ -41,6 +57,7 @@ import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelines.TimelinesScrollPanelController;
+import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 
 
 /**
@@ -108,15 +125,58 @@ public class AppController
 	public AppController()
 	{
 		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
 		this.appModel = new AppModel();
 		
 		this.appView = new AppView(this.appModel);
 		
-		this.appView.setTitle("NoiseComp V2.0");
+		this.appView.setTitle("NoiseComp V" + Version.version);
 		this.appView.setSize(800, 600);
 		this.appView.setLocationRelativeTo(null);
 		this.appView.setVisible(true);
 		
+		//------------------------------------------------------------------------------------------
+		Preferences userPrefs = PreferencesUtils.getUserPreferences();
+		
+		File fileActionFile = this.appModel.getFileActionFile();
+		
+		if (fileActionFile == null)
+		{
+			String fileActionFileStr = 
+				PreferencesUtils.getValueString(userPrefs, 
+				                                "fileActionFile", 
+				                                null);
+			
+			if (fileActionFileStr != null)
+			{
+				File file = new File(fileActionFileStr);
+				
+				this.appModel.setFileActionFile(file);
+			}
+		}
+		//------------------------------------------------------------------------------------------
+		// File:
+		{
+			FileOpenAction action = new FileOpenAction(this);
+			
+			this.appView.getFileOpenMenuItem().setAction(action);
+			this.appView.getFileOpenButtonView().setAction(action);
+		}
+		{
+			FileSaveAction action = new FileSaveAction(this);
+			
+			this.appView.getFileSaveMenuItem().setAction(action);
+			this.appView.getFileSaveButtonView().setAction(action);
+		}
+		//------------------------------------------------------------------------------------------
+		// Help:
+		{
+			HelpAboutAction action = new HelpAboutAction(this);
+			
+			this.appView.getHelpAboutMenuItem().setAction(action);
+		}
 		//------------------------------------------------------------------------------------------
 		this.modulesTreeController = new ModulesTreeController(this);
 		
@@ -166,6 +226,15 @@ public class AppController
 		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
 		
 		//==========================================================================================
+		// Exit:
+		{
+			ExitAction action = new ExitAction(this);
+			
+			this.appView.getExitMenuItem().setAction(action);
+			this.appView.getExitButtonView().setAction(action);
+			this.appView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		}
+		//------------------------------------------------------------------------------------------
 		this.modulesTreeController.getModulesTreeView().addDoEditModuleListener
 		(
 		 	new DoEditModuleListener()
@@ -589,6 +658,26 @@ public class AppController
 				}
 		 	}
 		);
+	    //------------------------------------------------------------------------------------------
+		// Exit:
+		this.appView.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		this.appView.addWindowListener(new WindowAdapter() 
+		{
+            /* (non-Javadoc)
+             * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+             */
+            public void windowClosing(WindowEvent ex) 
+            {
+            	doExit();
+            }
+        });
+		
+	    //------------------------------------------------------------------------------------------
+		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+		
+		this.modulesTreeController.addGeneratorTypes(generatorTypes);
+		
 		//==========================================================================================
 	}
 
@@ -599,8 +688,12 @@ public class AppController
 	public void selectEditModule(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		//==========================================================================================
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+		//==========================================================================================
 		TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
 		
+		//==========================================================================================
 		timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(null);
 
 		this.timelinesDrawPanelController.clearTimelineGenerators();
@@ -608,19 +701,32 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		this.modulesTreeController.getModulesTreeModel().setEditedModulGeneratorTypeData(modulGeneratorTypeData);
 		
-		Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
-		
-		while (generatorsIterator.hasNext())
+		if (modulGeneratorTypeData != null)
 		{
-			Generator generator = generatorsIterator.next();
+			Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
 			
-			TimelineGeneratorModel timelineGeneratorModel = 
-				new TimelineGeneratorModel(generator.getName(),
-				                           generator.getStartTimePos(),
-				                           generator.getEndTimePos());
-			
-			this.timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
+			while (generatorsIterator.hasNext())
+			{
+				Generator generator = generatorsIterator.next();
+				
+				TimelineGeneratorModel timelineGeneratorModel = 
+					new TimelineGeneratorModel(generator.getName(),
+					                           generator.getStartTimePos(),
+					                           generator.getEndTimePos());
+				
+				if (generator instanceof OutputGenerator)
+				{	
+					OutputGenerator outputGenerator = (OutputGenerator)generator;
+					
+					//SoundData soundData = this.desktopControllerData.getSoundData();
+
+					soundSourceLogic.setOutputGenerator(outputGenerator);
+				}
+				
+				this.timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
+			}
 		}
+		
 		//==========================================================================================
 	}
 
@@ -714,4 +820,263 @@ public class AppController
 		
 		return editedModulGeneratorTypeData;
 	}
+
+	/**
+	 * Exit Applikation.
+	 */
+	public void doExit()
+	{
+		int option = JOptionPane.showConfirmDialog(this.appView, "Really Exit?");
+
+		if (option == JOptionPane.YES_OPTION)
+		{
+			System.exit(0);
+		}
+	}
+
+	/**
+	 * Show About-Dialog.
+	 */
+	public void doHelpAbout()
+	{
+		AboutDialogView aboutDialogView = new AboutDialogView(this.appView, true);
+		
+		AboutController aboutController = new AboutController(aboutDialogView);
+		
+		aboutController.doShow();
+	}
+
+	/**
+	 * File-Open.
+	 */
+	public void doFileOpen()
+	{
+		this.setEnableOpenFile(false);
+
+		File fileActionFile = this.getFileActionFile();
+		
+		JFileChooser chooser = new JFileChooser();
+
+		chooser.setFileHidingEnabled(true);
+		chooser.setMultiSelectionEnabled(false);
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+		chooser.setSelectedFile(fileActionFile);
+		
+//		ExtensionFileFilter filter = new ExtensionFileFilter();
+//		filter.addExtension("lwx");
+//		filter.setDescription("Geneden XML-File");
+//		chooser.setFileFilter(filter);
+
+		int state = chooser.showDialog(this.appView, "Open");
+
+		if (state == JFileChooser.APPROVE_OPTION)
+		{ 
+			//File dir = chooser.getCurrentDirectory();
+			File file = chooser.getSelectedFile();
+
+			try
+			{
+				this.doLoad(file);
+				
+				this.setFileActionFile(file);
+			}
+			catch (LoadFileException ex)
+			{
+				ex.printStackTrace(System.err);
+
+				JOptionPane.showMessageDialog(this.appView,
+				                              "Error while loading \"" + file + "\".\n" +
+				                              "Message: " + ex,
+				                              "Load File Error",
+				                              JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		this.setEnableOpenFile(true);
+	}
+	
+	/**
+	 * @param enable
+	 * 			<code>true</code> wenn die Open-Auswahlfunktionen für Files zugelassen werden sollen.
+	 */
+	public void setEnableOpenFile(boolean enable)
+	{
+		this.appView.getFileOpenMenuItem().setEnabled(enable);
+		this.appView.getFileOpenButtonView().setEnabled(enable);
+	}
+
+	/**
+	 * Load the Application data.
+	 * 
+	 * @param file
+	 * 			is the file to load. 
+	 * @throws LoadFileException 
+	 * 			wenn einFehler beim Laden Auftritt.
+	 */
+	public void doLoad(File file) 
+	throws LoadFileException
+	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
+		float frameRate = SwingMain.getSoundData().getFrameRate();
+		String absolutePath = file.getAbsolutePath();
+
+		ModulGeneratorTypeData mainModulGeneratorTypeData;
+		GeneratorTypesData generatorTypesData = new GeneratorTypesData();
+
+		try
+		{
+			mainModulGeneratorTypeData =
+				LoadFileOperationLogic.loadNoiseCompFile(generatorTypesData, absolutePath, frameRate);
+		}
+		catch (Exception ex)
+		{
+			throw new LoadFileException("Load \"" + absolutePath + "\".", ex);
+		}
+		
+		//------------------------------------------------------------------------------------------
+		soundService.removeAllGeneratorTypes();
+		
+		Iterator<GeneratorTypeData> generatorTypesIterator = generatorTypesData.getGeneratorTypesIterator();
+		
+		while (generatorTypesIterator.hasNext())
+		{
+			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			
+			 soundService.addGeneratorType(generatorTypeData);
+		}
+		
+		//------------------------------------------------------------------------------------------
+		this.selectEditModule(null);
+		
+		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+		
+		this.modulesTreeController.addGeneratorTypes(generatorTypes);
+		
+		this.selectEditModule(mainModulGeneratorTypeData);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Save the Application data.
+	 * 
+	 * @param file
+	 * 			is the file to save. 
+	 * @throws SaveFileException
+	 * 			wenn ein Fehler beim Speichern Auftritt. 
+	 */
+	public void doSave(File file) throws SaveFileException
+	{
+		String absolutePath = file.getAbsolutePath();
+		
+		try
+		{
+			SaveFileOperationLogic.saveFile(generatorTypesData, mainModulTypeData, absolutePath);
+		}
+		catch (Exception ex)
+		{
+			throw new SaveFileException("Save file \"" + absolutePath + "\".", ex);
+		}
+	}
+
+	/**
+	 * File-Save.
+	 */
+	public void doFileSave()
+	{
+		this.setEnableSaveFile(false);
+
+		File fileActionFile = this.getFileActionFile();
+		
+		JFileChooser chooser = new JFileChooser();
+
+		chooser.setFileHidingEnabled(true);
+		chooser.setMultiSelectionEnabled(false);
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+		chooser.setSelectedFile(fileActionFile);
+		
+//		ExtensionFileFilter filter = new ExtensionFileFilter();
+//		filter.addExtension("lwx");
+//		filter.setDescription("Geneden XML-File");
+//		chooser.setFileFilter(filter);
+
+		int state = chooser.showDialog(this.appView, "Save");
+
+		if (state == JFileChooser.APPROVE_OPTION)
+		{ 
+			//File dir = chooser.getCurrentDirectory();
+			File file = chooser.getSelectedFile();
+
+			try
+			{
+				this.doSave(file);
+				
+				this.setFileActionFile(file);
+			}
+			catch (SaveFileException ex)
+			{
+				ex.printStackTrace(System.err);
+
+				JOptionPane.showMessageDialog(this.appView,
+				                              "Error while saving \"" + file + "\".\n" +
+				                              "Message: " + ex,
+				                              "Save File Error",
+				                              JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		this.setEnableSaveFile(true);
+	}
+
+	/**
+	 * @return
+	 * 			die Datei der letzten Datei-Operation.
+	 */
+	private File getFileActionFile()
+	{
+		return this.appModel.getFileActionFile();
+	}
+	
+	/**
+	 * @param enable
+	 * 			<code>true</code> wenn die Save-Auswahlfunktionen für Files zugelassen werden sollen.
+	 */
+	public void setEnableSaveFile(boolean enable)
+	{
+		this.appView.getFileSaveMenuItem().setEnabled(enable);
+		this.appView.getFileSaveButtonView().setEnabled(enable);
+	}
+
+	/**
+	 * @param file
+	 * 			die Datei der letzten Datei-Operation.
+	 */
+	private void setFileActionFile(File file)
+	{
+		if (file == null)
+		{
+			this.appView.setTitle("NoiseComp");
+		}
+		else
+		{
+			String fileName = file.getName();
+			
+			this.appView.setTitle(fileName + " - NoiseComp");
+		}
+		this.appModel.setFileActionFile(file);
+		
+		String fileActionFileStr = file.getAbsolutePath();
+		
+		Preferences userPrefs = PreferencesUtils.getUserPreferences();
+
+		PreferencesUtils.setValueString(userPrefs, 
+		                                "fileActionFile", 
+		                                fileActionFileStr);
+	}
+
 }

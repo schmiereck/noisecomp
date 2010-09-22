@@ -25,8 +25,18 @@ import de.schmiereck.noiseComp.swingView.appController.AppController;
 public class SwingMain
 {
 	//**********************************************************************************************
-	// Fields:
+	// Constants:
 
+	/**
+	 * Node Name der Preferences.
+	 */
+	public static final String	PREFERENCES_ROOT_NODE_NAME	= "/de/schmiereck/noiseComp";
+	
+	//**********************************************************************************************
+	// Fields:
+	
+	private static SoundSourceLogic soundSourceLogic;
+	
 	private static SoundData soundData;
 	
 	private static SoundSourceSchedulerLogic soundSourceSchedulerLogic;
@@ -49,7 +59,7 @@ public class SwingMain
 		SourceDataLine line = StartupService.createLine();
 		
 		//------------------------------------------------------------------------------------------
-		SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
+		soundSourceLogic = new SoundSourceLogic();
 		
 		soundData = new SoundData(line, soundSourceLogic);
 		
@@ -116,5 +126,14 @@ public class SwingMain
 	public static SoundData getSoundData()
 	{
 		return soundData;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #soundSourceLogic}.
+	 */
+	public static SoundSourceLogic getSoundSourceLogic()
+	{
+		return soundSourceLogic;
 	}
 }

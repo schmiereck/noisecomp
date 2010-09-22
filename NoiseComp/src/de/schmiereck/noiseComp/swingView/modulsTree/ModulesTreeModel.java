@@ -6,6 +6,8 @@ package de.schmiereck.noiseComp.swingView.modulsTree;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.tree.DefaultTreeModel;
+
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 
@@ -22,6 +24,8 @@ public class ModulesTreeModel
 	//**********************************************************************************************
 	// Fields:
 
+	private final DefaultTreeModel treeModel;
+	
 	/**
 	 * Edited Modul-Generator-Type Data.
 	 */
@@ -31,6 +35,17 @@ public class ModulesTreeModel
 	
 	//**********************************************************************************************
 	// Functions:
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param treeModel
+	 * 			is the tree Model.
+	 */
+	public ModulesTreeModel(DefaultTreeModel treeModel)
+	{
+		this.treeModel = treeModel;
+	}
 
 	/**
 	 * @return 
@@ -62,6 +77,15 @@ public class ModulesTreeModel
 	public void addEditModuleChangedListener(EditModuleChangedListener editModuleChangedListener)
 	{
 		this.editModuleChangedListeners.add(editModuleChangedListener);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #treeModel}.
+	 */
+	public DefaultTreeModel getTreeModel()
+	{
+		return this.treeModel;
 	}
 
 }

@@ -68,12 +68,12 @@ public class SoundService
 	}
 
 	/**
-	 * @param createGeneratorTypeData
+	 * @param generatorTypeData
 	 * 			is the generator type.
 	 */
-	public void addGeneratorType(GeneratorTypeData createGeneratorTypeData)
+	public void addGeneratorType(GeneratorTypeData generatorTypeData)
 	{
-		this.generatorTypesData.addGeneratorTypeData(createGeneratorTypeData);
+		this.generatorTypesData.addGeneratorTypeData(generatorTypeData);
 	}
 
 	/**

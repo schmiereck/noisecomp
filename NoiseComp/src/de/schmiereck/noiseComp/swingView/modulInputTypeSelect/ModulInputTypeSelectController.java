@@ -150,22 +150,25 @@ public class ModulInputTypeSelectController
 	 */
 	public void doEditModuleChanged(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
-		Iterator<InputTypeData> inputTypesIterator = modulGeneratorTypeData.getInputTypesIterator();
-
-//		this.inputTypeSelectModel.setSelectedRowNo(null);
-		
 		this.inputTypeSelectModel.clearInputs();
 		
-		if (inputTypesIterator != null)
+		if (modulGeneratorTypeData != null)
 		{
-			while (inputTypesIterator.hasNext())
+			Iterator<InputTypeData> inputTypesIterator = modulGeneratorTypeData.getInputTypesIterator();
+	
+	//		this.inputTypeSelectModel.setSelectedRowNo(null);
+			
+			if (inputTypesIterator != null)
 			{
-				InputTypeData inputTypeData = inputTypesIterator.next();
-				
-				ModulInputTypeSelectEntryModel selectEntryModel = 
-					new ModulInputTypeSelectEntryModel(inputTypeData);
-				
-				this.inputTypeSelectModel.addInputData(selectEntryModel);
+				while (inputTypesIterator.hasNext())
+				{
+					InputTypeData inputTypeData = inputTypesIterator.next();
+					
+					ModulInputTypeSelectEntryModel selectEntryModel = 
+						new ModulInputTypeSelectEntryModel(inputTypeData);
+					
+					this.inputTypeSelectModel.addInputData(selectEntryModel);
+				}
 			}
 		}
 	}

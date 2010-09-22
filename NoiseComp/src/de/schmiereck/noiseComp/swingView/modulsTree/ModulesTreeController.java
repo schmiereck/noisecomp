@@ -5,14 +5,12 @@ package de.schmiereck.noiseComp.swingView.modulsTree;
 
 import java.util.List;
 
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 
 /**
@@ -50,10 +48,10 @@ public class ModulesTreeController
 	public ModulesTreeController(final AppController appController)
 	{
 		//==========================================================================================
-		this.modulesTreeModel = new ModulesTreeModel();
-		this.modulesTreeView = new ModulesTreeView(this.modulesTreeModel);
+		DefaultTreeModel treeModel = this.createTreeModel();
 		
-		createNodes(this.modulesTreeView);
+		this.modulesTreeModel = new ModulesTreeModel(treeModel);
+		this.modulesTreeView = new ModulesTreeView(this.modulesTreeModel);
 		
 		//------------------------------------------------------------------------------------------
 		this.modulesTreeModel.addEditModuleChangedListener(this.modulesTreeView);
@@ -65,40 +63,61 @@ public class ModulesTreeController
 	 * @param tree
 	 * 			is the Tree.
 	 */
-	private static void createNodes(JTree tree)
+	private DefaultTreeModel createTreeModel()
 	{
+		//==========================================================================================
 		DefaultMutableTreeNode modulesTreeNode = new DefaultMutableTreeNode("Modules");
 
-		{
-			DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode("Modul 1");
-			modulesTreeNode.add(modulTreeNode);
-			{
-				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator A");
-				modulTreeNode.add(generatorTreeNode);
-			}
-			{
-				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator B");
-				modulTreeNode.add(generatorTreeNode);
-			}
-		}
-		
-		{
-			DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode("Modul 2");
-			modulesTreeNode.add(modulTreeNode);
-			{
-				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator C");
-				modulTreeNode.add(generatorTreeNode);
-			}
-			{
-				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator D");
-				modulTreeNode.add(generatorTreeNode);
-			}
-		}
-		
+		//------------------------------------------------------------------------------------------
+		DefaultTreeModel treeModel = new DefaultTreeModel(modulesTreeNode);
+
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
 		
-		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+		return treeModel;
+	}
+	
+	/**
+	 * @param generatorTypes
+	 * 			are the  generator Types.
+	 */
+	public void addGeneratorTypes(List<GeneratorTypeData> generatorTypes)
+	{
+		//==========================================================================================
+		DefaultTreeModel treeModel = this.modulesTreeModel.getTreeModel();
+		
+		DefaultMutableTreeNode modulesTreeNode = (DefaultMutableTreeNode)treeModel.getRoot();
+		
+		modulesTreeNode.removeAllChildren();
+
+//		//------------------------------------------------------------------------------------------
+//		{
+//			DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode("Modul 1");
+//			modulesTreeNode.add(modulTreeNode);
+//			{
+//				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator A");
+//				modulTreeNode.add(generatorTreeNode);
+//			}
+//			{
+//				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator B");
+//				modulTreeNode.add(generatorTreeNode);
+//			}
+//		}
+//		
+//		{
+//			DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode("Modul 2");
+//			modulesTreeNode.add(modulTreeNode);
+//			{
+//				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator C");
+//				modulTreeNode.add(generatorTreeNode);
+//			}
+//			{
+//				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator D");
+//				modulTreeNode.add(generatorTreeNode);
+//			}
+//		}
+//		
+		//------------------------------------------------------------------------------------------
+//		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
 
 		for (GeneratorTypeData generatorTypeData : generatorTypes)
 		{
@@ -107,10 +126,10 @@ public class ModulesTreeController
 			modulesTreeNode.add(modulTreeNode);
 		}
 		
+		//------------------------------------------------------------------------------------------
+		treeModel.reload();
+		
 		//==========================================================================================
-		DefaultTreeModel treeModel = new DefaultTreeModel(modulesTreeNode);
-
-		tree.setModel(treeModel);
 	}
 
 	/**
@@ -128,19 +147,30 @@ public class ModulesTreeController
 	public void updateEditedModulTreeEntry(ModulGeneratorTypeData editedModulGeneratorTypeData)
 	{
 		//==========================================================================================
+		DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
+
+		//==========================================================================================
+		DefaultMutableTreeNode treeNode;
+		
 //		ModulGeneratorTypeData editedModulGeneratorTypeData = this.appModel.getEditedModulGeneratorTypeData();
 		
 		TreePath treePath = this.modulesTreeView.searchModulTreeNode(editedModulGeneratorTypeData);
 		
-		DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)treePath.getLastPathComponent();
-		
-		DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
+		if (treePath != null)
+		{
+			treeNode = (DefaultMutableTreeNode)treePath.getLastPathComponent();
+			
+		}
+		else
+		{
+			treeNode = null;
+		}
 		
 		//------------------------------------------------------------------------------------------
 		treeModel.nodeChanged(treeNode);
-//		treeModel.reload(treeNode);
-		
-//		this.modulesTree.repaint();
+		//		treeModel.reload(treeNode);
+				
+		//		this.modulesTree.repaint();
 		
 		//==========================================================================================
 	}

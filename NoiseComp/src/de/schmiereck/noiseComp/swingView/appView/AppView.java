@@ -7,12 +7,16 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
@@ -48,10 +52,50 @@ extends JFrame
 	@SuppressWarnings("unused")
 	private final AppModel appModel;
 	
-//	/**
-//	 * Timeline Draw Panel Model.
-//	 */
-//	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
+	/**
+	 * Menu-Bar: Main.
+	 */
+	private JMenuBar menuBarView = null;
+
+	/**
+	 * SubMenu Bar: File: File-Open.
+	 */
+	private JMenuItem fileOpenMenuItem = null;
+	
+	/**
+	 * SubMenu Bar: File: File-Save.
+	 */
+	private JMenuItem fileSaveMenuItem = null;
+	
+	/**
+	 * SubMenu Bar: File: Exit.
+	 */
+	private JMenuItem exitMenuItem = null;
+
+	/**
+	 * SubMenu Bar: Help: About.
+	 */
+	private JMenuItem helpAboutMenuItem = null;
+	
+	/**
+	 * Button-Bar: File.
+	 */
+	private JToolBar fileToolBarView = null;
+	
+	/**
+	 * Button: File: File-Open.
+	 */
+	private JButton fileOpenButtonView = null;
+	
+	/**
+	 * Button: File: File-Save.
+	 */
+	private JButton fileSaveButtonView = null;
+	
+	/**
+	 * Button: File: Exit.
+	 */
+	private JButton exitButtonView = null;
 	
 	/**
 	 * Modules-Tree Scroll-Pane.
@@ -128,6 +172,27 @@ extends JFrame
 //		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
 		//==========================================================================================
+		// Menu-Bar:
+		{
+			this.menuBarView = new JMenuBar();
+		
+			//JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+		
+			this.setJMenuBar(this.menuBarView);
+			
+			this.buildMenuBar();
+		}
+		//------------------------------------------------------------------------------------------
+		// File Tool-Bar:
+		{
+			this.fileToolBarView = new JToolBar();
+			
+			//this.add(this.toolBarView);
+			this.getContentPane().add(this.fileToolBarView, BorderLayout.NORTH);
+	
+			this.buildFileToolBar(this.fileToolBarView);
+		}
+		//------------------------------------------------------------------------------------------
 		// http://download.oracle.com/javase/tutorial/uiswing/components/toolbar.html
 		
 		JToolBar playToolBar = new JToolBar("Play");
@@ -190,8 +255,8 @@ extends JFrame
 		//------------------------------------------------------------------------------------------
 //		this.add(this.timelinePanel);
 		
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		//==========================================================================================
 	}
 
@@ -366,4 +431,261 @@ extends JFrame
 	{
 		return this.stopButton;
 	}
+	
+	/**
+	 * Create Main-Menu.
+	 */
+	public void buildMenuBar(/*ActionListener actionListener, ItemListener itemListener*/)
+	{
+		{
+			//======================================================================
+			// File:
+
+			JMenu menu = new JMenu("File");
+			menu.setMnemonic(KeyEvent.VK_F);
+			this.menuBarView.add(menu);
+	
+			//----------------------------------------------------------------------
+			// File-Open:
+			this.fileOpenMenuItem = new JMenuItem();
+			menu.add(this.fileOpenMenuItem);
+	
+			//----------------------------------------------------------------------
+			// File-Save:
+			this.fileSaveMenuItem = new JMenuItem();
+			menu.add(this.fileSaveMenuItem);
+			
+			//----------------------------------------------------------------------
+			menu.addSeparator();
+			//----------------------------------------------------------------------
+			// Exit:
+			this.exitMenuItem = new JMenuItem(); //"Exit", KeyEvent.VK_X);
+			//this.exitMenuItem.setActionCommand(MainMenuActionListener.CMD_EXIT);
+			menu.add(this.exitMenuItem);
+		}
+		/*
+		//----------------------------------------------------------------------
+		// Open:
+		menuItem = new JMenuItem("Open...", KeyEvent.VK_O);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+		menuItem.addActionListener(actionListener);
+		menuItem.setActionCommand("open");
+		menu.add(menuItem);
+
+		//----------------------------------------------------------------------
+		menu.addSeparator();
+		//----------------------------------------------------------------------
+		// Save as:
+		menuItem = new JMenuItem("Save as...");
+		menuItem.addActionListener(actionListener);
+		menuItem.setActionCommand("saveAs");
+		menu.add(menuItem);
+
+		//----------------------------------------------------------------------
+		// Save:
+		menuItem = new JMenuItem("Save", KeyEvent.VK_S);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+		menuItem.addActionListener(actionListener);
+		menuItem.setActionCommand("save");
+		menu.add(menuItem);
+		*/
+		
+		//======================================================================
+		// Insert:
+		//ClassLoader cl = this.getClass().getClassLoader(); 
+
+		/*
+		menu = new JMenu("Insert");
+		menu.setMnemonic(KeyEvent.VK_I);
+		this.menuBarView.add(menu);
+
+		//----------------------------------------------------------------------
+		menuItem = new JMenuItem("1: Water", 
+		//new ImageIcon(cl.getResource("images/e00_ball01.gif")));
+		new ImageIcon("images/e00_ball01.gif"));
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.CTRL_MASK));
+		menuItem.addActionListener(actionListener);
+		menuItem.setMnemonic(KeyEvent.VK_1);
+		menu.add(menuItem);
+
+		//----------------------------------------------------------------------
+		menuItem = new JMenuItem("2: Goldnugget", 
+		//new ImageIcon(cl.getResource("images/e00_ball03.gif")));
+		new ImageIcon("images/e00_ball03.gif"));
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.CTRL_MASK));
+		menuItem.addActionListener(actionListener);
+		menuItem.setMnemonic(KeyEvent.VK_2);
+		menu.add(menuItem);
+		*/
+		{
+			//======================================================================
+			// Help:
+			
+			JMenu menu = new JMenu("Help");
+			menu.setMnemonic(KeyEvent.VK_I);
+			this.menuBarView.add(menu);
+	
+			//----------------------------------------------------------------------
+			this.helpAboutMenuItem = new JMenuItem();//"About...");
+			//this.helpAboutMenuItem.addActionListener(actionListener);
+			menu.add(this.helpAboutMenuItem);
+		}
+		/*
+//		  a group of radio button menu items
+		menu.addSeparator();
+		ButtonGroup group = new ButtonGroup();
+		rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
+		rbMenuItem.setSelected(true);
+		rbMenuItem.setMnemonic(KeyEvent.VK_R);
+		group.add(rbMenuItem);
+		menu.add(rbMenuItem);
+
+		rbMenuItem = new JRadioButtonMenuItem("Another one");
+		rbMenuItem.setMnemonic(KeyEvent.VK_O);
+		group.add(rbMenuItem);
+		menu.add(rbMenuItem);
+
+//		  a group of check box menu items
+		menu.addSeparator();
+		cbMenuItem = new JCheckBoxMenuItem("A check box menu item");
+		cbMenuItem.setMnemonic(KeyEvent.VK_C);
+		menu.add(cbMenuItem);
+
+		cbMenuItem = new JCheckBoxMenuItem("Another one");
+		cbMenuItem.setMnemonic(KeyEvent.VK_H);
+		menu.add(cbMenuItem);
+
+//		  a submenu
+		menu.addSeparator();
+		submenu = new JMenu("A submenu");
+		submenu.setMnemonic(KeyEvent.VK_S);
+
+		menuItem = new JMenuItem("An item in the submenu");
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_2, ActionEvent.ALT_MASK));
+		submenu.add(menuItem);
+
+		menuItem = new JMenuItem("Another item");
+		submenu.add(menuItem);
+		menu.add(submenu);
+
+//		  Build second menu in the menu bar.
+		menu = new JMenu("Another Menu");
+		menu.setMnemonic(KeyEvent.VK_N);
+		menu.getAccessibleContext().setAccessibleDescription(
+				"This menu does nothing");
+		menuBarView.add(menu);
+
+*/
+	}
+
+	/**
+	 * Aufbau der File Buttons für die angebenen Tool-Bar.
+	 * 
+	 * @param toolBarView
+	 * 			ist die Tool-Bar.
+	 */
+	public void buildFileToolBar(JToolBar toolBarView)
+	{
+		//------------------------------------------------------------------------------------------
+		{
+			this.fileOpenButtonView = new JButton();//, new ImageIcon("images/select_scan_button_icon_e00.gif"));
+			//this.selectSourceButtonView.setActionCommand(MainMenuActionListener.CMD_SELECT_SOURCE);
+		    toolBarView.add(this.fileOpenButtonView);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.fileSaveButtonView = new JButton();//, new ImageIcon("images/select_scan_button_icon_e00.gif"));
+			//this.selectSourceButtonView.setActionCommand(MainMenuActionListener.CMD_SELECT_SOURCE);
+		    toolBarView.add(this.fileSaveButtonView);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.exitButtonView = new JButton();//, new ImageIcon("images/exit_button_icon_e00.gif"));
+			//this.exitButtonView.setActionCommand(MainMenuActionListener.CMD_EXIT);
+		    toolBarView.add(this.exitButtonView);
+		}
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #menuBarView}.
+	 */
+	public JMenuBar getMenuBarView()
+	{
+		return this.menuBarView;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #fileOpenMenuItem}.
+	 */
+	public JMenuItem getFileOpenMenuItem()
+	{
+		return this.fileOpenMenuItem;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #fileSaveMenuItem}.
+	 */
+	public JMenuItem getFileSaveMenuItem()
+	{
+		return this.fileSaveMenuItem;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #exitMenuItem}.
+	 */
+	public JMenuItem getExitMenuItem()
+	{
+		return this.exitMenuItem;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #helpAboutMenuItem}.
+	 */
+	public JMenuItem getHelpAboutMenuItem()
+	{
+		return this.helpAboutMenuItem;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #fileToolBarView}.
+	 */
+	public JToolBar getFileToolBarView()
+	{
+		return this.fileToolBarView;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #fileOpenButtonView}.
+	 */
+	public JButton getFileOpenButtonView()
+	{
+		return this.fileOpenButtonView;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #fileSaveButtonView}.
+	 */
+	public JButton getFileSaveButtonView()
+	{
+		return this.fileSaveButtonView;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #exitButtonView}.
+	 */
+	public JButton getExitButtonView()
+	{
+		return this.exitButtonView;
+	}
+
 }

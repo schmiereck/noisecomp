@@ -63,6 +63,8 @@ implements EditModuleChangedListener
 		//==========================================================================================
 		this.modulesTreeModel = modulesTreeModel;
 		
+		this.setModel(this.modulesTreeModel.getTreeModel());
+		
 		this.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
 		this.setCellRenderer(new DefaultTreeCellRenderer()
@@ -203,18 +205,29 @@ implements EditModuleChangedListener
 	}
 
 	/**
-	 * @param editedModulGeneratorTypeData
+	 * @param modulGeneratorTypeData
+	 * 			is the Modul-Generator-Type.
 	 * @return
+	 * 			the tree path or <code>null</code> if the Modul-Generator-Type is not found.
 	 */
-	public TreePath searchModulTreeNode(ModulGeneratorTypeData editedModulGeneratorTypeData)
+	public TreePath searchModulTreeNode(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
-		DefaultTreeModel treeModel = (DefaultTreeModel)this.getModel();
+		TreePath treePath;
 		
-		DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)treeModel.getRoot();
-		
-		ModulTreePath modulTreePath = this.searchModulTreeNode(rootTreeNode, editedModulGeneratorTypeData);
-		
-		TreePath treePath = modulTreePath.createTreePath();
+		if (modulGeneratorTypeData != null)
+		{
+			DefaultTreeModel treeModel = (DefaultTreeModel)this.getModel();
+			
+			DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)treeModel.getRoot();
+			
+			ModulTreePath modulTreePath = this.searchModulTreeNode(rootTreeNode, modulGeneratorTypeData);
+			
+			treePath = modulTreePath.createTreePath();
+		}
+		else
+		{
+			treePath = null;
+		}
 		
 		return treePath;
 	}

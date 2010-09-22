@@ -3,6 +3,8 @@ package de.schmiereck.noiseComp.file;
 import java.util.Iterator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+
+import de.schmiereck.noiseComp.Version;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
@@ -39,7 +41,7 @@ public class SaveFileOperationLogic
 		
 		Node noiseNode = XMLData.appendNode(xmlDoc, xmlDoc, "noise");
 
-		XMLData.appendTextNode(xmlDoc, noiseNode, "version", "1.0.1");
+		XMLData.appendTextNode(xmlDoc, noiseNode, "version", Version.version);
 		
 		//-----------------------------------------------------
 		// GeneratorTypesData:
