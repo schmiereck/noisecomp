@@ -518,8 +518,12 @@ public class AppController
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Timeline-Select-Model:
 					
+					int timelinePos = timelinesDrawPanelModel.getTimelineGeneratorModels().size();
+					
 					TimelineGeneratorModel timelineGeneratorModel = 
-						new TimelineGeneratorModel("(new)",
+						new TimelineGeneratorModel(null,
+						                           timelinePos,
+						                           "(new)",
 						                           0.0F,
 						                           1.0F);
 					
@@ -752,6 +756,8 @@ public class AppController
 		
 		if (modulGeneratorTypeData != null)
 		{
+			int timelinePos = 0;
+			
 			Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
 			
 			while (generatorsIterator.hasNext())
@@ -759,7 +765,9 @@ public class AppController
 				Generator generator = generatorsIterator.next();
 				
 				TimelineGeneratorModel timelineGeneratorModel = 
-					new TimelineGeneratorModel(generator.getName(),
+					new TimelineGeneratorModel(generator,
+					                           timelinePos,
+					                           generator.getName(),
 					                           generator.getStartTimePos(),
 					                           generator.getEndTimePos());
 				
@@ -773,6 +781,8 @@ public class AppController
 				}
 				
 				this.timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
+				
+				timelinePos++;
 			}
 		}
 		

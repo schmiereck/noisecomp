@@ -17,10 +17,11 @@ TODO:
 #18:	IMPROVEMENT: Insert new timelines after selected timeline with same start- and stop-time.
 #19:	IMPROVEMENT: Add a Generators Category seperate to the Modules Category.
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
+#21:	IMPROVEMENT: View Sound-Buffer Status in timeline-select-view (maybe in ruler?).
+#22:	
 
 WORK:
 =====
-#13:	IMPROVEMENT: Show input connectors in timeline draw pane.
 		
 DONE:
 =====
@@ -35,4 +36,5 @@ DONE:
 #10:	BUG: Select Modul Input-Type for Editing.
 		-> Fixed and add Remove function.
 #21:	BUG: Show file operations tool-bar.
+#13:	IMPROVEMENT: Show input connectors in timeline draw pane.
 		

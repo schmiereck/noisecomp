@@ -12,8 +12,11 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -21,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 
+import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 
 /**
@@ -50,7 +55,7 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
-	private AffineTransform at = AffineTransform.getScaleInstance(10.0D, 2.0D);
+	private AffineTransform at = AffineTransform.getScaleInstance(15.0D, 2.0D);
 	
 	/**
 	 * Do Timeline Selected Listeners.
@@ -69,24 +74,13 @@ implements Scrollable//, MouseMotionListener
 		//==========================================================================================
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
-//		this.timelineGeneratorModels.add(new Rectangle(0, 0, 100, 100));
-//		this.timelineGeneratorModels.add(new Rectangle(100, 100, 100, 100));
-//		this.timelineGeneratorModels.add(new Rectangle(200, 200, 100, 100));
-//		this.timelineGeneratorModels.add(new Rectangle(300, 300, 100, 100));
-//		this.timelineGeneratorModels.add(new Rectangle(200, 0, 50, 50));
-//		this.timelineGeneratorModels.add(new Rectangle(250, 50, 50, 50));
-//		this.timelineGeneratorModels.add(new Rectangle(500, 200, 100, 100));
-//		this.timelineGeneratorModels.add(new Rectangle(600, 300, 100, 100));
-//		this.timelineGeneratorModels.add(new Rectangle(500, 0, 50, 50));
-//		this.timelineGeneratorModels.add(new Rectangle(650, 50, 50, 50));
-		
 		this.dimension = new Dimension(2000, 400);
 		
 	    this.setPreferredSize(this.dimension);
 		
 		this.setBackground(Color.LIGHT_GRAY);
 
-		//Let the user scroll by dragging to outside the window.
+		// Let the user scroll by dragging to outside the window.
 		this.setAutoscrolls(true); //enable synthetic drag events
 //		this.addMouseMotionListener(this); //handle mouse drags
 		
@@ -171,45 +165,176 @@ implements Scrollable//, MouseMotionListener
 	 */
 	protected void paintComponent(Graphics g) 
 	{
+		//==========================================================================================
 		super.paintComponent(g);  // I was missing this code which caused "bleeding"
 	   
+		//==========================================================================================
 		Graphics2D g2 = (Graphics2D) g;
 	   
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
 	   
-		int timelineGeneratorPos = 0;
+		//------------------------------------------------------------------------------------------
+		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels(); 
 		
-		List<TimelineGeneratorModel> timelineGeneratorModels = 
-			this.timelinesDrawPanelModel.getTimelineGeneratorModels(); 
+		//------------------------------------------------------------------------------------------
+		// Paint timelines:
+		{
+			int timelineGeneratorPos = 0;
+			
+			for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
+			{
+				this.paintTimeline(g2, timelineGeneratorPos, timelineGeneratorModel);
+				
+				timelineGeneratorPos++;
+			}
+		}
+		
+		//------------------------------------------------------------------------------------------
+		// Paint timeline input connectors:
+		{
+			int entryHeight = maxUnitIncrementY;
+			
+			g2.setPaint(Color.red);
+			
+			TimelineGeneratorModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+			
+			if (selectedTimelineModel != null)
+			{
+			Generator generator = selectedTimelineModel.getGenerator();
+			
+			if (generator != null)
+			{
+			int selectedPos = selectedTimelineModel.getTimelinePos();
+			
+			Iterator<InputData> inputsIterator = generator.getInputsIterator();
+			
+			if (inputsIterator != null)
+			{
+				float selectedScreenPosX = selectedTimelineModel.getStartTimePos();
+				float selectedScreenInputOffset = (((selectedTimelineModel.getEndTimePos() - 
+													 selectedTimelineModel.getStartTimePos())) / 
+												   (generator.getInputsCount() + 1));
+				
+				int inputNo = 1;
+				
+				while (inputsIterator.hasNext())
+				{
+					InputData inputData = inputsIterator.next();
+
+					Generator inputGenerator = inputData.getInputGenerator();
+					
+					if (inputGenerator != null)
+					{
+					TimelineGeneratorModel inputTimelineModel = this.searchTimelineModel(inputGenerator);
+
+					// Generator found ?
+					if (inputTimelineModel != null)
+					{	
+						int timelinePos = inputTimelineModel.getTimelinePos();
+						
+						float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
+
+						float inputScreenPosX = (int)inputGenerator.getEndTimePos(); //(int)((inputGenerator.getEndTimePos() - horizontalScrollStart) * scaleX);
+						
+						float inp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
+						float inp1Y = selectedPos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
+						
+						float inp2X = inputScreenPosX; //(int)(tracksData.getGeneratorsLabelSizeX() + inputScreenPosX);
+						float inp2Y = timelinePos * entryHeight + entryHeight / 2.0F; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + timelinePos * entryHeight + entryHeight / 2);
+						
+						{
+//							g2.drawLine(inp1X, inp1Y, 
+//							            inp1X, inp2Y);
+							Line2D line = new Line2D.Float(inp1X, inp1Y, 
+							                                     inp1X, inp2Y);
+							g2.draw(this.at.createTransformedShape(line));
+						}
+						{
+//							g2.drawLine(inp1X, inp2Y, 
+//							            inp2X, inp2Y);
+							Line2D line = new Line2D.Float(inp1X, inp2Y, 
+							                                     inp2X, inp2Y);
+							g2.draw(this.at.createTransformedShape(line));
+						}
+						{
+							Point2D inpPoint = new Point2D.Float(inp1X, inp1Y);
+							Point2D point = this.at.transform(inpPoint, null);
+							g2.fillRect((int)(point.getX() - 2), (int)(point.getY()), 5, 4);
+//							Rectangle2D.Float rectangle = new Rectangle2D.Float(inp1X - 0.25F, inp1Y, 0.5F, 2.0F);
+//							g2.fill(this.at.createTransformedShape(rectangle));
+						}
+					}
+					}
+					inputNo++;
+				}
+			}
+			}
+			}
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * @param generator
+	 * 			is the generator.
+	 * @return
+	 * 			the timeline of given generator.
+	 */
+	private TimelineGeneratorModel searchTimelineModel(Generator generator)
+	{
+		//==========================================================================================
+		TimelineGeneratorModel retTimelineGeneratorModel;
+		
+		//------------------------------------------------------------------------------------------
+		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels(); 
+		
+		//------------------------------------------------------------------------------------------
+		retTimelineGeneratorModel = null;
 		
 		for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
 		{
-			if (timelinesDrawPanelModel.getSelectedTimelineGeneratorModel() == timelineGeneratorModel)
+			if (timelineGeneratorModel.getGenerator() == generator)
 			{
-				g2.setPaint(Color.GREEN);
+				retTimelineGeneratorModel = timelineGeneratorModel;
+				break;
 			}
-			else
-			{
-				g2.setPaint(Color.BLACK);
-			}
-			
-			float startTimePos = timelineGeneratorModel.getStartTimePos();
-			float endTimePos = timelineGeneratorModel.getEndTimePos();
-			
-			float timeLength = endTimePos - startTimePos;
-			
-			Rectangle rectangle = new Rectangle((int)startTimePos,
-			                                    timelineGeneratorPos * this.maxUnitIncrementY,
-			                                    (int)timeLength,
-			                                    this.maxUnitIncrementY);
-			
-			g2.fill(this.at.createTransformedShape(rectangle));
-			
-			timelineGeneratorPos++;
 		}
 		
-		g2.setPaint(Color.red);
+		//==========================================================================================
+		return retTimelineGeneratorModel;
+	}
+
+	/**
+	 * @param g2
+	 * 			is the Graphics.
+	 * @param timelineGeneratorPos
+	 * 			is the timeline position.
+	 * @param timelineGeneratorModel
+	 * 			is the timeline model.
+	 */
+	private void paintTimeline(Graphics2D g2, int timelineGeneratorPos, TimelineGeneratorModel timelineGeneratorModel)
+	{
+		if (timelinesDrawPanelModel.getSelectedTimelineGeneratorModel() == timelineGeneratorModel)
+		{
+			g2.setPaint(Color.GREEN);
+		}
+		else
+		{
+			g2.setPaint(Color.BLACK);
+		}
+		
+		float startTimePos = timelineGeneratorModel.getStartTimePos();
+		float endTimePos = timelineGeneratorModel.getEndTimePos();
+		
+		float timeLength = endTimePos - startTimePos;
+		
+		Rectangle2D.Float rectangle = new Rectangle2D.Float(startTimePos,
+		                                                    timelineGeneratorPos * this.maxUnitIncrementY,
+		                                                    timeLength,
+		                                                    this.maxUnitIncrementY);
+		
+		g2.fill(this.at.createTransformedShape(rectangle));
 	}
 	
 	/* (non-Javadoc)
@@ -311,7 +436,12 @@ implements Scrollable//, MouseMotionListener
 		return this.dimension;
 	}
 
-
+	/**
+	 * @param point2D
+	 * 			is the point.
+	 * @return
+	 * 			is the generator at given point.
+	 */
 	private TimelineGeneratorModel searchGenerator(Point2D point2D)
 	{
 		TimelineGeneratorModel retTimelineGeneratorModel;
