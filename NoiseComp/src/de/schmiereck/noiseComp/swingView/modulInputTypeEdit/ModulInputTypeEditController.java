@@ -76,7 +76,7 @@ public class ModulInputTypeEditController
 	 * 			is the edited Modul-Generator-Type Data.
 	 */
 	public void doUpdate(final ModulInputTypeSelectModel selectModel, 
-	                     final InputTypeData selectedInputTypeData,
+	                     //final InputTypeData selectedInputTypeData,
 	                     ModulGeneratorTypeData editedModulGeneratorTypeData)
 	{
 		ModulInputTypeEditModel inputEditModel = this.getModulInputTypeEditModel();
@@ -95,14 +95,12 @@ public class ModulInputTypeEditController
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// Input-Data:
 		
-		ModulInputTypeSelectEntryModel selectEntryModel = selectModel.getSelectedRow();
-		
-		Integer selectedRowNo = selectModel.getSelectedRowNo();
-		
-		// Input selected?
-		if (selectedRowNo != null)
+//		Integer selectedRowNo = selectModel.getSelectedRowNo();
+//		
+//		// Input selected?
+//		if (selectedRowNo != null)
 		{
-			InputTypeData inputTypeData = selectEntryModel.getInputTypeData();
+			InputTypeData inputTypeData = inputEditModel.getInputTypeData();
 			
 			// Existing Input-type selected?
 			if (inputTypeData != null)
@@ -113,8 +111,8 @@ public class ModulInputTypeEditController
 //				inputTypeData.setInputCountMax(inputCountMax)
 //				inputTypeData.setInputCountMin(inputCountMin)
 				inputTypeData.setInputType(inputTypeID);
-				inputTypeData.setInputTypeDescription(inputTypeDescription);
 				inputTypeData.setInputTypeName(inputTypeName);
+				inputTypeData.setInputTypeDescription(inputTypeDescription);
 			}
 			else
 			{
@@ -126,6 +124,8 @@ public class ModulInputTypeEditController
 
 				editedModulGeneratorTypeData.addInputTypeData(inputTypeData);
 				
+				ModulInputTypeSelectEntryModel selectEntryModel = selectModel.getSelectedRow();
+				
 				selectEntryModel.setInputTypeData(inputTypeData);
 			}
 		}
@@ -136,6 +136,36 @@ public class ModulInputTypeEditController
 		inputEditModel.setInputTypeID(inputTypeID);
 		inputEditModel.setInputTypeName(inputTypeName);
 		inputEditModel.setInputTypeDescription(inputTypeDescription);
+	}
+
+	/**
+	 * @param editedInputTypeData
+	 * 			is the input Type.
+	 */
+	public void updateEditedInputType(InputTypeData editedInputTypeData)
+	{
+		this.modulInputTypeEditModel.setInputTypeData(editedInputTypeData);
+		
+		Integer inputTypeID;
+		String inputTypeName;
+		String inputTypeDescription;
+
+		if (editedInputTypeData != null)
+		{
+			inputTypeID = editedInputTypeData.getInputType();
+			inputTypeName = editedInputTypeData.getInputTypeName();
+			inputTypeDescription = editedInputTypeData.getInputTypeDescription();
+		}
+		else
+		{
+			inputTypeID = null;
+			inputTypeName = null;
+			inputTypeDescription = null;
+		}
+
+		this.modulInputTypeEditModel.setInputTypeID(inputTypeID);
+		this.modulInputTypeEditModel.setInputTypeName(inputTypeName);
+		this.modulInputTypeEditModel.setInputTypeDescription(inputTypeDescription);
 	}
 
 }

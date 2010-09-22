@@ -58,6 +58,15 @@ public class GeneratorTypeData
 	{
 		this.inputTypesData.addInputTypeData(inputTypeData);
 	}
+	
+	/**
+	 * @see #inputTypesData
+	 */
+	public void removeInputTypeData(InputTypeData inputTypeData)
+	{
+		this.inputTypesData.removeInputTypeData(inputTypeData);
+	}
+	
 	/**
 	 * @return 
 	 * 			the attribute {@link #generatorClass}.

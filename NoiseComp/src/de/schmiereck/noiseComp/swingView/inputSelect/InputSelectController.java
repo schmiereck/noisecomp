@@ -169,5 +169,38 @@ public class InputSelectController
 			inputsTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
 		}
 	}
+	
+	/**
+	 */
+	public void doRemoveSelectedEntry()
+	{
+		InputSelectModel inputSelectModel = this.getInputSelectModel();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+		
+		if (selectedRowNo != null)
+		{
+			InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+		
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Update Generator-Input-Data:
+			
+			InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
+			
+			InputData inputData = inputSelectEntryModel.getInputData();
+			
+			Generator ownerGenerator = inputData.getOwnerGenerator();
+			
+			ownerGenerator.removeInput(inputData);
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Update Input-Select-Model:
+			
+			inputsTabelModel.removeInput(selectedRowNo);
+
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
+	}
 
 }

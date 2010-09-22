@@ -176,4 +176,13 @@ public class ModulInputTypeEditModel
 	{
 		return this.inputTypeDescriptionChangedNotifier;
 	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputTypeData}.
+	 */
+	public InputTypeData getInputTypeData()
+	{
+		return this.inputTypeData;
+	}
 }

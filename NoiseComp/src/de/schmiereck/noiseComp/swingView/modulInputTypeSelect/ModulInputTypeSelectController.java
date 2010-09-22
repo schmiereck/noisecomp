@@ -179,9 +179,20 @@ public class ModulInputTypeSelectController
 	 */
 	public InputTypeData getSelectedModulInputType()
 	{
+		InputTypeData inputTypeData;
+		
 		ModulInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
 		
-		return selectEntryModel.getInputTypeData();
+		if (selectEntryModel != null)
+		{
+			inputTypeData = selectEntryModel.getInputTypeData();
+		}
+		else
+		{
+			inputTypeData = null;
+		}
+		
+		return inputTypeData;
 	}
 
 	/**
@@ -200,6 +211,41 @@ public class ModulInputTypeSelectController
 			selectEntryModel.updateInputData();
 			
 			modulInputTypeTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
+		}
+	}
+
+	/**
+	 * Remove Selected Entry.
+	 * 
+	 * @param editedModulGeneratorTypeData
+	 * 			is the edited Modul-Generator-Type Data.
+	 */
+	public void doRemoveSelectedEntry(ModulGeneratorTypeData editedModulGeneratorTypeData)
+	{
+		ModulInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
+		
+		if (selectEntryModel != null)
+		{
+			ModulInputTypeTabelModel tabelModel = this.inputTypeSelectModel.getModulInputTypeTabelModel();
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Update Modul Input-Type Data:
+			
+			InputTypeData inputTypeData = selectEntryModel.getInputTypeData();
+			
+			if (inputTypeData != null)
+			{
+				editedModulGeneratorTypeData.removeInputTypeData(inputTypeData);
+			}
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Update Input-Select-Model:
+			
+			Integer selectedRowNo = this.inputTypeSelectModel.getSelectedRowNo();
+			
+			tabelModel.removeInput(selectedRowNo);
+
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 	}
 }

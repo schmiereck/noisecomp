@@ -82,7 +82,7 @@ extends BasicEditView
 		{
 			this.inputTypeIDTextField = this.addTextField(2, "ID:");
 			
-			modulInputTypeEditModel.getInputTypeNameChangedNotifier().addModelPropertyChangedListener
+			modulInputTypeEditModel.getInputTypeIDChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
@@ -114,7 +114,7 @@ extends BasicEditView
 		{
 			this.inputTypeDescriptionTextField = this.addTextField(4, "Description:");
 			
-			modulInputTypeEditModel.getInputTypeNameChangedNotifier().addModelPropertyChangedListener
+			modulInputTypeEditModel.getInputTypeDescriptionChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{

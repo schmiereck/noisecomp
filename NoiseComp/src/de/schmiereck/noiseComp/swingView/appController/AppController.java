@@ -44,6 +44,7 @@ import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController;
+import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel;
@@ -312,6 +313,54 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
+		// Modul-Input-Type Selected Input changed: Update Modul-Input-Type-Edit Model:
+		
+		modulInputTypeSelectController.getInputTypeSelectModel().getSelectedRowNoChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					ModulInputTypeSelectModel modulInputTypeSelectModel = modulInputTypeSelectController.getInputTypeSelectModel();
+					
+					ModulInputTypeSelectEntryModel selectEntryModel = modulInputTypeSelectModel.getSelectedRow();
+					
+					InputTypeData inputTypeData;
+					String inputTypeLabel;
+					String inputTypeName;
+					
+					if (selectEntryModel != null)
+					{
+						inputTypeData = selectEntryModel.getInputTypeData();
+						inputTypeLabel = selectEntryModel.getInputTypeLabel();
+						inputTypeName = selectEntryModel.getInputTypeName();
+					}
+					else
+					{
+						inputTypeData = null;
+						inputTypeLabel = null;
+						inputTypeName = null;
+					}
+					
+					ModulInputTypeEditModel modulInputTypeEditModel = modulInputTypeEditController.getModulInputTypeEditModel();
+					
+					modulInputTypeEditController.updateEditedInputType(inputTypeData);
+					
+//					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
+//					
+//					ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+//					
+//					Generator selectedTimelineGenerator = timelinesDrawPanelController.getSelectedTimelineGenerator();
+//					
+//					inputEditController.updateEditedInput(editedModulGeneratorTypeData,
+//					                                      selectedTimelineGenerator,
+//					                                      inputData,
+//					                                      editInput);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
 		// Modul-Input-Type Edit: Create-New Button: Update Modul-Input-Type Select Model:
 		
 		modulInputTypeEditController.getModulInputTypeEditView().getCreateNewButton().addActionListener
@@ -361,12 +410,37 @@ public class AppController
 					ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
 					ModulInputTypeSelectModel selectModel = modulInputTypeSelectController.getInputTypeSelectModel();
 					
-					InputTypeData inputTypeData = modulInputTypeSelectController.getSelectedModulInputType();
+//					InputTypeData inputTypeData = modulInputTypeSelectController.getSelectedModulInputType();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					modulInputTypeEditController.doUpdate(selectModel, 
-					                                      inputTypeData,
+					                                      //inputTypeData,
 					                                      editedModulGeneratorTypeData);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// Modul-Input-Type Edit Remove-Button: Update Modul-Input-Type Data and Modul-Input-Type Select-Model:
+		
+		modulInputTypeEditController.getModulInputTypeEditView().getRemoveButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+//					ModulInputTypeSelectModel selectModel = modulInputTypeSelectController.getInputTypeSelectModel();
+					
+//					InputTypeData inputTypeData = modulInputTypeSelectController.getSelectedModulInputType();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					modulInputTypeSelectController.doRemoveSelectedEntry(editedModulGeneratorTypeData);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
@@ -529,34 +603,9 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
-					
-					if (selectedRowNo != null)
-					{
-						InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
-					
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						// Update Generator-Input-Data:
-						
-						InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
-						
-						InputData inputData = inputSelectEntryModel.getInputData();
-						
-						Generator ownerGenerator = inputData.getOwnerGenerator();
-						
-						ownerGenerator.removeInput(inputData);
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						// Update Input-Select-Model:
-						
-						inputsTabelModel.removeInput(selectedRowNo);
-
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					}
+					inputSelectController.doRemoveSelectedEntry();
 			 	}
+
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
