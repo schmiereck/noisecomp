@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelines;
+package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.util.List;
 import java.util.Vector;

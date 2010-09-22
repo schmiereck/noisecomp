@@ -13,9 +13,9 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.timelines.SelectedTimelineChangedListenerInterface;
-import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineChangedListenerInterface;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineGeneratorModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 
 /**
  * <p>

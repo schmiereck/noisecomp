@@ -10,7 +10,6 @@ TODO:
 #9:		BUG: Do not allow more than one OutputGenerator for a Module.
 #11:	IMPROVEMENT: Display name and type in vetrical timeline draw pane.
 #12:	IMPROVEMENT: Display time in horizontal timeline draw pane.
-#13:	IMPROVEMENT: Show input connectors in timeline draw pane.
 #14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
 #15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
 #16:	IMPROVEMENT: Implements mouse featured resize of timelines in timeline draw pane.
@@ -21,6 +20,7 @@ TODO:
 
 WORK:
 =====
+#13:	IMPROVEMENT: Show input connectors in timeline draw pane.
 		
 DONE:
 =====

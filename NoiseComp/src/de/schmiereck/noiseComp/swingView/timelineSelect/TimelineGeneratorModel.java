@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelines;
+package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 

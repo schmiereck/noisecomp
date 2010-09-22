@@ -54,10 +54,10 @@ import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
-import de.schmiereck.noiseComp.swingView.timelines.TimelineGeneratorModel;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelController;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesDrawPanelModel;
-import de.schmiereck.noiseComp.swingView.timelines.TimelinesScrollPanelController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineGeneratorModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelController;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 
 
