@@ -203,6 +203,7 @@ public class TimelineEditController
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						// Update Timeline-Model:
 						
+						timelineGeneratorModel.setGenerator(generator);
 //						timelineGeneratorModel.setGeneratorTypeData(generatorTypeData);
 						timelineGeneratorModel.setName(generatorName);
 						timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
