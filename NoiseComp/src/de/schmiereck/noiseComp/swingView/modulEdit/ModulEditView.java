@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
-import de.schmiereck.noiseComp.swingView.OutputUtils;
 import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
+import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
  * <p>

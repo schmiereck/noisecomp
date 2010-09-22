@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
-import de.schmiereck.noiseComp.swingView.OutputUtils;
 import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
+import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
  * <p>

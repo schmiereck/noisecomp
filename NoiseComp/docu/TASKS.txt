@@ -8,7 +8,6 @@ TODO:
 #5:		BUG: Implements obligate input fields.
 #6:		BUG: Disable unreachable functions (buttons).
 #9:		BUG: Do not allow more than one OutputGenerator for a Module.
-#10:	BUG: Select Modul Input-Type for Editing.
 #11:	IMPROVEMENT: Display name and type in vetrical timeline draw pane.
 #12:	IMPROVEMENT: Display time in horizontal timeline draw pane.
 #13:	IMPROVEMENT: Show input connectors in timeline draw pane.
@@ -22,6 +21,7 @@ TODO:
 
 WORK:
 =====
+#10:	BUG: Select Modul Input-Type for Editing.
 		
 DONE:
 =====

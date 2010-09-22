@@ -12,12 +12,12 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.swingView.InputUtils;
 import de.schmiereck.noiseComp.swingView.MultiValue;
-import de.schmiereck.noiseComp.swingView.OutputUtils;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
+import de.schmiereck.noiseComp.swingView.utils.InputUtils;
+import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
  * <p>

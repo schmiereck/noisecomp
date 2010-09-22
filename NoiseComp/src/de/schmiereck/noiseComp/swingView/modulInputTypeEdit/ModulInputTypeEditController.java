@@ -5,9 +5,9 @@ package de.schmiereck.noiseComp.swingView.modulInputTypeEdit;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.swingView.InputUtils;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel;
+import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
 
 /**
