@@ -44,7 +44,6 @@ import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController;
-import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel;
@@ -327,36 +326,17 @@ public class AppController
 					ModulInputTypeSelectEntryModel selectEntryModel = modulInputTypeSelectModel.getSelectedRow();
 					
 					InputTypeData inputTypeData;
-					String inputTypeLabel;
-					String inputTypeName;
 					
 					if (selectEntryModel != null)
 					{
 						inputTypeData = selectEntryModel.getInputTypeData();
-						inputTypeLabel = selectEntryModel.getInputTypeLabel();
-						inputTypeName = selectEntryModel.getInputTypeName();
 					}
 					else
 					{
 						inputTypeData = null;
-						inputTypeLabel = null;
-						inputTypeName = null;
 					}
 					
-					ModulInputTypeEditModel modulInputTypeEditModel = modulInputTypeEditController.getModulInputTypeEditModel();
-					
 					modulInputTypeEditController.updateEditedInputType(inputTypeData);
-					
-//					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
-//					
-//					ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
-//					
-//					Generator selectedTimelineGenerator = timelinesDrawPanelController.getSelectedTimelineGenerator();
-//					
-//					inputEditController.updateEditedInput(editedModulGeneratorTypeData,
-//					                                      selectedTimelineGenerator,
-//					                                      inputData,
-//					                                      editInput);
 				}
 		 	}
 		);
