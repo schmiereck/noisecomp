@@ -22,7 +22,6 @@ TODO:
 
 WORK:
 =====
-#10:	BUG: Select Modul Input-Type for Editing.
 		
 DONE:
 =====
@@ -34,4 +33,5 @@ DONE:
 #8:		Add file operations.
 		-> Load file is working.
 		-> Save file is working.
-	
+#10:	BUG: Select Modul Input-Type for Editing.
+		-> Fixed and add Remove function.
