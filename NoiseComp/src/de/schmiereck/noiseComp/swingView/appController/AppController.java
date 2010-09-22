@@ -971,16 +971,45 @@ public class AppController
 	 */
 	public void doSave(File file) throws SaveFileException
 	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
+		GeneratorTypesData generatorTypesData = new GeneratorTypesData();
+		ModulGeneratorTypeData mainModulGeneratorTypeData = null;
+		
+		Iterator<GeneratorTypeData> generatorTypesIterator = soundService.retrieveGeneratorTypesIterator();
+		
+		while (generatorTypesIterator.hasNext())
+		{
+			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			
+			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			{
+				ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				
+				if (modulGeneratorTypeData.getIsMainModulGeneratorType() == true)
+				{
+					mainModulGeneratorTypeData = modulGeneratorTypeData;
+				}
+			}
+			
+			generatorTypesData.addGeneratorTypeData(generatorTypeData);
+		}
+		
 		String absolutePath = file.getAbsolutePath();
 		
 		try
 		{
-			SaveFileOperationLogic.saveFile(generatorTypesData, mainModulTypeData, absolutePath);
+			SaveFileOperationLogic.saveFile(generatorTypesData, 
+			                                mainModulGeneratorTypeData, 
+			                                absolutePath);
 		}
 		catch (Exception ex)
 		{
 			throw new SaveFileException("Save file \"" + absolutePath + "\".", ex);
 		}
+		//==========================================================================================
 	}
 
 	/**
