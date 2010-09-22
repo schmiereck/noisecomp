@@ -9,11 +9,12 @@ TODO:
 #5:		Implements obligate input fields.
 #6:		Disable unreachable functions (buttons).
 #7:		Add "Realy Exit?" dialog.
-#8:		Add file operations.
 #9:		Do not allow more than one OutputGenerator for a Module.
 
 WORK:
 =====
+#8:		Add file operations.
+		-> Load file is working.
 
 DONE:
 =====
