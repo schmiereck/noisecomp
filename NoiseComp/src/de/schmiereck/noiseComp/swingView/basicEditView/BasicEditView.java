@@ -5,6 +5,7 @@ package de.schmiereck.noiseComp.swingView.basicEditView;
 
 import java.awt.GridBagConstraints;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -122,5 +123,27 @@ extends JPanel
 		
 		//==========================================================================================
 		return comboBox;
+	}
+	
+	/**
+	 * @param gridy
+	 * 			is the Y-Position in grid.
+	 * @param labelText
+	 * 			is the Label Text.
+	 * @return
+	 * 			the Check-Box.
+	 */
+	public JCheckBox addCheckBox(int gridy, String labelText)
+	{
+		//==========================================================================================
+		this.addLabel(gridy, labelText);
+
+		//------------------------------------------------------------------------------------------
+		JCheckBox checkBox = new JCheckBox();
+
+		this.addField(gridy, checkBox);
+		
+		//==========================================================================================
+		return checkBox;
 	}
 }

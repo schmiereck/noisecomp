@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
+import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
 
 /**
@@ -66,12 +67,23 @@ public class ModulEditController
 					
 					if (modulGeneratorTypeData != null)
 					{
-						String generatorTypeName = modulEditView.getModulNameTextField().getText();
-
-						modulEditModel.setModulName(generatorTypeName);
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						String generatorTypeName = InputUtils.makeStringValue(modulEditView.getModulNameTextField().getText());
+						Boolean modulIsMain = InputUtils.makeBooleanValue(modulEditView.getModulIsMainCheckBox().isSelected());
 						
-						// Update Modul.
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Edit-Model:
+						
+						modulEditModel.setModulName(generatorTypeName);
+						modulEditModel.setModulIsMain(modulIsMain);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Modul:
+						
 						modulGeneratorTypeData.setGeneratorTypeName(generatorTypeName);
+						modulGeneratorTypeData.setIsMainModulGeneratorType(modulIsMain);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}
 				}
 		 	}
@@ -104,16 +116,20 @@ public class ModulEditController
 	public void doEditModuleChanged(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		String generatorTypeName;
+		Boolean modulIsMain;
 		
 		if (modulGeneratorTypeData != null)
 		{
 			generatorTypeName = modulGeneratorTypeData.getGeneratorTypeName();
+			modulIsMain = modulGeneratorTypeData.getIsMainModulGeneratorType();
 		}
 		else
 		{
 			generatorTypeName = null;
+			modulIsMain = null;
 		}
 
-		modulEditModel.setModulName(generatorTypeName);
+		this.modulEditModel.setModulName(generatorTypeName);
+		this.modulEditModel.setModulIsMain(modulIsMain);
 	}
 }

@@ -61,4 +61,27 @@ public class OutputUtils
 		
 		return ret;
 	}
+
+	/**
+	 * @param value
+	 * 			is the value.
+	 * @return
+	 * 			<code>true</code> if value is not <code>null</code> and {@link Boolean#TRUE}.
+	 * 			<code>false</code> if value is <code>null</code> or {@link Boolean#FALSE}.
+	 */
+	public static boolean makeBoolean(Boolean value)
+	{
+		boolean ret;
+		
+		if (value != null)
+		{
+			ret = value.booleanValue();
+		}
+		else
+		{
+			ret = false;
+		}
+		
+		return ret;
+	}
 }

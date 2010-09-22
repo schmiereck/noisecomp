@@ -19,21 +19,33 @@ public class ModulEditModel
 	// Fields:
 
 	/**
-	 * Generator Name.
+	 * {@link ModulEditModel} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier modulEditModelChangedNotifier = new ModelPropertyChangedNotifier();
+
+	//----------------------------------------------------------------------------------------------
+	/**
+	 * Modul Name.
 	 */
 	private String modulName = null;
 
-	//----------------------------------------------------------------------------------------------
 	/**
 	 * {@link #modulName} changed listeners.
 	 */
 	private final ModelPropertyChangedNotifier modulNameChangedNotifier = new ModelPropertyChangedNotifier();
 
+	//----------------------------------------------------------------------------------------------
+	
 	/**
-	 * {@link ModulEditModel} changed listeners.
+	 * Modul Is-Main.
 	 */
-	private final ModelPropertyChangedNotifier modulEditModelChangedNotifier = new ModelPropertyChangedNotifier();
+	private Boolean modulIsMain = null;
 
+	/**
+	 * {@link #modulIsMain} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier modulIsMainChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -76,6 +88,38 @@ public class ModulEditModel
 	public ModelPropertyChangedNotifier getModulEditModelChangedNotifier()
 	{
 		return this.modulEditModelChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulIsMain}.
+	 */
+	public Boolean getModulIsMain()
+	{
+		return this.modulIsMain;
+	}
+
+	/**
+	 * @param modulIsMain 
+	 * 			to set {@link #modulIsMain}.
+	 */
+	public void setModulIsMain(Boolean modulIsMain)
+	{
+		this.modulIsMain = modulIsMain;
+		
+		// Notify listeners.
+		this.modulIsMainChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		this.modulEditModelChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulIsMainChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getModulIsMainChangedNotifier()
+	{
+		return this.modulIsMainChangedNotifier;
 	}
 
 }

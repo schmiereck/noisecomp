@@ -97,4 +97,26 @@ public class InputUtils
 		
 		return multiValue;
 	}
+
+	/**
+	 * @param value
+	 * 			is the boolean.
+	 * @return
+	 * 			the boolean value.
+	 */
+	public static Boolean makeBooleanValue(boolean value)
+	{
+		Boolean ret;
+		
+		if (value == true)
+		{
+			ret = Boolean.TRUE;
+		}
+		else
+		{
+			ret = Boolean.FALSE;
+		}
+		
+		return ret;
+	}
 }

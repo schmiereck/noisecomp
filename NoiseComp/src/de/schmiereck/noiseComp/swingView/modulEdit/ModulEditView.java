@@ -6,6 +6,7 @@ package de.schmiereck.noiseComp.swingView.modulEdit;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
@@ -35,6 +36,11 @@ extends BasicEditView
 	 * Modul-Name Text-Field
 	 */
 	private final JTextField modulNameTextField;
+	
+	/**
+	 * modul-Is-Main Check-Box.
+	 */
+	private final JCheckBox modulIsMainCheckBox;
 	
 	/**
 	 * Update Button.
@@ -80,15 +86,33 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
+			this.modulIsMainCheckBox = this.addCheckBox(1, "Is Main:");
+			
+			this.modulEditModel.getModulIsMainChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						boolean modulIsMain = OutputUtils.makeBoolean(modulEditModel.getModulIsMain());
+						
+						modulIsMainCheckBox.setSelected(modulIsMain);
+					}
+			 	}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
 			this.editInputTypesButton = new JButton("Edit Input-Types...");
 			
-			this.addField(1, this.editInputTypesButton);
+			this.addField(2, this.editInputTypesButton);
 		}
 		//------------------------------------------------------------------------------------------
 		{
 			this.updateButton = new JButton("Update");
 			
-			this.addField(2, this.updateButton);
+			this.addField(3, this.updateButton);
 		}
 		//==========================================================================================
 	}
@@ -118,5 +142,14 @@ extends BasicEditView
 	public JTextField getModulNameTextField()
 	{
 		return this.modulNameTextField;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulIsMainCheckBox}.
+	 */
+	public JCheckBox getModulIsMainCheckBox()
+	{
+		return this.modulIsMainCheckBox;
 	}
 }
