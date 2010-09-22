@@ -18,7 +18,6 @@ TODO:
 #18:	IMPROVEMENT: Insert new timelines after selected timeline with same start- and stop-time.
 #19:	IMPROVEMENT: Add a Generators Category seperate to the Modules Category.
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
-#21:	BUG: Show file operations tool-bar.
 
 WORK:
 =====
@@ -35,3 +34,5 @@ DONE:
 		-> Save file is working.
 #10:	BUG: Select Modul Input-Type for Editing.
 		-> Fixed and add Remove function.
+#21:	BUG: Show file operations tool-bar.
+		

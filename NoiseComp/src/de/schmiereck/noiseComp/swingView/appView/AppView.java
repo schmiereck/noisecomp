@@ -6,6 +6,7 @@ package de.schmiereck.noiseComp.swingView.appView;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.net.URL;
@@ -17,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
@@ -183,23 +185,33 @@ extends JFrame
 			this.buildMenuBar();
 		}
 		//------------------------------------------------------------------------------------------
+		// Tool-Bar Panel:
+		
+		JPanel toolBarPanel = new JPanel();
+		
+		toolBarPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		
+		this.add(toolBarPanel, BorderLayout.PAGE_START);
+		
+		//------------------------------------------------------------------------------------------
 		// File Tool-Bar:
-		{
-			this.fileToolBarView = new JToolBar();
+
+		this.fileToolBarView = new JToolBar("File");
 			
-			//this.add(this.toolBarView);
-			this.getContentPane().add(this.fileToolBarView, BorderLayout.NORTH);
-	
-			this.buildFileToolBar(this.fileToolBarView);
-		}
+		this.buildFileToolBar(this.fileToolBarView);
+		
+//		this.add(this.toolBarView);
+//		this.getContentPane().add(this.fileToolBarView, BorderLayout.NORTH);
+		toolBarPanel.add(this.fileToolBarView, BorderLayout.PAGE_START);
+
 		//------------------------------------------------------------------------------------------
 		// http://download.oracle.com/javase/tutorial/uiswing/components/toolbar.html
 		
 		JToolBar playToolBar = new JToolBar("Play");
         
-		this.addPlayButtons(playToolBar);
+		this.buildPlayToolBar(playToolBar);
 	    
-		this.add(playToolBar, BorderLayout.PAGE_START);
+		toolBarPanel.add(playToolBar, BorderLayout.PAGE_START);
 
 		//------------------------------------------------------------------------------------------
 		// Modul Select Panel:
@@ -346,7 +358,7 @@ extends JFrame
 	 * @param toolBar
 	 * 			is the play Tool-bar.
 	 */
-	private final void addPlayButtons(JToolBar toolBar)
+	private final void buildPlayToolBar(JToolBar toolBar)
 	{
 		//==========================================================================================
 		// Play-Button:
