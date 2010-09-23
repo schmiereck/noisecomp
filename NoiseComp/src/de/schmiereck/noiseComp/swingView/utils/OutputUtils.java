@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.utils;
 
+import de.schmiereck.noiseComp.swingView.MultiValue;
+
 /**
  * <p>
  * 	Output Utils.
@@ -80,6 +82,28 @@ public class OutputUtils
 		else
 		{
 			ret = false;
+		}
+		
+		return ret;
+	}
+
+	/**
+	 * @param multiValue
+	 * 			is the Multi-Value.
+	 * @return
+	 * 			the text string.
+	 */
+	public static String makeMultiValueText(MultiValue multiValue)
+	{
+		String ret;
+		
+		if (multiValue.floatValue != null)
+		{
+			ret = makeFloatText(multiValue.floatValue);
+		}
+		else
+		{
+			ret = makeStringText(multiValue.stringValue);
 		}
 		
 		return ret;

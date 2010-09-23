@@ -217,7 +217,11 @@ public class InputEditController
 			if (inputData != null)
 			{
 				inputGenerator = inputData.getInputGenerator();
-				value = OutputUtils.makeFloatText(inputData.getInputValue());
+				
+				MultiValue multiValue = new MultiValue();
+				multiValue.floatValue = inputData.getInputValue();
+				multiValue.stringValue = inputData.getInputStringValue();
+				value = OutputUtils.makeMultiValueText(multiValue);
 			}
 			else
 			{
