@@ -31,6 +31,11 @@ extends JComponent
 	
 	//**********************************************************************************************
 	// Fields:
+
+	/**
+	 * Timelines-Time-Rule Model.
+	 */
+	private final TimelinesTimeRuleModel timelinesTimeRuleModel;
 	
 	public boolean			isMetric;
 	private int				increment;
@@ -45,8 +50,10 @@ extends JComponent
 	 * @param isMetric
 	 * 			<code>true</code> if is Metric.
 	 */
-	public TimelinesTimeRuleView(boolean isMetric)
+	public TimelinesTimeRuleView(TimelinesTimeRuleModel timelinesTimeRuleModel,
+	                             boolean isMetric)
 	{
+		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
 		this.isMetric = isMetric;
 		this.setIncrementAndUnits();
 	}

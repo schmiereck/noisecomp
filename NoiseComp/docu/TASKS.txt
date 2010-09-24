@@ -8,7 +8,6 @@ TODO:
 #5:		BUG: Implements obligate input fields.
 #6:		BUG: Disable unreachable functions (buttons).
 #9:		BUG: Do not allow more than one OutputGenerator for a Module.
-#12:	IMPROVEMENT: Display time in horizontal timeline draw pane.
 #14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
 #15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
 #16:	IMPROVEMENT: Implements mouse featured resize of timelines in timeline draw pane.
@@ -21,11 +20,13 @@ TODO:
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
 #27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
-#28:	
+#28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.
+#29:	
 
 WORK:
 =====
-		
+#12:	IMPROVEMENT: Display time in horizontal timeline draw pane.
+
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 

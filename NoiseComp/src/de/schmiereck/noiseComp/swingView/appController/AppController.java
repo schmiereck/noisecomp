@@ -58,6 +58,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelContro
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 
 
@@ -196,6 +197,9 @@ public class AppController
 		final ModulInputTypeSelectController modulInputTypeSelectController = modulInputTypesController.getModulInputTypeSelectController();
 		
 		//------------------------------------------------------------------------------------------
+		final TimelinesTimeRuleController timelinesTimeRuleController = new TimelinesTimeRuleController();
+		
+	//------------------------------------------------------------------------------------------
 		final TimelinesGeneratorsRuleController timelinesGeneratorsRuleController = new TimelinesGeneratorsRuleController();
 		
 		//------------------------------------------------------------------------------------------
@@ -203,7 +207,8 @@ public class AppController
 		
 		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView());
 		
-		this.timelinesScrollPanelController.setTimelinesGeneratorsRuleController(timelinesGeneratorsRuleController);
+		this.timelinesScrollPanelController.setTimelinesRuleController(timelinesTimeRuleController,
+		                                                                         timelinesGeneratorsRuleController);
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelController = 
@@ -212,7 +217,7 @@ public class AppController
 		// TODO Change this dynamicaly with listener/notifier.
 		this.timelinesDrawPanelController.getTimelinesDrawPanelModel().setMaxUnitIncrementY(this.timelinesScrollPanelController.getTimelinesScrollPanelModel().getGeneratorSizeY());
 		
-		this.timelinesScrollPanelController.setTimelinesScrollPanelController(this.timelinesDrawPanelController);
+		this.timelinesScrollPanelController.setTimelinesDrawPanelController(this.timelinesDrawPanelController);
 		
 		this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
 		(
@@ -221,6 +226,7 @@ public class AppController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					timelinesTimeRuleController.doTimelineGeneratorModelsChanged();
 					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged();
 				}
 		 	}
@@ -525,6 +531,9 @@ public class AppController
 					timelineEditController.doUpdateEditModel(editedModulGeneratorTypeData,
 					                                         //generator,
 					                                         timelinesDrawPanelModel);
+					
+					// TimelinesTimeRule update.
+					timelinesTimeRuleController.doTimelineGeneratorModelsChanged();
 					
 					// TimelinesGeneratorsRule update.
 					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged();

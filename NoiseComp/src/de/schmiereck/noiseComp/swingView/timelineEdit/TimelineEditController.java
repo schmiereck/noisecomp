@@ -3,8 +3,6 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
 

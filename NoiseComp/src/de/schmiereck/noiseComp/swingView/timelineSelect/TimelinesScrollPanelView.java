@@ -35,7 +35,7 @@ extends JPanel
 	@SuppressWarnings("unused")
 	private TimelinesScrollPanelModel timelinesScrollPanelModel;
 	
-	private TimelinesTimeRuleView columnView = null;
+	private TimelinesTimeRuleView timelinesTimeRuleView = null;
 	private TimelinesGeneratorsRuleView timelinesGeneratorsRuleView = null;
 
 	private JScrollPane scrollPane;
@@ -63,7 +63,7 @@ extends JPanel
 	    
 	    //------------------------------------------------------------------------------------------
 		// Create the row and column headers.
-	    this.columnView = new TimelinesTimeRuleView(true);
+//	    this.columnView = new TimelinesTimeRuleView(true);
 	    
 //	    TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel = 
 //	    	new TimelinesGeneratorsRuleModel(this.timelinesScrollPanelModel.getGeneratorSizeY());
@@ -74,7 +74,7 @@ extends JPanel
 	    
 //	    this.scrollPane.getViewport().add(scroll);
 	    
-	    this.scrollPane.setColumnHeaderView(this.columnView);
+//	    this.scrollPane.setColumnHeaderView(this.timelinesTimeRuleView);
 //	    this.scrollPane.setRowHeaderView(this.rowView);
 	    
 	    this.scrollPane.setOpaque(true); //content panes must be opaque
@@ -100,11 +100,25 @@ extends JPanel
 		
 	    Dimension dimension = this.timelinesDrawPanelView.getDimension();
 
-	    this.columnView.setPreferredWidth((int)dimension.getWidth());
+	    this.timelinesTimeRuleView.setPreferredWidth((int)dimension.getWidth());
 	    this.timelinesGeneratorsRuleView.setPreferredHeight((int)dimension.getHeight());
 	    
 //	    this.scrollPane.getViewport().revalidate();
 //	    this.scrollPane.revalidate();
+	    
+		//==========================================================================================
+	}
+
+	/**
+	 * @param timelinesTimeRuleView 
+	 * 			to set {@link #timelinesTimeRuleView}.
+	 */
+	public void setTimelinesTimeRuleView(TimelinesTimeRuleView columnView)
+	{
+		//==========================================================================================
+		this.timelinesTimeRuleView = columnView;
+
+	    this.scrollPane.setColumnHeaderView(this.timelinesTimeRuleView);
 	    
 		//==========================================================================================
 	}
@@ -117,7 +131,7 @@ extends JPanel
 	{
 		this.timelinesGeneratorsRuleView = timelinesGeneratorsRuleView;
 
-		this.scrollPane.setRowHeaderView(this.timelinesGeneratorsRuleView);
+	    this.scrollPane.setRowHeaderView(this.timelinesGeneratorsRuleView);
 	}
 }		
 

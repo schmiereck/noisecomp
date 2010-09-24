@@ -57,7 +57,7 @@ public class TimelinesGeneratorsRuleController
 	}
 
 	/**
-	 * 
+	 * Do Timeline Generator Models Changed.
 	 */
 	public void doTimelineGeneratorModelsChanged()
 	{

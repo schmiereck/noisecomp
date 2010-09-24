@@ -3,7 +3,6 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
-import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 
 /**
  * <p>
@@ -21,6 +20,8 @@ public class TimelinesScrollPanelController
 	private TimelinesScrollPanelView timelinesScrollPanelView;
 	
 	private TimelinesScrollPanelModel timelinesScrollPanelModel;
+	
+	private TimelinesTimeRuleController timelinesTimeRuleController = null; 
 	
 	private TimelinesGeneratorsRuleController timelinesGeneratorsRuleController = null; 
 	
@@ -45,31 +46,24 @@ public class TimelinesScrollPanelController
 	 * @param timelinesDrawPanelController 
 	 * 			is the Timelines Draw-Panel Controller.
 	 */
-	public void setTimelinesScrollPanelController(TimelinesDrawPanelController timelinesDrawPanelController)
+	public void setTimelinesDrawPanelController(TimelinesDrawPanelController timelinesDrawPanelController)
 	{
 		//==========================================================================================
 	    TimelinesDrawPanelView timelinesDrawPanelView = timelinesDrawPanelController.getTimelinesDrawPanelView();
 	    
+	    TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+	    
 	    this.timelinesScrollPanelView.setTimelinesDrawPanelView(timelinesDrawPanelView);
 	    
 	    //------------------------------------------------------------------------------------------
+	    TimelinesTimeRuleModel timelinesTimeRuleModel = this.timelinesTimeRuleController.getTimelinesTimeRuleModel();
+	    
+		timelinesTimeRuleModel.setTimelineGeneratorModels(timelinesDrawPanelModel.getTimelineGeneratorModels());
+		
+	    //------------------------------------------------------------------------------------------
 	    TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel = this.timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleModel();
 	    
-	    TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-	    
 		timelinesGeneratorsRuleModel.setTimelineGeneratorModels(timelinesDrawPanelModel.getTimelineGeneratorModels());
-		
-//		timelinesDrawPanelModel.getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
-//		(
-//		 	new ModelPropertyChangedListener()
-//		 	{
-//				@Override
-//				public void notifyModelPropertyChanged()
-//				{
-//					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged();
-//				}
-//		 	}
-//		);
 		
 		//==========================================================================================
 	}
@@ -93,19 +87,36 @@ public class TimelinesScrollPanelController
 	}
 
 	/**
+	 * @param timelinesTimeRuleController
+	 * 			is the Timelines-Time-Rule Controller.
 	 * @param timelinesGeneratorsRuleController
+	 * 			is the Timeline-Generators-Rule Controller.
 	 */
-	public void setTimelinesGeneratorsRuleController(TimelinesGeneratorsRuleController timelinesGeneratorsRuleController)
+	public void setTimelinesRuleController(TimelinesTimeRuleController timelinesTimeRuleController,
+	                                       TimelinesGeneratorsRuleController timelinesGeneratorsRuleController)
 	{
-		this.timelinesGeneratorsRuleController = timelinesGeneratorsRuleController;
+		//==========================================================================================
+		TimelinesTimeRuleModel timelinesTimeRuleModel = timelinesTimeRuleController.getTimelinesTimeRuleModel();
+
+		timelinesTimeRuleModel.setTimelinesScrollPanelModel(this.timelinesScrollPanelModel);
 		
+		this.timelinesTimeRuleController = timelinesTimeRuleController;
+		
+		TimelinesTimeRuleView timelinesTimeRuleView = timelinesTimeRuleController.getTimelinesTimeRuleView();
+		
+		this.timelinesScrollPanelView.setTimelinesTimeRuleView(timelinesTimeRuleView);
+
+		//------------------------------------------------------------------------------------------
 		TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel = timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleModel();
 
 		timelinesGeneratorsRuleModel.setTimelinesScrollPanelModel(this.timelinesScrollPanelModel);
-//		timelinesGeneratorsRuleModel.setGeneratorSizeY(this.timelinesScrollPanelModel.getGeneratorSizeY());
+		
+		this.timelinesGeneratorsRuleController = timelinesGeneratorsRuleController;
 		
 		TimelinesGeneratorsRuleView timelinesGeneratorsRuleView = timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleView();
 		
 		this.timelinesScrollPanelView.setTimelinesGeneratorsRuleView(timelinesGeneratorsRuleView);
+		
+		//==========================================================================================
 	}
 }
