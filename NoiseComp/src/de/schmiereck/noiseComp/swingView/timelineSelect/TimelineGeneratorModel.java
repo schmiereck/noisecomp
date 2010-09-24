@@ -20,17 +20,20 @@ public class TimelineGeneratorModel
 	//**********************************************************************************************
 	// Fields:
 	
+	//----------------------------------------------------------------------------------------------
 	/**
 	 * Generator.
 	 * <code>null</code> if the timeline is new generated.
 	 */
 	private Generator generator = null;
 	
+	//----------------------------------------------------------------------------------------------
 	/**
 	 * Position of tmeline in the select list.
 	 */
 	private int timelinePos;
 	
+	//----------------------------------------------------------------------------------------------
 	/**
 	 * Name of Generator.
 	 */
@@ -41,6 +44,7 @@ public class TimelineGeneratorModel
 	 */
 	private final ModelPropertyChangedNotifier nameChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	//----------------------------------------------------------------------------------------------
 	/**
 	 * Start time position in milli seconds.
 	 */
@@ -51,6 +55,7 @@ public class TimelineGeneratorModel
 	 */
 	private final ModelPropertyChangedNotifier startTimePosChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	//----------------------------------------------------------------------------------------------
 	/**
 	 * End time position in milli seconds.
 	 */

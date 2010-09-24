@@ -21,6 +21,11 @@ public class TimelinesDrawPanelModel
 	//**********************************************************************************************
 	// Fields:
 	
+	//----------------------------------------------------------------------------------------------
+	private int maxUnitIncrementX = 1;
+	private int maxUnitIncrementY = 16;
+
+	//----------------------------------------------------------------------------------------------
 	/**
 	 * Timeline-Generator Models.
 	 */
@@ -139,5 +144,41 @@ public class TimelinesDrawPanelModel
 	public void addSelectedTimelineChangedListener(SelectedTimelineChangedListenerInterface selectedTimelineChangedListener)
 	{
 		this.selectedTimelineChangedListeners.add(selectedTimelineChangedListener);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #maxUnitIncrementX}.
+	 */
+	public int getMaxUnitIncrementX()
+	{
+		return this.maxUnitIncrementX;
+	}
+
+	/**
+	 * @param maxUnitIncrementX 
+	 * 			to set {@link #maxUnitIncrementX}.
+	 */
+	public void setMaxUnitIncrementX(int maxUnitIncrementX)
+	{
+		this.maxUnitIncrementX = maxUnitIncrementX;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #maxUnitIncrementY}.
+	 */
+	public int getMaxUnitIncrementY()
+	{
+		return this.maxUnitIncrementY;
+	}
+
+	/**
+	 * @param maxUnitIncrementY 
+	 * 			to set {@link #maxUnitIncrementY}.
+	 */
+	public void setMaxUnitIncrementY(int maxUnitIncrementY)
+	{
+		this.maxUnitIncrementY = maxUnitIncrementY;
 	}
 }

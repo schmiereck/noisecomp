@@ -56,6 +56,7 @@ import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelController;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 
@@ -195,16 +196,36 @@ public class AppController
 		final ModulInputTypeSelectController modulInputTypeSelectController = modulInputTypesController.getModulInputTypeSelectController();
 		
 		//------------------------------------------------------------------------------------------
+		final TimelinesGeneratorsRuleController timelinesGeneratorsRuleController = new TimelinesGeneratorsRuleController();
+		
+		//------------------------------------------------------------------------------------------
 		this.timelinesScrollPanelController = new TimelinesScrollPanelController();
 		
 		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView());
 		
+		this.timelinesScrollPanelController.setTimelinesGeneratorsRuleController(timelinesGeneratorsRuleController);
+		
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelController = 
 			new TimelinesDrawPanelController(modulesTreeController.getModulesTreeModel());
+
+		// TODO Change this dynamicaly with listener/notifier.
+		this.timelinesDrawPanelController.getTimelinesDrawPanelModel().setMaxUnitIncrementY(this.timelinesScrollPanelController.getTimelinesScrollPanelModel().getGeneratorSizeY());
 		
 		this.timelinesScrollPanelController.setTimelinesScrollPanelController(this.timelinesDrawPanelController);
 		
+		this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged();
+				}
+		 	}
+		);
+
 		//------------------------------------------------------------------------------------------
 		final InputSelectController inputSelectController = 
 			new InputSelectController(this,
@@ -483,6 +504,33 @@ public class AppController
 				}
 		 	}
 		);	
+		//------------------------------------------------------------------------------------------
+		// Timeline-Edit Update-Button: Timeline-Select-Model:
+		
+		this.timelineEditController.getTimelineEditView().getUpdateButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+//					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+					
+					ModulGeneratorTypeData editedModulGeneratorTypeData = getEditedModulGeneratorTypeData();
+					
+//					Generator generator = 
+//						retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
+					
+					timelineEditController.doUpdateEditModel(editedModulGeneratorTypeData,
+					                                         //generator,
+					                                         timelinesDrawPanelModel);
+					
+					// TimelinesGeneratorsRule update.
+					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged();
+				}
+		 	}
+		);
 		//------------------------------------------------------------------------------------------
 		// Timeline-Edit Create-New-Timeline-Button: Timeline-Select-Model:
 		

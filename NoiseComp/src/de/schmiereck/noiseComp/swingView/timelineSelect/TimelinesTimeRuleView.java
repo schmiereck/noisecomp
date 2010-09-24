@@ -14,27 +14,24 @@ import javax.swing.JComponent;
 
 /**
  * <p>
- * 	Timelines-Rule View.
+ * 	Timelines-Time Rule View.
  * </p>
  * 
  * @author smk
  * @version <p>17.06.2010:	created, smk</p>
  */
-public class TimelinesRuleView
+public class TimelinesTimeRuleView
 extends JComponent
 {
 	//**********************************************************************************************
 	// Constats:
 
-	public static final int	INCH		= Toolkit.getDefaultToolkit().getScreenResolution();
-	public static final int	HORIZONTAL	= 0;
-	public static final int	VERTICAL	= 1;
-	public static final int	SIZE		= 35;
+	public static final int	DPI		= Toolkit.getDefaultToolkit().getScreenResolution();
+	public static final int	SIZE	= 35;
 	
 	//**********************************************************************************************
 	// Fields:
 	
-	public int				orientation;
 	public boolean			isMetric;
 	private int				increment;
 	private int				units;
@@ -45,14 +42,11 @@ extends JComponent
 	/**
 	 * Constructor.
 	 * 
-	 * @param orientation
-	 * 			is the orientation.
 	 * @param isMetric
 	 * 			<code>true</code> if is Metric.
 	 */
-	public TimelinesRuleView(int orientation, boolean isMetric)
+	public TimelinesTimeRuleView(boolean isMetric)
 	{
-		this.orientation = orientation;
 		this.isMetric = isMetric;
 		this.setIncrementAndUnits();
 	}
@@ -68,13 +62,13 @@ extends JComponent
 	{
 		if (this.isMetric)
 		{
-			this.units = (int)((double)INCH / (double)2.54); // dots per centimeter
-			this.increment = units;
+			this.units = (int)((double)DPI / (double)2.54); // dots per centimeter
+			this.increment = this.units;
 		}
 		else
 		{
-			this.units = INCH;
-			this.increment = units / 2;
+			this.units = DPI;
+			this.increment = this.units / 2;
 		}
 	}
 
@@ -115,33 +109,21 @@ extends JComponent
 		int start = 0;
 		int tickLength = 0;
 		String text = null;
+
 		// Use clipping bounds to calculate first and last tick locations.
-		if (this.orientation == HORIZONTAL)
-		{
-			start = (drawHere.x / this.increment) * this.increment;
-			end = (((drawHere.x + drawHere.width) / this.increment) + 1) * this.increment;
-		}
-		else
-		{
-			start = (drawHere.y / this.increment) * this.increment;
-			end = (((drawHere.y + drawHere.height) / this.increment) + 1) * this.increment;
-		}
+		start = (drawHere.x / this.increment) * this.increment;
+		end = (((drawHere.x + drawHere.width) / this.increment) + 1) * this.increment;
+
 		// Make a special case of 0 to display the number
 		// within the rule and draw a units label.
 		if (start == 0)
 		{
 			text = Integer.toString(0) + (this.isMetric ? " cm" : " in");
 			tickLength = 10;
-			if (this.orientation == HORIZONTAL)
-			{
-				g.drawLine(0, SIZE - 1, 0, SIZE - tickLength - 1);
-				g.drawString(text, 2, 21);
-			}
-			else
-			{
-				g.drawLine(SIZE - 1, 0, SIZE - tickLength - 1, 0);
-				g.drawString(text, 9, 10);
-			}
+
+			g.drawLine(0, SIZE - 1, 0, SIZE - tickLength - 1);
+			g.drawString(text, 2, 21);
+
 			text = null;
 			start = this.increment;
 		}
@@ -151,7 +133,7 @@ extends JComponent
 			if (i % this.units == 0)
 			{
 				tickLength = 10;
-				text = Integer.toString(i / units);
+				text = Integer.toString(i / this.units);
 			}
 			else
 			{
@@ -160,17 +142,10 @@ extends JComponent
 			}
 			if (tickLength != 0)
 			{
-				if (this.orientation == HORIZONTAL)
+				g.drawLine(i, SIZE - 1, i, SIZE - tickLength - 1);
+				if (text != null)
 				{
-					g.drawLine(i, SIZE - 1, i, SIZE - tickLength - 1);
-					if (text != null)
-						g.drawString(text, i - 3, 21);
-				}
-				else
-				{
-					g.drawLine(SIZE - 1, i, SIZE - tickLength - 1, i);
-					if (text != null)
-						g.drawString(text, 9, i + 3);
+					g.drawString(text, i - 3, 21);
 				}
 			}
 		}

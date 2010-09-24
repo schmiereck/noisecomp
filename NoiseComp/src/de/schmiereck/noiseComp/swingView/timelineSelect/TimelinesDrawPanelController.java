@@ -117,6 +117,8 @@ public class TimelinesDrawPanelController
 		timelineGeneratorModel.getNameChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
 		timelineGeneratorModel.getStartTimePosChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
 		timelineGeneratorModel.getEndTimePosChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
+		
+		// TODO remove listeners if timeline is removed.
 	}
 
 	/**

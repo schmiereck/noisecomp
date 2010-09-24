@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+
 /**
  * <p>
  * 	Timelines Scroll-Panel Controller.
@@ -19,6 +21,8 @@ public class TimelinesScrollPanelController
 	private TimelinesScrollPanelView timelinesScrollPanelView;
 	
 	private TimelinesScrollPanelModel timelinesScrollPanelModel;
+	
+	private TimelinesGeneratorsRuleController timelinesGeneratorsRuleController = null; 
 	
 	//**********************************************************************************************
 	// Functions:
@@ -48,6 +52,25 @@ public class TimelinesScrollPanelController
 	    
 	    this.timelinesScrollPanelView.setTimelinesDrawPanelView(timelinesDrawPanelView);
 	    
+	    //------------------------------------------------------------------------------------------
+	    TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel = this.timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleModel();
+	    
+	    TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+	    
+		timelinesGeneratorsRuleModel.setTimelineGeneratorModels(timelinesDrawPanelModel.getTimelineGeneratorModels());
+		
+//		timelinesDrawPanelModel.getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
+//		(
+//		 	new ModelPropertyChangedListener()
+//		 	{
+//				@Override
+//				public void notifyModelPropertyChanged()
+//				{
+//					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged();
+//				}
+//		 	}
+//		);
+		
 		//==========================================================================================
 	}
 
@@ -67,5 +90,22 @@ public class TimelinesScrollPanelController
 	public TimelinesScrollPanelModel getTimelinesScrollPanelModel()
 	{
 		return this.timelinesScrollPanelModel;
+	}
+
+	/**
+	 * @param timelinesGeneratorsRuleController
+	 */
+	public void setTimelinesGeneratorsRuleController(TimelinesGeneratorsRuleController timelinesGeneratorsRuleController)
+	{
+		this.timelinesGeneratorsRuleController = timelinesGeneratorsRuleController;
+		
+		TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel = timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleModel();
+
+		timelinesGeneratorsRuleModel.setTimelinesScrollPanelModel(this.timelinesScrollPanelModel);
+//		timelinesGeneratorsRuleModel.setGeneratorSizeY(this.timelinesScrollPanelModel.getGeneratorSizeY());
+		
+		TimelinesGeneratorsRuleView timelinesGeneratorsRuleView = timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleView();
+		
+		this.timelinesScrollPanelView.setTimelinesGeneratorsRuleView(timelinesGeneratorsRuleView);
 	}
 }

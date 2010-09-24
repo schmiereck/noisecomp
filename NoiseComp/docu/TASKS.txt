@@ -8,7 +8,6 @@ TODO:
 #5:		BUG: Implements obligate input fields.
 #6:		BUG: Disable unreachable functions (buttons).
 #9:		BUG: Do not allow more than one OutputGenerator for a Module.
-#11:	IMPROVEMENT: Display name and type in vetrical timeline draw pane.
 #12:	IMPROVEMENT: Display time in horizontal timeline draw pane.
 #14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
 #15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
@@ -18,7 +17,11 @@ TODO:
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
 #21:	IMPROVEMENT: View Sound-Buffer Status in timeline-select-view (maybe in ruler?).
 #22:	BUG: Make sure that only one module have IsMainModulGeneratorType Flag.
-#24:	
+#24:	IMPROVEMENT: Implements Timeline-Select Zoom function.
+#25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
+#26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
+#27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
+#28:	
 
 WORK:
 =====
@@ -39,4 +42,5 @@ DONE:
 #13:	IMPROVEMENT: Show input connectors in timeline draw pane.
 #17:	IMPROVEMENT: Editing IsMainModulGeneratorType Flag.
 #23:	BUG: Input value String (fileName) are not editable after reselect input.
+#11:	IMPROVEMENT: Display name and type in vetrical timeline draw pane.
 		

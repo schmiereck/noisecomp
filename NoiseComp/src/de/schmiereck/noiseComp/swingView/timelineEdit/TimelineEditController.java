@@ -136,84 +136,20 @@ public class TimelineEditController
 				}
 		 	}
 		);
-		//------------------------------------------------------------------------------------------
-		// Timeline-Edit Update-Button: Generator, Update Timeline-Edit Model and Timeline-Generator Model:
-		
-		this.timelineEditView.getUpdateButton().addActionListener
-		(
-		 	new ActionListener()
-		 	{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-//					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
-//					TimelineEditView timelineEditView = timelineEditController.getTimelineEditView();
-					
-					if (timelineGeneratorModel != null)
-					{
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						GeneratorTypeData generatorTypeData;
-						{
-							GeneratorTypeSelectItem generatorTypeSelectItem = 
-								(GeneratorTypeSelectItem)timelineEditView.getGeneratorTypeComboBox().getSelectedItem();
-							generatorTypeData = generatorTypeSelectItem.getGeneratorTypeData();
-						}
-						String generatorName = timelineEditView.getGeneratorNameTextField().getText();
-						Float generatorStartTimePos = Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText());
-						Float generatorEndTimePos = Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText());
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						// Update Generator:
-						
-						Generator generator = 
-							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
-
-						// Create new generator?
-						if (generator == null)
-						{
-							Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
-							
-							generator = generatorTypeData.createGeneratorInstance(generatorName, 
-							                                                      soundFrameRate);
-							
-//							generator = new Generator(generatorName, 
-//							                          soundFrameRate, 
-//							                          generatorTypeData);
-							
-							ModulGeneratorTypeData editedModulGeneratorTypeData = appController.getEditedModulGeneratorTypeData();
-							
-							editedModulGeneratorTypeData.addGenerator(generator);
-						}
-						else
-						{
-							generator.setName(generatorName);
-						}
-						generator.setStartTimePos(generatorStartTimePos);
-						generator.setEndTimePos(generatorEndTimePos);
-
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						// Update Timeline-Edit Model:
-						
-						timelineEditModel.setGeneratorTypeData(generatorTypeData);
-						timelineEditModel.setGeneratorName(generatorName);
-						timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
-						timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						// Update Timeline-Model:
-						
-						timelineGeneratorModel.setGenerator(generator);
-//						timelineGeneratorModel.setGeneratorTypeData(generatorTypeData);
-						timelineGeneratorModel.setName(generatorName);
-						timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
-						timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					}
-				}
-		 	}
-		);
+//		//------------------------------------------------------------------------------------------
+//		// Timeline-Edit Update-Button: Update Generator, Update Timeline-Edit Model and Timeline-Generator Model:
+//		
+//		this.timelineEditView.getUpdateButton().addActionListener
+//		(
+//		 	new ActionListener()
+//		 	{
+//				@Override
+//				public void actionPerformed(ActionEvent e)
+//				{
+//					doUpdateEditModel(appController, timelinesDrawPanelModel);
+//				}
+//		 	}
+//		);
 		//==========================================================================================
 	}
 
@@ -224,5 +160,83 @@ public class TimelineEditController
 	public TimelineEditView getTimelineEditView()
 	{
 		return this.timelineEditView;
+	}
+
+	/**
+	 * Timeline-Edit Update-Button: Update Generator, Update Timeline-Edit Model and Timeline-Generator Model:
+	 * 
+	 * @param appController
+	 * @param timelinesDrawPanelModel
+	 */
+	public void doUpdateEditModel(final ModulGeneratorTypeData editedModulGeneratorTypeData,
+	                              //final Generator generator,
+	                              final TimelinesDrawPanelModel timelinesDrawPanelModel)
+	{
+//		TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+		TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+//		TimelineEditView timelineEditView = timelineEditController.getTimelineEditView();
+		
+		if (timelineGeneratorModel != null)
+		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			GeneratorTypeData generatorTypeData;
+			{
+				GeneratorTypeSelectItem generatorTypeSelectItem = 
+					(GeneratorTypeSelectItem)timelineEditView.getGeneratorTypeComboBox().getSelectedItem();
+				generatorTypeData = generatorTypeSelectItem.getGeneratorTypeData();
+			}
+			String generatorName = timelineEditView.getGeneratorNameTextField().getText();
+			Float generatorStartTimePos = Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText());
+			Float generatorEndTimePos = Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText());
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Update Generator:
+			
+//			Generator generator = 
+//				appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
+			Generator generator = timelineGeneratorModel.getGenerator();
+			
+			// Create new generator?
+			if (generator == null)
+			{
+				Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
+				
+				generator = generatorTypeData.createGeneratorInstance(generatorName, 
+				                                                      soundFrameRate);
+				
+//				generator = new Generator(generatorName, 
+//				                          soundFrameRate, 
+//				                          generatorTypeData);
+				
+//				ModulGeneratorTypeData editedModulGeneratorTypeData = appController.getEditedModulGeneratorTypeData();
+				
+				editedModulGeneratorTypeData.addGenerator(generator);
+			}
+			else
+			{
+				generator.setName(generatorName);
+			}
+			generator.setStartTimePos(generatorStartTimePos);
+			generator.setEndTimePos(generatorEndTimePos);
+
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Update Timeline-Edit Model:
+			
+			timelineEditModel.setGeneratorTypeData(generatorTypeData);
+			timelineEditModel.setGeneratorName(generatorName);
+			timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
+			timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Update Timeline-Model:
+			
+			timelineGeneratorModel.setGenerator(generator);
+//			timelineGeneratorModel.setGeneratorTypeData(generatorTypeData);
+			timelineGeneratorModel.setName(generatorName);
+			timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
+			timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
 	}
 }

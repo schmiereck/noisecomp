@@ -45,9 +45,6 @@ implements Scrollable//, MouseMotionListener
 	//**********************************************************************************************
 	// Fields:
 	
-	private int maxUnitIncrementX = 1;
-	private int maxUnitIncrementY = 16;
-
 	private Dimension dimension;
 	
 	/**
@@ -55,7 +52,7 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
-	private AffineTransform at = AffineTransform.getScaleInstance(15.0D, 2.0D);
+	private AffineTransform at = AffineTransform.getScaleInstance(15.0D, 1.0D);
 	
 	/**
 	 * Do Timeline Selected Listeners.
@@ -193,7 +190,7 @@ implements Scrollable//, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		// Paint timeline input connectors:
 		{
-			int entryHeight = maxUnitIncrementY;
+			int entryHeight = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
 			
 			g2.setPaint(Color.red);
 			
@@ -324,15 +321,17 @@ implements Scrollable//, MouseMotionListener
 			g2.setPaint(Color.BLACK);
 		}
 		
+		int maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+		
 		float startTimePos = timelineGeneratorModel.getStartTimePos();
 		float endTimePos = timelineGeneratorModel.getEndTimePos();
 		
 		float timeLength = endTimePos - startTimePos;
 		
 		Rectangle2D.Float rectangle = new Rectangle2D.Float(startTimePos,
-		                                                    timelineGeneratorPos * this.maxUnitIncrementY,
+		                                                    timelineGeneratorPos * maxUnitIncrementY,
 		                                                    timeLength,
-		                                                    this.maxUnitIncrementY);
+		                                                    maxUnitIncrementY);
 		
 		g2.fill(this.at.createTransformedShape(rectangle));
 	}
@@ -357,17 +356,20 @@ implements Scrollable//, MouseMotionListener
 		// Get the current position.
 		int currentPosition = 0;
 		
+		int maxUnitIncrementX = this.timelinesDrawPanelModel.getMaxUnitIncrementX();
+		int maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+		
 		if (orientation == SwingConstants.HORIZONTAL) 
 		{
 			currentPosition = visibleRect.x;
 			
-			nearestTick = calcNearestTick(direction, currentPosition, this.maxUnitIncrementX);
+			nearestTick = calcNearestTick(direction, currentPosition, maxUnitIncrementX);
 		} 
 		else 
 		{
 			currentPosition = visibleRect.y;
 			
-			nearestTick = calcNearestTick(direction, currentPosition, this.maxUnitIncrementY);
+			nearestTick = calcNearestTick(direction, currentPosition, maxUnitIncrementY);
 		}
 
 		return nearestTick;
@@ -401,6 +403,9 @@ implements Scrollable//, MouseMotionListener
 										   int orientation,
 										   int direction) 
 	{
+		int maxUnitIncrementX = this.timelinesDrawPanelModel.getMaxUnitIncrementX();
+		int maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+		
 		if (orientation == SwingConstants.HORIZONTAL) 
 		{
 			return visibleRect.width - maxUnitIncrementX;
@@ -448,6 +453,8 @@ implements Scrollable//, MouseMotionListener
 		
 		retTimelineGeneratorModel = null;
 		
+		int maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+		
 		double generatorPosY = 0.0D;
 		
 		for (TimelineGeneratorModel timelineGeneratorModel : this.timelinesDrawPanelModel.getTimelineGeneratorModels())
@@ -458,13 +465,13 @@ implements Scrollable//, MouseMotionListener
 			if ((point2D.getX() >= startTimePos) &&
 				(point2D.getX() <= endTimePos) &&
 				(point2D.getY() >= generatorPosY) &&
-				(point2D.getY() <= (generatorPosY + this.maxUnitIncrementY)))
+				(point2D.getY() <= (generatorPosY + maxUnitIncrementY)))
 			{
 				retTimelineGeneratorModel = timelineGeneratorModel;
 				break;
 			}
 			
-			generatorPosY += this.maxUnitIncrementY;
+			generatorPosY += maxUnitIncrementY;
 		}
 		
 		return retTimelineGeneratorModel;
