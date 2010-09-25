@@ -16,6 +16,7 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.MultiplierGenerator;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.RectangleGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
@@ -44,6 +45,7 @@ public class StartupService
 		
 		soundService.addGeneratorType(FaderGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(MixerGenerator.createGeneratorTypeData());
+		soundService.addGeneratorType(MultiplierGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(OutputGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(SinusGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(RectangleGenerator.createGeneratorTypeData());
@@ -225,6 +227,7 @@ public class StartupService
 			
 			mainModulTypeData.addGenerator(mixerGenerator);
 		}
+		//---------------------------------
 		//---------------------------------
 		OutputGenerator outputGenerator;
 		{

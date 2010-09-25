@@ -20,7 +20,9 @@ TODO:
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
 #27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
 #28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.
-#30:	
+#31:	IMPROVEMENT: Add Flag that markes a input-type as multiple or singele input-type.
+#32:	BUG: Input Edit: Modul-Input-Type are not updated? 
+#33:	
 
 WORK:
 =====
@@ -46,4 +48,5 @@ DONE:
 #11:	IMPROVEMENT: Display name and type in vetrical timeline draw pane.
 #12:	IMPROVEMENT: Display time in horizontal timeline draw pane.
 #29:	BUG: Allow editing default inputs of module input-types.
-		
+#30:	IMPROVEMENT: Add a Multiplier-Generator.
+		-> Done, is very similar to the Mixer-Generator.

@@ -511,12 +511,6 @@ implements GeneratorInterface,
 		return 1.0F;
 	}
 
-	public static GeneratorTypeData createGeneratorTypeData()
-	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SinusGenerator.class, "Base", "Is the base of all other generators.");
-		
-		return generatorTypeData;
-	}
 	/**
 	 * @return the attribute {@link #generatorTypeData}.
 	 */

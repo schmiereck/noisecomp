@@ -11,9 +11,15 @@ import java.util.Iterator;
 public class MixerGenerator
 extends Generator
 {
+	//**********************************************************************************************
+	// Constants:
+
 	public static final int	INPUT_TYPE_VOLUME	= 1;
 	public static final int	INPUT_TYPE_SIGNAL	= 2;
 	
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * Liste aus {@link Generator}-Objekten.
 	 */
@@ -24,12 +30,18 @@ extends Generator
 	 */
 	//private Vector signalInputs = null;
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
-	 * @param defaultValue
-	 * @param holdLastValue
+	 * @param name
+	 * 			is the genrator name.
 	 * @param frameRate
+	 * 			is the frame rate.
+	 * @param generatorTypeData
+	 * 			is the Generator-Type Data.
 	 */
 	public MixerGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
@@ -217,9 +229,6 @@ extends Generator
 		soundSample.setStereoValues(signalLeft * volume, signalRight * volume);
 	}
 
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
-	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MixerGenerator.class, "Mixer", "Mixes multiple signal input lines and scale them with a volume.");
