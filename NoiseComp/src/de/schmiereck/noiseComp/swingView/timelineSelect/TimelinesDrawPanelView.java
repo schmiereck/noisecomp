@@ -62,7 +62,7 @@ implements Scrollable//, MouseMotionListener
 	private List<DoTimelineSelectedListenerInterface> doTimelineSelectedListeners = new Vector<DoTimelineSelectedListenerInterface>();
 	
 	//----------------------------------------------------------------------------------------------
- 	private boolean isMousePressed = false;
+// 	private boolean isMousePressed = false;
  	
  	private TimelineGeneratorModel selectedTimelineGeneratorModel;
 	
@@ -129,14 +129,14 @@ implements Scrollable//, MouseMotionListener
 					Point2D point2D = mousePos(e.getPoint());
 					
 					selectedTimelineGeneratorModel = searchGenerator(point2D);
-					isMousePressed = true;
+//					isMousePressed = true;
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent e)
 				{
 					selectedTimelineGeneratorModel = null;
-					isMousePressed = false;
+//					isMousePressed = false;
 				}
 		 	}
 		);

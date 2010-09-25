@@ -39,6 +39,7 @@ extends JComponent
 	/**
 	 * Timelines-Time-Rule Model.
 	 */
+	@SuppressWarnings("unused")
 	private final TimelinesTimeRuleModel timelinesTimeRuleModel;
 	
 	private int				increment;

@@ -3,9 +3,14 @@
  */
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
+
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
@@ -128,6 +133,40 @@ public class InputEditController
 //				}
 //		 	}
 //		);
+		//------------------------------------------------------------------------------------------
+		this.inputEditView.getInputTypeComboBox().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					JComboBox cb = (JComboBox)e.getSource();
+					InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)cb.getSelectedItem();
+					
+					if (inputTypeSelectItem != null)
+					{
+						InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
+						
+						if (inputTypeData != null)
+						{
+							JTextField inputTypeValueTextField = inputEditView.getInputTypeValueTextField();
+							
+							String valueStr = InputUtils.makeStringValue(inputTypeValueTextField.getText());
+							
+							if (valueStr == null)
+							{
+								Float defaultValue = inputTypeData.getDefaultValue();
+								
+								String defaultValueStr = OutputUtils.makeFloatText(defaultValue);
+								
+								inputTypeValueTextField.setText(defaultValueStr);
+							}
+						}
+					}
+				}
+		 	}
+		);
 		//==========================================================================================
 	}
 
@@ -289,7 +328,7 @@ public class InputEditController
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)inputEditView.getInputTypeComboBox().getSelectedItem();
 		GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)inputEditView.getInputGeneratorComboBox().getSelectedItem();
-		String valueStr = inputEditView.getValueTextField().getText();
+		String valueStr = inputEditView.getInputTypeValueTextField().getText();
 		ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)inputEditView.getModulInputTypeComboBox().getSelectedItem();
 			
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

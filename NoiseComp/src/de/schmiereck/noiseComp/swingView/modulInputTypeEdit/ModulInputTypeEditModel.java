@@ -54,6 +54,17 @@ public class ModulInputTypeEditModel
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
+	 * Input-Type Default-Value.
+	 */
+	private Float inputTypeDefaultValue = null;
+
+	/**
+	 * {@link #inputTypeDefaultValue} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier inputTypeDefaultValueChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	/**
 	 * Input-Type Description.
 	 */
 	private String inputTypeDescription = null;
@@ -110,11 +121,41 @@ public class ModulInputTypeEditModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #inputTypeNameChangedNotifier}.
+	 * 			returns the {@link #inputTypeIDChangedNotifier}.
 	 */
 	public ModelPropertyChangedNotifier getInputTypeIDChangedNotifier()
 	{
 		return this.inputTypeIDChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputTypeDefaultValue}.
+	 */
+	public Float getInputTypeDefaultValue()
+	{
+		return this.inputTypeDefaultValue;
+	}
+
+	/**
+	 * @param inputTypeDefaultValue 
+	 * 			to set {@link #inputTypeDefaultValue}.
+	 */
+	public void setInputTypeDefaultValue(Float inputTypeDefaultValue)
+	{
+		this.inputTypeDefaultValue = inputTypeDefaultValue;
+		
+		// Notify listeners.
+		this.inputTypeDefaultValueChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputTypeDefaultValueChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getInputTypeDefaultValueChangedNotifier()
+	{
+		return this.inputTypeDefaultValueChangedNotifier;
 	}
 
 	/**

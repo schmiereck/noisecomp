@@ -84,11 +84,13 @@ public class ModulInputTypeEditController
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		String inputTypeIDStr = inputEditView.getInputTypeIDTextField().getText();
+		String inputTypeDefaultValueStr = inputEditView.getInputTypeDefaultValueTextField().getText();
 		String inputTypeNameStr = inputEditView.getInputTypeNameTextField().getText();
 		String inputTypeDescriptionStr = inputEditView.getInputTypeDescriptionTextField().getText();
 			
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		Integer inputTypeID = InputUtils.makeIntegerValue(inputTypeIDStr);
+		Float inputTypeDefaultValue = InputUtils.makeFloatValue(inputTypeDefaultValueStr);
 		String inputTypeName = InputUtils.makeStringValue(inputTypeNameStr);
 		String inputTypeDescription = InputUtils.makeStringValue(inputTypeDescriptionStr);
 		
@@ -107,10 +109,10 @@ public class ModulInputTypeEditController
 			{
 				// Update selected Input:
 				
-//				inputTypeData.setDefaultValue(defaultValue)
 //				inputTypeData.setInputCountMax(inputCountMax)
 //				inputTypeData.setInputCountMin(inputCountMin)
 				inputTypeData.setInputType(inputTypeID);
+				inputTypeData.setDefaultValue(inputTypeDefaultValue);
 				inputTypeData.setInputTypeName(inputTypeName);
 				inputTypeData.setInputTypeDescription(inputTypeDescription);
 			}
@@ -122,6 +124,8 @@ public class ModulInputTypeEditController
 				                                  inputTypeName,
 				                                  inputTypeDescription);
 
+				inputTypeData.setDefaultValue(inputTypeDefaultValue);
+				
 				editedModulGeneratorTypeData.addInputTypeData(inputTypeData);
 				
 				ModulInputTypeSelectEntryModel selectEntryModel = selectModel.getSelectedRow();
@@ -147,23 +151,27 @@ public class ModulInputTypeEditController
 		this.modulInputTypeEditModel.setInputTypeData(editedInputTypeData);
 		
 		Integer inputTypeID;
+		Float inputTypeDefaultValue;
 		String inputTypeName;
 		String inputTypeDescription;
 
 		if (editedInputTypeData != null)
 		{
 			inputTypeID = editedInputTypeData.getInputType();
+			inputTypeDefaultValue = editedInputTypeData.getDefaultValue();
 			inputTypeName = editedInputTypeData.getInputTypeName();
 			inputTypeDescription = editedInputTypeData.getInputTypeDescription();
 		}
 		else
 		{
 			inputTypeID = null;
+			inputTypeDefaultValue = null;
 			inputTypeName = null;
 			inputTypeDescription = null;
 		}
 
 		this.modulInputTypeEditModel.setInputTypeID(inputTypeID);
+		this.modulInputTypeEditModel.setInputTypeDefaultValue(inputTypeDefaultValue);
 		this.modulInputTypeEditModel.setInputTypeName(inputTypeName);
 		this.modulInputTypeEditModel.setInputTypeDescription(inputTypeDescription);
 	}

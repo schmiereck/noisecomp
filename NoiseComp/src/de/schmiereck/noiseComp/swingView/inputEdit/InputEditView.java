@@ -36,7 +36,7 @@ extends BasicEditView
 	
 	private final JComboBox inputGeneratorComboBox;
 	private final JComboBox inputTypeComboBox;
-	private final JTextField valueTextField;
+	private final JTextField inputTypeValueTextField;
 	private final JComboBox modulInputTypeComboBox;
 
 	/**
@@ -188,7 +188,7 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.valueTextField = this.addTextField(4, "Value:");
+			this.inputTypeValueTextField = this.addTextField(4, "Value:");
 			
 			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
 			(
@@ -197,7 +197,7 @@ extends BasicEditView
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						valueTextField.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
+						inputTypeValueTextField.setText(OutputUtils.makeStringText(inputEditModel.getValue()));
 					}
 			 	}
 			);
@@ -291,11 +291,11 @@ extends BasicEditView
 
 	/**
 	 * @return 
-	 * 			returns the {@link #valueTextField}.
+	 * 			returns the {@link #inputTypeValueTextField}.
 	 */
-	public JTextField getValueTextField()
+	public JTextField getInputTypeValueTextField()
 	{
-		return this.valueTextField;
+		return this.inputTypeValueTextField;
 	}
 
 	/**

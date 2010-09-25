@@ -20,11 +20,12 @@ TODO:
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
 #27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
 #28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.
-#29:	
+#30:	
 
 WORK:
 =====
 #15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
+		-> DD is working, but TimelinesGeneratorsRule is not updated (repaints are not done with model-listeners).
 
 DONE:
 =====
@@ -44,4 +45,5 @@ DONE:
 #23:	BUG: Input value String (fileName) are not editable after reselect input.
 #11:	IMPROVEMENT: Display name and type in vetrical timeline draw pane.
 #12:	IMPROVEMENT: Display time in horizontal timeline draw pane.
+#29:	BUG: Allow editing default inputs of module input-types.
 		

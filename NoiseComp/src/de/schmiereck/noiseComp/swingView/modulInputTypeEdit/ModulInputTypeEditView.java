@@ -31,6 +31,7 @@ extends BasicEditView
 	private final ModulInputTypeEditModel modulInputTypeEditModel;
 	
 	private final JTextField inputTypeIDTextField;
+	private final JTextField inputTypeDefaultValueTextField;
 	private final JTextField inputTypeNameTextField;
 	private final JTextField inputTypeDescriptionTextField;
 	
@@ -96,7 +97,23 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.inputTypeNameTextField = this.addTextField(3, "Name:");
+			this.inputTypeDefaultValueTextField = this.addTextField(3, "Default-Value:");
+			
+			modulInputTypeEditModel.getInputTypeDefaultValueChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						inputTypeDefaultValueTextField.setText(OutputUtils.makeFloatText(modulInputTypeEditModel.getInputTypeDefaultValue()));
+					}
+			 	}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.inputTypeNameTextField = this.addTextField(4, "Name:");
 			
 			modulInputTypeEditModel.getInputTypeNameChangedNotifier().addModelPropertyChangedListener
 			(
@@ -112,7 +129,7 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.inputTypeDescriptionTextField = this.addTextField(4, "Description:");
+			this.inputTypeDescriptionTextField = this.addTextField(5, "Description:");
 			
 			modulInputTypeEditModel.getInputTypeDescriptionChangedNotifier().addModelPropertyChangedListener
 			(
@@ -130,7 +147,7 @@ extends BasicEditView
 		{
 			this.updateButton = new JButton("Update");
 			
-			this.addField(5, this.updateButton);
+			this.addField(6, this.updateButton);
 		}
 		//==========================================================================================
 	}
@@ -160,6 +177,15 @@ extends BasicEditView
 	public JButton getRemoveButton()
 	{
 		return this.removeButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputTypeDefaultValueTextField}.
+	 */
+	public JTextField getInputTypeDefaultValueTextField()
+	{
+		return this.inputTypeDefaultValueTextField;
 	}
 
 	/**
