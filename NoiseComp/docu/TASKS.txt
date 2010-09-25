@@ -21,13 +21,19 @@ TODO:
 #27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
 #28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.
 #31:	IMPROVEMENT: Add Flag that markes a input-type as multiple or singele input-type.
-#32:	BUG: Input Edit: Modul-Input-Type are not updated? 
-#33:	
+#33:	BUG: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
+#34:	IMPROVEMENT: Input-Edit: Do not serve the edited generator as input generator.
+#35:	BUG: After inserting new model and update an new Input-type:
+		Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
+			at de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController.doUpdate(ModulInputTypeEditController.java:133)
+			at de.schmiereck.noiseComp.swingView.appController.AppController$9.actionPerformed(AppController.java:423)
+#46:	
 
 WORK:
 =====
 #15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
-		-> DD is working, but TimelinesGeneratorsRule is not updated (repaints are not done with model-listeners).
+		-> DD is working.
+		-> But TimelinesGeneratorsRule is not updated (repaints are not done with model-listeners).
 
 DONE:
 =====
@@ -50,3 +56,4 @@ DONE:
 #29:	BUG: Allow editing default inputs of module input-types.
 #30:	IMPROVEMENT: Add a Multiplier-Generator.
 		-> Done, is very similar to the Mixer-Generator.
+#32:	BUG: Input Edit: Modul-Input-Type are not updated? 

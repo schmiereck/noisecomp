@@ -206,7 +206,7 @@ extends BasicEditView
 		{
 			this.modulInputTypeComboBox = this.addComboBox(5, "Modul-Input-Type:");
 			
-			inputEditModel.getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener
+			inputEditModel.getModulInputTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
@@ -225,7 +225,7 @@ extends BasicEditView
 					}
 			 	}
 			);
-			inputEditModel.getModulInputTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
+			inputEditModel.getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
@@ -237,7 +237,7 @@ extends BasicEditView
 						InputTypeData inputTypeData = inputEditModel.getModulInputTypeData();
 
 						List<ModulInputTypeSelectItem> modulInputTypeSelectItems = inputEditModel.getModulInputTypeSelectItems();
-						if (modulInputTypeSelectItem != null)
+						if (modulInputTypeSelectItems != null)
 						{
 							for (ModulInputTypeSelectItem modulInputTypeSelectItem2 : modulInputTypeSelectItems)
 							{
