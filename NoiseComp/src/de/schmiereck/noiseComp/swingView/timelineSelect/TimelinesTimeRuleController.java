@@ -38,8 +38,7 @@ public class TimelinesTimeRuleController
 		//==========================================================================================
 		this.timelinesTimeRuleModel = new TimelinesTimeRuleModel();
 		
-		this.timelinesTimeRuleView = new TimelinesTimeRuleView(this.timelinesTimeRuleModel,
-		                                                       true);
+		this.timelinesTimeRuleView = new TimelinesTimeRuleView(this.timelinesTimeRuleModel);
 		
 		//==========================================================================================
 	}

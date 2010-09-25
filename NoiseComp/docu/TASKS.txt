@@ -25,7 +25,6 @@ TODO:
 
 WORK:
 =====
-#12:	IMPROVEMENT: Display time in horizontal timeline draw pane.
 
 DONE:
 =====
@@ -44,4 +43,5 @@ DONE:
 #17:	IMPROVEMENT: Editing IsMainModulGeneratorType Flag.
 #23:	BUG: Input value String (fileName) are not editable after reselect input.
 #11:	IMPROVEMENT: Display name and type in vetrical timeline draw pane.
+#12:	IMPROVEMENT: Display time in horizontal timeline draw pane.
 		

@@ -91,7 +91,7 @@ extends JComponent
 		
 		// Do the ruler labels in a small font that's black.
 		g.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		g.setColor(Color.black);
+		g.setColor(Color.BLACK);
 		
 		TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
 		
@@ -104,28 +104,28 @@ extends JComponent
 		int end = (((drawHere.y + drawHere.height) / generatorSizeY) + 1) * generatorSizeY;
 
 		// ticks and labels
-		for (int pos = start; pos < end; pos += generatorSizeY)
+		for (int tickPos = start; tickPos < end; tickPos += generatorSizeY)
 		{
 			int stringPosY;
 			
 			// Make a special case of 0 to display the number
 			// within the rule and draw a units label.
-			if (pos == 0)
+			if (tickPos == 0)
 			{
 				stringPosY = 10;
 			}
 			else
 			{
-				stringPosY = pos + 3;
+				stringPosY = tickPos + 3;
 			}
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			int tickLength = 10;
 			
-			g.drawLine(SIZE - 1, pos, SIZE - tickLength - 1, pos);
+			g.drawLine(SIZE - 1, tickPos, SIZE - tickLength - 1, tickPos);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			int generatorPos = pos / generatorSizeY;
+			int generatorPos = tickPos / generatorSizeY;
 			
 			String generatorName;
 			String generatorTypeName;

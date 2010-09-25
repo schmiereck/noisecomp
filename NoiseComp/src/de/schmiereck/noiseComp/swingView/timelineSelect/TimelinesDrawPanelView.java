@@ -52,7 +52,7 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
-	private AffineTransform at = AffineTransform.getScaleInstance(15.0D, 1.0D);
+	private AffineTransform at = AffineTransform.getScaleInstance(20.0D, 1.0D);
 	
 	/**
 	 * Do Timeline Selected Listeners.

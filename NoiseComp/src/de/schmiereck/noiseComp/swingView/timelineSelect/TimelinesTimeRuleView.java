@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 
 import javax.swing.JComponent;
 
@@ -26,8 +25,13 @@ extends JComponent
 	//**********************************************************************************************
 	// Constats:
 
-	public static final int	DPI		= Toolkit.getDefaultToolkit().getScreenResolution();
+	public static final int	DPI		= 20;//Toolkit.getDefaultToolkit().getScreenResolution();
 	public static final int	SIZE	= 35;
+
+	/**
+	 * Color - Background (dirty brown/orange).
+	 */
+	private static final Color	COLOR_BACKGROUND	= new Color(230, 163, 4);
 	
 	//**********************************************************************************************
 	// Fields:
@@ -37,7 +41,6 @@ extends JComponent
 	 */
 	private final TimelinesTimeRuleModel timelinesTimeRuleModel;
 	
-	public boolean			isMetric;
 	private int				increment;
 	private int				units;
 
@@ -47,41 +50,25 @@ extends JComponent
 	/**
 	 * Constructor.
 	 * 
-	 * @param isMetric
-	 * 			<code>true</code> if is Metric.
 	 */
-	public TimelinesTimeRuleView(TimelinesTimeRuleModel timelinesTimeRuleModel,
-	                             boolean isMetric)
+	public TimelinesTimeRuleView(TimelinesTimeRuleModel timelinesTimeRuleModel)
 	{
 		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
-		this.isMetric = isMetric;
+		
 		this.setIncrementAndUnits();
 	}
 
-	public void setIsMetric(boolean isMetric)
-	{
-		this.isMetric = isMetric;
-		this.setIncrementAndUnits();
-		this.repaint();
-	}
+//	public void setIsMetric(boolean isMetric)
+//	{
+//		this.isMetric = isMetric;
+//		this.setIncrementAndUnits();
+//		this.repaint();
+//	}
 
 	private void setIncrementAndUnits()
 	{
-		if (this.isMetric)
-		{
-			this.units = (int)((double)DPI / (double)2.54); // dots per centimeter
-			this.increment = this.units;
-		}
-		else
-		{
-			this.units = DPI;
-			this.increment = this.units / 2;
-		}
-	}
-
-	public boolean isMetric()
-	{
-		return this.isMetric;
+		this.units = DPI;
+		this.increment = DPI / 2;
 	}
 
 	public int getIncrement()
@@ -104,56 +91,54 @@ extends JComponent
 		Rectangle drawHere = g.getClipBounds();
 		
 		// Fill clipping area with dirty brown/orange.
-		g.setColor(new Color(230, 163, 4));
+		g.setColor(COLOR_BACKGROUND);
 		g.fillRect(drawHere.x, drawHere.y, drawHere.width, drawHere.height);
 		
 		// Do the ruler labels in a small font that's black.
 		g.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		g.setColor(Color.black);
-		
-		// Some vars we need.
-		int end = 0;
-		int start = 0;
-		int tickLength = 0;
-		String text = null;
+		g.setColor(Color.BLACK);
 
 		// Use clipping bounds to calculate first and last tick locations.
-		start = (drawHere.x / this.increment) * this.increment;
-		end = (((drawHere.x + drawHere.width) / this.increment) + 1) * this.increment;
+		int start = ((drawHere.x / this.increment) * this.increment);
+		int end = ((((drawHere.x + drawHere.width) / this.increment) + 1) * this.increment);
 
-		// Make a special case of 0 to display the number
-		// within the rule and draw a units label.
-		if (start == 0)
-		{
-			text = Integer.toString(0) + (this.isMetric ? " cm" : " in");
-			tickLength = 10;
-
-			g.drawLine(0, SIZE - 1, 0, SIZE - tickLength - 1);
-			g.drawString(text, 2, 21);
-
-			text = null;
-			start = this.increment;
-		}
 		// ticks and labels
-		for (int i = start; i < end; i += this.increment)
+		for (int tickPos = start; tickPos < end; tickPos += this.increment)
 		{
-			if (i % this.units == 0)
+			int tickLength;
+			String text;
+			int textPosX;
+			
+			if (tickPos % this.units == 0)
 			{
 				tickLength = 10;
-				text = Integer.toString(i / this.units);
+				text = Integer.toString((int)(tickPos / this.units));
+				
+				if (tickPos == 0)
+				{
+					// Make a special case of 0 to display the number
+					// within the rule and draw a units label.
+					text += " s";
+					textPosX = 0;
+				}
+				else
+				{
+					textPosX = tickPos - 3;
+				}
+
 			}
 			else
 			{
-				tickLength = 7;
+				tickLength = 5;
 				text = null;
+				textPosX = 0;
 			}
-			if (tickLength != 0)
+			
+			g.drawLine(tickPos, SIZE - 1, tickPos, SIZE - tickLength - 1);
+			
+			if (text != null)
 			{
-				g.drawLine(i, SIZE - 1, i, SIZE - tickLength - 1);
-				if (text != null)
-				{
-					g.drawString(text, i - 3, 21);
-				}
+				g.drawString(text, textPosX, 21);
 			}
 		}
 	}
