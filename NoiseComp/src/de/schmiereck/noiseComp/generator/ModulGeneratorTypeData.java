@@ -324,6 +324,8 @@ public class ModulGeneratorTypeData
 	 */
 	public void switchTracksByPos(int sourceTrackPos, int tagetTrackPos)
 	{
+		this.generators.switchTracksByPos(sourceTrackPos, tagetTrackPos);
+		
 		this.tracksData.switchTracksByPos(sourceTrackPos, tagetTrackPos);
 	}
 }

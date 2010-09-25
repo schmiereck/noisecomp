@@ -9,7 +9,6 @@ TODO:
 #6:		BUG: Disable unreachable functions (buttons).
 #9:		BUG: Do not allow more than one OutputGenerator for a Module.
 #14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
-#15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
 #16:	IMPROVEMENT: Implements mouse featured resize of timelines in timeline draw pane.
 #18:	IMPROVEMENT: Insert new timelines after selected timeline with same start- and stop-time.
 #19:	IMPROVEMENT: Add a Generators Category seperate to the Modules Category.
@@ -25,6 +24,7 @@ TODO:
 
 WORK:
 =====
+#15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
 
 DONE:
 =====

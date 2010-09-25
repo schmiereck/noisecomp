@@ -122,4 +122,25 @@ public class Generators
 		return inputData;
 	}
 	*/
+
+	/**
+	 * @param firstPos
+	 * 			is the first Position in the {@link #secondGenerator}.
+	 * @param secondPos
+	 * 			is the second Position in the {@link #secondGenerator}.
+	 */
+	public void switchTracksByPos(int firstPos, int secondPos)
+	{
+		if ((firstPos >= 0) &&
+			(secondPos >= 0) &&
+			(firstPos < this.generators.size()) &&
+			(secondPos < this.generators.size()))
+		{
+			Generator firstGenerator = this.generators.get(firstPos);
+			Generator secondGenerator = this.generators.get(secondPos);
+			
+			this.generators.set(secondPos,firstGenerator);
+			this.generators.set(firstPos, secondGenerator);
+		}
+	}
 }

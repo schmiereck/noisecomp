@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.util.Iterator;
+import java.util.List;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -77,6 +78,20 @@ public class TimelinesDrawPanelController
 //	    (
 //	     	this.timelineGeneratorModelChangedListener
 //	    );
+	    //------------------------------------------------------------------------------------------
+	    this.timelinesDrawPanelView.addChangeTimelinesPositionListeners
+	    (
+	     	new DoChangeTimelinesPositionListenerInterface()
+	     	{
+				@Override
+				public void changeTimelinesPosition(TimelineGeneratorModel selectedTimelineGeneratorModel,
+													TimelineGeneratorModel newTimelineGeneratorModel)
+				{
+					doChangeTimelinesPosition(selectedTimelineGeneratorModel,
+					                          newTimelineGeneratorModel);
+				}
+	     	}
+	    );
 	    //==========================================================================================
 	}
 
@@ -167,5 +182,53 @@ public class TimelinesDrawPanelController
 		}
 		
 		return selectedGenerator;
+	}
+	
+	/**
+	 * 
+	 * @param firstTimelineGeneratorModel
+	 * 			is the first Timeline-Generator Model.
+	 * @param secondTimelineGeneratorModel
+	 * 			is the second Timeline-Generator Model.
+	 */
+	public void doChangeTimelinesPosition(TimelineGeneratorModel firstTimelineGeneratorModel,
+	                                      TimelineGeneratorModel secondTimelineGeneratorModel)
+	{
+		//==========================================================================================
+		int firstTimelinePos = firstTimelineGeneratorModel.getTimelinePos();
+		int secondTimelinePos = secondTimelineGeneratorModel.getTimelinePos();
+		
+		//------------------------------------------------------------------------------------------
+		// Update edited Modul Data:
+		
+		ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
+		
+//		Generator firstGenerator = selectedTimelineGeneratorModel.getGenerator();
+//		Generator secondGenerator = newTimelineGeneratorModel.getGenerator();
+		
+		editedModulGeneratorTypeData.switchTracksByPos(firstTimelinePos,
+		                                               secondTimelinePos);
+		
+		//------------------------------------------------------------------------------------------
+		// Update Timeline-Draw Model:
+		
+		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels();
+		
+		timelineGeneratorModels.set(firstTimelinePos, secondTimelineGeneratorModel);
+		timelineGeneratorModels.set(secondTimelinePos, firstTimelineGeneratorModel);
+		
+		//------------------------------------------------------------------------------------------
+		// Update Timeline-Generator Models:
+		
+		firstTimelineGeneratorModel.setTimelinePos(secondTimelinePos);
+		secondTimelineGeneratorModel.setTimelinePos(firstTimelinePos);
+		
+		//------------------------------------------------------------------------------------------
+		// TODO Should be triggered by timelinesDrawPanel Model update.
+		this.timelinesDrawPanelView.repaint();
+		
+		// TODO Update TimelinesGeneratorsRule.
+		
+		//==========================================================================================
 	}
 }

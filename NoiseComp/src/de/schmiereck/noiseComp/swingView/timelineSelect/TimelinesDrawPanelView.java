@@ -7,10 +7,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.NoninvertibleTransformException;
@@ -59,12 +61,24 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private List<DoTimelineSelectedListenerInterface> doTimelineSelectedListeners = new Vector<DoTimelineSelectedListenerInterface>();
 	
+	//----------------------------------------------------------------------------------------------
+ 	private boolean isMousePressed = false;
+ 	
+ 	private TimelineGeneratorModel selectedTimelineGeneratorModel;
+	
+	/**
+	 * Do Timeline Selected Listeners.
+	 */
+	private List<DoChangeTimelinesPositionListenerInterface> doChangeTimelinesPositionListeners = new Vector<DoChangeTimelinesPositionListenerInterface>();
+ 	
 	//**********************************************************************************************
 	// Functions:
 
 	/**
 	* Constructor.
 	* 
+	* @param timelinesDrawPanelModel
+	* 			is the Timeline Draw Panel Model.
 	*/
 	public TimelinesDrawPanelView(TimelinesDrawPanelModel timelinesDrawPanelModel) 
 	{
@@ -86,19 +100,10 @@ implements Scrollable//, MouseMotionListener
 		(
 		 	new MouseListener()
 		 	{
-
 				@Override
 				public void mouseClicked(MouseEvent e)
 				{
-					Point2D point2D;
-					try
-					{
-						point2D = at.inverseTransform(e.getPoint(), null);
-					}
-					catch (NoninvertibleTransformException ex)
-					{
-						throw new RuntimeException(ex);
-					}
+					Point2D point2D = mousePos(e.getPoint());
 					
 					TimelineGeneratorModel timelineGeneratorModel = searchGenerator(point2D);
 					
@@ -121,10 +126,43 @@ implements Scrollable//, MouseMotionListener
 				@Override
 				public void mousePressed(MouseEvent e)
 				{
+					Point2D point2D = mousePos(e.getPoint());
+					
+					selectedTimelineGeneratorModel = searchGenerator(point2D);
+					isMousePressed = true;
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent e)
+				{
+					selectedTimelineGeneratorModel = null;
+					isMousePressed = false;
+				}
+		 	}
+		);
+		this.addMouseMotionListener
+		(
+		 	new MouseMotionListener()
+		 	{
+				@Override
+				public void mouseDragged(MouseEvent e)
+				{
+					Point2D point2D = mousePos(e.getPoint());
+					
+					TimelineGeneratorModel timelineGeneratorModel = searchTimeline(point2D);
+					
+					if (timelineGeneratorModel != null)
+					{
+						if (timelineGeneratorModel != selectedTimelineGeneratorModel)
+						{
+							notifyDoChangeTimelinesPositionListeners(selectedTimelineGeneratorModel, 
+							                                         timelineGeneratorModel);
+						}
+					}
+				}
+
+				@Override
+				public void mouseMoved(MouseEvent e)
 				{
 				}
 		 	}
@@ -155,6 +193,24 @@ implements Scrollable//, MouseMotionListener
 		 	}
 		);
 		//==========================================================================================
+	}
+
+	/**
+	 * @param point
+	 * @return
+	 */
+	private Point2D mousePos(Point point)
+	{
+		Point2D point2D;
+		try
+		{
+			point2D = at.inverseTransform(point, null);
+		}
+		catch (NoninvertibleTransformException ex)
+		{
+			throw new RuntimeException(ex);
+		}
+		return point2D;
 	}
 	
 	/* (non-Javadoc)
@@ -445,9 +501,9 @@ implements Scrollable//, MouseMotionListener
 	 * @param point2D
 	 * 			is the point.
 	 * @return
-	 * 			is the generator at given point.
+	 * 			is the Timeline at given point.
 	 */
-	private TimelineGeneratorModel searchGenerator(Point2D point2D)
+	private TimelineGeneratorModel searchTimeline(Point2D point2D)
 	{
 		TimelineGeneratorModel retTimelineGeneratorModel;
 		
@@ -459,12 +515,7 @@ implements Scrollable//, MouseMotionListener
 		
 		for (TimelineGeneratorModel timelineGeneratorModel : this.timelinesDrawPanelModel.getTimelineGeneratorModels())
 		{
-			float startTimePos = timelineGeneratorModel.getStartTimePos();
-			float endTimePos = timelineGeneratorModel.getEndTimePos();
-			
-			if ((point2D.getX() >= startTimePos) &&
-				(point2D.getX() <= endTimePos) &&
-				(point2D.getY() >= generatorPosY) &&
+			if ((point2D.getY() >= generatorPosY) &&
 				(point2D.getY() <= (generatorPosY + maxUnitIncrementY)))
 			{
 				retTimelineGeneratorModel = timelineGeneratorModel;
@@ -472,6 +523,41 @@ implements Scrollable//, MouseMotionListener
 			}
 			
 			generatorPosY += maxUnitIncrementY;
+		}
+		
+		return retTimelineGeneratorModel;
+	}
+
+	/**
+	 * @param point2D
+	 * 			is the point.
+	 * @return
+	 * 			is the generator at given point.
+	 */
+	private TimelineGeneratorModel searchGenerator(Point2D point2D)
+	{
+		TimelineGeneratorModel retTimelineGeneratorModel;
+		
+		TimelineGeneratorModel timelineGeneratorModel = this.searchTimeline(point2D);
+		
+		if (timelineGeneratorModel != null)
+		{
+			float startTimePos = timelineGeneratorModel.getStartTimePos();
+			float endTimePos = timelineGeneratorModel.getEndTimePos();
+			
+			if ((point2D.getX() >= startTimePos) &&
+				(point2D.getX() <= endTimePos))
+			{
+				retTimelineGeneratorModel = timelineGeneratorModel;
+			}
+			else
+			{
+				retTimelineGeneratorModel = null;
+			}
+		}
+		else
+		{
+			retTimelineGeneratorModel = null;
 		}
 		
 		return retTimelineGeneratorModel;
@@ -496,4 +582,27 @@ implements Scrollable//, MouseMotionListener
 	{
 		this.doTimelineSelectedListeners.add(doTimelineSelectedListener);
 	}
+
+	/**
+	 * Notify the {@link #doChangeTimelinesPositionListeners}.
+	 */
+	public void notifyDoChangeTimelinesPositionListeners(TimelineGeneratorModel selectedTimelineGeneratorModel,
+	                                                     TimelineGeneratorModel newTimelineGeneratorModel)
+	{
+		for (DoChangeTimelinesPositionListenerInterface doTimelineSelectedListener : this.doChangeTimelinesPositionListeners)
+		{
+			doTimelineSelectedListener.changeTimelinesPosition(selectedTimelineGeneratorModel,
+			                                                   newTimelineGeneratorModel);
+		};
+	}
+
+	/**
+	 * @param doChangeTimelinesPositionListener 
+	 * 			to add to {@link #doChangeTimelinesPositionListeners}.
+	 */
+	public void addChangeTimelinesPositionListeners(DoChangeTimelinesPositionListenerInterface doChangeTimelinesPositionListener)
+	{
+		this.doChangeTimelinesPositionListeners.add(doChangeTimelinesPositionListener);
+	}
+	
 }
