@@ -58,6 +58,13 @@ public class TimelinesDrawPanelModel
 //	 */
 //	private List<DoTimelineSelectedListenerInterface> doTimelineSelectedListeners = new Vector<DoTimelineSelectedListenerInterface>();
 	
+	/**
+	 * {@link #timelineGeneratorModels} positions changed.
+	 * 
+	 * @see #changeTimelinesPosition(int, int)
+	 */
+	private final ModelPropertyChangedNotifier changeTimelinesPositionChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	//**********************************************************************************************
 	// Functions:
 	
@@ -200,5 +207,39 @@ public class TimelinesDrawPanelModel
 	public ModelPropertyChangedNotifier getSelectedTimelineChangedNotifier()
 	{
 		return this.selectedTimelineChangedNotifier;
+	}
+
+	/**
+	 * @param firstTimelinePos
+	 * 			is the first Timeline-Generator Poisition.
+	 * @param secondTimelinePos
+	 * 			is the second Timeline-Generator Poisition.
+	 */
+	public void changeTimelinesPosition(int firstTimelinePos, int secondTimelinePos)
+	{
+		TimelineGeneratorModel firstTimelineGeneratorModel = this.timelineGeneratorModels.get(firstTimelinePos);
+		TimelineGeneratorModel secondTimelineGeneratorModel = this.timelineGeneratorModels.get(secondTimelinePos);
+		
+		this.timelineGeneratorModels.set(firstTimelinePos, secondTimelineGeneratorModel);
+		this.timelineGeneratorModels.set(secondTimelinePos, firstTimelineGeneratorModel);
+		
+		//------------------------------------------------------------------------------------------
+		// Update Timeline-Generator Models:
+		
+		firstTimelineGeneratorModel.setTimelinePos(secondTimelinePos);
+		secondTimelineGeneratorModel.setTimelinePos(firstTimelinePos);
+		
+		//------------------------------------------------------------------------------------------
+		// Notify listeners.
+		this.changeTimelinesPositionChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #changeTimelinesPositionChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getChangeTimelinesPositionChangedNotifier()
+	{
+		return this.changeTimelinesPositionChangedNotifier;
 	}
 }

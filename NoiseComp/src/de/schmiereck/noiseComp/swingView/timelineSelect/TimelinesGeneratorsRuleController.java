@@ -65,4 +65,12 @@ public class TimelinesGeneratorsRuleController
 		this.timelinesGeneratorsRuleView.repaint();
 	}
 
+	/**
+	 * Do Change Timelines Position.
+	 */
+	public void doChangeTimelinesPosition()
+	{
+		this.getTimelinesGeneratorsRuleView().repaint();
+	}
+
 }

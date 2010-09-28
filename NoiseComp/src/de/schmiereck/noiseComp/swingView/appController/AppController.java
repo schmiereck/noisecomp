@@ -199,7 +199,7 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		final TimelinesTimeRuleController timelinesTimeRuleController = new TimelinesTimeRuleController();
 		
-	//------------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------------------
 		final TimelinesGeneratorsRuleController timelinesGeneratorsRuleController = new TimelinesGeneratorsRuleController();
 		
 		//------------------------------------------------------------------------------------------
@@ -232,6 +232,17 @@ public class AppController
 		 	}
 		);
 
+		this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getChangeTimelinesPositionChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					timelinesGeneratorsRuleController.doChangeTimelinesPosition();
+				}
+		 	}
+		);
 		//------------------------------------------------------------------------------------------
 		final InputSelectController inputSelectController = 
 			new InputSelectController(this,

@@ -197,6 +197,18 @@ implements Scrollable//, MouseMotionListener
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		this.timelinesDrawPanelModel.getChangeTimelinesPositionChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					repaint();
+				}
+		 	}
+		);
 		//==========================================================================================
 	}
 

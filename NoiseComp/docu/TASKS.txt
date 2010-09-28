@@ -30,9 +30,6 @@ TODO:
 
 WORK:
 =====
-#15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
-		-> DD is working.
-		-> But TimelinesGeneratorsRule is not updated (repaints are not done triggered with model-listeners).
 #14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
 
 DONE:
@@ -57,3 +54,6 @@ DONE:
 #30:	IMPROVEMENT: Add a Multiplier-Generator.
 		-> Done, is very similar to the Mixer-Generator.
 #32:	BUG: Input Edit: Modul-Input-Type are not updated? 
+#15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
+		-> DD is working.
+		-> TimelinesGeneratorsRule is now updated (repaints are triggered by model-listeners).

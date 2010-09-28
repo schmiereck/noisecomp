@@ -4,7 +4,6 @@
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.util.Iterator;
-import java.util.List;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -212,22 +211,24 @@ public class TimelinesDrawPanelController
 		//------------------------------------------------------------------------------------------
 		// Update Timeline-Draw Model:
 		
-		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels();
+//		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels();
+//		
+//		timelineGeneratorModels.set(firstTimelinePos, secondTimelineGeneratorModel);
+//		timelineGeneratorModels.set(secondTimelinePos, firstTimelineGeneratorModel);
+		this.timelinesDrawPanelModel.changeTimelinesPosition(firstTimelinePos,
+		                                                     secondTimelinePos);
 		
-		timelineGeneratorModels.set(firstTimelinePos, secondTimelineGeneratorModel);
-		timelineGeneratorModels.set(secondTimelinePos, firstTimelineGeneratorModel);
-		
+//		//------------------------------------------------------------------------------------------
+//		// Update Timeline-Generator Models:
+//		
+//		firstTimelineGeneratorModel.setTimelinePos(secondTimelinePos);
+//		secondTimelineGeneratorModel.setTimelinePos(firstTimelinePos);
+//		
 		//------------------------------------------------------------------------------------------
-		// Update Timeline-Generator Models:
+		// Should be triggered by timelinesDrawPanel Model update.
+//		this.timelinesDrawPanelView.repaint();
 		
-		firstTimelineGeneratorModel.setTimelinePos(secondTimelinePos);
-		secondTimelineGeneratorModel.setTimelinePos(firstTimelinePos);
-		
-		//------------------------------------------------------------------------------------------
-		// TODO Should be triggered by timelinesDrawPanel Model update.
-		this.timelinesDrawPanelView.repaint();
-		
-		// TODO Update TimelinesGeneratorsRule.
+		// Update TimelinesGeneratorsRule.
 		
 		//==========================================================================================
 	}
