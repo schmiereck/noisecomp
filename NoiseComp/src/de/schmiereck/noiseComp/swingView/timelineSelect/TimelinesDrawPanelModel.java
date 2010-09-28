@@ -42,10 +42,21 @@ public class TimelinesDrawPanelModel
 	 */
 	private TimelineGeneratorModel selectedTimelineGeneratorModel = null;
 	
+//	/**
+//	 * Selected Timeline Changed Listeners.
+//	 */
+//	private List<SelectedTimelineChangedListenerInterface> selectedTimelineChangedListeners = new Vector<SelectedTimelineChangedListenerInterface>();
 	/**
-	 * Selected Timeline Changed Listeners.
+	 * {@link #selectedTimelineGeneratorModel} changed listeners.
 	 */
-	private List<SelectedTimelineChangedListenerInterface> selectedTimelineChangedListeners = new Vector<SelectedTimelineChangedListenerInterface>();
+	private final ModelPropertyChangedNotifier selectedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	//----------------------------------------------------------------------------------------------
+	
+//	/**
+//	 * Do Timeline Selected Listeners.
+//	 */
+//	private List<DoTimelineSelectedListenerInterface> doTimelineSelectedListeners = new Vector<DoTimelineSelectedListenerInterface>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -123,28 +134,28 @@ public class TimelinesDrawPanelModel
 	{
 		this.selectedTimelineGeneratorModel = selectedTimelineGeneratorModel;
 		
-		this.notifySelectedTimelineChangedListeners();
+		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
 	}
-
-	/**
-	 * Notify the {@link #selectedTimelineChangedListeners}.
-	 */
-	public void notifySelectedTimelineChangedListeners()
-	{
-		for (SelectedTimelineChangedListenerInterface selectedTimelineChangedListener : this.selectedTimelineChangedListeners)
-		{
-			selectedTimelineChangedListener.selectedTimelineChanged();
-		}
-	}
-
-	/**
-	 * @param selectedTimelineChangedListener 
-	 * 			to add to {@link #selectedTimelineChangedListeners}.
-	 */
-	public void addSelectedTimelineChangedListener(SelectedTimelineChangedListenerInterface selectedTimelineChangedListener)
-	{
-		this.selectedTimelineChangedListeners.add(selectedTimelineChangedListener);
-	}
+//
+//	/**
+//	 * Notify the {@link #selectedTimelineChangedListeners}.
+//	 */
+//	public void notifySelectedTimelineChangedListeners()
+//	{
+//		for (SelectedTimelineChangedListenerInterface selectedTimelineChangedListener : this.selectedTimelineChangedListeners)
+//		{
+//			selectedTimelineChangedListener.selectedTimelineChanged();
+//		}
+//	}
+//	
+//	/**
+//	 * @param selectedTimelineChangedListener 
+//	 * 			to add to {@link #selectedTimelineChangedListeners}.
+//	 */
+//	public void addSelectedTimelineChangedListener(SelectedTimelineChangedListenerInterface selectedTimelineChangedListener)
+//	{
+//		this.selectedTimelineChangedNotifier.add(selectedTimelineChangedListener);
+//	}
 
 	/**
 	 * @return 
@@ -180,5 +191,14 @@ public class TimelinesDrawPanelModel
 	public void setMaxUnitIncrementY(int maxUnitIncrementY)
 	{
 		this.maxUnitIncrementY = maxUnitIncrementY;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedTimelineChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getSelectedTimelineChangedNotifier()
+	{
+		return this.selectedTimelineChangedNotifier;
 	}
 }

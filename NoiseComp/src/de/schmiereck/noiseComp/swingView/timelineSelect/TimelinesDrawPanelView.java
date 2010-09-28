@@ -56,15 +56,15 @@ implements Scrollable//, MouseMotionListener
 	
 	private AffineTransform at = AffineTransform.getScaleInstance(20.0D, 1.0D);
 	
-	/**
-	 * Do Timeline Selected Listeners.
-	 */
-	private List<DoTimelineSelectedListenerInterface> doTimelineSelectedListeners = new Vector<DoTimelineSelectedListenerInterface>();
-	
 	//----------------------------------------------------------------------------------------------
 // 	private boolean isMousePressed = false;
  	
- 	private TimelineGeneratorModel selectedTimelineGeneratorModel;
+// 	private TimelineGeneratorModel selectedTimelineGeneratorModel;
+	
+//	/**
+//	 * Do Timeline Selected Listeners.
+//	 */
+//	private List<DoTimelineSelectedListenerInterface> doTimelineSelectedListeners = new Vector<DoTimelineSelectedListenerInterface>();
 	
 	/**
 	 * Do Timeline Selected Listeners.
@@ -80,7 +80,7 @@ implements Scrollable//, MouseMotionListener
 	* @param timelinesDrawPanelModel
 	* 			is the Timeline Draw Panel Model.
 	*/
-	public TimelinesDrawPanelView(TimelinesDrawPanelModel timelinesDrawPanelModel) 
+	public TimelinesDrawPanelView(final TimelinesDrawPanelModel timelinesDrawPanelModel) 
 	{
 		//==========================================================================================
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
@@ -109,7 +109,7 @@ implements Scrollable//, MouseMotionListener
 					
 					//if (timelineGeneratorModel != null)
 					{
-						notifyDoTimelineSelectedListeners(timelineGeneratorModel);
+						timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
 					}
 				}
 
@@ -128,14 +128,17 @@ implements Scrollable//, MouseMotionListener
 				{
 					Point2D point2D = mousePos(e.getPoint());
 					
-					selectedTimelineGeneratorModel = searchGenerator(point2D);
+					TimelineGeneratorModel timelineGeneratorModel = searchGenerator(point2D);
+					
+					timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
+//					selectedTimelineGeneratorModel = timelineGeneratorModel;
 //					isMousePressed = true;
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent e)
 				{
-					selectedTimelineGeneratorModel = null;
+//					selectedTimelineGeneratorModel = null;
 //					isMousePressed = false;
 				}
 		 	}
@@ -153,6 +156,9 @@ implements Scrollable//, MouseMotionListener
 					
 					if (timelineGeneratorModel != null)
 					{
+						TimelineGeneratorModel selectedTimelineGeneratorModel = 
+							timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+						
 						if (timelineGeneratorModel != selectedTimelineGeneratorModel)
 						{
 							notifyDoChangeTimelinesPositionListeners(selectedTimelineGeneratorModel, 
@@ -168,16 +174,15 @@ implements Scrollable//, MouseMotionListener
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		this.timelinesDrawPanelModel.addSelectedTimelineChangedListener
+		this.timelinesDrawPanelModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
-		 	new SelectedTimelineChangedListenerInterface()
+		 	new ModelPropertyChangedListener()
 		 	{
 				@Override
-				public void selectedTimelineChanged()
+				public void notifyModelPropertyChanged()
 				{
 					repaint();
 				}
-		 		
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
@@ -562,26 +567,26 @@ implements Scrollable//, MouseMotionListener
 		
 		return retTimelineGeneratorModel;
 	}
-
-	/**
-	 * Notify the {@link #doTimelineSelectedListeners}.
-	 */
-	public void notifyDoTimelineSelectedListeners(TimelineGeneratorModel timelineGeneratorModel)
-	{
-		for (DoTimelineSelectedListenerInterface doTimelineSelectedListener : this.doTimelineSelectedListeners)
-		{
-			doTimelineSelectedListener.timelineSelected(timelineGeneratorModel);
-		};
-	}
-
-	/**
-	 * @param doTimelineSelectedListener 
-	 * 			to add to {@link #doTimelineSelectedListeners}.
-	 */
-	public void addDoTimelineSelectedListeners(DoTimelineSelectedListenerInterface doTimelineSelectedListener)
-	{
-		this.doTimelineSelectedListeners.add(doTimelineSelectedListener);
-	}
+//
+//	/**
+//	 * Notify the {@link #doTimelineSelectedListeners}.
+//	 */
+//	public void notifyDoTimelineSelectedListeners(TimelineGeneratorModel timelineGeneratorModel)
+//	{
+//		for (DoTimelineSelectedListenerInterface doTimelineSelectedListener : this.doTimelineSelectedListeners)
+//		{
+//			doTimelineSelectedListener.timelineSelected(timelineGeneratorModel);
+//		};
+//	}
+//
+//	/**
+//	 * @param doTimelineSelectedListener 
+//	 * 			to add to {@link #doTimelineSelectedListeners}.
+//	 */
+//	public void addDoTimelineSelectedListeners(DoTimelineSelectedListenerInterface doTimelineSelectedListener)
+//	{
+//		this.doTimelineSelectedListeners.add(doTimelineSelectedListener);
+//	}
 
 	/**
 	 * Notify the {@link #doChangeTimelinesPositionListeners}.

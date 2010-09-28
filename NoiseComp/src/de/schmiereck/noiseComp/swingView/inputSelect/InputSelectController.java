@@ -11,7 +11,6 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 
@@ -59,12 +58,12 @@ public class InputSelectController
 		//------------------------------------------------------------------------------------------
 		// Selected Timeline changed -> update Input-Select-Model:
 		
-		timelinesDrawPanelModel.addSelectedTimelineChangedListener
+		timelinesDrawPanelModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
-		 	new SelectedTimelineChangedListenerInterface()
+		 	new ModelPropertyChangedListener()
 		 	{
 				@Override
-				public void selectedTimelineChanged()
+				public void notifyModelPropertyChanged()
 				{
 					Iterator<InputData> inputsIterator;
 					

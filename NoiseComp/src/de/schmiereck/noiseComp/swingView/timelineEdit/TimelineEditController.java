@@ -9,9 +9,9 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 
@@ -67,12 +67,13 @@ public class TimelineEditController
 		//------------------------------------------------------------------------------------------
 		// Selected Timeline changed: Update Timeline-Edit Model:
 		
-		this.timelinesDrawPanelModel.addSelectedTimelineChangedListener
+		//------------------------------------------------------------------------------------------
+		this.timelinesDrawPanelModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
-		 	new SelectedTimelineChangedListenerInterface()
+		 	new ModelPropertyChangedListener()
 		 	{
 				@Override
-				public void selectedTimelineChanged()
+				public void notifyModelPropertyChanged()
 				{
 					List<GeneratorTypeSelectItem> generatorTypeSelectItems;
 					GeneratorTypeData generatorTypeData;
