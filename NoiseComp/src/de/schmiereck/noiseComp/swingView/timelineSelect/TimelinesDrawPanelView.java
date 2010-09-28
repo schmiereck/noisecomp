@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -28,6 +29,8 @@ import javax.swing.SwingConstants;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
+import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 
 /**
@@ -52,9 +55,9 @@ implements Scrollable//, MouseMotionListener
 	/**
 	 * Timeline Draw Panel Model.
 	 */
-	private TimelinesDrawPanelModel timelinesDrawPanelModel;
+	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
-	private AffineTransform at = AffineTransform.getScaleInstance(20.0D, 1.0D);
+	private final AffineTransform at = AffineTransform.getScaleInstance(40.0D, 1.0D);
 	
 	//----------------------------------------------------------------------------------------------
 // 	private boolean isMousePressed = false;
@@ -385,28 +388,81 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private void paintTimeline(Graphics2D g2, int timelineGeneratorPos, TimelineGeneratorModel timelineGeneratorModel)
 	{
+		//==========================================================================================
 		if (timelinesDrawPanelModel.getSelectedTimelineGeneratorModel() == timelineGeneratorModel)
 		{
 			g2.setPaint(Color.GREEN);
 		}
 		else
 		{
-			g2.setPaint(Color.BLACK);
+			g2.setPaint(Color.WHITE);
 		}
 		
-		int maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+		float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
 		
 		float startTimePos = timelineGeneratorModel.getStartTimePos();
 		float endTimePos = timelineGeneratorModel.getEndTimePos();
+		float generatorPosY = timelineGeneratorPos * maxUnitIncrementY;
 		
 		float timeLength = endTimePos - startTimePos;
 		
-		Rectangle2D.Float rectangle = new Rectangle2D.Float(startTimePos,
-		                                                    timelineGeneratorPos * maxUnitIncrementY,
-		                                                    timeLength,
-		                                                    maxUnitIncrementY);
+		Rectangle2D rectangle = new Rectangle2D.Float(startTimePos,
+		                                              generatorPosY,
+		                                              timeLength,
+		                                              maxUnitIncrementY);
 		
 		g2.fill(this.at.createTransformedShape(rectangle));
+		
+		//------------------------------------------------------------------------------------------
+		// Display signal shapes:
+		
+		g2.setPaint(Color.BLACK);
+		g2.setColor(Color.BLACK);
+		
+		Generator generator = timelineGeneratorModel.getGenerator();
+		
+		ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
+		
+		float frameRate = generator.getSoundFrameRate();
+		float frameStep = timeLength / (frameRate / 1.0F);
+
+		float pointSizeX = (float)(1.0F / at.getScaleX());
+		float pointSizeY = (float)(1.0F / at.getScaleY());
+		
+//		Rectangle2D point = new Rectangle2D.Float();
+		Point2D srcPoint = new Point2D.Float();
+		Point2D dstPoint = new Point2D.Float();
+		
+		for (float timePos = 0.0F; timePos < timeLength; timePos += frameStep)
+		{
+			long sampleFrame = (long)((startTimePos + timePos) * frameRate);
+			
+			SoundSample soundSample = generator.generateFrameSample(sampleFrame, parentModulGenerator);
+			
+			if (soundSample != null)
+			{
+				float posX = (startTimePos + timePos); 
+				float posY = (generatorPosY + 
+							  (soundSample.getMonoValue() * maxUnitIncrementY * 0.5F) + 
+							  (maxUnitIncrementY / 2.0F)); 
+				
+//				point.setRect(posX, posY,
+//				              pointSizeX, pointSizeY);
+				srcPoint.setLocation(pointSizeX, pointSizeY);
+				
+//				Shape shape = this.at.createTransformedShape(point);
+				srcPoint.setLocation(posX, posY);
+				this.at.transform(srcPoint, dstPoint);
+				
+				Only draw line if x and y changed after last draw
+				
+//				g2.fill(shape);
+				g2.drawLine((int)dstPoint.getX(), (int)dstPoint.getY(), 
+				            (int)dstPoint.getX(), (int)dstPoint.getY());
+			}
+		}
+		
+		//==========================================================================================
 	}
 	
 	/* (non-Javadoc)

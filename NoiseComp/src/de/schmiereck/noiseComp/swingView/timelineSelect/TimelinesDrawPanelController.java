@@ -86,8 +86,12 @@ public class TimelinesDrawPanelController
 				public void changeTimelinesPosition(TimelineGeneratorModel selectedTimelineGeneratorModel,
 													TimelineGeneratorModel newTimelineGeneratorModel)
 				{
-					doChangeTimelinesPosition(selectedTimelineGeneratorModel,
-					                          newTimelineGeneratorModel);
+					if ((selectedTimelineGeneratorModel != null) &&
+						(newTimelineGeneratorModel != null))
+					{
+						doChangeTimelinesPosition(selectedTimelineGeneratorModel,
+						                          newTimelineGeneratorModel);
+					}
 				}
 	     	}
 	    );

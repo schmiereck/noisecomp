@@ -127,7 +127,7 @@ public class SoundSample
 	 */
 	public float getMonoValue()
 	{
-		return (this.leftValue + this.rightValue) / 2;
+		return (this.leftValue + this.rightValue) / 2.0F;
 	}
 
 	/**

@@ -127,7 +127,7 @@ extends ListWidgetGraphic
 						{	
 							//g.setColor(Color.LIGHT_GRAY);
 							//screenGrafic.drawAbsLine(g, lastX, lastY, samplePosX, samplePosY);
-							g.setColor(desktopColors.getSampleColor());
+//							g.setColor(desktopColors.getSampleColor());
 							screenGrafic.drawPoint(g, lastX, lastY, 1);
 						}
 						lastX = samplePosX;
