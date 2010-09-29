@@ -41,13 +41,11 @@ import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
-import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeTabelModel;
 import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesController;
 import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
@@ -243,6 +241,25 @@ public class AppController
 				}
 		 	}
 		);
+
+		this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getZoomXChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+					
+					float zoomX = timelinesDrawPanelModel.getZoomX();
+					
+					timelinesTimeRuleController.doChangeZoomX(zoomX);
+				}
+		 	}
+		);
+		
+		timelinesTimeRuleController.doChangeZoomX(this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getZoomX());
+		
 		//------------------------------------------------------------------------------------------
 		final InputSelectController inputSelectController = 
 			new InputSelectController(this,
@@ -388,28 +405,11 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					ModulInputTypeSelectModel modulInputTypeSelectModel = modulInputTypeSelectController.getInputTypeSelectModel();
-					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					doCreateNew(modulInputTypeSelectModel);
+					modulInputTypeSelectController.doCreateNew();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			 	}
-
-				/**
-				 * @param inputSelectModel
-				 * 			is the Modul-Input-Type Select Model. 
-				 */
-				private void doCreateNew(ModulInputTypeSelectModel modulInputTypeSelectModel)
-				{
-					ModulInputTypeTabelModel tabelModel = modulInputTypeSelectModel.getModulInputTypeTabelModel();
-					
-					ModulInputTypeSelectEntryModel selectEntryModel = new ModulInputTypeSelectEntryModel(null);
-					
-					int rowNo = tabelModel.addInputData(selectEntryModel);
-					
-					modulInputTypeSelectModel.setSelectedRowNo(rowNo);
-				}
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
@@ -561,25 +561,7 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					// Update Timeline-Select-Model:
-					
-					int timelinePos = timelinesDrawPanelModel.getTimelineGeneratorModels().size();
-					
-					TimelineGeneratorModel timelineGeneratorModel = 
-						new TimelineGeneratorModel(null,
-						                           timelinePos,
-						                           "(new)",
-						                           0.0F,
-						                           1.0F);
-					
-					timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
-					
-					timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					timelinesDrawPanelController.doCreateNew();
 				}
 		 	}
 		);	
@@ -657,7 +639,6 @@ public class AppController
 				{
 					inputSelectController.doRemoveSelectedEntry();
 			 	}
-
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
@@ -670,28 +651,11 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
-					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					doCreateNewInput(inputSelectModel);
+					inputSelectController.doCreateNewInput();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			 	}
-
-				/**
-				 * @param inputSelectModel
-				 * 			is the Input-Select Model. 
-				 */
-				private void doCreateNewInput(InputSelectModel inputSelectModel)
-				{
-					InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
-					
-					InputSelectEntryModel inputSelectEntryModel = new InputSelectEntryModel(null);
-					
-					int rowNo = inputsTabelModel.addInputData(inputSelectEntryModel);
-					
-					inputSelectModel.setSelectedRowNo(rowNo);
-				}
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
@@ -709,8 +673,6 @@ public class AppController
 						
 					inputSelectController.doInputUpdated();
 					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					// Update Timeline-Select: See below.
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
@@ -731,7 +693,7 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					playSound();
+					doPlaySound();
 				}
 		 	}
 		);
@@ -743,7 +705,7 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					pauseSound();
+					doPauseSound();
 				}
 		 	}
 		);
@@ -755,7 +717,31 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					stopSound();
+					doStopSound();
+				}
+		 	}
+		);
+	    //------------------------------------------------------------------------------------------
+		this.appView.getZoomInButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					timelinesDrawPanelController.doTimelinesZoomIn();
+				}
+		 	}
+		);
+	    //------------------------------------------------------------------------------------------
+		this.appView.getZoomOutButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					timelinesDrawPanelController.doTimelinesZoomOut();
 				}
 		 	}
 		);
@@ -864,7 +850,7 @@ public class AppController
 		return this.appView;
 	}
 
-	public void playSound()
+	public void doPlaySound()
 	{
 		if (this.soundSchedulerLogic == null)
 		{
@@ -882,7 +868,7 @@ public class AppController
 		}
 	}
 
-	public void stopSound()
+	public void doStopSound()
 	{
 		if (this.soundSchedulerLogic != null)
 		{
@@ -894,7 +880,7 @@ public class AppController
 		}
 	}
 
-	public void pauseSound()
+	public void doPauseSound()
 	{
 		if (this.soundSchedulerLogic != null)
 		{

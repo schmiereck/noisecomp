@@ -65,6 +65,17 @@ public class TimelinesDrawPanelModel
 	 */
 	private final ModelPropertyChangedNotifier changeTimelinesPositionChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	//----------------------------------------------------------------------------------------------
+	/**
+	 * Zoom Size X.
+	 */
+	private float zoomX;
+
+	/**
+	 * {@link #zoomX} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier zoomXChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	//**********************************************************************************************
 	// Functions:
 	
@@ -241,5 +252,35 @@ public class TimelinesDrawPanelModel
 	public ModelPropertyChangedNotifier getChangeTimelinesPositionChangedNotifier()
 	{
 		return this.changeTimelinesPositionChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #zoomX}.
+	 */
+	public float getZoomX()
+	{
+		return this.zoomX;
+	}
+
+	/**
+	 * @param zoomX 
+	 * 			to set {@link #zoomX}.
+	 */
+	public void setZoomX(float zoomX)
+	{
+		this.zoomX = zoomX;
+		
+		// Notify listeners.
+		this.zoomXChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #zoomXChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getZoomXChangedNotifier()
+	{
+		return this.zoomXChangedNotifier;
 	}
 }

@@ -248,4 +248,19 @@ public class ModulInputTypeSelectController
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 	}
+
+	/**
+	 */
+	public void doCreateNew()
+	{
+		ModulInputTypeSelectModel modulInputTypeSelectModel = this.getInputTypeSelectModel();
+		
+		ModulInputTypeTabelModel tabelModel = modulInputTypeSelectModel.getModulInputTypeTabelModel();
+		
+		ModulInputTypeSelectEntryModel selectEntryModel = new ModulInputTypeSelectEntryModel(null);
+		
+		int rowNo = tabelModel.addInputData(selectEntryModel);
+		
+		modulInputTypeSelectModel.setSelectedRowNo(rowNo);
+	}
 }

@@ -69,4 +69,14 @@ public class TimelinesTimeRuleController
 		this.timelinesTimeRuleView.repaint();
 	}
 
+	/**
+	 * 
+	 */
+	public void doChangeZoomX(float zoomX)
+	{
+		this.timelinesTimeRuleModel.setUnits((int)zoomX);
+		
+		this.timelinesTimeRuleView.repaint();
+	}
+
 }

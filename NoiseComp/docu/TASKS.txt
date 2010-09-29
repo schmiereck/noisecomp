@@ -14,7 +14,6 @@ TODO:
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
 #21:	IMPROVEMENT: View Sound-Buffer Status in timeline-select-view (maybe in ruler?).
 #22:	BUG: Make sure that only one module have IsMainModulGeneratorType Flag.
-#24:	IMPROVEMENT: Implements Timeline-Select Zoom function.
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
 #27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
@@ -28,7 +27,8 @@ TODO:
 			at de.schmiereck.noiseComp.swingView.appController.AppController$9.actionPerformed(AppController.java:423)
 #46:	IMPROVEMENT: Draw horizontal seperator lines between timenes in TimelinesDrawPanel.
 #47:	IMPROVEMENT: Implement Sample-Buffers and a input change notification system.
-#48:	
+#48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
+#49:	
 
 WORK:
 =====
@@ -59,3 +59,4 @@ DONE:
 		-> DD is working.
 		-> TimelinesGeneratorsRule is now updated (repaints are triggered by model-listeners).
 #14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
+#24:	IMPROVEMENT: Implements Timeline-Select Zoom function.

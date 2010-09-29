@@ -202,4 +202,17 @@ public class InputSelectController
 		}
 	}
 
+	/**
+	 */
+	public void doCreateNewInput()
+	{
+		InputsTabelModel inputsTabelModel = this.inputSelectModel.getInputsTabelModel();
+		
+		InputSelectEntryModel inputSelectEntryModel = new InputSelectEntryModel(null);
+		
+		int rowNo = inputsTabelModel.addInputData(inputSelectEntryModel);
+		
+		this.inputSelectModel.setSelectedRowNo(rowNo);
+	}
+
 }

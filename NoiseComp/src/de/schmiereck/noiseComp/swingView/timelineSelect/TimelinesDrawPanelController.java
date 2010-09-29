@@ -236,4 +236,55 @@ public class TimelinesDrawPanelController
 		
 		//==========================================================================================
 	}
+
+	/**
+	 * 
+	 */
+	public void doCreateNew()
+	{
+		//==========================================================================================
+		TimelinesDrawPanelModel timelinesDrawPanelModel = this.getTimelinesDrawPanelModel();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Update Timeline-Select-Model:
+		
+		int timelinePos = timelinesDrawPanelModel.getTimelineGeneratorModels().size();
+		
+		TimelineGeneratorModel timelineGeneratorModel = 
+			new TimelineGeneratorModel(null,
+			                           timelinePos,
+			                           "(new)",
+			                           0.0F,
+			                           1.0F);
+		
+		this.addTimelineGeneratorModel(timelineGeneratorModel);
+		
+		timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
+		
+		//==========================================================================================
+	}
+
+	public void doTimelinesZoomIn()
+	{
+		//==========================================================================================
+		float zoomX = this.timelinesDrawPanelModel.getZoomX();
+		
+		zoomX *= 1.5F;
+		
+		this.timelinesDrawPanelModel.setZoomX(zoomX);
+
+		//==========================================================================================
+	}
+
+	public void doTimelinesZoomOut()
+	{
+		//==========================================================================================
+		float zoomX = this.timelinesDrawPanelModel.getZoomX();
+		
+		zoomX /= 1.5F;
+		
+		this.timelinesDrawPanelModel.setZoomX(zoomX);
+
+		//==========================================================================================
+	}
 }

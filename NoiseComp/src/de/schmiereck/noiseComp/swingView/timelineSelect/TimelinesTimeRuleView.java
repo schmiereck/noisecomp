@@ -25,7 +25,7 @@ extends JComponent
 	//**********************************************************************************************
 	// Constats:
 
-	public static final int	DPI		= 20;//Toolkit.getDefaultToolkit().getScreenResolution();
+//	public static final int	DPI		= 20;//Toolkit.getDefaultToolkit().getScreenResolution();
 	public static final int	SIZE	= 35;
 
 	/**
@@ -41,9 +41,6 @@ extends JComponent
 	 */
 	@SuppressWarnings("unused")
 	private final TimelinesTimeRuleModel timelinesTimeRuleModel;
-	
-	private int				increment;
-	private int				units;
 
 	//**********************************************************************************************
 	// Functions:
@@ -56,7 +53,7 @@ extends JComponent
 	{
 		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
 		
-		this.setIncrementAndUnits();
+//		this.setIncrementAndUnits();
 	}
 
 //	public void setIsMetric(boolean isMetric)
@@ -66,16 +63,16 @@ extends JComponent
 //		this.repaint();
 //	}
 
-	private void setIncrementAndUnits()
-	{
-		this.units = DPI;
-		this.increment = DPI / 2;
-	}
-
-	public int getIncrement()
-	{
-		return this.increment;
-	}
+//	private void setIncrementAndUnits()
+//	{
+//		this.units = DPI;
+//		this.increment = DPI / 2;
+//	}
+//
+//	public int getIncrement()
+//	{
+//		return this.increment;
+//	}
 
 	public void setPreferredHeight(int ph)
 	{
@@ -87,8 +84,14 @@ extends JComponent
 		setPreferredSize(new Dimension(pw, SIZE));
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	protected void paintComponent(Graphics g)
 	{
+		int units = this.timelinesTimeRuleModel.getUnits();
+		int increment = this.timelinesTimeRuleModel.getIncrement();
+		
 		Rectangle drawHere = g.getClipBounds();
 		
 		// Fill clipping area with dirty brown/orange.
@@ -100,20 +103,20 @@ extends JComponent
 		g.setColor(Color.BLACK);
 
 		// Use clipping bounds to calculate first and last tick locations.
-		int start = ((drawHere.x / this.increment) * this.increment);
-		int end = ((((drawHere.x + drawHere.width) / this.increment) + 1) * this.increment);
+		int start = ((drawHere.x / increment) * increment);
+		int end = ((((drawHere.x + drawHere.width) / increment) + 1) * increment);
 
 		// ticks and labels
-		for (int tickPos = start; tickPos < end; tickPos += this.increment)
+		for (int tickPos = start; tickPos < end; tickPos += increment)
 		{
 			int tickLength;
 			String text;
 			int textPosX;
 			
-			if (tickPos % this.units == 0)
+			if (tickPos % units == 0)
 			{
 				tickLength = 10;
-				text = Integer.toString((int)(tickPos / this.units));
+				text = Integer.toString((int)(tickPos / units));
 				
 				if (tickPos == 0)
 				{

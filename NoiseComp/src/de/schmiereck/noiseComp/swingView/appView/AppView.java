@@ -134,6 +134,10 @@ extends JFrame
 	private JButton	pauseButton;
 
 	private JButton	stopButton;
+
+	private JButton	zoomInButton;
+
+	private JButton	zoomOutButton;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -186,6 +190,7 @@ extends JFrame
 		}
 		//------------------------------------------------------------------------------------------
 		// Tool-Bar Panel:
+		// http://download.oracle.com/javase/tutorial/uiswing/components/toolbar.html
 		
 		JPanel toolBarPanel = new JPanel();
 		
@@ -195,24 +200,31 @@ extends JFrame
 		
 		//------------------------------------------------------------------------------------------
 		// File Tool-Bar:
-
-		this.fileToolBarView = new JToolBar("File");
+		{
+			this.fileToolBarView = new JToolBar("File");
+				
+			this.buildFileToolBar(this.fileToolBarView);
 			
-		this.buildFileToolBar(this.fileToolBarView);
-		
-//		this.add(this.toolBarView);
-//		this.getContentPane().add(this.fileToolBarView, BorderLayout.NORTH);
-		toolBarPanel.add(this.fileToolBarView, BorderLayout.PAGE_START);
-
+//			this.add(this.toolBarView);
+//			this.getContentPane().add(this.fileToolBarView, BorderLayout.NORTH);
+			toolBarPanel.add(this.fileToolBarView, BorderLayout.PAGE_START);
+		}
 		//------------------------------------------------------------------------------------------
-		// http://download.oracle.com/javase/tutorial/uiswing/components/toolbar.html
-		
-		JToolBar playToolBar = new JToolBar("Play");
-        
-		this.buildPlayToolBar(playToolBar);
-	    
-		toolBarPanel.add(playToolBar, BorderLayout.PAGE_START);
-
+		{
+			JToolBar playToolBar = new JToolBar("Play");
+	        
+			this.buildPlayToolBar(playToolBar);
+		    
+			toolBarPanel.add(playToolBar, BorderLayout.PAGE_START);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			JToolBar zoomToolBar = new JToolBar("Zoom");
+	        
+			this.buildZoomToolBar(zoomToolBar);
+		    
+			toolBarPanel.add(zoomToolBar, BorderLayout.PAGE_START);
+		}
 		//------------------------------------------------------------------------------------------
 		// Modul Select Panel:
 		
@@ -396,6 +408,36 @@ extends JFrame
 		//==========================================================================================
 	}
 	
+
+	/**
+	 * @param toolBar
+	 * 			is the zoom Tool-bar.
+	 */
+	private final void buildZoomToolBar(JToolBar toolBar)
+	{
+		//==========================================================================================
+		// Zoom-In-Button:
+		{
+			this.zoomInButton = 
+				this.makeNavigationButton("zoomInIcon", 
+				                          "Timelines zoom in.",
+				                          "+");
+			
+		    toolBar.add(this.zoomInButton);
+		}
+		//------------------------------------------------------------------------------------------
+		// Zoom-Out-Button:
+		{
+			this.zoomOutButton = 
+				this.makeNavigationButton("zoomOutIcon", 
+				                          "Timelines zoom out.",
+				                          "-");
+			
+		    toolBar.add(this.zoomOutButton);
+		}
+		//==========================================================================================
+	}
+	
 	private JButton makeNavigationButton(String imageName,
 	                                     //String actionCommand,
 	                                     String toolTipText,
@@ -429,16 +471,28 @@ extends JFrame
 	    return button;
 	}
 
+	/**
+	 * @return 
+	 * 			returns the {@link #playButton}.
+	 */
 	public JButton getPlayButton()
 	{
 		return this.playButton;
 	}
 
+	/**
+	 * @return 
+	 * 			returns the {@link #pauseButton}.
+	 */
 	public JButton getPauseButton()
 	{
 		return this.pauseButton;
 	}
 
+	/**
+	 * @return 
+	 * 			returns the {@link #stopButton}.
+	 */
 	public JButton getStopButton()
 	{
 		return this.stopButton;
@@ -698,6 +752,24 @@ extends JFrame
 	public JButton getExitButtonView()
 	{
 		return this.exitButtonView;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #zoomInButton}.
+	 */
+	public JButton getZoomInButton()
+	{
+		return this.zoomInButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #zoomOutButton}.
+	 */
+	public JButton getZoomOutButton()
+	{
+		return this.zoomOutButton;
 	}
 
 }

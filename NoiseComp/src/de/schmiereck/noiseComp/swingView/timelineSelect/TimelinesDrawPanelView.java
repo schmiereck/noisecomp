@@ -47,6 +47,14 @@ extends JPanel
 implements Scrollable//, MouseMotionListener
 {
 	//**********************************************************************************************
+	// Constants:
+	
+	/**
+	 * Zoom factor Y.
+	 */
+	private static final double	ZOOM_Y	= 1.0D;
+
+	//**********************************************************************************************
 	// Fields:
 	
 	private Dimension dimension;
@@ -56,7 +64,7 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
-	private final AffineTransform at = AffineTransform.getScaleInstance(40.0D, 1.0D);
+	private final AffineTransform at = AffineTransform.getScaleInstance(40.0D, ZOOM_Y);
 	
 	//----------------------------------------------------------------------------------------------
 // 	private boolean isMousePressed = false;
@@ -211,6 +219,27 @@ implements Scrollable//, MouseMotionListener
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		this.timelinesDrawPanelModel.getZoomXChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					float zoomX = timelinesDrawPanelModel.getZoomX();
+					
+					at.setToScale(zoomX, ZOOM_Y);
+					
+					repaint();
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		float zoomX = (float)this.at.getScaleX();
+		
+		this.timelinesDrawPanelModel.setZoomX(zoomX);
+		
 		//==========================================================================================
 	}
 

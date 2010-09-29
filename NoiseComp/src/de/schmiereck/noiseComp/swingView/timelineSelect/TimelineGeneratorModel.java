@@ -110,6 +110,7 @@ public class TimelineGeneratorModel
 	{
 		this.startTimePos = startTimePos;
 		
+		// Notify listeners.
 		this.startTimePosChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
@@ -130,6 +131,7 @@ public class TimelineGeneratorModel
 	{
 		this.endTimePos = endTimePos;
 		
+		// Notify listeners.
 		this.endTimePosChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 

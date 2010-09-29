@@ -37,6 +37,15 @@ public class TimelinesTimeRuleModel
 	 */
 	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	//----------------------------------------------------------------------------------------------
+	private int				units = 1;
+	private int				increment = 1;
+
+	/**
+	 * {@link #units} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier unitsChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -85,5 +94,44 @@ public class TimelinesTimeRuleModel
 		
 		// Notify listeners.
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #units}.
+	 */
+	public int getUnits()
+	{
+		return this.units;
+	}
+
+	/**
+	 * @param units 
+	 * 			to set {@link #units}.
+	 */
+	public void setUnits(int units)
+	{
+		this.units = units;
+		this.increment = this.units / 2;
+		
+		this.unitsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #unitsChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getUnitsChangedNotifier()
+	{
+		return this.unitsChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #increment}.
+	 */
+	public int getIncrement()
+	{
+		return this.increment;
 	}
 }
