@@ -474,7 +474,7 @@ implements Scrollable//, MouseMotionListener
 			{
 				float posX = (startTimePos + timePos); 
 				float posY = (generatorPosY + 
-							  (soundSample.getMonoValue() * maxUnitIncrementY * 0.5F) + 
+							  (soundSample.getMonoValue() * maxUnitIncrementY * -0.5F) + 
 							  (maxUnitIncrementY / 2.0F)); 
 				
 //				point.setRect(posX, posY,

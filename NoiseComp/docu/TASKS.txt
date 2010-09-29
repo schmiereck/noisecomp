@@ -28,10 +28,11 @@ TODO:
 #46:	IMPROVEMENT: Draw horizontal seperator lines between timenes in TimelinesDrawPanel.
 #47:	IMPROVEMENT: Implement Sample-Buffers and a input change notification system.
 #48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
-#49:	
+#50:	
 
 WORK:
 =====
+#49:	IMPROVEMENT: Add Noise-generator.
 
 DONE:
 =====

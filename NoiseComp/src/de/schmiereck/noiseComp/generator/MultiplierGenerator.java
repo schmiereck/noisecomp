@@ -94,7 +94,7 @@ extends Generator
 							}
 							default:
 							{
-								throw new RuntimeException("unknown input type " + inputData.getInputTypeData());
+								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
 							}
 						}
 					}
@@ -107,7 +107,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MixerGenerator.class, "Multiplier", "Multiply multiple signal input lines and multiply them with a multiplier.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MultiplierGenerator.class, "Multiplier", "Multiply multiple signal input lines and multiply them with a multiplier.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MULTIPLIER, "multiplier", -1, -1, "The volume of the output singal between 0 and 1 (average is calculated if more then one volume is connected).");

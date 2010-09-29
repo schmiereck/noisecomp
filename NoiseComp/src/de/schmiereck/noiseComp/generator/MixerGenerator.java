@@ -213,7 +213,7 @@ extends Generator
 							}
 							default:
 							{
-								throw new RuntimeException("unknown input type " + inputData.getInputTypeData());
+								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
 							}
 						}
 					}
