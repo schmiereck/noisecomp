@@ -10,7 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -424,7 +423,7 @@ implements Scrollable//, MouseMotionListener
 		ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
 		
 		float frameRate = generator.getSoundFrameRate();
-		float frameStep = timeLength / (frameRate / 1.0F);
+		float frameStep = timeLength / (frameRate / 50.0F);
 
 		float pointSizeX = (float)(1.0F / at.getScaleX());
 		float pointSizeY = (float)(1.0F / at.getScaleY());
@@ -432,6 +431,9 @@ implements Scrollable//, MouseMotionListener
 //		Rectangle2D point = new Rectangle2D.Float();
 		Point2D srcPoint = new Point2D.Float();
 		Point2D dstPoint = new Point2D.Float();
+		
+		int lastX = 0;
+		int lastY = 0;
 		
 		for (float timePos = 0.0F; timePos < timeLength; timePos += frameStep)
 		{
@@ -454,11 +456,23 @@ implements Scrollable//, MouseMotionListener
 				srcPoint.setLocation(posX, posY);
 				this.at.transform(srcPoint, dstPoint);
 				
-				Only draw line if x and y changed after last draw
+				int x = (int)dstPoint.getX();
+				int y = (int)dstPoint.getY();
 				
-//				g2.fill(shape);
-				g2.drawLine((int)dstPoint.getX(), (int)dstPoint.getY(), 
-				            (int)dstPoint.getX(), (int)dstPoint.getY());
+				// x or y changed after last draw?
+				if (((x != lastX) ||
+					 (y != lastY)) &&
+					(timePos > 0.0F))
+				{
+					// Draw line.
+					
+//					g2.fill(shape);
+					g2.drawLine(lastX, lastY, 
+					            x, y);
+				}
+				
+				lastX = x;
+				lastY = y;
 			}
 		}
 		

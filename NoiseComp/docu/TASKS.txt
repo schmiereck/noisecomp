@@ -26,11 +26,12 @@ TODO:
 		Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
 			at de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController.doUpdate(ModulInputTypeEditController.java:133)
 			at de.schmiereck.noiseComp.swingView.appController.AppController$9.actionPerformed(AppController.java:423)
-#46:	IMPROVEMENT: Draw horizontal seperator lines between timenes in .TimelinesDrawPanel.
+#46:	IMPROVEMENT: Draw horizontal seperator lines between timenes in TimelinesDrawPanel.
+#47:	IMPROVEMENT: Implement Sample-Buffers and a input change notification system.
+#48:	
 
 WORK:
 =====
-#14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
 
 DONE:
 =====
@@ -57,3 +58,4 @@ DONE:
 #15:	IMPROVEMENT: Implements drag and drop order change in timeline draw pane.
 		-> DD is working.
 		-> TimelinesGeneratorsRule is now updated (repaints are triggered by model-listeners).
+#14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
