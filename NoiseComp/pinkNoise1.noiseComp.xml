@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <noise>
-	<version>1.0.0</version>
+	<version>2.0</version>
 	<generatorTypes>
 		<generatorType>
 			<generatorTypeClassName>
@@ -475,408 +475,161 @@
 				de.schmiereck.noiseComp.generator.ModulGeneratorTypeData
 			</generatorTypeClassName>
 			<generatorClassName>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
+				de.schmiereck.noiseComp.generator.ModulGenerator#Main-Modul
 			</generatorClassName>
-			<name>tone</name>
-			<description>Generic Modul.</description>
-			<inputTypes>
-				<inputType>
-					<name>freq</name>
-					<type>1</type>
-					<countMin>1</countMin>
-					<countMax>1</countMax>
-					<defaultValue>60.0</defaultValue>
-					<description>frequency</description>
-				</inputType>
-			</inputTypes>
+			<name>Main-Modul</name>
+			<description>
+				Manages a Group of other generators.
+			</description>
+			<isMain>true</isMain>
+			<inputTypes />
 			<generators>
+				<generator>
+					<type>
+						de.schmiereck.noiseComp.generator.FaderGenerator
+					</type>
+					<name>afade</name>
+					<startTime>0.0</startTime>
+					<endTime>2.5</endTime>
+					<inputs>
+						<input>
+							<type>1</type>
+							<value>-0.99</value>
+							<stringValue>-0.99</stringValue>
+						</input>
+						<input>
+							<type>2</type>
+							<value>0.9</value>
+							<stringValue>.9</stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type>
+						de.schmiereck.noiseComp.generator.FaderGenerator
+					</type>
+					<name>afader2</name>
+					<startTime>2.5</startTime>
+					<endTime>5.0</endTime>
+					<inputs>
+						<input>
+							<type>1</type>
+							<value>0.9</value>
+							<stringValue>.9</stringValue>
+						</input>
+						<input>
+							<type>2</type>
+							<value>-0.9</value>
+							<stringValue>-0.9</stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type>
+						de.schmiereck.noiseComp.generator.PinkNoise2Generator
+					</type>
+					<name>pink</name>
+					<startTime>0.0</startTime>
+					<endTime>5.0</endTime>
+					<inputs>
+						<input>
+							<type>2</type>
+							<value>0.02</value>
+							<stringValue>.02</stringValue>
+						</input>
+						<input>
+							<generatorName>afade</generatorName>
+							<type>3</type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName>afader2</generatorName>
+							<type>3</type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type>
+						de.schmiereck.noiseComp.generator.SinusGenerator
+					</type>
+					<name>sinus3</name>
+					<startTime>0.0</startTime>
+					<endTime>5.0</endTime>
+					<inputs>
+						<input>
+							<type>1</type>
+							<value>70.0</value>
+							<stringValue />
+						</input>
+						<input>
+							<type>2</type>
+							<value>0.5</value>
+							<stringValue>.5</stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type>
+						de.schmiereck.noiseComp.generator.MixerGenerator
+					</type>
+					<name>mixer</name>
+					<startTime>0.0</startTime>
+					<endTime>5.0</endTime>
+					<inputs>
+						<input>
+							<generatorName>sinus3</generatorName>
+							<type>2</type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName>pink</generatorName>
+							<type>2</type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
 				<generator>
 					<type>
 						de.schmiereck.noiseComp.generator.OutputGenerator
 					</type>
-					<name>out</name>
+					<name>output</name>
 					<startTime>0.0</startTime>
-					<endTime>2.0</endTime>
+					<endTime>5.0</endTime>
 					<inputs>
 						<input>
-							<generatorName>mixer1</generatorName>
+							<generatorName>mixer</generatorName>
 							<type>1</type>
 							<value />
-						</input>
-					</inputs>
-				</generator>
-				<generator>
-					<type>
-						de.schmiereck.noiseComp.generator.MixerGenerator
-					</type>
-					<name>mixer1</name>
-					<startTime>0.0</startTime>
-					<endTime>2.0</endTime>
-					<inputs>
-						<input>
-							<generatorName>fadeIn</generatorName>
-							<type>1</type>
-							<value />
-						</input>
-						<input>
-							<generatorName>fadeOut</generatorName>
-							<type>1</type>
-							<value />
-						</input>
-						<input>
-							<generatorName>tone1</generatorName>
-							<type>2</type>
-							<value />
-						</input>
-						<input>
-							<generatorName>tone2</generatorName>
-							<type>2</type>
-							<value />
-						</input>
-					</inputs>
-				</generator>
-				<generator>
-					<type>
-						de.schmiereck.noiseComp.generator.FaderGenerator
-					</type>
-					<name>fadeIn</name>
-					<startTime>0.0</startTime>
-					<endTime>0.5</endTime>
-					<inputs>
-						<input>
-							<type>1</type>
-							<value />
-						</input>
-						<input>
-							<type>2</type>
-							<value>1.0</value>
-						</input>
-					</inputs>
-				</generator>
-				<generator>
-					<type>
-						de.schmiereck.noiseComp.generator.FaderGenerator
-					</type>
-					<name>fadeOut</name>
-					<startTime>0.5</startTime>
-					<endTime>2.0</endTime>
-					<inputs>
-						<input>
-							<type>1</type>
-							<value>1.0</value>
-						</input>
-						<input>
-							<type>2</type>
-							<value />
-						</input>
-					</inputs>
-				</generator>
-				<generator>
-					<type>
-						de.schmiereck.noiseComp.generator.SinusGenerator
-					</type>
-					<name>tone1</name>
-					<startTime>0.0</startTime>
-					<endTime>2.0</endTime>
-					<inputs>
-						<input>
-							<type>1</type>
-							<value />
-							<inputModulInputType>1</inputModulInputType>
-						</input>
-						<input>
-							<type>2</type>
-							<value>0.5</value>
-						</input>
-						<input>
-							<type>3</type>
-							<value>0.0</value>
-						</input>
-					</inputs>
-				</generator>
-				<generator>
-					<type>
-						de.schmiereck.noiseComp.generator.SinusGenerator
-					</type>
-					<name>tone2</name>
-					<startTime>0.0</startTime>
-					<endTime>2.0</endTime>
-					<inputs>
-						<input>
-							<generatorName>multFreq</generatorName>
-							<type>1</type>
-							<value />
-						</input>
-						<input>
-							<type>2</type>
-							<value>0.5</value>
-						</input>
-						<input>
-							<type>3</type>
-							<value>0.0</value>
-						</input>
-					</inputs>
-				</generator>
-				<generator>
-					<type>
-						de.schmiereck.noiseComp.generator.MixerGenerator
-					</type>
-					<name>multFreq</name>
-					<startTime>0.0</startTime>
-					<endTime>2.0</endTime>
-					<inputs>
-						<input>
-							<type>2</type>
-							<value>1.0</value>
-						</input>
-						<input>
-							<type>1</type>
-							<value />
-							<inputModulInputType>1</inputModulInputType>
+							<stringValue />
 						</input>
 					</inputs>
 				</generator>
 			</generators>
+			<tracks>
+				<track>
+					<generatorName>afade</generatorName>
+				</track>
+				<track>
+					<generatorName>afader2</generatorName>
+				</track>
+				<track>
+					<generatorName>pink</generatorName>
+				</track>
+				<track>
+					<generatorName>sinus3</generatorName>
+				</track>
+				<track>
+					<generatorName>mixer</generatorName>
+				</track>
+				<track>
+					<generatorName>output</generatorName>
+				</track>
+			</tracks>
 		</generatorType>
 	</generatorTypes>
-	<generators>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.OutputGenerator
-			</type>
-			<name>out</name>
-			<startTime>0.0</startTime>
-			<endTime>16.0</endTime>
-			<inputs>
-				<input>
-					<generatorName>mix1</generatorName>
-					<type>1</type>
-					<value />
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.MixerGenerator
-			</type>
-			<name>mix1</name>
-			<startTime>0.0</startTime>
-			<endTime>16.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>0.5</value>
-				</input>
-				<input>
-					<generatorName>generator2-c</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator3-d</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator4-e</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator5-f</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator6-g</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator7-g</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator8-a</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator9-a</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator10-a</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator11-a</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-				<input>
-					<generatorName>generator12-g</generatorName>
-					<type>2</type>
-					<value />
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator2-c</name>
-			<startTime>0.0</startTime>
-			<endTime>2.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>262.0</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator3-d</name>
-			<startTime>1.0</startTime>
-			<endTime>3.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>294.1</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator4-e</name>
-			<startTime>2.0</startTime>
-			<endTime>4.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>330.1</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator5-f</name>
-			<startTime>3.0</startTime>
-			<endTime>5.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>349.7</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator6-g</name>
-			<startTime>4.0</startTime>
-			<endTime>6.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>392.5</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator7-g</name>
-			<startTime>5.0</startTime>
-			<endTime>7.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>392.5</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator8-a</name>
-			<startTime>6.0</startTime>
-			<endTime>8.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>440.6</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator9-a</name>
-			<startTime>7.0</startTime>
-			<endTime>9.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>440.6</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator10-a</name>
-			<startTime>8.0</startTime>
-			<endTime>10.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>440.6</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator11-a</name>
-			<startTime>9.0</startTime>
-			<endTime>11.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>440.6</value>
-				</input>
-			</inputs>
-		</generator>
-		<generator>
-			<type>
-				de.schmiereck.noiseComp.generator.ModulGenerator#tone
-			</type>
-			<name>generator12-g</name>
-			<startTime>10.0</startTime>
-			<endTime>12.0</endTime>
-			<inputs>
-				<input>
-					<type>1</type>
-					<value>392.5</value>
-				</input>
-			</inputs>
-		</generator>
-	</generators>
 </noise>
