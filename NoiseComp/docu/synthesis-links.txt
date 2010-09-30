@@ -8,6 +8,7 @@ http://www.cim.mcgill.ca/~clark/nordmodularbook/nm_percussion.html
 http://www.idmforums.com/showthread.php?t=21280
 http://www.gearslutz.com/board/electronic-music-instruments-electronic-music-production/390358-drum-synthesis-tutorials.html
 http://www.soundonsound.com/sos/Nov01/articles/synthsecrets1101.asp?print=yes
+http://www.sequencer.de/synthaudio/synthesizer-grundlagen.html#subtraktiv
 
 noise synthesis
 ===============

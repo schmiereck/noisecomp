@@ -8,29 +8,33 @@ import java.util.Random;
 
 /**
  * <p>
- * 	Noise Generator.
+ * 	Pink-Noise2 Generator.
  * </p>
  * 
- * see: http://www.dspguru.com/dsp/howtos/how-to-generate-white-gaussian-noise
- * 
  * @author smk
- * @version <p>29.09.2010:	created, smk</p>
+ * @version <p>30.09.2010:	created, smk</p>
  */
-public class NoiseGenerator
+public class PinkNoise2Generator
 extends Generator
 {
 	//**********************************************************************************************
 	// Constants:
 
-	public static final int	INPUT_TYPE_MEAN	= 1;
+	public static final int	INPUT_TYPE_MEAN		= 1;
 	public static final int	INPUT_TYPE_VARIANCE	= 2;
+	public static final int	INPUT_TYPE_ALPHA	= 3;
 	
 	//**********************************************************************************************
 	// Fields:
 
-	private final long generatorSeed = new Random().nextLong();
+//	private final long generatorSeed = new Random().nextLong();
 	
 	private final Random rnd = new Random(0);
+	
+	/**
+	 * Pink noise source.
+	 */
+	private PinkNoise pinkNoise = null;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -39,13 +43,13 @@ extends Generator
 	 * Constructor.
 	 * 
 	 * @param name
-	 * 			is the genrator name.
+	 * 			is the generator name.
 	 * @param frameRate
 	 * 			is the frame rate.
 	 * @param generatorTypeData
 	 * 			is the Generator-Type Data.
 	 */
-	public NoiseGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public PinkNoise2Generator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
 		super(name, frameRate, generatorTypeData);
 	}
@@ -56,31 +60,10 @@ extends Generator
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
 		//==========================================================================================
-		// see http://www.dspguru.com/dsp/howtos/how-to-generate-white-gaussian-noise
-		
-//		this.rnd.setSeed(this.generatorSeed + framePosition);
-		
-		float v1;
-		float v2;
-		float s;
-		
-		do
-		{
-			float u1 = this.uniformRnd(framePosition); 	// U1=[0,1] 
-			float u2 = this.uniformRnd(framePosition); 	// U2=[0,1] 
-			v1 = 2.0F * u1 - 1.0F;        				// V1=[-1,1]
-			v2 = 2.0F * u2 - 1.0F;        				// V2=[-1,1]
-			
-			s = v1 * v1 + v2 * v2;
-		}
-		while (s >= 1.0F);
-				
-		float x = (float)(Math.sqrt(-2.0F * Math.log(s) / s) * v1);
-		float y = (float)(Math.sqrt(-2.0F * Math.log(s) / s) * v2);
-		
-		//------------------------------------------------------------------------------------------
 		float mean = 0.0F;
 		float variance = 0.0F;
+		double alpha = 1.0D;
+		int poles = 5;
 		
 		Object inputsSyncObject = this.getInputsSyncObject();
 		
@@ -126,6 +109,20 @@ extends Generator
 								}
 								break;
 							}
+							case INPUT_TYPE_ALPHA:
+							{
+								float value;
+								try
+								{
+									value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
+									
+									alpha += value;
+								}
+								catch (NoInputSignalException ex)
+								{
+								}
+								break;
+							}
 							default:
 							{
 								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
@@ -136,28 +133,36 @@ extends Generator
 			}
 		}
 		
-		float signalLeft = (float)(mean + Math.sqrt(variance) * x);
-		float signalRight = (float)(mean + Math.sqrt(variance) * y);
+		//------------------------------------------------------------------------------------------
+//		this.rnd.setSeed(this.generatorSeed + framePosition);
+		
+		if (this.pinkNoise == null)
+		{
+			this.pinkNoise = new PinkNoise(alpha, poles, this.rnd);
+		}
+		else
+		{
+			if (this.pinkNoise.getAlpha() != alpha)
+			{
+				this.pinkNoise.setAlpha(alpha);
+			}
+		}
+		
+		float left  = (float)this.pinkNoise.nextValue();
+		float right = (float)this.pinkNoise.nextValue();
+		
+		//------------------------------------------------------------------------------------------
+		float signalLeft = (float)(mean + Math.sqrt(variance) * left);
+		float signalRight = (float)(mean + Math.sqrt(variance) * right);
 		
 		soundSample.setStereoValues(signalLeft, signalRight);
 		
 		//==========================================================================================
 	}
-
-	/**
-	 * @return
-	 * 			a random variable in the range [0, 1]. 
-	 */
-	private float uniformRnd(long framePosition)
-	{
-//		return this.rnd.nextGaussian();
-//		return (float)Math.random();
-		return this.rnd.nextFloat();
-	}
-
+	
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(NoiseGenerator.class, "Gaussian Noise", "Generate White Gaussian Noise with variance and mean.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(PinkNoise2Generator.class, "Pink Noise 2", "Generate White Gaussian Noise with variance and mean.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VARIANCE, "variance", -1, -1, "The variance.");
@@ -165,6 +170,10 @@ extends Generator
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MEAN, "mean", -1, -1, "The mean.");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_ALPHA, "alpha", -1, -1, "The alpha.");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

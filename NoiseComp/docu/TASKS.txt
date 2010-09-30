@@ -28,11 +28,14 @@ TODO:
 #46:	IMPROVEMENT: Draw horizontal seperator lines between timenes in TimelinesDrawPanel.
 #47:	IMPROVEMENT: Implement Sample-Buffers and a input change notification system.
 #48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
-#50:	
+#50:	BUG: After removing a timeline drag and drope not working and inputs are draw at wrong position (after reselect editing module al is working).
+#51:	
 
 WORK:
 =====
 #49:	IMPROVEMENT: Add Noise-generator.
+		-> Is working.
+		-> PinkNoise2 needs pole-input.
 
 DONE:
 =====
