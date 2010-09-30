@@ -57,8 +57,6 @@ implements Scrollable//, MouseMotionListener
 	//**********************************************************************************************
 	// Fields:
 	
-	private Dimension dimension;
-	
 	/**
 	 * Timeline Draw Panel Model.
 	 */
@@ -95,9 +93,7 @@ implements Scrollable//, MouseMotionListener
 		//==========================================================================================
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
-		this.dimension = new Dimension(2000, 400);
-		
-	    this.setPreferredSize(this.dimension);
+	    this.setPreferredSize(this.timelinesDrawPanelModel.getDimension());
 		
 		this.setBackground(Color.LIGHT_GRAY);
 
@@ -203,6 +199,14 @@ implements Scrollable//, MouseMotionListener
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// Recalculate size of pane.
+					double width;
+					double height;
+					
+					timelinesDrawPanelModel.setDimensionSize(width, height);
+					
+				    setPreferredSize(timelinesDrawPanelModel.getDimension());
+					
 					repaint();
 				}
 		 	}
@@ -602,15 +606,6 @@ implements Scrollable//, MouseMotionListener
 	public boolean getScrollableTracksViewportHeight() 
 	{
 		return false;
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #dimension}.
-	 */
-	public Dimension getDimension()
-	{
-		return this.dimension;
 	}
 
 	/**

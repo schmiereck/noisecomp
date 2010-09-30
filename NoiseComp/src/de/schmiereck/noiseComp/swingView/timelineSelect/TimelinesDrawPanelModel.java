@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
+import java.awt.Dimension;
 import java.util.List;
 import java.util.Vector;
 
@@ -20,6 +21,9 @@ public class TimelinesDrawPanelModel
 {
 	//**********************************************************************************************
 	// Fields:
+	
+	//----------------------------------------------------------------------------------------------
+	private Dimension dimension = new Dimension(2000, 400);;
 	
 	//----------------------------------------------------------------------------------------------
 	private int maxUnitIncrementX = 1;
@@ -282,5 +286,25 @@ public class TimelinesDrawPanelModel
 	public ModelPropertyChangedNotifier getZoomXChangedNotifier()
 	{
 		return this.zoomXChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #dimension}.
+	 */
+	public Dimension getDimension()
+	{
+		return this.dimension;
+	}
+
+	/**
+     * @param width  
+     * 			the new width of the {@link #dimension}.
+     * @param height 
+     * 			the new height of the {@link #dimension}.
+	 */
+	public void setDimensionSize(double width, double height)
+	{
+		this.dimension.setSize(width, height);
 	}
 }

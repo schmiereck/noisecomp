@@ -17,7 +17,6 @@ TODO:
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
 #27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
-#28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.
 #31:	IMPROVEMENT: Add Flag that markes a input-type as multiple or singele input-type.
 #33:	BUG: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
 #34:	IMPROVEMENT: Input-Edit: Do not serve the edited generator as input generator.
@@ -38,6 +37,7 @@ WORK:
 #49:	IMPROVEMENT: Add Noise-generator.
 		-> Is working.
 		-> PinkNoise2 needs pole-input.
+#28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.
 
 DONE:
 =====
