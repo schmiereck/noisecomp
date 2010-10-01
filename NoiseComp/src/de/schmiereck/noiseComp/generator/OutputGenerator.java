@@ -12,7 +12,13 @@ package de.schmiereck.noiseComp.generator;
 public class OutputGenerator
 extends Generator
 {
+	//**********************************************************************************************
+	// Constants:
+
 	public static final int	INPUT_TYPE_SIGNAL	= 1;
+
+	//**********************************************************************************************
+	// Functions:
 
 	/**
 	 * Constructor.
@@ -38,6 +44,7 @@ extends Generator
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
+		//==========================================================================================
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
 		this.calcInputSignals(framePosition, signalInputData, soundSample, parentModulGenerator);
@@ -66,6 +73,7 @@ extends Generator
 			}
 		}
 		*/
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)

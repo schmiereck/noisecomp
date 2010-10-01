@@ -19,6 +19,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.MultiplierGenerator;
 import de.schmiereck.noiseComp.generator.PinkNoise2Generator;
 import de.schmiereck.noiseComp.generator.PinkNoiseGenerator;
+import de.schmiereck.noiseComp.generator.TanhGenerator;
 import de.schmiereck.noiseComp.generator.WhiteNoiseGenerator;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.RectangleGenerator;
@@ -58,6 +59,7 @@ public class StartupService
 		soundService.addGeneratorType(WhiteNoiseGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(PinkNoiseGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(PinkNoise2Generator.createGeneratorTypeData());
+		soundService.addGeneratorType(TanhGenerator.createGeneratorTypeData());
 		//==========================================================================================
 	}
 	
@@ -177,24 +179,37 @@ public class StartupService
 			mainModulTypeData.addGenerator(faderOutGenerator);
 		}
 		//---------------------------------
-		SinusGenerator sinusGenerator;
+		SinusGenerator sinus0Generator;
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
-			sinusGenerator = new SinusGenerator("sinus", frameRateFloat, generatorTypeData);
-			sinusGenerator.addInputValue(262F, SinusGenerator.INPUT_TYPE_FREQ);
+			sinus0Generator = new SinusGenerator("sinus0", frameRateFloat, generatorTypeData);
+			sinus0Generator.addInputValue(110F, SinusGenerator.INPUT_TYPE_FREQ);
 			//sinusGenerator.setSignalFrequency(262F);
 			
-			sinusGenerator.setStartTimePos(0.0F);
-			sinusGenerator.setEndTimePos(5.0F);
+			sinus0Generator.setStartTimePos(0.0F);
+			sinus0Generator.setEndTimePos(5.0F);
 			
-			mainModulTypeData.addGenerator(sinusGenerator);
+			mainModulTypeData.addGenerator(sinus0Generator);
+		}
+		//---------------------------------
+		SinusGenerator sinus1Generator;
+		{
+			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
+			sinus1Generator = new SinusGenerator("sinus1", frameRateFloat, generatorTypeData);
+			sinus1Generator.addInputValue(220F, SinusGenerator.INPUT_TYPE_FREQ);
+			//sinusGenerator.setSignalFrequency(262F);
+			
+			sinus1Generator.setStartTimePos(0.0F);
+			sinus1Generator.setEndTimePos(5.0F);
+			
+			mainModulTypeData.addGenerator(sinus1Generator);
 		}
 		//---------------------------------
 		SinusGenerator sinus2Generator;
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
 			sinus2Generator = new SinusGenerator("sinus2", frameRateFloat, generatorTypeData);
-			sinus2Generator.addInputValue(131F, SinusGenerator.INPUT_TYPE_FREQ);
+			sinus2Generator.addInputValue(240F, SinusGenerator.INPUT_TYPE_FREQ);
 			//sinus2Generator.setSignalFrequency(131F);
 			
 			sinus2Generator.setStartTimePos(0.0F);
@@ -207,7 +222,7 @@ public class StartupService
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SinusGenerator.class.getName());
 			sinus3Generator = new SinusGenerator("sinus3", frameRateFloat, generatorTypeData);
-			sinus3Generator.addInputValue(70F, SinusGenerator.INPUT_TYPE_FREQ);
+			sinus3Generator.addInputValue(248F, SinusGenerator.INPUT_TYPE_FREQ);
 			//sinus3Generator.setSignalFrequency(70F);
 			
 			sinus3Generator.setStartTimePos(0.0F);
@@ -220,6 +235,7 @@ public class StartupService
 		{
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(MixerGenerator.class.getName());
 			mixerGenerator = new MixerGenerator("mixer", frameRateFloat, generatorTypeData);
+			mixerGenerator.addInputValue(0.5F, MixerGenerator.INPUT_TYPE_VOLUME);
 		
 			mixerGenerator.setStartTimePos(0.0F);
 			mixerGenerator.setEndTimePos(5.0F);
@@ -227,7 +243,7 @@ public class StartupService
 			mixerGenerator.addVolumeInput(faderInGenerator);
 			mixerGenerator.addVolumeInput(faderOutGenerator);
 			
-			mixerGenerator.addSignalInput(sinusGenerator);
+			mixerGenerator.addSignalInput(sinus1Generator);
 			mixerGenerator.addSignalInput(sinus2Generator);
 			mixerGenerator.addSignalInput(sinus3Generator);
 			

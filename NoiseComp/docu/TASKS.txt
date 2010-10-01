@@ -5,7 +5,7 @@ TODO:
 =====
 #2:		IMPROVEMENT: Mail: Florian und ich empfehlen eine BSD-style license. Mit GNU-Lizenzen hatten wir schon jede Menge Ärger.
 #4:		BUG: Disable change Input-Type of existing Timeline-Generator.
-#5:		BUG: Implements obligate input fields.
+#5:		BUG: Implements obligate input fields (with default values).
 #6:		BUG: Disable unreachable functions (buttons).
 #9:		BUG: Do not allow more than one OutputGenerator for a Module.
 #16:	IMPROVEMENT: Implements mouse featured resize of timelines in timeline draw pane.
@@ -32,7 +32,9 @@ TODO:
 #52:	IMPROVEMENT: Modul-Generators should repeat theire output signal if theire length is longer as the output (with defined sielent time between).
 #53:	IMPROVEMENT: Generator-Input-Types needs max, min and datatype definitions.
 #54:	BUG: Rulers are completely destroyed if zoom and timelineSelect size changed.
-#55:	
+#55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
+#56:	IMPROVEMENT: Import noiseComp.xml files.
+#58:	
 
 WORK:
 =====
@@ -68,3 +70,4 @@ DONE:
 #14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
 #24:	IMPROVEMENT: Implements Timeline-Select Zoom function.
 #28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.
+#57:	IMPROVEMENT: Add TanhGenerator.

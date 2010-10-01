@@ -77,14 +77,16 @@ extends Generator
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
+		//==========================================================================================
+		SoundSample signalSample = new SoundSample();
+		
+		//------------------------------------------------------------------------------------------
 		//int valumeCnt = 0;
 		float volume = 1.0F;
-
+	
 		float signalLeft = 0.0F;
 		float signalRight = 0.0F;
-
-		SoundSample signal = new SoundSample();
-		
+	
 		Object inputsSyncObject = this.getInputsSyncObject();
 		
 		if (inputsSyncObject != null)
@@ -160,7 +162,7 @@ extends Generator
 							}
 							case INPUT_TYPE_SIGNAL:
 							{
-								this.calcInputValue(framePosition, inputData, signal, parentModulGenerator);
+								this.calcInputValue(framePosition, inputData, signalSample, parentModulGenerator);
 								/*
 								float valueRight;
 								float valueLeft;
@@ -207,8 +209,8 @@ extends Generator
 									}
 								}
 								*/
-								signalLeft += signal.getLeftValue();
-								signalRight += signal.getRightValue();
+								signalLeft += signalSample.getLeftValue();
+								signalRight += signalSample.getRightValue();
 								break;
 							}
 							default:
@@ -221,12 +223,15 @@ extends Generator
 			}
 		}
 		
+		//------------------------------------------------------------------------------------------
 		//if (valumeCnt > 1)
 		//{
 		//	volume /= valumeCnt;
 		//}
 		
 		soundSample.setStereoValues(signalLeft * volume, signalRight * volume);
+		
+		//==========================================================================================
 	}
 
 	public static GeneratorTypeData createGeneratorTypeData()
