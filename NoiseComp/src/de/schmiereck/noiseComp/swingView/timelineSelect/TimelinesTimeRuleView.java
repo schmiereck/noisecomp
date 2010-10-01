@@ -74,14 +74,12 @@ extends JComponent
 //		return this.increment;
 //	}
 
-	public void setPreferredHeight(int ph)
+	public void setWidth(int pw)
 	{
-		setPreferredSize(new Dimension(SIZE, ph));
-	}
-
-	public void setPreferredWidth(int pw)
-	{
-		setPreferredSize(new Dimension(pw, SIZE));
+		Dimension dimension = new Dimension(pw, SIZE);
+		
+		//this.setSize(dimension);
+		this.setPreferredSize(dimension);
 	}
 
 	/* (non-Javadoc)

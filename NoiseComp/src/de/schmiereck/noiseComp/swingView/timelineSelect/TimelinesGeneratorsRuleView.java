@@ -76,9 +76,12 @@ extends JComponent
 //		this.repaint();
 //	}
 
-	public void setPreferredHeight(int ph)
+	public void setHeight(int ph)
 	{
-		this.setPreferredSize(new Dimension(SIZE, ph));
+		Dimension dimension = new Dimension(SIZE, ph);
+		
+//		this.setSize(dimension);
+		this.setPreferredSize(dimension);
 	}
 
 	protected void paintComponent(Graphics g)

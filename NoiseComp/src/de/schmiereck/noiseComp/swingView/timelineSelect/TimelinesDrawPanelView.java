@@ -200,25 +200,7 @@ implements Scrollable//, MouseMotionListener
 				public void notifyModelPropertyChanged()
 				{
 					// Recalculate size of pane.
-					double width = 0.0D;
-					double height = 0.0D;
-					
-					for (TimelineGeneratorModel timelineGeneratorModel : timelinesDrawPanelModel.getTimelineGeneratorModels())
-					{
-						float endTimePos = timelineGeneratorModel.getEndTimePos();
-						
-						if (endTimePos > width)
-						{
-							width = endTimePos;
-						}
-						
-						height += timelinesDrawPanelModel.getMaxUnitIncrementY();
-					}
-					
-					// Scale:
-					
-					timelinesDrawPanelModel.setDimensionSize(width * timelinesDrawPanelModel.getZoomX(), 
-					                                         height * ZOOM_Y);
+					recalculateDimension();
 				}
 		 	}
 		);
@@ -262,6 +244,18 @@ implements Scrollable//, MouseMotionListener
 				    setSize(timelinesDrawPanelModel.getDimension());
 				    
 					repaint();
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.timelinesDrawPanelModel.getZoomXChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+				    recalculateDimension();
 				}
 		 	}
 		);
@@ -751,6 +745,33 @@ implements Scrollable//, MouseMotionListener
 	public TimelinesDrawPanelModel getTimelinesDrawPanelModel()
 	{
 		return this.timelinesDrawPanelModel;
+	}
+
+	/**
+	 * Recalculate size of pane.
+	 * 
+	 */
+	private void recalculateDimension()
+	{
+		double width = 0.0D;
+		double height = 0.0D;
+		
+		for (TimelineGeneratorModel timelineGeneratorModel : this.timelinesDrawPanelModel.getTimelineGeneratorModels())
+		{
+			float endTimePos = timelineGeneratorModel.getEndTimePos();
+			
+			if (endTimePos > width)
+			{
+				width = endTimePos;
+			}
+			
+			height += this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+		}
+		
+		// Scale:
+		
+		this.timelinesDrawPanelModel.setDimensionSize(width * timelinesDrawPanelModel.getZoomX(), 
+		                                              height * ZOOM_Y);
 	}
 	
 }

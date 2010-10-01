@@ -100,8 +100,8 @@ extends JPanel
 		
 	    Dimension dimension = this.timelinesDrawPanelView.getTimelinesDrawPanelModel().getDimension();
 
-	    this.timelinesTimeRuleView.setPreferredWidth((int)dimension.getWidth());
-	    this.timelinesGeneratorsRuleView.setPreferredHeight((int)dimension.getHeight());
+	    this.timelinesTimeRuleView.setWidth((int)dimension.getWidth());
+	    this.timelinesGeneratorsRuleView.setHeight((int)dimension.getHeight());
 	    
 //	    this.scrollPane.getViewport().revalidate();
 //	    this.scrollPane.revalidate();
