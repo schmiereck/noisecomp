@@ -29,16 +29,6 @@ public class TimelinesDrawPanelController
 	
 	final private TimelinesDrawPanelView timelinesDrawPanelView;
 	
-	private final ModelPropertyChangedListener timelineGeneratorModelChangedListener =
-	 	new ModelPropertyChangedListener()
- 	{
-		@Override
-		public void notifyModelPropertyChanged()
-		{
-			timelinesDrawPanelView.repaint();
-		}
- 	};
-	
 	//**********************************************************************************************
 	// Functions:
 	
@@ -132,20 +122,13 @@ public class TimelinesDrawPanelController
 	{
 		this.timelinesDrawPanelModel.addTimelineGeneratorModel(timelineGeneratorModel);
 		
-		timelineGeneratorModel.getNameChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
-		timelineGeneratorModel.getStartTimePosChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
-		timelineGeneratorModel.getEndTimePosChangedNotifier().addModelPropertyChangedListener(this.timelineGeneratorModelChangedListener);
+		ModelPropertyChangedListener modelChangedListener = this.timelinesDrawPanelModel.getTimelineGeneratorModelChangedListener();
+		
+		timelineGeneratorModel.getNameChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
+		timelineGeneratorModel.getStartTimePosChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
+		timelineGeneratorModel.getEndTimePosChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
 		
 		// TODO remove listeners if timeline is removed.
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #timelineGeneratorModelChangedListener}.
-	 */
-	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener()
-	{
-		return this.timelineGeneratorModelChangedListener;
 	}
 
 	/**

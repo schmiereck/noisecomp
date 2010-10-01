@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.util.List;
 import java.util.Vector;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 /**
@@ -24,6 +25,11 @@ public class TimelinesDrawPanelModel
 	
 	//----------------------------------------------------------------------------------------------
 	private Dimension dimension = new Dimension(2000, 400);;
+
+	/**
+	 * {@link #dimension} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier dimensionChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//----------------------------------------------------------------------------------------------
 	private int maxUnitIncrementX = 1;
@@ -79,6 +85,18 @@ public class TimelinesDrawPanelModel
 	 * {@link #zoomX} changed listeners.
 	 */
 	private final ModelPropertyChangedNotifier zoomXChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	//----------------------------------------------------------------------------------------------
+	private final ModelPropertyChangedListener timelineGeneratorModelChangedListener =
+	 	new ModelPropertyChangedListener()
+ 	{
+		@Override
+		public void notifyModelPropertyChanged()
+		{
+//			timelinesDrawPanelView.repaint();
+			timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+		}
+ 	};
 	
 	//**********************************************************************************************
 	// Functions:
@@ -306,5 +324,26 @@ public class TimelinesDrawPanelModel
 	public void setDimensionSize(double width, double height)
 	{
 		this.dimension.setSize(width, height);
+		
+		// Notify listeners.
+		this.dimensionChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #dimensionChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getDimensionChangedNotifier()
+	{
+		return this.dimensionChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineGeneratorModelChangedListener}.
+	 */
+	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener()
+	{
+		return this.timelineGeneratorModelChangedListener;
 	}
 }

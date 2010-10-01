@@ -37,7 +37,6 @@ WORK:
 #49:	IMPROVEMENT: Add Noise-generator.
 		-> Is working.
 		-> PinkNoise2 needs pole-input.
-#28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.
 
 DONE:
 =====
@@ -66,3 +65,4 @@ DONE:
 		-> TimelinesGeneratorsRule is now updated (repaints are triggered by model-listeners).
 #14:	IMPROVEMENT: Display signal shapes in timeline draw pane.
 #24:	IMPROVEMENT: Implements Timeline-Select Zoom function.
+#28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.

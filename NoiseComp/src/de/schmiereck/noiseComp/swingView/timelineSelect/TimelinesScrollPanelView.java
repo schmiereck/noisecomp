@@ -33,7 +33,7 @@ extends JPanel
 	 * Timelines Scroll-Panel Model.
 	 */
 	@SuppressWarnings("unused")
-	private TimelinesScrollPanelModel timelinesScrollPanelModel;
+	private final TimelinesScrollPanelModel timelinesScrollPanelModel;
 	
 	private TimelinesTimeRuleView timelinesTimeRuleView = null;
 	private TimelinesGeneratorsRuleView timelinesGeneratorsRuleView = null;
@@ -51,7 +51,7 @@ extends JPanel
 	 * @param timelinesScrollPanelModel
 	 * 			is the Timelines Scroll-Panel Model.
 	 */
-	public TimelinesScrollPanelView(TimelinesScrollPanelModel timelinesScrollPanelModel)
+	public TimelinesScrollPanelView(final TimelinesScrollPanelModel timelinesScrollPanelModel)
 		throws HeadlessException
 	{
 		//==========================================================================================
@@ -98,7 +98,7 @@ extends JPanel
 	    
 		this.scrollPane.setViewportView(this.timelinesDrawPanelView);
 		
-	    Dimension dimension = this.timelinesDrawPanelView.getDimension();
+	    Dimension dimension = this.timelinesDrawPanelView.getTimelinesDrawPanelModel().getDimension();
 
 	    this.timelinesTimeRuleView.setPreferredWidth((int)dimension.getWidth());
 	    this.timelinesGeneratorsRuleView.setPreferredHeight((int)dimension.getHeight());
@@ -132,6 +132,15 @@ extends JPanel
 		this.timelinesGeneratorsRuleView = timelinesGeneratorsRuleView;
 
 	    this.scrollPane.setRowHeaderView(this.timelinesGeneratorsRuleView);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelinesScrollPanelModel}.
+	 */
+	public TimelinesScrollPanelModel getTimelinesScrollPanelModel()
+	{
+		return this.timelinesScrollPanelModel;
 	}
 }		
 

@@ -677,13 +677,13 @@ public class AppController
 				}
 		 	}
 		);
-	    //------------------------------------------------------------------------------------------
-		// Input-Edit-Model Value changed: Update Timeline-Select:
-		
-		inputEditController.getInputEditModel().getValueChangedNotifier().addModelPropertyChangedListener
-	    (
-	    	timelinesDrawPanelController.getTimelineGeneratorModelChangedListener()
-	    );
+//	    //------------------------------------------------------------------------------------------
+//		// Input-Edit-Model Value changed: Update Timeline-Select:
+//		
+//		inputEditController.getInputEditModel().getValueChangedNotifier().addModelPropertyChangedListener
+//	    (
+//	    	timelinesDrawPanelController.getTimelineGeneratorModelChangedListener()
+//	    );
 	    //------------------------------------------------------------------------------------------
 		// http://download.oracle.com/javase/tutorial/uiswing/misc/action.html
 		this.appView.getPlayButton().addActionListener

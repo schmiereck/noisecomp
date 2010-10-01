@@ -200,14 +200,25 @@ implements Scrollable//, MouseMotionListener
 				public void notifyModelPropertyChanged()
 				{
 					// Recalculate size of pane.
-					double width;
-					double height;
+					double width = 0.0D;
+					double height = 0.0D;
 					
-					timelinesDrawPanelModel.setDimensionSize(width, height);
+					for (TimelineGeneratorModel timelineGeneratorModel : timelinesDrawPanelModel.getTimelineGeneratorModels())
+					{
+						float endTimePos = timelineGeneratorModel.getEndTimePos();
+						
+						if (endTimePos > width)
+						{
+							width = endTimePos;
+						}
+						
+						height += timelinesDrawPanelModel.getMaxUnitIncrementY();
+					}
 					
-				    setPreferredSize(timelinesDrawPanelModel.getDimension());
+					// Scale:
 					
-					repaint();
+					timelinesDrawPanelModel.setDimensionSize(width * timelinesDrawPanelModel.getZoomX(), 
+					                                         height * ZOOM_Y);
 				}
 		 	}
 		);
@@ -235,6 +246,21 @@ implements Scrollable//, MouseMotionListener
 					
 					at.setToScale(zoomX, ZOOM_Y);
 					
+					repaint();
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.timelinesDrawPanelModel.getDimensionChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+				    setPreferredSize(timelinesDrawPanelModel.getDimension());
+				    setSize(timelinesDrawPanelModel.getDimension());
+				    
 					repaint();
 				}
 		 	}
@@ -448,67 +474,69 @@ implements Scrollable//, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		// Display signal shapes:
 		
-		g2.setPaint(Color.BLACK);
-		g2.setColor(Color.BLACK);
-		
 		Generator generator = timelineGeneratorModel.getGenerator();
-		
-		ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
-		
-		float frameRate = generator.getSoundFrameRate();
-		float frameStep = timeLength / (frameRate / 50.0F);
 
-		float pointSizeX = (float)(1.0F / at.getScaleX());
-		float pointSizeY = (float)(1.0F / at.getScaleY());
-		
-//		Rectangle2D point = new Rectangle2D.Float();
-		Point2D srcPoint = new Point2D.Float();
-		Point2D dstPoint = new Point2D.Float();
-		
-		int lastX = 0;
-		int lastY = 0;
-		
-		for (float timePos = 0.0F; timePos < timeLength; timePos += frameStep)
+		if (generator != null)
 		{
-			long sampleFrame = (long)((startTimePos + timePos) * frameRate);
+			g2.setPaint(Color.BLACK);
+			g2.setColor(Color.BLACK);
 			
-			SoundSample soundSample = generator.generateFrameSample(sampleFrame, parentModulGenerator);
+			ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
 			
-			if (soundSample != null)
+			float frameRate = generator.getSoundFrameRate();
+			float frameStep = timeLength / (frameRate / 50.0F);
+	
+			float pointSizeX = (float)(1.0F / at.getScaleX());
+			float pointSizeY = (float)(1.0F / at.getScaleY());
+			
+	//		Rectangle2D point = new Rectangle2D.Float();
+			Point2D srcPoint = new Point2D.Float();
+			Point2D dstPoint = new Point2D.Float();
+			
+			int lastX = 0;
+			int lastY = 0;
+			
+			for (float timePos = 0.0F; timePos < timeLength; timePos += frameStep)
 			{
-				float posX = (startTimePos + timePos); 
-				float posY = (generatorPosY + 
-							  (soundSample.getMonoValue() * maxUnitIncrementY * -0.5F) + 
-							  (maxUnitIncrementY / 2.0F)); 
+				long sampleFrame = (long)((startTimePos + timePos) * frameRate);
 				
-//				point.setRect(posX, posY,
-//				              pointSizeX, pointSizeY);
-				srcPoint.setLocation(pointSizeX, pointSizeY);
+				SoundSample soundSample = generator.generateFrameSample(sampleFrame, parentModulGenerator);
 				
-//				Shape shape = this.at.createTransformedShape(point);
-				srcPoint.setLocation(posX, posY);
-				this.at.transform(srcPoint, dstPoint);
-				
-				int x = (int)dstPoint.getX();
-				int y = (int)dstPoint.getY();
-				
-				// x or y changed after last draw?
-				if (((x != lastX) ||
-					 (y != lastY)) &&
-					(timePos > 0.0F))
+				if (soundSample != null)
 				{
-					// Draw line.
+					float posX = (startTimePos + timePos); 
+					float posY = (generatorPosY + 
+								  (soundSample.getMonoValue() * maxUnitIncrementY * -0.5F) + 
+								  (maxUnitIncrementY / 2.0F)); 
 					
-//					g2.fill(shape);
-					g2.drawLine(lastX, lastY, 
-					            x, y);
+	//				point.setRect(posX, posY,
+	//				              pointSizeX, pointSizeY);
+					srcPoint.setLocation(pointSizeX, pointSizeY);
+					
+	//				Shape shape = this.at.createTransformedShape(point);
+					srcPoint.setLocation(posX, posY);
+					this.at.transform(srcPoint, dstPoint);
+					
+					int x = (int)dstPoint.getX();
+					int y = (int)dstPoint.getY();
+					
+					// x or y changed after last draw?
+					if (((x != lastX) ||
+						 (y != lastY)) &&
+						(timePos > 0.0F))
+					{
+						// Draw line.
+						
+	//					g2.fill(shape);
+						g2.drawLine(lastX, lastY, 
+						            x, y);
+					}
+					
+					lastX = x;
+					lastY = y;
 				}
-				
-				lastX = x;
-				lastY = y;
 			}
 		}
-		
 		//==========================================================================================
 	}
 	
@@ -714,6 +742,15 @@ implements Scrollable//, MouseMotionListener
 	public void addChangeTimelinesPositionListeners(DoChangeTimelinesPositionListenerInterface doChangeTimelinesPositionListener)
 	{
 		this.doChangeTimelinesPositionListeners.add(doChangeTimelinesPositionListener);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelinesDrawPanelModel}.
+	 */
+	public TimelinesDrawPanelModel getTimelinesDrawPanelModel()
+	{
+		return this.timelinesDrawPanelModel;
 	}
 	
 }
