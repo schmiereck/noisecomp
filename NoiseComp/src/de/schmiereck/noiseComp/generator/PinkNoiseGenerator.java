@@ -28,7 +28,7 @@ extends Generator
 	//**********************************************************************************************
 	// Fields:
 
-//	private final long generatorSeed = new Random().nextLong();
+	private final long generatorSeed = new Random().nextLong();
 	
 	private final Random rnd = new Random(0);
 	
@@ -114,7 +114,7 @@ extends Generator
 		}
 		
 		//------------------------------------------------------------------------------------------
-//		this.rnd.setSeed(this.generatorSeed + framePosition);
+		this.rnd.setSeed(this.generatorSeed + framePosition);
 		
 		float left  = (float)this.makePinkNoise(framePosition);
 		float right = (float)this.makePinkNoise(framePosition);
@@ -172,24 +172,13 @@ extends Generator
 	
 	/**
 	 * @return
-	 * 			a random variable in the range [0, 1]. 
-	 */
-	private double uniformRnd(long framePosition)
-	{
-//		return this.rnd.nextGaussian();
-//		return (float)Math.random();
-		return this.rnd.nextDouble();
-	}
-	
-	/**
-	 * @return
 	 * 			a random variable in the range [-1, 1]. 
 	 */
 	private double signedRnd(long framePosition)
 	{
-//		return this.rnd.nextGaussian();
+		return this.rnd.nextGaussian() - 0.5D;
 //		return (float)Math.random();
-		return (this.rnd.nextDouble() - 0.5D) * 2.0D;
+//		return (this.rnd.nextDouble() - 0.5D) * 2.0D;
 	}
 
 	public static GeneratorTypeData createGeneratorTypeData()

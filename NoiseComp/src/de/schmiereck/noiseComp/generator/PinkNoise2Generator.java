@@ -27,7 +27,7 @@ extends Generator
 	//**********************************************************************************************
 	// Fields:
 
-//	private final long generatorSeed = new Random().nextLong();
+	private final long generatorSeed = new Random().nextLong();
 	
 	private final Random rnd = new Random(0);
 	
@@ -134,7 +134,7 @@ extends Generator
 		}
 		
 		//------------------------------------------------------------------------------------------
-//		this.rnd.setSeed(this.generatorSeed + framePosition);
+		this.rnd.setSeed(this.generatorSeed + framePosition);
 		
 		if (this.pinkNoise == null)
 		{

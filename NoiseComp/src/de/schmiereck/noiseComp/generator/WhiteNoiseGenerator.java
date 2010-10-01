@@ -28,7 +28,7 @@ extends Generator
 	//**********************************************************************************************
 	// Fields:
 
-//	private final long generatorSeed = new Random().nextLong();
+	private final long generatorSeed = new Random().nextLong();
 	
 	private final Random rnd = new Random(0);
 	
@@ -116,31 +116,31 @@ extends Generator
 		//------------------------------------------------------------------------------------------
 		// see http://www.dspguru.com/dsp/howtos/how-to-generate-white-gaussian-noise
 		
-//		this.rnd.setSeed(this.generatorSeed + framePosition);
+		this.rnd.setSeed(this.generatorSeed + framePosition);
 		
-		float v1;
-		float v2;
-		float s;
+		double v1;
+		double v2;
+		double s;
 		
 		do
 		{
-			float u1 = this.uniformRnd(framePosition); 	// U1=[0,1] 
-			float u2 = this.uniformRnd(framePosition); 	// U2=[0,1] 
-			v1 = 2.0F * u1 - 1.0F;        				// V1=[-1,1]
-			v2 = 2.0F * u2 - 1.0F;        				// V2=[-1,1]
+			double u1 = this.uniformRnd(framePosition); 	// U1=[0,1] 
+			double u2 = this.uniformRnd(framePosition); 	// U2=[0,1] 
+			v1 = 2.0F * u1 - 1.0F;        					// V1=[-1,1]
+			v2 = 2.0F * u2 - 1.0F;        					// V2=[-1,1]
 			
 			s = v1 * v1 + v2 * v2;
 		}
 		while (s >= 1.0F);
 				
-		float left  = (float)(Math.sqrt(-2.0F * Math.log(s) / s) * v1);
-		float right = (float)(Math.sqrt(-2.0F * Math.log(s) / s) * v2);
+		double left  = (double)(Math.sqrt(-2.0F * Math.log(s) / s) * v1);
+		double right = (double)(Math.sqrt(-2.0F * Math.log(s) / s) * v2);
 		
 		//------------------------------------------------------------------------------------------
 		float signalLeft = (float)(mean + Math.sqrt(variance) * left);
 		float signalRight = (float)(mean + Math.sqrt(variance) * right);
 		
-		soundSample.setStereoValues(signalLeft, signalRight);
+		soundSample.setStereoValues(signalLeft * 0.5F, signalRight * 0.5F);
 		
 		//==========================================================================================
 	}
@@ -149,11 +149,12 @@ extends Generator
 	 * @return
 	 * 			a random variable in the range [0, 1]. 
 	 */
-	private float uniformRnd(long framePosition)
+	private double uniformRnd(long framePosition)
 	{
-//		return this.rnd.nextGaussian();
+		return this.rnd.nextGaussian();
 //		return (float)Math.random();
-		return this.rnd.nextFloat();
+//		return this.rnd.nextFloat();
+//		return this.rnd.nextDouble();
 	}
 
 	public static GeneratorTypeData createGeneratorTypeData()

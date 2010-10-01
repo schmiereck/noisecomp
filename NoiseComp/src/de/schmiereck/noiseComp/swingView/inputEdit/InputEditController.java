@@ -230,34 +230,33 @@ public class InputEditController
 			modulInputTypeData = null;
 		}
 
-		inputEditModel.setInputTypeSelectItems(inputTypeSelectItems);
-		inputEditModel.setInputTypeData(inputTypeData);
-		inputEditModel.setGeneratorSelectItems(generatorSelectItems);
-		inputEditModel.setInputGenerator(inputGenerator);
-		inputEditModel.setValue(value);
-		inputEditModel.setModulInputTypeSelectItems(modulInputTypeSelectItems);
-		inputEditModel.setModulInputTypeData(modulInputTypeData);
+		this.inputEditModel.setInputTypeSelectItems(inputTypeSelectItems);
+		this.inputEditModel.setInputTypeData(inputTypeData);
+		this.inputEditModel.setGeneratorSelectItems(generatorSelectItems);
+		this.inputEditModel.setInputGenerator(inputGenerator);
+		this.inputEditModel.setValue(value);
+		this.inputEditModel.setModulInputTypeSelectItems(modulInputTypeSelectItems);
+		this.inputEditModel.setModulInputTypeData(modulInputTypeData);
 		
 		//==========================================================================================
 	}
 
 	/**
+	 * Submit edited Input.
+	 * 
 	 * @param selectModel
 	 * 			is the Select Model.
 	 * @param selectedGenerator
 	 * 			is the selected Generator.
 	 */
-	public void doUpdate(final InputSelectModel selectModel,
+	public void doSubmit(final InputSelectModel selectModel,
 	                     final Generator selectedGenerator)
 	{
-		InputEditModel inputEditModel = this.getInputEditModel();
-		InputEditView inputEditView = this.getInputEditView();
-		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)inputEditView.getInputTypeComboBox().getSelectedItem();
-		GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)inputEditView.getInputGeneratorComboBox().getSelectedItem();
-		String valueStr = inputEditView.getInputTypeValueTextField().getText();
-		ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)inputEditView.getModulInputTypeComboBox().getSelectedItem();
+		//==========================================================================================
+		InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
+		GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
+		String valueStr = this.inputEditView.getInputTypeValueTextField().getText();
+		ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)this.inputEditView.getModulInputTypeComboBox().getSelectedItem();
 			
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
@@ -305,10 +304,12 @@ public class InputEditController
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// Update Input-Edit-Model:
 		
-		inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
-		inputEditModel.setInputGenerator(inputGeneratorSelectItem.getGenerator());
-		inputEditModel.setValue(valueStr);
-		inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
+		this.inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
+		this.inputEditModel.setInputGenerator(inputGeneratorSelectItem.getGenerator());
+		this.inputEditModel.setValue(valueStr);
+		this.inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
+		
+		//==========================================================================================
 	}
 
 }

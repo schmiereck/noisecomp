@@ -30,7 +30,8 @@ TODO:
 #50:	BUG: After removing a timeline drag and drope not working and inputs are draw at wrong position (after reselect editing module al is working).
 #51:	IMPROVEMENT: After selecting a module-generator for new timeline set length to his output length.
 #52:	IMPROVEMENT: Modul-Generators should repeat theire output signal if theire length is longer as the output (with defined sielent time between).
-#53:	
+#53:	IMPROVEMENT: Generator-Input-Types needs max, min and datatype definitions.
+#54:	
 
 WORK:
 =====

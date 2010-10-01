@@ -87,6 +87,9 @@ public class TimelinesDrawPanelModel
 	private final ModelPropertyChangedNotifier zoomXChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//----------------------------------------------------------------------------------------------
+	/**
+	 * Something in the Timeline-Generator internals changed.
+	 */
 	private final ModelPropertyChangedListener timelineGeneratorModelChangedListener =
 	 	new ModelPropertyChangedListener()
  	{

@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 /**
@@ -109,10 +110,13 @@ public class InputEditModel
 	 */
 	public void setValue(String value)
 	{
-		this.value = value;
-		
-		// Notify listeners.
-		this.valueChangedNotifier.notifyModelPropertyChangedListeners();
+		if (CompareUtils.compareWithNull(this.value, value) == false)
+		{
+			this.value = value;
+			
+			// Notify listeners.
+			this.valueChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
@@ -169,10 +173,13 @@ public class InputEditModel
 	 */
 	public void setInputGenerator(Generator inputGenerator)
 	{
-		this.inputGenerator = inputGenerator;
-		
-		// Notify Listeners.
-		this.inputGeneratorChangedNotifier.notifyModelPropertyChangedListeners();
+		if (this.inputGenerator != inputGenerator)
+		{
+			this.inputGenerator = inputGenerator;
+			
+			// Notify Listeners.
+			this.inputGeneratorChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
@@ -229,10 +236,13 @@ public class InputEditModel
 	 */
 	public void setInputTypeData(InputTypeData inputTypeData)
 	{
-		this.inputTypeData = inputTypeData;
-		
-		// Notify Listeners.
-		this.inputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+		if (this.inputTypeData != inputTypeData)
+		{
+			this.inputTypeData = inputTypeData;
+			
+			// Notify Listeners.
+			this.inputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
@@ -289,10 +299,13 @@ public class InputEditModel
 	 */
 	public void setModulInputTypeData(InputTypeData modulInputTypeData)
 	{
-		this.modulInputTypeData = modulInputTypeData;
-		
-		// Notify Listeners.
-		this.modulInputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+		if (this.modulInputTypeData != modulInputTypeData)
+		{
+			this.modulInputTypeData = modulInputTypeData;
+			
+			// Notify Listeners.
+			this.modulInputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**

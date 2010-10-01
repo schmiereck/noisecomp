@@ -22,7 +22,7 @@ public class CompareUtils
 	 * @return
 	 * 			<code>true</code> if the values are equal or both <code>null</code>.
 	 */
-	public static boolean compareWithNull(Integer value1, Integer value2)
+	public static boolean compareWithNull(Object value1, Object value2)
 	{
 		boolean ret;
 		
