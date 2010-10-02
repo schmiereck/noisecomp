@@ -34,7 +34,8 @@ TODO:
 #54:	BUG: Rulers are completely destroyed if zoom and timelineSelect size changed.
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #56:	IMPROVEMENT: Import noiseComp.xml files.
-#58:	
+#58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
+#59:	
 
 WORK:
 =====

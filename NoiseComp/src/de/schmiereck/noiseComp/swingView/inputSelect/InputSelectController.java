@@ -189,10 +189,12 @@ public class InputSelectController
 			
 			InputData inputData = inputSelectEntryModel.getInputData();
 			
-			Generator ownerGenerator = inputData.getOwnerGenerator();
-			
-			ownerGenerator.removeInput(inputData);
-			
+			if (inputData != null)
+			{
+				Generator ownerGenerator = inputData.getOwnerGenerator();
+				
+				ownerGenerator.removeInput(inputData);
+			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Input-Select-Model:
 			
