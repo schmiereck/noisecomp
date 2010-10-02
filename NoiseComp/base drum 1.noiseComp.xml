@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<noise>
+	<version><![CDATA[2.0]]></version>
+	<generatorTypes>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></generatorClassName>
+			<name><![CDATA[Fader]]></name>
+			<description><![CDATA[Fades linear from a start to a end value.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[startFadeValue]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[Start value between -1 and 1 of the fading over generator length (other
+						value ranges can used).]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[endFadeValue]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[End value between -1 and 1 of the fading over generator length (other value
+						ranges can used).]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></generatorClassName>
+			<name><![CDATA[Mixer]]></name>
+			<description><![CDATA[Mixes multiple signal input lines and scale them with a volume.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[volume]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The volume of the output singal between 0 and 1 (average is calculated if
+						more then one volume is connected).]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signal]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The input signal between -1 and 1 (average is calculated if more then one
+						volume is connected).]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.MultiplierGenerator]]></generatorClassName>
+			<name><![CDATA[Multiplier]]></name>
+			<description><![CDATA[Multiply multiple signal input lines and multiply them with a multiplier.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[multiplier]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The volume of the output singal between 0 and 1 (average is calculated if
+						more then one volume is connected).]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signal]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The input signal between -1 and 1 (average is calculated if more then one
+						volume is connected).]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></generatorClassName>
+			<name><![CDATA[Output]]></name>
+			<description><![CDATA[The input signal is audible at the audio hardware.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[signal]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[Is a signal between -1 and 1 send to output speakers.]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.SinusGenerator]]></generatorClassName>
+			<name><![CDATA[Sinus]]></name>
+			<description><![CDATA[Generates a sinus signal with a specified frequency and amplidude.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[signalFrequency]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[1.0]]></defaultValue>
+					<description><![CDATA[Frequency of the signal in oscillations per second.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signalAmplitude]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[1.0]]></defaultValue>
+					<description><![CDATA[Amplidude of the signal between 0 and 1.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signalShift]]></name>
+					<type><![CDATA[3]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[0]]></countMax>
+					<defaultValue><![CDATA[0.0]]></defaultValue>
+					<description><![CDATA[The offset of the sinus between -1 and 1 (0 is no shift, 0.5 is shifting a
+						half oscillation).]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.RectangleGenerator]]></generatorClassName>
+			<name><![CDATA[Rectangle]]></name>
+			<description><![CDATA[Generates a rectangle signal with a specified frequency and amplidude.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[signalFrequency]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[1.0]]></defaultValue>
+					<description><![CDATA[Frequency of the signal in oscillations per second.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signalAmplitude]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[1.0]]></defaultValue>
+					<description><![CDATA[Amplidude of the signal between 0 and 1.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signalShift]]></name>
+					<type><![CDATA[3]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[0]]></countMax>
+					<defaultValue><![CDATA[0.0]]></defaultValue>
+					<description><![CDATA[The offset of the rectangle between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.CutGenerator]]></generatorClassName>
+			<name><![CDATA[Cut]]></name>
+			<description><![CDATA[Cut the input singnal to the given minimum and maximum values.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[signalMaximum]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[1.0]]></defaultValue>
+					<description><![CDATA[Mamximum of the signal value.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signalMinimum]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[-1.0]]></defaultValue>
+					<description><![CDATA[Minimum of the signal value.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signal]]></name>
+					<type><![CDATA[3]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[0.0]]></defaultValue>
+					<description><![CDATA[Signal value.]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.WaveGenerator]]></generatorClassName>
+			<name><![CDATA[Wave File]]></name>
+			<description><![CDATA[Plays a Wave file from file system.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[fileName]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[Is the file name of a .WAV file.]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ASRPulseGenerator]]></generatorClassName>
+			<name><![CDATA[ASRPulse]]></name>
+			<description><![CDATA[Generates a pulse signal with a specified frequency and amplidude and puls shape.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[signalFrequency]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[1.0]]></defaultValue>
+					<description><![CDATA[Frequency of the pulse in oscillations per second.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signalAmplitude]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[1.0]]></defaultValue>
+					<description><![CDATA[Amplidude of the pulse between 0 and 1.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[attackTime]]></name>
+					<type><![CDATA[3]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[0.1]]></defaultValue>
+					<description><![CDATA[The attack time of the pulse in percent between 0.0 and 1.0.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[sustainTime]]></name>
+					<type><![CDATA[4]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[0.3]]></defaultValue>
+					<description><![CDATA[The sustain time of the pulse in percent between 0.0 and 1.0.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[releaseTime]]></name>
+					<type><![CDATA[5]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue><![CDATA[0.2]]></defaultValue>
+					<description><![CDATA[The release time of the pulse in percent between 0.0 and 1.0.]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.WhiteNoiseGenerator]]></generatorClassName>
+			<name><![CDATA[White Gaussian Noise]]></name>
+			<description><![CDATA[Generate White Gaussian Noise with variance and mean.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[variance]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The variance.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[mean]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The mean.]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.PinkNoiseGenerator]]></generatorClassName>
+			<name><![CDATA[Pink Noise]]></name>
+			<description><![CDATA[Generate White Gaussian Noise with variance and mean.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[variance]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The variance.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[mean]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The mean.]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.PinkNoise2Generator]]></generatorClassName>
+			<name><![CDATA[Pink Noise 2]]></name>
+			<description><![CDATA[Generate White Gaussian Noise with variance and mean.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[variance]]></name>
+					<type><![CDATA[2]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The variance.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[mean]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The mean.]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[alpha]]></name>
+					<type><![CDATA[3]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[The alpha.]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.TanhGenerator]]></generatorClassName>
+			<name><![CDATA[tanh]]></name>
+			<description><![CDATA[Math.tanh Generator.]]></description>
+			<inputTypes>
+				<inputType>
+					<name><![CDATA[signal]]></name>
+					<type><![CDATA[1]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[Is a signal between -1 and 1 send to output speakers.]]></description>
+				</inputType>
+			</inputTypes>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#Main-Modul]]></generatorClassName>
+			<name><![CDATA[Main-Modul]]></name>
+			<description><![CDATA[Manages a Group of other generators.]]></description>
+			<isMain><![CDATA[true]]></isMain>
+			<inputTypes />
+			<generators>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></type>
+					<name><![CDATA[output]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[5.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[mixer]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></type>
+					<name><![CDATA[mixer]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[5.0]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[0.5]]></value>
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[b1]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[b2]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#base drum]]></type>
+					<name><![CDATA[b1]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#base drum]]></type>
+					<name><![CDATA[b2]]></name>
+					<startTime><![CDATA[1.0]]></startTime>
+					<endTime><![CDATA[2.0]]></endTime>
+				</generator>
+			</generators>
+			<tracks>
+				<track>
+					<generatorName><![CDATA[output]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[mixer]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[b1]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[b2]]></generatorName>
+				</track>
+			</tracks>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#h1]]></generatorClassName>
+			<name><![CDATA[h1]]></name>
+			<description><![CDATA[Manages a Group of other generators.]]></description>
+			<inputTypes />
+			<generators>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></type>
+					<name><![CDATA[out]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[f]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></type>
+					<name><![CDATA[f]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[f1in]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[f12]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[f13]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[f14]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[f15]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[f16]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<name><![CDATA[f1in]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[0.2]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[1.0]]></value>
+							<stringValue><![CDATA[1]]></stringValue>
+						</input>
+						<input>
+							<type><![CDATA[2]]></type>
+							<value><![CDATA[0.4]]></value>
+							<stringValue><![CDATA[0.4]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<name><![CDATA[f12]]></name>
+					<startTime><![CDATA[0.2]]></startTime>
+					<endTime><![CDATA[0.4]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[0.4]]></value>
+							<stringValue><![CDATA[0.4]]></stringValue>
+						</input>
+						<input>
+							<type><![CDATA[2]]></type>
+							<value><![CDATA[0.2]]></value>
+							<stringValue><![CDATA[0.2]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<name><![CDATA[f13]]></name>
+					<startTime><![CDATA[0.4]]></startTime>
+					<endTime><![CDATA[0.6]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[2]]></type>
+							<value><![CDATA[0.3]]></value>
+							<stringValue><![CDATA[0.3]]></stringValue>
+						</input>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[0.2]]></value>
+							<stringValue><![CDATA[0.2]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<name><![CDATA[f14]]></name>
+					<startTime><![CDATA[0.6]]></startTime>
+					<endTime><![CDATA[0.7]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[0.3]]></value>
+							<stringValue><![CDATA[0.3]]></stringValue>
+						</input>
+						<input>
+							<type><![CDATA[2]]></type>
+							<value><![CDATA[0.5]]></value>
+							<stringValue><![CDATA[0.5]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<name><![CDATA[f15]]></name>
+					<startTime><![CDATA[0.7]]></startTime>
+					<endTime><![CDATA[0.8]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[0.5]]></value>
+							<stringValue><![CDATA[0.5]]></stringValue>
+						</input>
+						<input>
+							<type><![CDATA[2]]></type>
+							<value><![CDATA[0.2]]></value>
+							<stringValue><![CDATA[0.2]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<name><![CDATA[f16]]></name>
+					<startTime><![CDATA[0.8]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[0.2]]></value>
+							<stringValue><![CDATA[0.2]]></stringValue>
+						</input>
+						<input>
+							<type><![CDATA[2]]></type>
+							<value><![CDATA[0.0]]></value>
+							<stringValue><![CDATA[0]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+			</generators>
+			<tracks>
+				<track>
+					<generatorName><![CDATA[out]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[f]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[f1in]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[f12]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[f13]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[f14]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[f15]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[f16]]></generatorName>
+				</track>
+			</tracks>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#h2]]></generatorClassName>
+			<name><![CDATA[h2]]></name>
+			<description><![CDATA[Manages a Group of other generators.]]></description>
+			<inputTypes />
+			<generators>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></type>
+					<name><![CDATA[h]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[m]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></type>
+					<name><![CDATA[m]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[h1]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[h2]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[h3]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<name><![CDATA[h1]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[0.3]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[1.0]]></value>
+							<stringValue><![CDATA[1]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<name><![CDATA[h2]]></name>
+					<startTime><![CDATA[0.3]]></startTime>
+					<endTime><![CDATA[0.6]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[2]]></type>
+							<value><![CDATA[1.0]]></value>
+							<stringValue><![CDATA[1]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<name><![CDATA[h3]]></name>
+					<startTime><![CDATA[0.6]]></startTime>
+					<endTime><![CDATA[0.8]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[1.0]]></value>
+							<stringValue><![CDATA[1]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+			</generators>
+			<tracks>
+				<track>
+					<generatorName><![CDATA[h]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[m]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[h1]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[h2]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[h3]]></generatorName>
+				</track>
+			</tracks>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#s1]]></generatorClassName>
+			<name><![CDATA[s1]]></name>
+			<description><![CDATA[Manages a Group of other generators.]]></description>
+			<inputTypes />
+			<generators>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></type>
+					<name><![CDATA[out]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[mix]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></type>
+					<name><![CDATA[mix]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[s]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<generatorName><![CDATA[sth]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[0.5]]></value>
+							<stringValue><![CDATA[.5]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.TanhGenerator]]></type>
+					<name><![CDATA[sth]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[s]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.SinusGenerator]]></type>
+					<name><![CDATA[s]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[mu]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.MultiplierGenerator]]></type>
+					<name><![CDATA[mu]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<type><![CDATA[1]]></type>
+							<value><![CDATA[150.0]]></value>
+							<stringValue><![CDATA[150]]></stringValue>
+						</input>
+						<input>
+							<generatorName><![CDATA[h1]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#h1]]></type>
+					<name><![CDATA[h1]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+				</generator>
+			</generators>
+			<tracks>
+				<track>
+					<generatorName><![CDATA[out]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[mix]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[sth]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[s]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[mu]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[h1]]></generatorName>
+				</track>
+			</tracks>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#base drum]]></generatorClassName>
+			<name><![CDATA[base drum]]></name>
+			<description><![CDATA[Manages a Group of other generators.]]></description>
+			<inputTypes />
+			<generators>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></type>
+					<name><![CDATA[out]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[m]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></type>
+					<name><![CDATA[m]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[s1]]></generatorName>
+							<type><![CDATA[2]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#s1]]></type>
+					<name><![CDATA[s1]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+				</generator>
+			</generators>
+			<tracks>
+				<track>
+					<generatorName><![CDATA[out]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[m]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[s1]]></generatorName>
+				</track>
+			</tracks>
+		</generatorType>
+		<generatorType>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#s2]]></generatorClassName>
+			<name><![CDATA[s2]]></name>
+			<description><![CDATA[Manages a Group of other generators.]]></description>
+			<inputTypes />
+			<generators>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></type>
+					<name><![CDATA[out]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[s2]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.SinusGenerator]]></type>
+					<name><![CDATA[s2]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[m]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.MultiplierGenerator]]></type>
+					<name><![CDATA[m]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+					<inputs>
+						<input>
+							<generatorName><![CDATA[h1]]></generatorName>
+							<type><![CDATA[1]]></type>
+							<value />
+							<stringValue />
+						</input>
+						<input>
+							<type><![CDATA[2]]></type>
+							<value><![CDATA[2.1]]></value>
+							<stringValue><![CDATA[2.1]]></stringValue>
+						</input>
+						<input>
+							<type><![CDATA[2]]></type>
+							<value><![CDATA[300.0]]></value>
+							<stringValue><![CDATA[300.0]]></stringValue>
+						</input>
+					</inputs>
+				</generator>
+				<generator>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#h1]]></type>
+					<name><![CDATA[h1]]></name>
+					<startTime><![CDATA[0.0]]></startTime>
+					<endTime><![CDATA[1.0]]></endTime>
+				</generator>
+			</generators>
+			<tracks>
+				<track>
+					<generatorName><![CDATA[out]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[s2]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[m]]></generatorName>
+				</track>
+				<track>
+					<generatorName><![CDATA[h1]]></generatorName>
+				</track>
+			</tracks>
+		</generatorType>
+	</generatorTypes>
+</noise>

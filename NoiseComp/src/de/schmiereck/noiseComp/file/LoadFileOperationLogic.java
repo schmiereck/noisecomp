@@ -416,6 +416,11 @@ public class LoadFileOperationLogic
 			
 			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorType);
 			
+			if (generatorTypeData == null)
+			{
+				throw new RuntimeException("Unknown Generator-Type \"" + generatorType + "\".");
+			}
+			
 			Generator generator;
 			
 			generator = generatorTypeData.createGeneratorInstance(generatorName, frameRate); //, parentModulGenerator);

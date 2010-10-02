@@ -908,10 +908,31 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	{
 		// Einer der überwachten Inputs hat sich geändert:
 
-		this.getGeneratorChangeObserver().changedEvent(this, 
-//		                                    		   this.getStartTimePos() + startTimePos, 
-//		                                    		   this.getStartTimePos() + endTimePos);
-													   startTimePos, 
-													   endTimePos);
+		if (generator == this)
+		{
+			throw new RuntimeException("Generator \"" + generator + "\" notify himself of changes.");
+		}
+		
+		try
+		{
+			this.getGeneratorChangeObserver().changedEvent(this, 
+//		    	                                		   this.getStartTimePos() + startTimePos, 
+//		        	                            		   this.getStartTimePos() + endTimePos);
+			                                               startTimePos, 
+			                                               endTimePos);
+		}
+		catch (Throwable ex)
+		{
+			throw new RuntimeException("Notify Generator \"" + generator + "\" changed.", ex);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return "{" + super.toString() + ": name: \"" + this.name + "\"}";
 	}
 }
