@@ -478,7 +478,7 @@ implements Scrollable//, MouseMotionListener
 			ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
 			
 			float frameRate = generator.getSoundFrameRate();
-			float frameStep = timeLength / (frameRate / 50.0F);
+			float frameStep = timeLength / (frameRate / 25.0F);
 	
 			float pointSizeX = (float)(1.0F / at.getScaleX());
 			float pointSizeY = (float)(1.0F / at.getScaleY());

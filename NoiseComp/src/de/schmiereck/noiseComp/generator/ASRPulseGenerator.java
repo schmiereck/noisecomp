@@ -7,12 +7,12 @@ package de.schmiereck.noiseComp.generator;
 ASR:
 
 Attack
-Zeit die ein Signal benötigt, um von Wert Null auf die max. Amplitude (Lautstärke) zu gelangen; Einschwingphase einer Voice
+Zeit die ein Signal benï¿½tigt, um von Wert Null auf die max. Amplitude (Lautstï¿½rke) zu gelangen; Einschwingphase einer Voice
 Anschlag: Ansteigen auf hohen Wert.
 
 Sustain
 Voice aushalten
-Halten des Tones auf Lautstärke.
+Halten des Tones auf Lautstï¿½rke.
 
 Release
 Loslassen der Taste, Nachklingen einer Voice
@@ -55,70 +55,70 @@ extends Generator
 	{
 		//----------------------------------------------------------------------
 		float signalFrequency;
-		try
-		{
+//		try
+//		{
 			signalFrequency = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			signalFrequency = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalFrequency = 0.0F;
+//		}
 
 		//----------------------------------------------------------------------
 		float signalAmplitude;
-		try
-		{
+//		try
+//		{
 			// Amplitude des gerade generierten Sinus-Siganls.
 			signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			signalAmplitude = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalAmplitude = 0.0F;
+//		}
 		
 		//----------------------------------------------------------------------
 		float attackTime;
-		try
-		{
+//		try
+//		{
 			attackTime = this.calcInputMonoValue(framePosition, 
 												   this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ATTACK_TIME), 
 												   parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			attackTime = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			attackTime = 0.0F;
+//		}
 		//----------------------------------------------------------------------
 		float sustainTime;
-		try
-		{
+//		try
+//		{
 			sustainTime = this.calcInputMonoValue(framePosition, 
 													this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SUSTAIN_TIME), 
 													parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			sustainTime = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			sustainTime = 0.0F;
+//		}
 		//----------------------------------------------------------------------
 		float releaseTime;
-		try
-		{
+//		try
+//		{
 			releaseTime = this.calcInputMonoValue(framePosition, 
 													this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_RELEASE_TIME), 
 													parentModulGenerator);
 		
-		}
-		catch (NoInputSignalException ex)
-		{
-			releaseTime = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			releaseTime = 0.0F;
+//		}
 		//----------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
 		
 		
-		// Länge einer Sinus-Periode in Frames.
+		// LÃ¤nge einer Sinus-Periode in Frames.
 		int periodLengthInFrames = Math.round(this.getSoundFrameRate() / signalFrequency);
 		
 		// Die Position im Puls in Prozent als Wert zwischen 0.0 und 1.0.

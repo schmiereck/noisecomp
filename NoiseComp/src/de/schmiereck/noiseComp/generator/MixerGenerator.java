@@ -105,59 +105,20 @@ extends Generator
 						{
 							case INPUT_TYPE_VOLUME:
 							{
-								try
-								{
+//								try
+//								{
 									float value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
 									
-									//volume += value;
-									//valumeCnt++;
-									
-									//das ist doof: wenn kein input da ist, sollte er auch nicht benutzt werden...
-									
-									volume *= value;
-								}
-								catch (NoInputSignalException ex)
-								{
-								}
-								/*
-								GeneratorInterface volumeInputGenerator = inputData.getInputGenerator();
-								
-								// Found Input-Generator ?
-								if (volumeInputGenerator != null)
-								{	
-									SoundSample volumeInputSample = volumeInputGenerator.generateFrameSample(framePosition);
-									
-									if (volumeInputSample != null)
+
+									// Kein input da?
+									if (Float.isNaN(value) == false)
 									{
-										value = volumeInputSample.getMonoValue();
+										volume *= value;
 									}
-									else
-									{
-										// Found no input signal:
-										
-										value = 0.0F;
-									}
-								}
-								else
-								{	
-									// Found no Input-Generator:
-									
-									Float inputValue = inputData.getInputValue();
-									
-									// Found constant input value ?
-									if (inputValue != null)
-									{
-										value = inputValue.floatValue();
-									}
-									else
-									{	
-										// Found no input value:
-										// Use Default Value of Input type:
-										
-										value = this.getInputDefaultValueByInputType(inputData.getInputType());
-									}
-								}
-								*/
+//								}
+//								catch (NoInputSignalException ex)
+//								{
+//								}
 								break;
 							}
 							case INPUT_TYPE_SIGNAL:

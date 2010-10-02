@@ -31,44 +31,44 @@ extends Generator
 	{
 		//----------------------------------------------------------------------
 		float signalFrequency;
-		try
-		{
+//		try
+//		{
 			signalFrequency = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			signalFrequency = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalFrequency = 0.0F;
+//		}
 
 		//----------------------------------------------------------------------
 		float signalAmplitude;
-		try
-		{
+//		try
+//		{
 			// Amplitude des gerade generierten Sinus-Siganls.
 			signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			signalAmplitude = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalAmplitude = 0.0F;
+//		}
 		
 		//----------------------------------------------------------------------
 		float signalShift;
-		try
-		{
+//		try
+//		{
 			// Versatz des Sinus-Siganls um eine Schwingung.
 			signalShift = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			signalShift = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalShift = 0.0F;
+//		}
 		
 		//----------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
 		
-		// Länge einer Sinus-Periode in Frames.
+		// Lï¿½nge einer Sinus-Periode in Frames.
 		int periodLengthInFrames = Math.round(this.getSoundFrameRate() / signalFrequency);
 		float	periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
 		//float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;

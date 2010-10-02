@@ -8,14 +8,14 @@ package de.schmiereck.noiseComp.generator;
  * Frequenz des generierten Sinus-Signals.
  *	 Frequenz  Note  Instrument  
  *	 16.5Hz  C2  Taste C im 32' der Orgel 
- *	 33Hz  C1  C-Saite bei fünfseitigen Kontrabässen 
+ *	 33Hz  C1  C-Saite bei fï¿½nfseitigen Kontrabï¿½ssen 
  *	 66Hz  C  C-Saite der Violoncelli 
  *	 131Hz  c  C-Saite der Bratschen 
  *	 262Hz  c'  tiefstes c der Geigen 
- *	 524Hz  c''  hohes c der Tenöre 
+ *	 524Hz  c''  hohes c der Tenï¿½re 
  *	 1047Hz  c'''  hohes c der Soprane 
- *	 2093Hz  c4  höchstes c der Geigen 
- *	 4185Hz  c5  höchstes c der Piccolo-Flöten
+ *	 2093Hz  c4  hï¿½chstes c der Geigen 
+ *	 4185Hz  c5  hï¿½chstes c der Piccolo-Flï¿½ten
  * 
  * @author smk
  * @version 21.01.2004
@@ -44,45 +44,45 @@ extends Generator
 	{
 		//----------------------------------------------------------------------
 		float signalFrequency;
-		try
-		{
+//		try
+//		{
 			signalFrequency = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			signalFrequency = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalFrequency = 0.0F;
+//		}
 
 		//----------------------------------------------------------------------
 		float signalAmplitude;
-		try
-		{
+//		try
+//		{
 			// Amplitude des gerade generierten Sinus-Siganls.
 			signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			signalAmplitude = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalAmplitude = 0.0F;
+//		}
 		
 		//----------------------------------------------------------------------
 		float signalShift;
-		try
-		{
+//		try
+//		{
 			// Versatz des Sinus-Siganls um eine Schwingung.
 			signalShift = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			signalShift = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalShift = 0.0F;
+//		}
 		
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
 		
-		// Länge einer Sinus-Periode in Frames.
+		// LÃ¤nge einer Sinus-Periode in Frames.
 		int periodLengthInFrames = Math.round(this.getSoundFrameRate() / signalFrequency);
-		float	periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
+		float periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
 		float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
 		
 		//float value = ((float)Math.sin(frameTime * ((2.0F + signalShift) * Math.PI))) * amplitude;

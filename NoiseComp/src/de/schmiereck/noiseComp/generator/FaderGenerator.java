@@ -53,14 +53,14 @@ extends Generator
 	{
 		//----------------------------------------------------------------------
 		float endFadeValue;
-		try
-		{
+//		try
+//		{
 			endFadeValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_END_VALUE), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			endFadeValue = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			endFadeValue = 0.0F;
+//		}
 		/*
 		{
 			InputData endFadeValueInputData = this.searchInputByType(INPUT_TYPE_END_VALUE);
@@ -112,14 +112,14 @@ extends Generator
 	{
 		//----------------------------------------------------------------------
 		float startFadeValue;
-		try
-		{
+//		try
+//		{
 			startFadeValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_START_VALUE), parentModulGenerator);
-		}
-		catch (NoInputSignalException ex)
-		{
-			startFadeValue = 0.0F;
-		}
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			startFadeValue = 0.0F;
+//		}
 		/*
 		{
 			InputData startFadeValueInputData = this.searchInputByType(INPUT_TYPE_START_VALUE);

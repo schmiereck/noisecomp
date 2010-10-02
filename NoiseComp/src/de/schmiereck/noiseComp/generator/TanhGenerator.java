@@ -61,8 +61,11 @@ extends Generator
 		float signalLeft = signalSample.getLeftValue();
 		float signalRight = signalSample.getRightValue();
 		
-		soundSample.setStereoValues((float)Math.tanh(signalLeft), 
-		                            (float)Math.tanh(signalRight));
+		double left = Math.tanh(signalLeft * 2.0D);
+		double right = Math.tanh(signalRight * 2.0D);
+		
+		soundSample.setStereoValues((float)left, 
+		                            (float)right);
 		
 		//==========================================================================================
 	}

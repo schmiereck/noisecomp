@@ -73,15 +73,15 @@ extends Generator
 						{
 							case INPUT_TYPE_MULTIPLIER:
 							{
-								try
-								{
+//								try
+//								{
 									float value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
 									
 									multiplier *= value;
-								}
-								catch (NoInputSignalException ex)
-								{
-								}
+//								}
+//								catch (NoInputSignalException ex)
+//								{
+//								}
 								break;
 							}
 							case INPUT_TYPE_SIGNAL:

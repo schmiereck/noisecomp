@@ -84,43 +84,43 @@ extends Generator
 							case INPUT_TYPE_MEAN:
 							{
 								float value;
-								try
-								{
+//								try
+//								{
 									value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
 									
 									mean += value;
-								}
-								catch (NoInputSignalException ex)
-								{
-								}
+//								}
+//								catch (NoInputSignalException ex)
+//								{
+//								}
 								break;
 							}
 							case INPUT_TYPE_VARIANCE:
 							{
 								float value;
-								try
-								{
+//								try
+//								{
 									value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
 									
 									variance += value;
-								}
-								catch (NoInputSignalException ex)
-								{
-								}
+//								}
+//								catch (NoInputSignalException ex)
+//								{
+//								}
 								break;
 							}
 							case INPUT_TYPE_ALPHA:
 							{
 								float value;
-								try
-								{
+//								try
+//								{
 									value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
 									
 									alpha += value;
-								}
-								catch (NoInputSignalException ex)
-								{
-								}
+//								}
+//								catch (NoInputSignalException ex)
+//								{
+//								}
 								break;
 							}
 							default:

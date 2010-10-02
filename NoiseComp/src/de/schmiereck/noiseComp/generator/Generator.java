@@ -665,7 +665,7 @@ implements GeneratorInterface,
 	}
 	
 	protected float calcInputMonoValue(long framePosition, InputTypeData inputTypeData, ModulGenerator parentModulGenerator) //, float defaultValue)
-	throws NoInputSignalException
+//	throws NoInputSignalException
 	{
 		float value;
 		
@@ -684,9 +684,18 @@ implements GeneratorInterface,
 		return value;
 	}
 
+	/**
+	 * @param framePosition
+	 * @param inputData
+	 * @param parentModulGenerator
+	 * @return
+	 * 			the value.<br/>
+	 * 			{@link Float#NaN} if no input signal found.
+
+	 */
 	protected float calcInputMonoValue(long framePosition, InputData inputData, 
 									   ModulGenerator parentModulGenerator)
-	throws NoInputSignalException
+//	throws NoInputSignalException
 	{
 		float value;
 
@@ -707,8 +716,8 @@ implements GeneratorInterface,
 			{
 				// Found no input signal:
 				
-				throw new NoInputSignalException();
-				//value = 0.0F; // this.getInputDefaultValueByInputType(inputType);
+//				throw new NoInputSignalException();
+				value = Float.NaN; // this.getInputDefaultValueByInputType(inputType);
 			}
 		}
 		else
@@ -814,6 +823,12 @@ implements GeneratorInterface,
 		return ret;
 	}
 
+	/**
+	 * @param inputTypeData
+	 * @return
+	 * 			the default value.<br/>
+	 * 			{@link Float#NaN} if no default input defined.
+	 */
 	private float getInputDefaultValueByInputType(InputTypeData inputTypeData)
 	{
 		float ret;
@@ -825,7 +840,7 @@ implements GeneratorInterface,
 		}
 		else
 		{	
-			ret = 0.0F;
+			ret = Float.NaN;
 		}
 		return ret;
 	}
