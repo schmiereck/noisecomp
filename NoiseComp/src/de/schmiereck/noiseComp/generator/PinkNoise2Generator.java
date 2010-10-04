@@ -23,6 +23,7 @@ extends Generator
 	public static final int	INPUT_TYPE_MEAN		= 1;
 	public static final int	INPUT_TYPE_VARIANCE	= 2;
 	public static final int	INPUT_TYPE_ALPHA	= 3;
+	public static final int	INPUT_TYPE_POLES	= 4;
 	
 	//**********************************************************************************************
 	// Fields:
@@ -123,6 +124,20 @@ extends Generator
 //								}
 								break;
 							}
+							case INPUT_TYPE_POLES:
+							{
+								float value;
+//								try
+//								{
+									value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
+									
+									poles += (int)Math.round(value);
+//								}
+//								catch (NoInputSignalException ex)
+//								{
+//								}
+								break;
+							}
 							default:
 							{
 								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
@@ -142,9 +157,16 @@ extends Generator
 		}
 		else
 		{
+			// Alpha changed?
 			if (this.pinkNoise.getAlpha() != alpha)
 			{
 				this.pinkNoise.setAlpha(alpha);
+			}
+			
+			// Poles changed?
+			if (this.pinkNoise.getPoles() != poles)
+			{
+				this.pinkNoise.setPoles(poles);
 			}
 		}
 		
@@ -162,7 +184,7 @@ extends Generator
 	
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(PinkNoise2Generator.class, "Pink Noise 2", "Generate White Gaussian Noise with variance and mean.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(PinkNoise2Generator.class, "Pink Noise 2", "Generate White Gaussian Noise with variance, mean, alpha and poles.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VARIANCE, "variance", -1, -1, "The variance.");
@@ -174,6 +196,10 @@ extends Generator
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_ALPHA, "alpha", -1, -1, "The alpha.");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_POLES, "poles", -1, -1, "The poles.");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

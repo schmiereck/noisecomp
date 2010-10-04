@@ -77,27 +77,36 @@ import java.util.Random;
  */
 public class PinkNoise 
 {
-	private final int poles;
-	private final double[] multipliers;
-	
-	private final double[] values;
+	//**********************************************************************************************
+	// Fields:
+
 	private final Random rnd;
+	private int poles;
+	private double[] multipliers;
+	
+	private double[] values;
 
 	/**
 	 * Exponent of the pink noise, 1/f^alpha.
 	 */
 	private double alpha;
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
+	 * Constructor.
+	 * 
 	 * Generate pink noise with alpha=1.0 using a five-pole IIR.
 	 */
 	public PinkNoise() 
 	{
-		this(1.0, 5, new Random());
+		this(1.0D, 5, new Random());
 	}
 	
-	
 	/**
+	 * Constructor.
+	 * 
 	 * Generate a specific pink noise using a five-pole IIR.
 	 * 
 	 * @param alpha  the exponent of the pink noise, 1/f^alpha.
@@ -109,8 +118,9 @@ public class PinkNoise
 		this(alpha, 5, new Random());
 	}
 	
-	
 	/**
+	 * Constructor.
+	 * 
 	 * Generate pink noise specifying alpha and the number of poles.
 	 * The larger the number of poles, the lower are the lowest
 	 * frequency components that are amplified. 
@@ -124,9 +134,10 @@ public class PinkNoise
 	{
 		this(alpha, poles, new Random());
 	}
-	
 
 	/**
+	 * Constructor.
+	 * 
 	 * Generate pink noise from a specific randomness source
 	 * specifying alpha and the number of poles.  The larger the
 	 * number of poles, the lower are the lowest frequency components
@@ -140,24 +151,40 @@ public class PinkNoise
 	 */
 	public PinkNoise(double alpha, int poles, Random random) 
 	{
-		if (alpha < 0 || alpha > 2) 
+		if (alpha < 0.0D || alpha > 2.0D) 
 		{
-			throw new IllegalArgumentException("Invalid pink noise alpha \"" + alpha + "\"");
+			throw new IllegalArgumentException("Invalid pink noise alpha \"" + alpha + "\".");
 		}
 
 		this.rnd = random;
+		this.alpha = alpha;
+		
+		this.setPoles(poles);
+	}
+	
+	/**
+	 * @param poles
+	 * 			to set {@link #poles} and recalc {@link #multipliers}, {@link #values} and random-history.
+	 */
+	public void setPoles(int poles)
+	{
+		//==========================================================================================
 		this.poles = poles;
 		this.multipliers = new double[poles];
 		this.values = new double[poles];
-		this.setAlpha(alpha);
 		
+		//------------------------------------------------------------------------------------------
+		this.recalcMultipliers();
+		
+		//------------------------------------------------------------------------------------------
 		// Fill the history with random values
 		for (int i = 0; i < 5 * poles; i++)
 		{
 			this.nextValue();
 		}
+		
+		//==========================================================================================
 	}
-	
 	
 	/**
 	 * Return the next pink noise sample.
@@ -166,20 +193,62 @@ public class PinkNoise
 	 */
 	public double nextValue() 
 	{
+		//==========================================================================================
 		// The following may be changed to  rnd.nextDouble()-0.5
 		// if strict Gaussian distribution of resulting values is not
 		// required.
 		double x = this.rnd.nextGaussian();
 		
-		for (int i=0; i < this.poles; i++) {
+		for (int i=0; i < this.poles; i++) 
+		{
 			x -= this.multipliers[i] * this.values[i];
 		}
 		System.arraycopy(this.values, 0, this.values, 1, this.values.length-1);
 		this.values[0] = x;
 		
+		//==========================================================================================
 		return x;
 	}
-	
+
+	/**
+	 * @return 
+	 * 			returns the {@link #alpha}.
+	 */
+	public double getAlpha()
+	{
+		return this.alpha;
+	}
+
+	/**
+	 * @param alpha 
+	 * 			to set {@link #alpha} and recalc {@link #multipliers}.
+	 */
+	public void setAlpha(double alpha)
+	{
+		//==========================================================================================
+		this.alpha = alpha;
+
+		//------------------------------------------------------------------------------------------
+		this.recalcMultipliers();
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Recalc {@link #multipliers} after setting {@link #alpha} or {@link #poles}.
+	 */
+	private void recalcMultipliers()
+	{
+		//==========================================================================================
+		double a = 1.0D;
+		for (int i=0; i < this.poles; i++) 
+		{
+			a = (i - this.alpha/2.0D) * a / (i+1.0D);
+			this.multipliers[i] = a;
+		}
+		
+		//==========================================================================================
+	}
 
 	/**
 	 * A main method to demonstrate the functionality.  The program is used as:
@@ -193,6 +262,7 @@ public class PinkNoise
 	 */
 	public static void main(String[] arg) 
 	{
+		//==========================================================================================
 		PinkNoise source;
 
 		int n;
@@ -229,33 +299,15 @@ public class PinkNoise
 				System.out.println(source.nextValue());
 			}
 		}
+		//==========================================================================================
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #alpha}.
+	 * 			returns the {@link #poles}.
 	 */
-	public double getAlpha()
+	public int getPoles()
 	{
-		return this.alpha;
-	}
-
-	/**
-	 * @param alpha 
-	 * 			to set {@link #alpha}.
-	 */
-	public void setAlpha(double alpha)
-	{
-		//==========================================================================================
-		this.alpha = alpha;
-
-		//------------------------------------------------------------------------------------------
-		double a = 1;
-		for (int i=0; i < poles; i++) 
-		{
-			a = (i - alpha/2) * a / (i+1);
-			this.multipliers[i] = a;
-		}
-		//==========================================================================================
+		return this.poles;
 	}
 }

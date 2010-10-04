@@ -35,13 +35,13 @@ TODO:
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #56:	IMPROVEMENT: Import noiseComp.xml files.
 #58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
-#59:	
+#59:	BUG: Seems to be a bug, if you increase the frequence of an sinus after decreasing the frequency.
+#60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
+#61:	BUG: Sinus with increasing frequence will produce may much to high frequences.
+#62:	
 
 WORK:
 =====
-#49:	IMPROVEMENT: Add Noise-generator.
-		-> Is working.
-		-> PinkNoise2 needs pole-input.
 
 DONE:
 =====
@@ -72,3 +72,6 @@ DONE:
 #24:	IMPROVEMENT: Implements Timeline-Select Zoom function.
 #28:	BUG: Update Timeline-Select Scroll Pane size depending on displayed timelines.
 #57:	IMPROVEMENT: Add TanhGenerator.
+#49:	IMPROVEMENT: Add Noise-generator.
+		-> Is working.
+		-> Add PinkNoise2 pole-input.
