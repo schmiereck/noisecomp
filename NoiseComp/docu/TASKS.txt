@@ -37,11 +37,12 @@ TODO:
 #58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
 #59:	BUG: Seems to be a bug, if you increase the frequence of an sinus after decreasing the frequency.
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
-#61:	BUG: Sinus with increasing frequence will produce may much to high frequences.
 #62:	
 
 WORK:
 =====
+#61:	BUG: Sinus with decreasing frequence will may produce much to high frequences.
+		-> http://forums.creativecow.net/thread/227/13104 needs integral of the signalFrequency over time this needs a working buffer system for generators
 
 DONE:
 =====

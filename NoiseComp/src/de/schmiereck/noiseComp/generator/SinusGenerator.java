@@ -23,10 +23,19 @@ package de.schmiereck.noiseComp.generator;
 public class SinusGenerator
 extends Generator
 {
+	//**********************************************************************************************
+	// Constants:
+
 	public static final int	INPUT_TYPE_FREQ		= 1;
 	public static final int	INPUT_TYPE_AMPL		= 2;
 	public static final int	INPUT_TYPE_SHIFT	= 3;
 	
+	//**********************************************************************************************
+	// Fields:
+
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
@@ -42,52 +51,50 @@ extends Generator
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
-		//----------------------------------------------------------------------
-		float signalFrequency;
-//		try
-//		{
-			signalFrequency = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			signalFrequency = 0.0F;
-//		}
+		//==========================================================================================
+//		long dt = (long)(1.0F / this.getSoundFrameRate()) + 2;
+//		
+//		//==========================================================================================
+//		float lastFignalFrequency = 
+//			this.calcInputMonoValue(framePosition - dt, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
+		
+		float signalFrequency = 
+			this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
 
-		//----------------------------------------------------------------------
-		float signalAmplitude;
-//		try
-//		{
-			// Amplitude des gerade generierten Sinus-Siganls.
-			signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), parentModulGenerator);
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			signalAmplitude = 0.0F;
-//		}
+		//------------------------------------------------------------------------------------------
+		// Amplitude des gerade generierten Sinus-Siganls.
+		float signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), parentModulGenerator);
 		
-		//----------------------------------------------------------------------
-		float signalShift;
-//		try
-//		{
-			// Versatz des Sinus-Siganls um eine Schwingung.
-			signalShift = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), parentModulGenerator);
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			signalShift = 0.0F;
-//		}
+		//------------------------------------------------------------------------------------------
+		// Versatz des Sinus-Siganls um eine Schwingung.
+		float signalShift = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), parentModulGenerator);
 		
+		//------------------------------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
 		
 		// Länge einer Sinus-Periode in Frames.
-		int periodLengthInFrames = Math.round(this.getSoundFrameRate() / signalFrequency);
-		float periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
-		float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
+		float periodLengthInFrames = Math.round(this.getSoundFrameRate() / signalFrequency);
+		float periodPosition = (float)(framePosition / periodLengthInFrames);
 		
-		//float value = ((float)Math.sin(frameTime * ((2.0F + signalShift) * Math.PI))) * amplitude;
+		float s = (float)(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI));
+		
+		float value = (float)(Math.sin(s) * signalAmplitude);
+//		float value = (float)(Math.sin(s * (periodPosition/periodLengthInFrames)) * signalAmplitude);
+//		float value = (float)(signalFrequency * Math.sin(frameTime*this.getSoundFrameRate()) * Math.cos(frameTime*this.getSoundFrameRate()) * signalAmplitude);
+		
+//		float value = ((float)Math.sin(signalFrequency * ((2.0F + signalShift) * Math.PI))) * signalAmplitude;
+		
+		// TODO http://forums.creativecow.net/thread/227/13104
+		// TODO needs integral of the signalFrequency over time
+		// TODO this needs a working buffer system for generators
+		
+//		float sum = lastFignalFrequency + signalFrequency;
+//
+//		float value = (float)(Math.sin(sum * (2.0F * Math.PI)) * signalAmplitude * dt);
 		
 		soundSample.setStereoValues(value, value);
+		//==========================================================================================
 	}
 	
 	/* (non-Javadoc)

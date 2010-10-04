@@ -110,7 +110,7 @@ extends Generator
 									float value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
 									
 
-									// Kein input da?
+									// Input da?
 									if (Float.isNaN(value) == false)
 									{
 										volume *= value;
