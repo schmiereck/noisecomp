@@ -17,9 +17,15 @@ package de.schmiereck.noiseComp.generator;
  */
 public class SoundSample
 {
+	//**********************************************************************************************
+	// Fields:
+	
 	private float leftValue;
 	private float rightValue;
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
@@ -201,10 +207,13 @@ public class SoundSample
 
 	/**
 	 * @param startSoundSample
+	 * 			is the start Sound Sample.
 	 * @param endSoundSample
+	 * 			is the end Sound Sample.
 	 * @param soundDivPos
-	 * 			between 0.0F and 1.0F
+	 * 			is the time position between the start and end sample between 0.0F and 1.0F
 	 * @return
+	 * 			the sample.
 	 */
 	public static SoundSample createInterpolate(SoundSample startSoundSample, 
 												SoundSample endSoundSample, 

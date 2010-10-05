@@ -24,6 +24,9 @@ public abstract class Generator
 implements GeneratorInterface,
 		   GeneratorChangeListenerInterface
 {
+	//**********************************************************************************************
+	// Fields:
+	
 	/**
 	 * Start time position in milli seconds.
 	 */
@@ -57,6 +60,9 @@ implements GeneratorInterface,
 	//private GeneratorBuffer	generatorBuffer = null;
 	
 	private GeneratorChangeObserver generatorChangeObserver = null;
+	
+	//**********************************************************************************************
+	// Functions:
 	
 	/**
 	 * Constructor.
