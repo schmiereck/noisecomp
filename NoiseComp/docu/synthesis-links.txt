@@ -26,4 +26,7 @@ noise synthesis
 http://www.ahristov.com/noise-explorer/
 http://www.dspguru.com/dsp/howtos/how-to-generate-white-gaussian-noise
 
-
+sinus synthesis
+===============
+http://forums.creativecow.net/thread/227/13104
+	Need integral of the input signalFrequency over time.

@@ -37,12 +37,18 @@ TODO:
 #58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
 #59:	BUG: Seems to be a bug, if you increase the frequence of an sinus after decreasing the frequency.
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
-#62:	
+#63:	
 
 WORK:
 =====
 #61:	BUG: Sinus with decreasing frequence will may produce much to high frequences.
-		-> http://forums.creativecow.net/thread/227/13104 needs integral of the signalFrequency over time this needs a working buffer system for generators
+		-> http://forums.creativecow.net/thread/227/13104 
+		Need integral of the input signalFrequency over time, this needs a working buffer system for generators.
+		Entweder ich integriere einen input-buffer mit integral-Funktion oder
+		ich lege fest, das ein Input von sinus immer nur von einem generator kommen kann (wie jetzt schon).
+		Ein Integral über mehrere Generatoren geht nicht, da mir der Wert des "vorherigen" fehlt.
+#62:	IMPROVEMENT: Because of BUG#61: Generate for every generator of a modul and the modules itself used for generate sample-sound playing a buffer hirarchy.
+		The buffer contains the samples and a integrated signal (maybe also a differetial) over time.
 
 DONE:
 =====

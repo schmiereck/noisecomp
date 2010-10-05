@@ -52,7 +52,7 @@ extends Generator
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
 	{
 		//==========================================================================================
-//		long dt = (long)(1.0F / this.getSoundFrameRate()) + 2;
+//		float dt = (1.0F / this.getSoundFrameRate());
 //		
 //		//==========================================================================================
 //		float lastFignalFrequency = 
