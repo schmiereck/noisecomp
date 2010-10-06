@@ -13,7 +13,7 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineGeneratorModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
@@ -83,11 +83,11 @@ public class TimelineEditController
 					Float generatorStartTimePos;
 					Float generatorEndTimePos;
 
-					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+					TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 					
-					if (timelineGeneratorModel != null)
+					if (timelineSelectEntryModel != null)
 					{
-						String name = timelineGeneratorModel.getName();
+						String name = timelineSelectEntryModel.getName();
 						
 						Generator generator = appController.retrieveGeneratorOfEditedModul(name);
 						
@@ -117,8 +117,8 @@ public class TimelineEditController
 						}
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						generatorName = name;
-						generatorStartTimePos = timelineGeneratorModel.getStartTimePos();
-						generatorEndTimePos = timelineGeneratorModel.getEndTimePos();
+						generatorStartTimePos = timelineSelectEntryModel.getStartTimePos();
+						generatorEndTimePos = timelineSelectEntryModel.getEndTimePos();
 					}
 					else
 					{
@@ -176,10 +176,10 @@ public class TimelineEditController
 		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
 //		TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-		TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+		TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 //		TimelineEditView timelineEditView = timelineEditController.getTimelineEditView();
 		
-		if (timelineGeneratorModel != null)
+		if (timelineSelectEntryModel != null)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			GeneratorTypeData generatorTypeData;
@@ -201,7 +201,7 @@ public class TimelineEditController
 			
 //			Generator generator = 
 //				appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
-			Timeline timeline = timelineGeneratorModel.getTimeline();
+			Timeline timeline = timelineSelectEntryModel.getTimeline();
 			
 			if (timeline == null)
 			{
@@ -254,11 +254,11 @@ public class TimelineEditController
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Timeline-Model:
 			
-			timelineGeneratorModel.setTimeline(timeline);
+			timelineSelectEntryModel.setTimeline(timeline);
 //			timelineGeneratorModel.setGeneratorTypeData(generatorTypeData);
-			timelineGeneratorModel.setName(generatorName);
-			timelineGeneratorModel.setStartTimePos(generatorStartTimePos);
-			timelineGeneratorModel.setEndTimePos(generatorEndTimePos);
+			timelineSelectEntryModel.setName(generatorName);
+			timelineSelectEntryModel.setStartTimePos(generatorStartTimePos);
+			timelineSelectEntryModel.setEndTimePos(generatorEndTimePos);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}

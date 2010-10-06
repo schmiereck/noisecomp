@@ -50,7 +50,7 @@ import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
-import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineGeneratorModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleController;
@@ -501,7 +501,7 @@ public class AppController
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
 					
-					TimelineGeneratorModel selectedTimelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+					TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Modul-Data:
@@ -513,9 +513,9 @@ public class AppController
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Timeline-Select-Model:
 					
-					timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(null);
+					timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(null);
 					
-					timelinesDrawPanelModel.removeTimelineGeneratorModel(selectedTimelineGeneratorModel);
+					timelinesDrawPanelModel.removeTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
@@ -532,7 +532,7 @@ public class AppController
 				public void actionPerformed(ActionEvent e)
 				{
 					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-//					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+//					TimelineSelectEntryModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
 					
 					ModulGeneratorTypeData editedModulGeneratorTypeData = getEditedModulGeneratorTypeData();
 					
@@ -820,7 +820,7 @@ public class AppController
 		TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
 		
 		//==========================================================================================
-		timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(null);
+		timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(null);
 
 		this.timelinesDrawPanelController.clearTimelineGenerators();
 		
@@ -845,14 +845,14 @@ public class AppController
 			{
 				Generator generator = timeline.getGenerator();
 				
-				TimelineGeneratorModel timelineGeneratorModel = 
-					new TimelineGeneratorModel(timeline,
+				TimelineSelectEntryModel timelineSelectEntryModel = 
+					new TimelineSelectEntryModel(timeline,
 					                           timelinePos,
 					                           generator.getName(),
 					                           generator.getStartTimePos(),
 					                           generator.getEndTimePos());
 				
-				this.timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
+				this.timelinesDrawPanelController.addTimelineSelectEntryModel(timelineSelectEntryModel);
 				
 				timelinePos++;
 			}

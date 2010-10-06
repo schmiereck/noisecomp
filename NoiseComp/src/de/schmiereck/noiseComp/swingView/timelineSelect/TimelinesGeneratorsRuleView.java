@@ -101,7 +101,7 @@ extends JComponent
 		
 		int generatorSizeY = timelinesScrollPanelModel.getGeneratorSizeY();
 
-		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesGeneratorsRuleModel.getTimelineGeneratorModels();
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesGeneratorsRuleModel.getTimelineSelectEntryModels();
 		
 		// Use clipping bounds to calculate first and last tick locations.
 		int start = (drawHere.y / generatorSizeY) * generatorSizeY;
@@ -134,13 +134,13 @@ extends JComponent
 			String generatorName;
 			String generatorTypeName;
 			
-			if (generatorPos < timelineGeneratorModels.size())
+			if (generatorPos < timelineSelectEntryModels.size())
 			{
-				TimelineGeneratorModel timelineGeneratorModel = timelineGeneratorModels.get(generatorPos);
+				TimelineSelectEntryModel timelineSelectEntryModel = timelineSelectEntryModels.get(generatorPos);
 				
-				generatorName = timelineGeneratorModel.getName();
+				generatorName = timelineSelectEntryModel.getName();
 
-				Timeline timeline = timelineGeneratorModel.getTimeline();
+				Timeline timeline = timelineSelectEntryModel.getTimeline();
 				
 				if (timeline != null)
 				{

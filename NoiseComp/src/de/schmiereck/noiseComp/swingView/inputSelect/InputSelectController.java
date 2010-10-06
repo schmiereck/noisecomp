@@ -11,7 +11,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineGeneratorModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 
 /**
@@ -67,12 +67,12 @@ public class InputSelectController
 				{
 					Iterator<InputData> inputsIterator;
 					
-					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+					TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 					
-					if (timelineGeneratorModel != null)
+					if (timelineSelectEntryModel != null)
 					{
 						Generator generator = 
-							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
+							appController.retrieveGeneratorOfEditedModul(timelineSelectEntryModel.getName());
 						
 						if (generator != null)
 						{

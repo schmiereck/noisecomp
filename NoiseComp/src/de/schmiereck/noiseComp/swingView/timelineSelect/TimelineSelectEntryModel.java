@@ -15,7 +15,7 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @author smk
  * @version <p>05.09.2010:	created, smk</p>
  */
-public class TimelineGeneratorModel
+public class TimelineSelectEntryModel
 {
 	//**********************************************************************************************
 	// Fields:
@@ -81,7 +81,7 @@ public class TimelineGeneratorModel
 	 * @param endTimePos
 	 * 			is the End time position in milli seconds.
 	 */
-	public TimelineGeneratorModel(Timeline timeline,
+	public TimelineSelectEntryModel(Timeline timeline,
 	                              int timelinePos,
 	                              String generatorName,
 	                              float startTimePos, float endTimePos)

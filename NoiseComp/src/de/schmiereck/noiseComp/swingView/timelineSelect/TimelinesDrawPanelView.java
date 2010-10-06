@@ -69,7 +69,7 @@ implements Scrollable//, MouseMotionListener
 	//----------------------------------------------------------------------------------------------
 // 	private boolean isMousePressed = false;
  	
-// 	private TimelineGeneratorModel selectedTimelineGeneratorModel;
+// 	private TimelineSelectEntryModel selectedTimelineGeneratorModel;
 	
 //	/**
 //	 * Do Timeline Selected Listeners.
@@ -113,11 +113,11 @@ implements Scrollable//, MouseMotionListener
 				{
 					Point2D point2D = mousePos(e.getPoint());
 					
-					TimelineGeneratorModel timelineGeneratorModel = searchGenerator(point2D);
+					TimelineSelectEntryModel timelineSelectEntryModel = searchGenerator(point2D);
 					
 					//if (timelineGeneratorModel != null)
 					{
-						timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
+						timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 					}
 				}
 
@@ -136,9 +136,9 @@ implements Scrollable//, MouseMotionListener
 				{
 					Point2D point2D = mousePos(e.getPoint());
 					
-					TimelineGeneratorModel timelineGeneratorModel = searchGenerator(point2D);
+					TimelineSelectEntryModel timelineSelectEntryModel = searchGenerator(point2D);
 					
-					timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
+					timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 //					selectedTimelineGeneratorModel = timelineGeneratorModel;
 //					isMousePressed = true;
 				}
@@ -160,17 +160,17 @@ implements Scrollable//, MouseMotionListener
 				{
 					Point2D point2D = mousePos(e.getPoint());
 					
-					TimelineGeneratorModel timelineGeneratorModel = searchTimeline(point2D);
+					TimelineSelectEntryModel timelineSelectEntryModel = searchTimeline(point2D);
 					
-					if (timelineGeneratorModel != null)
+					if (timelineSelectEntryModel != null)
 					{
-						TimelineGeneratorModel selectedTimelineGeneratorModel = 
-							timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+						TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
+							timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 						
-						if (timelineGeneratorModel != selectedTimelineGeneratorModel)
+						if (timelineSelectEntryModel != selectedTimelineSelectEntryModel)
 						{
-							notifyDoChangeTimelinesPositionListeners(selectedTimelineGeneratorModel, 
-							                                         timelineGeneratorModel);
+							notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel, 
+							                                         timelineSelectEntryModel);
 						}
 					}
 				}
@@ -302,16 +302,16 @@ implements Scrollable//, MouseMotionListener
 							RenderingHints.VALUE_ANTIALIAS_ON);
 	   
 		//------------------------------------------------------------------------------------------
-		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels(); 
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels(); 
 		
 		//------------------------------------------------------------------------------------------
 		// Paint timelines:
 		{
 			int timelineGeneratorPos = 0;
 			
-			for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
+			for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
 			{
-				this.paintTimeline(g2, timelineGeneratorPos, timelineGeneratorModel);
+				this.paintTimeline(g2, timelineGeneratorPos, timelineSelectEntryModel);
 				
 				timelineGeneratorPos++;
 			}
@@ -324,7 +324,7 @@ implements Scrollable//, MouseMotionListener
 			
 			g2.setPaint(Color.red);
 			
-			TimelineGeneratorModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+			TimelineSelectEntryModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 			
 			if (selectedTimelineModel != null)
 			{
@@ -353,7 +353,7 @@ implements Scrollable//, MouseMotionListener
 					
 					if (inputGenerator != null)
 					{
-					TimelineGeneratorModel inputTimelineModel = this.searchTimelineModel(inputGenerator);
+					TimelineSelectEntryModel inputTimelineModel = this.searchTimelineModel(inputGenerator);
 
 					// Generator found ?
 					if (inputTimelineModel != null)
@@ -408,30 +408,30 @@ implements Scrollable//, MouseMotionListener
 	 * @return
 	 * 			the timeline of given generator.
 	 */
-	private TimelineGeneratorModel searchTimelineModel(Generator generator)
+	private TimelineSelectEntryModel searchTimelineModel(Generator generator)
 	{
 		//==========================================================================================
-		TimelineGeneratorModel retTimelineGeneratorModel;
+		TimelineSelectEntryModel retTimelineSelectEntryModel;
 		
 		//------------------------------------------------------------------------------------------
-		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels(); 
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels(); 
 		
 		//------------------------------------------------------------------------------------------
-		retTimelineGeneratorModel = null;
+		retTimelineSelectEntryModel = null;
 		
-		for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
 		{
-			Timeline timeline = timelineGeneratorModel.getTimeline();
+			Timeline timeline = timelineSelectEntryModel.getTimeline();
 			
 			if (timeline.getGenerator() == generator)
 			{
-				retTimelineGeneratorModel = timelineGeneratorModel;
+				retTimelineSelectEntryModel = timelineSelectEntryModel;
 				break;
 			}
 		}
 		
 		//==========================================================================================
-		return retTimelineGeneratorModel;
+		return retTimelineSelectEntryModel;
 	}
 
 	/**
@@ -439,13 +439,13 @@ implements Scrollable//, MouseMotionListener
 	 * 			is the Graphics.
 	 * @param timelineGeneratorPos
 	 * 			is the timeline position.
-	 * @param timelineGeneratorModel
+	 * @param timelineSelectEntryModel
 	 * 			is the timeline model.
 	 */
-	private void paintTimeline(Graphics2D g2, int timelineGeneratorPos, TimelineGeneratorModel timelineGeneratorModel)
+	private void paintTimeline(Graphics2D g2, int timelineGeneratorPos, TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		//==========================================================================================
-		if (timelinesDrawPanelModel.getSelectedTimelineGeneratorModel() == timelineGeneratorModel)
+		if (timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel() == timelineSelectEntryModel)
 		{
 			g2.setPaint(Color.GREEN);
 		}
@@ -456,8 +456,8 @@ implements Scrollable//, MouseMotionListener
 		
 		float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
 		
-		float startTimePos = timelineGeneratorModel.getStartTimePos();
-		float endTimePos = timelineGeneratorModel.getEndTimePos();
+		float startTimePos = timelineSelectEntryModel.getStartTimePos();
+		float endTimePos = timelineSelectEntryModel.getEndTimePos();
 		float generatorPosY = timelineGeneratorPos * maxUnitIncrementY;
 		
 		float timeLength = endTimePos - startTimePos;
@@ -472,7 +472,7 @@ implements Scrollable//, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		// Display signal shapes:
 		
-		Timeline timeline = timelineGeneratorModel.getTimeline();
+		Timeline timeline = timelineSelectEntryModel.getTimeline();
 
 		if (timeline != null)
 		{
@@ -640,29 +640,29 @@ implements Scrollable//, MouseMotionListener
 	 * @return
 	 * 			is the Timeline at given point.
 	 */
-	private TimelineGeneratorModel searchTimeline(Point2D point2D)
+	private TimelineSelectEntryModel searchTimeline(Point2D point2D)
 	{
-		TimelineGeneratorModel retTimelineGeneratorModel;
+		TimelineSelectEntryModel retTimelineSelectEntryModel;
 		
-		retTimelineGeneratorModel = null;
+		retTimelineSelectEntryModel = null;
 		
 		int maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
 		
 		double generatorPosY = 0.0D;
 		
-		for (TimelineGeneratorModel timelineGeneratorModel : this.timelinesDrawPanelModel.getTimelineGeneratorModels())
+		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelinesDrawPanelModel.getTimelineSelectEntryModels())
 		{
 			if ((point2D.getY() >= generatorPosY) &&
 				(point2D.getY() <= (generatorPosY + maxUnitIncrementY)))
 			{
-				retTimelineGeneratorModel = timelineGeneratorModel;
+				retTimelineSelectEntryModel = timelineSelectEntryModel;
 				break;
 			}
 			
 			generatorPosY += maxUnitIncrementY;
 		}
 		
-		return retTimelineGeneratorModel;
+		return retTimelineSelectEntryModel;
 	}
 
 	/**
@@ -671,39 +671,39 @@ implements Scrollable//, MouseMotionListener
 	 * @return
 	 * 			is the generator at given point.
 	 */
-	private TimelineGeneratorModel searchGenerator(Point2D point2D)
+	private TimelineSelectEntryModel searchGenerator(Point2D point2D)
 	{
-		TimelineGeneratorModel retTimelineGeneratorModel;
+		TimelineSelectEntryModel retTimelineSelectEntryModel;
 		
-		TimelineGeneratorModel timelineGeneratorModel = this.searchTimeline(point2D);
+		TimelineSelectEntryModel timelineSelectEntryModel = this.searchTimeline(point2D);
 		
-		if (timelineGeneratorModel != null)
+		if (timelineSelectEntryModel != null)
 		{
-			float startTimePos = timelineGeneratorModel.getStartTimePos();
-			float endTimePos = timelineGeneratorModel.getEndTimePos();
+			float startTimePos = timelineSelectEntryModel.getStartTimePos();
+			float endTimePos = timelineSelectEntryModel.getEndTimePos();
 			
 			if ((point2D.getX() >= startTimePos) &&
 				(point2D.getX() <= endTimePos))
 			{
-				retTimelineGeneratorModel = timelineGeneratorModel;
+				retTimelineSelectEntryModel = timelineSelectEntryModel;
 			}
 			else
 			{
-				retTimelineGeneratorModel = null;
+				retTimelineSelectEntryModel = null;
 			}
 		}
 		else
 		{
-			retTimelineGeneratorModel = null;
+			retTimelineSelectEntryModel = null;
 		}
 		
-		return retTimelineGeneratorModel;
+		return retTimelineSelectEntryModel;
 	}
 //
 //	/**
 //	 * Notify the {@link #doTimelineSelectedListeners}.
 //	 */
-//	public void notifyDoTimelineSelectedListeners(TimelineGeneratorModel timelineGeneratorModel)
+//	public void notifyDoTimelineSelectedListeners(TimelineSelectEntryModel timelineGeneratorModel)
 //	{
 //		for (DoTimelineSelectedListenerInterface doTimelineSelectedListener : this.doTimelineSelectedListeners)
 //		{
@@ -723,13 +723,13 @@ implements Scrollable//, MouseMotionListener
 	/**
 	 * Notify the {@link #doChangeTimelinesPositionListeners}.
 	 */
-	public void notifyDoChangeTimelinesPositionListeners(TimelineGeneratorModel selectedTimelineGeneratorModel,
-	                                                     TimelineGeneratorModel newTimelineGeneratorModel)
+	public void notifyDoChangeTimelinesPositionListeners(TimelineSelectEntryModel selectedTimelineSelectEntryModel,
+	                                                     TimelineSelectEntryModel newTimelineSelectEntryModel)
 	{
 		for (DoChangeTimelinesPositionListenerInterface doTimelineSelectedListener : this.doChangeTimelinesPositionListeners)
 		{
-			doTimelineSelectedListener.changeTimelinesPosition(selectedTimelineGeneratorModel,
-			                                                   newTimelineGeneratorModel);
+			doTimelineSelectedListener.changeTimelinesPosition(selectedTimelineSelectEntryModel,
+			                                                   newTimelineSelectEntryModel);
 		};
 	}
 
@@ -760,9 +760,9 @@ implements Scrollable//, MouseMotionListener
 		double width = 0.0D;
 		double height = 0.0D;
 		
-		for (TimelineGeneratorModel timelineGeneratorModel : this.timelinesDrawPanelModel.getTimelineGeneratorModels())
+		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelinesDrawPanelModel.getTimelineSelectEntryModels())
 		{
-			float endTimePos = timelineGeneratorModel.getEndTimePos();
+			float endTimePos = timelineSelectEntryModel.getEndTimePos();
 			
 			if (endTimePos > width)
 			{

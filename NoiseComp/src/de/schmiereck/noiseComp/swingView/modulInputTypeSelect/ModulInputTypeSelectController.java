@@ -59,7 +59,7 @@ public class ModulInputTypeSelectController
 //				{
 //					Iterator<InputData> inputsIterator;
 //					
-//					TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+//					TimelineSelectEntryModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
 //					
 //					if (timelineGeneratorModel != null)
 //					{

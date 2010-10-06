@@ -58,12 +58,12 @@ public class TimelinesScrollPanelController
 	    //------------------------------------------------------------------------------------------
 	    TimelinesTimeRuleModel timelinesTimeRuleModel = this.timelinesTimeRuleController.getTimelinesTimeRuleModel();
 	    
-		timelinesTimeRuleModel.setTimelineGeneratorModels(timelinesDrawPanelModel.getTimelineGeneratorModels());
+		timelinesTimeRuleModel.setTimelineSelectEntryModels(timelinesDrawPanelModel.getTimelineSelectEntryModels());
 		
 	    //------------------------------------------------------------------------------------------
 	    TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel = this.timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleModel();
 	    
-		timelinesGeneratorsRuleModel.setTimelineGeneratorModels(timelinesDrawPanelModel.getTimelineGeneratorModels());
+		timelinesGeneratorsRuleModel.setTimelineSelectEntryModels(timelinesDrawPanelModel.getTimelineSelectEntryModels());
 		
 		//==========================================================================================
 	}

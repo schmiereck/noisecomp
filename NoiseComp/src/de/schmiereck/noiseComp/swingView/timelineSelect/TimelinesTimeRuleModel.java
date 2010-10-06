@@ -30,10 +30,10 @@ public class TimelinesTimeRuleModel
 	/**
 	 * Timeline-Generator Models.
 	 */
-	private List<TimelineGeneratorModel> timelineGeneratorModels = new Vector<TimelineGeneratorModel>();
+	private List<TimelineSelectEntryModel> timelineSelectEntryModels = new Vector<TimelineSelectEntryModel>();
 
 	/**
-	 * {@link #timelineGeneratorModels} changed (insert or remove) listeners.
+	 * {@link #timelineSelectEntryModels} changed (insert or remove) listeners.
 	 */
 	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
 	
@@ -77,20 +77,20 @@ public class TimelinesTimeRuleModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #timelineGeneratorModels}.
+	 * 			returns the {@link #timelineSelectEntryModels}.
 	 */
-	public List<TimelineGeneratorModel> getTimelineGeneratorModels()
+	public List<TimelineSelectEntryModel> getTimelineSelectEntryModels()
 	{
-		return this.timelineGeneratorModels;
+		return this.timelineSelectEntryModels;
 	}
 
 	/**
-	 * @param timelineGeneratorModels 
-	 * 			to set {@link #timelineGeneratorModels}.
+	 * @param timelineSelectEntryModels 
+	 * 			to set {@link #timelineSelectEntryModels}.
 	 */
-	public void setTimelineGeneratorModels(List<TimelineGeneratorModel> timelineGeneratorModels)
+	public void setTimelineSelectEntryModels(List<TimelineSelectEntryModel> timelineSelectEntryModels)
 	{
-		this.timelineGeneratorModels = timelineGeneratorModels;
+		this.timelineSelectEntryModels = timelineSelectEntryModels;
 		
 		// Notify listeners.
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();

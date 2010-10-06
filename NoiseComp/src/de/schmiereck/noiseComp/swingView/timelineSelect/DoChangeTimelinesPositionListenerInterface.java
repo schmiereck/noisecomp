@@ -15,9 +15,9 @@ public interface DoChangeTimelinesPositionListenerInterface
 {
 
 	/**
-	 * @param selectedTimelineGeneratorModel
-	 * @param newTimelineGeneratorModel
+	 * @param selectedTimelineSelectEntryModel
+	 * @param newTimelineSelectEntryModel
 	 */
-	void changeTimelinesPosition(TimelineGeneratorModel selectedTimelineGeneratorModel,
-	                             TimelineGeneratorModel newTimelineGeneratorModel);
+	void changeTimelinesPosition(TimelineSelectEntryModel selectedTimelineSelectEntryModel,
+	                             TimelineSelectEntryModel newTimelineSelectEntryModel);
 }

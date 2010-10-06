@@ -56,7 +56,7 @@ public class TimelinesDrawPanelController
 //	     	new DoTimelineSelectedListenerInterface()
 //	     	{
 //				@Override
-//				public void timelineSelected(TimelineGeneratorModel timelineGeneratorModel)
+//				public void timelineSelected(TimelineSelectEntryModel timelineGeneratorModel)
 //				{
 //					timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
 //				}
@@ -73,14 +73,14 @@ public class TimelinesDrawPanelController
 	     	new DoChangeTimelinesPositionListenerInterface()
 	     	{
 				@Override
-				public void changeTimelinesPosition(TimelineGeneratorModel selectedTimelineGeneratorModel,
-													TimelineGeneratorModel newTimelineGeneratorModel)
+				public void changeTimelinesPosition(TimelineSelectEntryModel selectedTimelineSelectEntryModel,
+													TimelineSelectEntryModel newTimelineSelectEntryModel)
 				{
-					if ((selectedTimelineGeneratorModel != null) &&
-						(newTimelineGeneratorModel != null))
+					if ((selectedTimelineSelectEntryModel != null) &&
+						(newTimelineSelectEntryModel != null))
 					{
-						doChangeTimelinesPosition(selectedTimelineGeneratorModel,
-						                          newTimelineGeneratorModel);
+						doChangeTimelinesPosition(selectedTimelineSelectEntryModel,
+						                          newTimelineSelectEntryModel);
 					}
 				}
 	     	}
@@ -115,18 +115,18 @@ public class TimelinesDrawPanelController
 	}
 
 	/**
-	 * @param timelineGeneratorModel
+	 * @param timelineSelectEntryModel
 	 * 			is a Timeline-Generator Model.
 	 */
-	public void addTimelineGeneratorModel(TimelineGeneratorModel timelineGeneratorModel)
+	public void addTimelineSelectEntryModel(TimelineSelectEntryModel timelineSelectEntryModel)
 	{
-		this.timelinesDrawPanelModel.addTimelineGeneratorModel(timelineGeneratorModel);
+		this.timelinesDrawPanelModel.addTimelineSelectEntryModel(timelineSelectEntryModel);
 		
 		ModelPropertyChangedListener modelChangedListener = this.timelinesDrawPanelModel.getTimelineGeneratorModelChangedListener();
 		
-		timelineGeneratorModel.getNameChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
-		timelineGeneratorModel.getStartTimePosChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
-		timelineGeneratorModel.getEndTimePosChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
+		timelineSelectEntryModel.getNameChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
+		timelineSelectEntryModel.getStartTimePosChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
+		timelineSelectEntryModel.getEndTimePosChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
 		
 		// TODO remove listeners if timeline is removed.
 	}
@@ -139,11 +139,11 @@ public class TimelinesDrawPanelController
 	{
 		Generator selectedGenerator;
 		
-		TimelineGeneratorModel selectedTimelineGeneratorModel = this.timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 		
-		if (selectedTimelineGeneratorModel != null)
+		if (selectedTimelineSelectEntryModel != null)
 		{
-			String selectedTimelineGeneratorName = selectedTimelineGeneratorModel.getName();
+			String selectedTimelineGeneratorName = selectedTimelineSelectEntryModel.getName();
 			
 			ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
 			
@@ -172,17 +172,17 @@ public class TimelinesDrawPanelController
 	
 	/**
 	 * 
-	 * @param firstTimelineGeneratorModel
+	 * @param firstTimelineSelectEntryModel
 	 * 			is the first Timeline-Generator Model.
-	 * @param secondTimelineGeneratorModel
+	 * @param secondTimelineSelectEntryModel
 	 * 			is the second Timeline-Generator Model.
 	 */
-	public void doChangeTimelinesPosition(TimelineGeneratorModel firstTimelineGeneratorModel,
-	                                      TimelineGeneratorModel secondTimelineGeneratorModel)
+	public void doChangeTimelinesPosition(TimelineSelectEntryModel firstTimelineSelectEntryModel,
+	                                      TimelineSelectEntryModel secondTimelineSelectEntryModel)
 	{
 		//==========================================================================================
-		int firstTimelinePos = firstTimelineGeneratorModel.getTimelinePos();
-		int secondTimelinePos = secondTimelineGeneratorModel.getTimelinePos();
+		int firstTimelinePos = firstTimelineSelectEntryModel.getTimelinePos();
+		int secondTimelinePos = secondTimelineSelectEntryModel.getTimelinePos();
 		
 		//------------------------------------------------------------------------------------------
 		// Update edited Modul Data:
@@ -198,7 +198,7 @@ public class TimelinesDrawPanelController
 		//------------------------------------------------------------------------------------------
 		// Update Timeline-Draw Model:
 		
-//		List<TimelineGeneratorModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels();
+//		List<TimelineSelectEntryModel> timelineGeneratorModels = this.timelinesDrawPanelModel.getTimelineGeneratorModels();
 //		
 //		timelineGeneratorModels.set(firstTimelinePos, secondTimelineGeneratorModel);
 //		timelineGeneratorModels.set(secondTimelinePos, firstTimelineGeneratorModel);
@@ -231,18 +231,18 @@ public class TimelinesDrawPanelController
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// Update Timeline-Select-Model:
 		
-		int timelinePos = timelinesDrawPanelModel.getTimelineGeneratorModels().size();
+		int timelinePos = timelinesDrawPanelModel.getTimelineSelectEntryModels().size();
 		
-		TimelineGeneratorModel timelineGeneratorModel = 
-			new TimelineGeneratorModel(null,
+		TimelineSelectEntryModel timelineSelectEntryModel = 
+			new TimelineSelectEntryModel(null,
 			                           timelinePos,
 			                           "(new)",
 			                           0.0F,
 			                           1.0F);
 		
-		this.addTimelineGeneratorModel(timelineGeneratorModel);
+		this.addTimelineSelectEntryModel(timelineSelectEntryModel);
 		
-		timelinesDrawPanelModel.setSelectedTimelineGeneratorModel(timelineGeneratorModel);
+		timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 		
 		//==========================================================================================
 	}
