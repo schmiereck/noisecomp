@@ -4,12 +4,14 @@
 package de.schmiereck.noiseComp.timeline;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 
 /**
@@ -114,6 +116,58 @@ public class Timeline
 	public void addOutputTimeline(InputData inputData, Timeline outputTimeline)
 	{
 		this.outputTimelines.put(inputData, outputTimeline);
+	}
+	
+	/**
+	 * Wird aufgerufen, um den Ausgangswert eines Generators für die angegebene 
+	 * Frame-Position zu ermitteln.
+	 * 
+	 * Liefert <code>null</code>, wenn der Generator für den Zeitpunkt keinen Wert 
+	 * generieren kann (Frame-Position nicht zwischen Start und Ende).
+	 * 
+	 * @see Generator#generateFrameSample(long, ModulGenerator)
+	 * 
+	 * @param framePosition
+	 * 			ist the position of the sample frame.
+	 * @return
+	 * 			the sound sample.
+	 */
+	public SoundSample generateFrameSample(long framePosition, ModulGenerator parentModulGenerator)
+	{
+		SoundSample retSoundSample;
+		
+		retSoundSample = this.generator.generateFrameSample(framePosition, parentModulGenerator);
+		
+		return retSoundSample;
+	}
+
+	/**
+	 * @see Generator#getSoundFrameRate()
+	 * 
+	 * @return
+	 * 			the Frame rate of the outgoing sound.
+	 */
+	public float getSoundFrameRate()
+	{
+		return this.generator.getSoundFrameRate();
+	}
+
+	/**
+	 * @return
+	 * 			the iterator of {@link Generator#getInputsIterator()}.
+	 */
+	public Iterator<InputData> getInputsIterator()
+	{
+		return this.generator.getInputsIterator();
+	}
+
+	/**
+	 * @return
+	 * 			the vaue of {@link Generator#getInputsCount()}.
+	 */
+	public int getInputsCount()
+	{
+		return this.generator.getInputsCount();
 	}
 	
 }

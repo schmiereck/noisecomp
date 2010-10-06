@@ -13,7 +13,7 @@ public interface GeneratorInterface
 	 * Wird aufgerufen, um den Ausgangswert eines Generators für die angegebene 
 	 * Frame-Position zu ermitteln.
 	 * 
-	 * Liefert null, wenn der Generator für den Zeitpunkt keinen Wert 
+	 * Liefert <code>null</code>, wenn der Generator für den Zeitpunkt keinen Wert 
 	 * generieren kann (Frame-Position nicht zwischen Start und Ende).
 	 * 
 	 * @param framePosition

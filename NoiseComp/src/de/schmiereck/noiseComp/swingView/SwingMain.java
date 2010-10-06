@@ -7,7 +7,6 @@ import javax.sound.sampled.SourceDataLine;
 import javax.swing.UIManager;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
@@ -67,9 +66,7 @@ public class SwingMain
 		final ModulGeneratorTypeData mainModulGeneratorTypeData = 
 			StartupService.createDemoGenerators(soundData.getFrameRate());
 
-		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
-		
-		soundSourceLogic.setOutputGenerator(outputGenerator);
+		soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 	

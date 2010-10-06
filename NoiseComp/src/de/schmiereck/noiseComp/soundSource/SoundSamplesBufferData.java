@@ -2,6 +2,7 @@ package de.schmiereck.noiseComp.soundSource;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.SoundSample;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * Buffer of the calculated Samples.
@@ -78,12 +79,12 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 	/**
 	 * @param frame
 	 * 			is the sound sample frame.
-	 * @param outputGenerator
-	 * 			is the output generator.
+	 * @param outputTimeline
+	 * 			is the output Timeline.
 	 * @return
 	 * 			the sound sample.
 	 */
-	public SoundSample generateSoundSample(long frame, Generator outputGenerator)
+	public SoundSample generateSoundSample(long frame, Timeline outputTimeline)
 	{
 		SoundSample soundSample;
 		
@@ -93,7 +94,7 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 
 			if (soundSample == null)
 			{
-				soundSample = outputGenerator.generateFrameSample(frame, null);
+				soundSample = outputTimeline.generateFrameSample(frame, null);
 			
 				this.bufferSoundSamples[(int)frame] = soundSample;
 			}
@@ -111,12 +112,13 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 	 * 
 	 * @param partTime
 	 * 			says in milliseconds how long is the time part the buffer is filled. 
-	 * @param outputGenerator
+	 * @param outputTimeline
+	 * 			is the output Timeline.
 	 */
-	public void calcWaitingSamplesPart(float partTime, Generator outputGenerator)
+	public void calcWaitingSamplesPart(float partTime, Timeline outputTimeline)
 	{
 		long framePos;
-		long frames = (long)(partTime * outputGenerator.getSoundFrameRate());
+		long frames = (long)(partTime * outputTimeline.getSoundFrameRate());
 		
 		for (framePos = this.emptyBufferStart; framePos < this.emptyBufferEnd; framePos++)
 		{
@@ -126,7 +128,7 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 			}
 			frames--;
 
-			SoundSample soundSample = outputGenerator.generateFrameSample(framePos, null);
+			SoundSample soundSample = outputTimeline.generateFrameSample(framePos, null);
 		
 			this.bufferSoundSamples[(int)framePos] = soundSample;
 		}

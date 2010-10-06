@@ -3,8 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
-import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 
 /**
@@ -22,10 +22,10 @@ public class TimelineGeneratorModel
 	
 	//----------------------------------------------------------------------------------------------
 	/**
-	 * Generator.
+	 * Timeline.
 	 * <code>null</code> if the timeline is new generated.
 	 */
-	private Generator generator = null;
+	private de.schmiereck.noiseComp.timeline.Timeline timeline = null;
 	
 	//----------------------------------------------------------------------------------------------
 	/**
@@ -72,8 +72,8 @@ public class TimelineGeneratorModel
 	/**
 	 * Constructor.
 	 * 
-	 * @param generator
-	 * 			is the Generator.
+	 * @param timeline
+	 * 			is the Timeline.
 	 * @param name
 	 * 			is the Name of Generator.
 	 * @param startTimePos
@@ -81,12 +81,12 @@ public class TimelineGeneratorModel
 	 * @param endTimePos
 	 * 			is the End time position in milli seconds.
 	 */
-	public TimelineGeneratorModel(Generator generator,
+	public TimelineGeneratorModel(Timeline timeline,
 	                              int timelinePos,
 	                              String generatorName,
 	                              float startTimePos, float endTimePos)
 	{
-		this.generator = generator;
+		this.timeline = timeline;
 		this.timelinePos = timelinePos;
 		this.name = generatorName;
 		this.startTimePos = startTimePos;
@@ -184,20 +184,20 @@ public class TimelineGeneratorModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #generator}.
+	 * 			returns the {@link #timeline}.
 	 */
-	public Generator getGenerator()
+	public Timeline getTimeline()
 	{
-		return this.generator;
+		return this.timeline;
 	}
 
 	/**
-	 * @param generator 
-	 * 			to set {@link #generator}.
+	 * @param timeline 
+	 * 			to set {@link #timeline}.
 	 */
-	public void setGenerator(Generator generator)
+	public void setTimeline(Timeline timeline)
 	{
-		this.generator = generator;
+		this.timeline = timeline;
 	}
 
 	/**

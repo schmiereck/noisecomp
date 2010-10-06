@@ -317,7 +317,8 @@ implements GeneratorInterface,
 	 */
 	
 	/**
-	 * @see #inputs
+	 * @return
+	 * 			the iterator of {@link #inputs}.
 	 */
 	public Iterator<InputData> getInputsIterator()
 	{

@@ -278,4 +278,13 @@ extends AudioInputStream
 	{
 		return this.waitingGeneratorBuffer;
 	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #actualFrame}.
+	 */
+	public long getActualFrame()
+	{
+		return this.actualFrame;
+	}
 }

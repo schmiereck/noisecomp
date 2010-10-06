@@ -25,7 +25,6 @@ import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
@@ -58,6 +57,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleC
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 
 /**
@@ -808,10 +808,10 @@ public class AppController
 	}
 
 	/**
-	 * @param modulGeneratorTypeData
+	 * @param mainModulGeneratorTypeData
 	 * 			is the edited modul.
 	 */
-	public void selectEditModule(ModulGeneratorTypeData modulGeneratorTypeData)
+	public void selectEditModule(ModulGeneratorTypeData mainModulGeneratorTypeData)
 	{
 		//==========================================================================================
 		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
@@ -825,33 +825,32 @@ public class AppController
 		this.timelinesDrawPanelController.clearTimelineGenerators();
 		
 		//------------------------------------------------------------------------------------------
-		this.modulesTreeController.getModulesTreeModel().setEditedModulGeneratorTypeData(modulGeneratorTypeData);
+		this.modulesTreeController.getModulesTreeModel().setEditedModulGeneratorTypeData(mainModulGeneratorTypeData);
 		
-		if (modulGeneratorTypeData != null)
+		if (mainModulGeneratorTypeData != null)
 		{
+			List<Timeline> timelines =soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
+//			OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
+//			
+//			Timeline outputTimeline = soundSourceLogic.setOutputGenerator(outputGenerator);
+			
 			int timelinePos = 0;
 			
-			Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
-			
-			while (generatorsIterator.hasNext())
+//			Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
+//			
+//			while (generatorsIterator.hasNext())
+//			{
+//				Generator generator = generatorsIterator.next();
+			for (Timeline timeline : timelines)
 			{
-				Generator generator = generatorsIterator.next();
+				Generator generator = timeline.getGenerator();
 				
 				TimelineGeneratorModel timelineGeneratorModel = 
-					new TimelineGeneratorModel(generator,
+					new TimelineGeneratorModel(timeline,
 					                           timelinePos,
 					                           generator.getName(),
 					                           generator.getStartTimePos(),
 					                           generator.getEndTimePos());
-				
-				if (generator instanceof OutputGenerator)
-				{	
-					OutputGenerator outputGenerator = (OutputGenerator)generator;
-					
-					//SoundData soundData = this.desktopControllerData.getSoundData();
-
-					soundSourceLogic.setOutputGenerator(outputGenerator);
-				}
 				
 				this.timelinesDrawPanelController.addTimelineGeneratorModel(timelineGeneratorModel);
 				

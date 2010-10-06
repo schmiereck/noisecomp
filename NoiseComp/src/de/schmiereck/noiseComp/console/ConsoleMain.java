@@ -5,6 +5,7 @@ import javax.sound.sampled.SourceDataLine;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.service.StartupService;
+import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
@@ -65,9 +66,7 @@ public class ConsoleMain
 		ModulGeneratorTypeData mainModulGeneratorTypeData = 
 			StartupService.createDemoGenerators(soundData.getFrameRate());
 
-		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
-		
-		soundSourceLogic.setOutputGenerator(outputGenerator);
+		soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);;
 
 		//------------------------------------------------------------------------------------------
 	
@@ -102,6 +101,30 @@ public class ConsoleMain
 		soundSchedulerLogic.startThread();
 
 		soundSchedulerLogic.startPlayback();
+		
+		//------------------------------------------------------------------------------------------
+		SoundBufferManager soundBufferManager = soundData.getSoundBufferManager();
+		
+		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
+
+		float endTimePos = outputGenerator.getEndTimePos();
+		
+		do
+		{
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace(System.err);
+			}
+		}
+		while (soundBufferManager.getActualTime() <= endTimePos);
+		
+		//------------------------------------------------------------------------------------------
+		System.exit(0);
+		
 		//==========================================================================================
 	}
 }

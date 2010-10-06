@@ -353,18 +353,18 @@ extends ControllerLogic
 			//----------------------------------------------------------------------
 			// Manage a new Output-Generator specialy:
 			
-			if (generator instanceof OutputGenerator)
-			{	
-				OutputGenerator outputGenerator = (OutputGenerator)generator;
-				
-				//SoundData soundData = this.desktopControllerData.getSoundData();
-
-				this.soundSourceLogic.setOutputGenerator(outputGenerator);
-
-				// Start scheduled polling for the new SoundSource.
-				//this.soundSourceSchedulerLogic.setSoundSourceLogic(this.soundSourceLogic);
-				//soundData.setOutputGenerator(outputGenerator);
-			}
+//			if (generator instanceof OutputGenerator)
+//			{	
+//				OutputGenerator outputGenerator = (OutputGenerator)generator;
+//				
+//				//SoundData soundData = this.desktopControllerData.getSoundData();
+//
+//				this.soundSourceLogic.setOutputGenerator(outputGenerator);
+//
+//				// Start scheduled polling for the new SoundSource.
+//				//this.soundSourceSchedulerLogic.setSoundSourceLogic(this.soundSourceLogic);
+//				//soundData.setOutputGenerator(outputGenerator);
+//			}
 
 			//Generators generators = editModulTypeData.getGenerators();
 	
@@ -619,7 +619,8 @@ extends ControllerLogic
 
 			if (outputGenerator != null)
 			{
-				this.soundSourceLogic.setOutputGenerator(outputGenerator);
+//				this.soundSourceLogic.setOutputGenerator(outputGenerator);
+				this.soundSourceLogic.setMainModulGeneratorTypeData(modulGeneratorTypeData);
 			}
 		}
 

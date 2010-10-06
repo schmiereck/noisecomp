@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -139,15 +140,24 @@ extends JComponent
 				
 				generatorName = timelineGeneratorModel.getName();
 
-				Generator generator = timelineGeneratorModel.getGenerator();
+				Timeline timeline = timelineGeneratorModel.getTimeline();
 				
-				if (generator != null)
+				if (timeline != null)
 				{
-					GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
+					Generator generator = timeline.getGenerator();
 					
-					if (generatorTypeData != null)
+					if (generator != null)
 					{
-						generatorTypeName = generatorTypeData.getGeneratorTypeName();
+						GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
+						
+						if (generatorTypeData != null)
+						{
+							generatorTypeName = generatorTypeData.getGeneratorTypeName();
+						}
+						else
+						{
+							generatorTypeName = null;
+						}
 					}
 					else
 					{

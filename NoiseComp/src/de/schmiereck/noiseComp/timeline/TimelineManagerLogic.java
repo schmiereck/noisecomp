@@ -32,6 +32,11 @@ public class TimelineManagerLogic
 	 */
 	private Map<ModulGenerator, Timeline> moduleGenerators = new HashMap<ModulGenerator, Timeline>();
 	
+//	/**
+//	 * Generator Timelines.
+//	 */
+//	private Map<Generator, Timeline> generators = new HashMap<Generator, Timeline>();
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -52,40 +57,43 @@ public class TimelineManagerLogic
 		//------------------------------------------------------------------------------------------
 		Iterator<InputData> inputsIterator = generator.getInputsIterator();
 		
-		while (inputsIterator.hasNext())
+		if (inputsIterator != null)
 		{
-			InputData inputData = (InputData)inputsIterator.next();
-			
-			Generator inputGenerator = inputData.getInputGenerator();
-			
-			if (inputGenerator != null)
+			while (inputsIterator.hasNext())
 			{
-				Timeline inputTimeline;
+				InputData inputData = (InputData)inputsIterator.next();
 				
-				// Modul-Generator without inputs?
-				if ((inputGenerator instanceof ModulGenerator) &&
-					(inputGenerator.getInputsCount() == 0))
+				Generator inputGenerator = inputData.getInputGenerator();
+				
+				if (inputGenerator != null)
 				{
-					ModulGenerator modulGenerator = (ModulGenerator)inputGenerator;
+					Timeline inputTimeline;
 					
-					inputTimeline = this.moduleGenerators.get(modulGenerator);
-					
-					if (inputTimeline == null)
+					// Modul-Generator without inputs? TODO Only the count of inputs with other generators are interesting, const. value inputs not.
+					if ((inputGenerator instanceof ModulGenerator) &&
+						(inputGenerator.getInputsCount() == 0))
 					{
-						inputTimeline = this.makeTimeline(inputGenerator);
+						ModulGenerator modulGenerator = (ModulGenerator)inputGenerator;
 						
-						this.moduleGenerators.put(modulGenerator, inputTimeline);
+						inputTimeline = this.moduleGenerators.get(modulGenerator);
+						
+						if (inputTimeline == null)
+						{
+							inputTimeline = this.makeTimeline(inputGenerator);
+							
+							this.moduleGenerators.put(modulGenerator, inputTimeline);
+						}
 					}
-				}
-				else
-				{
-					inputTimeline = this.createTimeline(inputGenerator);
-				}
-				
-				timeline.addInputTimeline(inputData, inputTimeline);
-				
-				inputTimeline.addOutputTimeline(inputData, timeline);
+					else
+					{
+						inputTimeline = this.createTimeline(inputGenerator);
+					}
 					
+					timeline.addInputTimeline(inputData, inputTimeline);
+					
+					inputTimeline.addOutputTimeline(inputData, timeline);
+						
+				}
 			}
 		}
 		//==========================================================================================
@@ -100,10 +108,79 @@ public class TimelineManagerLogic
 	 */
 	private Timeline makeTimeline(Generator generator)
 	{
-		Timeline timeline = new Timeline();
+		Timeline timeline;
 		
-		timeline.setGenerator(generator);
+		timeline = this.moduleGenerators.get(generator);
+		
+		if (timeline == null)
+		{
+			timeline = new Timeline();
+		
+			timeline.setGenerator(generator);
+		}
+		
+//		this.generators.put(generator, timeline);
+		
 		return timeline;
+	}
+
+//	/**
+//	 * @param generator
+//	 * 			is the generator.
+//	 * @return
+//	 * 			the timeline or <code>null</code> if not found.
+//	 */
+//	public Timeline getTimeline(Generator generator)
+//	{
+//		return this.generators.get(generator);
+//	}
+
+	/**
+	 * @param generator
+	 * 			is the generator.
+	 * @return
+	 * 			the timeline.
+	 */
+	public Timeline addGenerator(Generator generator)
+	{
+		Timeline timeline = this.makeTimeline(generator);
+		
+		// TODO Notify change listeners.
+		
+		return timeline;
+	}
+
+	/**
+	 * @param timeline
+	 * 			is the timeline.
+	 * @param generatorStartTimePos
+	 * 			is the generator StartTimePos.
+	 * @param generatorEndTimePos
+	 * 			is the generator EndTimePos.
+	 */
+	public void updateTimePos(Timeline timeline, Float generatorStartTimePos, Float generatorEndTimePos)
+	{
+		Generator generator = timeline.getGenerator();
+		
+		// TODO Notify change listeners.
+		
+		generator.setStartTimePos(generatorStartTimePos);
+		generator.setEndTimePos(generatorEndTimePos);
+	}
+
+	/**
+	 * @param timeline
+	 * 			is the timeline.
+	 * @param generatorName
+	 * 			is the generator name.
+	 */
+	public void updateName(Timeline timeline, String generatorName)
+	{
+		Generator generator = timeline.getGenerator();
+		
+		// TODO Notify change listeners.
+		
+		generator.setName(generatorName);
 	}
 	
 }

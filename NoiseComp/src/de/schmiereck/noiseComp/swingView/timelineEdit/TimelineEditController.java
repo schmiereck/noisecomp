@@ -9,11 +9,13 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineGeneratorModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -171,6 +173,8 @@ public class TimelineEditController
 	                              //final Generator generator,
 	                              final TimelinesDrawPanelModel timelinesDrawPanelModel)
 	{
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
 //		TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 		TimelineGeneratorModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
 //		TimelineEditView timelineEditView = timelineEditController.getTimelineEditView();
@@ -181,43 +185,64 @@ public class TimelineEditController
 			GeneratorTypeData generatorTypeData;
 			{
 				GeneratorTypeSelectItem generatorTypeSelectItem = 
-					(GeneratorTypeSelectItem)timelineEditView.getGeneratorTypeComboBox().getSelectedItem();
+					(GeneratorTypeSelectItem)this.timelineEditView.getGeneratorTypeComboBox().getSelectedItem();
 				generatorTypeData = generatorTypeSelectItem.getGeneratorTypeData();
 			}
-			String generatorName = timelineEditView.getGeneratorNameTextField().getText();
-			Float generatorStartTimePos = Float.parseFloat(timelineEditView.getGeneratorStartTimePosTextField().getText());
-			Float generatorEndTimePos = Float.parseFloat(timelineEditView.getGeneratorEndTimePosTextField().getText());
+			String generatorName = this.timelineEditView.getGeneratorNameTextField().getText();
+			Float generatorStartTimePos = Float.parseFloat(this.timelineEditView.getGeneratorStartTimePosTextField().getText());
+			Float generatorEndTimePos = Float.parseFloat(this.timelineEditView.getGeneratorEndTimePosTextField().getText());
 			
+			if (generatorTypeData == null)
+			{
+				throw new RuntimeException("generatorTypeData not selected.");
+			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Generator:
 			
 //			Generator generator = 
 //				appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
-			Generator generator = timelineGeneratorModel.getGenerator();
+			Timeline timeline = timelineGeneratorModel.getTimeline();
 			
-			// Create new generator?
-			if (generator == null)
+			if (timeline == null)
 			{
 				Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
 				
-				generator = generatorTypeData.createGeneratorInstance(generatorName, 
-				                                                      soundFrameRate);
-				
-//				generator = new Generator(generatorName, 
-//				                          soundFrameRate, 
-//				                          generatorTypeData);
-				
-//				ModulGeneratorTypeData editedModulGeneratorTypeData = appController.getEditedModulGeneratorTypeData();
-				
-				editedModulGeneratorTypeData.addGenerator(generator);
+				timeline = soundSourceLogic.createTimeline(generatorTypeData,
+				                                           soundFrameRate,
+				                                           generatorName); 
 			}
 			else
 			{
-				generator.setName(generatorName);
+				soundSourceLogic.updateName(timeline, generatorName);
 			}
-			generator.setStartTimePos(generatorStartTimePos);
-			generator.setEndTimePos(generatorEndTimePos);
-
+//			Generator generator = timeline.getGenerator();
+//			
+//			// Create new generator?
+//			if (generator == null)
+//			{
+//				Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
+//				
+//				generator = generatorTypeData.createGeneratorInstance(generatorName, 
+//				                                                      soundFrameRate);
+//				
+////				generator = new Generator(generatorName, 
+////				                          soundFrameRate, 
+////				                          generatorTypeData);
+//				
+////				ModulGeneratorTypeData editedModulGeneratorTypeData = appController.getEditedModulGeneratorTypeData();
+//				
+//				timeline = soundSourceLogic.addGenerator(generator);
+//				
+//				editedModulGeneratorTypeData.addGenerator(generator);
+//			}
+//			else
+//			{
+//				generator.setName(generatorName);
+//			}
+//			generator.setStartTimePos(generatorStartTimePos);
+//			generator.setEndTimePos(generatorEndTimePos);
+			soundSourceLogic.updateTimePos(timeline, generatorStartTimePos, generatorEndTimePos);
+			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Timeline-Edit Model:
 			
@@ -229,7 +254,7 @@ public class TimelineEditController
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Timeline-Model:
 			
-			timelineGeneratorModel.setGenerator(generator);
+			timelineGeneratorModel.setTimeline(timeline);
 //			timelineGeneratorModel.setGeneratorTypeData(generatorTypeData);
 			timelineGeneratorModel.setName(generatorName);
 			timelineGeneratorModel.setStartTimePos(generatorStartTimePos);

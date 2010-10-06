@@ -20,6 +20,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -31,6 +32,7 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -326,20 +328,20 @@ implements Scrollable//, MouseMotionListener
 			
 			if (selectedTimelineModel != null)
 			{
-			Generator generator = selectedTimelineModel.getGenerator();
+			Timeline timeline = selectedTimelineModel.getTimeline();
 			
-			if (generator != null)
+			if (timeline != null)
 			{
 			int selectedPos = selectedTimelineModel.getTimelinePos();
 			
-			Iterator<InputData> inputsIterator = generator.getInputsIterator();
+			Iterator<InputData> inputsIterator = timeline.getInputsIterator();
 			
 			if (inputsIterator != null)
 			{
 				float selectedScreenPosX = selectedTimelineModel.getStartTimePos();
 				float selectedScreenInputOffset = (((selectedTimelineModel.getEndTimePos() - 
 													 selectedTimelineModel.getStartTimePos())) / 
-												   (generator.getInputsCount() + 1));
+												   (timeline.getInputsCount() + 1));
 				
 				int inputNo = 1;
 				
@@ -419,7 +421,9 @@ implements Scrollable//, MouseMotionListener
 		
 		for (TimelineGeneratorModel timelineGeneratorModel : timelineGeneratorModels)
 		{
-			if (timelineGeneratorModel.getGenerator() == generator)
+			Timeline timeline = timelineGeneratorModel.getTimeline();
+			
+			if (timeline.getGenerator() == generator)
 			{
 				retTimelineGeneratorModel = timelineGeneratorModel;
 				break;
@@ -468,16 +472,16 @@ implements Scrollable//, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		// Display signal shapes:
 		
-		Generator generator = timelineGeneratorModel.getGenerator();
+		Timeline timeline = timelineGeneratorModel.getTimeline();
 
-		if (generator != null)
+		if (timeline != null)
 		{
 			g2.setPaint(Color.BLACK);
 			g2.setColor(Color.BLACK);
 			
 			ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
 			
-			float frameRate = generator.getSoundFrameRate();
+			float frameRate = timeline.getSoundFrameRate();
 			float frameStep = timeLength / (frameRate / 25.0F);
 	
 			float pointSizeX = (float)(1.0F / at.getScaleX());
@@ -494,7 +498,7 @@ implements Scrollable//, MouseMotionListener
 			{
 				long sampleFrame = (long)((startTimePos + timePos) * frameRate);
 				
-				SoundSample soundSample = generator.generateFrameSample(sampleFrame, parentModulGenerator);
+				SoundSample soundSample = timeline.generateFrameSample(sampleFrame, parentModulGenerator);
 				
 				if (soundSample != null)
 				{
