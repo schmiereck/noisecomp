@@ -42,12 +42,16 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
 	{
 		//==========================================================================================
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
-		this.calcInputSignals(framePosition, signalInputData, soundSample, parentModulGenerator);
+		this.calcInputSignals(framePosition, 
+		                      signalInputData, 
+		                      soundSample, 
+		                      parentModulGenerator,
+		                      generatorBuffer);
 		/*
 		InputData inputData = this.searchInputByType(INPUT_TYPE_SIGNAL);
 		

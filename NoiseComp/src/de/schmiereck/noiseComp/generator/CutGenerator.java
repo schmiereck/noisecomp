@@ -26,13 +26,16 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
 	{
 		//----------------------------------------------------------------------
 		float maxValue;
 //		try
 //		{
-			maxValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MAX_AMPL), parentModulGenerator);
+			maxValue = this.calcInputMonoValue(framePosition, 
+			                                   this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MAX_AMPL), 
+			                                   parentModulGenerator,
+			                                   generatorBuffer);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -42,7 +45,10 @@ extends Generator
 		float minValue;
 //		try
 //		{
-			minValue = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MIN_AMPL), parentModulGenerator);
+			minValue = this.calcInputMonoValue(framePosition, 
+			                                   this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MIN_AMPL), 
+			                                   parentModulGenerator,
+			                                   generatorBuffer);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -50,7 +56,7 @@ extends Generator
 //		}
 
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
-		this.calcInputValue(framePosition, signalInputData, soundSample, parentModulGenerator);
+		this.calcInputValue(framePosition, signalInputData, soundSample, parentModulGenerator, generatorBuffer);
 		
 		float leftValue = soundSample.getLeftValue();
 		float rightValue = soundSample.getRightValue();

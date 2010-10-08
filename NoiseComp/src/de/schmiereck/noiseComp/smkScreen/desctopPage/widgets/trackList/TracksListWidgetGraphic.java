@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Iterator;
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.GeneratorBufferInterface;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
@@ -39,6 +40,7 @@ extends ListWidgetGraphic
 	                                      float scrollStartTime, float scrollEndTime, 
 	                                      boolean generatorIsActive, boolean generatorIsSelected)
 	{
+		GeneratorBufferInterface generatorBuffer = null;
 		// While calulate the scrolling, remember the part of the left row:
 		
 		ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
@@ -57,7 +59,7 @@ extends ListWidgetGraphic
 		// Is the generator visible and is he right side by the scroll-area ?
 		if (generatorStartTime < scrollEndTime)
 		{	
-			// Beim Scrollen den rechts abgeschnittenen Teil ber�cksichtigen.
+			// Beim Scrollen den rechts abgeschnittenen Teil berücksichtigen.
 			float timeLength;
 			
 			if (generator.getEndTimePos() < scrollEndTime)
@@ -98,7 +100,8 @@ extends ListWidgetGraphic
 				// Samples:
 				g.setColor(desktopColors.getSampleColor());
 				
-				float generatorSampleScale = generator.getGeneratorSampleDrawScale(parentModulGenerator);
+				float generatorSampleScale = generator.getGeneratorSampleDrawScale(parentModulGenerator, 
+				                                                                   generatorBuffer);
 				
 				float frameRate = generator.getSoundFrameRate();
 				boolean firstSample = true;
@@ -113,7 +116,8 @@ extends ListWidgetGraphic
 					// TODO hier auf den Track zugreifen, der soll einen Puffer verwalten.
 					//SoundSample soundSample = null;//XXX generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate), parentModulGenerator);
 					SoundSample soundSample = generator.generateFrameSample(sampleFrame, 
-					                                                        parentModulGenerator);
+					                                                        parentModulGenerator, 
+					                                                        generatorBuffer);
 					
 					if (soundSample != null)
 					{	

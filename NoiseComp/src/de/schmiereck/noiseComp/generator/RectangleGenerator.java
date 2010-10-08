@@ -27,13 +27,17 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, 
+	                                 GeneratorBufferInterface generatorBuffer)
 	{
 		//----------------------------------------------------------------------
 		float signalFrequency;
 //		try
 //		{
-			signalFrequency = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
+			signalFrequency = this.calcInputMonoValue(framePosition, 
+			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), 
+			                                          parentModulGenerator,
+			                                          generatorBuffer);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -45,7 +49,10 @@ extends Generator
 //		try
 //		{
 			// Amplitude des gerade generierten Sinus-Siganls.
-			signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), parentModulGenerator);
+			signalAmplitude = this.calcInputMonoValue(framePosition, 
+			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
+			                                          parentModulGenerator,
+			                                          generatorBuffer);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -57,7 +64,10 @@ extends Generator
 //		try
 //		{
 			// Versatz des Sinus-Siganls um eine Schwingung.
-			signalShift = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), parentModulGenerator);
+			signalShift = this.calcInputMonoValue(framePosition, 
+			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), 
+			                                      parentModulGenerator,
+			                                      generatorBuffer);
 //		}
 //		catch (NoInputSignalException ex)
 //		{

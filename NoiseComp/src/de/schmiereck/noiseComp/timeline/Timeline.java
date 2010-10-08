@@ -5,11 +5,10 @@ package de.schmiereck.noiseComp.timeline;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.GeneratorBufferInterface;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
@@ -29,6 +28,7 @@ import de.schmiereck.noiseComp.generator.SoundSample;
  * @version <p>05.10.2010:	created, smk</p>
  */
 public class Timeline
+implements GeneratorBufferInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -53,9 +53,9 @@ public class Timeline
 	private Map<InputData, Timeline> outputTimelines = new HashMap<InputData, Timeline>();
 	
 	/**
-	 * Sound Samples between start and end output of {@link #generator}.
+	 * Buffered Sound Samples between start and end output of {@link #generator}.
 	 */
-	private List<SoundSample> soundSamples = new Vector<SoundSample>();
+	private SoundSample[] bufSoundSamples = new SoundSample[0];
 	
 	//**********************************************************************************************
 	// Functions:
@@ -73,9 +73,22 @@ public class Timeline
 	 * @param generator 
 	 * 			to set {@link #generator}.
 	 */
-	public void setGenerator(Generator generator)
+	public synchronized void setGenerator(Generator generator)
 	{
+		//==========================================================================================
 		this.generator = generator;
+		
+		//------------------------------------------------------------------------------------------
+		float startTimePos = this.generator.getStartTimePos();
+		float endTimePos = this.generator.getEndTimePos();
+		
+		float timeLength = endTimePos - startTimePos;
+		
+		int bufSize = (int)(this.generator.getSoundFrameRate() * timeLength);
+		
+		this.bufSoundSamples = new SoundSample[bufSize];
+
+		//==========================================================================================
 	}
 
 	/**
@@ -125,7 +138,7 @@ public class Timeline
 	 * Liefert <code>null</code>, wenn der Generator für den Zeitpunkt keinen Wert 
 	 * generieren kann (Frame-Position nicht zwischen Start und Ende).
 	 * 
-	 * @see Generator#generateFrameSample(long, ModulGenerator)
+	 * @see Generator#generateFrameSample(long, ModulGenerator, GeneratorBufferInterface)
 	 * 
 	 * @param framePosition
 	 * 			ist the position of the sample frame.
@@ -134,10 +147,30 @@ public class Timeline
 	 */
 	public SoundSample generateFrameSample(long framePosition, ModulGenerator parentModulGenerator)
 	{
+		//==========================================================================================
 		SoundSample retSoundSample;
 		
-		retSoundSample = this.generator.generateFrameSample(framePosition, parentModulGenerator);
+		int bufFramePos = this.makeBufferFramePos(framePosition);
 		
+		if (bufFramePos >= 0)
+		{
+			retSoundSample = this.bufSoundSamples[bufFramePos];
+			
+			if (retSoundSample == null)
+			{
+				retSoundSample = this.generator.generateFrameSample(framePosition,
+				                                                    parentModulGenerator, 
+				                                                    this);
+				
+				this.bufSoundSamples[bufFramePos] = retSoundSample;
+			}
+		}
+		else
+		{
+			retSoundSample = null;
+		}
+		
+		//==========================================================================================
 		return retSoundSample;
 	}
 
@@ -169,5 +202,60 @@ public class Timeline
 	{
 		return this.generator.getInputsCount();
 	}
+
+	/**
+	 * @param sampleFramePos
+	 * 			is the sampleFrame position.
+	 * @return
+	 * 			is the buffered sample.
+	 */
+	public SoundSample getBufSoundSample(long sampleFramePos)
+	{
+		//==========================================================================================
+		SoundSample soundSample;
+		
+		int bufFramePos = this.makeBufferFramePos(sampleFramePos);
+		
+		if (bufFramePos >= 0)
+		{
+			soundSample = this.bufSoundSamples[bufFramePos];
+		}
+		else
+		{
+			soundSample = null;
+		}
+		//==========================================================================================
+		return soundSample;
+	}
+
+	/**
+	 * @param sampleFrame
+	 * 			is the sample Frame.
+	 * @return
+	 * 			is the buffer Frame or <code>-1</code> if not in buffer range.
+	 */
+	private int makeBufferFramePos(long sampleFrame)
+	{
+		//==========================================================================================
+		float startTimePos = this.generator.getStartTimePos();
+		
+		long startFrame = (long)(this.generator.getSoundFrameRate() * startTimePos);
+		
+		int bufFramePos = (int)(sampleFrame - startFrame);
+		
+		// Frame is not in buffer range?
+		if (((bufFramePos >= 0) && (bufFramePos < this.bufSoundSamples.length)) == false)
+		{
+			bufFramePos = -1;
+		}
+		
+		//==========================================================================================
+		return bufFramePos;
+	}
+	
+	/**
+	 * Fill buffer.
+	 * Clear buffer (on changes).
+	 */
 	
 }

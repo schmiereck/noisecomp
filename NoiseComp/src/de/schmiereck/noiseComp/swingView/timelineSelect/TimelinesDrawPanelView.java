@@ -20,7 +20,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -56,6 +55,12 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private static final double	ZOOM_Y	= 1.0D;
 
+	private static final Color CTimelineNormalBackground = Color.WHITE;
+	private static final Color CTimelineSelectedBackground = new Color(128, 128, 192);
+	private static final Color CTimelineSignal = new Color(0, 0, 0, 160);
+	private static final Color CTimelineInputConnector = new Color(255, 0, 0, 192);
+	private static final Color CTimelineBuffer = new Color(0, 200, 0, 127);
+	
 	//**********************************************************************************************
 	// Fields:
 	
@@ -322,7 +327,7 @@ implements Scrollable//, MouseMotionListener
 		{
 			int entryHeight = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
 			
-			g2.setPaint(Color.red);
+			g2.setPaint(CTimelineInputConnector);
 			
 			TimelineSelectEntryModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 			
@@ -445,15 +450,6 @@ implements Scrollable//, MouseMotionListener
 	private void paintTimeline(Graphics2D g2, int timelineGeneratorPos, TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		//==========================================================================================
-		if (timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel() == timelineSelectEntryModel)
-		{
-			g2.setPaint(Color.GREEN);
-		}
-		else
-		{
-			g2.setPaint(Color.WHITE);
-		}
-		
 		float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
 		
 		float startTimePos = timelineSelectEntryModel.getStartTimePos();
@@ -461,6 +457,18 @@ implements Scrollable//, MouseMotionListener
 		float generatorPosY = timelineGeneratorPos * maxUnitIncrementY;
 		
 		float timeLength = endTimePos - startTimePos;
+		
+		//------------------------------------------------------------------------------------------
+		// Background:
+		
+		if (timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel() == timelineSelectEntryModel)
+		{
+			g2.setPaint(CTimelineSelectedBackground);
+		}
+		else
+		{
+			g2.setPaint(CTimelineNormalBackground);
+		}
 		
 		Rectangle2D rectangle = new Rectangle2D.Float(startTimePos,
 		                                              generatorPosY,
@@ -476,16 +484,13 @@ implements Scrollable//, MouseMotionListener
 
 		if (timeline != null)
 		{
-			g2.setPaint(Color.BLACK);
-			g2.setColor(Color.BLACK);
-			
 			ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
 			
 			float frameRate = timeline.getSoundFrameRate();
 			float frameStep = timeLength / (frameRate / 25.0F);
 	
-			float pointSizeX = (float)(1.0F / at.getScaleX());
-			float pointSizeY = (float)(1.0F / at.getScaleY());
+			float pointSizeX = (float)(1.0F / this.at.getScaleX());
+			float pointSizeY = (float)(1.0F / this.at.getScaleY());
 			
 	//		Rectangle2D point = new Rectangle2D.Float();
 			Point2D srcPoint = new Point2D.Float();
@@ -498,7 +503,18 @@ implements Scrollable//, MouseMotionListener
 			{
 				long sampleFrame = (long)((startTimePos + timePos) * frameRate);
 				
-				SoundSample soundSample = timeline.generateFrameSample(sampleFrame, parentModulGenerator);
+				SoundSample bufSoundSample = timeline.getBufSoundSample(sampleFrame);
+				SoundSample soundSample;
+				
+				if (bufSoundSample != null)
+				{
+					soundSample = bufSoundSample;
+				}
+				else
+				{
+					soundSample = timeline.generateFrameSample(sampleFrame, parentModulGenerator);
+					bufSoundSample = null;
+				}
 				
 				if (soundSample != null)
 				{
@@ -507,11 +523,11 @@ implements Scrollable//, MouseMotionListener
 								  (soundSample.getMonoValue() * maxUnitIncrementY * -0.5F) + 
 								  (maxUnitIncrementY / 2.0F)); 
 					
-	//				point.setRect(posX, posY,
-	//				              pointSizeX, pointSizeY);
+//					point.setRect(posX, posY,
+//					              pointSizeX, pointSizeY);
 					srcPoint.setLocation(pointSizeX, pointSizeY);
 					
-	//				Shape shape = this.at.createTransformedShape(point);
+//					Shape shape = this.at.createTransformedShape(point);
 					srcPoint.setLocation(posX, posY);
 					this.at.transform(srcPoint, dstPoint);
 					
@@ -525,6 +541,8 @@ implements Scrollable//, MouseMotionListener
 					{
 						// Draw line.
 						
+						g2.setColor(CTimelineSignal);
+						
 	//					g2.fill(shape);
 						g2.drawLine(lastX, lastY, 
 						            x, y);
@@ -532,6 +550,16 @@ implements Scrollable//, MouseMotionListener
 					
 					lastX = x;
 					lastY = y;
+					
+					if (bufSoundSample != null)
+					{
+						g2.setColor(CTimelineBuffer);
+						
+						int gy = (int)(generatorPosY * this.at.getScaleY());
+						
+						g2.drawLine(x, gy, 
+						            x, gy + 2);
+					}
 				}
 			}
 		}

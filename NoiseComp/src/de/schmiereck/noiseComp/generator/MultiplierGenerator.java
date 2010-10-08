@@ -46,7 +46,7 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
 	{
 		float multiplier = 1.0F;
 
@@ -75,7 +75,10 @@ extends Generator
 							{
 //								try
 //								{
-									float value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
+									float value = this.calcInputMonoValue(framePosition, 
+									                                      inputData, 
+									                                      parentModulGenerator,
+									                                      generatorBuffer);
 									
 									multiplier *= value;
 //								}
@@ -86,7 +89,11 @@ extends Generator
 							}
 							case INPUT_TYPE_SIGNAL:
 							{
-								this.calcInputValue(framePosition, inputData, signal, parentModulGenerator);
+								this.calcInputValue(framePosition, 
+								                    inputData, 
+								                    signal, 
+								                    parentModulGenerator,
+								                    generatorBuffer);
 
 								signalLeft += signal.getLeftValue();
 								signalRight += signal.getRightValue();

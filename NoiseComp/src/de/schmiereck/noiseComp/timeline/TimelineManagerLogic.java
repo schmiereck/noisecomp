@@ -145,7 +145,7 @@ public class TimelineManagerLogic
 	{
 		Timeline timeline = this.makeTimeline(generator);
 		
-		// TODO Notify change listeners.
+		// TODO Notify outputs.
 		
 		return timeline;
 	}
@@ -162,7 +162,7 @@ public class TimelineManagerLogic
 	{
 		Generator generator = timeline.getGenerator();
 		
-		// TODO Notify change listeners.
+		// TODO Notify outputs.
 		
 		generator.setStartTimePos(generatorStartTimePos);
 		generator.setEndTimePos(generatorEndTimePos);

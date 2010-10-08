@@ -20,7 +20,7 @@ extends Generator
 	{
 		super(name, frameRate, generatorTypeData);
 		
-		// Fügt sich als Listener zu dem seinem Typ hinzu, um über Änderungen informiert zu werden.
+		// Fï¿½gt sich als Listener zu dem seinem Typ hinzu, um Ã¼ber Ã„nderungen informiert zu werden.
 		//((ModulGeneratorTypeData)generatorTypeData).getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 	}
 
@@ -30,7 +30,7 @@ extends Generator
 	protected void finalize()
 		throws Throwable
 	{
-		// Nimmt sich als Listener von seinem Typ weg, um nicht mehr über Änderungen informiert zu werden.
+		// Nimmt sich als Listener von seinem Typ weg, um nicht mehr Ã¼ber Ã„nderungen informiert zu werden.
 		//((ModulGeneratorTypeData)this.getGeneratorTypeData()).getGeneratorChangeObserver().removeGeneratorChangeListener(this);
 
 		super.finalize();
@@ -39,7 +39,11 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample sample, ModulGenerator parentModulGenerator)
+	public void calculateSoundSample(long framePosition, 
+	                                 float frameTime, 
+	                                 SoundSample sample, 
+	                                 ModulGenerator parentModulGenerator, 
+	                                 GeneratorBufferInterface generatorBuffer)
 	{
 		ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)this.getGeneratorTypeData();
 		
@@ -51,7 +55,9 @@ extends Generator
 			long outputStartPos = (long)(this.getStartTimePos() * this.getSoundFrameRate());
 			
 			//outputGenerator.calculateSoundSample(framePosition, frameTime, sample);
-			SoundSample outputSample = outputGenerator.generateFrameSample(framePosition - outputStartPos, this);
+			SoundSample outputSample = outputGenerator.generateFrameSample(framePosition - outputStartPos, 
+			                                                               this,
+			                                                               generatorBuffer);
 			
 			sample.setValues(outputSample);
 		}

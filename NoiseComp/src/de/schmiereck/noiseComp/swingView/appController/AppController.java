@@ -829,7 +829,7 @@ public class AppController
 		
 		if (mainModulGeneratorTypeData != null)
 		{
-			List<Timeline> timelines =soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
+			List<Timeline> timelines = soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
 //			OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
 //			
 //			Timeline outputTimeline = soundSourceLogic.setOutputGenerator(outputGenerator);

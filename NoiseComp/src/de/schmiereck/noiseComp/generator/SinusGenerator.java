@@ -49,7 +49,8 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, 
+	                                 GeneratorBufferInterface generatorBuffer)
 	{
 		//==========================================================================================
 //		float dt = (1.0F / this.getSoundFrameRate());
@@ -59,15 +60,24 @@ extends Generator
 //			this.calcInputMonoValue(framePosition - dt, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
 		
 		float signalFrequency = 
-			this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
+			this.calcInputMonoValue(framePosition, 
+			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), 
+			                        parentModulGenerator,
+			                        generatorBuffer);
 
 		//------------------------------------------------------------------------------------------
 		// Amplitude des gerade generierten Sinus-Siganls.
-		float signalAmplitude = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), parentModulGenerator);
+		float signalAmplitude = this.calcInputMonoValue(framePosition, 
+		                                                this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
+		                                                parentModulGenerator,
+		                                                generatorBuffer);
 		
 		//------------------------------------------------------------------------------------------
 		// Versatz des Sinus-Siganls um eine Schwingung.
-		float signalShift = this.calcInputMonoValue(framePosition, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), parentModulGenerator);
+		float signalShift = this.calcInputMonoValue(framePosition, 
+		                                            this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), 
+		                                            parentModulGenerator,
+		                                            generatorBuffer);
 		
 		//------------------------------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.

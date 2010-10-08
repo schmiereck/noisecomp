@@ -43,7 +43,7 @@ extends Generator
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, 
 									 SoundSample soundSample, 
-									 ModulGenerator parentModulGenerator)
+									 ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
 	{
 		long soundFramePosition = (long)(framePosition - (this.getStartTimePos() * this.getSoundFrameRate()));
 		

@@ -1,6 +1,5 @@
 package de.schmiereck.noiseComp.soundSource;
 
-import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.timeline.Timeline;
 

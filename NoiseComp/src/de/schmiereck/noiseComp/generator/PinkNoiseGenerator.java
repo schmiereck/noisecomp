@@ -53,7 +53,7 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
 	{
 		//==========================================================================================
 		float mean = 0.0F;
@@ -80,7 +80,10 @@ extends Generator
 								float value;
 //								try
 //								{
-									value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
+								value = this.calcInputMonoValue(framePosition, 
+								                                inputData, 
+								                                parentModulGenerator,
+								                                generatorBuffer);
 									
 									mean += value;
 //								}
@@ -94,7 +97,10 @@ extends Generator
 								float value;
 //								try
 //								{
-									value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
+								value = this.calcInputMonoValue(framePosition, 
+								                                inputData, 
+								                                parentModulGenerator,
+								                                generatorBuffer);
 									
 									variance += value;
 //								}

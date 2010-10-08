@@ -139,35 +139,25 @@ implements GeneratorInterface,
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.GeneratorInterface#generateFrameSample(long, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public SoundSample generateFrameSample(long framePosition, ModulGenerator parentModulGenerator)
+	public SoundSample generateFrameSample(long framePosition, ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
 	{
+		//==========================================================================================
 		SoundSample soundSample;
 		
-		// TODO Implements Buffer for SoundSamples.
-		//GeneratorBuffer generatorBuffer = this.getGeneratorBuffer();
-
 		// Die Frameposition in Zeit umrechnen.
 		float frameTime = (framePosition / this.getSoundFrameRate());
 		
-		//if (generatorBuffer.checkIsInTime(framePosition) == true)
-		//if ((frameTime >= this.startTimePos) && (frameTime < this.endTimePos))
 		if (this.checkIsInTime(frameTime) == true)
 		{	
-			//soundSample = generatorBuffer.readBuffer(framePosition);
-				
-			//if (soundSample == null)
-			//{
-				soundSample = new SoundSample();
+			soundSample = new SoundSample();
 
-				this.calculateSoundSample(framePosition, frameTime, soundSample, parentModulGenerator);
-				
-			//	generatorBuffer.writeBuffer(framePosition, soundSample);
-			//}
+			this.calculateSoundSample(framePosition, frameTime, soundSample, parentModulGenerator, generatorBuffer);
 		}
 		else
 		{
 			soundSample = null;
 		}
+		//==========================================================================================
 		return soundSample;
 	}
 
@@ -180,6 +170,7 @@ implements GeneratorInterface,
 	 */
 	public boolean checkIsInTime(float frameTime)
 	{
+		//==========================================================================================
 		boolean ret;
 		
 		if ((frameTime >= this.startTimePos) && (frameTime < this.endTimePos))
@@ -190,6 +181,7 @@ implements GeneratorInterface,
 		{
 			ret = false;
 		}
+		//==========================================================================================
 		return ret;
 	}
 	
@@ -201,11 +193,14 @@ implements GeneratorInterface,
 	 * 			(Is NOT the position in the generator, calulate this frame pos with 
 	 * 			soundFramePosition = framePosition - {@link #getStartTimePos()}!)
 	 * @param sample
+	 * @param generatorBuffer
+	 * 			is the generatorBuffer.
 	 */
 	public abstract void calculateSoundSample(long framePosition, 
 	                                          float frameTime, 
 	                                          SoundSample sample, 
-	                                          ModulGenerator parentModulGenerator);
+	                                          ModulGenerator parentModulGenerator, 
+	                                          GeneratorBufferInterface generatorBuffer);
 
 	/**
 	 * @see #name
@@ -510,10 +505,13 @@ implements GeneratorInterface,
 	}
 
 	/**
+	 * @param generatorBuffer 
+	 * 			is the generatorBuffer.
 	 * @return a scale factor for drawing the samples.
 	 * 			Should be a factor that normalize all samples of the generator between -1.0 and +1.0.
 	 */
-	public float getGeneratorSampleDrawScale(ModulGenerator parentModulGenerator)
+	public float getGeneratorSampleDrawScale(ModulGenerator parentModulGenerator, 
+	                                         GeneratorBufferInterface generatorBuffer)
 	{
 		return 1.0F;
 	}
@@ -530,7 +528,11 @@ implements GeneratorInterface,
 	 * Calculates the value for a given input for this position.
 	 *
 	 */
-	protected void calcInputValue(long framePosition, InputData inputData, SoundSample value, ModulGenerator parentModulGenerator)
+	protected void calcInputValue(long framePosition, 
+	                              InputData inputData, 
+	                              SoundSample value, 
+	                              ModulGenerator parentModulGenerator,
+	                              GeneratorBufferInterface generatorBuffer)
 	{
 		GeneratorInterface inputSoundGenerator = inputData.getInputGenerator();
 
@@ -539,7 +541,10 @@ implements GeneratorInterface,
 		{	
 			// Use his input:
 			
-			SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition, parentModulGenerator);
+			SoundSample inputSoundSample = 
+				inputSoundGenerator.generateFrameSample(framePosition, 
+				                                        parentModulGenerator, 
+				                                        generatorBuffer);
 			
 			value.setValues(inputSoundSample);
 		}
@@ -579,7 +584,11 @@ implements GeneratorInterface,
 								
 								if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
 								{
-									parentModulGenerator.calcInputValue(framePosition, modulInputData, value, parentModulGenerator);
+									parentModulGenerator.calcInputValue(framePosition, 
+									                                    modulInputData, 
+									                                    value, 
+									                                    parentModulGenerator,
+									                                    generatorBuffer);
 									break;
 								}
 							}
@@ -600,7 +609,11 @@ implements GeneratorInterface,
 		}
 	}
 
-	protected void calcInputSignals(long framePosition, InputData inputData, SoundSample signal, ModulGenerator parentModulGenerator)
+	protected void calcInputSignals(long framePosition, 
+	                                InputData inputData, 
+	                                SoundSample signal, 
+	                                ModulGenerator parentModulGenerator,
+	                                GeneratorBufferInterface generatorBuffer)
 	{
 		if (inputData != null)
 		{	
@@ -611,7 +624,10 @@ implements GeneratorInterface,
 			{	
 				// Use his input:
 				
-				SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition, parentModulGenerator);
+				SoundSample inputSoundSample = 
+					inputSoundGenerator.generateFrameSample(framePosition, 
+					                                        parentModulGenerator, 
+					                                        generatorBuffer);
 				
 				signal.setSignals(inputSoundSample);
 			}
@@ -649,7 +665,11 @@ implements GeneratorInterface,
 								
 								if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
 								{
-									parentModulGenerator.calcInputSignals(framePosition, modulInputData, signal, parentModulGenerator);
+									parentModulGenerator.calcInputSignals(framePosition, 
+									                                      modulInputData, 
+									                                      signal, 
+									                                      parentModulGenerator,
+									                                      generatorBuffer);
 									break;
 								}
 							}
@@ -671,7 +691,10 @@ implements GeneratorInterface,
 		}
 	}
 	
-	protected float calcInputMonoValue(long framePosition, InputTypeData inputTypeData, ModulGenerator parentModulGenerator) //, float defaultValue)
+	protected float calcInputMonoValue(long framePosition, 
+	                                   InputTypeData inputTypeData, 
+	                                   ModulGenerator parentModulGenerator,
+	                                   GeneratorBufferInterface generatorBuffer)
 //	throws NoInputSignalException
 	{
 		float value;
@@ -680,7 +703,10 @@ implements GeneratorInterface,
 		
 		if (inputData != null)
 		{
-			value = this.calcInputMonoValue(framePosition, inputData, parentModulGenerator);
+			value = this.calcInputMonoValue(framePosition, 
+			                                inputData, 
+			                                parentModulGenerator,
+			                                generatorBuffer);
 		}
 		else
 		{
@@ -700,8 +726,10 @@ implements GeneratorInterface,
 	 * 			{@link Float#NaN} if no input signal found.
 
 	 */
-	protected float calcInputMonoValue(long framePosition, InputData inputData, 
-									   ModulGenerator parentModulGenerator)
+	protected float calcInputMonoValue(long framePosition, 
+	                                   InputData inputData, 
+									   ModulGenerator parentModulGenerator,
+									   GeneratorBufferInterface generatorBuffer)
 //	throws NoInputSignalException
 	{
 		float value;
@@ -713,7 +741,10 @@ implements GeneratorInterface,
 		{	
 			// Use his input:
 			
-			SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition, parentModulGenerator);
+			SoundSample inputSoundSample = 
+				inputSoundGenerator.generateFrameSample(framePosition, 
+				                                        parentModulGenerator, 
+				                                        generatorBuffer);
 			
 			if (inputSoundSample != null)
 			{	
@@ -759,7 +790,10 @@ implements GeneratorInterface,
 							
 							if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
 							{
-								value = parentModulGenerator.calcInputMonoValue(framePosition, modulInputData, parentModulGenerator);
+								value = parentModulGenerator.calcInputMonoValue(framePosition, 
+								                                                modulInputData, 
+								                                                parentModulGenerator,
+								                                                generatorBuffer);
 								break;
 							}
 						}
