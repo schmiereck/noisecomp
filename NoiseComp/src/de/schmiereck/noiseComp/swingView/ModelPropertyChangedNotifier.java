@@ -40,11 +40,20 @@ public class ModelPropertyChangedNotifier
 	}
 
 	/**
-	 * @param generatorNameChangedListener
+	 * @param modelChangedListener
 	 * 			to add to {@link #modelPropertyChangedListeners}.
 	 */
-	public void addModelPropertyChangedListener(ModelPropertyChangedListener generatorNameChangedListener)
+	public void addModelPropertyChangedListener(ModelPropertyChangedListener modelChangedListener)
 	{
-		this.modelPropertyChangedListeners.add(generatorNameChangedListener);
+		this.modelPropertyChangedListeners.add(modelChangedListener);
+	}
+
+	/**
+	 * @param modelChangedListener
+	 * 			to remove from {@link #modelPropertyChangedListeners}.
+	 */
+	public void removeModelPropertyChangedListener(ModelPropertyChangedListener modelChangedListener)
+	{
+		this.modelPropertyChangedListeners.remove(modelChangedListener);
 	}
 }

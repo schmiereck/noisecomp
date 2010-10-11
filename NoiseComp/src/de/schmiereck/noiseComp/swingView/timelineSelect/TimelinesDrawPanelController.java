@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.util.Iterator;
+import java.util.List;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -111,7 +112,24 @@ public class TimelinesDrawPanelController
 	 */
 	public void clearTimelineGenerators()
 	{
+		//==========================================================================================
+		// Remove listeners if timeline is removed:
+		
+		ModelPropertyChangedListener modelChangedListener = this.timelinesDrawPanelModel.getTimelineGeneratorModelChangedListener();
+		
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels();
+		
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
+		{
+			timelineSelectEntryModel.getNameChangedNotifier().removeModelPropertyChangedListener(modelChangedListener);
+			timelineSelectEntryModel.getStartTimePosChangedNotifier().removeModelPropertyChangedListener(modelChangedListener);
+			timelineSelectEntryModel.getEndTimePosChangedNotifier().removeModelPropertyChangedListener(modelChangedListener);
+		}
+		
+		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelModel.clearTimelineGenerators();
+
+		//==========================================================================================
 	}
 
 	/**
