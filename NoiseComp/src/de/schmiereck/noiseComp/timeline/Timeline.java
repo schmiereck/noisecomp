@@ -9,6 +9,7 @@ import java.util.Map;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorBufferInterface;
+import de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
@@ -88,6 +89,20 @@ implements GeneratorBufferInterface
 		
 		this.bufSoundSamples = new SoundSample[bufSize];
 
+		//------------------------------------------------------------------------------------------
+		this.generator.getGeneratorChangeObserver().registerGeneratorChangeListener
+		(
+		 	new GeneratorChangeListenerInterface()
+		 	{
+				@Override
+				public void notifyGeneratorChanged(Generator generator, 
+				                                   float changedStartTimePos, float changedEndTimePos)
+				{
+					generatorChanged(changedStartTimePos, changedEndTimePos);
+				}
+		 	}
+		);
+		
 		//==========================================================================================
 	}
 
@@ -252,10 +267,57 @@ implements GeneratorBufferInterface
 		//==========================================================================================
 		return bufFramePos;
 	}
-	
-	/**
-	 * Fill buffer.
-	 * Clear buffer (on changes).
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#calcInputFrameSample(long, de.schmiereck.noiseComp.generator.InputData, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
+	@Override
+	public SoundSample calcInputFrameSample(long framePosition, 
+	                                        InputData inputData, 
+	                                        ModulGenerator parentModulGenerator)
+	{
+		//==========================================================================================
+		SoundSample bufInputSoundSample;
+		
+		Timeline inputTimeline = this.inputTimelines.get(inputData);
+
+		if (inputTimeline != null)
+		{
+			bufInputSoundSample = inputTimeline.getBufSoundSample(framePosition);
+		}
+		else
+		{
+			bufInputSoundSample = null;
+		}
+		
+		//==========================================================================================
+		return bufInputSoundSample;
+	}
+
+	/**
+	 * Generator changed.
+	 * 
+	 * @param changedStartTimePos
+	 * 			is the start time pos the data in generator changed.
+	 * @param changedEndTimePos
+	 * 			is the end time pos the data in generator changed.
+	 */
+	protected void generatorChanged(float changedStartTimePos, float changedEndTimePos)
+	{
+		//==========================================================================================
+		int changedStartBufPos = (int)(this.generator.getSoundFrameRate() * changedStartTimePos);
+
+		//------------------------------------------------------------------------------------------
+		float timeLength = changedEndTimePos - changedStartTimePos;
+		
+		int changedBufSize = (int)(this.generator.getSoundFrameRate() * timeLength);
+
+		//------------------------------------------------------------------------------------------
+		for (int bufPos = changedStartBufPos; bufPos < changedBufSize; bufPos++)
+		{
+			this.bufSoundSamples[bufPos] = null;
+		}
+		//==========================================================================================
+	}
 	
 }

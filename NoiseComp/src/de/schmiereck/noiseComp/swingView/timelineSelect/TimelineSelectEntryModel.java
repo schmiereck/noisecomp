@@ -116,6 +116,15 @@ public class TimelineSelectEntryModel
 
 	/**
 	 * @return 
+	 * 			returns the {@link #startTimePosChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getStartTimePosChangedNotifier()
+	{
+		return this.startTimePosChangedNotifier;
+	}
+
+	/**
+	 * @return 
 	 * 			returns the {@link #endTimePos}.
 	 */
 	public float getEndTimePos()
@@ -162,15 +171,6 @@ public class TimelineSelectEntryModel
 	public ModelPropertyChangedNotifier getNameChangedNotifier()
 	{
 		return this.nameChangedNotifier;
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #startTimePosChangedNotifier}.
-	 */
-	public ModelPropertyChangedNotifier getStartTimePosChangedNotifier()
-	{
-		return this.startTimePosChangedNotifier;
 	}
 
 	/**

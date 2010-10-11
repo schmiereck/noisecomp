@@ -187,12 +187,14 @@ implements GeneratorInterface,
 	
 	/**
 	 * Berechnen des Sample-Wertes für die angegebene Frame-Position.
+	 * TODO Use inputs of generatorBuffer to calculate.
 	 * 
 	 * @param framePosition
 	 * 			is the position of the frame in the complete line to play.<br/>
 	 * 			(Is NOT the position in the generator, calulate this frame pos with 
 	 * 			soundFramePosition = framePosition - {@link #getStartTimePos()}!)
 	 * @param sample
+	 * 			is the sound sample.
 	 * @param generatorBuffer
 	 * 			is the generatorBuffer.
 	 */
@@ -719,8 +721,11 @@ implements GeneratorInterface,
 
 	/**
 	 * @param framePosition
+	 * 			is the frame position.
 	 * @param inputData
+	 * 			is the input data.
 	 * @param parentModulGenerator
+	 * 			is the parent modul generator.
 	 * @return
 	 * 			the value.<br/>
 	 * 			{@link Float#NaN} if no input signal found.
@@ -732,83 +737,111 @@ implements GeneratorInterface,
 									   GeneratorBufferInterface generatorBuffer)
 //	throws NoInputSignalException
 	{
+		//==========================================================================================
 		float value;
 
-		GeneratorInterface inputSoundGenerator = inputData.getInputGenerator();
-
-		// Found Input-Generator ?
-		if (inputSoundGenerator != null)
-		{	
-			// Use his input:
-			
-			SoundSample inputSoundSample = 
-				inputSoundGenerator.generateFrameSample(framePosition, 
-				                                        parentModulGenerator, 
-				                                        generatorBuffer);
-			
-			if (inputSoundSample != null)
-			{	
-				value = inputSoundSample.getMonoValue();
-			}
-			else
-			{
-				// Found no input signal:
-				
-//				throw new NoInputSignalException();
-				value = Float.NaN; // this.getInputDefaultValueByInputType(inputType);
-			}
+		//------------------------------------------------------------------------------------------
+		// Buffer value:
+		SoundSample bufInputSoundSample;
+		
+		if (generatorBuffer != null)
+		{
+			bufInputSoundSample = 
+				generatorBuffer.calcInputFrameSample(framePosition, 
+				                                     inputData,
+				                                     parentModulGenerator);
 		}
 		else
 		{
-			// Found no Input-Generator:
-			
-			Float inputValue = inputData.getInputValue();
+			bufInputSoundSample = null;
+		}
 		
-			// Found constant input value ?
-			if (inputValue != null)
-			{
-				value = inputValue.floatValue();
-			}
-			else
-			{
-				InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
-
-				// Found a modul input type ?
-				if ((modulInputTypeData != null) && (parentModulGenerator != null))
-				{
-					// Use Value from this input:
-
-					Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
-					
-					value = 0.0F;
-					
-					if (modulInputsIterator != null)
-					{
-						while (modulInputsIterator.hasNext())
-						{
-							InputData modulInputData = modulInputsIterator.next();
-							
-							if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
-							{
-								value = parentModulGenerator.calcInputMonoValue(framePosition, 
-								                                                modulInputData, 
-								                                                parentModulGenerator,
-								                                                generatorBuffer);
-								break;
-							}
-						}
-					}
+		if (bufInputSoundSample != null)
+		{
+			value = bufInputSoundSample.getMonoValue();
+		}
+		else
+		{
+			//------------------------------------------------------------------------------------------
+			GeneratorInterface inputSoundGenerator = inputData.getInputGenerator();
+	
+			// Found Input-Generator ?
+			if (inputSoundGenerator != null)
+			{	
+				// Use his input:
+				
+				SoundSample inputSoundSample = 
+					inputSoundGenerator.generateFrameSample(framePosition, 
+					                                        parentModulGenerator, 
+					                                        generatorBuffer);
+				
+				if (inputSoundSample != null)
+				{	
+					value = inputSoundSample.getMonoValue();
 				}
 				else
 				{
-					// Found no input value:
-					// Use Default Value of Input type:
+					// Found no input signal:
 					
-					value = this.getInputDefaultValueByInputType(inputData);
+	//				throw new NoInputSignalException();
+					value = Float.NaN; // this.getInputDefaultValueByInputType(inputType);
+				}
+			}
+			else
+			{
+				//--------------------------------------------------------------------------------------
+				// Found no Input-Generator:
+				
+				Float inputValue = inputData.getInputValue();
+			
+				// Found constant input value ?
+				if (inputValue != null)
+				{
+					value = inputValue.floatValue();
+				}
+				else
+				{
+					//----------------------------------------------------------------------------------
+					InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
+	
+					// Found a modul input type ?
+					if ((modulInputTypeData != null) && (parentModulGenerator != null))
+					{
+						// Use Value from this input:
+	
+						Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
+						
+						value = 0.0F;
+						
+						if (modulInputsIterator != null)
+						{
+							while (modulInputsIterator.hasNext())
+							{
+								InputData modulInputData = modulInputsIterator.next();
+								
+								if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
+								{
+									value = parentModulGenerator.calcInputMonoValue(framePosition, 
+									                                                modulInputData, 
+									                                                parentModulGenerator,
+									                                                generatorBuffer);
+									break;
+								}
+							}
+						}
+					}
+					else
+					{
+						//------------------------------------------------------------------------------
+						// Found no input value:
+						// Use Default Value of Input type:
+						
+						value = this.getInputDefaultValueByInputType(inputData);
+					}
 				}
 			}
 		}
-
+		//==========================================================================================
 		return value;
 	}
 

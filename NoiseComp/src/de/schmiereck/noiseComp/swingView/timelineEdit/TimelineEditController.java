@@ -151,6 +151,29 @@ public class TimelineEditController
 //				}
 //		 	}
 //		);
+//		//------------------------------------------------------------------------------------------
+//		// Timeline-Edit GeneratorStartTimePosChanged: Notify Timeline:
+//		
+//		this.timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
+//		(
+//		 	new ModelPropertyChangedListener()
+//		 	{
+//				@Override
+//				public void notifyModelPropertyChanged()
+//				{
+//					TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+//					
+//					if (timelineSelectEntryModel != null)
+//					{
+//						String name = timelineSelectEntryModel.getName();
+//						
+//						Generator generator = appController.retrieveGeneratorOfEditedModul(name);
+//						
+//						generator
+//					}
+//				}
+//		 	}
+//		);
 		//==========================================================================================
 	}
 
@@ -262,5 +285,14 @@ public class TimelineEditController
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineEditModel}.
+	 */
+	public TimelineEditModel getTimelineEditModel()
+	{
+		return this.timelineEditModel;
 	}
 }
