@@ -16,6 +16,7 @@ import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
+import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
 
 /**
  * <p>
@@ -196,8 +197,12 @@ public class TimelineEditController
 	                              //final Generator generator,
 	                              final TimelinesDrawPanelModel timelinesDrawPanelModel)
 	{
+		//==========================================================================================
 		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
+		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		//==========================================================================================
 //		TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 		TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 //		TimelineEditView timelineEditView = timelineEditController.getTimelineEditView();
@@ -230,9 +235,9 @@ public class TimelineEditController
 			{
 				Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
 				
-				timeline = soundSourceLogic.createTimeline(generatorTypeData,
-				                                           soundFrameRate,
-				                                           generatorName); 
+				timeline = timelineManagerLogic.createTimeline(generatorTypeData,
+				                                               soundFrameRate,
+				                                               generatorName); 
 			}
 			else
 			{
@@ -285,6 +290,7 @@ public class TimelineEditController
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
+		//==========================================================================================
 	}
 
 	/**

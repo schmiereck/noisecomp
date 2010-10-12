@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
 import java.util.Iterator;
+
 import de.schmiereck.noiseComp.PopupRuntimeException;
 
 
@@ -104,20 +105,22 @@ public class ModulGeneratorTypeData
 
 	/**
 	 * Alle Generatoren durchlaufen und benachrichtigen 
-	 * das einer der ihren gel�scht wurde (als Input entfernen usw.):
+	 * das einer der ihren gelöscht wurde (als Input entfernen usw.):
+	 * 
 	 * @param removedGenerator
+	 * 			is the generator.
 	 */
 	private void notifyGeneratorsOfRemoving(Generator removedGenerator)
 	{
 		if (removedGenerator != null)
 		{
 			Iterator<Generator> generatorsIterator = this.generators.getGeneratorsIterator();
-			
+
 			while (generatorsIterator.hasNext())
 			{
 				Generator generator = generatorsIterator.next();
 				
-				generator.notifyRemoveGenerator(removedGenerator);
+				generator.notifyModulGeneratorRemoved(removedGenerator);
 			}
 			
 			// Output removed ?
@@ -226,6 +229,8 @@ public class ModulGeneratorTypeData
 		
 			this.notifyGeneratorsOfRemoving(generator);
 
+			generator.notifyModulGeneratorRemoveListeners(generator);
+			
 			// De-Registriert sich bei dem Generator als Listener.
 			//generator.getGeneratorChangeObserver().removeGeneratorChangeListener(this);
 		}

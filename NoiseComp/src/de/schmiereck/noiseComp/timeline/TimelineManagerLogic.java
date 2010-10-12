@@ -8,14 +8,16 @@ import java.util.Iterator;
 import java.util.Map;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
  * <p>
  * 	Timeline-Manager Logic.
  * </p>
  * <p>
- * 	Manages a list of all Modul-Generator Timelines without inputs.
+ * 	Manages a list of all Generator Timelines of a Module.
  * </p>
  * 
  * @author smk
@@ -27,17 +29,28 @@ public class TimelineManagerLogic
 	// Fields:
 	
 	/**
+	 * Main Modul-Generator-Type Data.
+	 */
+	private final ModulGeneratorTypeData mainModulGeneratorTypeData;
+	
+	/**
 	 * Generator Timelines.
 	 */
 	private Map<Generator, Timeline> generatorTimelines = new HashMap<Generator, Timeline>();
 	
-//	/**
-//	 * Generator Timelines.
-//	 */
-//	private Map<Generator, Timeline> generators = new HashMap<Generator, Timeline>();
-	
 	//**********************************************************************************************
 	// Functions:
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param mainModulGeneratorTypeData
+	 * 			is the mainModulGeneratorTypeData.
+	 */
+	public TimelineManagerLogic(ModulGeneratorTypeData mainModulGeneratorTypeData)
+	{
+		this.mainModulGeneratorTypeData = mainModulGeneratorTypeData;
+	}
 
 	/**
 	 * Create all timelines for gnerators an input-generators if they have inputs 
@@ -186,6 +199,40 @@ public class TimelineManagerLogic
 		// TODO Notify change listeners.
 		
 		generator.setName(generatorName);
+	}
+
+	/**
+	 * @param generatorTypeData
+	 * @param soundFrameRate
+	 * @param generatorName
+	 * @return
+	 */
+	public Timeline createTimeline(GeneratorTypeData generatorTypeData,
+	                               Float soundFrameRate,
+	                               String generatorName)
+	{
+		//==========================================================================================
+		Generator generator = generatorTypeData.createGeneratorInstance(generatorName, 
+		                                                                soundFrameRate);
+
+		this.mainModulGeneratorTypeData.addGenerator(generator);
+
+		Timeline timeline = 
+			this.createTimeline(generator);
+
+		//==========================================================================================
+		return timeline;
+	}
+
+	/**
+	 * @param timeline
+	 * 			is the timeline.
+	 */
+	public void removeTimeline(Timeline timeline)
+	{
+		Generator timelineGenerator = timeline.getGenerator();
+		
+		this.mainModulGeneratorTypeData.removeGenerator(timelineGenerator);
 	}
 	
 }

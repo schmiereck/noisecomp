@@ -58,6 +58,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelCont
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
+import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
 
 
 /**
@@ -506,9 +507,17 @@ public class AppController
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Modul-Data:
 					
-					Generator selectedTimelineGenerator = timelinesDrawPanelController.getSelectedTimelineGenerator();
+					SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 					
-					editedModulGeneratorTypeData.removeGenerator(selectedTimelineGenerator);
+					TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+					
+					Timeline timeline = selectedTimelineSelectEntryModel.getTimeline();
+					
+					timelineManagerLogic.removeTimeline(timeline);
+					
+//					Generator selectedTimelineGenerator = timelinesDrawPanelController.getSelectedTimelineGenerator();
+//					
+//					editedModulGeneratorTypeData.removeGenerator(selectedTimelineGenerator);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Timeline-Select-Model:
@@ -834,7 +843,7 @@ public class AppController
 //			
 //			Timeline outputTimeline = soundSourceLogic.setOutputGenerator(outputGenerator);
 			
-			int timelinePos = 0;
+//			int timelinePos = 0;
 			
 //			Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
 //			
@@ -847,14 +856,14 @@ public class AppController
 				
 				TimelineSelectEntryModel timelineSelectEntryModel = 
 					new TimelineSelectEntryModel(timeline,
-					                             timelinePos,
+//					                             timelinePos,
 					                             generator.getName(),
 					                             generator.getStartTimePos(),
 					                             generator.getEndTimePos());
 				
 				this.timelinesDrawPanelController.addTimelineSelectEntryModel(timelineSelectEntryModel);
 				
-				timelinePos++;
+//				timelinePos++;
 			}
 		}
 		

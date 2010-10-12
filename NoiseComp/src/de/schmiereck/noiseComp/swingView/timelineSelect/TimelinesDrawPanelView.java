@@ -309,6 +309,9 @@ implements Scrollable//, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels(); 
 		
+		TimelineSelectEntryModel selectedTimelineEntryModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+		int selectedPos = 0;
+		
 		//------------------------------------------------------------------------------------------
 		// Paint timelines:
 		{
@@ -317,6 +320,11 @@ implements Scrollable//, MouseMotionListener
 			for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
 			{
 				this.paintTimeline(g2, timelineGeneratorPos, timelineSelectEntryModel);
+				
+				if (selectedTimelineEntryModel == timelineSelectEntryModel)
+				{
+					selectedPos = timelineGeneratorPos;
+				}
 				
 				timelineGeneratorPos++;
 			}
@@ -329,23 +337,21 @@ implements Scrollable//, MouseMotionListener
 			
 			g2.setPaint(CTimelineInputConnector);
 			
-			TimelineSelectEntryModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
-			
-			if (selectedTimelineModel != null)
+			if (selectedTimelineEntryModel != null)
 			{
-			Timeline timeline = selectedTimelineModel.getTimeline();
+			Timeline timeline = selectedTimelineEntryModel.getTimeline();
 			
 			if (timeline != null)
 			{
-			int selectedPos = selectedTimelineModel.getTimelinePos();
+//			int selectedPos = selectedTimelineEntryModel.getTimelinePos();
 			
 			Iterator<InputData> inputsIterator = timeline.getInputsIterator();
 			
 			if (inputsIterator != null)
 			{
-				float selectedScreenPosX = selectedTimelineModel.getStartTimePos();
-				float selectedScreenInputOffset = (((selectedTimelineModel.getEndTimePos() - 
-													 selectedTimelineModel.getStartTimePos())) / 
+				float selectedScreenPosX = selectedTimelineEntryModel.getStartTimePos();
+				float selectedScreenInputOffset = (((selectedTimelineEntryModel.getEndTimePos() - 
+													 selectedTimelineEntryModel.getStartTimePos())) / 
 												   (timeline.getInputsCount() + 1));
 				
 				int inputNo = 1;
@@ -358,12 +364,13 @@ implements Scrollable//, MouseMotionListener
 					
 					if (inputGenerator != null)
 					{
-					TimelineSelectEntryModel inputTimelineModel = this.searchTimelineModel(inputGenerator);
+					TimelineSelectEntryModel inputTimelineEntryModel = this.searchTimelineModel(inputGenerator);
 
 					// Generator found ?
-					if (inputTimelineModel != null)
+					if (inputTimelineEntryModel != null)
 					{	
-						int timelinePos = inputTimelineModel.getTimelinePos();
+//						int timelinePos = inputTimelineModel.getTimelinePos();
+						int timelinePos = this.timelinesDrawPanelModel.getTimelineSelectEntryPos(inputTimelineEntryModel);
 						
 						float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
 

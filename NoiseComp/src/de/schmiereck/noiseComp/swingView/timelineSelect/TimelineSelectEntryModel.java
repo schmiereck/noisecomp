@@ -27,11 +27,11 @@ public class TimelineSelectEntryModel
 	 */
 	private de.schmiereck.noiseComp.timeline.Timeline timeline = null;
 	
-	//----------------------------------------------------------------------------------------------
-	/**
-	 * Position of tmeline in the select list.
-	 */
-	private int timelinePos;
+//	//----------------------------------------------------------------------------------------------
+//	/**
+//	 * Position of tmeline in the select list.
+//	 */
+//	private int timelinePos;
 	
 	//----------------------------------------------------------------------------------------------
 	/**
@@ -82,12 +82,12 @@ public class TimelineSelectEntryModel
 	 * 			is the End time position in milli seconds.
 	 */
 	public TimelineSelectEntryModel(Timeline timeline,
-	                              int timelinePos,
-	                              String generatorName,
-	                              float startTimePos, float endTimePos)
+//	                                int timelinePos,
+	                                String generatorName,
+	                                float startTimePos, float endTimePos)
 	{
 		this.timeline = timeline;
-		this.timelinePos = timelinePos;
+//		this.timelinePos = timelinePos;
 		this.name = generatorName;
 		this.startTimePos = startTimePos;
 		this.endTimePos = endTimePos;
@@ -200,22 +200,22 @@ public class TimelineSelectEntryModel
 		this.timeline = timeline;
 	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #timelinePos}.
-	 */
-	public int getTimelinePos()
-	{
-		return this.timelinePos;
-	}
-
-	/**
-	 * @param timelinePos 
-	 * 			to set {@link #timelinePos}.
-	 */
-	public void setTimelinePos(int timelinePos)
-	{
-		this.timelinePos = timelinePos;
-	}
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #timelinePos}.
+//	 */
+//	public int getTimelinePos()
+//	{
+//		return this.timelinePos;
+//	}
+//
+//	/**
+//	 * @param timelinePos 
+//	 * 			to set {@link #timelinePos}.
+//	 */
+//	public void setTimelinePos(int timelinePos)
+//	{
+//		this.timelinePos = timelinePos;
+//	}
 	
 }

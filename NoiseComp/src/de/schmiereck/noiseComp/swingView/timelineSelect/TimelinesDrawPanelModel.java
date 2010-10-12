@@ -262,8 +262,8 @@ public class TimelinesDrawPanelModel
 		//------------------------------------------------------------------------------------------
 		// Update Timeline-Generator Models:
 		
-		firstTimelineSelectEntryModel.setTimelinePos(secondTimelinePos);
-		secondTimelineSelectEntryModel.setTimelinePos(firstTimelinePos);
+//		firstTimelineSelectEntryModel.setTimelinePos(secondTimelinePos);
+//		secondTimelineSelectEntryModel.setTimelinePos(firstTimelinePos);
 		
 		//------------------------------------------------------------------------------------------
 		// Notify listeners.
@@ -348,5 +348,32 @@ public class TimelinesDrawPanelModel
 	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener()
 	{
 		return this.timelineGeneratorModelChangedListener;
+	}
+
+	/**
+	 * @param searchTimelineSelectEntryModel
+	 * 			is the searched timeline SelectEntryModel.
+	 * @return
+	 * 			the position of timeline.
+	 */
+	public int getTimelineSelectEntryPos(TimelineSelectEntryModel searchTimelineSelectEntryModel)
+	{
+		//==========================================================================================
+		int retPos;
+		
+		retPos = 0;
+		
+		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelineSelectEntryModels)
+		{
+			if (timelineSelectEntryModel == searchTimelineSelectEntryModel)
+			{
+				break;
+			}
+			
+			retPos++;
+		}
+		
+		//==========================================================================================
+		return retPos;
 	}
 }

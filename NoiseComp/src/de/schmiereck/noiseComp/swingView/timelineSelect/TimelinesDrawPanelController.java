@@ -199,9 +199,10 @@ public class TimelinesDrawPanelController
 	                                      TimelineSelectEntryModel secondTimelineSelectEntryModel)
 	{
 		//==========================================================================================
-		int firstTimelinePos = firstTimelineSelectEntryModel.getTimelinePos();
-		int secondTimelinePos = secondTimelineSelectEntryModel.getTimelinePos();
-		
+//		int firstTimelinePos = firstTimelineSelectEntryModel.getTimelinePos();
+//		int secondTimelinePos = secondTimelineSelectEntryModel.getTimelinePos();
+		int firstTimelinePos = this.timelinesDrawPanelModel.getTimelineSelectEntryPos(firstTimelineSelectEntryModel);
+		int secondTimelinePos = this.timelinesDrawPanelModel.getTimelineSelectEntryPos(secondTimelineSelectEntryModel);
 		//------------------------------------------------------------------------------------------
 		// Update edited Modul Data:
 		
@@ -249,11 +250,11 @@ public class TimelinesDrawPanelController
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// Update Timeline-Select-Model:
 		
-		int timelinePos = timelinesDrawPanelModel.getTimelineSelectEntryModels().size();
+//		int timelinePos = timelinesDrawPanelModel.getTimelineSelectEntryModels().size();
 		
 		TimelineSelectEntryModel timelineSelectEntryModel = 
 			new TimelineSelectEntryModel(null,
-			                           timelinePos,
+//			                           timelinePos,
 			                           "(new)",
 			                           0.0F,
 			                           1.0F);

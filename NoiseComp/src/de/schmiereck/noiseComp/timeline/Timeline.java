@@ -12,6 +12,7 @@ import de.schmiereck.noiseComp.generator.GeneratorBufferInterface;
 import de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
+import de.schmiereck.noiseComp.generator.ModulGeneratorRemoveListenerInterface;
 import de.schmiereck.noiseComp.generator.SoundSample;
 
 /**
@@ -29,7 +30,8 @@ import de.schmiereck.noiseComp.generator.SoundSample;
  * @version <p>05.10.2010:	created, smk</p>
  */
 public class Timeline
-implements GeneratorBufferInterface
+implements GeneratorBufferInterface, 
+		   ModulGeneratorRemoveListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -102,6 +104,9 @@ implements GeneratorBufferInterface
 				}
 		 	}
 		);
+		
+		//------------------------------------------------------------------------------------------
+		this.generator.addModulGeneratorRemoveListener(this);
 		
 		//==========================================================================================
 	}
@@ -350,8 +355,22 @@ implements GeneratorBufferInterface
 	@Override
 	public GeneratorBufferInterface getInputGeneratorBuffer(InputData inputData)
 	{
-		// TODO Auto-generated method stub
 		return this.inputTimelines.get(inputData);
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.ModulGeneratorRemoveListenerInterface#notifyModulGeneratorRemoved(de.schmiereck.noiseComp.generator.Generator)
+	 */
+	@Override
+	public void notifyModulGeneratorRemoved(Generator removedGenerator)
+	{
+		for (InputData inputData : this.inputTimelines.keySet())
+		{
+			if (inputData.getInputGenerator() == removedGenerator)
+			{
+				this.inputTimelines.remove(removedGenerator);
+			}
+		}
 	}
 	
 }

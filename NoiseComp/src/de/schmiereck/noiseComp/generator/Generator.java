@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 import de.schmiereck.noiseComp.PopupRuntimeException;
 
@@ -22,7 +23,8 @@ import de.schmiereck.noiseComp.PopupRuntimeException;
  */
 public abstract class Generator 
 implements GeneratorInterface,
-		   GeneratorChangeListenerInterface
+		   GeneratorChangeListenerInterface,
+		   ModulGeneratorRemoveListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -60,6 +62,11 @@ implements GeneratorInterface,
 	//private GeneratorBuffer	generatorBuffer = null;
 	
 	private GeneratorChangeObserver generatorChangeObserver = null;
+	
+	/**
+	 * Modul-Generator Remove Listeners.
+	 */
+	private final List<ModulGeneratorRemoveListenerInterface> modulGeneratorRemoveListeners = new Vector<ModulGeneratorRemoveListenerInterface>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -468,13 +475,19 @@ implements GeneratorInterface,
 		return ret;
 	}
 
-	/**
-	 * Generator benachrichtigen 
-	 * das einer der ihren gelöscht wurde (als Input entfernen usw.):
-	 * 
-	 * @param removedGenerator
+//	/**
+//	 * Notify Generator 
+//	 * that the given generator is removed (remove the Input etc.):
+//	 * 
+//	 * @param removedGenerator
+//	 * 			is the generator.
+//	 */
+//	public synchronized void notifyRemoveGenerator(Generator removedGenerator)
+	
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.ModulGeneratorRemoveListenerInterface#notifyModulGeneratorRemoved(de.schmiereck.noiseComp.generator.Generator)
 	 */
-	public synchronized void notifyRemoveGenerator(Generator removedGenerator)
+	public synchronized void notifyModulGeneratorRemoved(Generator removedGenerator)
 	{
 		if (removedGenerator != null)
 		{
@@ -1112,6 +1125,27 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 		catch (Throwable ex)
 		{
 			throw new RuntimeException("Notify Generator \"" + generator + "\" changed.", ex);
+		}
+	}
+
+	/**
+	 * @param modulGeneratorRemoveListener 
+	 * 			to add to {@link #modulGeneratorRemoveListeners}.
+	 */
+	public void addModulGeneratorRemoveListener(ModulGeneratorRemoveListenerInterface modulGeneratorRemoveListener)
+	{
+		this.modulGeneratorRemoveListeners.add(modulGeneratorRemoveListener);
+	}
+
+	/**
+	 * @param removedGenerator 
+	 * 			to notify the {@link #modulGeneratorRemoveListeners}.
+	 */
+	public void notifyModulGeneratorRemoveListeners(Generator removedGenerator)
+	{
+		for (ModulGeneratorRemoveListenerInterface modulGeneratorRemoveListener : this.modulGeneratorRemoveListeners)
+		{
+			modulGeneratorRemoveListener.notifyModulGeneratorRemoved(removedGenerator);
 		}
 	}
 

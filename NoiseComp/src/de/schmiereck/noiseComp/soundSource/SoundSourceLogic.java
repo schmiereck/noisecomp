@@ -42,11 +42,6 @@ implements GeneratorChangeListenerInterface
 	// Fields:
 	
 	/**
-	 * Main Modul-Generator-Type Data.
-	 */
-	ModulGeneratorTypeData mainModulGeneratorTypeData = null;
-	
-	/**
 	 * Is the generator genarates the output samples.
 	 * 
 	 * TODO Remove this and only use {@link #outputTimeline}.
@@ -93,10 +88,10 @@ implements GeneratorChangeListenerInterface
 		//==========================================================================================
 		List<Timeline> timelines = new Vector<Timeline>();
 		
-		this.timelineManagerLogic = new TimelineManagerLogic();
+		this.timelineManagerLogic = new TimelineManagerLogic(mainModulGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
-		this.mainModulGeneratorTypeData = mainModulGeneratorTypeData;
+//		this.mainModulGeneratorTypeData = mainModulGeneratorTypeData;
 		
 		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
 		
@@ -306,29 +301,6 @@ implements GeneratorChangeListenerInterface
 	}
 
 	/**
-	 * @param generatorTypeData
-	 * @param soundFrameRate
-	 * @param generatorName
-	 * @return
-	 */
-	public Timeline createTimeline(GeneratorTypeData generatorTypeData,
-	                               Float soundFrameRate,
-	                               String generatorName)
-	{
-		//==========================================================================================
-		Generator generator = generatorTypeData.createGeneratorInstance(generatorName, 
-		                                                                soundFrameRate);
-
-		this.mainModulGeneratorTypeData.addGenerator(generator);
-
-		Timeline timeline = 
-			this.timelineManagerLogic.createTimeline(generator);
-
-		//==========================================================================================
-		return timeline;
-	}
-
-	/**
 	 * @param timeline
 	 * 			is the timeline.
 	 * @param generatorStartTimePos
@@ -350,5 +322,14 @@ implements GeneratorChangeListenerInterface
 	public void updateName(Timeline timeline, String generatorName)
 	{
 		this.timelineManagerLogic.updateName(timeline, generatorName);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineManagerLogic}.
+	 */
+	public TimelineManagerLogic getTimelineManagerLogic()
+	{
+		return this.timelineManagerLogic;
 	}
 }
