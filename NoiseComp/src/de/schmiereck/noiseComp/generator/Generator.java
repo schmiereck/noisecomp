@@ -201,7 +201,8 @@ implements GeneratorInterface,
 	 * @param sample
 	 * 			is the sound sample.
 	 * @param generatorBuffer
-	 * 			is the generatorBuffer.
+	 * 			is the generator buffer.<br/>
+	 * 			<code>null</code> if there is no buffer available.
 	 */
 	public abstract void calculateSoundSample(long framePosition, 
 	                                          float frameTime, 
@@ -514,7 +515,11 @@ implements GeneratorInterface,
 	/**
 	 * @param generatorBuffer 
 	 * 			is the generatorBuffer.
-	 * @return a scale factor for drawing the samples.
+	 * @param generatorBuffer
+	 * 			is the generator buffer.<br/>
+	 * 			<code>null</code> if there is no buffer available.
+	 * @return 
+	 * 			a scale factor for drawing the samples.
 	 * 			Should be a factor that normalize all samples of the generator between -1.0 and +1.0.
 	 */
 	public float getGeneratorSampleDrawScale(ModulGenerator parentModulGenerator, 
@@ -534,6 +539,9 @@ implements GeneratorInterface,
 	/**
 	 * Calculates the value for a given input for this position.
 	 *
+	 * @param generatorBuffer
+	 * 			is the generator buffer.<br/>
+	 * 			<code>null</code> if there is no buffer available.
 	 */
 	protected void calcInputValue(long framePosition, 
 	                              float frameTime,
@@ -643,6 +651,11 @@ implements GeneratorInterface,
 		//==========================================================================================
 	}
 
+	/**
+	 * @param generatorBuffer
+	 * 			is the generator buffer.<br/>
+	 * 			<code>null</code> if there is no buffer available.
+	 */
 	protected void calcInputSignal(long framePosition, 
 	                               float frameTime,
 	                               InputData inputData, 
@@ -760,6 +773,11 @@ implements GeneratorInterface,
 		//==========================================================================================
 	}
 	
+	/**
+	 * @param generatorBuffer
+	 * 			is the generator buffer.<br/>
+	 * 			<code>null</code> if there is no buffer available.
+	 */
 	protected float calcInputMonoValue(long framePosition, 
 	                                   float frameTime,
 	                                   InputTypeData inputTypeData, 
@@ -795,10 +813,12 @@ implements GeneratorInterface,
 	 * 			is the input data.
 	 * @param parentModulGenerator
 	 * 			is the parent modul generator.
+	 * @param generatorBuffer
+	 * 			is the generator buffer.<br/>
+	 * 			<code>null</code> if there is no buffer available.
 	 * @return
 	 * 			the value.<br/>
 	 * 			{@link Float#NaN} if no input signal found.
-
 	 */
 	protected float calcInputMonoValue(long framePosition, 
 	                                   float frameTime,

@@ -21,7 +21,8 @@ public interface GeneratorInterface
 	 * @param parentModulGenerator
 	 * 			is the TODO parentModulGenerator.
 	 * @param generatorBuffer
-	 * 			is the generatorBuffer.
+	 * 			is the generator buffer.<br/>
+	 * 			<code>null</code> if there is no buffer available.
 	 * @return
 	 * 			the sound sample.
 	 */
