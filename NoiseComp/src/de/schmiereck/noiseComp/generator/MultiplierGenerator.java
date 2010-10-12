@@ -76,6 +76,7 @@ extends Generator
 //								try
 //								{
 									float value = this.calcInputMonoValue(framePosition, 
+									                                      frameTime,
 									                                      inputData, 
 									                                      parentModulGenerator,
 									                                      generatorBuffer);
@@ -90,6 +91,7 @@ extends Generator
 							case INPUT_TYPE_SIGNAL:
 							{
 								this.calcInputValue(framePosition, 
+								                    frameTime,
 								                    inputData, 
 								                    signal, 
 								                    parentModulGenerator,

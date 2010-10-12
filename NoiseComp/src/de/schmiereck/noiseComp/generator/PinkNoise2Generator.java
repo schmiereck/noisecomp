@@ -88,6 +88,7 @@ extends Generator
 //								try
 //								{
 									value = this.calcInputMonoValue(framePosition, 
+									                                frameTime,
 									                                inputData, 
 									                                parentModulGenerator,
 									                                generatorBuffer);
@@ -105,6 +106,7 @@ extends Generator
 //								try
 //								{
 								value = this.calcInputMonoValue(framePosition, 
+								                                frameTime,
 								                                inputData, 
 								                                parentModulGenerator,
 								                                generatorBuffer);
@@ -122,6 +124,7 @@ extends Generator
 //								try
 //								{
 								value = this.calcInputMonoValue(framePosition, 
+								                                frameTime,
 								                                inputData, 
 								                                parentModulGenerator,
 								                                generatorBuffer);
@@ -139,6 +142,7 @@ extends Generator
 //								try
 //								{
 								value = this.calcInputMonoValue(framePosition, 
+								                                frameTime,
 								                                inputData, 
 								                                parentModulGenerator,
 								                                generatorBuffer);

@@ -51,11 +51,12 @@ extends Generator
 		//==========================================================================================
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
-		this.calcInputSignals(framePosition, 
-		                      signalInputData, 
-		                      soundSample, 
-		                      parentModulGenerator,
-		                      generatorBuffer);
+		this.calcInputSignal(framePosition, 
+		                     frameTime,
+		                     signalInputData, 
+		                     soundSample, 
+		                     parentModulGenerator,
+		                     generatorBuffer);
 		/*
 		InputData inputData = this.searchInputByType(INPUT_TYPE_SIGNAL);
 		

@@ -492,7 +492,7 @@ implements Scrollable//, MouseMotionListener
 			float pointSizeX = (float)(1.0F / this.at.getScaleX());
 			float pointSizeY = (float)(1.0F / this.at.getScaleY());
 			
-	//		Rectangle2D point = new Rectangle2D.Float();
+//			Rectangle2D point = new Rectangle2D.Float();
 			Point2D srcPoint = new Point2D.Float();
 			Point2D dstPoint = new Point2D.Float();
 			
@@ -512,7 +512,7 @@ implements Scrollable//, MouseMotionListener
 				}
 				else
 				{
-					soundSample = timeline.generateFrameSample(sampleFrame, parentModulGenerator);
+					soundSample = null;//timeline.generateFrameSample(sampleFrame, parentModulGenerator);
 					bufSoundSample = null;
 				}
 				

@@ -244,6 +244,25 @@ implements GeneratorBufferInterface
 	}
 
 	/**
+	 * @param sampleFramePos
+	 * 			is the sampleFrame position.
+	 * @param soundSample
+	 * 			is sample.
+	 */
+	private void setBufSoundSample(long sampleFramePos, SoundSample soundSample)
+	{
+		//==========================================================================================
+		int bufFramePos = this.makeBufferFramePos(sampleFramePos);
+		
+		if (bufFramePos >= 0)
+		{
+			this.bufSoundSamples[bufFramePos] = soundSample;
+		}
+
+		//==========================================================================================
+	}
+
+	/**
 	 * @param sampleFrame
 	 * 			is the sample Frame.
 	 * @return
@@ -269,25 +288,30 @@ implements GeneratorBufferInterface
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#calcInputFrameSample(long, de.schmiereck.noiseComp.generator.InputData, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#calcFrameSample(long, float, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
 	@Override
-	public SoundSample calcInputFrameSample(long framePosition, 
-	                                        InputData inputData, 
-	                                        ModulGenerator parentModulGenerator)
+	public SoundSample calcFrameSample(long framePosition, 
+	                                   float frameTime,
+	                                   ModulGenerator parentModulGenerator)
 	{
 		//==========================================================================================
 		SoundSample bufInputSoundSample;
 		
-		Timeline inputTimeline = this.inputTimelines.get(inputData);
-
-		if (inputTimeline != null)
+		bufInputSoundSample = this.getBufSoundSample(framePosition);
+		
+		if (bufInputSoundSample == null)
 		{
-			bufInputSoundSample = inputTimeline.getBufSoundSample(framePosition);
-		}
-		else
-		{
-			bufInputSoundSample = null;
+			bufInputSoundSample = new SoundSample();
+			
+			this.generator.calculateSoundSample(framePosition, 
+			                                    frameTime, 
+			                                    bufInputSoundSample, 
+			                                    parentModulGenerator, 
+			                                    this);
+			
+			this.setBufSoundSample(framePosition,
+			                       bufInputSoundSample);
 		}
 		
 		//==========================================================================================
@@ -318,6 +342,16 @@ implements GeneratorBufferInterface
 			this.bufSoundSamples[bufPos] = null;
 		}
 		//==========================================================================================
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#getInputGeneratorBuffer(de.schmiereck.noiseComp.generator.InputData)
+	 */
+	@Override
+	public GeneratorBufferInterface getInputGeneratorBuffer(InputData inputData)
+	{
+		// TODO Auto-generated method stub
+		return this.inputTimelines.get(inputData);
 	}
 	
 }

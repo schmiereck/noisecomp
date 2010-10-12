@@ -127,6 +127,7 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 			}
 			frames--;
 
+			// TODO null as modul is not the best...?
 			SoundSample soundSample = outputTimeline.generateFrameSample(framePos, null);
 		
 			this.bufferSoundSamples[(int)framePos] = soundSample;

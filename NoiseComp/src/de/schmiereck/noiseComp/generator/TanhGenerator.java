@@ -55,6 +55,7 @@ extends Generator
 		if (signalInputData != null)
 		{
 			this.calcInputValue(framePosition, 
+                                frameTime,
 			                    signalInputData, 
 			                    signalSample, 
 			                    parentModulGenerator,

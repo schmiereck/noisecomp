@@ -56,7 +56,6 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
-import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
 

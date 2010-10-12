@@ -45,10 +45,12 @@ extends Generator
 	{
 		//==========================================================================================
 		float startFadeValue = this.calcStartFadeValue(framePosition, 
+		                                               frameTime,
 		                                               parentModulGenerator,
 		                                               generatorBuffer);
 		
 		float endFadeValue = this.calcEndFadeValue(framePosition, 
+	                                               frameTime,
 		                                           parentModulGenerator, 
 		                                           generatorBuffer);
 		
@@ -70,13 +72,16 @@ extends Generator
 		//==========================================================================================
 	}
 	
-	private float calcEndFadeValue(long framePosition, ModulGenerator parentModulGenerator,
+	private float calcEndFadeValue(long framePosition, 
+                                   float frameTime,
+	                               ModulGenerator parentModulGenerator,
 	                               GeneratorBufferInterface generatorBuffer)
 	{
 		//==========================================================================================
 		float endFadeValue;
 
 		endFadeValue = this.calcInputMonoValue(framePosition, 
+			                                   frameTime,
 		                                       this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_END_VALUE), 
 		                                       parentModulGenerator,
 		                                       generatorBuffer);
@@ -85,13 +90,16 @@ extends Generator
 		return endFadeValue;
 	}
 
-	private float calcStartFadeValue(long framePosition, ModulGenerator parentModulGenerator,
+	private float calcStartFadeValue(long framePosition, 
+                                     float frameTime,
+	                                 ModulGenerator parentModulGenerator,
 	                                 GeneratorBufferInterface generatorBuffer)
 	{
 		//==========================================================================================
 		float startFadeValue;
 
 		startFadeValue = this.calcInputMonoValue(framePosition, 
+		                                         frameTime,
 		                                         this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_START_VALUE), 
 		                                         parentModulGenerator,
 		                                         generatorBuffer);
@@ -129,8 +137,17 @@ extends Generator
 		//==========================================================================================
 		// Works only, if the values are constant inputs:
 		
-		float startFadeValue = this.calcStartFadeValue(0, parentModulGenerator, generatorBuffer);
-		float endFadeValue = this.calcEndFadeValue(0, parentModulGenerator, generatorBuffer);
+        float frameTime = 0.0F;
+        
+		float startFadeValue = this.calcStartFadeValue(0, 
+		                                               frameTime,
+		                                               parentModulGenerator, 
+		                                               generatorBuffer);
+		
+		float endFadeValue = this.calcEndFadeValue(0, 
+	                                               frameTime,
+		                                           parentModulGenerator, 
+		                                           generatorBuffer);
 		
 		float max = Math.max(Math.abs(startFadeValue), Math.abs(endFadeValue));
 		

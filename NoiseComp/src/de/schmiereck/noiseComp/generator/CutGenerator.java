@@ -33,6 +33,7 @@ extends Generator
 //		try
 //		{
 			maxValue = this.calcInputMonoValue(framePosition, 
+			                                   frameTime,
 			                                   this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MAX_AMPL), 
 			                                   parentModulGenerator,
 			                                   generatorBuffer);
@@ -46,6 +47,7 @@ extends Generator
 //		try
 //		{
 			minValue = this.calcInputMonoValue(framePosition, 
+			                                   frameTime,
 			                                   this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MIN_AMPL), 
 			                                   parentModulGenerator,
 			                                   generatorBuffer);
@@ -56,7 +58,12 @@ extends Generator
 //		}
 
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
-		this.calcInputValue(framePosition, signalInputData, soundSample, parentModulGenerator, generatorBuffer);
+		this.calcInputValue(framePosition, 
+                            frameTime,
+		                    signalInputData, 
+		                    soundSample, 
+		                    parentModulGenerator, 
+		                    generatorBuffer);
 		
 		float leftValue = soundSample.getLeftValue();
 		float rightValue = soundSample.getRightValue();

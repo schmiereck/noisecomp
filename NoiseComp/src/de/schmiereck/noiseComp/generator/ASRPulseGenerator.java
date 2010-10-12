@@ -61,6 +61,7 @@ extends Generator
 //		try
 //		{
 			signalFrequency = this.calcInputMonoValue(framePosition, 
+			                                          frameTime,
 			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ),
 			                                          parentModulGenerator,
 			                                          generatorBuffer);
@@ -76,6 +77,7 @@ extends Generator
 //		{
 			// Amplitude des gerade generierten Sinus-Siganls.
 			signalAmplitude = this.calcInputMonoValue(framePosition, 
+			                                          frameTime,
 			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
 			                                          parentModulGenerator,
 			                                          generatorBuffer);
@@ -90,6 +92,7 @@ extends Generator
 //		try
 //		{
 			attackTime = this.calcInputMonoValue(framePosition, 
+			                                     frameTime,
 			                                     this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ATTACK_TIME), 
 			                                     parentModulGenerator,
 			                                     generatorBuffer);
@@ -103,6 +106,7 @@ extends Generator
 //		try
 //		{
 			sustainTime = this.calcInputMonoValue(framePosition, 
+		                                          frameTime,
 			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SUSTAIN_TIME), 
 			                                      parentModulGenerator,
 			                                      generatorBuffer);
@@ -116,6 +120,7 @@ extends Generator
 //		try
 //		{
 			releaseTime = this.calcInputMonoValue(framePosition, 
+		                                          frameTime,
 			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_RELEASE_TIME), 
 			                                      parentModulGenerator,
 			                                      generatorBuffer);

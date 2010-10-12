@@ -61,6 +61,7 @@ extends Generator
 		
 		float signalFrequency = 
 			this.calcInputMonoValue(framePosition, 
+                                    frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), 
 			                        parentModulGenerator,
 			                        generatorBuffer);
@@ -68,6 +69,7 @@ extends Generator
 		//------------------------------------------------------------------------------------------
 		// Amplitude des gerade generierten Sinus-Siganls.
 		float signalAmplitude = this.calcInputMonoValue(framePosition, 
+		                                                frameTime,
 		                                                this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
 		                                                parentModulGenerator,
 		                                                generatorBuffer);
@@ -75,6 +77,7 @@ extends Generator
 		//------------------------------------------------------------------------------------------
 		// Versatz des Sinus-Siganls um eine Schwingung.
 		float signalShift = this.calcInputMonoValue(framePosition, 
+		                                            frameTime,
 		                                            this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), 
 		                                            parentModulGenerator,
 		                                            generatorBuffer);

@@ -9,7 +9,6 @@ import java.util.Map;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
 
 /**
  * <p>
@@ -28,9 +27,9 @@ public class TimelineManagerLogic
 	// Fields:
 	
 	/**
-	 * Modul-Generator Timelines without inputs.
+	 * Generator Timelines.
 	 */
-	private Map<ModulGenerator, Timeline> moduleGenerators = new HashMap<ModulGenerator, Timeline>();
+	private Map<Generator, Timeline> generatorTimelines = new HashMap<Generator, Timeline>();
 	
 //	/**
 //	 * Generator Timelines.
@@ -69,30 +68,34 @@ public class TimelineManagerLogic
 				{
 					Timeline inputTimeline;
 					
-					// Modul-Generator without inputs? TODO Only the count of inputs with other generators are interesting, const. value inputs not.
-					if ((inputGenerator instanceof ModulGenerator) &&
-						(inputGenerator.getInputsCount() == 0))
-					{
-						ModulGenerator modulGenerator = (ModulGenerator)inputGenerator;
-						
-						inputTimeline = this.moduleGenerators.get(modulGenerator);
-						
-						if (inputTimeline == null)
-						{
-							inputTimeline = this.makeTimeline(inputGenerator);
-							
-							this.moduleGenerators.put(modulGenerator, inputTimeline);
-						}
-					}
-					else
-					{
-						inputTimeline = this.createTimeline(inputGenerator);
-					}
+//					// Modul-Generator without inputs? TODO Only the count of inputs with other generators are interesting, const. value inputs not.
+//					if ((inputGenerator instanceof ModulGenerator) &&
+//						(inputGenerator.getInputsCount() == 0))
+//					{
+//						ModulGenerator modulGenerator = (ModulGenerator)inputGenerator;
+//						
+//						inputTimeline = this.moduleGenerators.get(modulGenerator);
+//						
+//						if (inputTimeline == null)
+//						{
+//							inputTimeline = this.makeTimeline(inputGenerator);
+//							
+//							this.moduleGenerators.put(modulGenerator, inputTimeline);
+//						}
+//					}
+//					else
+//					{
+//						inputTimeline = this.createTimeline(inputGenerator);
+//					}
 					
-					timeline.addInputTimeline(inputData, inputTimeline);
+					inputTimeline = this.generatorTimelines.get(inputGenerator);
 					
-					inputTimeline.addOutputTimeline(inputData, timeline);
+					if (inputTimeline != null)
+					{
+						timeline.addInputTimeline(inputData, inputTimeline);
 						
+						inputTimeline.addOutputTimeline(inputData, timeline);
+					}
 				}
 			}
 		}
@@ -110,13 +113,15 @@ public class TimelineManagerLogic
 	{
 		Timeline timeline;
 		
-		timeline = this.moduleGenerators.get(generator);
+		timeline = this.generatorTimelines.get(generator);
 		
 		if (timeline == null)
 		{
 			timeline = new Timeline();
 		
 			timeline.setGenerator(generator);
+			
+			this.generatorTimelines.put(generator, timeline);
 		}
 		
 //		this.generators.put(generator, timeline);
