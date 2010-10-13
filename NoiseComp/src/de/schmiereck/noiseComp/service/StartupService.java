@@ -243,6 +243,7 @@ public class StartupService
 			mixerGenerator.addVolumeInput(faderInGenerator);
 			mixerGenerator.addVolumeInput(faderOutGenerator);
 			
+			mixerGenerator.addSignalInput(sinus0Generator);
 			mixerGenerator.addSignalInput(sinus1Generator);
 			mixerGenerator.addSignalInput(sinus2Generator);
 			mixerGenerator.addSignalInput(sinus3Generator);
