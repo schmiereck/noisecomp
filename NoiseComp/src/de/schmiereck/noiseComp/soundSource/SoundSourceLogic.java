@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
@@ -266,7 +265,7 @@ implements GeneratorChangeListenerInterface
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface#notifyGeneratorChanged(de.schmiereck.noiseComp.generator.Generator, float, float)
 	 */
-	public void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos)
+	public void notifyGeneratorChanged(Generator generator, float changedStartTimePos, float changedEndTimePos)
 	{
 		long bufferSamplesCount = this.soundSamplesBufferData.getBufferSamplesCount();
 
@@ -277,14 +276,14 @@ implements GeneratorChangeListenerInterface
 		long newCamplesCount = (long)(timeLen * frameRate);
 		
 		System.out.println("SoundSourceLogic.notifyChanged: frameRate: generator(" + generator.getSoundFrameRate() + "), buffer(" + frameRate + ")");
-		System.out.println("SoundSourceLogic.notifyChanged: oldBuffer(" + bufferSamplesCount + "), new(" + newCamplesCount + "), " + startTimePos + ", " + endTimePos + ")");
+		System.out.println("SoundSourceLogic.notifyChanged: oldBuffer(" + bufferSamplesCount + "), new(" + newCamplesCount + "), " + changedStartTimePos + ", " + changedEndTimePos + ")");
 		
 		if (newCamplesCount > bufferSamplesCount)
 		{
 			this.soundSamplesBufferData.createBuffer(timeLen, frameRate);
 		}
 		
-		this.soundSamplesBufferData.clearBuffer(startTimePos, endTimePos);
+		this.soundSamplesBufferData.clearBuffer(changedStartTimePos, changedEndTimePos);
 	}
 
 	/**
@@ -298,30 +297,6 @@ implements GeneratorChangeListenerInterface
 		Timeline timeline = this.timelineManagerLogic.addGenerator(generator);
 		
 		return timeline;
-	}
-
-	/**
-	 * @param timeline
-	 * 			is the timeline.
-	 * @param generatorStartTimePos
-	 * 			is the generator StartTimePos.
-	 * @param generatorEndTimePos
-	 * 			is the generator EndTimePos.
-	 */
-	public void updateTimePos(Timeline timeline, Float generatorStartTimePos, Float generatorEndTimePos)
-	{
-		this.timelineManagerLogic.updateTimePos(timeline, generatorStartTimePos, generatorEndTimePos);
-	}
-
-	/**
-	 * @param timeline
-	 * 			is the timeline.
-	 * @param generatorName
-	 * 			is the generator name.
-	 */
-	public void updateName(Timeline timeline, String generatorName)
-	{
-		this.timelineManagerLogic.updateName(timeline, generatorName);
 	}
 
 	/**

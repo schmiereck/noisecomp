@@ -40,12 +40,12 @@ public class SoundSamplesBufferData
 		synchronized (this)
 		{
 System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
-			long startFrame = (int)(startTimePos * this.frameRate);
-			long endFrame = (int)(endTimePos * this.frameRate);
+			int startFrame = (int)(startTimePos * this.frameRate);
+			int endFrame = (int)(endTimePos * this.frameRate);
 	
-			for (long pos = startFrame; pos < endFrame; pos++)
+			for (int pos = startFrame; pos < endFrame; pos++)
 			{
-				this.bufferSoundSamples[(int)pos] = null;
+				this.bufferSoundSamples[pos] = null;
 			}
 			
 			this.emptyBufferStart 	= Math.min(this.emptyBufferStart, startFrame);

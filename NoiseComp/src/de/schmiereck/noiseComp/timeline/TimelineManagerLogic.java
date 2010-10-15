@@ -10,6 +10,7 @@ import java.util.Map;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 
 /**
@@ -79,8 +80,8 @@ public class TimelineManagerLogic
 				
 				if (inputGenerator != null)
 				{
-					Timeline inputTimeline;
-					
+//					Timeline inputTimeline;
+//					
 //					// Modul-Generator without inputs? TODO Only the count of inputs with other generators are interesting, const. value inputs not.
 //					if ((inputGenerator instanceof ModulGenerator) &&
 //						(inputGenerator.getInputsCount() == 0))
@@ -101,19 +102,36 @@ public class TimelineManagerLogic
 //						inputTimeline = this.createTimeline(inputGenerator);
 //					}
 					
-					inputTimeline = this.generatorTimelines.get(inputGenerator);
-					
-					if (inputTimeline != null)
-					{
-						timeline.addInputTimeline(inputData, inputTimeline);
-						
-						inputTimeline.addOutputTimeline(inputData, timeline);
-					}
+					this.addInputTimeline(timeline, inputData, inputGenerator);
 				}
 			}
 		}
 		//==========================================================================================
 		return timeline;
+	}
+
+	/**
+	 * Add the given Input Data for the given input generator
+	 * to the given timeline
+	 * if the coresponding inputTimeline for the given input generator is managed in {@link #generatorTimelines}.
+	 * 
+	 * @param timeline
+	 * 			is the timeline.
+	 * @param inputData
+	 * 			is the Input Data.
+	 * @param inputGenerator
+	 * 			is the input generator.
+	 */
+	private void addInputTimeline(Timeline timeline, InputData inputData, Generator inputGenerator)
+	{
+		Timeline inputTimeline = this.generatorTimelines.get(inputGenerator);
+		
+		if (inputTimeline != null)
+		{
+			timeline.addInputTimeline(inputData, inputTimeline);
+			
+			inputTimeline.addOutputTimeline(inputData, timeline);
+		}
 	}
 
 	/**
@@ -124,6 +142,7 @@ public class TimelineManagerLogic
 	 */
 	private Timeline makeTimeline(Generator generator)
 	{
+		//==========================================================================================
 		Timeline timeline;
 		
 		timeline = this.generatorTimelines.get(generator);
@@ -139,6 +158,7 @@ public class TimelineManagerLogic
 		
 //		this.generators.put(generator, timeline);
 		
+		//==========================================================================================
 		return timeline;
 	}
 
@@ -161,11 +181,13 @@ public class TimelineManagerLogic
 	 */
 	public Timeline addGenerator(Generator generator)
 	{
+		//==========================================================================================
 		Timeline timeline = this.makeTimeline(generator);
 		
 		// TODO Notify outputs.
 		
 		return timeline;
+		//==========================================================================================
 	}
 
 	/**
@@ -178,12 +200,12 @@ public class TimelineManagerLogic
 	 */
 	public void updateTimePos(Timeline timeline, Float generatorStartTimePos, Float generatorEndTimePos)
 	{
-		Generator generator = timeline.getGenerator();
+		//==========================================================================================
+//		Generator generator = timeline.getGenerator();
 		
-		// TODO Notify outputs.
-		
-		generator.setStartTimePos(generatorStartTimePos);
-		generator.setEndTimePos(generatorEndTimePos);
+		timeline.setTimePos(generatorStartTimePos, generatorEndTimePos);
+
+		//==========================================================================================
 	}
 
 	/**
@@ -194,18 +216,23 @@ public class TimelineManagerLogic
 	 */
 	public void updateName(Timeline timeline, String generatorName)
 	{
+		//==========================================================================================
 		Generator generator = timeline.getGenerator();
 		
-		// TODO Notify change listeners.
-		
 		generator.setName(generatorName);
+		
+		//==========================================================================================
 	}
 
 	/**
 	 * @param generatorTypeData
-	 * @param soundFrameRate
+	 * 			is the generatorType Data.
+	 * @param frameRate
+	 * 			is the frame rate.
 	 * @param generatorName
+	 * 			is the genrator name.
 	 * @return
+	 * 			the generator.
 	 */
 	public Timeline createTimeline(GeneratorTypeData generatorTypeData,
 	                               Float soundFrameRate,
@@ -225,14 +252,69 @@ public class TimelineManagerLogic
 	}
 
 	/**
-	 * @param timeline
+	 * @param removedTimeline
 	 * 			is the timeline.
 	 */
-	public void removeTimeline(Timeline timeline)
+	public void removeTimeline(Timeline removedTimeline)
 	{
-		Generator timelineGenerator = timeline.getGenerator();
+		//==========================================================================================
+		Generator timelineGenerator = removedTimeline.getGenerator();
 		
 		this.mainModulGeneratorTypeData.removeGenerator(timelineGenerator);
+		
+		this.generatorTimelines.remove(timelineGenerator);
+		
+		//------------------------------------------------------------------------------------------
+		// remove all inputs from all other timelines:
+		
+		for (Timeline timeline : this.generatorTimelines.values())
+		{
+			timeline.removeInputTimeline(removedTimeline);
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * Add input to the given timeline and 
+	 * the generator of this timeline.
+	 * 
+	 * @param timeline
+	 * 			is the timeline.
+	 * @param inputGenerator
+	 * 			is the Input-Generator.
+	 * @param inputTypeData
+	 * 			is the Input-Type Data.
+	 * @param inputValue
+	 * 			is the Input-Value.
+	 * @param inputStringValue
+	 * 			is the Input-String-Value.
+	 * @param inputModulInputTypeData
+	 * 			is the Input-Modul-Input-Type Data.
+	 * @return 
+	 * 			the new created and added {@link InputData}-Object.
+	 */
+	public InputData addInputGenerator(Timeline timeline, 
+	                                   Generator inputGenerator,
+	                                   InputTypeData inputTypeData, 
+	                                   Float floatValue, String stringValue,
+	                                   InputTypeData modulInputTypeData)
+	{
+		//==========================================================================================
+		InputData inputData;
+		
+		final Generator selectedGenerator = timeline.getGenerator();
+		
+		inputData = 
+			selectedGenerator.addInputGenerator(inputGenerator, 
+			                                    inputTypeData, 
+			                                    floatValue, stringValue,
+			                                    modulInputTypeData);
+		
+		//------------------------------------------------------------------------------------------
+		this.addInputTimeline(timeline, inputData, inputGenerator);
+		
+		//==========================================================================================
+		return inputData;
 	}
 	
 }

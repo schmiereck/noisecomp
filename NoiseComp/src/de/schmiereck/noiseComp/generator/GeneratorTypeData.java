@@ -134,8 +134,11 @@ public class GeneratorTypeData
 	
 	/**
 	 * @param generatorName
+	 * 			is the genrator name.
 	 * @param frameRate
+	 * 			is the frame rate.
 	 * @return
+	 * 			the generator.
 	 */
 	public Generator createGeneratorInstance(String generatorName, float frameRate)//, ModulGenerator parentModulGenerator)
 	{

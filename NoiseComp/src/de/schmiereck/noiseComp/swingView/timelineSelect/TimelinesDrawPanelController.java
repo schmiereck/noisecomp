@@ -10,6 +10,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -151,41 +152,45 @@ public class TimelinesDrawPanelController
 
 	/**
 	 * @return
-	 * 			the Selected Timeline Generator.
+	 * 			the Selected Timeline.
 	 */
-	public Generator getSelectedTimelineGenerator()
+	public Timeline getSelectedTimeline()
 	{
-		Generator selectedGenerator;
+		Timeline retSelectedTimeline;
 		
 		TimelineSelectEntryModel selectedTimelineSelectEntryModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
-		
+
 		if (selectedTimelineSelectEntryModel != null)
 		{
-			String selectedTimelineGeneratorName = selectedTimelineSelectEntryModel.getName();
+			retSelectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
 			
-			ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
-			
-			selectedGenerator = null;
-			
-			Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
-			
-			while (generatorsIterator.hasNext())
-			{
-				Generator generator = generatorsIterator.next();
-				
-				if (generator.getName().equals(selectedTimelineGeneratorName))
-				{
-					selectedGenerator = generator;
-					break;
-				}
-			}
+//			Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+//			
+//			String selectedTimelineGeneratorName = selectedTimelineSelectEntryModel.getName();
+//			
+//			ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
+//			
+//			retSelectedTimeline = null;
+//			
+//			Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
+//			
+//			while (generatorsIterator.hasNext())
+//			{
+//				Generator generator = generatorsIterator.next();
+//				
+//				if (generator.getName().equals(selectedTimelineGeneratorName))
+//				{
+//					retSelectedTimeline = generator;
+//					break;
+//				}
+//			}
 		}
 		else
 		{
-			selectedGenerator = null;
+			retSelectedTimeline = null;
 		}
 		
-		return selectedGenerator;
+		return retSelectedTimeline;
 	}
 	
 	/**

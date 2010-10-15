@@ -430,8 +430,8 @@ public class LoadFileOperationLogic
 				throw new PopupRuntimeException("can't create generator by type: " + generatorTypeData);
 			}
 
-			generator.setStartTimePos(generatorStartTime.floatValue());
-			generator.setEndTimePos(generatorEndTime.floatValue());
+			generator.setTimePos(generatorStartTime.floatValue(),
+			                     generatorEndTime.floatValue());
 
 			/*
 			// Generator is a Module ?

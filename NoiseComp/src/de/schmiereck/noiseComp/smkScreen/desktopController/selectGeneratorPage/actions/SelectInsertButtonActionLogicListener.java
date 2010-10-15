@@ -88,8 +88,7 @@ implements ButtonActionLogicListenerInterface
 			GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(OutputGenerator.class.getName());
 			outputGenerator = new OutputGenerator("output", Float.valueOf(frameRate), generatorTypeData);
 	
-			outputGenerator.setStartTimePos(0.0F);
-			outputGenerator.setEndTimePos(5.0F);
+			outputGenerator.setTimePos(0.0F, 5.0F);
 			
 			//outputGenerator.setSignalInput(mixerGenerator);
 			

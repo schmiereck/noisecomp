@@ -222,13 +222,11 @@ public class TimelineEditController
 			
 			if (generatorTypeData == null)
 			{
-				throw new RuntimeException("generatorTypeData not selected.");
+				throw new RuntimeException("GeneratorTypeData not selected.");
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Update Generator:
+			// Update Timeline-Generator:
 			
-//			Generator generator = 
-//				appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
 			Timeline timeline = timelineSelectEntryModel.getTimeline();
 			
 			if (timeline == null)
@@ -241,35 +239,11 @@ public class TimelineEditController
 			}
 			else
 			{
-				soundSourceLogic.updateName(timeline, generatorName);
+				timelineManagerLogic.updateName(timeline, generatorName);
 			}
-//			Generator generator = timeline.getGenerator();
-//			
-//			// Create new generator?
-//			if (generator == null)
-//			{
-//				Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
-//				
-//				generator = generatorTypeData.createGeneratorInstance(generatorName, 
-//				                                                      soundFrameRate);
-//				
-////				generator = new Generator(generatorName, 
-////				                          soundFrameRate, 
-////				                          generatorTypeData);
-//				
-////				ModulGeneratorTypeData editedModulGeneratorTypeData = appController.getEditedModulGeneratorTypeData();
-//				
-//				timeline = soundSourceLogic.addGenerator(generator);
-//				
-//				editedModulGeneratorTypeData.addGenerator(generator);
-//			}
-//			else
-//			{
-//				generator.setName(generatorName);
-//			}
-//			generator.setStartTimePos(generatorStartTimePos);
-//			generator.setEndTimePos(generatorEndTimePos);
-			soundSourceLogic.updateTimePos(timeline, generatorStartTimePos, generatorEndTimePos);
+
+			timelineManagerLogic.updateTimePos(timeline, 
+			                                   generatorStartTimePos, generatorEndTimePos);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Timeline-Edit Model:

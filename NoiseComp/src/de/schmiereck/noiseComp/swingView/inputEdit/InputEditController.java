@@ -17,12 +17,16 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.MultiValue;
+import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
+import de.schmiereck.noiseComp.timeline.Timeline;
+import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
 
 /**
  * <p>
@@ -117,17 +121,19 @@ public class InputEditController
 	}
 
 	/**
+	 * Update the Edited-Input in the Input-Edit-Model.
+	 * 
 	 * @param editedModulGeneratorTypeData 
 	 * 			is the edited Modul-Generator-Type Data.
-	 * @param selectedTimelineGenerator 
-	 * 			is the Selected Timeline Generator.
+	 * @param selectedTimeline 
+	 * 			is the Selected Timeline.
 	 * @param inputData
 	 * 			is the edited input data.
 	 * @param editInput
 	 * 			<code>true</code> if a input edited.
 	 */
 	public void updateEditedInput(ModulGeneratorTypeData editedModulGeneratorTypeData, 
-	                              Generator selectedTimelineGenerator, 
+	                              Timeline selectedTimeline, 
 	                              InputData inputData,
 	                              boolean editInput)
 	{
@@ -142,9 +148,11 @@ public class InputEditController
 		
 		if (editInput == true)
 		{
+			// Make InputType-SelectItems:
 			{
 				inputTypeSelectItems = new Vector<InputTypeSelectItem>();
-				GeneratorTypeData generatorTypeData = selectedTimelineGenerator.getGeneratorTypeData();
+				Generator selectedGenerator = selectedTimeline.getGenerator();
+				GeneratorTypeData generatorTypeData = selectedGenerator.getGeneratorTypeData();
 				Iterator<InputTypeData> inputTypeIterator = generatorTypeData.getInputTypesIterator();
 				if (inputTypeIterator != null)
 				{
@@ -166,6 +174,7 @@ public class InputEditController
 			{
 				inputTypeData = null;
 			}
+			// Make Generator-SelectItems:
 			{
 				generatorSelectItems = new Vector<GeneratorSelectItem>();
 				Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
@@ -195,6 +204,7 @@ public class InputEditController
 				inputGenerator = null;
 				value = null;
 			}
+			// Make ModulInputType-SelectItems:
 			{
 				modulInputTypeSelectItems = new Vector<ModulInputTypeSelectItem>();
 				Iterator<InputTypeData> modulInputTypeIterator = editedModulGeneratorTypeData.getInputTypesIterator();
@@ -246,11 +256,11 @@ public class InputEditController
 	 * 
 	 * @param selectModel
 	 * 			is the Select Model.
-	 * @param selectedGenerator
-	 * 			is the selected Generator.
+	 * @param selectedTimeline
+	 * 			is the selected Timeline.
 	 */
 	public void doSubmit(final InputSelectModel selectModel,
-	                     final Generator selectedGenerator)
+	                     final Timeline selectedTimeline)
 	{
 		//==========================================================================================
 		InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
@@ -290,12 +300,16 @@ public class InputEditController
 			else
 			{
 				// Insert new Input:
+				SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+				
+				TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
 				
 				inputData = 
-					selectedGenerator.addInputGenerator(inputGenerator, 
-					                                    inputTypeData, 
-					                                    multiValue.floatValue, multiValue.stringValue,
-					                                    modulInputTypeData);
+					timelineManagerLogic.addInputGenerator(selectedTimeline,
+					                                       inputGenerator, 
+					                                       inputTypeData, 
+					                                       multiValue.floatValue, multiValue.stringValue,
+					                                       modulInputTypeData);
 				
 				inputSelectEntryModel.setInputData(inputData);
 			}

@@ -101,6 +101,25 @@ implements GeneratorInterface,
 	}
 
 	/**
+	 * @param startTimePos
+	 * 			is the startTimePos.
+	 * @param endTimePos
+	 * 			is the endTimePos.
+	 */
+	public void setTimePos(float startTimePos, float endTimePos)
+	{
+		float changedStartTimePos 	= Math.min(this.startTimePos, startTimePos);
+		float changedEndTimePos		= Math.max(this.endTimePos, endTimePos);
+		
+		this.startTimePos = startTimePos;
+		this.endTimePos = endTimePos;
+		
+		this.generateChangedEvent(this,
+		                          changedStartTimePos,
+								  changedEndTimePos);
+	}
+	
+	/**
 	 * @set #startTimePos
 	 */
 	public synchronized void setStartTimePos(float startTimePos)
@@ -110,7 +129,8 @@ implements GeneratorInterface,
 		
 		this.startTimePos = startTimePos;
 		
-		this.generateChangedEvent(changedStartTimePos,
+		this.generateChangedEvent(this,
+		                          changedStartTimePos,
 								  changedEndTimePos);
 	}
 
@@ -124,7 +144,8 @@ implements GeneratorInterface,
 		
 		this.endTimePos = endTimePos;
 		
-		this.generateChangedEvent(changedStartTimePos,
+		this.generateChangedEvent(this,
+		                          changedStartTimePos,
 								  changedEndTimePos);
 	}
 
@@ -227,6 +248,17 @@ implements GeneratorInterface,
 	
 	/**
 	 * @see #inputs
+	 * 
+	 * @param inputGenerator
+	 * 			is the Input-Generator.
+	 * @param inputTypeData
+	 * 			is the Input-Type Data.
+	 * @param inputValue
+	 * 			is the Input-Value.
+	 * @param inputStringValue
+	 * 			is the Input-String-Value.
+	 * @param inputModulInputTypeData
+	 * 			is the Input-Modul-Input-Type Data.
 	 * @return 
 	 * 			the new created and added {@link InputData}-Object.
 	 */
@@ -256,7 +288,8 @@ implements GeneratorInterface,
 			inputData.getInputGenerator().getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 		}
 		
-		this.generateChangedEvent(this.getStartTimePos(),
+		this.generateChangedEvent(this,
+		                          this.getStartTimePos(),
 								  this.getEndTimePos());
 		
 		return inputData;
@@ -268,6 +301,18 @@ implements GeneratorInterface,
 		
 		InputData inputData = this.addInputGenerator(null, inputTypeData, Float.valueOf(value), null, null);
 		
+		return inputData;
+	}
+
+	/**
+	 * @see #addInputGenerator(Generator, InputTypeData, Float)
+	 */
+	public InputData addInputValue(Float value, InputTypeData inputTypeData)
+	{
+		InputData inputData = this.addInputGenerator(null, inputTypeData, value, null, null);
+		
+		//inputData.getInputGenerator();
+
 		return inputData;
 	}
 
@@ -304,18 +349,6 @@ implements GeneratorInterface,
 				this.generateChangedEvent();
 			}
 		}
-	}
-
-	/**
-	 * @see #addInputGenerator(Generator, InputTypeData, Float)
-	 */
-	public InputData addInputValue(Float value, InputTypeData inputTypeData)
-	{
-		InputData inputData = this.addInputGenerator(null, inputTypeData, value, null, null);
-		
-		//inputData.getInputGenerator();
-
-		return inputData;
 	}
 
 	/**
@@ -508,7 +541,8 @@ implements GeneratorInterface,
 							inputGeneratorsIterator.remove();
 						}
 						
-						this.generateChangedEvent(generator.getStartTimePos(),
+						this.generateChangedEvent(removedGenerator,
+						                          generator.getStartTimePos(),
 												  generator.getEndTimePos());
 						break;
 					}
@@ -1082,13 +1116,14 @@ implements GeneratorInterface,
 	/**
 	 * Send a change Event to {@link #generatorChangeObserver}.
 	 */
-	public synchronized void generateChangedEvent(float changedStartTimePos, 
+	public synchronized void generateChangedEvent(Generator generator,
+	                                              float changedStartTimePos, 
 	                                              float changedEndTimePos)
 	{
 System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: " + changedStartTimePos + ", " + changedEndTimePos);
 		if (this.generatorChangeObserver != null)
 		{
-			this.generatorChangeObserver.changedEvent(this, 
+			this.generatorChangeObserver.changedEvent(generator, 
 													  changedStartTimePos, changedEndTimePos);
 		}
 	}
@@ -1098,14 +1133,15 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	 */
 	public void generateChangedEvent()
 	{
-		this.generateChangedEvent(this.getStartTimePos(),
+		this.generateChangedEvent(this,
+		                          this.getStartTimePos(),
 								  this.getEndTimePos());
 	}
 	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface#notifyGeneratorChanged(de.schmiereck.noiseComp.generator.Generator, float, float)
 	 */
-	public void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos)
+	public void notifyGeneratorChanged(Generator generator, float changedStartTimePos, float changedEndTimePos)
 	{
 		// Einer der überwachten Inputs hat sich geändert:
 
@@ -1116,11 +1152,11 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 		
 		try
 		{
-			this.getGeneratorChangeObserver().changedEvent(this, 
+			this.getGeneratorChangeObserver().changedEvent(generator, 
 //		    	                                		   this.getStartTimePos() + startTimePos, 
 //		        	                            		   this.getStartTimePos() + endTimePos);
-			                                               startTimePos, 
-			                                               endTimePos);
+			                                               changedStartTimePos, 
+			                                               changedEndTimePos);
 		}
 		catch (Throwable ex)
 		{

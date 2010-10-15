@@ -655,8 +655,7 @@ EditGeneratorChangedListener
 			float endTimePos = Float.parseFloat(endTime);
 			
 			generator.setName(name);
-			generator.setStartTimePos(startTimePos);
-			generator.setEndTimePos(endTimePos);
+			generator.setTimePos(startTimePos, endTimePos);
 			
 			//XXX 
 			//this.notifyInputsChanged();
