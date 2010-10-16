@@ -198,7 +198,7 @@ public class TimelineManagerLogic
 	 * @param generatorEndTimePos
 	 * 			is the generator EndTimePos.
 	 */
-	public void updateTimePos(Timeline timeline, Float generatorStartTimePos, Float generatorEndTimePos)
+	public void updateTimePos(Timeline timeline, float generatorStartTimePos, float generatorEndTimePos)
 	{
 		//==========================================================================================
 //		Generator generator = timeline.getGenerator();

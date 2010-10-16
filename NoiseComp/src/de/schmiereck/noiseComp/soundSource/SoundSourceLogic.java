@@ -261,6 +261,34 @@ implements GeneratorChangeListenerInterface
 		
 		return ret;
 	}
+	
+	public long getEmptyBufferEnd()
+	{
+		long ret;
+		
+		if (this.soundSamplesBufferData != null)
+		{
+			ret = this.soundSamplesBufferData.getEmptyBufferEnd();
+		}
+		else
+		{
+			ret = 0L;
+		}
+		
+		return ret;
+	}
+
+	/**
+	 * @return
+	 */
+	public long getEmptyBufferSize()
+	{
+		long emptyBufferSize;
+		
+		emptyBufferSize = this.getEmptyBufferEnd() - this.getEmptyBufferStart();
+		
+		return emptyBufferSize;
+	}
 
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface#notifyGeneratorChanged(de.schmiereck.noiseComp.generator.Generator, float, float)

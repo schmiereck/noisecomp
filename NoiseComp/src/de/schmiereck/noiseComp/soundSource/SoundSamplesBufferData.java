@@ -1,5 +1,6 @@
 package de.schmiereck.noiseComp.soundSource;
 
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
@@ -118,6 +119,9 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 	{
 		long framePos;
 		long frames = (long)(partTime * outputTimeline.getSoundFrameRate());
+
+		// TODO null as modul is not the best...?
+		ModulGenerator parentModulGenerator = null;
 		
 		for (framePos = this.emptyBufferStart; framePos < this.emptyBufferEnd; framePos++)
 		{
@@ -126,9 +130,8 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 				break;
 			}
 			frames--;
-
-			// TODO null as modul is not the best...?
-			SoundSample soundSample = outputTimeline.generateFrameSample(framePos, null);
+			
+			SoundSample soundSample = outputTimeline.generateFrameSample(framePos, parentModulGenerator);
 		
 			this.bufferSoundSamples[(int)framePos] = soundSample;
 		}
@@ -150,6 +153,15 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 	public long getEmptyBufferStart()
 	{
 		return this.emptyBufferStart;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #emptyBufferEnd}.
+	 */
+	public long getEmptyBufferEnd()
+	{
+		return this.emptyBufferEnd;
 	}
 	
 	/**

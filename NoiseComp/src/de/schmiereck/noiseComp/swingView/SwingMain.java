@@ -66,7 +66,7 @@ public class SwingMain
 		final ModulGeneratorTypeData mainModulGeneratorTypeData = 
 			StartupService.createDemoGenerators(soundData.getFrameRate());
 
-		soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
+//		soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 	

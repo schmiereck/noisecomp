@@ -113,7 +113,7 @@ implements GeneratorBufferInterface,
 	}
 
 	/**
-	 * Change start end end time of timeline.
+	 * Change start- and end-time of timeline.
 	 * Reinitialize buffer.
 	 * 
 	 * @param startTimePos
@@ -404,34 +404,33 @@ implements GeneratorBufferInterface,
 			
 			if (changedStartTimePos < this.startTimePos)
 			{
-				startTimePos = 0.0F;
+				startTimePos = this.startTimePos;
 			}
 			else
 			{
 				startTimePos = changedStartTimePos;
 			}
 
-			float timeLength;
-			
+			float endTimePos;
+
 			if (changedEndTimePos > this.endTimePos)
 			{
-				timeLength = this.endTimePos - startTimePos;
+				endTimePos = this.endTimePos;
 			}
 			else
 			{
-				timeLength = changedEndTimePos - changedStartTimePos;
+				endTimePos = changedEndTimePos;
 			}
 			
+//			float timeLength = startTimePos - endTimePos;
+			
 			//--------------------------------------------------------------------------------------
-			int changedStartBufPos = (int)(this.generator.getSoundFrameRate() * startTimePos);
+			int changedStartBufPos = (int)(this.generator.getSoundFrameRate() * (startTimePos - this.startTimePos));
 	
-			int changedBufSize = (int)(this.generator.getSoundFrameRate() * timeLength);
+			int changedEndBufSize = (int)(this.generator.getSoundFrameRate() * (endTimePos - this.startTimePos));
 			
 			//--------------------------------------------------------------------------------------
-			for (int bufPos = changedStartBufPos; bufPos < changedBufSize; bufPos++)
-			{
-				this.bufSoundSamples[bufPos] = null;
-			}
+			this.clearBuffer(changedStartBufPos, changedEndBufSize);
 		}
 		//==========================================================================================
 		// Notify also Output-Timelines:
@@ -442,6 +441,25 @@ implements GeneratorBufferInterface,
 		}
 		
 		//==========================================================================================
+	}
+
+	/**
+	 * @param changedStartBufPos
+	 * @param changedEndBufSize
+	 */
+	private void clearBuffer(int changedStartBufPos, int changedEndBufSize)
+	{
+		try
+		{
+			for (int bufPos = changedStartBufPos; bufPos < changedEndBufSize; bufPos++)
+			{
+				this.bufSoundSamples[bufPos] = null;
+			}
+		}
+		catch (Exception ex)
+		{
+			throw new RuntimeException("gen:" + this.generator.getName() + ", bufSize:" + this.bufSoundSamples.length + ", changedStartBufPos:" + changedStartBufPos + ", changedEndBufSize:" + changedEndBufSize + ", startTimePos:" + this.startTimePos + ", endTimePos:" + this.endTimePos, ex);
+		}
 	}
 
 	/* (non-Javadoc)

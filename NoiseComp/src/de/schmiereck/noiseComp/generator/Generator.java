@@ -598,23 +598,6 @@ implements GeneratorInterface,
 	                              GeneratorBufferInterface generatorBuffer)
 	{
 		//==========================================================================================
-//		GeneratorInterface inputGenerator = inputData.getInputGenerator();
-//
-//		// Found Input-Generator ?
-//		if (inputGenerator != null)
-//		{	
-//			//--------------------------------------------------------------------------------------
-//			// Use Input-Generator input:
-//			
-//			SoundSample inputSoundSample = 
-//				inputGenerator.generateFrameSample(framePosition, 
-//				                                        parentModulGenerator, 
-//				                                        generatorBuffer);
-//			
-//			value.setValues(inputSoundSample);
-//		}
-//		else
-//		{
 		GeneratorBufferInterface inputGeneratorBuffer = 
 			generatorBuffer.getInputGeneratorBuffer(inputData);
 		
@@ -878,31 +861,6 @@ implements GeneratorInterface,
 		float value;
 
 		//------------------------------------------------------------------------------------------
-//		GeneratorInterface inputSoundGenerator = inputData.getInputGenerator();
-//
-//		// Found Input-Generator ?
-//		if (inputSoundGenerator != null)
-//		{	
-//			// Use his input:
-//			
-//			SoundSample inputSoundSample = 
-//				inputSoundGenerator.generateFrameSample(framePosition, 
-//				                                        parentModulGenerator, 
-//				                                        generatorBuffer);
-//			
-//			if (inputSoundSample != null)
-//			{	
-//				value = inputSoundSample.getMonoValue();
-//			}
-//			else
-//			{
-//				// Found no input signal:
-//				
-////				throw new NoInputSignalException();
-//				value = Float.NaN; // this.getInputDefaultValueByInputType(inputType);
-//			}
-//		}
-		
 		GeneratorBufferInterface inputGeneratorBuffer = 
 			generatorBuffer.getInputGeneratorBuffer(inputData);
 		
@@ -945,6 +903,8 @@ implements GeneratorInterface,
 			else
 			{
 				//----------------------------------------------------------------------------------
+				// Found no input value:
+
 				InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
 
 				// Found a modul input type ?
@@ -964,9 +924,6 @@ implements GeneratorInterface,
 							
 							if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
 							{
-								GeneratorBufferInterface modulGeneratorBuffer = 
-									generatorBuffer.getInputGeneratorBuffer(modulInputData);
-								
 								value = parentModulGenerator.calcInputMonoValue(framePosition, 
 								                                                frameTime,
 								                                                modulInputData, 
