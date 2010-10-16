@@ -51,8 +51,6 @@ WORK:
 		Ein Integral über mehrere Generatoren geht nicht, da mir der Wert des "vorherigen" fehlt.
 #62:	IMPROVEMENT: Because of BUG#61: Generate for every generator of a modul and the modules itself used for generate sample-sound playing a buffer hirarchy.
 		The buffer contains the samples and a integrated signal (maybe also a differetial) over time.
-#66:	BUG: Timeline: Change size of generator is not evaluated.
-#67:	BUG: Move generateChangedEvent-management from Generator to Timeline.
 
 DONE:
 =====
@@ -87,4 +85,5 @@ DONE:
 		-> Is working.
 		-> Add PinkNoise2 pole-input.
 #64:	BUG: Remove generator do not change the timeline select entry positions.
-		
+#66:	BUG: Timeline: Change size of generator is not evaluated.
+#67:	BUG: Move generateChangedEvent-management from Generator to Timeline.
