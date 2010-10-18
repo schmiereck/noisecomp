@@ -39,7 +39,9 @@ TODO:
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
 #63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
 #65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.
-#67:	
+#67:	BUG: If a generator (example: Sinus) generate no signal, it continouse.
+		-> return NaN signal to mark that noting returned.
+#79:	
 
 WORK:
 =====
@@ -51,6 +53,9 @@ WORK:
 		Ein Integral über mehrere Generatoren geht nicht, da mir der Wert des "vorherigen" fehlt.
 #62:	IMPROVEMENT: Because of BUG#61: Generate for every generator of a modul and the modules itself used for generate sample-sound playing a buffer hirarchy.
 		The buffer contains the samples and a integrated signal (maybe also a differetial) over time.
+#78:	BUG: Adding new Output generator to a new Modul and his TimelineManagerLogic does not update the SoundSourceLogic and the mainModulGeneratorTypeData.
+		-> Update mainModulGeneratorTypeData.
+		-> Update SoundSourceLogic.
 
 DONE:
 =====

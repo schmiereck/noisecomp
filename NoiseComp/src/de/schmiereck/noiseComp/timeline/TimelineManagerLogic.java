@@ -12,7 +12,10 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.OutputGenerator;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
+import de.schmiereck.noiseComp.swingView.SwingMain;
 
 /**
  * <p>
@@ -66,6 +69,31 @@ public class TimelineManagerLogic
 	public Timeline createTimeline(Generator generator)
 	{
 		//==========================================================================================
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+//		//==========================================================================================
+//		Timeline timeline = this.makeTimeline(generator);
+//		
+////		if (OutputGenerator.class.getName().equals(generator.getGeneratorTypeData().getGeneratorTypeClassName())
+//		if (generator instanceof OutputGenerator)
+//		{
+//			// TODO Update mainModulGeneratorTypeData.
+//			//mainModulGeneratorTypeData.se
+//			
+//			// TODO Update SoundSourceLogic.
+//			soundSourceLogic.setOutputGenerator(generator);
+//		}
+		//==========================================================================================
+//		if (OutputGenerator.class.getName().equals(generator.getGeneratorTypeData().getGeneratorTypeClassName())
+		if (generator instanceof OutputGenerator)
+		{
+			// TODO Update mainModulGeneratorTypeData.
+			//mainModulGeneratorTypeData.set
+			
+			// TODO Update SoundSourceLogic.
+			soundSourceLogic.setOutputGenerator(generator);
+		}
+		//------------------------------------------------------------------------------------------
 		Timeline timeline = this.makeTimeline(generator);
 		
 		//------------------------------------------------------------------------------------------
@@ -174,22 +202,33 @@ public class TimelineManagerLogic
 //		return this.generators.get(generator);
 //	}
 
-	/**
-	 * @param generator
-	 * 			is the generator.
-	 * @return
-	 * 			the timeline.
-	 */
-	public Timeline addGenerator(Generator generator)
-	{
-		//==========================================================================================
-		Timeline timeline = this.makeTimeline(generator);
-		
-		// TODO Notify outputs.
-		
-		return timeline;
-		//==========================================================================================
-	}
+//	/**
+//	 * @param generator
+//	 * 			is the generator.
+//	 * @return
+//	 * 			the timeline.
+//	 */
+//	public Timeline addGenerator(Generator generator)
+//	{
+//		//==========================================================================================
+//		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+//		
+//		//==========================================================================================
+//		Timeline timeline = this.makeTimeline(generator);
+//		
+////		if (OutputGenerator.class.getName().equals(generator.getGeneratorTypeData().getGeneratorTypeClassName())
+//		if (generator instanceof OutputGenerator)
+//		{
+//			// TODO Update mainModulGeneratorTypeData.
+//			//mainModulGeneratorTypeData.se
+//			
+//			// TODO Update SoundSourceLogic.
+//			soundSourceLogic.setOutputGenerator(generator);
+//		}
+//		
+//		return timeline;
+//		//==========================================================================================
+//	}
 
 	/**
 	 * @param timeline

@@ -12,8 +12,8 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  */
 public class SoundSamplesBufferData
 {
-	private long			emptyBufferStart	= 0;
-	private long			emptyBufferEnd		= 0;
+	private int			emptyBufferStart	= 0;
+	private int			emptyBufferEnd		= 0;
 	private SoundSample[]	bufferSoundSamples	= null;
 	private float 			frameRate			= 0F;
 	
@@ -21,7 +21,7 @@ public class SoundSamplesBufferData
 	{
 		synchronized (this)
 		{
-			long frames = (long)(timeLen * frameRate);
+			int frames = (int)(timeLen * frameRate);
 	
 			this.bufferSoundSamples = new SoundSample[(int)frames];
 			this.frameRate = frameRate;
@@ -117,8 +117,8 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 	 */
 	public void calcWaitingSamplesPart(float partTime, Timeline outputTimeline)
 	{
-		long framePos;
-		long frames = (long)(partTime * outputTimeline.getSoundFrameRate());
+		int framePos;
+		int frames = (int)(partTime * outputTimeline.getSoundFrameRate());
 
 		// TODO null as modul is not the best...?
 		ModulGenerator parentModulGenerator = null;
