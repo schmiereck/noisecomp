@@ -11,11 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -158,7 +158,7 @@ extends BasicEditView
 					}
 			 	}
 			);
-			inputEditModel.getInputGeneratorChangedNotifier().addModelPropertyChangedListener
+			inputEditModel.getInputTimelineChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
@@ -167,14 +167,14 @@ extends BasicEditView
 					{
 						GeneratorSelectItem inputGeneratorSelectItem = null;
 						
-						Generator inputGenerator = inputEditModel.getInputGenerator();
+						Timeline inputTimeline = inputEditModel.getInputTimeline();
 
 						List<GeneratorSelectItem> generatorSelectItems = inputEditModel.getGeneratorSelectItems();
 						if (generatorSelectItems != null)
 						{
 							for (GeneratorSelectItem generatorSelectItem : generatorSelectItems)
 							{
-								if (generatorSelectItem.getGenerator() == inputGenerator)
+								if (generatorSelectItem.getTimeline() == inputTimeline)
 								{
 									inputGeneratorSelectItem = generatorSelectItem;
 									break;

@@ -714,7 +714,7 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model InputGenerator changed: Update TimelinesDrawPanel:
 		
-		inputEditController.getInputEditModel().getInputGeneratorChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+		inputEditController.getInputEditModel().getInputTimelineChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model ModulInputTypeData changed: Update TimelinesDrawPanel:

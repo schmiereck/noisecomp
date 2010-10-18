@@ -121,10 +121,8 @@ implements GeneratorChangeListenerInterface
 	/**
 	 * @param outputGenerator 
 	 * 			to set {@link #outputGenerator}.
-	 * @return
-	 * 			the output Timeline.
 	 */
-	private Timeline setOutputGenerator(Generator outputGenerator)
+	private void setOutputGenerator(Generator outputGenerator)
 	{
 		//==========================================================================================
 		if (this.outputGenerator != null)
@@ -134,17 +132,18 @@ implements GeneratorChangeListenerInterface
 		
 		this.outputGenerator = outputGenerator;
 		
-		float timeLen = this.outputGenerator.getEndTimePos() - this.outputGenerator.getStartTimePos();
-		
-		this.soundSamplesBufferData.createBuffer(timeLen, this.outputGenerator.getSoundFrameRate());
-
 		if (this.outputGenerator != null)
 		{
-			this.outputGenerator.getGeneratorChangeObserver().registerGeneratorChangeListener(this);
-		}
-		
+			float timeLen = this.outputGenerator.getEndTimePos() - this.outputGenerator.getStartTimePos();
+			
+			this.soundSamplesBufferData.createBuffer(timeLen, this.outputGenerator.getSoundFrameRate());
+	
+			if (this.outputGenerator != null)
+			{
+				this.outputGenerator.getGeneratorChangeObserver().registerGeneratorChangeListener(this);
+			}
+		}		
 		//==========================================================================================
-		return this.outputTimeline;
 	}
 
 //	/**

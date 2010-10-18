@@ -185,6 +185,67 @@ implements GeneratorBufferInterface,
 	}
 
 	/**
+	 * @param inputData
+	 * 			to set {@link #inputTimelines} with key.
+	 * @param inputTimeline
+	 * 			to set to {@link #inputTimelines} as value with given key.
+	 * @return
+	 * 			the old Timeline.
+	 */
+	public Timeline updateInput(InputData inputData, Timeline inputTimeline)
+	{
+		//==========================================================================================
+		Timeline oldInputTimeline;
+		
+		if (inputTimeline != null)
+		{
+			oldInputTimeline = this.inputTimelines.put(inputData, inputTimeline);
+			
+			//------------------------------------------------------------------------------------------
+			float changedStartTimePos;
+			float changedEndTimePos;
+			
+			if (oldInputTimeline != null)
+			{
+				changedStartTimePos = Math.min(oldInputTimeline.getStartTimePos(), inputTimeline.getStartTimePos());
+				changedEndTimePos = Math.max(oldInputTimeline.getEndTimePos(), inputTimeline.getEndTimePos());
+			}
+			else
+			{
+				changedStartTimePos = inputTimeline.getStartTimePos();
+				changedEndTimePos = inputTimeline.getEndTimePos();
+			}
+			
+			this.generatorChanged(changedStartTimePos, changedEndTimePos);
+		}
+		else
+		{
+			oldInputTimeline = null;
+		}
+		
+		//==========================================================================================
+		return oldInputTimeline;
+	}
+
+	/**
+	 * @return
+	 * 			the {@link Generator#getStartTimePos()} of {@link #generator}.
+	 */
+	private float getStartTimePos()
+	{
+		return this.generator.getStartTimePos();
+	}
+
+	/**
+	 * @return
+	 * 			the {@link Generator#getEndTimePos()} of {@link #generator}.
+	 */
+	private float getEndTimePos()
+	{
+		return this.generator.getEndTimePos();
+	}
+
+	/**
 	 * @return 
 	 * 			returns the {@link #outputTimelines}.
 	 */
@@ -201,7 +262,27 @@ implements GeneratorBufferInterface,
 	 */
 	public void addOutputTimeline(InputData inputData, Timeline outputTimeline)
 	{
-		this.outputTimelines.put(inputData, outputTimeline);
+		//==========================================================================================
+		Timeline oldOutputTimeline = this.outputTimelines.put(inputData, outputTimeline);
+		
+		//------------------------------------------------------------------------------------------
+		float changedStartTimePos;
+		float changedEndTimePos;
+		
+		if (oldOutputTimeline != null)
+		{
+			changedStartTimePos = Math.min(oldOutputTimeline.getStartTimePos(), outputTimeline.getStartTimePos());
+			changedEndTimePos = Math.max(oldOutputTimeline.getEndTimePos(), outputTimeline.getEndTimePos());
+		}
+		else
+		{
+			changedStartTimePos = outputTimeline.getStartTimePos();
+			changedEndTimePos = outputTimeline.getEndTimePos();
+		}
+		
+		this.generatorChanged(changedStartTimePos, changedEndTimePos);
+
+		//==========================================================================================
 	}
 	
 	/**
@@ -444,6 +525,16 @@ implements GeneratorBufferInterface,
 	}
 
 	/**
+	 * Generator changed.
+	 * 
+	 * #see {@link #generatorChanged(float, float)} for generator time.
+	 */
+	public void generatorChanged()
+	{
+		this.generatorChanged(this.startTimePos, this.endTimePos);
+	}
+
+	/**
 	 * @param changedStartBufPos
 	 * @param changedEndBufSize
 	 */
@@ -528,6 +619,35 @@ implements GeneratorBufferInterface,
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param inputData
+	 * 			is the inputData to remove from {@link #outputTimelines}.
+	 */
+	public void removeOutputTimeline(InputData inputData)
+	{
+		//==========================================================================================
+		Timeline removedTimeline = this.outputTimelines.remove(inputData);
+		
+		//------------------------------------------------------------------------------------------
+		float changedStartTimePos = removedTimeline.getStartTimePos();
+		float changedEndTimePos = removedTimeline.getEndTimePos();
+		
+		this.generatorChanged(changedStartTimePos, changedEndTimePos);
+
+		//==========================================================================================
+	}
+
+	/**
+	 * @param inputData
+	 * 			is the Input-Data.
+	 * @return
+	 * 			is the Input-Timeline for given Input-Data.
+	 */
+	public Timeline searchInputTimeline(InputData inputData)
+	{
+		return this.inputTimelines.get(inputData);
 	}
 	
 }

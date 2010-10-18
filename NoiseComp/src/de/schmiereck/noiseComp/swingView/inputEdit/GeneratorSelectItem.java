@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -21,7 +22,7 @@ public class GeneratorSelectItem
 	/**
 	 * Generator.
 	 */
-	private final Generator generator;
+	private final Timeline timeline;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -29,21 +30,21 @@ public class GeneratorSelectItem
 	/**
 	 * Constructor.
 	 * 
-	 * @param generator
-	 * 			is the Generator.
+	 * @param timeline
+	 * 			is the Timeline.
 	 */
-	public GeneratorSelectItem(Generator generator)
+	public GeneratorSelectItem(Timeline timeline)
 	{
-		this.generator = generator;
+		this.timeline = timeline;
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #generator}.
+	 * 			returns the {@link #timeline}.
 	 */
-	public Generator getGenerator()
+	public Timeline getTimeline()
 	{
-		return this.generator;
+		return this.timeline;
 	}
 
 	/* (non-Javadoc)
@@ -56,7 +57,7 @@ public class GeneratorSelectItem
 		
 		if (obj != null)
 		{
-			ret = this.generator == ((GeneratorSelectItem)obj).generator;
+			ret = this.timeline == ((GeneratorSelectItem)obj).timeline;
 		}
 		else
 		{
@@ -74,9 +75,18 @@ public class GeneratorSelectItem
 	{
 		String ret;
 		
-		if (this.generator != null)
+		if (this.timeline != null)
 		{
-			ret = this.generator.getName();
+			Generator generator = this.timeline.getGenerator();
+			
+			if (generator != null)
+			{
+				ret = generator.getName();
+			}
+			else
+			{
+				ret = "(UNKOWN)";
+			}
 		}
 		else
 		{

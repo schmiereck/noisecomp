@@ -6,10 +6,10 @@ package de.schmiereck.noiseComp.swingView.inputEdit;
 import java.util.List;
 import java.util.Vector;
 
-import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -45,14 +45,14 @@ public class InputEditModel
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
-	 * Input Generator.
+	 * Input Timeline.
 	 */
-	private Generator inputGenerator = null;
+	private Timeline inputTimeline = null;
 
 	/**
-	 * {@link #inputGenerator} changed listeners.
+	 * {@link #inputTimeline} changed listeners.
 	 */
-	private final ModelPropertyChangedNotifier inputGeneratorChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier inputTimelineChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	private List<GeneratorSelectItem> generatorSelectItems = new Vector<GeneratorSelectItem>();
@@ -160,35 +160,35 @@ public class InputEditModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #inputGenerator}.
+	 * 			returns the {@link #inputTimeline}.
 	 */
-	public Generator getInputGenerator()
+	public Timeline getInputTimeline()
 	{
-		return this.inputGenerator;
+		return this.inputTimeline;
 	}
 
 	/**
-	 * @param inputGenerator 
-	 * 			to set {@link #inputGenerator}.
+	 * @param inputTimeline 
+	 * 			to set {@link #inputTimeline}.
 	 */
-	public void setInputGenerator(Generator inputGenerator)
+	public void setInputTimeline(Timeline inputTimeline)
 	{
-		if (this.inputGenerator != inputGenerator)
+		if (this.inputTimeline != inputTimeline)
 		{
-			this.inputGenerator = inputGenerator;
+			this.inputTimeline = inputTimeline;
 			
 			// Notify Listeners.
-			this.inputGeneratorChangedNotifier.notifyModelPropertyChangedListeners();
+			this.inputTimelineChangedNotifier.notifyModelPropertyChangedListeners();
 		}
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #inputGeneratorChangedNotifier}.
+	 * 			returns the {@link #inputTimelineChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getInputGeneratorChangedNotifier()
+	public ModelPropertyChangedNotifier getInputTimelineChangedNotifier()
 	{
-		return this.inputGeneratorChangedNotifier;
+		return this.inputTimelineChangedNotifier;
 	}
 
 	/**

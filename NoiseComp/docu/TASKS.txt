@@ -39,7 +39,7 @@ TODO:
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
 #63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
 #65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.
-#68:	
+#67:	
 
 WORK:
 =====
@@ -87,3 +87,4 @@ DONE:
 #64:	BUG: Remove generator do not change the timeline select entry positions.
 #66:	BUG: Timeline: Change size of generator is not evaluated.
 #67:	BUG: Move generateChangedEvent-management from Generator to Timeline.
+#68:	BUG: Insert new Module: No signal gnerated.

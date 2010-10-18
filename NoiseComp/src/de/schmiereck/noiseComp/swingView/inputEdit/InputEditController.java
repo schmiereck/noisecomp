@@ -138,10 +138,15 @@ public class InputEditController
 	                              boolean editInput)
 	{
 		//==========================================================================================
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		//==========================================================================================
 		List<InputTypeSelectItem> inputTypeSelectItems;
 		InputTypeData inputTypeData;
 		List<GeneratorSelectItem> generatorSelectItems;
-		Generator inputGenerator;
+		Timeline inputTimeline;
 		String value;
 		List<ModulInputTypeSelectItem> modulInputTypeSelectItems;
 		InputTypeData modulInputTypeData;
@@ -177,22 +182,24 @@ public class InputEditController
 			// Make Generator-SelectItems:
 			{
 				generatorSelectItems = new Vector<GeneratorSelectItem>();
-				Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
-				if (generatorsIterator != null)
+//				Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
+				Iterator<Timeline> timelinesIterator = timelineManagerLogic.getTimelinesIterator();
+				if (timelinesIterator != null)
 				{
 					GeneratorSelectItem noSelectItem = new GeneratorSelectItem(null);
 					generatorSelectItems.add(noSelectItem);
-					while (generatorsIterator.hasNext())
+					while (timelinesIterator.hasNext())
 					{
-						Generator generator = generatorsIterator.next();
+						Timeline timeline = timelinesIterator.next();
 						
-						generatorSelectItems.add(new GeneratorSelectItem(generator));
+						generatorSelectItems.add(new GeneratorSelectItem(timeline));
 					}
 				}
 			}
 			if (inputData != null)
 			{
-				inputGenerator = inputData.getInputGenerator();
+//				inputTimeline = inputData.getInputGenerator();
+				inputTimeline = selectedTimeline.searchInputTimeline(inputData);
 				
 				MultiValue multiValue = new MultiValue();
 				multiValue.floatValue = inputData.getInputValue();
@@ -201,7 +208,7 @@ public class InputEditController
 			}
 			else
 			{
-				inputGenerator = null;
+				inputTimeline = null;
 				value = null;
 			}
 			// Make ModulInputType-SelectItems:
@@ -234,7 +241,7 @@ public class InputEditController
 			inputTypeSelectItems = null;
 			inputTypeData = null;
 			generatorSelectItems = null;
-			inputGenerator = null;
+			inputTimeline = null;
 			value = null;
 			modulInputTypeSelectItems = null;
 			modulInputTypeData = null;
@@ -243,7 +250,7 @@ public class InputEditController
 		this.inputEditModel.setInputTypeSelectItems(inputTypeSelectItems);
 		this.inputEditModel.setInputTypeData(inputTypeData);
 		this.inputEditModel.setGeneratorSelectItems(generatorSelectItems);
-		this.inputEditModel.setInputGenerator(inputGenerator);
+		this.inputEditModel.setInputTimeline(inputTimeline);
 		this.inputEditModel.setValue(value);
 		this.inputEditModel.setModulInputTypeSelectItems(modulInputTypeSelectItems);
 		this.inputEditModel.setModulInputTypeData(modulInputTypeData);
@@ -263,6 +270,11 @@ public class InputEditController
 	                     final Timeline selectedTimeline)
 	{
 		//==========================================================================================
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		//==========================================================================================
 		InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
 		GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
 		String valueStr = this.inputEditView.getInputTypeValueTextField().getText();
@@ -270,7 +282,7 @@ public class InputEditController
 			
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
-		Generator inputGenerator = inputGeneratorSelectItem.getGenerator();
+		Timeline inputTimeline = inputGeneratorSelectItem.getTimeline();
 		MultiValue multiValue = InputUtils.makeMultiValue(valueStr);
 		InputTypeData modulInputTypeData = modulInputTypeSelectItem.getInputTypeData();
 		
@@ -293,20 +305,22 @@ public class InputEditController
 			{
 				// Update selected Input:
 				
-				inputData.setInputGenerator(inputGenerator);
-				inputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
-				inputData.setInputModulInputTypeData(modulInputTypeData);
+				timelineManagerLogic.updateInput(selectedTimeline,
+				                                 inputData,
+				                                 inputTimeline, 
+				                                 inputTypeData, 
+				                                 multiValue.floatValue, multiValue.stringValue,
+				                                 modulInputTypeData);
+//				inputData.setInputGenerator(inputGenerator);
+//				inputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
+//				inputData.setInputModulInputTypeData(modulInputTypeData);
 			}
 			else
 			{
 				// Insert new Input:
-				SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-				
-				TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
-				
 				inputData = 
 					timelineManagerLogic.addInputGenerator(selectedTimeline,
-					                                       inputGenerator, 
+					                                       inputTimeline, 
 					                                       inputTypeData, 
 					                                       multiValue.floatValue, multiValue.stringValue,
 					                                       modulInputTypeData);
@@ -319,7 +333,7 @@ public class InputEditController
 		// Update Input-Edit-Model:
 		
 		this.inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
-		this.inputEditModel.setInputGenerator(inputGeneratorSelectItem.getGenerator());
+		this.inputEditModel.setInputTimeline(inputGeneratorSelectItem.getTimeline());
 		this.inputEditModel.setValue(valueStr);
 		this.inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
 		
