@@ -179,8 +179,19 @@ extends Generator
 									}
 								}
 								*/
-								signalLeft += signalSample.getLeftValue();
-								signalRight += signalSample.getRightValue();
+								float leftValue = signalSample.getLeftValue();
+								
+								if (Float.isNaN(leftValue) == false)
+								{
+									signalLeft += leftValue;
+								}
+								
+								float rightValue = signalSample.getRightValue();
+								
+								if (Float.isNaN(rightValue) == false)
+								{
+									signalRight += rightValue;
+								}
 								break;
 							}
 							default:

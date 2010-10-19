@@ -26,7 +26,7 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample signalSample, ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
 	{
 		//----------------------------------------------------------------------
 		float maxValue;
@@ -61,32 +61,47 @@ extends Generator
 		this.calcInputValue(framePosition, 
                             frameTime,
 		                    signalInputData, 
-		                    soundSample, 
+		                    signalSample, 
 		                    parentModulGenerator, 
 		                    generatorBuffer);
 		
-		float leftValue = soundSample.getLeftValue();
-		float rightValue = soundSample.getRightValue();
+		float leftValue = signalSample.getLeftValue();
 		
-		if (leftValue > maxValue)
+		if (Float.isNaN(leftValue) == false)
 		{
-			leftValue = maxValue;
+			if (leftValue > maxValue)
+			{
+				leftValue = maxValue;
+			}
+			if (leftValue < minValue)
+			{
+				leftValue = minValue;
+			}
 		}
-		if (rightValue > maxValue)
+		else
 		{
-			rightValue = maxValue;
-		}
-
-		if (leftValue < minValue)
-		{
-			leftValue = minValue;
-		}
-		if (rightValue < minValue)
-		{
-			rightValue = minValue;
+			leftValue = Float.NaN;
 		}
 		
-		soundSample.setStereoValues(leftValue, rightValue);
+		float rightValue = signalSample.getRightValue();
+		
+		if (Float.isNaN(rightValue) == false)
+		{
+			if (rightValue > maxValue)
+			{
+				rightValue = maxValue;
+			}
+			if (rightValue < minValue)
+			{
+				rightValue = minValue;
+			}
+		}
+		else
+		{
+			rightValue = Float.NaN;
+		}
+		
+		signalSample.setStereoValues(leftValue, rightValue);
 	}
 	
 	/* (non-Javadoc)

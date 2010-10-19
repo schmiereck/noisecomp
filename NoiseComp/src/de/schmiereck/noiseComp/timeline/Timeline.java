@@ -441,6 +441,7 @@ implements GeneratorBufferInterface,
 		
 		if (bufInputSoundSample == null)
 		{
+			//SoundSample bufInputSoundSample = this.generator.generateFrameSample(framePosition, parentModulGenerator, generatorBuffer);
 			bufInputSoundSample = new SoundSample();
 			
 			this.generator.calculateSoundSample(framePosition, 

@@ -63,14 +63,32 @@ extends Generator
 		}
 		
 		//------------------------------------------------------------------------------------------
-		float signalLeft = signalSample.getLeftValue();
-		float signalRight = signalSample.getRightValue();
+		float left;
+		float leftValue = signalSample.getLeftValue();
 		
-		double left = Math.tanh(signalLeft * 2.0D);
-		double right = Math.tanh(signalRight * 2.0D);
+		if (Float.isNaN(leftValue) == false)
+		{
+			left = (float)Math.tanh(leftValue * 2.0D);
+		}
+		else
+		{
+			left = Float.NaN;
+		}
 		
-		soundSample.setStereoValues((float)left, 
-		                            (float)right);
+		float right;
+		float rightValue = signalSample.getLeftValue();
+		
+		if (Float.isNaN(rightValue) == false)
+		{
+			right = (float)Math.tanh(rightValue * 2.0D);
+		}
+		else
+		{
+			right = Float.NaN;
+		}
+		
+		soundSample.setStereoValues(left, 
+		                            right);
 		
 		//==========================================================================================
 	}

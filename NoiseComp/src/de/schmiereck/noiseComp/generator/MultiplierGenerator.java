@@ -53,7 +53,7 @@ extends Generator
 		float signalLeft = 0.0F;
 		float signalRight = 0.0F;
 
-		SoundSample signal = new SoundSample();
+		SoundSample signalSample = new SoundSample();
 		
 		Object inputsSyncObject = this.getInputsSyncObject();
 		
@@ -93,12 +93,23 @@ extends Generator
 								this.calcInputValue(framePosition, 
 								                    frameTime,
 								                    inputData, 
-								                    signal, 
+								                    signalSample, 
 								                    parentModulGenerator,
 								                    generatorBuffer);
 
-								signalLeft += signal.getLeftValue();
-								signalRight += signal.getRightValue();
+								float leftValue = signalSample.getLeftValue();
+								
+								if (Float.isNaN(leftValue) == false)
+								{
+									signalLeft += signalSample.getLeftValue();
+								}
+								
+								float reightValue = signalSample.getRightValue();
+								
+								if (Float.isNaN(reightValue) == false)
+								{
+									signalRight += reightValue;
+								}
 								break;
 							}
 							default:
