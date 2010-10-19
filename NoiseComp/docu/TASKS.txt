@@ -41,7 +41,7 @@ TODO:
 #65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.
 #67:	BUG: If a generator (example: Sinus) generate no signal, it continouse.
 		-> return NaN signal to mark that noting returned.
-#79:	
+#80:	
 
 WORK:
 =====
@@ -53,9 +53,7 @@ WORK:
 		Ein Integral über mehrere Generatoren geht nicht, da mir der Wert des "vorherigen" fehlt.
 #62:	IMPROVEMENT: Because of BUG#61: Generate for every generator of a modul and the modules itself used for generate sample-sound playing a buffer hirarchy.
 		The buffer contains the samples and a integrated signal (maybe also a differetial) over time.
-#78:	BUG: Adding new Output generator to a new Modul and his TimelineManagerLogic does not update the SoundSourceLogic and the mainModulGeneratorTypeData.
-		-> Update mainModulGeneratorTypeData.
-		-> Update SoundSourceLogic.
+#79:	BUG: Modules as input generates no signal.
 
 DONE:
 =====
@@ -93,3 +91,7 @@ DONE:
 #66:	BUG: Timeline: Change size of generator is not evaluated.
 #67:	BUG: Move generateChangedEvent-management from Generator to Timeline.
 #68:	BUG: Insert new Module: No signal gnerated.
+#78:	BUG: Adding new Output generator to a new Modul and his TimelineManagerLogic does not update the SoundSourceLogic and the mainModulGeneratorTypeData.
+		-> Update mainModulGeneratorTypeData.
+		-> Update SoundSourceLogic.
+		-> SoundSourceLogic.setMainModulGeneratorTypeData(): Walk rekursive through inputs because we need existing timelines to create input timelines.

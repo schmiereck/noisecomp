@@ -361,7 +361,8 @@ implements GeneratorInterface,
 	
 	/**
 	 * @return
-	 * 			the iterator of {@link #inputs}.
+	 * 			the iterator of {@link #inputs}.<br/>
+	 * 			<code>null</code> if no inputs exists.
 	 */
 	public Iterator<InputData> getInputsIterator()
 	{

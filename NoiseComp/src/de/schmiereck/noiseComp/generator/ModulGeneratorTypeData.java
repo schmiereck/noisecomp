@@ -98,7 +98,7 @@ public class ModulGeneratorTypeData
 	/**
 	 * @param outputGenerator is the new value for attribute {@link #outputGenerator} to set.
 	 */
-	private void setOutputGenerator(OutputGenerator outputGenerator)
+	public void setOutputGenerator(OutputGenerator outputGenerator)
 	{
 		this.outputGenerator = outputGenerator;
 	}

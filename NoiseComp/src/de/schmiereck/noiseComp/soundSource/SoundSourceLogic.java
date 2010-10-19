@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface;
+import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
@@ -90,32 +91,110 @@ implements GeneratorChangeListenerInterface
 		this.timelineManagerLogic = new TimelineManagerLogic(mainModulGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
-//		this.mainModulGeneratorTypeData = mainModulGeneratorTypeData;
+		this.setOutputGenerator(null);
+	
+		this.outputTimeline = null;
+		
+		//------------------------------------------------------------------------------------------
+		// Walk rekursive through inputs because we need existing timelines to create input timelines:
 		
 		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
 		
-		this.setOutputGenerator(outputGenerator);
-	
-		//------------------------------------------------------------------------------------------
-		Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
-		
-		while (generatorsIterator.hasNext())
+		if (outputGenerator != null)
 		{
-			Generator generator = generatorsIterator.next();
+			List<Timeline> inputTimelines = new Vector<Timeline>();
 			
-			Timeline timeline = 
-				this.timelineManagerLogic.createTimeline(generator);
+			this.createTimeline(inputTimelines, outputGenerator);
+			
+			// TODO Sort timelines.
 
-			// Output Generator?
-			if (generator == outputGenerator)
-			{
-				this.outputTimeline = timeline;
-			}
+			Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
 			
-			timelines.add(timeline);
+			while (generatorsIterator.hasNext())
+			{
+				Generator generator = generatorsIterator.next();
+				
+				Timeline inputTimeline = this.searchInputTimeline(inputTimelines, generator);
+				
+				timelines.add(inputTimeline);
+			}
 		}
+		
+//		Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
+//		
+//		while (generatorsIterator.hasNext())
+//		{
+//			Generator generator = generatorsIterator.next();
+//			
+//			Timeline timeline = 
+//				this.timelineManagerLogic.createTimeline(generator);
+//			
+//			timelines.add(timeline);
+//		}
 		//==========================================================================================
 		return timelines;
+	}
+
+	/**
+	 * @param inputTimelines
+	 * 			are the timelines.
+	 * @param generator
+	 * 			is the Generator.
+	 * @return
+	 * 			is the searched Timeline with given Generator.
+	 */
+	private Timeline searchInputTimeline(List<Timeline> inputTimelines, Generator generator)
+	{
+		//==========================================================================================
+		Timeline retTimeline;
+		
+		retTimeline = null;
+		
+		for (Timeline timeline : inputTimelines)
+		{
+			if (timeline.getGenerator() == generator)
+			{
+				retTimeline = timeline;
+				break;
+			}
+		}
+		
+		//==========================================================================================
+		return retTimeline;
+	}
+
+	/**
+	 * @param timelines
+	 * 			are the timelines.
+	 * @param generator
+	 * 			is the generator.
+	 */
+	private void createTimeline(List<Timeline> timelines, Generator generator)
+	{
+		//==========================================================================================
+		Iterator<InputData> inputsIterator = generator.getInputsIterator();
+		
+		if (inputsIterator != null)
+		{
+			while (inputsIterator.hasNext())
+			{
+				InputData inputData = inputsIterator.next();
+				
+				Generator inputGenerator = inputData.getInputGenerator();
+				
+				if (inputGenerator != null)
+				{
+					this.createTimeline(timelines, inputGenerator);
+				}
+			}
+		}
+		
+		//------------------------------------------------------------------------------------------
+		Timeline timeline = this.timelineManagerLogic.createTimeline(generator);
+	
+		timelines.add(timeline);
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -330,5 +409,14 @@ implements GeneratorChangeListenerInterface
 	public TimelineManagerLogic getTimelineManagerLogic()
 	{
 		return this.timelineManagerLogic;
+	}
+
+	/**
+	 * @param outputTimeline 
+	 * 			to set {@link #outputTimeline}.
+	 */
+	public void setOutputTimeline(Timeline outputTimeline)
+	{
+		this.outputTimeline = outputTimeline;
 	}
 }
