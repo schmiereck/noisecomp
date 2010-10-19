@@ -53,7 +53,6 @@ WORK:
 		Ein Integral über mehrere Generatoren geht nicht, da mir der Wert des "vorherigen" fehlt.
 #62:	IMPROVEMENT: Because of BUG#61: Generate for every generator of a modul and the modules itself used for generate sample-sound playing a buffer hirarchy.
 		The buffer contains the samples and a integrated signal (maybe also a differetial) over time.
-#79:	BUG: Modules as input generates no signal.
 
 DONE:
 =====
@@ -95,3 +94,4 @@ DONE:
 		-> Update mainModulGeneratorTypeData.
 		-> Update SoundSourceLogic.
 		-> SoundSourceLogic.setMainModulGeneratorTypeData(): Walk rekursive through inputs because we need existing timelines to create input timelines.
+#79:	BUG: Modules as input generates no signal.

@@ -602,7 +602,7 @@ implements GeneratorInterface,
 		GeneratorBufferInterface inputGeneratorBuffer = 
 			generatorBuffer.getInputGeneratorBuffer(inputData);
 		
-		GeneratorInterface inputGenerator = inputData.getInputGenerator();
+//		GeneratorInterface inputGenerator = inputData.getInputGenerator();
 
 		// Found Input-Generator-Buffer ?
 		if (inputGeneratorBuffer != null)
@@ -709,12 +709,11 @@ implements GeneratorInterface,
 //			else
 //			{
 			//--------------------------------------------------------------------------------------
+			// Input-Buffer:
 			
 			GeneratorBufferInterface inputGeneratorBuffer = 
 				generatorBuffer.getInputGeneratorBuffer(inputData);
 			
-			GeneratorInterface inputGenerator = inputData.getInputGenerator();
-	
 			// Found Input-Generator-Buffer ?
 			if (inputGeneratorBuffer != null)
 			{	
@@ -730,67 +729,83 @@ implements GeneratorInterface,
 			else
 			{
 				//----------------------------------------------------------------------------------
-				// Found no Input-Generator:
+				// Input-Generator:
 				
-				Float inputValue = inputData.getInputValue();
+				GeneratorInterface inputGenerator = inputData.getInputGenerator();
 				
-				// Found constant input value ?
-				if (inputValue != null)
+				if (inputGenerator != null)
 				{
-					signal.setMonoSignal(inputValue.floatValue());
+					SoundSample frameSample = inputGenerator.generateFrameSample(framePosition, 
+					                                                             parentModulGenerator, 
+					                                                             generatorBuffer);
+					
+					signal.setSignals(frameSample);
 				}
 				else
 				{
-					//------------------------------------------------------------------------------
-					// Found no input value:
-	
-					InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
-
-					// Found a modul input type ?
-					if ((modulInputTypeData != null) && (parentModulGenerator != null))
+					//----------------------------------------------------------------------------------
+					// Found no Input-Generator:
+					
+					Float inputValue = inputData.getInputValue();
+					
+					// Found constant input value ?
+					if (inputValue != null)
 					{
-						// Use Value from this input:
-
-						// ALTERNATIVE: irgenendwie an den ModulGenerator drannkommen, in dem dieser Generator benutzt wird und dann in dem nach dem input suchen.
-						//InputData modulInputData = this.getParentModulGenerator().searchInputByTypeName(inputModulInput);
-						Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
-						
-						if (modulInputsIterator != null)
-						{
-							while (modulInputsIterator.hasNext())
-							{
-								InputData modulInputData = modulInputsIterator.next();
-								
-								if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
-								{
-//									GeneratorBufferInterface modulInputGeneratorBuffer = 
-//										generatorBuffer.getInputGeneratorBuffer(modulInputData);
-//									
-//									SoundSample inputSoundSample = 
-//										modulInputGeneratorBuffer.calcFrameSample(framePosition, 
-//										                                          frameTime,
-//										                                          parentModulGenerator);
-//									
-//									signal.setSignals(inputSoundSample);
-									
-									parentModulGenerator.calcInputSignal(framePosition, 
-									                                     frameTime,
-									                                     modulInputData, 
-									                                     signal, 
-									                                     parentModulGenerator,
-									                                     generatorBuffer);
-									break;
-								}
-							}
-						}
+						signal.setMonoSignal(inputValue.floatValue());
 					}
 					else
 					{
-						//--------------------------------------------------------------------------
+						//------------------------------------------------------------------------------
 						// Found no input value:
-						// Use Default Value of Input type:
-						
-						signal.setMonoSignal(this.getInputDefaultValueByInputType(inputData));
+		
+						InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
+	
+						// Found a modul input type ?
+						if ((modulInputTypeData != null) && (parentModulGenerator != null))
+						{
+							// Use Value from this input:
+	
+							// ALTERNATIVE: irgenendwie an den ModulGenerator drannkommen, in dem dieser Generator benutzt wird und dann in dem nach dem input suchen.
+							//InputData modulInputData = this.getParentModulGenerator().searchInputByTypeName(inputModulInput);
+							Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
+							
+							if (modulInputsIterator != null)
+							{
+								while (modulInputsIterator.hasNext())
+								{
+									InputData modulInputData = modulInputsIterator.next();
+									
+									if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
+									{
+	//									GeneratorBufferInterface modulInputGeneratorBuffer = 
+	//										generatorBuffer.getInputGeneratorBuffer(modulInputData);
+	//									
+	//									SoundSample inputSoundSample = 
+	//										modulInputGeneratorBuffer.calcFrameSample(framePosition, 
+	//										                                          frameTime,
+	//										                                          parentModulGenerator);
+	//									
+	//									signal.setSignals(inputSoundSample);
+										
+										parentModulGenerator.calcInputSignal(framePosition, 
+										                                     frameTime,
+										                                     modulInputData, 
+										                                     signal, 
+										                                     parentModulGenerator,
+										                                     generatorBuffer);
+										break;
+									}
+								}
+							}
+						}
+						else
+						{
+							//--------------------------------------------------------------------------
+							// Found no input value:
+							// Use Default Value of Input type:
+							
+							signal.setMonoSignal(this.getInputDefaultValueByInputType(inputData));
+						}
 					}
 				}
 			}
@@ -865,7 +880,7 @@ implements GeneratorInterface,
 		GeneratorBufferInterface inputGeneratorBuffer = 
 			generatorBuffer.getInputGeneratorBuffer(inputData);
 		
-		GeneratorInterface inputGenerator = inputData.getInputGenerator();
+//		GeneratorInterface inputGenerator = inputData.getInputGenerator();
 
 		// Found Input-Generator-Buffer ?
 		if (inputGeneratorBuffer != null)
