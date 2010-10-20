@@ -39,7 +39,7 @@ TODO:
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
 #63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
 #65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.
-#80:	
+#81:	
 
 WORK:
 =====
@@ -93,5 +93,7 @@ DONE:
 		-> Update SoundSourceLogic.
 		-> SoundSourceLogic.setMainModulGeneratorTypeData(): Walk rekursive through inputs because we need existing timelines to create input timelines.
 #79:	BUG: Modules as input generates no signal.
-#67:	BUG: If a module-generator ends, he continouse to generates his signal.
+#67:	BUG: If a module-generator ends, he generates continouse.
+		-> return NaN signal to mark that noting returned.
+#80:	BUG: If a module-generator (example: Sinus) generate no signal, it continouse.
 		-> return NaN signal to mark that noting returned.

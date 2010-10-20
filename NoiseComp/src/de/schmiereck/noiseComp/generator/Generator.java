@@ -612,7 +612,14 @@ implements GeneratorInterface,
 				                                     frameTime,
 				                                     parentModulGenerator);
 			
-			signal.setSignals(inputSoundSample);
+			if (inputSoundSample != null)
+			{
+				signal.setSignals(inputSoundSample);
+			}
+			else
+			{
+				signal.setNaN();
+			}
 		}
 		else
 		{

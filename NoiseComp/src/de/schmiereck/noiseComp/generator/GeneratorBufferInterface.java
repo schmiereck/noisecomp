@@ -35,7 +35,8 @@ public interface GeneratorBufferInterface
 	 * @param parentModulGenerator
 	 * 			is the parent modul generator.
 	 * @return
-	 * 			the bufSoundSample.
+	 * 			the bufSoundSample.<br/>
+	 * 			<code>null</code> if time is out of generator time.
 	 */
 	SoundSample calcFrameSample(long framePosition, 
 	                            float frameTime,

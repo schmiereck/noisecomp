@@ -437,23 +437,29 @@ implements GeneratorBufferInterface,
 		//==========================================================================================
 		SoundSample bufInputSoundSample;
 		
-		bufInputSoundSample = this.getBufSoundSample(framePosition);
-		
-		if (bufInputSoundSample == null)
+		if (this.generator.checkIsInTime(frameTime) == true)
 		{
-			//SoundSample bufInputSoundSample = this.generator.generateFrameSample(framePosition, parentModulGenerator, generatorBuffer);
-			bufInputSoundSample = new SoundSample();
+			bufInputSoundSample = this.getBufSoundSample(framePosition);
 			
-			this.generator.calculateSoundSample(framePosition, 
-			                                    frameTime, 
-			                                    bufInputSoundSample, 
-			                                    parentModulGenerator, 
-			                                    this);
-			
-			this.setBufSoundSample(framePosition,
-			                       bufInputSoundSample);
+			if (bufInputSoundSample == null)
+			{
+				//SoundSample bufInputSoundSample = this.generator.generateFrameSample(framePosition, parentModulGenerator, generatorBuffer);
+				bufInputSoundSample = new SoundSample();
+				
+				this.generator.calculateSoundSample(framePosition, 
+				                                    frameTime, 
+				                                    bufInputSoundSample, 
+				                                    parentModulGenerator, 
+				                                    this);
+				
+				this.setBufSoundSample(framePosition,
+				                       bufInputSoundSample);
+			}
 		}
-		
+		else
+		{
+			bufInputSoundSample = null;
+		}
 		//==========================================================================================
 		return bufInputSoundSample;
 	}
