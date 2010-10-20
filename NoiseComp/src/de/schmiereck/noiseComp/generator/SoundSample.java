@@ -236,4 +236,13 @@ public class SoundSample
 		
 		return soundSample;
 	}
+
+	/**
+	 * Set {@link #leftValue} and {@link #rightValue} to {@link Float#NaN}.
+	 */
+	public void setNaN()
+	{
+		this.leftValue = Float.NaN;
+		this.rightValue = Float.NaN;
+	}
 }

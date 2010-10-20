@@ -42,9 +42,23 @@ noise
                                |
                                `--->input
 
+Generate Sound calls:
+=====================
+Timeline.calcFrameSample()
+	Generator.calculateSoundSample()
+		Generator.calcInputMonoValue()
+		Generator.calcInputValue()
+			GeneratorBufferInterface.calcFrameSample()
+				???
+			GeneratorInterface.generateFrameSample()
+				Generator.calculateSoundSample()
+
+
+
 ================================================================================
 Searching for:
 ==============
 visual analysis of the sound's waveform
 plot of signal amplitude
 waveform plotting
+

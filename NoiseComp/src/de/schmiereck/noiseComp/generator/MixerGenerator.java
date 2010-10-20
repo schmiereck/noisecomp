@@ -133,52 +133,7 @@ extends Generator
 								                    signalSample, 
 								                    parentModulGenerator,
 								                    generatorBuffer);
-								/*
-								float valueRight;
-								float valueLeft;
-	
-								GeneratorInterface signalInputGenerator = inputData.getInputGenerator();
-								
-								// Found Input-Generator ?
-								if (signalInputGenerator != null)
-								{	
-									SoundSample signalInputSample = signalInputGenerator.generateFrameSample(framePosition);
-								
-									if (signalInputSample != null)
-									{
-										valueLeft = signalInputSample.getLeftValue();
-										valueRight = signalInputSample.getRightValue();
-									}
-									else
-									{
-										// Found no input signal:
-										
-										valueLeft = 0.0F;
-										valueRight = 0.0F;
-									}
-								}
-								else
-								{	
-									// Found no Input-Generator:
-									
-									Float inputValue = inputData.getInputValue();
-									
-									// Found constant input value ?
-									if (inputValue != null)
-									{
-										valueLeft = inputValue.floatValue();
-										valueRight = inputValue.floatValue();
-									}
-									else
-									{	
-										// Found no input value:
-										// Use Default Value of Input type:
-										
-										valueLeft = this.getInputDefaultValueByInputType(inputData.getInputType());
-										valueRight = valueLeft;
-									}
-								}
-								*/
+
 								float leftValue = signalSample.getLeftValue();
 								
 								if (Float.isNaN(leftValue) == false)

@@ -49,8 +49,7 @@ extends Generator
 		
 		OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
 		
-		// TODO let it crash, write better programs to prevent from this situation ;-) smk
-		//if (outputGenerator != null)
+		if (this.checkIsInTime(frameTime) == true)
 		{	
 			long outputStartPos = (long)(this.getStartTimePos() * this.getSoundFrameRate());
 			
@@ -60,6 +59,10 @@ extends Generator
 			                                                               generatorBuffer);
 			
 			sample.setValues(outputSample);
+		}
+		else
+		{
+			sample.setNaN();
 		}
 	}
 
