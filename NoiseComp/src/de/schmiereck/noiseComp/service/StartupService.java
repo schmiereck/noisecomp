@@ -13,6 +13,7 @@ import de.schmiereck.noiseComp.generator.ASRPulseGenerator;
 import de.schmiereck.noiseComp.generator.CutGenerator;
 import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.IntegratorGenerator;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -60,6 +61,7 @@ public class StartupService
 		soundService.addGeneratorType(PinkNoiseGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(PinkNoise2Generator.createGeneratorTypeData());
 		soundService.addGeneratorType(TanhGenerator.createGeneratorTypeData());
+		soundService.addGeneratorType(IntegratorGenerator.createGeneratorTypeData());
 		//==========================================================================================
 	}
 	

@@ -196,7 +196,9 @@ public class SoundSample
 	{
 		if (soundSample != null)
 		{	
-			this.setStereoSignals(soundSample.leftValue, soundSample.rightValue);
+//			this.setStereoSignals(soundSample.leftValue, soundSample.rightValue);
+			this.leftValue = soundSample.leftValue;
+			this.rightValue = soundSample.rightValue;
 		}
 		else
 		{	

@@ -49,6 +49,7 @@ WORK:
 		Entweder ich integriere einen input-buffer mit integral-Funktion oder
 		ich lege fest, das ein Input von sinus immer nur von einem generator kommen kann (wie jetzt schon).
 		Ein Integral über mehrere Generatoren geht nicht, da mir der Wert des "vorherigen" fehlt.
+		bug 61 demo 1.noiseComp.xml
 #62:	IMPROVEMENT: Because of BUG#61: Generate for every generator of a modul and the modules itself used for generate sample-sound playing a buffer hirarchy.
 		The buffer contains the samples and a integrated signal (maybe also a differetial) over time.
 
