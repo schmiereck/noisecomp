@@ -61,6 +61,8 @@ implements Scrollable//, MouseMotionListener
 	private static final Color CTimelineInputConnector = new Color(255, 0, 0, 192);
 	private static final Color CTimelineBuffer = new Color(0, 200, 0, 127);
 	
+	private final float DRAW_EVERY_SAMPLE = 1.0F;//25.0F;
+	
 	//**********************************************************************************************
 	// Fields:
 	
@@ -494,7 +496,7 @@ implements Scrollable//, MouseMotionListener
 			ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
 			
 			float frameRate = timeline.getSoundFrameRate();
-			float frameStep = timeLength / (frameRate / 25.0F);
+			float frameStep = timeLength / (frameRate / DRAW_EVERY_SAMPLE);
 	
 			float pointSizeX = (float)(1.0F / this.at.getScaleX());
 			float pointSizeY = (float)(1.0F / this.at.getScaleY());

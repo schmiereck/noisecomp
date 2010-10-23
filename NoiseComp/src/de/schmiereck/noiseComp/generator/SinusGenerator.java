@@ -87,8 +87,9 @@ extends Generator
 		//float timePos = frameTime - (this.getStartTimePos());
 		
 		// Länge einer Sinus-Periode in Frames.
-		float periodLengthInFrames = Math.round(this.getSoundFrameRate() / signalFrequency);
-		float periodPosition = (float)(framePosition / periodLengthInFrames);
+//		float periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
+//		float periodPosition = (float)(framePosition / periodLengthInFrames);
+		float periodPosition = signalFrequency;
 		
 		float s = (float)(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI));
 		
@@ -105,7 +106,7 @@ extends Generator
 //		float sum = lastFignalFrequency + signalFrequency;
 //
 //		float value = (float)(Math.sin(sum * (2.0F * Math.PI)) * signalAmplitude * dt);
-		
+		System.out.printf("s: %2.6f\n", value);
 		soundSample.setStereoValues(value, value);
 		//==========================================================================================
 	}

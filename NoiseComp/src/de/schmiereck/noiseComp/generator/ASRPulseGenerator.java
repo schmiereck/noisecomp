@@ -136,7 +136,7 @@ extends Generator
 		
 		
 		// Länge einer Sinus-Periode in Frames.
-		int periodLengthInFrames = Math.round(this.getSoundFrameRate() / signalFrequency);
+		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency);
 		
 		// Die Position im Puls in Prozent als Wert zwischen 0.0 und 1.0.
 		float	periodPosition = (float) (framePosition) / (float)periodLengthInFrames;

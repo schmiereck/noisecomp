@@ -294,7 +294,7 @@ extends ListWidgetGraphic
 		
 //		float visibleTime = horizontalScrollEnd - horizontalScrollStart;
 		
-		for (float timePos = Math.round(horizontalScrollStart); timePos < horizontalScrollEnd; timePos += 1.0)
+		for (float timePos = (float)Math.floor(horizontalScrollStart); timePos < horizontalScrollEnd; timePos += 1.0F)
 		{
 			int screenPosX = tracksData.getGeneratorsLabelSizeX() + (int)((timePos - horizontalScrollStart) * scaleX);
 			

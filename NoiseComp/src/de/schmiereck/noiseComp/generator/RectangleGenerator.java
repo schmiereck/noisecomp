@@ -81,8 +81,8 @@ extends Generator
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
 		
-		// L�nge einer Sinus-Periode in Frames.
-		int periodLengthInFrames = Math.round(this.getSoundFrameRate() / signalFrequency);
+		// Länge einer Sinus-Periode in Frames.
+		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency);
 		float	periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
 		//float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
 

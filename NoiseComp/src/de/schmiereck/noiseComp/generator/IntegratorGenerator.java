@@ -45,15 +45,31 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
+	public void calculateSoundSample(long framePosition, 
+	                                 float frameTime, 
+	                                 SoundSample soundSample, 
+	                                 ModulGenerator parentModulGenerator, 
+	                                 GeneratorBufferInterface generatorBuffer)
 	{
 		//==========================================================================================
-		SoundSample signalSample = new SoundSample();
+//		SoundSample signal1Sample = new SoundSample();
+		SoundSample signal2Sample = new SoundSample();
 		
 		//------------------------------------------------------------------------------------------
-		float signalLeft = 0.0F;
-		float signalRight = 0.0F;
+		long frame1Position = framePosition - 1L;
+		float frame1Time = frame1Position / this.getSoundFrameRate();
+		
+		long frame2Position = framePosition;
+		float frame2Time = frame2Position / this.getSoundFrameRate();
+		
+		//------------------------------------------------------------------------------------------
+//		float signal1Left = 0.0F;
+//		float signal1Right = 0.0F;
 	
+		float signal2Left = 0.0F;
+		float signal2Right = 0.0F;
+	
+		//------------------------------------------------------------------------------------------
 		Object inputsSyncObject = this.getInputsSyncObject();
 		
 		if (inputsSyncObject != null)
@@ -73,56 +89,51 @@ extends Generator
 							case INPUT_TYPE_SIGNAL:
 							{
 								// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-								this.calcInputValue(framePosition, 
-								                    frameTime,
-								                    inputData, 
-								                    signalSample, 
-								                    parentModulGenerator,
-								                    generatorBuffer);
-
-								float leftValue = signalSample.getLeftValue();
-								
-								if (Float.isNaN(leftValue) == false)
 								{
-									signalLeft += leftValue;
+									this.calcInputValue(frame2Position, 
+									                    frame2Time,
+									                    inputData, 
+									                    signal2Sample, 
+									                    parentModulGenerator,
+									                    generatorBuffer);
+	
+									float leftValue = signal2Sample.getLeftValue();
+									
+									if (Float.isNaN(leftValue) == false)
+									{
+										signal2Left += (leftValue );
+									}
+									
+									float rightValue = signal2Sample.getRightValue();
+									
+									if (Float.isNaN(rightValue) == false)
+									{
+										signal2Right += (rightValue);
+									}
 								}
-								
-								float rightValue = signalSample.getRightValue();
-								
-								if (Float.isNaN(rightValue) == false)
-								{
-									signalRight += rightValue;
-								}
-
+//								// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//								this.calcInputValue(frame1Position, 
+//								                    frame1Time,
+//								                    inputData, 
+//								                    signal1Sample, 
+//								                    parentModulGenerator,
+//								                    generatorBuffer);
+//								{
+//									float leftValue = signal1Sample.getLeftValue();
+//									
+//									if (Float.isNaN(leftValue) == false)
+//									{
+//										signal1Left += (leftValue);
+//									}
+//									
+//									float rightValue = signal1Sample.getRightValue();
+//									
+//									if (Float.isNaN(rightValue) == false)
+//									{
+//										signal1Right += (rightValue);
+//									}
+//								}
 								// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-								long intgrFramePosition = framePosition - 1L;
-								float intgrFrameTime = intgrFramePosition / this.getSoundFrameRate();
-								
-								SoundSample intgrSoundSample = 
-//									this.generateFrameSample(framePosition - 1L,
-//									                         parentModulGenerator, 
-//									                         generatorBuffer);
-									generatorBuffer.calcFrameSample(intgrFramePosition, 
-									                                intgrFrameTime, 
-									                                parentModulGenerator);
-								
-								if (intgrSoundSample != null)
-								{
-									float intgrLeftValue = intgrSoundSample.getLeftValue();
-									
-									if (Float.isNaN(intgrLeftValue) == false)
-									{
-										signalLeft += intgrLeftValue / 44100.0F * 4.0F;
-									}
-									
-									float intgrRightValue = intgrSoundSample.getRightValue();
-									
-									if (Float.isNaN(intgrRightValue) == false)
-									{
-										signalLeft += intgrRightValue / 44100.0F * 4.0F;
-									}
-								}
-								
 								break;
 							}
 							default:
@@ -135,6 +146,36 @@ extends Generator
 			}
 		}
 		
+		//------------------------------------------------------------------------------------------
+		float scale = this.getSoundFrameRate(); //44100.0F * 1.0F;//4.0F;//
+		
+		float signalLeft = 0.0F;
+		float signalRight = 0.0F;
+		
+		SoundSample intgrSoundSample = 
+//			this.generateFrameSample(framePosition - 1L,
+//			                         parentModulGenerator, 
+//			                         generatorBuffer);
+			generatorBuffer.calcFrameSample(frame1Position, 
+			                                frame1Time, 
+			                                parentModulGenerator);
+		
+		if (intgrSoundSample != null)
+		{
+			float intgrLeftValue = intgrSoundSample.getLeftValue();
+			
+			if (Float.isNaN(intgrLeftValue) == false)
+			{
+				signalLeft = intgrLeftValue + signal2Left / scale;//(intgrLeftValue + (signal2Left - signal1Left));//(leftValue - intgrLeftValue);//intgrLeftValue ;// / 4.410F * 1.0F;
+			}
+			
+			float intgrRightValue = intgrSoundSample.getRightValue();
+			
+			if (Float.isNaN(intgrRightValue) == false)
+			{
+				signalRight = intgrRightValue + signal2Right / scale;//(intgrRightValue + (signal2Right - signal1Right));//(rightValue - intgrRightValue);//intgrRightValue;// / 4.410F * 1.0F;
+			}
+		}
 		//------------------------------------------------------------------------------------------
 		soundSample.setStereoValues(signalLeft, signalRight);
 		
