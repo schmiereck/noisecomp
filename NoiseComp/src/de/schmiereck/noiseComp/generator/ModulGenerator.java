@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
+import de.schmiereck.noiseComp.timeline.Timeline;
+
 /**
  * Manages a List of Generators and use them
  * to generate his output signal.
@@ -45,18 +47,22 @@ extends Generator
 	                                 ModulGenerator parentModulGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer)
 	{
-		ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)this.getGeneratorTypeData();
-		
-		OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
-		
 		if (this.checkIsInTime(frameTime) == true)
 		{	
+			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)this.getGeneratorTypeData();
+			
+			OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
+			
+			//ModulGenerator modulGenerator = (ModulGenerator)generatorBuffer;
+			
+			Timeline modulTimeline = generatorBuffer.getSubGeneratorTimeline(outputGenerator);
+			
 			long outputStartPos = (long)(this.getStartTimePos() * this.getSoundFrameRate());
 			
 			//outputGenerator.calculateSoundSample(framePosition, frameTime, sample);
 			SoundSample outputSample = outputGenerator.generateFrameSample(framePosition - outputStartPos, 
 			                                                               this,
-			                                                               generatorBuffer);
+			                                                               modulTimeline);
 			
 			sample.setValues(outputSample);
 		}

@@ -25,7 +25,7 @@ public class TimelineSelectEntryModel
 	 * Timeline.
 	 * <code>null</code> if the timeline is new generated.
 	 */
-	private de.schmiereck.noiseComp.timeline.Timeline timeline = null;
+	private Timeline timeline = null;
 	
 //	//----------------------------------------------------------------------------------------------
 //	/**

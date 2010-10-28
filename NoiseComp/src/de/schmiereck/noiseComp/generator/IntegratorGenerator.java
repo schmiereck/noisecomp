@@ -152,13 +152,30 @@ extends Generator
 		float signalLeft = 0.0F;
 		float signalRight = 0.0F;
 		
-		SoundSample intgrSoundSample = 
-//			this.generateFrameSample(framePosition - 1L,
-//			                         parentModulGenerator, 
-//			                         generatorBuffer);
-			generatorBuffer.calcFrameSample(frame1Position, 
-			                                frame1Time, 
-			                                parentModulGenerator);
+		SoundSample intgrSoundSample;
+		
+//		if (generatorBuffer != null)
+		{
+			//Von einer Funktion holen die den Buffer abfragt.
+			intgrSoundSample = 
+//				this.generateFrameSample(frame1Position,
+//				                         parentModulGenerator, 
+//				                         generatorBuffer);
+				generatorBuffer.calcFrameSample(frame1Position, 
+				                                frame1Time, 
+ 												parentModulGenerator);
+		}
+//		else
+//		{
+//			// TODO #82: Every generator needs a Timeline to calculates the Integrator effectively (and without StackOverflowError), also generator in SubModules.
+//			intgrSoundSample = new SoundSample();
+//			
+//			this.calculateSoundSample(frame1Position,
+//			                          frame1Time,
+//			                          intgrSoundSample,
+//			                          parentModulGenerator, 
+//			                          null);
+//		}
 		
 		if (intgrSoundSample != null)
 		{

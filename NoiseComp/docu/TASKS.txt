@@ -40,17 +40,10 @@ TODO:
 #63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
 #65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.
 #81:	IMPROVEMENT: Calc the min/max values of a timeline and use it to scale the waveform view.
-#82:	
+#83:	
 
 WORK:
 =====
-#61:	BUG: Sinus with decreasing frequence will may produce much to high frequences.
-		-> http://forums.creativecow.net/thread/227/13104 
-		Need integral of the input signalFrequency over time, this needs a working buffer system for generators.
-		Entweder ich integriere einen input-buffer mit integral-Funktion oder
-		ich lege fest, das ein Input von sinus immer nur von einem generator kommen kann (wie jetzt schon).
-		Ein Integral über mehrere Generatoren geht nicht, da mir der Wert des "vorherigen" fehlt.
-		bug 61 demo 1.noiseComp.xml
 
 DONE:
 =====
@@ -100,3 +93,12 @@ DONE:
 #62:	IMPROVEMENT: Because of BUG#61: Generate for every generator of a modul and the modules itself used for generate sample-sound playing a buffer hirarchy.
 		The buffer contains the samples and a integrated signal (maybe also a differetial) over time.
 		-> Add the IntegratorGenerator and remove time from calculating sinus signal.
+#61:	BUG: Sinus with decreasing frequence will may produce much to high frequences.
+		-> http://forums.creativecow.net/thread/227/13104 
+		Need integral of the input signalFrequency over time, this needs a working buffer system for generators.
+		Entweder ich integriere einen input-buffer mit integral-Funktion oder
+		ich lege fest, das ein Input von sinus immer nur von einem generator kommen kann (wie jetzt schon).
+		Ein Integral über mehrere Generatoren geht nicht, da mir der Wert des "vorherigen" fehlt.
+		bug 61 demo 1.noiseComp.xml
+#82:	BUG: Integrator sinus generatates noise signal if used in modul.
+		--> Every generator needs a Timeline to calculates the Integrator effectively (and without StackOverflowError), also generator in SubModules.

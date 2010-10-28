@@ -85,6 +85,9 @@ extends JComponent
 		this.setPreferredSize(dimension);
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	protected void paintComponent(Graphics g)
 	{
 		Rectangle drawHere = g.getClipBounds();

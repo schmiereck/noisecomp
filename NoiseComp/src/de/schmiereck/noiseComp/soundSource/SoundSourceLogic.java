@@ -1,5 +1,6 @@
 package de.schmiereck.noiseComp.soundSource;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -102,11 +103,13 @@ implements GeneratorChangeListenerInterface
 		
 		if (outputGenerator != null)
 		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			List<Timeline> inputTimelines = new Vector<Timeline>();
 			
 			this.createTimeline(inputTimelines, outputGenerator);
 			
-			// TODO Sort timelines.
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Sort timelines:
 
 			Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
 			
@@ -118,6 +121,7 @@ implements GeneratorChangeListenerInterface
 				
 				timelines.add(inputTimeline);
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		
 //		Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
@@ -131,8 +135,81 @@ implements GeneratorChangeListenerInterface
 //			
 //			timelines.add(timeline);
 //		}
+		
+		//------------------------------------------------------------------------------------------
+		this.printDebug1(this.outputTimeline, 0);
+		this.printDebug2(this.outputTimeline, 0);
+		this.printDebug3(this.outputTimeline, 0, false);
+		
 		//==========================================================================================
 		return timelines;
+	}
+
+	private void printDebug1(Timeline parentTimeline, int level)
+	{
+		for (int pos = 0; pos < level * 2; pos++)
+		{
+			System.out.print(' ');
+		}
+		System.out.println("DBG 1: " + parentTimeline);
+		
+		Iterator<InputData> inputsIterator = parentTimeline.getInputsIterator();
+		
+		if (inputsIterator != null)
+		{
+			while (inputsIterator.hasNext())
+			{
+				InputData inputData = inputsIterator.next();
+
+				Timeline inputTimeline = (Timeline)parentTimeline.getInputGeneratorBuffer(inputData);
+				
+				if (inputTimeline != null)
+				{
+					this.printDebug1(inputTimeline, level + 1);
+				}
+			}
+		}
+	}
+	private void printDebug2(Timeline parentTimeline, int level)
+	{
+		for (int pos = 0; pos < level * 2; pos++)
+		{
+			System.out.print(' ');
+		}
+		System.out.println("DBG 2: " + parentTimeline);
+		
+		Collection<Timeline> timelines = parentTimeline.getInputTimelines().values();
+		
+		for (Timeline timeline : timelines)
+		{
+			this.printDebug2(timeline, level + 1);
+		}
+	}
+
+
+	private void printDebug3(Timeline parentTimeline, int level, boolean isSub)
+	{
+		for (int pos = 0; pos < level * 2; pos++)
+		{
+			System.out.print(' ');
+		}
+		if (isSub == true)
+		{
+			System.out.print("SUB ");
+		}
+		System.out.println("DBG 3: " + parentTimeline);
+		
+		Collection<Timeline> timelines = parentTimeline.getInputTimelines().values();
+		
+		for (Timeline timeline : timelines)
+		{
+			this.printDebug3(timeline, level + 1, false);
+			
+			for (Timeline subTimeline : timeline.getSubGeneratorTimelines())
+			{
+				this.printDebug3(subTimeline, level + 2, true);
+			}
+		}
 	}
 
 	/**

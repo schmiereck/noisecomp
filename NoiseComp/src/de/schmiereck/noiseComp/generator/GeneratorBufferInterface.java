@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.generator;
 
+import de.schmiereck.noiseComp.timeline.Timeline;
+
 /**
  * <p>
  * 	Generator-Buffer Interface.
@@ -50,4 +52,12 @@ public interface GeneratorBufferInterface
 	 * 			<code>null</code> if there is no input-timeline found.
 	 */
 	GeneratorBufferInterface getInputGeneratorBuffer(InputData inputData);
+	
+	/**
+	 * @param generator
+	 * 			is the Sub-Generator.
+	 * @return 
+	 * 			returns Timeline of the {@link #subGeneratorTimelines} for given Sub-Generator.
+	 */
+	Timeline getSubGeneratorTimeline(Generator generator);
 }

@@ -106,7 +106,7 @@ extends Generator
 //		float sum = lastFignalFrequency + signalFrequency;
 //
 //		float value = (float)(Math.sin(sum * (2.0F * Math.PI)) * signalAmplitude * dt);
-		System.out.printf("s: %2.6f\n", value);
+//		System.out.printf("s: %2.6f\n", value);
 		soundSample.setStereoValues(value, value);
 		//==========================================================================================
 	}

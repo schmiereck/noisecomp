@@ -599,8 +599,17 @@ implements GeneratorInterface,
 	                              GeneratorBufferInterface generatorBuffer)
 	{
 		//==========================================================================================
-		GeneratorBufferInterface inputGeneratorBuffer = 
-			generatorBuffer.getInputGeneratorBuffer(inputData);
+		GeneratorBufferInterface inputGeneratorBuffer;
+		
+		if (generatorBuffer != null)
+		{
+			inputGeneratorBuffer = 
+				generatorBuffer.getInputGeneratorBuffer(inputData);
+		}
+		else
+		{
+			inputGeneratorBuffer = null;
+		}
 		
 		// Found Input-Generator-Buffer ?
 		if (inputGeneratorBuffer != null)
@@ -731,9 +740,17 @@ implements GeneratorInterface,
 //			{
 			//--------------------------------------------------------------------------------------
 			// Input-Buffer:
+			GeneratorBufferInterface inputGeneratorBuffer;
 			
-			GeneratorBufferInterface inputGeneratorBuffer = 
-				generatorBuffer.getInputGeneratorBuffer(inputData);
+			if (generatorBuffer != null)
+			{
+				inputGeneratorBuffer = 
+					generatorBuffer.getInputGeneratorBuffer(inputData);
+			}
+			else
+			{
+				inputGeneratorBuffer = null;
+			}
 			
 			// Found Input-Generator-Buffer ?
 			if (inputGeneratorBuffer != null)
@@ -898,8 +915,17 @@ implements GeneratorInterface,
 		float value;
 
 		//------------------------------------------------------------------------------------------
-		GeneratorBufferInterface inputGeneratorBuffer = 
-			generatorBuffer.getInputGeneratorBuffer(inputData);
+		GeneratorBufferInterface inputGeneratorBuffer;
+		
+		if (generatorBuffer != null)
+		{
+			inputGeneratorBuffer = 
+				generatorBuffer.getInputGeneratorBuffer(inputData);
+		}
+		else
+		{
+			inputGeneratorBuffer = null;
+		}
 		
 		// Found Input-Generator-Buffer ?
 		if (inputGeneratorBuffer != null)
@@ -936,7 +962,14 @@ implements GeneratorInterface,
 				                                                             parentModulGenerator, 
 				                                                             generatorBuffer);
 				
-				value = frameSample.getMonoValue();
+				if (frameSample != null)
+				{
+					value = frameSample.getMonoValue();
+				}
+				else
+				{
+					value = Float.NaN; // this.getInputDefaultValueByInputType(inputType);
+				}
 			}
 			else
 			{

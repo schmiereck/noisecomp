@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.timeline;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -64,6 +65,11 @@ implements GeneratorBufferInterface,
 	 * Buffered Sound Samples between start and end output of {@link #generator}.
 	 */
 	private SoundSample[] bufSoundSamples = new SoundSample[0];
+	
+	/**
+	 * Sub-Modul Generator Timelines.
+	 */
+	private Map<Generator, Timeline> subGeneratorTimelines = new HashMap<Generator, Timeline>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -566,7 +572,19 @@ implements GeneratorBufferInterface,
 	@Override
 	public GeneratorBufferInterface getInputGeneratorBuffer(InputData inputData)
 	{
-		return this.inputTimelines.get(inputData);
+		GeneratorBufferInterface inputTimeline = this.inputTimelines.get(inputData);
+		
+		if (inputTimeline == null)
+		{
+			Generator inputGenerator = inputData.getInputGenerator();
+			
+			if (inputGenerator instanceof ModulGenerator)
+			{
+				inputTimeline = this.subGeneratorTimelines.get(inputGenerator);
+			}
+		}
+		
+		return inputTimeline;
 	}
 
 	/* (non-Javadoc)
@@ -655,6 +673,56 @@ implements GeneratorBufferInterface,
 	public Timeline searchInputTimeline(InputData inputData)
 	{
 		return this.inputTimelines.get(inputData);
+	}
+
+	/**
+	 * @param generator
+	 * 			is the Sub-Generator.
+	 * @return 
+	 * 			returns Timeline of the {@link #subGeneratorTimelines} for given Sub-Generator.
+	 */
+	public Timeline getSubGeneratorTimeline(Generator generator)
+	{
+		return this.subGeneratorTimelines.get(generator);
+	}
+
+	/**
+	 * @param subGenerator
+	 * 			to set {@link #subGeneratorTimelines}.
+	 * @param subTimeline
+	 * 			to set {@link #subGeneratorTimelines}.
+	 */
+	public void addSubGeneratorTimeline(Generator subGenerator, Timeline subTimeline)
+	{
+		this.subGeneratorTimelines.put(subGenerator, subTimeline);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #subGeneratorTimelines} values.
+	 */
+	public Collection<Timeline> getSubGeneratorTimelines()
+	{
+		return this.subGeneratorTimelines.values();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		String generatorStr;
+		
+		if (this.generator != null)
+		{
+			generatorStr = "generator.name:" + this.generator.getName();
+		}
+		else
+		{
+			generatorStr = "generator:null";
+		}
+		return super.toString() + "{" + generatorStr + "}";
 	}
 	
 }

@@ -11,6 +11,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
@@ -39,9 +40,9 @@ public class TimelineManagerLogic
 	private final ModulGeneratorTypeData mainModulGeneratorTypeData;
 	
 	/**
-	 * Generator Timelines.
+	 * Main-Modul Generator Timelines.
 	 */
-	private Map<Generator, Timeline> generatorTimelines = new HashMap<Generator, Timeline>();
+	private Map<Generator, Timeline> mainGeneratorTimelines = new HashMap<Generator, Timeline>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -63,6 +64,8 @@ public class TimelineManagerLogic
 	 * 
 	 * @param generator
 	 * 			is the generator
+	 * @param isSubModuleGenerator
+	 * 			<code>true</code> if the generator is a input of a sub module.
 	 * @return
 	 * 			the timeline.
 	 */
@@ -72,7 +75,12 @@ public class TimelineManagerLogic
 		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
 		//==========================================================================================
-		Timeline timeline = this.makeTimeline(generator);
+		Timeline timeline;
+		
+		//------------------------------------------------------------------------------------------
+		// Search or create Main-Modul Timeline:
+		
+		timeline = this.makeMainTimeline(generator);
 		
 		//------------------------------------------------------------------------------------------
 //		if (OutputGenerator.class.getName().equals(generator.getGeneratorTypeData().getGeneratorTypeClassName())
@@ -89,6 +97,22 @@ public class TimelineManagerLogic
 			soundSourceLogic.setOutputGenerator(generator);
 		}
 		//------------------------------------------------------------------------------------------
+		this.createTimelineInputs(generator, timeline);
+		
+		//==========================================================================================
+		return timeline;
+	}
+
+	/**
+	 * @param generator
+	 * 			is the generator
+	 * @param timeline
+	 * 			is the timeline.
+	 */
+	private void createTimelineInputs(Generator generator, 
+	                                  Timeline timeline)
+	{
+		//==========================================================================================
 		Iterator<InputData> inputsIterator = generator.getInputsIterator();
 		
 		if (inputsIterator != null)
@@ -101,40 +125,98 @@ public class TimelineManagerLogic
 				
 				if (inputGenerator != null)
 				{
-//					Timeline inputTimeline;
-//					
-//					// Modul-Generator without inputs? TODO Only the count of inputs with other generators are interesting, const. value inputs not.
-//					if ((inputGenerator instanceof ModulGenerator) &&
-//						(inputGenerator.getInputsCount() == 0))
-//					{
-//						ModulGenerator modulGenerator = (ModulGenerator)inputGenerator;
-//						
-//						inputTimeline = this.moduleGenerators.get(modulGenerator);
-//						
-//						if (inputTimeline == null)
-//						{
-//							inputTimeline = this.makeTimeline(inputGenerator);
-//							
-//							this.moduleGenerators.put(modulGenerator, inputTimeline);
-//						}
-//					}
-//					else
-//					{
-//						inputTimeline = this.createTimeline(inputGenerator);
-//					}
+					Timeline inputTimeline = this.addInputTimeline(timeline, inputData, inputGenerator);
+				}
+			}
+		}
+		
+		// Modul-Generator?
+		if ((generator instanceof ModulGenerator))
+		{
+			ModulGenerator modulGenerator = (ModulGenerator)generator;
+			
+			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)modulGenerator.getGeneratorTypeData();
+			
+			OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
+			
+			this.createSubTimeline(timeline, outputGenerator);
+			//this.createSubTimelineInputs(inputGenerator, timeline);
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * @param modulTimeline
+	 * 			is the Modul-Timeline.
+	 * @param generator
+	 * 			is the Generator.
+	 * @return
+	 * 			the Timeline.
+	 */
+	private Timeline createSubTimeline(Timeline modulTimeline, Generator generator)
+	{
+		//==========================================================================================
+		// Search or create Sub-Modul Timeline for given Modul-Timeline:
+		
+		Timeline subTimeline = this.makeSubTimeline(modulTimeline, generator);
+		
+		//------------------------------------------------------------------------------------------
+		this.createSubTimelineInputs(modulTimeline, generator);
+		
+		//==========================================================================================
+		return subTimeline;
+	}
+
+	/**
+	 * @param modulTimeline
+	 * 			is the Modul-Timeline.
+	 * @param generator
+	 * 			is the generator
+	 */
+	private void createSubTimelineInputs(Timeline modulTimeline,
+	                                     Generator generator)
+	{
+		//==========================================================================================
+		Iterator<InputData> inputsIterator = generator.getInputsIterator();
+		
+		if (inputsIterator != null)
+		{
+			while (inputsIterator.hasNext())
+			{
+				InputData inputData = (InputData)inputsIterator.next();
+				
+				Generator inputGenerator = inputData.getInputGenerator();
+				
+				if (inputGenerator != null)
+				{
+					//------------------------------------------------------------------------------
+					Timeline inputTimeline = this.createSubTimeline(modulTimeline, inputGenerator);
 					
-					this.addInputTimeline(timeline, inputData, inputGenerator);
+					// Modul-Generator?
+					if ((inputGenerator instanceof ModulGenerator))
+					{
+						ModulGenerator modulGenerator = (ModulGenerator)inputGenerator;
+						
+						ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)modulGenerator.getGeneratorTypeData();
+						
+						OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
+						
+						this.createSubTimeline(inputTimeline, outputGenerator);
+					}
+					//------------------------------------------------------------------------------
+					this.addInputSubTimeline(modulTimeline, inputTimeline, inputData, generator);
+					
+					//------------------------------------------------------------------------------
 				}
 			}
 		}
 		//==========================================================================================
-		return timeline;
 	}
 
 	/**
 	 * Add the given Input Data for the given input generator
 	 * to the given timeline
-	 * if the coresponding inputTimeline for the given input generator is managed in {@link #generatorTimelines}.
+	 * if the coresponding inputTimeline for the given input generator is managed in {@link #mainGeneratorTimelines}.
 	 * 
 	 * @param timeline
 	 * 			is the timeline.
@@ -142,10 +224,12 @@ public class TimelineManagerLogic
 	 * 			is the Input Data.
 	 * @param inputGenerator
 	 * 			is the input generator.
+	 * @return
+	 * 			the inputTimeline.
 	 */
-	private void addInputTimeline(Timeline timeline, InputData inputData, Generator inputGenerator)
+	private Timeline addInputTimeline(Timeline timeline, InputData inputData, Generator inputGenerator)
 	{
-		Timeline inputTimeline = this.generatorTimelines.get(inputGenerator);
+		Timeline inputTimeline = this.mainGeneratorTimelines.get(inputGenerator);
 		
 		if (inputTimeline != null)
 		{
@@ -153,20 +237,54 @@ public class TimelineManagerLogic
 			
 			inputTimeline.addOutputTimeline(inputData, timeline);
 		}
+		
+		return inputTimeline;
 	}
 
 	/**
-	 * @param generator
-	 * 			is the genrator.
-	 * @return
-	 * 			the timeline.
+	 * Add the given Input Data for the given input generator
+	 * to the given timeline
+	 * if the coresponding inputTimeline for the given input generator is managed in {@link #mainGeneratorTimelines}.
+	 * 
+	 * @param modulTimeline
+	 * 			is the Modul-Timeline.
+	 * @param timeline
+	 * 			is the timeline.
+	 * @param inputData
+	 * 			is the Input Data.
+	 * @param inputGenerator
+	 * 			is the input generator.
 	 */
-	private Timeline makeTimeline(Generator generator)
+	private void addInputSubTimeline(Timeline modulTimeline, Timeline timeline, InputData inputData, Generator inputGenerator)
+	{
+		Timeline inputTimeline = modulTimeline.getSubGeneratorTimeline(inputGenerator);
+		
+		if (inputTimeline != null)
+		{
+//			timeline.addInputTimeline(inputData, inputTimeline);
+//			
+//			inputTimeline.addOutputTimeline(inputData, timeline);
+
+			inputTimeline.addInputTimeline(inputData, timeline);
+			
+			timeline.addOutputTimeline(inputData, inputTimeline);
+		}
+	}
+
+	/**
+	 * Search or create Main-Modul Timeline.
+	 * 
+	 * @param generator
+	 * 			is the Generator.
+	 * @return
+	 * 			the Timeline.
+	 */
+	private Timeline makeMainTimeline(Generator generator)
 	{
 		//==========================================================================================
 		Timeline timeline;
 		
-		timeline = this.generatorTimelines.get(generator);
+		timeline = this.mainGeneratorTimelines.get(generator);
 		
 		if (timeline == null)
 		{
@@ -174,10 +292,38 @@ public class TimelineManagerLogic
 		
 			timeline.setGenerator(generator);
 			
-			this.generatorTimelines.put(generator, timeline);
+			this.mainGeneratorTimelines.put(generator, timeline);
 		}
 		
-//		this.generators.put(generator, timeline);
+		//==========================================================================================
+		return timeline;
+	}
+
+	/**
+	 * Search or create Sub-Modul Timeline.
+	 * 
+	 * @param modulTimeline
+	 * 			is the Modul-Timeline.
+	 * @param generator
+	 * 			is the Generator.
+	 * @return
+	 * 			the Timeline.
+	 */
+	private Timeline makeSubTimeline(Timeline modulTimeline, Generator generator)
+	{
+		//==========================================================================================
+		Timeline timeline;
+		
+		timeline = modulTimeline.getSubGeneratorTimeline(generator);
+		
+		if (timeline == null)
+		{
+			timeline = new Timeline();
+		
+			timeline.setGenerator(generator);
+			
+			modulTimeline.addSubGeneratorTimeline(generator, timeline);
+		}
 		
 		//==========================================================================================
 		return timeline;
@@ -294,12 +440,12 @@ public class TimelineManagerLogic
 		
 		this.mainModulGeneratorTypeData.removeGenerator(timelineGenerator);
 		
-		this.generatorTimelines.remove(timelineGenerator);
+		this.mainGeneratorTimelines.remove(timelineGenerator);
 		
 		//------------------------------------------------------------------------------------------
 		// remove all inputs from all other timelines:
 		
-		for (Timeline timeline : this.generatorTimelines.values())
+		for (Timeline timeline : this.mainGeneratorTimelines.values())
 		{
 			timeline.removeInputTimeline(removedTimeline);
 		}
@@ -445,11 +591,11 @@ public class TimelineManagerLogic
 
 	/**
 	 * @return 
-	 * 			returns Iterator of {@link #generatorTimelines} values.
+	 * 			returns Iterator of {@link #mainGeneratorTimelines} values.
 	 */
 	public Iterator<Timeline> getTimelinesIterator()
 	{
-		return this.generatorTimelines.values().iterator();
+		return this.mainGeneratorTimelines.values().iterator();
 	}
 
 	
