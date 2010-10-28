@@ -667,10 +667,14 @@ implements GeneratorInterface,
 					// Found a modul input type ?
 					if (modulInputTypeData != null)
 					{
+						boolean foundModulInput;
+						
 						if (parentModulGenerator != null)
 						{	
 							// Use Value from this input:
 		
+							foundModulInput = false;
+
 							// ALTERNATIVE: irgenendwie an den ModulGenerator drannkommen, in dem dieser Generator benutzt wird und dann in dem nach dem input suchen.
 							//InputData modulInputData = this.getParentModulGenerator().searchInputByTypeName(inputModulInput);
 							Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
@@ -683,18 +687,38 @@ implements GeneratorInterface,
 									
 									if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
 									{
-										parentModulGenerator.calcInputValue(framePosition, 
-										                                    frameTime,
-										                                    modulInputData, 
-										                                    signal, 
-										                                    parentModulGenerator,
-										                                    generatorBuffer);
+//										GeneratorBufferInterface inputGeneratorBuffer2 = 
+//											generatorBuffer.getInputGeneratorBuffer(inputData);
+										
+										GeneratorBufferInterface modulInputGeneratorBuffer = 
+											inputGeneratorBuffer.getInputGeneratorBuffer(modulInputData);
+										
+										SoundSample inputSoundSample = 
+											modulInputGeneratorBuffer.calcFrameSample(framePosition, 
+											                                          frameTime,
+											                                          parentModulGenerator);
+										
+										signal.setSignals(inputSoundSample);
+										
+//										parentModulGenerator.calcInputValue(framePosition, 
+//										                                    frameTime,
+//										                                    modulInputData, 
+//										                                    signal, 
+//										                                    parentModulGenerator,
+//										                                    generatorBuffer);
+										
+										foundModulInput = true;
 										break;
 									}
 								}
 							}
 						}
 						else
+						{
+							foundModulInput = false;
+						}
+						
+						if (foundModulInput == false)
 						{
 							signal.setMonoValue(modulInputTypeData.getDefaultValue());
 						}
@@ -801,10 +825,14 @@ implements GeneratorInterface,
 						// Found a modul input type ?
 						if (modulInputTypeData != null)
 						{
+							boolean foundModulInput;
+							
 							if (parentModulGenerator != null)
 							{
 								// Use Value from this input:
 									
+								foundModulInput = false;
+
 								// ALTERNATIVE: irgenendwie an den ModulGenerator drannkommen, in dem dieser Generator benutzt wird und dann in dem nach dem input suchen.
 								//InputData modulInputData = this.getParentModulGenerator().searchInputByTypeName(inputModulInput);
 								Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
@@ -833,12 +861,19 @@ implements GeneratorInterface,
 											                                     signal, 
 											                                     parentModulGenerator,
 											                                     generatorBuffer);
+											
+											foundModulInput = true;
 											break;
 										}
 									}
 								}
 							}
 							else
+							{
+								foundModulInput = false;
+							}
+							
+							if (foundModulInput == false)
 							{
 								signal.setMonoValue(modulInputTypeData.getDefaultValue());
 							}
@@ -1000,10 +1035,14 @@ implements GeneratorInterface,
 					// Found a modul input type ?
 					if (modulInputTypeData != null)
 					{
+						boolean foundModulInput;
+						
 						if (parentModulGenerator != null)
 						{
 							// Use Value from this input:
 		
+							foundModulInput = false;
+
 							Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
 							
 							value = 0.0F;
@@ -1021,6 +1060,8 @@ implements GeneratorInterface,
 										                                                modulInputData, 
 										                                                parentModulGenerator,
 										                                                generatorBuffer);
+										
+										foundModulInput = true;
 										break;
 									}
 								}

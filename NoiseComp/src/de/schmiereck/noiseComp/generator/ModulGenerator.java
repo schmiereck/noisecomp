@@ -60,9 +60,10 @@ extends Generator
 			long outputStartPos = (long)(this.getStartTimePos() * this.getSoundFrameRate());
 			
 			//outputGenerator.calculateSoundSample(framePosition, frameTime, sample);
-			SoundSample outputSample = outputGenerator.generateFrameSample(framePosition - outputStartPos, 
-			                                                               this,
-			                                                               modulTimeline);
+			SoundSample outputSample = 
+				outputGenerator.generateFrameSample(framePosition - outputStartPos, 
+				                                    this,
+				                                    modulTimeline);
 			
 			sample.setValues(outputSample);
 		}

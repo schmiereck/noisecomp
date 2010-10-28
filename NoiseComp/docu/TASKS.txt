@@ -41,10 +41,14 @@ TODO:
 #81:	IMPROVEMENT: Calc the min/max values of a timeline and use it to scale the waveform view.
 #83:	IMPROVEMENT: Make width of TimelineGeneratorRule view bigger.
 #84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.
-#86:
+#86:	BUG: Update Modul Input-type default Value do not refresh timelines.
+#88:
 
 WORK:
 =====
+#87:	BUG: Modul Input-type default Value are not used in second Module.
+		-> base drum 2.noiseComp.xml
+		-> base drum 3.noiseComp.xml
 
 DONE:
 =====
