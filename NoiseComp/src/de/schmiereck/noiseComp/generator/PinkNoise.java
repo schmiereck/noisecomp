@@ -241,7 +241,7 @@ public class PinkNoise
 	{
 		//==========================================================================================
 		double a = 1.0D;
-		for (int i=0; i < this.poles; i++) 
+		for (int i = 0; i < this.poles; i++) 
 		{
 			a = (i - this.alpha/2.0D) * a / (i+1.0D);
 			this.multipliers[i] = a;

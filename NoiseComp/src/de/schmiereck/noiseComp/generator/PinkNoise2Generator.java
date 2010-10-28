@@ -84,74 +84,61 @@ extends Generator
 						{
 							case INPUT_TYPE_MEAN:
 							{
-								float value;
-//								try
-//								{
-									value = this.calcInputMonoValue(framePosition, 
-									                                frameTime,
-									                                inputData, 
-									                                parentModulGenerator,
-									                                generatorBuffer);
-									
+								float value = 
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer);
+
+								if (Float.isNaN(value) == false)
+								{
 									mean += value;
-//								}
-//								catch (NoInputSignalException ex)
-//								{
-//								}
-								break;
+								}
 							}
 							case INPUT_TYPE_VARIANCE:
 							{
-								float value;
-//								try
-//								{
-								value = this.calcInputMonoValue(framePosition, 
-								                                frameTime,
-								                                inputData, 
-								                                parentModulGenerator,
-								                                generatorBuffer);
+								float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer);
 									
+								if (Float.isNaN(value) == false)
+								{
 									variance += value;
-//								}
-//								catch (NoInputSignalException ex)
-//								{
-//								}
+								}
 								break;
 							}
 							case INPUT_TYPE_ALPHA:
 							{
-								float value;
-//								try
-//								{
-								value = this.calcInputMonoValue(framePosition, 
-								                                frameTime,
-								                                inputData, 
-								                                parentModulGenerator,
-								                                generatorBuffer);
+								float value = 
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer);
 									
+								if (Float.isNaN(value) == false)
+								{
 									alpha += value;
-//								}
-//								catch (NoInputSignalException ex)
-//								{
-//								}
+								}
 								break;
 							}
 							case INPUT_TYPE_POLES:
 							{
-								float value;
-//								try
-//								{
-								value = this.calcInputMonoValue(framePosition, 
-								                                frameTime,
-								                                inputData, 
-								                                parentModulGenerator,
-								                                generatorBuffer);
+								float value =
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer);
 									
+								if (Float.isNaN(value) == false)
+								{
 									poles += (int)Math.round(value);
-//								}
-//								catch (NoInputSignalException ex)
-//								{
-//								}
+								}
 								break;
 							}
 							default:
