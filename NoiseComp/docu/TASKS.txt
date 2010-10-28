@@ -41,7 +41,6 @@ TODO:
 #81:	IMPROVEMENT: Calc the min/max values of a timeline and use it to scale the waveform view.
 #83:	IMPROVEMENT: Make width of TimelineGeneratorRule view bigger.
 #84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.
-#85:	IMPROVEMENT: Add spezial frequenz input to SinusGenerator to set not changing frequenzes direcly (without pre IntegratorGenerator).
 #86:
 
 WORK:
@@ -105,3 +104,4 @@ DONE:
 #82:	BUG: Integrator sinus generatates noise signal if used in modul.
 		--> Every generator needs a Timeline to calculates the Integrator effectively (and without StackOverflowError), also generator in SubModules.
 #65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.
+#85:	IMPROVEMENT: Add special frequenz input to SinusGenerator to set not changing frequenzes direcly (without pre IntegratorGenerator).

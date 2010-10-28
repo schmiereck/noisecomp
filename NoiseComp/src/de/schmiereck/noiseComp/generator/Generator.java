@@ -799,41 +799,48 @@ implements GeneratorInterface,
 						InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
 	
 						// Found a modul input type ?
-						if ((modulInputTypeData != null) && (parentModulGenerator != null))
+						if (modulInputTypeData != null)
 						{
-							// Use Value from this input:
-	
-							// ALTERNATIVE: irgenendwie an den ModulGenerator drannkommen, in dem dieser Generator benutzt wird und dann in dem nach dem input suchen.
-							//InputData modulInputData = this.getParentModulGenerator().searchInputByTypeName(inputModulInput);
-							Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
-							
-							if (modulInputsIterator != null)
+							if (parentModulGenerator != null)
 							{
-								while (modulInputsIterator.hasNext())
-								{
-									InputData modulInputData = modulInputsIterator.next();
+								// Use Value from this input:
 									
-									if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
+								// ALTERNATIVE: irgenendwie an den ModulGenerator drannkommen, in dem dieser Generator benutzt wird und dann in dem nach dem input suchen.
+								//InputData modulInputData = this.getParentModulGenerator().searchInputByTypeName(inputModulInput);
+								Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
+								
+								if (modulInputsIterator != null)
+								{
+									while (modulInputsIterator.hasNext())
 									{
-	//									GeneratorBufferInterface modulInputGeneratorBuffer = 
-	//										generatorBuffer.getInputGeneratorBuffer(modulInputData);
-	//									
-	//									SoundSample inputSoundSample = 
-	//										modulInputGeneratorBuffer.calcFrameSample(framePosition, 
-	//										                                          frameTime,
-	//										                                          parentModulGenerator);
-	//									
-	//									signal.setSignals(inputSoundSample);
+										InputData modulInputData = modulInputsIterator.next();
 										
-										parentModulGenerator.calcInputSignal(framePosition, 
-										                                     frameTime,
-										                                     modulInputData, 
-										                                     signal, 
-										                                     parentModulGenerator,
-										                                     generatorBuffer);
-										break;
+										if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
+										{
+		//									GeneratorBufferInterface modulInputGeneratorBuffer = 
+		//										generatorBuffer.getInputGeneratorBuffer(modulInputData);
+		//									
+		//									SoundSample inputSoundSample = 
+		//										modulInputGeneratorBuffer.calcFrameSample(framePosition, 
+		//										                                          frameTime,
+		//										                                          parentModulGenerator);
+		//									
+		//									signal.setSignals(inputSoundSample);
+											
+											parentModulGenerator.calcInputSignal(framePosition, 
+											                                     frameTime,
+											                                     modulInputData, 
+											                                     signal, 
+											                                     parentModulGenerator,
+											                                     generatorBuffer);
+											break;
+										}
 									}
 								}
+							}
+							else
+							{
+								signal.setMonoValue(modulInputTypeData.getDefaultValue());
 							}
 						}
 						else
@@ -991,30 +998,37 @@ implements GeneratorInterface,
 					InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
 	
 					// Found a modul input type ?
-					if ((modulInputTypeData != null) && (parentModulGenerator != null))
+					if (modulInputTypeData != null)
 					{
-						// Use Value from this input:
-	
-						Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
-						
-						value = 0.0F;
-						
-						if (modulInputsIterator != null)
+						if (parentModulGenerator != null)
 						{
-							while (modulInputsIterator.hasNext())
+							// Use Value from this input:
+		
+							Iterator<InputData> modulInputsIterator = parentModulGenerator.getInputsIterator();
+							
+							value = 0.0F;
+							
+							if (modulInputsIterator != null)
 							{
-								InputData modulInputData = modulInputsIterator.next();
-								
-								if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
+								while (modulInputsIterator.hasNext())
 								{
-									value = parentModulGenerator.calcInputMonoValue(framePosition, 
-									                                                frameTime,
-									                                                modulInputData, 
-									                                                parentModulGenerator,
-									                                                generatorBuffer);
-									break;
+									InputData modulInputData = modulInputsIterator.next();
+									
+									if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
+									{
+										value = parentModulGenerator.calcInputMonoValue(framePosition, 
+										                                                frameTime,
+										                                                modulInputData, 
+										                                                parentModulGenerator,
+										                                                generatorBuffer);
+										break;
+									}
 								}
 							}
+						}
+						else
+						{
+							value = modulInputTypeData.getDefaultValue();
 						}
 					}
 					else

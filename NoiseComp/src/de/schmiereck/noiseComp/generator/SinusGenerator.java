@@ -8,14 +8,18 @@ package de.schmiereck.noiseComp.generator;
  * Frequenz des generierten Sinus-Signals.
  *	 Frequenz  Note  Instrument  
  *	 16.5Hz  C2  Taste C im 32' der Orgel 
- *	 33Hz  C1  C-Saite bei f�nfseitigen Kontrab�ssen 
+ *	 33Hz  C1  C-Saite bei fünfseitigen Kontrabässen 
  *	 66Hz  C  C-Saite der Violoncelli 
  *	 131Hz  c  C-Saite der Bratschen 
  *	 262Hz  c'  tiefstes c der Geigen 
- *	 524Hz  c''  hohes c der Ten�re 
+ *	 524Hz  c''  hohes c der Tenöre 
  *	 1047Hz  c'''  hohes c der Soprane 
- *	 2093Hz  c4  h�chstes c der Geigen 
- *	 4185Hz  c5  h�chstes c der Piccolo-Fl�ten
+ *	 2093Hz  c4  höchstes c der Geigen 
+ *	 4185Hz  c5  höchstes c der Piccolo-Flöten
+ *
+ * http://forums.creativecow.net/thread/227/13104
+ * needs integral of the signalFrequency over time
+ * this needs a working buffer system for generators
  * 
  * @author smk
  * @version 21.01.2004
@@ -29,6 +33,7 @@ extends Generator
 	public static final int	INPUT_TYPE_FREQ		= 1;
 	public static final int	INPUT_TYPE_AMPL		= 2;
 	public static final int	INPUT_TYPE_SHIFT	= 3;
+	public static final int	INPUT_TYPE_INPUT	= 4;
 	
 	//**********************************************************************************************
 	// Fields:
@@ -56,9 +61,7 @@ extends Generator
 //		float dt = (1.0F / this.getSoundFrameRate());
 //		
 //		//==========================================================================================
-//		float lastFignalFrequency = 
-//			this.calcInputMonoValue(framePosition - dt, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), parentModulGenerator);
-		
+		// Sinus Frequenz of the Sinus-Signal.
 		float signalFrequency = 
 			this.calcInputMonoValue(framePosition, 
                                     frameTime,
@@ -67,47 +70,64 @@ extends Generator
 			                        generatorBuffer);
 
 		//------------------------------------------------------------------------------------------
-		// Amplitude des gerade generierten Sinus-Siganls.
-		float signalAmplitude = this.calcInputMonoValue(framePosition, 
-		                                                frameTime,
-		                                                this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
-		                                                parentModulGenerator,
-		                                                generatorBuffer);
+		// Amplitude of the Sinus-Signal.
+		float signalAmplitude = 
+			this.calcInputMonoValue(framePosition, 
+			                        frameTime,
+			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
+			                        parentModulGenerator,
+			                        generatorBuffer);
 		
 		//------------------------------------------------------------------------------------------
-		// Versatz des Sinus-Siganls um eine Schwingung.
-		float signalShift = this.calcInputMonoValue(framePosition, 
-		                                            frameTime,
-		                                            this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), 
-		                                            parentModulGenerator,
-		                                            generatorBuffer);
+		// Shift of the Sinus-Signal.
+		float signalShift = 
+			this.calcInputMonoValue(framePosition, 
+			                        frameTime,
+			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), 
+			                        parentModulGenerator,
+			                        generatorBuffer);
 		
+		//------------------------------------------------------------------------------------------
+		// Integrated Input of the Sinus-Signal.
+		float signalInput = 
+			this.calcInputMonoValue(framePosition, 
+                                    frameTime,
+			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_INPUT), 
+			                        parentModulGenerator,
+			                        generatorBuffer);
+
 		//------------------------------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
 		
-		// Länge einer Sinus-Periode in Frames.
-//		float periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
-//		float periodPosition = (float)(framePosition / periodLengthInFrames);
-		float periodPosition = signalFrequency;
+		float periodPosition;
 		
-		float s = (float)(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI));
+		if (Float.isNaN(signalInput) == false)
+		{
+			periodPosition = signalInput;
+		}
+		else
+		{
+			// Länge einer Sinus-Periode in Frames.
+			float periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
+			periodPosition = (float)(framePosition / periodLengthInFrames);
+		}
 		
-		float value = (float)(Math.sin(s) * signalAmplitude);
-//		float value = (float)(Math.sin(s * (periodPosition/periodLengthInFrames)) * signalAmplitude);
-//		float value = (float)(signalFrequency * Math.sin(frameTime*this.getSoundFrameRate()) * Math.cos(frameTime*this.getSoundFrameRate()) * signalAmplitude);
+		float value;
 		
-//		float value = ((float)Math.sin(signalFrequency * ((2.0F + signalShift) * Math.PI))) * signalAmplitude;
+		if (Float.isNaN(periodPosition) == false)
+		{
+			float s = (float)(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI));
+			
+			value = (float)(Math.sin(s) * signalAmplitude);
+
+			soundSample.setStereoValues(value, value);
+		}
+		else
+		{
+			soundSample.setNaN();
+		}
 		
-		// TODO http://forums.creativecow.net/thread/227/13104
-		// TODO needs integral of the signalFrequency over time
-		// TODO this needs a working buffer system for generators
-		
-//		float sum = lastFignalFrequency + signalFrequency;
-//
-//		float value = (float)(Math.sin(sum * (2.0F * Math.PI)) * signalAmplitude * dt);
-//		System.out.printf("s: %2.6f\n", value);
-		soundSample.setStereoValues(value, value);
 		//==========================================================================================
 	}
 	
@@ -120,7 +140,7 @@ extends Generator
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SinusGenerator.class, "Sinus", "Generates a sinus signal with a specified frequency and amplidude.");
 		
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the signal in oscillations per second.");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, null, "Frequency of the signal in oscillations per second (alternativ to signalInput).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
@@ -128,7 +148,11 @@ extends Generator
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the sinus between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", -1, 1, Float.valueOf(0.0F), "The offset of the sinus between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_INPUT, "signalInput", -1, -1, null, "Input of the sinus signal (alternativ to signalFrequency).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

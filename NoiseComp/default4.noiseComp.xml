@@ -94,14 +94,15 @@
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.SinusGenerator]]></generatorClassName>
 			<name><![CDATA[Sinus]]></name>
-			<description><![CDATA[Generates a sinus signal with a specified frequency and amplidude.]]></description>
+			<description><![CDATA[Generates a sinus signal with a specified frequency and
+				amplidude.]]></description>
 			<inputTypes>
 				<inputType>
 					<name><![CDATA[signalFrequency]]></name>
 					<type><![CDATA[1]]></type>
 					<countMin><![CDATA[1]]></countMin>
 					<countMax><![CDATA[1]]></countMax>
-					<defaultValue><![CDATA[1.0]]></defaultValue>
+					<defaultValue />
 					<description><![CDATA[Frequency of the signal in oscillations per second.]]></description>
 				</inputType>
 				<inputType>
@@ -119,6 +120,14 @@
 					<countMax><![CDATA[0]]></countMax>
 					<defaultValue><![CDATA[0.0]]></defaultValue>
 					<description><![CDATA[The offset of the sinus between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[signalInput]]></name>
+					<type><![CDATA[4]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[Input of the sinus signal (alternativ to signalFrequency).]]></description>
 				</inputType>
 			</inputTypes>
 		</generatorType>
