@@ -38,9 +38,11 @@ TODO:
 #59:	BUG: Seems to be a bug, if you increase the frequence of an sinus after decreasing the frequency.
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
 #63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
-#65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.
 #81:	IMPROVEMENT: Calc the min/max values of a timeline and use it to scale the waveform view.
-#83:	
+#83:	IMPROVEMENT: Make width of TimelineGeneratorRule view bigger.
+#84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.
+#85:	IMPROVEMENT: Add spezial frequenz input to SinusGenerator to set not changing frequenzes direcly (without pre IntegratorGenerator).
+#86:
 
 WORK:
 =====
@@ -102,3 +104,4 @@ DONE:
 		bug 61 demo 1.noiseComp.xml
 #82:	BUG: Integrator sinus generatates noise signal if used in modul.
 		--> Every generator needs a Timeline to calculates the Integrator effectively (and without StackOverflowError), also generator in SubModules.
+#65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.

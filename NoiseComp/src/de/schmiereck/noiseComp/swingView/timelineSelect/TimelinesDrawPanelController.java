@@ -3,14 +3,13 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
-import java.util.Iterator;
 import java.util.List;
 
-import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
+import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
 
 /**
  * <p>
@@ -20,7 +19,8 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @author smk
  * @version <p>07.09.2010:	created, smk</p>
  */
-public class TimelinesDrawPanelController
+public class TimelinesDrawPanelController 
+implements TimelineContentChangedListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -292,6 +292,18 @@ public class TimelinesDrawPanelController
 		
 		this.timelinesDrawPanelModel.setZoomX(zoomX);
 
+		//==========================================================================================
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface#notifyTimelineContentChanged(long, long)
+	 */
+	@Override
+	public void notifyTimelineContentChanged(long bufferStart, long bufferEnd)
+	{
+		//==========================================================================================
+		this.timelinesDrawPanelView.repaint();
+		
 		//==========================================================================================
 	}
 }

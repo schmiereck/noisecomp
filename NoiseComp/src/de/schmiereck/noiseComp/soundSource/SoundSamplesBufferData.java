@@ -12,10 +12,16 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  */
 public class SoundSamplesBufferData
 {
-	private int			emptyBufferStart	= 0;
-	private int			emptyBufferEnd		= 0;
+	//**********************************************************************************************
+	// Fields:
+	
+	private int				emptyBufferStart	= 0;
+	private int				emptyBufferEnd		= 0;
 	private SoundSample[]	bufferSoundSamples	= null;
 	private float 			frameRate			= 0F;
+	
+	//**********************************************************************************************
+	// Functions:
 	
 	public void createBuffer(float timeLen, float frameRate)
 	{
@@ -49,8 +55,16 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 				this.bufferSoundSamples[pos] = null;
 			}
 			
-			this.emptyBufferStart 	= Math.min(this.emptyBufferStart, startFrame);
-			this.emptyBufferEnd 	= Math.max(this.emptyBufferEnd, endFrame);
+			if ((this.emptyBufferStart == 0) && (this.emptyBufferEnd == 0))
+			{
+				this.emptyBufferStart 	= startFrame;
+				this.emptyBufferEnd 	= endFrame;
+			}
+			else
+			{
+				this.emptyBufferStart 	= Math.min(this.emptyBufferStart, startFrame);
+				this.emptyBufferEnd 	= Math.max(this.emptyBufferEnd, endFrame);
+			}
 		}
 	}
 

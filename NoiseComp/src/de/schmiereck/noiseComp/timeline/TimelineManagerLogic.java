@@ -5,7 +5,9 @@ package de.schmiereck.noiseComp.timeline;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
@@ -43,6 +45,11 @@ public class TimelineManagerLogic
 	 * Main-Modul Generator Timelines.
 	 */
 	private Map<Generator, Timeline> mainGeneratorTimelines = new HashMap<Generator, Timeline>();
+	
+	/**
+	 * Timeline Content Changed Listeners.
+	 */
+	private List<TimelineContentChangedListenerInterface> timelineContentChangedListeners = new Vector<TimelineContentChangedListenerInterface>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -125,7 +132,8 @@ public class TimelineManagerLogic
 				
 				if (inputGenerator != null)
 				{
-					Timeline inputTimeline = this.addInputTimeline(timeline, inputData, inputGenerator);
+					//Timeline inputTimeline = 
+						this.addInputTimeline(timeline, inputData, inputGenerator);
 				}
 			}
 		}
@@ -598,5 +606,39 @@ public class TimelineManagerLogic
 		return this.mainGeneratorTimelines.values().iterator();
 	}
 
+	/**
+	 * @param timelineContentChangedListener
+	 * 			to remove from {@link #timelineContentChangedListeners}.
+	 */
+	public void removeTimelineContentChangedListeners(TimelineContentChangedListenerInterface timelineContentChangedListener)
+	{
+		this.timelineContentChangedListeners.remove(timelineContentChangedListener);
+	}
+
+	/**
+	 * @param timelineContentChangedListener 
+	 * 			to add to {@link #timelineContentChangedListeners}.
+	 */
+	public void addTimelineContentChangedListener(TimelineContentChangedListenerInterface timelineContentChangedListener)
+	{
+		this.timelineContentChangedListeners.add(timelineContentChangedListener);
+	}
+
+	/**
+	 * @param bufferStart
+	 * 			is the changed Buffer start.
+	 * @param bufferEnd
+	 * 			is the changed Buffer end.
+	 */
+	public void notifyTimelineContentChangedListeners(long bufferStart, long bufferEnd)
+	{
+		//==========================================================================================
+		for (TimelineContentChangedListenerInterface timelineContentChangedListener : this.timelineContentChangedListeners)
+		{
+			timelineContentChangedListener.notifyTimelineContentChanged(bufferStart, bufferEnd);
+		}
+		
+		//==========================================================================================
+	}
 	
 }

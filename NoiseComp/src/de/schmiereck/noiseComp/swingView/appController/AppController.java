@@ -497,10 +497,10 @@ public class AppController
 				public void actionPerformed(ActionEvent e)
 				{
 					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
+					//ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					//ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
 					
 					TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 					
@@ -835,6 +835,11 @@ public class AppController
 		if (mainModulGeneratorTypeData != null)
 		{
 			List<Timeline> timelines = soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
+			
+			TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+			
+			timelineManagerLogic.addTimelineContentChangedListener(this.timelinesDrawPanelController);
+			
 //			OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
 //			
 //			Timeline outputTimeline = soundSourceLogic.setOutputGenerator(outputGenerator);

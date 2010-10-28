@@ -31,8 +31,6 @@ import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
  * pre calculated samples (by polling in a thread).
  * </p>
  * 
- * TODO Change management einbauen, wenn sich "oben" was ändert, smk
- * 
  * @author smk
  * @version <p>06.06.2004: created, smk</p>
  */
@@ -89,6 +87,7 @@ implements GeneratorChangeListenerInterface
 		//==========================================================================================
 		List<Timeline> timelines = new Vector<Timeline>();
 		
+		//------------------------------------------------------------------------------------------
 		this.timelineManagerLogic = new TimelineManagerLogic(mainModulGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
@@ -392,8 +391,24 @@ implements GeneratorChangeListenerInterface
 		{
 			if (this.outputGenerator != null)
 			{
+				long emptyBuffer1Start = this.soundSamplesBufferData.getEmptyBufferStart();
+				long emptyBuffer1End = this.soundSamplesBufferData.getEmptyBufferEnd();
+				
 				this.soundSamplesBufferData.calcWaitingSamplesPart(actualWaitPerFramesMillis / 1000.0F, 
 																   this.outputTimeline);
+				
+				long emptyBuffer2Start = this.soundSamplesBufferData.getEmptyBufferStart();
+				long emptyBuffer2End = this.soundSamplesBufferData.getEmptyBufferEnd();
+				
+				//long calcBufferStart;
+				//long calcBufferEnd;
+				
+				if ((emptyBuffer1Start != emptyBuffer2Start) ||
+					(emptyBuffer1End != emptyBuffer2End))
+				{
+					this.timelineManagerLogic.notifyTimelineContentChangedListeners(emptyBuffer1Start,
+					                                                                emptyBuffer1End);
+				}
 			}
 		}
 	}
