@@ -28,7 +28,8 @@ extends Generator
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, 
-	                                 GeneratorBufferInterface generatorBuffer)
+	                                 GeneratorBufferInterface generatorBuffer,
+	                                 ModulArguments modulArguments)
 	{
 		//----------------------------------------------------------------------
 		float signalFrequency;
@@ -38,7 +39,8 @@ extends Generator
 			                                          frameTime,
 			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), 
 			                                          parentModulGenerator,
-			                                          generatorBuffer);
+			                                          generatorBuffer,
+			                                          modulArguments);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -54,7 +56,8 @@ extends Generator
 			                                          frameTime,
 			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
 			                                          parentModulGenerator,
-			                                          generatorBuffer);
+			                                          generatorBuffer,
+			                                          modulArguments);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -70,7 +73,8 @@ extends Generator
 		                                          frameTime,
 			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), 
 			                                      parentModulGenerator,
-			                                      generatorBuffer);
+			                                      generatorBuffer,
+			                                      modulArguments);
 //		}
 //		catch (NoInputSignalException ex)
 //		{

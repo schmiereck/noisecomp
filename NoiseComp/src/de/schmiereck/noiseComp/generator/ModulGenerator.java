@@ -45,7 +45,8 @@ extends Generator
 	                                 float frameTime, 
 	                                 SoundSample sample, 
 	                                 ModulGenerator parentModulGenerator, 
-	                                 GeneratorBufferInterface generatorBuffer)
+	                                 GeneratorBufferInterface generatorBuffer,
+	                                 ModulArguments modulArguments)
 	{
 		if (this.checkIsInTime(frameTime) == true)
 		{	
@@ -57,13 +58,17 @@ extends Generator
 			
 			Timeline modulTimeline = generatorBuffer.getSubGeneratorTimeline(outputGenerator);
 			
+			ModulArguments thisModulArguments = new ModulArguments(generatorBuffer,
+			                                                       modulArguments);
+			
 			long outputStartPos = (long)(this.getStartTimePos() * this.getSoundFrameRate());
 			
 			//outputGenerator.calculateSoundSample(framePosition, frameTime, sample);
 			SoundSample outputSample = 
 				outputGenerator.generateFrameSample(framePosition - outputStartPos, 
 				                                    this,
-				                                    modulTimeline);
+				                                    modulTimeline,
+				                                    thisModulArguments);
 			
 			sample.setValues(outputSample);
 		}

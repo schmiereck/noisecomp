@@ -152,19 +152,22 @@ implements GeneratorChangeListenerInterface
 		}
 		System.out.println("DBG 1: " + parentTimeline);
 		
-		Iterator<InputData> inputsIterator = parentTimeline.getInputsIterator();
-		
-		if (inputsIterator != null)
+		if (parentTimeline != null)
 		{
-			while (inputsIterator.hasNext())
+			Iterator<InputData> inputsIterator = parentTimeline.getInputsIterator();
+			
+			if (inputsIterator != null)
 			{
-				InputData inputData = inputsIterator.next();
-
-				Timeline inputTimeline = (Timeline)parentTimeline.getInputGeneratorBuffer(inputData);
-				
-				if (inputTimeline != null)
+				while (inputsIterator.hasNext())
 				{
-					this.printDebug1(inputTimeline, level + 1);
+					InputData inputData = inputsIterator.next();
+	
+					Timeline inputTimeline = (Timeline)parentTimeline.getInputGeneratorBuffer(inputData);
+					
+					if (inputTimeline != null)
+					{
+						this.printDebug1(inputTimeline, level + 1);
+					}
 				}
 			}
 		}
@@ -177,11 +180,14 @@ implements GeneratorChangeListenerInterface
 		}
 		System.out.println("DBG 2: " + parentTimeline);
 		
-		Collection<Timeline> timelines = parentTimeline.getInputTimelines().values();
-		
-		for (Timeline timeline : timelines)
+		if (parentTimeline != null)
 		{
-			this.printDebug2(timeline, level + 1);
+			Collection<Timeline> timelines = parentTimeline.getInputTimelines().values();
+			
+			for (Timeline timeline : timelines)
+			{
+				this.printDebug2(timeline, level + 1);
+			}
 		}
 	}
 
@@ -198,15 +204,18 @@ implements GeneratorChangeListenerInterface
 		}
 		System.out.println("DBG 3: " + parentTimeline);
 		
-		Collection<Timeline> timelines = parentTimeline.getInputTimelines().values();
-		
-		for (Timeline timeline : timelines)
+		if (parentTimeline != null)
 		{
-			this.printDebug3(timeline, level + 1, false);
+			Collection<Timeline> timelines = parentTimeline.getInputTimelines().values();
 			
-			for (Timeline subTimeline : timeline.getSubGeneratorTimelines())
+			for (Timeline timeline : timelines)
 			{
-				this.printDebug3(subTimeline, level + 2, true);
+				this.printDebug3(timeline, level + 1, false);
+				
+				for (Timeline subTimeline : timeline.getSubGeneratorTimelines())
+				{
+					this.printDebug3(subTimeline, level + 2, true);
+				}
 			}
 		}
 	}

@@ -41,18 +41,21 @@ extends Generator
 	                                 float frameTime, 
 	                                 SoundSample soundSample, 
 	                                 ModulGenerator parentModulGenerator, 
-	                                 GeneratorBufferInterface generatorBuffer)
+	                                 GeneratorBufferInterface generatorBuffer,
+	                                 ModulArguments modulArguments)
 	{
 		//==========================================================================================
 		float startFadeValue = this.calcStartFadeValue(framePosition, 
 		                                               frameTime,
 		                                               parentModulGenerator,
-		                                               generatorBuffer);
+		                                               generatorBuffer,
+		                                               modulArguments);
 		
 		float endFadeValue = this.calcEndFadeValue(framePosition, 
 	                                               frameTime,
 		                                           parentModulGenerator, 
-		                                           generatorBuffer);
+		                                           generatorBuffer,
+		                                           modulArguments);
 		
 		//------------------------------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
@@ -75,7 +78,8 @@ extends Generator
 	private float calcEndFadeValue(long framePosition, 
                                    float frameTime,
 	                               ModulGenerator parentModulGenerator,
-	                               GeneratorBufferInterface generatorBuffer)
+	                               GeneratorBufferInterface generatorBuffer,
+	                               ModulArguments modulArguments)
 	{
 		//==========================================================================================
 		float endFadeValue;
@@ -84,7 +88,8 @@ extends Generator
 			                                   frameTime,
 		                                       this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_END_VALUE), 
 		                                       parentModulGenerator,
-		                                       generatorBuffer);
+		                                       generatorBuffer,
+		                                       modulArguments);
 
 		//==========================================================================================
 		return endFadeValue;
@@ -93,7 +98,8 @@ extends Generator
 	private float calcStartFadeValue(long framePosition, 
                                      float frameTime,
 	                                 ModulGenerator parentModulGenerator,
-	                                 GeneratorBufferInterface generatorBuffer)
+	                                 GeneratorBufferInterface generatorBuffer,
+	                                 ModulArguments modulArguments)
 	{
 		//==========================================================================================
 		float startFadeValue;
@@ -102,7 +108,8 @@ extends Generator
 		                                         frameTime,
 		                                         this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_START_VALUE), 
 		                                         parentModulGenerator,
-		                                         generatorBuffer);
+		                                         generatorBuffer,
+		                                         modulArguments);
 
 		//==========================================================================================
 		return startFadeValue;
@@ -132,7 +139,8 @@ extends Generator
 	 * @see de.schmiereck.noiseComp.generator.Generator#getGeneratorSampleDrawScale()
 	 */
 	public float getGeneratorSampleDrawScale(ModulGenerator parentModulGenerator, 
-	                                         GeneratorBufferInterface generatorBuffer)
+	                                         GeneratorBufferInterface generatorBuffer,
+	                                         ModulArguments modulArguments)
 	{
 		//==========================================================================================
 		// Works only, if the values are constant inputs:
@@ -142,12 +150,14 @@ extends Generator
 		float startFadeValue = this.calcStartFadeValue(0, 
 		                                               frameTime,
 		                                               parentModulGenerator, 
-		                                               generatorBuffer);
+		                                               generatorBuffer,
+		                                               modulArguments);
 		
 		float endFadeValue = this.calcEndFadeValue(0, 
 	                                               frameTime,
 		                                           parentModulGenerator, 
-		                                           generatorBuffer);
+		                                           generatorBuffer,
+		                                           modulArguments);
 		
 		float max = Math.max(Math.abs(startFadeValue), Math.abs(endFadeValue));
 		

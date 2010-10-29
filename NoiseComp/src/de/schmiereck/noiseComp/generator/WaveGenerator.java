@@ -41,9 +41,9 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, 
-									 SoundSample soundSample, 
-									 ModulGenerator parentModulGenerator, GeneratorBufferInterface generatorBuffer)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, 
+									 GeneratorBufferInterface generatorBuffer,
+		                             ModulArguments modulArguments)
 	{
 		long soundFramePosition = (long)(framePosition - (this.getStartTimePos() * this.getSoundFrameRate()));
 		

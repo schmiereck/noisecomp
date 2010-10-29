@@ -28,7 +28,6 @@ import javax.swing.SwingConstants;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -493,7 +492,7 @@ implements Scrollable//, MouseMotionListener
 
 		if (timeline != null)
 		{
-			ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
+			//ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
 			
 			float frameRate = timeline.getSoundFrameRate();
 			float frameStep = timeLength / (frameRate / DRAW_EVERY_SAMPLE);

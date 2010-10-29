@@ -1,5 +1,6 @@
 package de.schmiereck.noiseComp.soundSource;
 
+import de.schmiereck.noiseComp.generator.ModulArguments;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -108,7 +109,7 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 
 			if (soundSample == null)
 			{
-				soundSample = outputTimeline.generateFrameSample(frame, null);
+				soundSample = outputTimeline.generateFrameSample(frame, null, null);
 			
 				this.bufferSoundSamples[(int)frame] = soundSample;
 			}
@@ -137,6 +138,8 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 		// TODO null as modul is not the best...?
 		ModulGenerator parentModulGenerator = null;
 		
+        ModulArguments modulArguments = null;
+		
 		for (framePos = this.emptyBufferStart; framePos < this.emptyBufferEnd; framePos++)
 		{
 			if (frames <= 0)
@@ -145,7 +148,9 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 			}
 			frames--;
 			
-			SoundSample soundSample = outputTimeline.generateFrameSample(framePos, parentModulGenerator);
+			SoundSample soundSample = outputTimeline.generateFrameSample(framePos, 
+			                                                             parentModulGenerator,
+			                                                             modulArguments);
 		
 			this.bufferSoundSamples[(int)framePos] = soundSample;
 		}

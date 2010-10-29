@@ -1,13 +1,6 @@
 package de.schmiereck.noiseComp.soundBuffer;
 
-import javax.sound.sampled.SourceDataLine;
-
 import junit.framework.TestCase;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.OutputGenerator;
-import de.schmiereck.noiseComp.service.StartupService;
-import de.schmiereck.noiseComp.soundData.SoundData;
-import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
  * Sound-Buffer-Manager Test.

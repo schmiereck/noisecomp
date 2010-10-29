@@ -46,7 +46,7 @@ TODO:
 
 WORK:
 =====
-#87:	BUG: Modul Input-type default Value are not used in second Module.
+#87:	BUG: Modul Input-type Value are not used in second sub Module.
 		-> base drum 2.noiseComp.xml
 		-> base drum 3.noiseComp.xml
 

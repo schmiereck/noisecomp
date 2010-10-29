@@ -42,7 +42,8 @@ public interface GeneratorBufferInterface
 	 */
 	SoundSample calcFrameSample(long framePosition, 
 	                            float frameTime,
-	                            ModulGenerator parentModulGenerator);
+	                            ModulGenerator parentModulGenerator,
+	                            ModulArguments modulArguments);
 
 	/**
 	 * @param inputData
@@ -60,4 +61,10 @@ public interface GeneratorBufferInterface
 	 * 			returns Timeline of the {@link #subGeneratorTimelines} for given Sub-Generator.
 	 */
 	Timeline getSubGeneratorTimeline(Generator generator);
+
+	/**
+	 * @return
+	 * 			the generator.
+	 */
+	Generator getGenerator();
 }

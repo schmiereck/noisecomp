@@ -101,7 +101,8 @@ extends ListWidgetGraphic
 				g.setColor(desktopColors.getSampleColor());
 				
 				float generatorSampleScale = generator.getGeneratorSampleDrawScale(parentModulGenerator, 
-				                                                                   generatorBuffer);
+				                                                                   generatorBuffer,
+				                                                                   null);
 				
 				float frameRate = generator.getSoundFrameRate();
 				boolean firstSample = true;
@@ -117,7 +118,8 @@ extends ListWidgetGraphic
 					//SoundSample soundSample = null;//XXX generator.generateFrameSample((long)((generatorStartTime + timePos) * frameRate), parentModulGenerator);
 					SoundSample soundSample = generator.generateFrameSample(sampleFrame, 
 					                                                        parentModulGenerator, 
-					                                                        generatorBuffer);
+					                                                        generatorBuffer,
+					                                                        null);
 					
 					if (soundSample != null)
 					{	

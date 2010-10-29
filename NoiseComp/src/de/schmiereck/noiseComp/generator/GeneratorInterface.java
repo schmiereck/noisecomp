@@ -23,12 +23,15 @@ public interface GeneratorInterface
 	 * @param generatorBuffer
 	 * 			is the generator buffer.<br/>
 	 * 			<code>null</code> if there is no buffer available.
+	 * @param modulArguments
+	 * 			are the Arguments of calling Modul.
 	 * @return
 	 * 			the sound sample.
 	 */
 	SoundSample generateFrameSample(long framePosition, 
 	                                ModulGenerator parentModulGenerator, 
-	                                GeneratorBufferInterface generatorBuffer);
+	                                GeneratorBufferInterface generatorBuffer,
+	                                ModulArguments modulArguments);
 
 	/**
 	 * @return

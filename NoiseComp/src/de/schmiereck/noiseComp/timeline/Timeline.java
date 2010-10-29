@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorBufferInterface;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.ModulArguments;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorRemoveListenerInterface;
 import de.schmiereck.noiseComp.generator.SoundSample;
@@ -305,7 +306,9 @@ implements GeneratorBufferInterface,
 	 * @return
 	 * 			the sound sample.
 	 */
-	public SoundSample generateFrameSample(long framePosition, ModulGenerator parentModulGenerator)
+	public SoundSample generateFrameSample(long framePosition, 
+	                                       ModulGenerator parentModulGenerator,
+	                                       ModulArguments modulArguments)
 	{
 		//==========================================================================================
 		SoundSample retSoundSample;
@@ -320,7 +323,8 @@ implements GeneratorBufferInterface,
 			{
 				retSoundSample = this.generator.generateFrameSample(framePosition,
 				                                                    parentModulGenerator, 
-				                                                    this);
+				                                                    this,
+				                                                    modulArguments);
 				
 				this.bufSoundSamples[bufFramePos] = retSoundSample;
 			}
@@ -438,7 +442,8 @@ implements GeneratorBufferInterface,
 	@Override
 	public SoundSample calcFrameSample(long framePosition, 
 	                                   float frameTime,
-	                                   ModulGenerator parentModulGenerator)
+	                                   ModulGenerator parentModulGenerator,
+	                                   ModulArguments modulArguments)
 	{
 		//==========================================================================================
 		SoundSample bufInputSoundSample;
@@ -456,7 +461,8 @@ implements GeneratorBufferInterface,
 				                                    frameTime, 
 				                                    bufInputSoundSample, 
 				                                    parentModulGenerator, 
-				                                    this);
+				                                    this,
+				                                    modulArguments);
 				
 				this.setBufSoundSample(framePosition,
 				                       bufInputSoundSample);

@@ -49,7 +49,8 @@ extends Generator
 	                                 float frameTime, 
 	                                 SoundSample soundSample, 
 	                                 ModulGenerator parentModulGenerator, 
-	                                 GeneratorBufferInterface generatorBuffer)
+	                                 GeneratorBufferInterface generatorBuffer,
+	                                 ModulArguments modulArguments)
 	{
 		//==========================================================================================
 //		SoundSample signal1Sample = new SoundSample();
@@ -95,7 +96,8 @@ extends Generator
 									                    inputData, 
 									                    signal2Sample, 
 									                    parentModulGenerator,
-									                    generatorBuffer);
+									                    generatorBuffer,
+									                    modulArguments);
 	
 									float leftValue = signal2Sample.getLeftValue();
 									
@@ -163,7 +165,8 @@ extends Generator
 //				                         generatorBuffer);
 				generatorBuffer.calcFrameSample(frame1Position, 
 				                                frame1Time, 
- 												parentModulGenerator);
+ 												parentModulGenerator,
+ 					                            modulArguments);
 		}
 //		else
 //		{

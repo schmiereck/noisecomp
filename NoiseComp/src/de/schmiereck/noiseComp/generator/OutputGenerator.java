@@ -46,7 +46,8 @@ extends Generator
 	                                 float frameTime, 
 	                                 SoundSample soundSample, 
 	                                 ModulGenerator parentModulGenerator, 
-	                                 GeneratorBufferInterface generatorBuffer)
+	                                 GeneratorBufferInterface generatorBuffer,
+	                                 ModulArguments modulArguments)
 	{
 		//==========================================================================================
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
@@ -56,7 +57,8 @@ extends Generator
 		                     signalInputData, 
 		                     soundSample, 
 		                     parentModulGenerator,
-		                     generatorBuffer);
+		                     generatorBuffer,
+                             modulArguments);
 		/*
 		InputData inputData = this.searchInputByType(INPUT_TYPE_SIGNAL);
 		
