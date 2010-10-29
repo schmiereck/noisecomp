@@ -42,7 +42,10 @@ TODO:
 #83:	IMPROVEMENT: Make width of TimelineGeneratorRule view bigger.
 #84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.
 #86:	BUG: Update Modul Input-type default Value do not refresh timelines.
-#88:
+#88:	IMPROVEMENT: Time-Scretching of timelines/modules, only the positions shifting, not the Freqences.
+#89:	IMPROVEMENT: Import and export of modules in/from files.
+#91:	IMPROVEMENT: Remove modules.
+#92:
 
 WORK:
 =====
