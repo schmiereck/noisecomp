@@ -46,9 +46,6 @@ TODO:
 
 WORK:
 =====
-#87:	BUG: Modul Input-type Value are not used in second sub Module.
-		-> base drum 2.noiseComp.xml
-		-> base drum 3.noiseComp.xml
 
 DONE:
 =====
@@ -109,3 +106,6 @@ DONE:
 		--> Every generator needs a Timeline to calculates the Integrator effectively (and without StackOverflowError), also generator in SubModules.
 #65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.
 #85:	IMPROVEMENT: Add special frequenz input to SinusGenerator to set not changing frequenzes direcly (without pre IntegratorGenerator).
+#87:	BUG: Modul Input-type Value are not used in second sub Module.
+		-> base drum 2.noiseComp.xml
+		-> base drum 3.noiseComp.xml

@@ -861,11 +861,11 @@ implements GeneratorInterface,
 						if (isSignal == true)
 						{
 							callingGenerator.calcInputSignal(framePosition, frameTime, 
-								                                modulInputData, 
-								                                signal, 
-								                                parentModulGenerator, 
-								                                callingModulGeneratorBuffer, 
-								                                prevModulArguments);
+							                                 modulInputData, 
+							                                 signal, 
+							                                 parentModulGenerator, 
+							                                 callingModulGeneratorBuffer, 
+							                                 prevModulArguments);
 						}
 						else
 						{
