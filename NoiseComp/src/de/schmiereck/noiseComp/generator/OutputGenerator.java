@@ -52,38 +52,14 @@ extends Generator
 		//==========================================================================================
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
-		this.calcInputSignal(framePosition, 
-		                     frameTime,
-		                     signalInputData, 
-		                     soundSample, 
-		                     parentModulGenerator,
-		                     generatorBuffer,
-                             modulArguments);
-		/*
-		InputData inputData = this.searchInputByType(INPUT_TYPE_SIGNAL);
-		
-		if (inputData != null)
-		{	
-			Float inputValue = inputData.getInputValue();
-			
-			// Constant input value ?
-			if (inputValue != null)
-			{
-				soundSample.setMonoValue(inputValue.floatValue());
-			}
-			else
-			{	
-				Generator inputSoundGenerator = inputData.getInputGenerator();
-				
-				if (inputSoundGenerator != null)
-				{	
-					SoundSample inputSoundSample = inputSoundGenerator.generateFrameSample(framePosition);
-					
-					soundSample.setSignals(inputSoundSample);
-				}
-			}
-		}
-		*/
+		this.calcInputValue(framePosition, 
+		                    frameTime,
+		                    signalInputData, 
+		                    soundSample, 
+		                    parentModulGenerator,
+		                    generatorBuffer,
+		                    modulArguments);
+
 		//==========================================================================================
 	}
 

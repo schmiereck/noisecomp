@@ -45,7 +45,7 @@ TODO:
 #88:	IMPROVEMENT: Time-Scretching of timelines/modules, only the positions shifting, not the Freqences.
 #89:	IMPROVEMENT: Import and export of modules in/from files.
 #91:	IMPROVEMENT: Remove modules.
-#92:
+#93:
 
 WORK:
 =====
@@ -112,3 +112,5 @@ DONE:
 #87:	BUG: Modul Input-type Value are not used in second sub Module.
 		-> base drum 2.noiseComp.xml
 		-> base drum 3.noiseComp.xml
+#92:	TASK: Refactor Generator calcInputValue(), calcInputSignal(), calcInputFrameSample(), calcInputMonoValue() , ... chaos.
+		
