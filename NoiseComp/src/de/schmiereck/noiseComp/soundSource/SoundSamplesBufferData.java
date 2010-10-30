@@ -51,6 +51,11 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 			int startFrame = (int)(startTimePos * this.frameRate);
 			int endFrame = (int)(endTimePos * this.frameRate);
 	
+			if (endFrame > this.bufferSoundSamples.length)
+			{
+				endFrame = this.bufferSoundSamples.length;
+			}
+			
 			for (int pos = startFrame; pos < endFrame; pos++)
 			{
 				this.bufferSoundSamples[pos] = null;
