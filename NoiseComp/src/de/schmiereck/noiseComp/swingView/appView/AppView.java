@@ -251,6 +251,8 @@ extends JFrame
 		
 		this.timelineSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		this.timelineSplitPane.setOneTouchExpandable(true);
+		// All Space for Timeline-Select.
+		this.timelineSplitPane.setResizeWeight(1.0D);
 		
 		this.timelineSplitPane.setRightComponent(this.timelineEditSplitPane);
 		

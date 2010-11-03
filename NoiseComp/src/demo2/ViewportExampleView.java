@@ -40,19 +40,26 @@ public class ViewportExampleView
 	public ViewportExampleView()
 	{
 		super("Viewport Example");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		JScrollPane scrollPane = new JScrollPane(this.drawPanelView);
+		//==========================================================================================
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		//------------------------------------------------------------------------------------------
+		this.horizontalRule.setPreferredSize(new Dimension(1500, 30));
+		
+		//------------------------------------------------------------------------------------------
 		this.verticalRule.setPreferredSize(new Dimension(30, 1000));
 		
-		scrollPane.setRowHeaderView(this.verticalRule);
-		
-		this.horizontalRule.setPreferredSize(new Dimension(1500, 30));
+		//------------------------------------------------------------------------------------------
+		JScrollPane scrollPane = new JScrollPane();
 		
 		scrollPane.setColumnHeaderView(this.horizontalRule);
 		scrollPane.setBackground(Color.DARK_GRAY);
+		scrollPane.setRowHeaderView(this.verticalRule);
 		
+		scrollPane.setViewportView(this.drawPanelView);
+		
+		//------------------------------------------------------------------------------------------
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(this.getSouthPanel(), BorderLayout.SOUTH);
 		
@@ -60,6 +67,8 @@ public class ViewportExampleView
 		
 		// setExtendedState(MAXIMIZED_BOTH);
 		this.setLocationRelativeTo(null);
+		
+		//==========================================================================================
 	}
 
 	private JPanel getSouthPanel()

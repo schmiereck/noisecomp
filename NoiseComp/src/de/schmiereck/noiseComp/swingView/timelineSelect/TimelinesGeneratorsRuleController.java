@@ -59,9 +59,9 @@ public class TimelinesGeneratorsRuleController
 	/**
 	 * Do Timeline Generator Models Changed.
 	 */
-	public void doTimelineGeneratorModelsChanged()
+	public void doTimelineGeneratorModelsChanged(double timelinesDrawPanelHeight)
 	{
-//		this.timelinesGeneratorsRuleModel.setTimelinesScrollPanelModel(timelinesScrollPanelModel)
+		this.timelinesGeneratorsRuleView.setHeight((int)timelinesDrawPanelHeight);
 		this.timelinesGeneratorsRuleView.repaint();
 	}
 

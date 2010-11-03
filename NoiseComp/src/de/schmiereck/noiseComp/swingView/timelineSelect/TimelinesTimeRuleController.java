@@ -64,8 +64,9 @@ public class TimelinesTimeRuleController
 	/**
 	 * Do Timeline Generator Models Changed.
 	 */
-	public void doTimelineGeneratorModelsChanged()
+	public void doTimelineGeneratorModelsChanged(double timelinesDrawPanelWidth)
 	{
+		this.timelinesTimeRuleView.setWidth((int)timelinesDrawPanelWidth);
 		this.timelinesTimeRuleView.repaint();
 	}
 

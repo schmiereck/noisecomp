@@ -3,13 +3,10 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 
@@ -24,7 +21,7 @@ import javax.swing.JScrollPane;
  * @version <p>17.06.2010:	created, smk</p>
  */
 public class TimelinesScrollPanelView
-extends JPanel
+extends JScrollPane
 {
 	//**********************************************************************************************
 	// Fields:
@@ -38,7 +35,7 @@ extends JPanel
 	private TimelinesTimeRuleView timelinesTimeRuleView = null;
 	private TimelinesGeneratorsRuleView timelinesGeneratorsRuleView = null;
 
-	private JScrollPane scrollPane;
+//	private JScrollPane scrollPane;
 	
 	private TimelinesDrawPanelView timelinesDrawPanelView = null;
 	
@@ -59,7 +56,7 @@ extends JPanel
 		
 		//==========================================================================================
 //		this.setLayout(new BorderLayout());
-		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+//		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 	    
 	    //------------------------------------------------------------------------------------------
 		// Create the row and column headers.
@@ -70,16 +67,17 @@ extends JPanel
 //	    this.rowView = new TimelinesGeneratorsRuleView(timelinesGeneratorsRuleModel);
 	    
 	    //------------------------------------------------------------------------------------------
-	    this.scrollPane = new JScrollPane();
+//	    this.scrollPane = new JScrollPane();
 	    
 //	    this.scrollPane.getViewport().add(scroll);
 	    
 //	    this.scrollPane.setColumnHeaderView(this.timelinesTimeRuleView);
 //	    this.scrollPane.setRowHeaderView(this.rowView);
 	    
-	    this.scrollPane.setOpaque(true); //content panes must be opaque
+//	    this.scrollPane.setOpaque(true); //content panes must be opaque
+	    this.setOpaque(true); //content panes must be opaque
 	    
-	    this.add(this.scrollPane, BorderLayout.CENTER);
+//	    this.add(this.scrollPane, BorderLayout.CENTER);
 		
 	    //------------------------------------------------------------------------------------------
 	    this.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
@@ -96,7 +94,8 @@ extends JPanel
 		//==========================================================================================
 		this.timelinesDrawPanelView = timelinesDrawPanelView;
 	    
-		this.scrollPane.setViewportView(this.timelinesDrawPanelView);
+//		this.scrollPane.setViewportView(this.timelinesDrawPanelView);
+		this.setViewportView(this.timelinesDrawPanelView);
 		
 	    Dimension dimension = this.timelinesDrawPanelView.getTimelinesDrawPanelModel().getDimension();
 
@@ -118,7 +117,8 @@ extends JPanel
 		//==========================================================================================
 		this.timelinesTimeRuleView = columnView;
 
-	    this.scrollPane.setColumnHeaderView(this.timelinesTimeRuleView);
+//	    this.scrollPane.setColumnHeaderView(this.timelinesTimeRuleView);
+	    this.setColumnHeaderView(this.timelinesTimeRuleView);
 	    
 		//==========================================================================================
 	}
@@ -131,7 +131,8 @@ extends JPanel
 	{
 		this.timelinesGeneratorsRuleView = timelinesGeneratorsRuleView;
 
-	    this.scrollPane.setRowHeaderView(this.timelinesGeneratorsRuleView);
+//	    this.scrollPane.setRowHeaderView(this.timelinesGeneratorsRuleView);
+	    this.setRowHeaderView(this.timelinesGeneratorsRuleView);
 	}
 
 	/**
@@ -143,13 +144,13 @@ extends JPanel
 		return this.timelinesScrollPanelModel;
 	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #scrollPane}.
-	 */
-	public JScrollPane getScrollPane()
-	{
-		return this.scrollPane;
-	}
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #scrollPane}.
+//	 */
+//	public JScrollPane getScrollPane()
+//	{
+//		return this.scrollPane;
+//	}
 }		
 

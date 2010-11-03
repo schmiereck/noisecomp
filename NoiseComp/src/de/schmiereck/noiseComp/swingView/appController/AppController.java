@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.appController;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -55,6 +56,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelContro
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelView;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -204,7 +206,10 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		this.timelinesScrollPanelController = new TimelinesScrollPanelController();
 		
-		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView().getScrollPane());
+		TimelinesScrollPanelView timelinesScrollPanelView = this.timelinesScrollPanelController.getTimelinesScrollPanelView();
+		
+//		this.appView.setTimelineComponent(timelinesScrollPanelView.getScrollPane());
+		this.appView.setTimelineComponent(timelinesScrollPanelView);
 		
 		this.timelinesScrollPanelController.setTimelinesRuleController(timelinesTimeRuleController,
 		                                                               timelinesGeneratorsRuleController);
@@ -225,8 +230,12 @@ public class AppController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					timelinesTimeRuleController.doTimelineGeneratorModelsChanged();
-					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged();
+					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+					
+					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+					
+					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
 				}
 		 	}
 		);
@@ -475,6 +484,9 @@ public class AppController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+					
 					ModulInputTypeSelectModel selectModel = modulInputTypeSelectController.getInputTypeSelectModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -482,6 +494,14 @@ public class AppController
 						
 					modulInputTypeSelectController.doInputTypeUpdated(selectModel);
 					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+					
+					// TimelinesTimeRule update.
+					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+					
+					// TimelinesGeneratorsRule update.
+					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
@@ -496,6 +516,7 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 					//ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 					
@@ -523,6 +544,15 @@ public class AppController
 					timelinesDrawPanelModel.removeTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+					
+					// TimelinesTimeRule update.
+					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+					
+					// TimelinesGeneratorsRule update.
+					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);	
@@ -536,9 +566,11 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 //					TimelineSelectEntryModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
 					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModulGeneratorTypeData editedModulGeneratorTypeData = getEditedModulGeneratorTypeData();
 					
 //					Generator generator = 
@@ -548,11 +580,16 @@ public class AppController
 					                                         //generator,
 					                                         timelinesDrawPanelModel);
 					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+					
 					// TimelinesTimeRule update.
-					timelinesTimeRuleController.doTimelineGeneratorModelsChanged();
+					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
 					
 					// TimelinesGeneratorsRule update.
-					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged();
+					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -566,7 +603,21 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					timelinesDrawPanelController.doCreateNew();
+
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+					
+					// TimelinesTimeRule update.
+					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+					
+					// TimelinesGeneratorsRule update.
+					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);	

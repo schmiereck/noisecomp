@@ -104,8 +104,6 @@ extends JComponent
 		g.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		g.setColor(Color.BLACK);
 
-		g.drawLine(0, 0, 1000, 30);
-		
 		// Use clipping bounds to calculate first and last tick locations.
 		int start = ((drawHere.x / increment) * increment);
 		int end = ((((drawHere.x + drawHere.width) / increment) + 1) * increment);
