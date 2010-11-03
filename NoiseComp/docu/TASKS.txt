@@ -4,38 +4,36 @@ TASKS
 TODO:
 =====
 #2:		IMPROVEMENT: Mail: Florian und ich empfehlen eine BSD-style license. Mit GNU-Lizenzen hatten wir schon jede Menge Ärger.
-#4:		BUG: Disable change Input-Type of existing Timeline-Generator.
-#5:		BUG: Implements obligate input fields (with default values).
-#6:		BUG: Disable unreachable functions (buttons).
-#9:		BUG: Do not allow more than one OutputGenerator for a Module.
+#4:		TASK: Disable change Input-Type of existing Timeline-Generator.
+#5:		TASK: Implements obligate input fields (with default values).
+#6:		TASK: Disable unreachable functions (buttons).
+#9:		TASK: Do not allow more than one OutputGenerator for a Module (and othe single input inputs).
 #16:	IMPROVEMENT: Implements mouse featured resize of timelines in timeline draw pane.
 #18:	IMPROVEMENT: Insert new timelines after selected timeline with same start- and stop-time.
 #19:	IMPROVEMENT: Add a Generators Category seperate to the Modules Category.
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
 #21:	IMPROVEMENT: View Sound-Buffer Status in timeline-select-view (maybe in ruler?).
-#22:	BUG: Make sure that only one module have IsMainModulGeneratorType Flag.
+#22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
 #27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
 #31:	IMPROVEMENT: Add Flag that markes a input-type as multiple or singele input-type.
-#33:	BUG: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
+#33:	TASK: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
 #34:	IMPROVEMENT: Input-Edit: Do not serve the edited generator as input generator.
-#35:	BUG: After inserting new model and update an new Input-type:
+#35:	TASK: Input-Type-Edit: Update Input-type without Create-New first:
 		Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
 			at de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController.doUpdate(ModulInputTypeEditController.java:133)
-			at de.schmiereck.noiseComp.swingView.appController.AppController$9.actionPerformed(AppController.java:423)
+			at de.schmiereck.noiseComp.swingView.appController.AppController$11.actionPerformed(AppController.java:435)
+		--> Disable input fields and "update"-Button if no input-type is selected.
 #46:	IMPROVEMENT: Draw horizontal seperator lines between timenes in TimelinesDrawPanel.
 #47:	IMPROVEMENT: Implement Sample-Buffers and a input change notification system.
 #48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
-#50:	BUG: After removing a timeline drag and drope not working and inputs are draw at wrong position (after reselect editing module al is working).
 #51:	IMPROVEMENT: After selecting a module-generator for new timeline set length to his output length.
 #52:	IMPROVEMENT: Modul-Generators should repeat theire output signal if theire length is longer as the output (with defined sielent time between).
 #53:	IMPROVEMENT: Generator-Input-Types needs max, min and datatype definitions.
-#54:	BUG: Rulers are completely destroyed if zoom and timelineSelect size changed.
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #56:	IMPROVEMENT: Import noiseComp.xml files.
 #58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
-#59:	BUG: Seems to be a bug, if you increase the frequence of an sinus after decreasing the frequency.
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
 #63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
 #81:	IMPROVEMENT: Calc the min/max values of a timeline and use it to scale the waveform view.
@@ -45,11 +43,23 @@ TODO:
 #88:	IMPROVEMENT: Time-Scretching of timelines/modules, only the positions shifting, not the Freqences.
 #89:	IMPROVEMENT: Import and export of modules in/from files.
 #91:	IMPROVEMENT: Remove modules.
-#93:
+#93:	BUG: Update new Input does not update timeline (after reselect input it works).
+#94:	BUG: New Modul. New Output. New Mixer. Change Select Modul. Come back. Seems to be a empty timeline.
+		Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
+			at de.schmiereck.noiseComp.swingView.appController.AppController.selectEditModule(AppController.java:856)
+			at de.schmiereck.noiseComp.swingView.appController.AppController$4.notifyEditModul(AppController.java:301)
+#95:	IMPROVEMENT: Allow switch timeline-rule and timeline/input positions between beats and time in seconds.
+		--> First fix #54.
+#96:	BUG: Remove a timeline does not clear the depending output timeline buffers.
+#97:	BUG: Change a module default does not clear the depending timeline buffers.
+#98:	IMPROVEMENT: Automatically ends playback if end of output reached.
+#99:
 
 WORK:
 =====
-
+#54:	BUG: Rulers are completely destroyed if zoom and timelineSelect size changed.
+		Also scrolling does not show the right ruler positions at all.
+		
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
@@ -107,10 +117,13 @@ DONE:
 		bug 61 demo 1.noiseComp.xml
 #82:	BUG: Integrator sinus generatates noise signal if used in modul.
 		--> Every generator needs a Timeline to calculates the Integrator effectively (and without StackOverflowError), also generator in SubModules.
+#59:	BUG: Seems to be a bug, if you increase the frequence of an sinus after decreasing the frequency.
+		--> see #82 and #61
 #65:	BUG: TimelinesDrawPanelView: Update timelines if buffer calc is updated.
 #85:	IMPROVEMENT: Add special frequenz input to SinusGenerator to set not changing frequenzes direcly (without pre IntegratorGenerator).
 #87:	BUG: Modul Input-type Value are not used in second sub Module.
 		-> base drum 2.noiseComp.xml
 		-> base drum 3.noiseComp.xml
 #92:	TASK: Refactor Generator calcInputValue(), calcInputSignal(), calcInputFrameSample(), calcInputMonoValue() , ... chaos.
-		
+#50:	BUG: After removing a timeline drag and drope not working and inputs are draw at wrong position (after reselect editing module al is working).
+		--> Fixed in the meantime because of change handling timeline positions.

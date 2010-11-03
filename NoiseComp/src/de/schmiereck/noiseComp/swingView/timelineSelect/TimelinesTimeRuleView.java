@@ -16,6 +16,8 @@ import javax.swing.JComponent;
  * 	Timelines-Time Rule View.
  * </p>
  * 
+ * see: http://java.sun.com/docs/books/tutorial/uiswing/components/scrollpane.html
+ * 
  * @author smk
  * @version <p>17.06.2010:	created, smk</p>
  */
@@ -87,6 +89,8 @@ extends JComponent
 	 */
 	protected void paintComponent(Graphics g)
 	{
+		//super.paintComponent(g);
+		 
 		int units = this.timelinesTimeRuleModel.getUnits();
 		int increment = this.timelinesTimeRuleModel.getIncrement();
 		
@@ -100,6 +104,8 @@ extends JComponent
 		g.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		g.setColor(Color.BLACK);
 
+		g.drawLine(0, 0, 1000, 30);
+		
 		// Use clipping bounds to calculate first and last tick locations.
 		int start = ((drawHere.x / increment) * increment);
 		int end = ((((drawHere.x + drawHere.width) / increment) + 1) * increment);

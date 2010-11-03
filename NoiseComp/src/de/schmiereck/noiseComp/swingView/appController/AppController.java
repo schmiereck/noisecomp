@@ -204,10 +204,10 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		this.timelinesScrollPanelController = new TimelinesScrollPanelController();
 		
-		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView());
+		this.appView.setTimelineComponent(this.timelinesScrollPanelController.getTimelinesScrollPanelView().getScrollPane());
 		
 		this.timelinesScrollPanelController.setTimelinesRuleController(timelinesTimeRuleController,
-		                                                                         timelinesGeneratorsRuleController);
+		                                                               timelinesGeneratorsRuleController);
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelController = 

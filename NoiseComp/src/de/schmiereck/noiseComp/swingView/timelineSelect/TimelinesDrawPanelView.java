@@ -236,6 +236,15 @@ implements Scrollable//, MouseMotionListener
 					
 					at.setToScale(zoomX, ZOOM_Y);
 					
+//				    // Update client's preferred size because
+//				    // the area taken up by the graphics has
+//				    // gotten larger or smaller (if cleared).
+//					setPreferredSize(timelinesDrawPanelModel.getDimension());
+//
+//				    // Let the scroll pane know to update itself
+//				    // and its scroll bars.
+//				    revalidate();
+				    
 					repaint();
 				}
 		 	}
@@ -248,10 +257,18 @@ implements Scrollable//, MouseMotionListener
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-				    setPreferredSize(timelinesDrawPanelModel.getDimension());
 				    setSize(timelinesDrawPanelModel.getDimension());
 				    
-					repaint();
+				    // Update client's preferred size because
+				    // the area taken up by the graphics has
+				    // gotten larger or smaller (if cleared).
+					setPreferredSize(timelinesDrawPanelModel.getDimension());
+
+				    // Let the scroll pane know to update itself
+				    // and its scroll bars.
+				    revalidate();
+				    
+					//repaint();
 				}
 		 	}
 		);
@@ -814,4 +831,9 @@ implements Scrollable//, MouseMotionListener
 		                                              height * ZOOM_Y);
 	}
 	
+//	public Dimension getPreferredSize()
+//	{
+//		return new Dimension(1500, 1000);
+//	}
+
 }

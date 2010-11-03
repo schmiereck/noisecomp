@@ -142,5 +142,14 @@ extends JPanel
 	{
 		return this.timelinesScrollPanelModel;
 	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #scrollPane}.
+	 */
+	public JScrollPane getScrollPane()
+	{
+		return this.scrollPane;
+	}
 }		
 
