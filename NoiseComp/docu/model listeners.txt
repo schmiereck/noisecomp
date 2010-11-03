@@ -1,0 +1,28 @@
+Model Listeners of Swing-View
+*****************************
+
+Matrix of all used Models
+=========================
+App
+
+	ModulesTree
+		ModulEdit
+			ModulInputTypes
+		
+			InputSelect
+				InputEdit
+		
+		TimelinesScrollPanel
+			TimelinesDrawPanel
+				TimelineEdit
+
+Update chains of Models
+=======================
+
+TimelineEdit
+	- generatorStartTimePosChangedNotifier(startPos, EndPos)
+		TimelineEditView.generatorStartTimePosTextField
+		??? TimelinesDrawPanel
+	- generatorEndTimePosChangedNotifier(startPos, EndPos)
+		TimelineEditView.generatorEndTimePosTextField
+		??? TimelinesDrawPanel

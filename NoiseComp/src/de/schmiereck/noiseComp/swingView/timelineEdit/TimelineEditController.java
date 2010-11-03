@@ -190,8 +190,10 @@ public class TimelineEditController
 	/**
 	 * Timeline-Edit Update-Button: Update Generator, Update Timeline-Edit Model and Timeline-Generator Model:
 	 * 
-	 * @param appController
+	 * @param editedModulGeneratorTypeData
+	 * 			is the editedModulGeneratorTypeData.
 	 * @param timelinesDrawPanelModel
+	 * 			is the TimelinesDrawPanelModel.
 	 */
 	public void doUpdateEditModel(final ModulGeneratorTypeData editedModulGeneratorTypeData,
 	                              //final Generator generator,

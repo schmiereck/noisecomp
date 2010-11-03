@@ -75,6 +75,11 @@ public class AppController
 {
 	//**********************************************************************************************
 	// Fields:
+	
+	/**
+	 * App View
+	 */
+	private final AppView appView;
 
 	/**
 	 * Modules Tree Controller.
@@ -85,6 +90,11 @@ public class AppController
 	 * Modul-Edit Controller.
 	 */
 	private final ModulEditController modulEditController;
+	
+	/**
+	 * Modul-Input-Types Controller.
+	 */
+	private final ModulInputTypesController modulInputTypesController;
 	
 	/**
 	 * Timelines Scroll-Panel Controller.
@@ -102,19 +112,19 @@ public class AppController
 	private final TimelineEditController timelineEditController;
 	
 	/**
-	 * Modul-Inputs Controller.
+	 * Input-Select Controller.
 	 */
-	private final ModulInputTypesController modulInputTypesController;
+	final InputSelectController inputSelectController;
+
+	/**
+	 * Input-Edit Controller.
+	 */
+	final InputEditController inputEditController;
 	
 	/**
 	 * App Model
 	 */
 	private final AppModel appModel;
-	
-	/**
-	 * App View
-	 */
-	private final AppView appView;
 	
 	private SoundSchedulerLogic soundSchedulerLogic = null;
 	
@@ -271,17 +281,17 @@ public class AppController
 		timelinesTimeRuleController.doChangeZoomX(this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getZoomX());
 		
 		//------------------------------------------------------------------------------------------
-		final InputSelectController inputSelectController = 
+		this.inputSelectController = 
 			new InputSelectController(this,
 			                          this.timelinesDrawPanelController.getTimelinesDrawPanelModel());
 		
-		this.appView.setInputSelectView(inputSelectController.getInputSelectView());
+		this.appView.setInputSelectView(this.inputSelectController.getInputSelectView());
 		
 		//------------------------------------------------------------------------------------------
-		final InputEditController inputEditController = 
-			new InputEditController(inputSelectController.getInputSelectModel());
+		this.inputEditController = 
+			new InputEditController(this.inputSelectController.getInputSelectModel());
 		
-		this.appView.setInputEditView(inputEditController.getInputEditView());
+		this.appView.setInputEditView(this.inputEditController.getInputEditView());
 		
 		//------------------------------------------------------------------------------------------
 		this.timelineEditController = 
@@ -311,6 +321,8 @@ public class AppController
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		// Modules-Tree:
 		//------------------------------------------------------------------------------------------
 		// Modules-Tree Edited Model changed -> updated Modul-Edit Model:
 		
@@ -346,7 +358,9 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		// Edit-Modul: Edit-Input-Types Button: Update Modules-Tree-View:
+		// Modul-Edit:
+		//------------------------------------------------------------------------------------------
+		// Modul-Edit: Edit-Input-Types Button: Update Modules-Tree-View:
 		
 		this.modulEditController.getModulEditView().getEditInputTypesButton().addActionListener
 		(
@@ -360,7 +374,7 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		// Edit-Modul Model changed: Update Modules-Tree-View:
+		// Modul-Edit Model changed: Update Modules-Tree-View:
 		
 		this.modulEditController.getModulEditModel().getModulEditModelChangedNotifier().addModelPropertyChangedListener
 		(
@@ -376,6 +390,8 @@ public class AppController
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		// Modul-Input-Type:
 		//------------------------------------------------------------------------------------------
 		// Modul-Input-Type Selected Input changed: Update Modul-Input-Type-Edit Model:
 		
@@ -432,6 +448,7 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -459,6 +476,7 @@ public class AppController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -485,8 +503,6 @@ public class AppController
 				public void notifyModelPropertyChanged()
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-					
 					ModulInputTypeSelectModel selectModel = modulInputTypeSelectController.getInputTypeSelectModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -495,17 +511,11 @@ public class AppController
 					modulInputTypeSelectController.doInputTypeUpdated(selectModel);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
-					
-					// TimelinesTimeRule update.
-					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
-					
-					// TimelinesGeneratorsRule update.
-					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		// Timeline-Edit:
 		//------------------------------------------------------------------------------------------
 		// Timeline-Edit Remove-Timeline-Button: Update Modul-Data and Timeline-Select-Model:
 		
@@ -622,9 +632,11 @@ public class AppController
 		 	}
 		);	
 		//------------------------------------------------------------------------------------------
-		// Selected Input changed: Update Input-Edit:
+		// Input-Select:
+		//------------------------------------------------------------------------------------------
+		// Input-Select: Selected Input changed: Update Input-Edit:
 		
-		inputSelectController.getInputSelectModel().getSelectedRowNoChangedNotifier().addModelPropertyChangedListener
+		this.inputSelectController.getInputSelectModel().getSelectedRowNoChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -663,9 +675,11 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
+		// Input-Edit:
+		//------------------------------------------------------------------------------------------
 		// Input-Edit Update-Button: Update Input-Data and Input-Edit-Model:
 		
-		inputEditController.getInputEditView().getUpdateButton().addActionListener
+		this.inputEditController.getInputEditView().getUpdateButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -686,7 +700,7 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		// Input-Edit Remove-Input-Button: Update Input-Select-Model and Generator-Input-Data:
 		
-		inputEditController.getInputEditView().getRemoveButton().addActionListener
+		this.inputEditController.getInputEditView().getRemoveButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -700,7 +714,7 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		// Input-Edit Create-New-Input-Button: Update Input-Select-Model // and Generator-Input-Data:
 		
-		inputEditController.getInputEditView().getCreateNewButton().addActionListener
+		this.inputEditController.getInputEditView().getCreateNewButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -715,25 +729,29 @@ public class AppController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
+		// Models Changed:
+		//------------------------------------------------------------------------------------------
+		// General TimelinesDrawPanelModel Listener: Called if something of Model changed:
+		
 	 	ModelPropertyChangedListener modelPropertyChangedListener = new ModelPropertyChangedListener()
 	 	{
 			@Override
 			public void notifyModelPropertyChanged()
 			{
-				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// Update TimelinesDrawPanel:
 				
 				TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 				
 				timelinesDrawPanelModel.getTimelineGeneratorModelChangedListener().notifyModelPropertyChanged();
 
-				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			}
 	 	};
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model InputTypeData changed: Update TimelinesDrawPanel:
 		
-		inputEditController.getInputEditModel().getInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+	 	this.inputEditController.getInputEditModel().getInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 		
 //		//------------------------------------------------------------------------------------------
 //		// Input-Edit-Model InputTypeData changed: Update TimelinesDrawPanel:
@@ -743,7 +761,7 @@ public class AppController
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model Value changed: Update Input-Select and TimelinesDrawPanel:
 		
-		inputEditController.getInputEditModel().getValueChangedNotifier().addModelPropertyChangedListener
+	 	this.inputEditController.getInputEditModel().getValueChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -760,17 +778,17 @@ public class AppController
 		 	}
 		);
 		
-		inputEditController.getInputEditModel().getValueChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+	 	this.inputEditController.getInputEditModel().getValueChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 		
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model InputGenerator changed: Update TimelinesDrawPanel:
 		
-		inputEditController.getInputEditModel().getInputTimelineChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+	 	this.inputEditController.getInputEditModel().getInputTimelineChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model ModulInputTypeData changed: Update TimelinesDrawPanel:
 		
-		inputEditController.getInputEditModel().getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+	 	this.inputEditController.getInputEditModel().getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 
 //	    //------------------------------------------------------------------------------------------
 //		// Input-Edit-Model Value changed: Update Timeline-Select:
