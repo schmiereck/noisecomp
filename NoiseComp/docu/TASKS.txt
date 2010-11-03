@@ -35,7 +35,6 @@ TODO:
 #56:	IMPROVEMENT: Import noiseComp.xml files.
 #58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
-#63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
 #81:	IMPROVEMENT: Calc the min/max values of a timeline and use it to scale the waveform view.
 #83:	IMPROVEMENT: Make width of TimelineGeneratorRule view bigger.
 #84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.
@@ -53,11 +52,14 @@ TODO:
 #96:	BUG: Remove a timeline does not clear the depending output timeline buffers.
 #97:	BUG: Change a module default does not clear the depending timeline buffers.
 #98:	IMPROVEMENT: Automatically ends playback if end of output reached.
-#99:
+#99:	BUG: If Zoom changed to + some of the things of #54 treten erneut auf. 
+#100:	
 
 WORK:
 =====
-		
+#63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
+		--> Timeline-(Buffers) used the removed timeline as input are not updated.
+ 
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 

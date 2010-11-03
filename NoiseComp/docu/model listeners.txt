@@ -22,7 +22,12 @@ Update chains of Models
 TimelineEdit
 	- generatorStartTimePosChangedNotifier(startPos, EndPos)
 		TimelineEditView.generatorStartTimePosTextField
-		??? TimelinesDrawPanel
+		TODO TimelinesDrawPanel
 	- generatorEndTimePosChangedNotifier(startPos, EndPos)
 		TimelineEditView.generatorEndTimePosTextField
-		??? TimelinesDrawPanel
+		TODO TimelinesDrawPanel
+
+TimelinesDrawPanel
+	- removeTimelineGeneratorNotifier()
+		timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(null)
+		TODO #63: Timeline-(Buffers) used the removed timeline as input are not updated.

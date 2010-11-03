@@ -87,6 +87,21 @@ implements TimelineContentChangedListenerInterface
 				}
 	     	}
 	    );
+	    //------------------------------------------------------------------------------------------
+	    this.timelinesDrawPanelModel.getRemoveTimelineGeneratorNotifier().addRemoveTimelineGeneratorListeners
+	    (
+	     	new RemoveTimelineGeneratorListenerInterface()
+	     	{
+				@Override
+				public void notifyRemoveTimelineGenerator(TimelineSelectEntryModel timelineSelectEntryModel)
+				{
+					if (timelineSelectEntryModel == timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel())
+					{
+						timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(null);
+					}
+				}
+	     	}
+	    );
 	    //==========================================================================================
 	}
 

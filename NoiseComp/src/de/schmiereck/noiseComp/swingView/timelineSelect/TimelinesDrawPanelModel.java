@@ -42,6 +42,11 @@ public class TimelinesDrawPanelModel
 	private List<TimelineSelectEntryModel> timelineSelectEntryModels = new Vector<TimelineSelectEntryModel>();
 
 	/**
+	 * {@link #timelineSelectEntryModels} removed listeners.
+	 */
+	private RemoveTimelineGeneratorNotifier removeTimelineGeneratorNotifier = new RemoveTimelineGeneratorNotifier();
+	
+	/**
 	 * {@link #timelineSelectEntryModels} changed (insert or remove) listeners.
 	 */
 	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
@@ -148,6 +153,7 @@ public class TimelinesDrawPanelModel
 		this.timelineSelectEntryModels.remove(timelineSelectEntryModel);
 		
 		// Notify listeners.
+		this.removeTimelineGeneratorNotifier.notifyRemoveTimelineGeneratorListeners(timelineSelectEntryModel);
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
@@ -375,5 +381,14 @@ public class TimelinesDrawPanelModel
 		
 		//==========================================================================================
 		return retPos;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #removeTimelineGeneratorNotifier}.
+	 */
+	public RemoveTimelineGeneratorNotifier getRemoveTimelineGeneratorNotifier()
+	{
+		return this.removeTimelineGeneratorNotifier;
 	}
 }
