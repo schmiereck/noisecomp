@@ -57,8 +57,6 @@ TODO:
 
 WORK:
 =====
-#63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
-		--> Timeline-(Buffers) used the removed timeline as input are not updated.
  
 DONE:
 =====
@@ -129,4 +127,6 @@ DONE:
 		--> Fixed in the meantime because of change handling timeline positions.
 #54:	BUG: Rulers are completely destroyed if zoom and timelineSelect size changed.
 		Also scrolling does not show the right ruler positions at all.
+#63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
+		--> Timeline-(Buffers) used the removed timeline as input are not updated.
 		

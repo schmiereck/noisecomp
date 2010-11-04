@@ -559,6 +559,7 @@ implements GeneratorBufferInterface,
 	 */
 	private void clearBuffer(int changedStartBufPos, int changedEndBufSize)
 	{
+		//==========================================================================================
 		try
 		{
 			for (int bufPos = changedStartBufPos; bufPos < changedEndBufSize; bufPos++)
@@ -570,6 +571,7 @@ implements GeneratorBufferInterface,
 		{
 			throw new RuntimeException("gen:" + this.generator.getName() + ", bufSize:" + this.bufSoundSamples.length + ", changedStartBufPos:" + changedStartBufPos + ", changedEndBufSize:" + changedEndBufSize + ", startTimePos:" + this.startTimePos + ", endTimePos:" + this.endTimePos, ex);
 		}
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
@@ -578,6 +580,7 @@ implements GeneratorBufferInterface,
 	@Override
 	public GeneratorBufferInterface getInputGeneratorBuffer(InputData inputData)
 	{
+		//==========================================================================================
 		GeneratorBufferInterface inputTimeline = this.inputTimelines.get(inputData);
 		
 		if (inputTimeline == null)
@@ -590,6 +593,7 @@ implements GeneratorBufferInterface,
 			}
 		}
 		
+		//==========================================================================================
 		return inputTimeline;
 	}
 
@@ -599,6 +603,7 @@ implements GeneratorBufferInterface,
 	@Override
 	public void notifyModulGeneratorRemoved(Generator removedGenerator)
 	{
+		//==========================================================================================
 		for (InputData inputData : this.inputTimelines.keySet())
 		{
 			if (inputData.getInputGenerator() == removedGenerator)
@@ -606,6 +611,7 @@ implements GeneratorBufferInterface,
 				this.inputTimelines.remove(removedGenerator);
 			}
 		}
+		//------------------------------------------------------------------------------------------
 		for (InputData inputData : this.outputTimelines.keySet())
 		{
 			if (inputData.getInputGenerator() == removedGenerator)
@@ -613,6 +619,7 @@ implements GeneratorBufferInterface,
 				this.outputTimelines.remove(removedGenerator);
 			}
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -620,6 +627,11 @@ implements GeneratorBufferInterface,
 	 */
 	public void removeInputTimeline(Timeline removedTimeline)
 	{
+		//==========================================================================================
+		float changedStartTimePos = removedTimeline.startTimePos;
+		float changedEndTimePos = removedTimeline.endTimePos;
+		
+		//------------------------------------------------------------------------------------------
 		{
 			Set<Entry<InputData, Timeline>> entrySet = this.inputTimelines.entrySet();
 			
@@ -631,10 +643,13 @@ implements GeneratorBufferInterface,
 				
 				if (entry.getValue() == removedTimeline)
 				{
+					this.generatorChanged(changedStartTimePos, changedEndTimePos);
+					
 					entrySetIterator.remove();
 				}
 			}
 		}
+		//------------------------------------------------------------------------------------------
 		{
 			Set<Entry<InputData, Timeline>> entrySet = this.outputTimelines.entrySet();
 			
@@ -650,6 +665,7 @@ implements GeneratorBufferInterface,
 				}
 			}
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -718,6 +734,7 @@ implements GeneratorBufferInterface,
 	@Override
 	public String toString()
 	{
+		//==========================================================================================
 		String generatorStr;
 		
 		if (this.generator != null)
@@ -728,6 +745,7 @@ implements GeneratorBufferInterface,
 		{
 			generatorStr = "generator:null";
 		}
+		//==========================================================================================
 		return super.toString() + "{" + generatorStr + "}";
 	}
 	

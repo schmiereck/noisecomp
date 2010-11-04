@@ -1324,7 +1324,7 @@ implements RemoveTimelineGeneratorListenerInterface
 		//==========================================================================================
 //		TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		//------------------------------------------------------------------------------------------
 		// Update Modul-Data:
 		
 		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
@@ -1334,6 +1334,7 @@ implements RemoveTimelineGeneratorListenerInterface
 		Timeline selectedTimeline = timelineSelectEntryModel.getTimeline();
 		
 		timelineManagerLogic.removeTimeline(selectedTimeline);
+		
 		//==========================================================================================
 	}
 

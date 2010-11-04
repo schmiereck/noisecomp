@@ -444,19 +444,19 @@ public class TimelineManagerLogic
 	public void removeTimeline(Timeline removedTimeline)
 	{
 		//==========================================================================================
-		Generator timelineGenerator = removedTimeline.getGenerator();
-		
-		this.mainModulGeneratorTypeData.removeGenerator(timelineGenerator);
-		
-		this.mainGeneratorTimelines.remove(timelineGenerator);
-		
-		//------------------------------------------------------------------------------------------
 		// remove all inputs from all other timelines:
 		
 		for (Timeline timeline : this.mainGeneratorTimelines.values())
 		{
 			timeline.removeInputTimeline(removedTimeline);
 		}
+		//------------------------------------------------------------------------------------------
+		Generator timelineGenerator = removedTimeline.getGenerator();
+		
+		this.mainModulGeneratorTypeData.removeGenerator(timelineGenerator);
+		
+		this.mainGeneratorTimelines.remove(timelineGenerator);
+		
 		//==========================================================================================
 	}
 

@@ -30,4 +30,7 @@ TimelineEdit
 TimelinesDrawPanel
 	- removeTimelineGeneratorNotifier()
 		timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(null)
-		TODO #63: Timeline-(Buffers) used the removed timeline as input are not updated.
+		AppController: timelineManagerLogic.removeTimeline
+		TimelinesTimeRuleController
+		TimelinesGeneratorsRuleController
+		timelineManagerLogic.removeTimeline
