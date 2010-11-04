@@ -41,6 +41,7 @@ import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
+import de.schmiereck.noiseComp.swingView.inputSelect.RemoveInputSelectEntryListenerInterface;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
@@ -73,7 +74,8 @@ import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
  * @version <p>04.09.2010:	created, smk</p>
  */
 public class AppController 
-implements RemoveTimelineGeneratorListenerInterface
+implements RemoveTimelineGeneratorListenerInterface, 
+		   RemoveInputSelectEntryListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -684,7 +686,12 @@ implements RemoveTimelineGeneratorListenerInterface
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					inputSelectController.doRemoveSelectedEntry();
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					Timeline selectedTimeline = timelinesDrawPanelController.getSelectedTimeline();
+					
+					inputSelectController.doRemoveSelectedEntry(selectedTimeline);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			 	}
 		 	}
 		);
@@ -792,6 +799,13 @@ implements RemoveTimelineGeneratorListenerInterface
 	 	timelinesDrawPanelModel.getRemoveTimelineGeneratorNotifier().addRemoveTimelineGeneratorListeners
 	 	(
 	 	 	timelinesGeneratorsRuleController
+	 	);
+	    //------------------------------------------------------------------------------------------
+	 	InputSelectModel inputSelectModel = this.inputSelectController.getInputSelectModel();
+	 	
+	 	inputSelectModel.getRemoveInputSelectEntryNotifier().addRemoveInputSelectEntryListeners
+	 	(
+	 	 	this
 	 	);
 	    //------------------------------------------------------------------------------------------
 		// http://download.oracle.com/javase/tutorial/uiswing/misc/action.html
@@ -1322,19 +1336,43 @@ implements RemoveTimelineGeneratorListenerInterface
 	                                          TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		//==========================================================================================
-//		TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
-		
-		//------------------------------------------------------------------------------------------
-		// Update Modul-Data:
-		
 		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
 		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		//------------------------------------------------------------------------------------------
+		// Update Modul-Data:
 		
 		Timeline selectedTimeline = timelineSelectEntryModel.getTimeline();
 		
 		timelineManagerLogic.removeTimeline(selectedTimeline);
 		
+		//==========================================================================================
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.swingView.inputSelect.RemoveInputSelectEntryListenerInterface#notifyRemoveInputSelectEntry(de.schmiereck.noiseComp.timeline.Timeline, de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel, de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel)
+	 */
+	@Override
+	public void notifyRemoveInputSelectEntry(Timeline selectedTimeline,
+	                                         InputSelectModel inputSelectModel, 
+	                                         InputSelectEntryModel inputSelectEntryModel)
+	{
+		//==========================================================================================
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		//------------------------------------------------------------------------------------------
+		// Update Generator-Input-Data:
+		
+		InputData inputData = inputSelectEntryModel.getInputData();
+		
+		if (inputData != null)
+		{
+			timelineManagerLogic.removeInput(selectedTimeline,
+			                                 inputData);
+		}
 		//==========================================================================================
 	}
 

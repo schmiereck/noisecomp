@@ -5,6 +5,7 @@ package de.schmiereck.noiseComp.swingView.inputSelect;
 
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 
 /**
@@ -22,6 +23,9 @@ public class InputSelectModel
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	private final InputsTabelModel inputsTabelModel = new InputsTabelModel();
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	private RemoveInputSelectEntryNotifier removeInputSelectEntryNotifier = new RemoveInputSelectEntryNotifier();
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
@@ -100,6 +104,7 @@ public class InputSelectModel
 	 */
 	public void setSelectedRowNo(Integer selectedRowNo)
 	{
+		//==========================================================================================
 		if (CompareUtils.compareWithNull(this.selectedRowNo, selectedRowNo) == false)
 		{
 			this.selectedRowNo = selectedRowNo;
@@ -107,6 +112,7 @@ public class InputSelectModel
 			// Notify listeners.
 			this.selectedRowNoChangedNotifier.notifyModelPropertyChangedListeners();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -124,6 +130,7 @@ public class InputSelectModel
 	 */
 	public InputSelectEntryModel getSelectedRow()
 	{
+		//==========================================================================================
 		InputSelectEntryModel selectEntryModel;
 		
 		Integer selectedRowNo = this.getSelectedRowNo();
@@ -139,7 +146,38 @@ public class InputSelectModel
 			selectEntryModel = null;
 		}
 		
+		//==========================================================================================
 		return selectEntryModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #removeInputSelectEntryNotifier}.
+	 */
+	public RemoveInputSelectEntryNotifier getRemoveInputSelectEntryNotifier()
+	{
+		return this.removeInputSelectEntryNotifier;
+	}
+
+	/**
+	 * @param selectedTimeline
+	 * 			is the selectedTimeline.
+	 * @param inputSelectEntryModel
+	 * 			is the InputSelectEntryModel.
+	 * @param rowNo
+	 * 			is the row number.
+	 */
+	public void removeInputSelectEntry(Timeline selectedTimeline,
+	                                   InputSelectEntryModel inputSelectEntryModel,
+	                                   int rowNo)
+	{
+		//==========================================================================================
+		this.inputsTabelModel.removeInput(rowNo);
+		
+		this.removeInputSelectEntryNotifier.notifyRemoveInputSelectEntryListeners(selectedTimeline,
+		                                                                          this, 
+		                                                                          inputSelectEntryModel);
+		//==========================================================================================
 	}
 
 }

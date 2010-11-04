@@ -13,6 +13,7 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -170,35 +171,40 @@ public class InputSelectController
 	}
 	
 	/**
+	 * Do Remove Selected Entry.
+	 * 
+	 * @param selectedTimeline
+	 * 			is the selectedTimeline.
 	 */
-	public void doRemoveSelectedEntry()
+	public void doRemoveSelectedEntry(Timeline selectedTimeline)
 	{
-		InputSelectModel inputSelectModel = this.getInputSelectModel();
-		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+		Integer selectedRowNo = this.inputSelectModel.getSelectedRowNo();
 		
 		if (selectedRowNo != null)
 		{
-			InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
-		
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Update Generator-Input-Data:
-			
+			InputsTabelModel inputsTabelModel = this.inputSelectModel.getInputsTabelModel();
+		
 			InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
 			
-			InputData inputData = inputSelectEntryModel.getInputData();
-			
-			if (inputData != null)
-			{
-				Generator ownerGenerator = inputData.getOwnerGenerator();
-				
-				ownerGenerator.removeInput(inputData);
-			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//			// Update Generator-Input-Data:
+//			
+//			InputData inputData = inputSelectEntryModel.getInputData();
+//			
+//			if (inputData != null)
+//			{
+//				Generator ownerGenerator = inputData.getOwnerGenerator();
+//				
+//				ownerGenerator.removeInput(inputData);
+//			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Input-Select-Model:
 			
-			inputsTabelModel.removeInput(selectedRowNo);
+			this.inputSelectModel.removeInputSelectEntry(selectedTimeline,
+			                                             inputSelectEntryModel,
+			                                             selectedRowNo);
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}

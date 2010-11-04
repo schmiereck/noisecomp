@@ -374,7 +374,7 @@ implements GeneratorInterface,
 				
 				if (inputData.getInputGenerator() != null)
 				{
-					//Der Generator tr�gt sich wieder als Listener bei dem Input aus.
+					// The Generator de-register as Listener from Input.
 					inputData.getInputGenerator().getGeneratorChangeObserver().removeGeneratorChangeListener(this);
 				}
 				

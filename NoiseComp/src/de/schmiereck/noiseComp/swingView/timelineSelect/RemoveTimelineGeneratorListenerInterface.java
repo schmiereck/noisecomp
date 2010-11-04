@@ -5,7 +5,7 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 /**
  * <p>
- * 	RemoveTimelineGeneratorListenerInterface.
+ * 	Remove Timeline-Generator Listener Interface.
  * </p>
  * 
  * @author smk

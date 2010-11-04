@@ -16,7 +16,6 @@ TODO:
 #22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
-#27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
 #31:	IMPROVEMENT: Add Flag that markes a input-type as multiple or singele input-type.
 #33:	TASK: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
 #34:	IMPROVEMENT: Input-Edit: Do not serve the edited generator as input generator.
@@ -42,7 +41,6 @@ TODO:
 #88:	IMPROVEMENT: Time-Scretching of timelines/modules, only the positions shifting, not the Freqences.
 #89:	IMPROVEMENT: Import and export of modules in/from files.
 #91:	IMPROVEMENT: Remove modules.
-#93:	BUG: Update new Input does not update timeline (after reselect input it works).
 #94:	BUG: New Modul. New Output. New Mixer. Change Select Modul. Come back. Seems to be a empty timeline.
 		Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
 			at de.schmiereck.noiseComp.swingView.appController.AppController.selectEditModule(AppController.java:856)
@@ -53,11 +51,13 @@ TODO:
 #97:	BUG: Change a module default does not clear the depending timeline buffers.
 #98:	IMPROVEMENT: Automatically ends playback if end of output reached.
 #99:	BUG: If Zoom changed to + some of the things of #54 treten erneut auf. 
-#100:	
+#101:
 
 WORK:
 =====
- 
+#93:	BUG: Update new Input does not update timeline (after reselect input it works).
+#100:	BUG: Remove Input does not update timeline.
+
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
@@ -129,4 +129,5 @@ DONE:
 		Also scrolling does not show the right ruler positions at all.
 #63:	BUG: TimelinesDrawPanelView: Update Inputs after remove timeline.
 		--> Timeline-(Buffers) used the removed timeline as input are not updated.
-		
+#27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
+		--> Cannot reproduce any more.

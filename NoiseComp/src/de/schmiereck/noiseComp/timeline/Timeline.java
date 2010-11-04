@@ -748,5 +748,29 @@ implements GeneratorBufferInterface,
 		//==========================================================================================
 		return super.toString() + "{" + generatorStr + "}";
 	}
+
+	/**
+	 * @param inputData
+	 * 			is the InputData.
+	 */
+	public void removeInput(InputData inputData)
+	{
+		//==========================================================================================
+		Generator inputGenerator = inputData.getInputGenerator();
+		Generator ownerGenerator = inputData.getOwnerGenerator();
+
+		Den entsprechenden output aus den soutput timeline löschen?
+		
+		this.inputTimelines.remove(inputData);
+		
+		//------------------------------------------------------------------------------------------
+		//inputGenerator.removeOutput();
+		this.generator.removeInput(inputData);
+		
+		//------------------------------------------------------------------------------------------
+		this.generatorChanged();
+		
+		//==========================================================================================
+	}
 	
 }

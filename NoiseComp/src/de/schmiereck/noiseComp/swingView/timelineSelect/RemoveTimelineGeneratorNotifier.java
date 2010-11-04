@@ -8,7 +8,7 @@ import java.util.Vector;
 
 /**
  * <p>
- * 	RemoveTimelineGeneratorNotifier.
+ * 	Remove Timeline-Generator Notifier.
  * </p>
  * 
  * @author smk
