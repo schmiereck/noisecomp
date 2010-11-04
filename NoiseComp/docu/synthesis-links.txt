@@ -30,3 +30,11 @@ sinus synthesis
 ===============
 http://forums.creativecow.net/thread/227/13104
 	Need integral of the input signalFrequency over time.
+
+http://v3.drumandbass.at/board/showthread.php?s=74463bab059269238dfb9d5192fac6d2&threadid=37507
+ein bsp für kick:
+sinus wave attack auf ca.5 bis 15 ms, decay = zw 150 und 800 ms oda länger kommt drauf an wasd willst, sustain = 0 release ca 50 bis 100 ms...
+drüber legst a noise wave mit attack=0 decay= 40 bis 100 ms sustain und release = 0 ...
+is jetz nur ein bsp wie ma z.B. ne minimal kick macht ... man kann da noch mehr rausholen mit pitch env. usw...
+und is nur EIN bsp und KEIN ultimatum...spiel dich einfach bissi mit synths. mach das gleiche mit nur einer noisewave und du hast a snare, mach decay kürzer und es wird ne hihat draus...usw...mach einfach mal!
+ 

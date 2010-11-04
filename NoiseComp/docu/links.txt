@@ -17,3 +17,6 @@ http://akira.ruc.dk/~jludvig/jamsynth/
 
 MML (Music Markup Language (XML)):
 http://www.musicmarkup.info/
+
+Samples:
+http://www.goldbaby.co.nz/freestuff.html

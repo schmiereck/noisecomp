@@ -756,12 +756,20 @@ implements GeneratorBufferInterface,
 	public void removeInput(InputData inputData)
 	{
 		//==========================================================================================
-		Generator inputGenerator = inputData.getInputGenerator();
-		Generator ownerGenerator = inputData.getOwnerGenerator();
+//		Generator inputGenerator = inputData.getInputGenerator();
+//		Generator ownerGenerator = inputData.getOwnerGenerator();
 
-		Den entsprechenden output aus den soutput timeline löschen?
+		// Remove from Input-Timelines:
 		
 		this.inputTimelines.remove(inputData);
+		
+//		//------------------------------------------------------------------------------------------
+//		// Remove also from Output-Timelines:
+//		
+//		for (Timeline outputTimeline : this.outputTimelines.values())
+//		{
+//			outputTimeline.removeInput(inputData);
+//		}
 		
 		//------------------------------------------------------------------------------------------
 		//inputGenerator.removeOutput();
