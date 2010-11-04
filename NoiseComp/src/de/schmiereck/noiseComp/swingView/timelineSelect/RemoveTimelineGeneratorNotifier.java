@@ -22,14 +22,18 @@ public class RemoveTimelineGeneratorNotifier
 	private List<RemoveTimelineGeneratorListenerInterface> removeTimelineGeneratorListeners = new Vector<RemoveTimelineGeneratorListenerInterface>();
 	
 	/**
+	 * @param timelinesDrawPanelModel
+	 * 			is the timelinesDrawPanelModel.
 	 * @param timelineSelectEntryModel
 	 * 			is the removed TimelineSelectEntryModel.
 	 */
-	public void notifyRemoveTimelineGeneratorListeners(TimelineSelectEntryModel timelineSelectEntryModel)
+	public void notifyRemoveTimelineGeneratorListeners(TimelinesDrawPanelModel timelinesDrawPanelModel,
+	                                                   TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		for (RemoveTimelineGeneratorListenerInterface removeTimelineGeneratorListener : this.removeTimelineGeneratorListeners)
 		{
-			removeTimelineGeneratorListener.notifyRemoveTimelineGenerator(timelineSelectEntryModel);
+			removeTimelineGeneratorListener.notifyRemoveTimelineGenerator(timelinesDrawPanelModel,
+			                                                              timelineSelectEntryModel);
 		}
 		
 	}

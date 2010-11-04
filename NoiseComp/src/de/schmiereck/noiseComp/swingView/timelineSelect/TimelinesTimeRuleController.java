@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
+import java.awt.Dimension;
+
 /**
  * <p>
  * 	Timelines-Time-Rule Controller.
@@ -11,7 +13,8 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
  * @author smk
  * @version <p>24.09.2010:	created, smk</p>
  */
-public class TimelinesTimeRuleController
+public class TimelinesTimeRuleController 
+implements RemoveTimelineGeneratorListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -78,6 +81,19 @@ public class TimelinesTimeRuleController
 		this.timelinesTimeRuleModel.setUnits((int)zoomX);
 		
 		this.timelinesTimeRuleView.repaint();
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.swingView.timelineSelect.RemoveTimelineGeneratorListenerInterface#notifyRemoveTimelineGenerator(de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel, de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel)
+	 */
+	@Override
+	public void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
+	                                          TimelineSelectEntryModel timelineSelectEntryModel)
+	{
+		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+		
+		// TimelinesTimeRule update.
+		this.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
 	}
 
 }

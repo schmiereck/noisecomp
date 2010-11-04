@@ -51,6 +51,7 @@ import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
@@ -71,7 +72,8 @@ import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
  * @author smk
  * @version <p>04.09.2010:	created, smk</p>
  */
-public class AppController
+public class AppController 
+implements RemoveTimelineGeneratorListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -528,37 +530,14 @@ public class AppController
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-					//ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					//ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
-					
 					TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					// Update Modul-Data:
-					
-					SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-					
-					TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
-					
-					Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
-					
-					timelineManagerLogic.removeTimeline(selectedTimeline);
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Timeline-Select-Model:
-					
+
 					timelinesDrawPanelModel.removeTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
-					
-					// TimelinesTimeRule update.
-					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
-					
-					// TimelinesGeneratorsRule update.
-					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
@@ -795,6 +774,25 @@ public class AppController
 //	    (
 //	    	timelinesDrawPanelController.getTimelineGeneratorModelChangedListener()
 //	    );
+	    //------------------------------------------------------------------------------------------
+	 	TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+	 	
+	    //------------------------------------------------------------------------------------------
+	 	timelinesDrawPanelModel.getRemoveTimelineGeneratorNotifier().addRemoveTimelineGeneratorListeners
+	 	(
+	 	 	this
+	 	);
+	    //------------------------------------------------------------------------------------------
+	 	timelinesDrawPanelModel.getRemoveTimelineGeneratorNotifier().addRemoveTimelineGeneratorListeners
+	 	(
+	 	 	timelinesTimeRuleController
+	 	);
+	    //------------------------------------------------------------------------------------------
+		// TimelinesGeneratorsRule update.
+	 	timelinesDrawPanelModel.getRemoveTimelineGeneratorNotifier().addRemoveTimelineGeneratorListeners
+	 	(
+	 	 	timelinesGeneratorsRuleController
+	 	);
 	    //------------------------------------------------------------------------------------------
 		// http://download.oracle.com/javase/tutorial/uiswing/misc/action.html
 		this.appView.getPlayButton().addActionListener
@@ -1314,6 +1312,29 @@ public class AppController
 		PreferencesUtils.setValueString(userPrefs, 
 		                                "fileActionFile", 
 		                                fileActionFileStr);
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.swingView.timelineSelect.RemoveTimelineGeneratorListenerInterface#notifyRemoveTimelineGenerator(de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel, de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel)
+	 */
+	@Override
+	public void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
+	                                          TimelineSelectEntryModel timelineSelectEntryModel)
+	{
+		//==========================================================================================
+//		TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Update Modul-Data:
+		
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		Timeline selectedTimeline = timelineSelectEntryModel.getTimeline();
+		
+		timelineManagerLogic.removeTimeline(selectedTimeline);
+		//==========================================================================================
 	}
 
 }

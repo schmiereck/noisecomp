@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
+import java.awt.Dimension;
+
 /**
  * <p>
  * 	Timeline-Generators-Rule Controller.
@@ -11,7 +13,8 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
  * @author smk
  * @version <p>23.09.2010:	created, smk</p>
  */
-public class TimelinesGeneratorsRuleController
+public class TimelinesGeneratorsRuleController 
+implements RemoveTimelineGeneratorListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -71,6 +74,19 @@ public class TimelinesGeneratorsRuleController
 	public void doChangeTimelinesPosition()
 	{
 		this.getTimelinesGeneratorsRuleView().repaint();
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.swingView.timelineSelect.RemoveTimelineGeneratorListenerInterface#notifyRemoveTimelineGenerator(de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel, de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel)
+	 */
+	@Override
+	public void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
+												TimelineSelectEntryModel timelineSelectEntryModel)
+	{
+		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+		
+		// TimelinesGeneratorsRule update.
+		this.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
 	}
 
 }

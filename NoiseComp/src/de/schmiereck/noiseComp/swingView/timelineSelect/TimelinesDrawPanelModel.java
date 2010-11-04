@@ -153,7 +153,8 @@ public class TimelinesDrawPanelModel
 		this.timelineSelectEntryModels.remove(timelineSelectEntryModel);
 		
 		// Notify listeners.
-		this.removeTimelineGeneratorNotifier.notifyRemoveTimelineGeneratorListeners(timelineSelectEntryModel);
+		this.removeTimelineGeneratorNotifier.notifyRemoveTimelineGeneratorListeners(this,
+		                                                                            timelineSelectEntryModel);
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 

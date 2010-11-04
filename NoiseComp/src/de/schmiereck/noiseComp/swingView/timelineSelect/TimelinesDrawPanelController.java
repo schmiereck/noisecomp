@@ -93,7 +93,8 @@ implements TimelineContentChangedListenerInterface
 	     	new RemoveTimelineGeneratorListenerInterface()
 	     	{
 				@Override
-				public void notifyRemoveTimelineGenerator(TimelineSelectEntryModel timelineSelectEntryModel)
+				public void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
+				                                          TimelineSelectEntryModel timelineSelectEntryModel)
 				{
 					if (timelineSelectEntryModel == timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel())
 					{

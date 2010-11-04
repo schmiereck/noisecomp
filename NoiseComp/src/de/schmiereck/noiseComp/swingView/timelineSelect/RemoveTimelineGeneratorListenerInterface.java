@@ -14,8 +14,11 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
 public interface RemoveTimelineGeneratorListenerInterface
 {
 	/**
+	 * @param timelinesDrawPanelModel
+	 * 			is the removed timelinesDrawPanelModel.
 	 * @param timelineSelectEntryModel
 	 * 			is the removed TimelineSelectEntryModel.
 	 */
-	void notifyRemoveTimelineGenerator(TimelineSelectEntryModel timelineSelectEntryModel);
+	void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
+	                                   TimelineSelectEntryModel timelineSelectEntryModel);
 }
