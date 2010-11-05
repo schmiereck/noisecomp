@@ -623,7 +623,44 @@ implements GeneratorBufferInterface,
 	}
 
 	/**
+	 * @param inputData
+	 * 			is the InputData.
+	 */
+	public void removeInput(InputData inputData)
+	{
+		//==========================================================================================
+//		Generator inputGenerator = inputData.getInputGenerator();
+//		Generator ownerGenerator = inputData.getOwnerGenerator();
+
+		//------------------------------------------------------------------------------------------
+		// Remove from Input-Timelines:
+		
+		Timeline removedTimeline = this.inputTimelines.remove(inputData);
+		
+		float changedStartTimePos = removedTimeline.startTimePos;
+		float changedEndTimePos = removedTimeline.endTimePos;
+		
+//		//------------------------------------------------------------------------------------------
+//		// Remove also from Output-Timelines:
+//		
+//		for (Timeline outputTimeline : this.outputTimelines.values())
+//		{
+//			outputTimeline.removeInput(inputData);
+//		}
+		
+		//------------------------------------------------------------------------------------------
+		//inputGenerator.removeOutput();
+		this.generator.removeInput(inputData);
+		
+		//------------------------------------------------------------------------------------------
+		this.generatorChanged(changedStartTimePos, changedEndTimePos);
+		
+		//==========================================================================================
+	}
+
+	/**
 	 * @param removedTimeline
+	 * 			is the removed Timeline.
 	 */
 	public void removeInputTimeline(Timeline removedTimeline)
 	{
@@ -643,9 +680,13 @@ implements GeneratorBufferInterface,
 				
 				if (entry.getValue() == removedTimeline)
 				{
-					this.generatorChanged(changedStartTimePos, changedEndTimePos);
+					InputData inputData = entry.getKey();
+					
+					this.generator.removeInput(inputData);
 					
 					entrySetIterator.remove();
+					
+					this.generatorChanged(changedStartTimePos, changedEndTimePos);
 				}
 			}
 		}
@@ -747,38 +788,6 @@ implements GeneratorBufferInterface,
 		}
 		//==========================================================================================
 		return super.toString() + "{" + generatorStr + "}";
-	}
-
-	/**
-	 * @param inputData
-	 * 			is the InputData.
-	 */
-	public void removeInput(InputData inputData)
-	{
-		//==========================================================================================
-//		Generator inputGenerator = inputData.getInputGenerator();
-//		Generator ownerGenerator = inputData.getOwnerGenerator();
-
-		// Remove from Input-Timelines:
-		
-		this.inputTimelines.remove(inputData);
-		
-//		//------------------------------------------------------------------------------------------
-//		// Remove also from Output-Timelines:
-//		
-//		for (Timeline outputTimeline : this.outputTimelines.values())
-//		{
-//			outputTimeline.removeInput(inputData);
-//		}
-		
-		//------------------------------------------------------------------------------------------
-		//inputGenerator.removeOutput();
-		this.generator.removeInput(inputData);
-		
-		//------------------------------------------------------------------------------------------
-		this.generatorChanged();
-		
-		//==========================================================================================
 	}
 	
 }

@@ -38,6 +38,7 @@ import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
+import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
@@ -52,6 +53,7 @@ import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
+import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController;
@@ -715,8 +717,22 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Models Changed:
 		//------------------------------------------------------------------------------------------
-		// General TimelinesDrawPanelModel Listener: Called if something of Model changed:
+		TimelineEditModel timelineEditModel = timelineEditController.getTimelineEditModel();
 		
+		//------------------------------------------------------------------------------------------
+	 	timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
+	 	(
+	 	 	timelinesDrawPanelController
+	 	);
+	 	
+		//------------------------------------------------------------------------------------------
+	 	timelineEditModel.getGeneratorEndTimePosChangedNotifier().addModelPropertyChangedListener
+	 	(
+	 	 	timelinesDrawPanelController
+	 	);
+	 	
+		//------------------------------------------------------------------------------------------
+		// General TimelinesDrawPanelModel Listener: Called if something of Model changed:
 	 	ModelPropertyChangedListener modelPropertyChangedListener = new ModelPropertyChangedListener()
 	 	{
 			@Override
@@ -733,19 +749,22 @@ implements RemoveTimelineGeneratorListenerInterface,
 			}
 	 	};
 		//------------------------------------------------------------------------------------------
+	 	InputEditModel inputEditModel = this.inputEditController.getInputEditModel();
+	 	
+		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model InputTypeData changed: Update TimelinesDrawPanel:
 		
-	 	this.inputEditController.getInputEditModel().getInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+		inputEditModel.getInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 		
 //		//------------------------------------------------------------------------------------------
 //		// Input-Edit-Model InputTypeData changed: Update TimelinesDrawPanel:
 //		
-//		inputEditController.getInputEditModel().getInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+//		inputEditModel.getInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model Value changed: Update Input-Select and TimelinesDrawPanel:
 		
-	 	this.inputEditController.getInputEditModel().getValueChangedNotifier().addModelPropertyChangedListener
+	 	inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -762,17 +781,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	}
 		);
 		
-	 	this.inputEditController.getInputEditModel().getValueChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+	 	inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 		
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model InputGenerator changed: Update TimelinesDrawPanel:
 		
-	 	this.inputEditController.getInputEditModel().getInputTimelineChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+	 	inputEditModel.getInputTimelineChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model ModulInputTypeData changed: Update TimelinesDrawPanel:
 		
-	 	this.inputEditController.getInputEditModel().getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+	 	inputEditModel.getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 
 //	    //------------------------------------------------------------------------------------------
 //		// Input-Edit-Model Value changed: Update Timeline-Select:

@@ -132,10 +132,13 @@ public class TimelineEditModel
 	 */
 	public void setGeneratorStartTimePos(Float startTimePos)
 	{
-		this.generatorStartTimePos = startTimePos;
-		
-		// Notify listeners.
-		this.generatorStartTimePosChangedNotifier.notifyModelPropertyChangedListeners();
+		if (startTimePos != this.generatorStartTimePos)
+		{
+			this.generatorStartTimePos = startTimePos;
+			
+			// Notify listeners.
+			this.generatorStartTimePosChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
@@ -162,10 +165,13 @@ public class TimelineEditModel
 	 */
 	public void setGeneratorEndTimePos(Float endTimePos)
 	{
-		this.generatorEndTimePos = endTimePos;
-		
-		// Notify listeners.
-		this.generatorEndTimePosChangedNotifier.notifyModelPropertyChangedListeners();
+		if (endTimePos != this.generatorEndTimePos)
+		{
+			this.generatorEndTimePos = endTimePos;
+			
+			// Notify listeners.
+			this.generatorEndTimePosChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**

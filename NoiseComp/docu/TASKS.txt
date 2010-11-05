@@ -51,12 +51,11 @@ TODO:
 #97:	BUG: Change a module default does not clear the depending timeline buffers.
 #98:	IMPROVEMENT: Automatically ends playback if end of output reached.
 #99:	BUG: If Zoom changed to + some of the things of #54 treten erneut auf. 
-#101:
+#101:	TASK: Change float to double.
+#102:
 
 WORK:
 =====
-#93:	BUG: Update new Input does not update timeline (after reselect input it works).
-#100:	BUG: Remove Input does not update timeline.
 
 DONE:
 =====
@@ -131,3 +130,6 @@ DONE:
 		--> Timeline-(Buffers) used the removed timeline as input are not updated.
 #27:	BUG: Application exit if resize application frame to very small and than back without exception (only if you maximace timeline-select split bevor?) (Swing-Bug?). 
 		--> Cannot reproduce any more.
+#100:	BUG: Remove Input does not update timeline.
+#93:	BUG: Update new Input does not update timeline (after reselect input it works).
+		--> look at #100

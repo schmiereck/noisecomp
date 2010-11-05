@@ -20,7 +20,8 @@ import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
  * @version <p>07.09.2010:	created, smk</p>
  */
 public class TimelinesDrawPanelController 
-implements TimelineContentChangedListenerInterface
+implements TimelineContentChangedListenerInterface, 
+		   ModelPropertyChangedListener
 {
 	//**********************************************************************************************
 	// Fields:
@@ -316,6 +317,18 @@ implements TimelineContentChangedListenerInterface
 	 */
 	@Override
 	public void notifyTimelineContentChanged(long bufferStart, long bufferEnd)
+	{
+		//==========================================================================================
+		this.timelinesDrawPanelView.repaint();
+		
+		//==========================================================================================
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener#notifyModelPropertyChanged()
+	 */
+	@Override
+	public void notifyModelPropertyChanged()
 	{
 		//==========================================================================================
 		this.timelinesDrawPanelView.repaint();
