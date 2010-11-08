@@ -118,6 +118,13 @@ implements GeneratorChangeListenerInterface
 				
 				Timeline inputTimeline = this.searchInputTimeline(inputTimelines, generator);
 				
+				// Not connected generator?
+				if (inputTimeline == null)
+				{
+					// Create this timeline.
+					inputTimeline = this.timelineManagerLogic.createTimeline(generator);
+				}
+				
 				timelines.add(inputTimeline);
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
