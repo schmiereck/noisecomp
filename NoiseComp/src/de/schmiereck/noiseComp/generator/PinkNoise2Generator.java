@@ -65,8 +65,8 @@ extends Generator
 		//==========================================================================================
 		float mean = 0.0F;
 		float variance = 0.0F;
-		double alpha = 1.0D;
-		int poles = 5;
+		double alpha = 0.0D;
+		int poles = 2;
 		
 		Object inputsSyncObject = this.getInputsSyncObject();
 		
@@ -98,6 +98,7 @@ extends Generator
 								{
 									mean += value;
 								}
+								break;
 							}
 							case INPUT_TYPE_VARIANCE:
 							{
@@ -196,19 +197,19 @@ extends Generator
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData(PinkNoise2Generator.class, "Pink Noise 2", "Generate White Gaussian Noise with variance, mean, alpha and poles.");
 		
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VARIANCE, "variance", -1, -1, "The variance.");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VARIANCE, "variance", -1, -1, "The variance (default 0).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MEAN, "mean", -1, -1, "The mean.");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MEAN, "mean", -1, -1, "The mean (default 0).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_ALPHA, "alpha", -1, -1, "The alpha.");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_ALPHA, "alpha", -1, -1, "The alpha (default 0, alpha 1 is pink, alpha 2 is brown, 0 to 2).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_POLES, "poles", -1, -1, "The poles.");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_POLES, "poles", -1, -1, "The poles (default 2).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

@@ -85,7 +85,8 @@ extends Generator
 		//------------------------------------------------------------------------------------------
 		//int valumeCnt = 0;
 		float volume = 1.0F;
-	
+//		float volumeCnt = 1.0F;
+		
 		float signalLeft = 0.0F;
 		float signalRight = 0.0F;
 	
@@ -121,6 +122,7 @@ extends Generator
 									if (Float.isNaN(value) == false)
 									{
 										volume *= value;
+//										volumeCnt++;
 									}
 //								}
 //								catch (NoInputSignalException ex)
@@ -169,7 +171,10 @@ extends Generator
 		//	volume /= valumeCnt;
 		//}
 		
-		soundSample.setStereoValues(signalLeft * volume, signalRight * volume);
+//		soundSample.setStereoValues(signalLeft * (volume / volumeCnt), 
+//		                            signalRight * (volume / volumeCnt));
+		soundSample.setStereoValues(signalLeft * (volume), 
+		                            signalRight * (volume));
 		
 		//==========================================================================================
 	}

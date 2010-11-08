@@ -135,44 +135,44 @@ extends Generator
 		return generatorTypeData;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#getGeneratorSampleDrawScale()
-	 */
-	public float getGeneratorSampleDrawScale(ModulGenerator parentModulGenerator, 
-	                                         GeneratorBufferInterface generatorBuffer,
-	                                         ModulArguments modulArguments)
-	{
-		//==========================================================================================
-		// Works only, if the values are constant inputs:
-		
-        float frameTime = 0.0F;
-        
-		float startFadeValue = this.calcStartFadeValue(0, 
-		                                               frameTime,
-		                                               parentModulGenerator, 
-		                                               generatorBuffer,
-		                                               modulArguments);
-		
-		float endFadeValue = this.calcEndFadeValue(0, 
-	                                               frameTime,
-		                                           parentModulGenerator, 
-		                                           generatorBuffer,
-		                                           modulArguments);
-		
-		float max = Math.max(Math.abs(startFadeValue), Math.abs(endFadeValue));
-		
-		float ret;
-		
-		if (max > 1.0F)
-		{
-			ret = 1.0F / max;
-		}
-		else
-		{	
-			ret = 1.0F;
-		}
-		
-		//==========================================================================================
-		return ret;
-	}
+//	/* (non-Javadoc)
+//	 * @see de.schmiereck.noiseComp.generator.Generator#getGeneratorSampleDrawScale()
+//	 */
+//	public float getGeneratorSampleDrawScale(ModulGenerator parentModulGenerator, 
+//	                                         GeneratorBufferInterface generatorBuffer,
+//	                                         ModulArguments modulArguments)
+//	{
+//		//==========================================================================================
+//		// Works only, if the values are constant inputs:
+//		
+//        float frameTime = 0.0F;
+//        
+//		float startFadeValue = this.calcStartFadeValue(0, 
+//		                                               frameTime,
+//		                                               parentModulGenerator, 
+//		                                               generatorBuffer,
+//		                                               modulArguments);
+//		
+//		float endFadeValue = this.calcEndFadeValue(0, 
+//	                                               frameTime,
+//		                                           parentModulGenerator, 
+//		                                           generatorBuffer,
+//		                                           modulArguments);
+//		
+//		float max = Math.max(Math.abs(startFadeValue), Math.abs(endFadeValue));
+//		
+//		float ret;
+//		
+//		if (max > 1.0F)
+//		{
+//			ret = 1.0F / max;
+//		}
+//		else
+//		{	
+//			ret = 1.0F;
+//		}
+//		
+//		//==========================================================================================
+//		return ret;
+//	}
 }
