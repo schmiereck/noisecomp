@@ -38,3 +38,8 @@ drüber legst a noise wave mit attack=0 decay= 40 bis 100 ms sustain und release
 is jetz nur ein bsp wie ma z.B. ne minimal kick macht ... man kann da noch mehr rausholen mit pitch env. usw...
 und is nur EIN bsp und KEIN ultimatum...spiel dich einfach bissi mit synths. mach das gleiche mit nur einer noisewave und du hast a snare, mach decay kürzer und es wird ne hihat draus...usw...mach einfach mal!
  
+clap
+====
+http://www.musiksynthesizer.de/geraete/DL-909/DL-909_handclap.htm
+example:
+http://www.fotosearch.com/UNK104/u17461568/

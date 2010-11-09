@@ -399,7 +399,7 @@ implements GeneratorChangeListenerInterface
 	 * Generates the next part of samples and store them in the buffer object {@link #soundSamplesBufferData}.
 	 * 
 	 * @param actualWaitPerFramesMillis
-	 * 			???
+	 * 			are the Milliseconds to calculate.
 	 */
 	public void pollCalcFillBuffer(long actualWaitPerFramesMillis)
 	{
@@ -410,8 +410,14 @@ implements GeneratorChangeListenerInterface
 				long emptyBuffer1Start = this.soundSamplesBufferData.getEmptyBufferStart();
 				long emptyBuffer1End = this.soundSamplesBufferData.getEmptyBufferEnd();
 				
-				this.soundSamplesBufferData.calcWaitingSamplesPart(actualWaitPerFramesMillis / 1000.0F, 
-																   this.outputTimeline);
+				boolean bufferCompletelyFilled =
+					this.soundSamplesBufferData.calcWaitingSamplesPart(actualWaitPerFramesMillis / 1000.0F, 
+																	   this.outputTimeline);
+				
+				if (bufferCompletelyFilled == true)
+				{
+					this.timelineManagerLogic.notifyBufferCompletelyFilled();
+				}
 				
 				long emptyBuffer2Start = this.soundSamplesBufferData.getEmptyBufferStart();
 				long emptyBuffer2End = this.soundSamplesBufferData.getEmptyBufferEnd();
@@ -428,7 +434,7 @@ implements GeneratorChangeListenerInterface
 			}
 		}
 	}
-	
+
 	public long getEmptyBufferStart()
 	{
 		long ret;

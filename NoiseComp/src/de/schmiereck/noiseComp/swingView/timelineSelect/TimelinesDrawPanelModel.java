@@ -21,6 +21,11 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 public class TimelinesDrawPanelModel
 {
 	//**********************************************************************************************
+	// Constants:
+	
+	public static final int SIZE_TIMELINE_Y = 16;
+	
+	//**********************************************************************************************
 	// Fields:
 	
 	//----------------------------------------------------------------------------------------------
@@ -33,7 +38,7 @@ public class TimelinesDrawPanelModel
 	
 	//----------------------------------------------------------------------------------------------
 	private int maxUnitIncrementX = 1;
-	private int maxUnitIncrementY = 16;
+	private int maxUnitIncrementY = SIZE_TIMELINE_Y;
 
 	//----------------------------------------------------------------------------------------------
 	/**

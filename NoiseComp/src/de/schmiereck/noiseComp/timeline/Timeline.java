@@ -44,9 +44,42 @@ implements GeneratorBufferInterface,
 	 */
 	private Generator generator = null;
 	
+	/**
+	 * Start time Position in seconds.
+	 */
 	private float startTimePos = 0.0F;
 	
+	/**
+	 * End time Position in seconds.
+	 */
 	private float endTimePos = 0.0F;
+	
+	/**
+	 * <code>true</code> (default) if {@link #bufSoundSamples} is not compleately calculated. 
+	 */
+	private boolean bufferIsDirty = true;
+	
+	/**
+	 * Maximum value of timeline {@link #bufSoundSamples}.<br/>
+	 * {@link Float#NaN} (default) if no value is calculated.<br/>
+	 * Only correct, if {@link #bufferIsDirty} if <code>false</code>.
+	 */
+	private float valueMax = Float.NaN;
+	
+	/**
+	 * Minimum value of timeline {@link #bufSoundSamples}.<br/>
+	 * {@link Float#NaN} (default) if no value is calculated.<br/>
+	 * Only correct, if {@link #bufferIsDirty} if <code>false</code>.
+	 */
+	private float valueMin = Float.NaN;
+	
+	/**
+	 * Buffered Sound Samples between start and end output of {@link #generator}.
+	 * @see #bufferIsDirty is <code>true</code> if not all samples are completely calculated.
+	 * @see #valueMax
+	 * @see #valueMin
+	 */
+	private SoundSample[] bufSoundSamples = new SoundSample[0];
 	
 	/**
 	 * Input Timelines.
@@ -61,11 +94,6 @@ implements GeneratorBufferInterface,
 	 * Key is the {@link InputData} of the target output timeline generator.
 	 */
 	private Map<InputData, Timeline> outputTimelines = new HashMap<InputData, Timeline>();
-	
-	/**
-	 * Buffered Sound Samples between start and end output of {@link #generator}.
-	 */
-	private SoundSample[] bufSoundSamples = new SoundSample[0];
 	
 	/**
 	 * Sub-Modul Generator Timelines.
@@ -555,11 +583,15 @@ implements GeneratorBufferInterface,
 
 	/**
 	 * @param changedStartBufPos
+	 * 			is the start position of changed buffer area.
 	 * @param changedEndBufSize
+	 * 			is the start position of changed buffer area.
 	 */
 	private void clearBuffer(int changedStartBufPos, int changedEndBufSize)
 	{
 		//==========================================================================================
+		this.bufferIsDirty = true;
+		
 		try
 		{
 			for (int bufPos = changedStartBufPos; bufPos < changedEndBufSize; bufPos++)
@@ -767,6 +799,111 @@ implements GeneratorBufferInterface,
 	public Collection<Timeline> getSubGeneratorTimelines()
 	{
 		return this.subGeneratorTimelines.values();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #valueMax}.
+	 */
+	public float getValueMax()
+	{
+		return this.valueMax;
+	}
+
+	/**
+	 * @param valueMax 
+	 * 			to set {@link #valueMax}.
+	 */
+	public void setValueMax(float valueMax)
+	{
+		this.valueMax = valueMax;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #valueMin}.
+	 */
+	public float getValueMin()
+	{
+		return this.valueMin;
+	}
+
+	/**
+	 * @param valueMin 
+	 * 			to set {@link #valueMin}.
+	 */
+	public void setValueMin(float valueMin)
+	{
+		this.valueMin = valueMin;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #bufferIsDirty}.
+	 */
+	public boolean getBufferIsDirty()
+	{
+		return this.bufferIsDirty;
+	}
+
+	/**
+	 * @param bufferIsDirty 
+	 * 			to set {@link #bufferIsDirty}.
+	 */
+	public void setBufferIsDirty(boolean bufferIsDirty)
+	{
+		this.bufferIsDirty = bufferIsDirty;
+	}
+
+	/**
+	 * Calculate min and max values of timeline buffer.
+	 */
+	public void calcMinMaxValues()
+	{
+		//==========================================================================================
+		float max = Float.MIN_VALUE;
+		float min = Float.MAX_VALUE;
+		
+		//------------------------------------------------------------------------------------------
+		for (int bufPos = 0; bufPos < this.bufSoundSamples.length; bufPos++)
+		{
+			SoundSample soundSample = this.bufSoundSamples[bufPos];
+			
+			if (soundSample != null)
+			{
+				float value = soundSample.getMonoValue();
+				
+				if (value > max)
+				{
+					max = value;
+				}
+				
+				if (value < min)
+				{
+					min = value;
+				}
+			}
+		}
+
+		//------------------------------------------------------------------------------------------
+		if (max != Float.MIN_VALUE)
+		{
+			this.valueMax = max;
+		}
+		else
+		{
+			this.valueMax = Float.NaN;
+		}
+		
+		if (min != Float.MAX_VALUE)
+		{
+			this.valueMin = min;
+		}
+		else
+		{
+			this.valueMin = Float.NaN;
+		}
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)

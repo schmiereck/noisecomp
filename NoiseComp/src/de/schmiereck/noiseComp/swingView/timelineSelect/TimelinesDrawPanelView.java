@@ -50,9 +50,14 @@ implements Scrollable//, MouseMotionListener
 	// Constants:
 	
 	/**
-	 * Zoom factor Y.
+	 * Initial Zoom factor X.
 	 */
-	private static final double	ZOOM_Y	= 1.0D;
+	private static final double	INIT_ZOOM_X	= 40.0D;
+	
+	/**
+	 * Initial Zoom factor Y.
+	 */
+	public static final double	INIT_ZOOM_Y	= 1.0D;
 
 	private static final Color CTimelineNormalBackground = Color.WHITE;
 	private static final Color CTimelineSelectedBackground = new Color(128, 128, 192);
@@ -70,7 +75,10 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
-	private final AffineTransform at = AffineTransform.getScaleInstance(40.0D, ZOOM_Y);
+	/**
+	 * Tranforma positions to view.
+	 */
+	private final AffineTransform at = AffineTransform.getScaleInstance(INIT_ZOOM_X, INIT_ZOOM_Y);
 	
 	//----------------------------------------------------------------------------------------------
 // 	private boolean isMousePressed = false;
@@ -234,7 +242,7 @@ implements Scrollable//, MouseMotionListener
 				{
 					float zoomX = timelinesDrawPanelModel.getZoomX();
 					
-					at.setToScale(zoomX, ZOOM_Y);
+					at.setToScale(zoomX, INIT_ZOOM_Y);
 					
 //				    // Update client's preferred size because
 //				    // the area taken up by the graphics has
@@ -294,14 +302,16 @@ implements Scrollable//, MouseMotionListener
 
 	/**
 	 * @param point
+	 * 			is the mouse Point poition of coordinates relative to the source component.
 	 * @return
+	 * 			the Point of tranformated to view.
 	 */
 	private Point2D mousePos(Point point)
 	{
 		Point2D point2D;
 		try
 		{
-			point2D = at.inverseTransform(point, null);
+			point2D = this.at.inverseTransform(point, null);
 		}
 		catch (NoninvertibleTransformException ex)
 		{
@@ -509,7 +519,8 @@ implements Scrollable//, MouseMotionListener
 
 		if (timeline != null)
 		{
-			//ModulGenerator parentModulGenerator = null;	//TODO make it real, smk
+			float valueMax = timeline.getValueMax();
+			float valueMin = timeline.getValueMin();
 			
 			float frameRate = timeline.getSoundFrameRate();
 			float frameStep = timeLength / (frameRate / DRAW_EVERY_SAMPLE);
@@ -544,12 +555,39 @@ implements Scrollable//, MouseMotionListener
 				if (soundSample != null)
 				{
 					float posX = (startTimePos + timePos); 
-					float posY = (generatorPosY + 
-								  (soundSample.getMonoValue() * maxUnitIncrementY * -0.5F) + 
-								  (maxUnitIncrementY / 2.0F)); 
+
+					float value = soundSample.getMonoValue();
+					float posY;
 					
-//					point.setRect(posX, posY,
-//					              pointSizeX, pointSizeY);
+					if (Float.isNaN(value) == false)
+					{
+						if (value > 0.0F)
+						{
+							if (Float.isNaN(valueMax) == false)
+							{
+								value /= valueMax;
+							}
+						}
+						else
+						{
+							if (value < 0.0F)
+							{
+								if (Float.isNaN(valueMin) == false)
+								{
+									value /= -valueMin;
+								}
+							}
+						}
+						
+						posY = (generatorPosY + 
+								(value * maxUnitIncrementY * -0.5F) + 
+								(maxUnitIncrementY / 2.0F)); 
+					}
+					else
+					{
+						posY = 0.0F;
+					}
+					
 					srcPoint.setLocation(pointSizeX, pointSizeY);
 					
 //					Shape shape = this.at.createTransformedShape(point);
@@ -828,7 +866,7 @@ implements Scrollable//, MouseMotionListener
 		// Scale:
 		
 		this.timelinesDrawPanelModel.setDimensionSize(width * timelinesDrawPanelModel.getZoomX(), 
-		                                              height * ZOOM_Y);
+		                                              height * INIT_ZOOM_Y);
 	}
 	
 //	public Dimension getPreferredSize()

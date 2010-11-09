@@ -664,4 +664,25 @@ public class TimelineManagerLogic
 		//==========================================================================================
 	}
 	
+	/**
+	 * Notify Sound Buffer is now completely filled.
+	 */
+	public void notifyBufferCompletelyFilled()
+	{
+		//==========================================================================================
+		for (Timeline timeline : this.mainGeneratorTimelines.values())
+		{
+			if (timeline.getBufferIsDirty() == true)
+			{
+				// Calculate min and max values of timeline.
+				timeline.calcMinMaxValues();
+				
+				// Reset dirty flag of timeline.
+				timeline.setBufferIsDirty(false);
+			}
+		}
+		
+		//==========================================================================================
+	}
+	
 }

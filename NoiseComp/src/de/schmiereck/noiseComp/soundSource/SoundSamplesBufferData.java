@@ -131,43 +131,66 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 	 * Generates the next part of samples and store them in the buffer.
 	 * 
 	 * @param partTime
-	 * 			says in milliseconds how long is the time part the buffer is filled. 
+	 * 			says in seconds how long the time part the buffer is to filled. 
 	 * @param outputTimeline
 	 * 			is the output Timeline.
+	 * @return
+	 * 			<code>true</code> if the buffer was dirty and is now completely filled.
 	 */
-	public void calcWaitingSamplesPart(float partTime, Timeline outputTimeline)
+	public boolean calcWaitingSamplesPart(float partTime, Timeline outputTimeline)
 	{
-		int framePos;
-		int frames = (int)(partTime * outputTimeline.getSoundFrameRate());
-
-		// TODO null as modul is not the best...?
-		ModulGenerator parentModulGenerator = null;
+		boolean bufferCompletelyFilled;
 		
-        ModulArguments modulArguments = null;
-		
-		for (framePos = this.emptyBufferStart; framePos < this.emptyBufferEnd; framePos++)
+		// Buffer not completely filled?
+		if ((this.emptyBufferStart != 0) || (this.emptyBufferEnd != 0))
 		{
-			if (frames <= 0)
-			{
-				break;
-			}
-			frames--;
+			int frames = (int)(partTime * outputTimeline.getSoundFrameRate());
+	
+			// TODO null as modul is not the best...?
+			ModulGenerator parentModulGenerator = null;
 			
-			SoundSample soundSample = outputTimeline.generateFrameSample(framePos, 
-			                                                             parentModulGenerator,
-			                                                             modulArguments);
-		
-			this.bufferSoundSamples[(int)framePos] = soundSample;
+	        ModulArguments modulArguments = null;
+			
+			int framePos;
+			
+			for (framePos = this.emptyBufferStart; framePos < this.emptyBufferEnd; framePos++)
+			{
+				// No frame samples left?
+				if (frames <= 0)
+				{
+					break;
+				}
+				frames--;
+				
+				SoundSample soundSample = outputTimeline.generateFrameSample(framePos, 
+				                                                             parentModulGenerator,
+				                                                             modulArguments);
+			
+				this.bufferSoundSamples[framePos] = soundSample;
+			}
+			
+			this.emptyBufferStart = framePos;
+			//System.err.println("POLL framePos:" + framePos);
+			
+			// Buffer now completely filled?
+			if (this.emptyBufferStart >= this.emptyBufferEnd)
+			{
+				this.emptyBufferStart = 0;
+				this.emptyBufferEnd = 0;
+				
+				bufferCompletelyFilled = true;
+			}
+			else
+			{
+				bufferCompletelyFilled = false;
+			}
 		}
-		
-		this.emptyBufferStart = framePos;
-		//System.err.println("POLL framePos:" + framePos);
-		
-		if (this.emptyBufferStart >= this.emptyBufferEnd)
+		else
 		{
-			this.emptyBufferStart = 0;
-			this.emptyBufferEnd = 0;
+			bufferCompletelyFilled = false;
 		}
+		
+		return bufferCompletelyFilled;
 	}
 
 	/**
