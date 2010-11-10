@@ -7,6 +7,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
  * <p>
@@ -60,7 +61,8 @@ public class InputSelectEntryModel
 		
 		if (inputData.getInputValue() != null)
 		{
-			label = String.valueOf(inputData.getInputValue());
+//			label = String.valueOf(inputData.getInputValue());
+			label = OutputUtils.makeFloatEditText(inputData.getInputValue());
 		}
 		else
 		{

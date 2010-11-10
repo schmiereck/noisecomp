@@ -16,6 +16,7 @@ import javax.swing.JComponent;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
@@ -207,7 +208,7 @@ extends JComponent
 			}
 			
 			{
-				String text = Float.toString(valueMax);
+				String text = OutputUtils.makeFloatText(valueMax, 2);
 			
 				FontMetrics fm = getFontMetrics(g.getFont());
 				
@@ -216,7 +217,7 @@ extends JComponent
 				g.drawString(text, SIZE_X - stringWidth, stringPosY);
 			}
 			{
-				String text = Float.toString(valueMin);
+				String text = OutputUtils.makeFloatText(valueMin, 2);
 			
 				FontMetrics fm = getFontMetrics(g.getFont());
 				

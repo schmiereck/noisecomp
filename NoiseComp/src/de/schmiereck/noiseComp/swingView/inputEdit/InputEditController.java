@@ -90,7 +90,7 @@ public class InputEditController
 							{
 								Float defaultValue = inputTypeData.getDefaultValue();
 								
-								String defaultValueStr = OutputUtils.makeFloatText(defaultValue);
+								String defaultValueStr = OutputUtils.makeFloatEditText(defaultValue);
 								
 								inputTypeValueTextField.setText(defaultValueStr);
 							}
@@ -204,7 +204,7 @@ public class InputEditController
 				MultiValue multiValue = new MultiValue();
 				multiValue.floatValue = inputData.getInputValue();
 				multiValue.stringValue = inputData.getInputStringValue();
-				value = OutputUtils.makeMultiValueText(multiValue);
+				value = OutputUtils.makeMultiValueEditText(multiValue);
 			}
 			else
 			{

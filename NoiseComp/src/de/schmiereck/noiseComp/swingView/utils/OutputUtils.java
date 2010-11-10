@@ -15,7 +15,24 @@ import de.schmiereck.noiseComp.swingView.MultiValue;
  */
 public class OutputUtils
 {
+//	private static final NumberFormat format = NumberFormat.getInstance();
+//	private static final DecimalFormat format = new DecimalFormat();
 
+//	private static final String[] formatPatterns =
+//	{
+//		"#0.",
+//		"#0.0",
+//		"#0.00",
+//		"#0.000",
+//		"#0.0000",
+//		"#0.00000",
+//	};
+//	
+//	private static DecimalFormat makeFormat(int digits)
+//	{
+//		return new DecimalFormat(formatPatterns[digits]);
+//	}
+	
 	public static String makeStringText(String value)
 	{
 		String ret;
@@ -48,13 +65,15 @@ public class OutputUtils
 		return ret;
 	}
 
-	public static String makeFloatText(Float value)
+	public static String makeFloatText(Float value, int digits)
 	{
 		String ret;
 		
 		if (value != null)
 		{
-			ret = Float.toString(value);
+			ret = String.format("%." + digits + "f", value.floatValue());
+//			DecimalFormat format = makeFormat(digits);
+//			ret = format.format(value.floatValue());
 		}
 		else
 		{
@@ -62,6 +81,40 @@ public class OutputUtils
 		}
 		
 		return ret;
+	}
+	
+	public static String makeFloatEditText(Float value)
+	{
+		String ret;
+		
+		ret = makeFloatText(value, 5);
+		
+		int len = ret.length();
+		
+		while (len > 1)
+		{
+			char c = ret.charAt(len - 1);
+			
+			if (c == '0')
+			{
+				char cc = ret.charAt(len - 2);
+				
+				if (Character.isDigit(cc) == true)
+				{
+					len--;
+				}
+				else
+				{
+					break;
+				}
+			}
+			else
+			{
+				break;
+			}
+		}
+		
+		return ret.substring(0, len);
 	}
 
 	/**
@@ -93,13 +146,13 @@ public class OutputUtils
 	 * @return
 	 * 			the text string.
 	 */
-	public static String makeMultiValueText(MultiValue multiValue)
+	public static String makeMultiValueEditText(MultiValue multiValue)
 	{
 		String ret;
 		
 		if (multiValue.floatValue != null)
 		{
-			ret = makeFloatText(multiValue.floatValue);
+			ret = makeFloatEditText(multiValue.floatValue);
 		}
 		else
 		{

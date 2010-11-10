@@ -103,6 +103,16 @@ implements RemoveTimelineGeneratorListenerInterface,
 	private final ModulInputTypesController modulInputTypesController;
 	
 	/**
+	 * Timelines-Time-Rule Controller
+	 */
+	private final TimelinesTimeRuleController timelinesTimeRuleController;
+	
+	/**
+	 * Timelines-Generators-Rule Controller.
+	 */
+	private final TimelinesGeneratorsRuleController timelinesGeneratorsRuleController;
+	
+	/**
 	 * Timelines Scroll-Panel Controller.
 	 */
 	private final TimelinesScrollPanelController timelinesScrollPanelController;
@@ -214,10 +224,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 		final ModulInputTypeSelectController modulInputTypeSelectController = modulInputTypesController.getModulInputTypeSelectController();
 		
 		//------------------------------------------------------------------------------------------
-		final TimelinesTimeRuleController timelinesTimeRuleController = new TimelinesTimeRuleController();
+		this.timelinesTimeRuleController = new TimelinesTimeRuleController();
 		
 		//------------------------------------------------------------------------------------------
-		final TimelinesGeneratorsRuleController timelinesGeneratorsRuleController = new TimelinesGeneratorsRuleController();
+		this.timelinesGeneratorsRuleController = new TimelinesGeneratorsRuleController();
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesScrollPanelController = new TimelinesScrollPanelController();
@@ -227,8 +237,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 //		this.appView.setTimelineComponent(timelinesScrollPanelView.getScrollPane());
 		this.appView.setTimelineComponent(timelinesScrollPanelView);
 		
-		this.timelinesScrollPanelController.setTimelinesRuleController(timelinesTimeRuleController,
-		                                                               timelinesGeneratorsRuleController);
+		this.timelinesScrollPanelController.setTimelinesRuleController(this.timelinesTimeRuleController,
+		                                                               this.timelinesGeneratorsRuleController);
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelController = 
@@ -284,7 +294,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	}
 		);
 		
-		timelinesTimeRuleController.doChangeZoomX(this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getZoomX());
+		this.timelinesTimeRuleController.doChangeZoomX(this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getZoomX());
 		
 		//------------------------------------------------------------------------------------------
 		this.inputSelectController = 
@@ -937,7 +947,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 			TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
 			
 			timelineManagerLogic.addTimelineContentChangedListener(this.timelinesDrawPanelController);
+
+			timelineManagerLogic.addTimelineContentChangedListener(this.timelinesTimeRuleController);
 			
+			timelineManagerLogic.addTimelineContentChangedListener(this.timelinesGeneratorsRuleController);
+
 //			OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
 //			
 //			Timeline outputTimeline = soundSourceLogic.setOutputGenerator(outputGenerator);

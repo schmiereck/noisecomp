@@ -155,7 +155,7 @@ extends BasicEditView
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						generatorStartTimePosTextField.setText(OutputUtils.makeFloatText(timelineEditModel.getGeneratorStartTimePos()));
+						generatorStartTimePosTextField.setText(OutputUtils.makeFloatEditText(timelineEditModel.getGeneratorStartTimePos()));
 					}
 			 	}
 			);
@@ -171,7 +171,7 @@ extends BasicEditView
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						generatorEndTimePosTextField.setText(OutputUtils.makeFloatText(timelineEditModel.getGeneratorEndTimePos()));
+						generatorEndTimePosTextField.setText(OutputUtils.makeFloatEditText(timelineEditModel.getGeneratorEndTimePos()));
 					}
 			 	}
 			);

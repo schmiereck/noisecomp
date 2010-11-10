@@ -3,6 +3,9 @@
  */
 package de.schmiereck.noiseComp.swingView.utils;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+
 import de.schmiereck.noiseComp.swingView.MultiValue;
 
 /**
@@ -15,6 +18,8 @@ import de.schmiereck.noiseComp.swingView.MultiValue;
  */
 public class InputUtils
 {
+//	private static final NumberFormat format = NumberFormat.getInstance();
+	private static final DecimalFormat format = new DecimalFormat();
 
 	/**
 	 * @param value
@@ -35,7 +40,19 @@ public class InputUtils
 	 */
 	public static Float makeFloatValue(String value)
 	{
-		return Float.parseFloat(value);
+//		return Float.parseFloat(value);
+		Number number;
+		
+		try
+		{
+			number = format.parse(value);
+		}
+		catch (ParseException ex)
+		{
+			throw new RuntimeException("Parse \"" + value + "\".", ex);
+		}
+		
+		return new Float(number.floatValue());
 	}
 
 	/**
@@ -83,7 +100,7 @@ public class InputUtils
 		{
 			try
 			{
-				multiValue.floatValue = InputUtils.makeFloatValue(value);
+				multiValue.floatValue = makeFloatValue(value);
 			}
 			catch (NumberFormatException ex)
 			{

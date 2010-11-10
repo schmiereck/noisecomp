@@ -5,6 +5,8 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.awt.Dimension;
 
+import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
+
 /**
  * <p>
  * 	Timelines-Time-Rule Controller.
@@ -14,7 +16,8 @@ import java.awt.Dimension;
  * @version <p>24.09.2010:	created, smk</p>
  */
 public class TimelinesTimeRuleController 
-implements RemoveTimelineGeneratorListenerInterface
+implements RemoveTimelineGeneratorListenerInterface, 
+		   TimelineContentChangedListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -69,8 +72,10 @@ implements RemoveTimelineGeneratorListenerInterface
 	 */
 	public void doTimelineGeneratorModelsChanged(double timelinesDrawPanelWidth)
 	{
+		//==========================================================================================
 		this.timelinesTimeRuleView.setWidth((int)timelinesDrawPanelWidth);
 		this.timelinesTimeRuleView.repaint();
+		//==========================================================================================
 	}
 
 	/**
@@ -78,9 +83,11 @@ implements RemoveTimelineGeneratorListenerInterface
 	 */
 	public void doChangeZoomX(float zoomX)
 	{
+		//==========================================================================================
 		this.timelinesTimeRuleModel.setUnits((int)zoomX);
 		
 		this.timelinesTimeRuleView.repaint();
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
@@ -90,10 +97,24 @@ implements RemoveTimelineGeneratorListenerInterface
 	public void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
 	                                          TimelineSelectEntryModel timelineSelectEntryModel)
 	{
+		//==========================================================================================
 		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
 		
 		// TimelinesTimeRule update.
 		this.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+		//==========================================================================================
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface#notifyTimelineContentChanged(long, long)
+	 */
+	@Override
+	public void notifyTimelineContentChanged(long bufferStart, long bufferEnd)
+	{
+		//==========================================================================================
+		this.timelinesTimeRuleView.repaint();
+
+		//==========================================================================================
 	}
 
 }

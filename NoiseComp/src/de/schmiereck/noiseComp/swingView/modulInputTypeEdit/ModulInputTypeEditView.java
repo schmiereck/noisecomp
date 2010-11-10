@@ -106,7 +106,7 @@ extends BasicEditView
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						inputTypeDefaultValueTextField.setText(OutputUtils.makeFloatText(modulInputTypeEditModel.getInputTypeDefaultValue()));
+						inputTypeDefaultValueTextField.setText(OutputUtils.makeFloatEditText(modulInputTypeEditModel.getInputTypeDefaultValue()));
 					}
 			 	}
 			);
