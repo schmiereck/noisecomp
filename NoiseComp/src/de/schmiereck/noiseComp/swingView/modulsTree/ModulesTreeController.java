@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.modulsTree;
 
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -10,7 +11,9 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 
 /**
@@ -56,12 +59,24 @@ public class ModulesTreeController
 		//------------------------------------------------------------------------------------------
 		this.modulesTreeModel.addEditModuleChangedListener(this.modulesTreeView);
 		
+		//------------------------------------------------------------------------------------------
+		{
+			// Add listener to components that can bring up popup menus.
+			MouseListener popupListener = new ModulTreeMouseListener(this,
+			                                                         this.modulesTreeView);
+			//output.addMouseListener(popupListener);
+			//menuBar.addMouseListener(popupListener);
+			this.modulesTreeView.addMouseListener(popupListener);
+		}
+
 		//==========================================================================================
 	}
 	
 	/**
-	 * @param tree
-	 * 			is the Tree.
+	 * Create Tree-Model.
+	 * 
+	 * @return
+	 * 			the Tree-Model.
 	 */
 	private DefaultTreeModel createTreeModel()
 	{
@@ -72,7 +87,6 @@ public class ModulesTreeController
 		DefaultTreeModel treeModel = new DefaultTreeModel(modulesTreeNode);
 
 		//==========================================================================================
-		
 		return treeModel;
 	}
 	
@@ -154,7 +168,7 @@ public class ModulesTreeController
 		
 //		ModulGeneratorTypeData editedModulGeneratorTypeData = this.appModel.getEditedModulGeneratorTypeData();
 		
-		TreePath treePath = this.modulesTreeView.searchModulTreeNode(editedModulGeneratorTypeData);
+		TreePath treePath = this.modulesTreeModel.searchModulTreeNode(editedModulGeneratorTypeData);
 		
 		if (treePath != null)
 		{
@@ -182,6 +196,33 @@ public class ModulesTreeController
 	public ModulesTreeModel getModulesTreeModel()
 	{
 		return this.modulesTreeModel;
+	}
+	
+	/**
+	 * Changed model notfier because of AppModelChanged.
+	 * 
+	 */
+	public void doInsert()
+	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
+		final ModulGeneratorTypeData modulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+	
+		//modulGeneratorTypeData.setIsMainModulGeneratorType(true);
+		
+		modulGeneratorTypeData.setGeneratorTypeName("(new)");
+	
+		soundService.addGeneratorType(modulGeneratorTypeData);
+		
+		//--------------------------------------------------------------------------
+		this.modulesTreeModel.insertModul(modulGeneratorTypeData);
+		
+		//--------------------------------------------------------------------------
+		this.modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
+
+		//==========================================================================================
 	}
 
 }

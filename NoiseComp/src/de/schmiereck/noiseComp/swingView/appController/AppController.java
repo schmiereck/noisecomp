@@ -16,6 +16,7 @@ import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.Version;
 import de.schmiereck.noiseComp.file.LoadFileOperationLogic;
@@ -35,6 +36,7 @@ import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.about.AboutController;
 import de.schmiereck.noiseComp.swingView.about.AboutDialogView;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
@@ -347,7 +349,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	new EditModuleChangedListener()
 		 	{
 				@Override
-				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel)
+				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel,
+				                                   TreePath selectionTreePath)
 				{
 					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
 					
@@ -363,7 +366,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	new EditModuleChangedListener()
 		 	{
 				@Override
-				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel)
+				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel,
+				                                   TreePath selectionTreePath)
 				{
 					ModulInputTypeSelectController modulInputTypeSelectController = modulInputTypesController.getModulInputTypeSelectController();
 					
@@ -727,6 +731,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Models Changed:
 		//------------------------------------------------------------------------------------------
+		AppModelChangedObserver appModelChangedObserver = new AppModelChangedObserver(this.appModel);
+		
+		//------------------------------------------------------------------------------------------
+		ModulesTreeModel modulesTreeModel = this.modulesTreeController.getModulesTreeModel();
+		
+		modulesTreeModel.addModulInsertedListener
+		(
+			appModelChangedObserver
+		);
+		
+		//------------------------------------------------------------------------------------------
 		TimelineEditModel timelineEditModel = timelineEditController.getTimelineEditModel();
 		
 		//------------------------------------------------------------------------------------------
@@ -837,6 +852,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 	 	this
 	 	);
 	    //------------------------------------------------------------------------------------------
+	 	// Action-Listeners:
+	    //------------------------------------------------------------------------------------------
 		// http://download.oracle.com/javase/tutorial/uiswing/misc/action.html
 		this.appView.getPlayButton().addActionListener
 		(
@@ -912,6 +929,8 @@ implements RemoveTimelineGeneratorListenerInterface,
             }
         });
 		
+	    //------------------------------------------------------------------------------------------
+		// Init Generator-Types:
 	    //------------------------------------------------------------------------------------------
 		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
 		
@@ -1012,6 +1031,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 
 	public void doPlaySound()
 	{
+		//==========================================================================================
 		if (this.soundSchedulerLogic == null)
 		{
 			SoundData soundData = SwingMain.getSoundData();
@@ -1026,10 +1046,12 @@ implements RemoveTimelineGeneratorListenerInterface,
 		{	
 			this.soundSchedulerLogic.resumePlayback();
 		}
+		//==========================================================================================
 	}
 
 	public void doStopSound()
 	{
+		//==========================================================================================
 		if (this.soundSchedulerLogic != null)
 		{
 			this.soundSchedulerLogic.stopPlayback();
@@ -1038,14 +1060,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 			
 			this.soundSchedulerLogic = null;
 		}
+		//==========================================================================================
 	}
 
 	public void doPauseSound()
 	{
+		//==========================================================================================
 		if (this.soundSchedulerLogic != null)
 		{
 			this.soundSchedulerLogic.pausePlayback();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -1054,10 +1079,12 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	public List<GeneratorTypeData> retrieveGeneratorTypesForSelect()
 	{
+		//==========================================================================================
 		SoundService soundService = SoundService.getInstance();
 		
 		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
 
+		//==========================================================================================
 		return generatorTypes;
 	}
 	
@@ -1067,10 +1094,12 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	public ModulGeneratorTypeData getEditedModulGeneratorTypeData()
 	{
+		//==========================================================================================
 		ModulesTreeModel modulesTreeModel = this.modulesTreeController.getModulesTreeModel();
 		
 		ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
 		
+		//==========================================================================================
 		return editedModulGeneratorTypeData;
 	}
 
@@ -1079,12 +1108,36 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	public void doExit()
 	{
-		int option = JOptionPane.showConfirmDialog(this.appView, "Really Exit?");
-
-		if (option == JOptionPane.YES_OPTION)
+		//==========================================================================================
+		boolean exitApp;
+		
+		boolean isModelChanged = this.appModel.getIsModelChanged();
+		
+		if (isModelChanged == true)
+		{
+			int option = JOptionPane.showConfirmDialog(this.appView, "Really Exit?");
+	
+			if (option == JOptionPane.YES_OPTION)
+			{
+				exitApp = true;
+			}
+			else
+			{
+				exitApp = false;
+			}
+		}
+		else
+		{
+			exitApp = true;
+		}
+		
+		//------------------------------------------------------------------------------------------
+		if (exitApp == true)
 		{
 			System.exit(0);
 		}
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -1092,11 +1145,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	public void doHelpAbout()
 	{
+		//==========================================================================================
 		AboutDialogView aboutDialogView = new AboutDialogView(this.appView, true);
 		
 		AboutController aboutController = new AboutController(aboutDialogView);
 		
 		aboutController.doShow();
+		//==========================================================================================
 	}
 
 	/**
@@ -1104,6 +1159,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	public void doFileOpen()
 	{
+		//==========================================================================================
 		this.setEnableOpenFile(false);
 
 		File fileActionFile = this.getFileActionFile();
@@ -1147,6 +1203,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		}
 
 		this.setEnableOpenFile(true);
+		//==========================================================================================
 	}
 	
 	/**
@@ -1155,8 +1212,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	public void setEnableOpenFile(boolean enable)
 	{
+		//==========================================================================================
 		this.appView.getFileOpenMenuItem().setEnabled(enable);
 		this.appView.getFileOpenButtonView().setEnabled(enable);
+		//==========================================================================================
 	}
 
 	/**
@@ -1210,6 +1269,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.modulesTreeController.addGeneratorTypes(generatorTypes);
 		
 		this.selectEditModule(mainModulGeneratorTypeData);
+		
+		//------------------------------------------------------------------------------------------
+		this.appModel.setIsModelChanged(false);
 		
 		//==========================================================================================
 	}

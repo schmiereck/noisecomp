@@ -12,7 +12,6 @@ TODO:
 #18:	IMPROVEMENT: Insert new timelines after selected timeline with same start- and stop-time.
 #19:	IMPROVEMENT: Add a Generators Category seperate to the Modules Category.
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
-#21:	IMPROVEMENT: View Sound-Buffer Status in timeline-select-view (maybe in ruler?).
 #22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
@@ -34,12 +33,11 @@ TODO:
 #56:	IMPROVEMENT: Import noiseComp.xml files.
 #58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
-#83:	IMPROVEMENT: Make width of TimelineGeneratorRule view bigger.
 #84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.
 #86:	BUG: Update Modul Input-type default Value do not refresh timelines.
 #88:	IMPROVEMENT: Time-Scretching of timelines/modules, only the positions shifting, not the Freqences.
 #89:	IMPROVEMENT: Import and export of modules in/from files.
-#91:	IMPROVEMENT: Remove modules.
+#91:	IMPROVEMENT: Allow remove modules if they are not used.
 #94:	BUG: New Modul. New Output. New Mixer. Change Select Modul. Come back. Seems to be a empty timeline.
 		Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
 			at de.schmiereck.noiseComp.swingView.appController.AppController.selectEditModule(AppController.java:856)
@@ -50,10 +48,15 @@ TODO:
 #98:	IMPROVEMENT: Automatically ends playback if end of output reached.
 #99:	BUG: If Zoom changed to + some of the things of #54 treten erneut auf. 
 #101:	TASK: Change float to double.
+#105:
 
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
+#104:	IMPROVEMENT: Ask only for save, if something in model is changed.
+		--> Move creating new ModulGeneratorTypeData to ModulTreeController.
+			--> Move inserting new ModulGeneratorTypeData to ModulTreeModel.
+			--> Lets ModulTreeModel handel the actual selectionPath.
 
 DONE:
 =====
@@ -138,3 +141,8 @@ DONE:
 		--> Show the min/max values in TimelinesTimeRule.
 		--> Update TimelinesTimeRule if min/max calc is finished.
 		--> Fix Output/Input Float value format.
+#21:	IMPROVEMENT: View Sound-Buffer Status in timeline-select-view (maybe in ruler?).
+		--> Fixed by another Tickets (#65, ..).
+#83:	IMPROVEMENT: Make width of TimelineGeneratorRule view bigger.
+		--> Fixed with #81.
+		

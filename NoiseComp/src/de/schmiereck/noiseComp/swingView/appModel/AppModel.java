@@ -24,6 +24,11 @@ public class AppModel
 	 */
 	private File fileActionFile = null;
 
+	/**
+	 * <code>true</code> if model is changed and should be saved.
+	 */
+	private boolean isModelChanged = false;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -43,6 +48,24 @@ public class AppModel
 	public void setFileActionFile(File fileActionFile)
 	{
 		this.fileActionFile = fileActionFile;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #isModelChanged}.
+	 */
+	public boolean getIsModelChanged()
+	{
+		return this.isModelChanged;
+	}
+
+	/**
+	 * @param isModelChanged 
+	 * 			to set {@link #isModelChanged}.
+	 */
+	public void setIsModelChanged(boolean isModelChanged)
+	{
+		this.isModelChanged = isModelChanged;
 	}
 
 }

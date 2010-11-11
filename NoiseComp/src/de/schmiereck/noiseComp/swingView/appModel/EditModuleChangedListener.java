@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.appModel;
 
+import javax.swing.tree.TreePath;
+
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 
 
@@ -23,6 +25,9 @@ public interface EditModuleChangedListener
 	 * 
 	 * @param modulesTreeModel
 	 * 			is the Modules Tree Model.
+	 * @param selectionTreePath
+	 * 			is the selection Tree-Path.
 	 */
-	public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel);
+	public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel,
+	                                   TreePath selectionTreePath);
 }

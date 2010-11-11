@@ -11,13 +11,10 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.service.SoundService;
 
 /**
  * <p>
@@ -58,10 +55,13 @@ extends MouseAdapter
 	/**
 	 * Constructor.
 	 * 
+	 * @param modulesTreeController
+	 * 			is the Modules Tree Controller.
 	 * @param modulesTreeView
 	 * 			is the Modules Tree View.
 	 */
-	public ModulTreeMouseListener(final ModulesTreeView modulesTreeView)
+	public ModulTreeMouseListener(final ModulesTreeController modulesTreeController,
+	                              final ModulesTreeView modulesTreeView)
 	{
 		//==========================================================================================
 		this.modulesTreeView = modulesTreeView;
@@ -80,35 +80,10 @@ extends MouseAdapter
 					public void actionPerformed(ActionEvent e)
 					{
 						//--------------------------------------------------------------------------
-						SoundService soundService = SoundService.getInstance();
-						
-						//--------------------------------------------------------------------------
-						final ModulGeneratorTypeData modulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
-
-						//modulGeneratorTypeData.setIsMainModulGeneratorType(true);
-						
-						modulGeneratorTypeData.setGeneratorTypeName("(new)");
-
-						soundService.addGeneratorType(modulGeneratorTypeData);
-						
-						//--------------------------------------------------------------------------
-						DefaultTreeModel treeModel = (DefaultTreeModel)modulesTreeView.getModel();
-						
-						DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(modulGeneratorTypeData);
-
-						TreePath selectionPath = modulesTreeView.getSelectionPath();
-						
-						DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
-
-						int parentChildCount = parentTreeNode.getChildCount();
-						
-						treeModel.insertNodeInto(modulTreeNode, parentTreeNode, parentChildCount);
-						
-						modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
+						modulesTreeController.doInsert();
 						
 						//--------------------------------------------------------------------------
 					}
-			 		
 			 	}
 			);
 			this.modulesCategoryPopupMenu.add(menuItem);

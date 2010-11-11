@@ -6,14 +6,12 @@ package de.schmiereck.noiseComp.swingView.modulsTree;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
-import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -148,14 +146,6 @@ implements EditModuleChangedListener
 	    		return dim;
 	    	}
 		});
-		//------------------------------------------------------------------------------------------
-		{
-			// Add listener to components that can bring up popup menus.
-			MouseListener popupListener = new ModulTreeMouseListener(this);
-			//output.addMouseListener(popupListener);
-			//menuBar.addMouseListener(popupListener);
-			this.addMouseListener(popupListener);
-		}
 		//==========================================================================================
 	}
 
@@ -165,10 +155,12 @@ implements EditModuleChangedListener
 	 */
 	public void notifyEditModulListeners(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
+		//==========================================================================================
 		for (DoEditModuleListener doEditModuleListener : this.doEditModuleListeners)
 		{
 			doEditModuleListener.notifyEditModul(modulGeneratorTypeData);
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -193,85 +185,22 @@ implements EditModuleChangedListener
 	 * @see de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener#notifyEditModulChanged(de.schmiereck.noiseComp.swingView.appModel.AppModel)
 	 */
 	@Override
-	public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel)
+	public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel,
+	                                   TreePath selectionTreePath)
 	{
-		ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
-		
-		TreePath treePath = this.searchModulTreeNode(editedModulGeneratorTypeData);
+		// XXX Move this to Model.
+		//==========================================================================================
+//		ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+//		
+//		TreePath treePath = this.searchModulTreeNode(editedModulGeneratorTypeData);
 		
 //		DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)treePath.getLastPathComponent();
 			
-		this.setSelectionPath(treePath);
-	}
-
-	/**
-	 * @param modulGeneratorTypeData
-	 * 			is the Modul-Generator-Type.
-	 * @return
-	 * 			the tree path or <code>null</code> if the Modul-Generator-Type is not found.
-	 */
-	public TreePath searchModulTreeNode(ModulGeneratorTypeData modulGeneratorTypeData)
-	{
-		TreePath treePath;
+		this.setSelectionPath(selectionTreePath);
 		
-		if (modulGeneratorTypeData != null)
-		{
-			DefaultTreeModel treeModel = (DefaultTreeModel)this.getModel();
-			
-			DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)treeModel.getRoot();
-			
-			ModulTreePath modulTreePath = this.searchModulTreeNode(rootTreeNode, modulGeneratorTypeData);
-			
-			treePath = modulTreePath.createTreePath();
-		}
-		else
-		{
-			treePath = null;
-		}
+		this.modulesTreeModel.setSelectionPath(selectionTreePath);
 		
-		return treePath;
-	}
-
-	/**
-	 * Search given generator starting from given node.
-	 * 
-	 * @param rootTreeNode
-	 * 			is the node.
-	 * @param modulGeneratorTypeData
-	 * 			is the generator.
-	 * @return
-	 * 			the path or <code>null</code>.
-	 */
-	private ModulTreePath searchModulTreeNode(DefaultMutableTreeNode rootTreeNode, 
-	                                          ModulGeneratorTypeData modulGeneratorTypeData)
-	{
-		ModulTreePath retTreePath;
-		
-		Object userObject = rootTreeNode.getUserObject();
-		
-		if (modulGeneratorTypeData == userObject)
-		{
-			retTreePath = new ModulTreePath(rootTreeNode);//rootTreePath.pathByAddingChild(userObject);
-		}
-		else
-		{
-			retTreePath = null;
-			
-			for (int childPos = 0; childPos < rootTreeNode.getChildCount(); childPos++)
-			{
-				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)rootTreeNode.getChildAt(childPos);
-				
-				ModulTreePath treePath = this.searchModulTreeNode(treeNode, modulGeneratorTypeData);
-				
-				if (treePath != null)
-				{
-					retTreePath = new ModulTreePath(rootTreeNode, treePath);
-					break;
-				}
-			}
-		}
-		
-		return retTreePath;
+		//==========================================================================================
 	}
 	
 }
