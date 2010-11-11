@@ -46,6 +46,7 @@ import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.RemoveInputSelectEntryListenerInterface;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
+import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectEntryModel;
@@ -740,7 +741,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 		(
 			appModelChangedObserver
 		);
+		//------------------------------------------------------------------------------------------
+		ModulEditModel modulEditModel = this.modulEditController.getModulEditModel();
 		
+		modulEditModel.getModulNameChangedNotifier().addModelPropertyChangedListener
+		(
+		 	appModelChangedObserver
+		);
+		modulEditModel.getModulIsMainChangedNotifier().addModelPropertyChangedListener
+		(
+		 	appModelChangedObserver
+		);
 		//------------------------------------------------------------------------------------------
 		TimelineEditModel timelineEditModel = timelineEditController.getTimelineEditModel();
 		

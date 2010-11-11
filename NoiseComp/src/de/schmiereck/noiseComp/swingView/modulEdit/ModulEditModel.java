@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
+import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 /**
@@ -64,12 +65,15 @@ public class ModulEditModel
 	 */
 	public void setModulName(String modulName)
 	{
-		this.modulName = modulName;
-		
-		// Notify listeners.
-		this.modulNameChangedNotifier.notifyModelPropertyChangedListeners();
-		
-		this.modulEditModelChangedNotifier.notifyModelPropertyChangedListeners();
+		if (CompareUtils.compareWithNull(this.modulName, modulName) == false)
+		{
+			this.modulName = modulName;
+			
+			// Notify listeners.
+			this.modulNameChangedNotifier.notifyModelPropertyChangedListeners();
+			
+			this.modulEditModelChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
