@@ -48,6 +48,7 @@ import de.schmiereck.noiseComp.swingView.inputSelect.RemoveInputSelectEntryListe
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController;
+import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel;
@@ -104,6 +105,16 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * Modul-Input-Types Controller.
 	 */
 	private final ModulInputTypesController modulInputTypesController;
+	
+	/**
+	 * Modul-Input-Type Edit Controller.
+	 */
+	private final ModulInputTypeEditController modulInputTypeEditController;
+	
+	/**
+	 * Modul-Input-Type Select Controller.
+	 */
+	private final ModulInputTypeSelectController modulInputTypeSelectController;
 	
 	/**
 	 * Timelines-Time-Rule Controller
@@ -223,8 +234,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		this.modulInputTypesController = new ModulInputTypesController(this);
 		
-		final ModulInputTypeEditController modulInputTypeEditController = modulInputTypesController.getModulInputTypeEditController();
-		final ModulInputTypeSelectController modulInputTypeSelectController = modulInputTypesController.getModulInputTypeSelectController();
+		this.modulInputTypeEditController = modulInputTypesController.getModulInputTypeEditController();
+		this.modulInputTypeSelectController = modulInputTypesController.getModulInputTypeSelectController();
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesTimeRuleController = new TimelinesTimeRuleController();
@@ -416,7 +427,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Modul-Input-Type Selected Input changed: Update Modul-Input-Type-Edit Model:
 		
-		modulInputTypeSelectController.getInputTypeSelectModel().getSelectedRowNoChangedNotifier().addModelPropertyChangedListener
+		this.modulInputTypeSelectController.getInputTypeSelectModel().getSelectedRowNoChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -445,7 +456,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Modul-Input-Type Edit: Create-New Button: Update Modul-Input-Type Select Model:
 		
-		modulInputTypeEditController.getModulInputTypeEditView().getCreateNewButton().addActionListener
+		this.modulInputTypeEditController.getModulInputTypeEditView().getCreateNewButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -462,7 +473,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Modul-Input-Type Edit Update-Button: Update Modul-Input-Type Data and Modul-Input-Type Edit-Model:
 		
-		modulInputTypeEditController.getModulInputTypeEditView().getUpdateButton().addActionListener
+		this.modulInputTypeEditController.getModulInputTypeEditView().getUpdateButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -490,7 +501,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Modul-Input-Type Edit Remove-Button: Update Modul-Input-Type Data and Modul-Input-Type Select-Model:
 		
-		modulInputTypeEditController.getModulInputTypeEditView().getRemoveButton().addActionListener
+		this.modulInputTypeEditController.getModulInputTypeEditView().getRemoveButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -516,7 +527,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Modul-Input-Type Edit Model Value changed: Update Input-Select:
 		
-		modulInputTypeEditController.getModulInputTypeEditModel().getInputTypeIDChangedNotifier().addModelPropertyChangedListener
+		this.modulInputTypeEditController.getModulInputTypeEditModel().getInputTypeIDChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -749,6 +760,29 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	appModelChangedObserver
 		);
 		modulEditModel.getModulIsMainChangedNotifier().addModelPropertyChangedListener
+		(
+		 	appModelChangedObserver
+		);
+		//------------------------------------------------------------------------------------------
+		ModulInputTypeEditModel modulInputTypeEditModel = modulInputTypeEditController.getModulInputTypeEditModel();
+		
+		modulInputTypeEditModel.getInputTypeDataChangedNotifier().addModelPropertyChangedListener
+		(
+		 	appModelChangedObserver
+		);
+		modulInputTypeEditModel.getInputTypeDefaultValueChangedNotifier().addModelPropertyChangedListener
+		(
+		 	appModelChangedObserver
+		);
+		modulInputTypeEditModel.getInputTypeDescriptionChangedNotifier().addModelPropertyChangedListener
+		(
+		 	appModelChangedObserver
+		);
+		modulInputTypeEditModel.getInputTypeIDChangedNotifier().addModelPropertyChangedListener
+		(
+		 	appModelChangedObserver
+		);
+		modulInputTypeEditModel.getInputTypeNameChangedNotifier().addModelPropertyChangedListener
 		(
 		 	appModelChangedObserver
 		);
@@ -1480,6 +1514,14 @@ implements RemoveTimelineGeneratorListenerInterface,
 			                                 inputData);
 		}
 		//==========================================================================================
+	}
+
+	/**
+	 * Init the startup Model.
+	 */
+	public void initStartupModel()
+	{
+		this.appModel.setIsModelChanged(false);
 	}
 
 }

@@ -57,9 +57,14 @@ WORK:
 		--> Move creating new ModulGeneratorTypeData to ModulTreeController.
 			--> Move inserting new ModulGeneratorTypeData to ModulTreeModel.
 			--> Lets ModulTreeModel handel the actual selectionPath.
-			--> appModelChangedObserver:ModulInserted
-		--> appModelChangedObserver:ModulNameChanged
-		--> appModelChangedObserver:ModulIsMainChanged
+			--> appModelChangedObserver:ModulEditModel:ModulInserted
+		--> ModulEditModel:ModulNameChanged.appModelChangedObserver
+		--> ModulEditModel:ModulIsMainChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeDataChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeDefaultValueChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeDescriptionChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeIDChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeNameChanged.appModelChangedObserver
 
 DONE:
 =====

@@ -94,6 +94,8 @@ public class SwingMain
 					AppController appController = new AppController();
 					
 					appController.selectEditModule(mainModulGeneratorTypeData);
+					
+					appController.initStartupModel();
 				}
 				catch (Exception ex)
 				{
