@@ -48,7 +48,7 @@ public class TimelineSelectEntryModel
 	/**
 	 * Start time position in milli seconds.
 	 */
-	private float startTimePos;
+	private Float startTimePos;
 
 	/**
 	 * {@link #startTimePos} changed listeners.
@@ -59,7 +59,7 @@ public class TimelineSelectEntryModel
 	/**
 	 * End time position in milli seconds.
 	 */
-	private float endTimePos;
+	private Float endTimePos;
 
 	/**
 	 * {@link #endTimePos} changed listeners.
@@ -84,7 +84,7 @@ public class TimelineSelectEntryModel
 	public TimelineSelectEntryModel(Timeline timeline,
 //	                                int timelinePos,
 	                                String generatorName,
-	                                float startTimePos, float endTimePos)
+	                                Float startTimePos, Float endTimePos)
 	{
 		this.timeline = timeline;
 //		this.timelinePos = timelinePos;
@@ -97,7 +97,7 @@ public class TimelineSelectEntryModel
 	 * @return 
 	 * 			returns the {@link #startTimePos}.
 	 */
-	public float getStartTimePos()
+	public Float getStartTimePos()
 	{
 		return this.startTimePos;
 	}
@@ -106,7 +106,7 @@ public class TimelineSelectEntryModel
 	 * @param startTimePos 
 	 * 			to set {@link #startTimePos}.
 	 */
-	public void setStartTimePos(float startTimePos)
+	public void setStartTimePos(Float startTimePos)
 	{
 		this.startTimePos = startTimePos;
 		
@@ -127,7 +127,7 @@ public class TimelineSelectEntryModel
 	 * @return 
 	 * 			returns the {@link #endTimePos}.
 	 */
-	public float getEndTimePos()
+	public Float getEndTimePos()
 	{
 		return this.endTimePos;
 	}
@@ -136,7 +136,7 @@ public class TimelineSelectEntryModel
 	 * @param endTimePos 
 	 * 			to set {@link #endTimePos}.
 	 */
-	public void setEndTimePos(float endTimePos)
+	public void setEndTimePos(Float endTimePos)
 	{
 		this.endTimePos = endTimePos;
 		

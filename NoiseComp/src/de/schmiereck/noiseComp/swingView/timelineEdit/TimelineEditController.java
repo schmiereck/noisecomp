@@ -15,6 +15,7 @@ import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
 import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
 
@@ -78,6 +79,7 @@ public class TimelineEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					Timeline timeline;
 					List<GeneratorTypeSelectItem> generatorTypeSelectItems;
 					GeneratorTypeData generatorTypeData;
 					String generatorName;
@@ -88,6 +90,7 @@ public class TimelineEditController
 					
 					if (timelineSelectEntryModel != null)
 					{
+						timeline = timelineSelectEntryModel.getTimeline();
 						String name = timelineSelectEntryModel.getName();
 						
 						Generator generator = appController.retrieveGeneratorOfEditedModul(name);
@@ -123,6 +126,7 @@ public class TimelineEditController
 					}
 					else
 					{
+						timeline = null;
 						generatorTypeSelectItems = null;
 						generatorTypeData = null;
 						generatorName = null;
@@ -130,6 +134,7 @@ public class TimelineEditController
 						generatorEndTimePos = null;
 					}
 
+					timelineEditModel.setTimeline(timeline);
 					timelineEditModel.setGeneratorTypeSelectItems(generatorTypeSelectItems);
 					timelineEditModel.setGeneratorTypeData(generatorTypeData);
 					timelineEditModel.setGeneratorName(generatorName);
@@ -219,8 +224,8 @@ public class TimelineEditController
 				generatorTypeData = generatorTypeSelectItem.getGeneratorTypeData();
 			}
 			String generatorName = this.timelineEditView.getGeneratorNameTextField().getText();
-			Float generatorStartTimePos = Float.parseFloat(this.timelineEditView.getGeneratorStartTimePosTextField().getText());
-			Float generatorEndTimePos = Float.parseFloat(this.timelineEditView.getGeneratorEndTimePosTextField().getText());
+			Float generatorStartTimePos = InputUtils.makeFloatValue(this.timelineEditView.getGeneratorStartTimePosTextField().getText());
+			Float generatorEndTimePos = InputUtils.makeFloatValue(this.timelineEditView.getGeneratorEndTimePosTextField().getText());
 			
 			if (generatorTypeData == null)
 			{
@@ -250,10 +255,11 @@ public class TimelineEditController
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Timeline-Edit Model:
 			
-			timelineEditModel.setGeneratorTypeData(generatorTypeData);
-			timelineEditModel.setGeneratorName(generatorName);
-			timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
-			timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
+			this.timelineEditModel.setTimeline(timeline);
+			this.timelineEditModel.setGeneratorTypeData(generatorTypeData);
+			this.timelineEditModel.setGeneratorName(generatorName);
+			this.timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
+			this.timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Timeline-Model:

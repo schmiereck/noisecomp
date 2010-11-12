@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 
 /**
@@ -23,6 +25,13 @@ public class TimelineEditModel
 	//**********************************************************************************************
 	// Fields:
 
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	/**
+	 * Edited timeline.<br/>
+	 * <code>null</code> if new timeline is edited.
+	 */
+	private Timeline timeline = null;
+	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
 	 * Input Generator.
@@ -89,6 +98,24 @@ public class TimelineEditModel
 
 	/**
 	 * @return 
+	 * 			returns the {@link #timeline}.
+	 */
+	public Timeline getTimeline()
+	{
+		return this.timeline;
+	}
+
+	/**
+	 * @param timeline 
+	 * 			to set {@link #timeline}.
+	 */
+	public void setTimeline(Timeline timeline)
+	{
+		this.timeline = timeline;
+	}
+
+	/**
+	 * @return 
 	 * 			returns the {@link #generatorName}.
 	 */
 	public String getGeneratorName()
@@ -102,10 +129,13 @@ public class TimelineEditModel
 	 */
 	public void setGeneratorName(String generatorName)
 	{
-		this.generatorName = generatorName;
-		
-		// Notify listeners.
-		this.generatorNameChangedNotifier.notifyModelPropertyChangedListeners();
+		if (CompareUtils.compareWithNull(this.generatorName, generatorName) == false)
+		{
+			this.generatorName = generatorName;
+			
+			// Notify listeners.
+			this.generatorNameChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
@@ -132,7 +162,7 @@ public class TimelineEditModel
 	 */
 	public void setGeneratorStartTimePos(Float startTimePos)
 	{
-		if (startTimePos != this.generatorStartTimePos)
+		if (CompareUtils.compareWithNull(this.generatorStartTimePos, startTimePos) == false)
 		{
 			this.generatorStartTimePos = startTimePos;
 			
@@ -165,7 +195,7 @@ public class TimelineEditModel
 	 */
 	public void setGeneratorEndTimePos(Float endTimePos)
 	{
-		if (endTimePos != this.generatorEndTimePos)
+		if (CompareUtils.compareWithNull(this.generatorEndTimePos, endTimePos) == false)
 		{
 			this.generatorEndTimePos = endTimePos;
 			
@@ -198,10 +228,13 @@ public class TimelineEditModel
 	 */
 	public void setGeneratorTypeSelectItems(List<GeneratorTypeSelectItem> generatorTypeSelectItems)
 	{
-		this.generatorTypeSelectItems = generatorTypeSelectItems;
-		
-		// Notify Listeners.
-		this.generatorTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+		if (CompareUtils.compareWithNull(this.generatorTypeSelectItems, generatorTypeSelectItems) == false)
+		{
+			this.generatorTypeSelectItems = generatorTypeSelectItems;
+			
+			// Notify Listeners.
+			this.generatorTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
@@ -228,10 +261,13 @@ public class TimelineEditModel
 	 */
 	public void setGeneratorTypeData(GeneratorTypeData generatorTypeData)
 	{
-		this.generatorTypeData = generatorTypeData;
-		
-		// Notify Listeners.
-		this.generatorTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+		if (CompareUtils.compareWithNull(this.generatorTypeData, generatorTypeData) == false)
+		{
+			this.generatorTypeData = generatorTypeData;
+			
+			// Notify Listeners.
+			this.generatorTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**

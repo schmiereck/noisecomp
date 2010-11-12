@@ -48,7 +48,9 @@ TODO:
 #98:	IMPROVEMENT: Automatically ends playback if end of output reached.
 #99:	BUG: If Zoom changed to + some of the things of #54 treten erneut auf. 
 #101:	TASK: Change float to double.
-#105:
+#105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
+		==> Reverted TimelineEditModelChangedObserver: Is not so easy: Selecting timeline updates timelineEditModel, this updates timelineSelectEntryModel fields bevor all fields are filled, that chrashes...
+#106:
 
 WORK:
 =====
@@ -65,7 +67,13 @@ WORK:
 		--> ModulInputTypeEditModel.getInputTypeDescriptionChanged.appModelChangedObserver
 		--> ModulInputTypeEditModel.getInputTypeIDChanged.appModelChangedObserver
 		--> ModulInputTypeEditModel.getInputTypeNameChanged.appModelChangedObserver
-
+	 	--> TimelineEditModel.getGeneratorTypeDataChanged.appModelChangedObserver
+	 	--> TimelineEditModel.getGeneratorNameChanged.appModelChangedObserver
+	 	--> TimelineEditModel.getGeneratorStartTimePosChanged.appModelChangedObserver
+	 	--> TimelineEditModel.getGeneratorEndTimePosChanged.appModelChangedObserver
+		==> NOT WORKING: Selection changes also updates Models by this settters.
+			--> Implements a submit-model pattern to update business-data if models updated by editing.
+ 
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 

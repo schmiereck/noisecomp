@@ -59,6 +59,7 @@ import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.RemoveTimelineGeneratorListenerInterface;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineEditModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
@@ -748,6 +749,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		ModulesTreeModel modulesTreeModel = this.modulesTreeController.getModulesTreeModel();
 		
+	 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		modulesTreeModel.addModulInsertedListener
 		(
 			appModelChangedObserver
@@ -755,6 +757,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		ModulEditModel modulEditModel = this.modulEditController.getModulEditModel();
 		
+	 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		modulEditModel.getModulNameChangedNotifier().addModelPropertyChangedListener
 		(
 		 	appModelChangedObserver
@@ -766,40 +769,79 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		ModulInputTypeEditModel modulInputTypeEditModel = modulInputTypeEditController.getModulInputTypeEditModel();
 		
-		modulInputTypeEditModel.getInputTypeDataChangedNotifier().addModelPropertyChangedListener
-		(
-		 	appModelChangedObserver
-		);
-		modulInputTypeEditModel.getInputTypeDefaultValueChangedNotifier().addModelPropertyChangedListener
-		(
-		 	appModelChangedObserver
-		);
-		modulInputTypeEditModel.getInputTypeDescriptionChangedNotifier().addModelPropertyChangedListener
-		(
-		 	appModelChangedObserver
-		);
-		modulInputTypeEditModel.getInputTypeIDChangedNotifier().addModelPropertyChangedListener
-		(
-		 	appModelChangedObserver
-		);
-		modulInputTypeEditModel.getInputTypeNameChangedNotifier().addModelPropertyChangedListener
-		(
-		 	appModelChangedObserver
-		);
+	 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//		modulInputTypeEditModel.getInputTypeDataChangedNotifier().addModelPropertyChangedListener
+//		(
+//		 	appModelChangedObserver
+//		);
+//		modulInputTypeEditModel.getInputTypeDefaultValueChangedNotifier().addModelPropertyChangedListener
+//		(
+//		 	appModelChangedObserver
+//		);
+//		modulInputTypeEditModel.getInputTypeDescriptionChangedNotifier().addModelPropertyChangedListener
+//		(
+//		 	appModelChangedObserver
+//		);
+//		modulInputTypeEditModel.getInputTypeIDChangedNotifier().addModelPropertyChangedListener
+//		(
+//		 	appModelChangedObserver
+//		);
+//		modulInputTypeEditModel.getInputTypeNameChangedNotifier().addModelPropertyChangedListener
+//		(
+//		 	appModelChangedObserver
+//		);
 		//------------------------------------------------------------------------------------------
 		TimelineEditModel timelineEditModel = timelineEditController.getTimelineEditModel();
 		
-		//------------------------------------------------------------------------------------------
-	 	timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
-	 	(
-	 	 	timelinesDrawPanelController
-	 	);
-	 	
-		//------------------------------------------------------------------------------------------
-	 	timelineEditModel.getGeneratorEndTimePosChangedNotifier().addModelPropertyChangedListener
-	 	(
-	 	 	timelinesDrawPanelController
-	 	);
+	 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
+		
+//		TimelineEditModelChangedObserver timelineEditModelChangedObserver = new TimelineEditModelChangedObserver(timelineEditModel,
+//		                                                                                                         timelinesDrawPanelModel);
+//	 	
+//		timelineEditModel.getGeneratorTypeDataChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	timelineEditModelChangedObserver
+//	 	);
+//		timelineEditModel.getGeneratorNameChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	timelineEditModelChangedObserver
+//	 	);
+//		timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	timelineEditModelChangedObserver
+//	 	);
+//	 	timelineEditModel.getGeneratorEndTimePosChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	timelineEditModelChangedObserver
+//	 	);
+	 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//	 	timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	timelinesDrawPanelController
+//	 	);
+//	 	timelineEditModel.getGeneratorEndTimePosChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	timelinesDrawPanelController
+//	 	);
+
+	 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//	 	timelineEditModel.getGeneratorTypeDataChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	appModelChangedObserver
+//	 	);
+//	 	timelineEditModel.getGeneratorNameChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	appModelChangedObserver
+//	 	);
+//	 	timelineEditModel.getGeneratorStartTimePosChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	appModelChangedObserver
+//	 	);
+//	 	timelineEditModel.getGeneratorEndTimePosChangedNotifier().addModelPropertyChangedListener
+//	 	(
+//	 	 	appModelChangedObserver
+//	 	);
 	 	
 		//------------------------------------------------------------------------------------------
 		// General TimelinesDrawPanelModel Listener: Called if something of Model changed:
@@ -871,7 +913,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 //	    	timelinesDrawPanelController.getTimelineGeneratorModelChangedListener()
 //	    );
 	    //------------------------------------------------------------------------------------------
-	 	TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+//	 	TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 	 	
 	    //------------------------------------------------------------------------------------------
 	 	timelinesDrawPanelModel.getRemoveTimelineGeneratorNotifier().addRemoveTimelineGeneratorListeners
