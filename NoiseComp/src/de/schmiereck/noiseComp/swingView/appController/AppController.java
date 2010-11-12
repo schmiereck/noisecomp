@@ -1193,7 +1193,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		if (isModelChanged == true)
 		{
-			int option = JOptionPane.showConfirmDialog(this.appView, "Really Exit?");
+			int option = JOptionPane.showConfirmDialog(this.appView, "Model changed.\nReally Exit?");
 	
 			if (option == JOptionPane.YES_OPTION)
 			{

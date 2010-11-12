@@ -24,7 +24,6 @@ TODO:
 			at de.schmiereck.noiseComp.swingView.appController.AppController$11.actionPerformed(AppController.java:435)
 		--> Disable input fields and "update"-Button if no input-type is selected.
 #46:	IMPROVEMENT: Draw horizontal seperator lines between timenes in TimelinesDrawPanel.
-#47:	IMPROVEMENT: Implement Sample-Buffers and a input change notification system.
 #48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
 #51:	IMPROVEMENT: After selecting a module-generator for new timeline set length to his output length.
 #52:	IMPROVEMENT: Modul-Generators should repeat theire output signal if theire length is longer as the output (with defined sielent time between).
@@ -32,7 +31,6 @@ TODO:
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #56:	IMPROVEMENT: Import noiseComp.xml files.
 #58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
-#60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
 #84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.
 #86:	BUG: Update Modul Input-type default Value do not refresh timelines.
 #88:	IMPROVEMENT: Time-Scretching of timelines/modules, only the positions shifting, not the Freqences.
@@ -50,12 +48,16 @@ TODO:
 #101:	TASK: Change float to double.
 #105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
 		==> Reverted TimelineEditModelChangedObserver: Is not so easy: Selecting timeline updates timelineEditModel, this updates timelineSelectEntryModel fields bevor all fields are filled, that chrashes...
-#106:
 #107:
 
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
+#106:	IMPROVEMENT: Allow selecting seconds, milliseconds or bpm (Beats Per Minute) used for TimelinesTimeRule.
+		--> Global setting.
+		--> Modul setting.
+		--> Fix zoom issues if to mutch or to many ticks displayed in TimelinesTimeRule.
+		--> Allow set time positions in bpm.
 
 DONE:
 =====
@@ -163,3 +165,7 @@ DONE:
 		==> NOT WORKING: Selection changes also updates Models by this settters.
 			--> Implements a submit-model pattern to update business-data if models updated by editing.
  			--> Add a AppModelChangedObserver to all Edit-Submit and Edit-Remove Controller actions.
+#47:	IMPROVEMENT: Implement Sample-Buffers and a input change notification system.
+ 		--> Don't know exacly what this is, but I think, is done.
+#60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
+ 		--> Done. #81 #62
