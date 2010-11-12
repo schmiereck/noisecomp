@@ -13,6 +13,7 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
@@ -47,6 +48,8 @@ public class TimelineEditController
 	 */
 	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
+	private final AppModelChangedObserver appModelChangedObserver;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -57,9 +60,11 @@ public class TimelineEditController
 	 * 			is the App Controller.
 	 * @param timelinesDrawPanelModel 
 	 * 			is the Timeline Draw-Panel Model.
+	 * @param appModelChangedObserver 
 	 */
 	public TimelineEditController(final AppController appController,
-	                              final TimelinesDrawPanelModel timelinesDrawPanelModel)
+	                              final TimelinesDrawPanelModel timelinesDrawPanelModel, 
+	                              final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
 		this.timelineEditModel = new TimelineEditModel();
@@ -67,6 +72,8 @@ public class TimelineEditController
 
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
+		
+		this.appModelChangedObserver = appModelChangedObserver;
 		
 		//------------------------------------------------------------------------------------------
 		// Selected Timeline changed: Update Timeline-Edit Model:
@@ -79,6 +86,7 @@ public class TimelineEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					Timeline timeline;
 					List<GeneratorTypeSelectItem> generatorTypeSelectItems;
 					GeneratorTypeData generatorTypeData;
@@ -134,12 +142,15 @@ public class TimelineEditController
 						generatorEndTimePos = null;
 					}
 
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					timelineEditModel.setTimeline(timeline);
 					timelineEditModel.setGeneratorTypeSelectItems(generatorTypeSelectItems);
 					timelineEditModel.setGeneratorTypeData(generatorTypeData);
 					timelineEditModel.setGeneratorName(generatorName);
 					timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
 					timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -270,7 +281,10 @@ public class TimelineEditController
 			timelineSelectEntryModel.setStartTimePos(generatorStartTimePos);
 			timelineSelectEntryModel.setEndTimePos(generatorEndTimePos);
 			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			this.appModelChangedObserver.notifyAppModelChanged();
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		//==========================================================================================
 	}

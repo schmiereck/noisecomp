@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
@@ -45,9 +46,12 @@ public class ModulEditController
 	 * 			is the App Controller.
 	 * @param modulesTreeModel
 	 * 			is the Modules Tree Model.
+	 * @param appModelChangedObserver 
+	 * 			is the AppModelChangedObserver.
 	 */
 	public ModulEditController(final AppController appController,
-	                           final ModulesTreeModel modulesTreeModel)
+	                           final ModulesTreeModel modulesTreeModel, 
+	                           final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
 		this.modulEditModel = new ModulEditModel();
@@ -82,6 +86,9 @@ public class ModulEditController
 						
 						modulGeneratorTypeData.setGeneratorTypeName(generatorTypeName);
 						modulGeneratorTypeData.setIsMainModulGeneratorType(modulIsMain);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						appModelChangedObserver.notifyAppModelChanged();
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}

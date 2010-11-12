@@ -7,6 +7,7 @@ import java.util.List;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
@@ -43,13 +44,14 @@ implements TimelineContentChangedListenerInterface,
 	 * @param inputEditModel 
 	 * 			is the Input-Edit Model.
 	 */
-	public TimelinesDrawPanelController(ModulesTreeModel modulesTreeModel)
+	public TimelinesDrawPanelController(final ModulesTreeModel modulesTreeModel,
 	                                    //InputEditModel inputEditModel)
+	                                    final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
 		this.modulesTreeModel = modulesTreeModel;
 		
-		this.timelinesDrawPanelModel = new TimelinesDrawPanelModel();
+		this.timelinesDrawPanelModel = new TimelinesDrawPanelModel(appModelChangedObserver);
 		
 	    this.timelinesDrawPanelView = new TimelinesDrawPanelView(this.timelinesDrawPanelModel);
 	    

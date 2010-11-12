@@ -5,8 +5,12 @@ package de.schmiereck.noiseComp.swingView.modulInputTypeEdit;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel;
+import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
+import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
 
@@ -79,6 +83,7 @@ public class ModulInputTypeEditController
 	                     //final InputTypeData selectedInputTypeData,
 	                     ModulGeneratorTypeData editedModulGeneratorTypeData)
 	{
+		//==========================================================================================
 		ModulInputTypeEditModel inputEditModel = this.getModulInputTypeEditModel();
 		ModulInputTypeEditView inputEditView = this.getModulInputTypeEditView();
 		
@@ -140,6 +145,8 @@ public class ModulInputTypeEditController
 		inputEditModel.setInputTypeID(inputTypeID);
 		inputEditModel.setInputTypeName(inputTypeName);
 		inputEditModel.setInputTypeDescription(inputTypeDescription);
+
+		//==========================================================================================
 	}
 
 	/**
@@ -148,6 +155,7 @@ public class ModulInputTypeEditController
 	 */
 	public void updateEditedInputType(InputTypeData editedInputTypeData)
 	{
+		//==========================================================================================
 		this.modulInputTypeEditModel.setInputTypeData(editedInputTypeData);
 		
 		Integer inputTypeID;
@@ -174,6 +182,34 @@ public class ModulInputTypeEditController
 		this.modulInputTypeEditModel.setInputTypeDefaultValue(inputTypeDefaultValue);
 		this.modulInputTypeEditModel.setInputTypeName(inputTypeName);
 		this.modulInputTypeEditModel.setInputTypeDescription(inputTypeDescription);
+
+		//==========================================================================================
 	}
 
+	/**
+	 * @param appModelChangedObserver
+	 */
+	public void doUpdateModulInputType(final ModulesTreeController modulesTreeController,
+	                                   final ModulInputTypeSelectController modulInputTypeSelectController,
+	                                   final AppModelChangedObserver appModelChangedObserver)
+	{
+		//==========================================================================================
+		ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+		ModulInputTypeSelectModel selectModel = modulInputTypeSelectController.getInputTypeSelectModel();
+		
+//		InputTypeData inputTypeData = modulInputTypeSelectController.getSelectedModulInputType();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		this.doUpdate(selectModel, 
+		              //inputTypeData,
+		              editedModulGeneratorTypeData);
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		appModelChangedObserver.notifyAppModelChanged();
+		
+		//==========================================================================================
+	}
 }

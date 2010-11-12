@@ -11,6 +11,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -38,6 +39,8 @@ public class InputSelectController
 	 */
 	private final InputSelectView inputSelectView;
 	
+	private AppModelChangedObserver appModelChangedObserver;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -50,12 +53,15 @@ public class InputSelectController
 	 * 			is the Timeline Draw-Panel Model.
 	 */
 	public InputSelectController(final AppController appController,
-	                             final TimelinesDrawPanelModel timelinesDrawPanelModel)
+	                             final TimelinesDrawPanelModel timelinesDrawPanelModel,
+	                             final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
 		this.inputSelectModel = new InputSelectModel();
 		this.inputSelectView = new InputSelectView(this.inputSelectModel);
 
+		this.appModelChangedObserver = appModelChangedObserver;
+		
 		//------------------------------------------------------------------------------------------
 		// Selected Timeline changed -> update Input-Select-Model:
 		
@@ -206,6 +212,9 @@ public class InputSelectController
 			                                             inputSelectEntryModel,
 			                                             selectedRowNo);
 
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			this.appModelChangedObserver.notifyAppModelChanged();
+			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 	}

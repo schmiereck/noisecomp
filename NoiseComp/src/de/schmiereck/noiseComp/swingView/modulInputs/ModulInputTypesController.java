@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.modulInputs;
 
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
 
@@ -42,14 +43,15 @@ public class ModulInputTypesController
 	 * @param appController
 	 * 			is the App Controller.
 	 */
-	public ModulInputTypesController(AppController appController)
+	public ModulInputTypesController(final AppController appController,
+	                                 final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
 		this.modulInputTypesModel = new ModulInputTypesModel();
 		this.modulInputTypesView = new ModulInputTypesView(appController.getAppView());
 		
 		//------------------------------------------------------------------------------------------
-		this.modulInputTypeSelectController = new ModulInputTypeSelectController();
+		this.modulInputTypeSelectController = new ModulInputTypeSelectController(appModelChangedObserver);
 		
 		this.modulInputTypesView.setModulInputTypeSelectView(this.modulInputTypeSelectController.getInputTypeSelectView());
 		

@@ -51,29 +51,12 @@ TODO:
 #105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
 		==> Reverted TimelineEditModelChangedObserver: Is not so easy: Selecting timeline updates timelineEditModel, this updates timelineSelectEntryModel fields bevor all fields are filled, that chrashes...
 #106:
+#107:
 
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
-#104:	IMPROVEMENT: Ask only for save, if something in model is changed.
-		--> Move creating new ModulGeneratorTypeData to ModulTreeController.
-			--> Move inserting new ModulGeneratorTypeData to ModulTreeModel.
-			--> Lets ModulTreeModel handel the actual selectionPath.
-			--> appModelChangedObserver:ModulEditModel:ModulInserted
-		--> ModulEditModel:ModulNameChanged.appModelChangedObserver
-		--> ModulEditModel:ModulIsMainChanged.appModelChangedObserver
-		--> ModulInputTypeEditModel.getInputTypeDataChanged.appModelChangedObserver
-		--> ModulInputTypeEditModel.getInputTypeDefaultValueChanged.appModelChangedObserver
-		--> ModulInputTypeEditModel.getInputTypeDescriptionChanged.appModelChangedObserver
-		--> ModulInputTypeEditModel.getInputTypeIDChanged.appModelChangedObserver
-		--> ModulInputTypeEditModel.getInputTypeNameChanged.appModelChangedObserver
-	 	--> TimelineEditModel.getGeneratorTypeDataChanged.appModelChangedObserver
-	 	--> TimelineEditModel.getGeneratorNameChanged.appModelChangedObserver
-	 	--> TimelineEditModel.getGeneratorStartTimePosChanged.appModelChangedObserver
-	 	--> TimelineEditModel.getGeneratorEndTimePosChanged.appModelChangedObserver
-		==> NOT WORKING: Selection changes also updates Models by this settters.
-			--> Implements a submit-model pattern to update business-data if models updated by editing.
- 
+
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
@@ -161,4 +144,22 @@ DONE:
 		--> Fixed by another Tickets (#65, ..).
 #83:	IMPROVEMENT: Make width of TimelineGeneratorRule view bigger.
 		--> Fixed with #81.
-		
+#104:	IMPROVEMENT: Ask only for save, if something in model is changed.
+		--> Move creating new ModulGeneratorTypeData to ModulTreeController.
+			--> Move inserting new ModulGeneratorTypeData to ModulTreeModel.
+			--> Lets ModulTreeModel handel the actual selectionPath.
+			--> appModelChangedObserver:ModulEditModel:ModulInserted
+		--> ModulEditModel:ModulNameChanged.appModelChangedObserver
+		--> ModulEditModel:ModulIsMainChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeDataChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeDefaultValueChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeDescriptionChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeIDChanged.appModelChangedObserver
+		--> ModulInputTypeEditModel.getInputTypeNameChanged.appModelChangedObserver
+	 	--> TimelineEditModel.getGeneratorTypeDataChanged.appModelChangedObserver
+	 	--> TimelineEditModel.getGeneratorNameChanged.appModelChangedObserver
+	 	--> TimelineEditModel.getGeneratorStartTimePosChanged.appModelChangedObserver
+	 	--> TimelineEditModel.getGeneratorEndTimePosChanged.appModelChangedObserver
+		==> NOT WORKING: Selection changes also updates Models by this settters.
+			--> Implements a submit-model pattern to update business-data if models updated by editing.
+ 			--> Add a AppModelChangedObserver to all Edit-Submit and Edit-Remove Controller actions.

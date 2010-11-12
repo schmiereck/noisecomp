@@ -10,6 +10,7 @@ import javax.swing.ListSelectionModel;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 
 /**
  * <p>
@@ -34,6 +35,8 @@ public class ModulInputTypeSelectController
 	 */
 	private final ModulInputTypeSelectView inputTypeSelectView;
 	
+	private final AppModelChangedObserver appModelChangedObserver;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -41,11 +44,13 @@ public class ModulInputTypeSelectController
 	 * Constructor.
 	 * 
 	 */
-	public ModulInputTypeSelectController()
+	public ModulInputTypeSelectController(final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
 		this.inputTypeSelectModel = new ModulInputTypeSelectModel();
 		this.inputTypeSelectView = new ModulInputTypeSelectView(this.inputTypeSelectModel);
+		
+		this.appModelChangedObserver = appModelChangedObserver;
 		
 		//------------------------------------------------------------------------------------------
 //		// Selected Timeline changed -> update Input-Select-Model:
@@ -150,6 +155,7 @@ public class ModulInputTypeSelectController
 	 */
 	public void doEditModuleChanged(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
+		//==========================================================================================
 		this.inputTypeSelectModel.clearInputs();
 		
 		if (modulGeneratorTypeData != null)
@@ -171,6 +177,7 @@ public class ModulInputTypeSelectController
 				}
 			}
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -179,6 +186,7 @@ public class ModulInputTypeSelectController
 	 */
 	public InputTypeData getSelectedModulInputType()
 	{
+		//==========================================================================================
 		InputTypeData inputTypeData;
 		
 		ModulInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
@@ -192,6 +200,7 @@ public class ModulInputTypeSelectController
 			inputTypeData = null;
 		}
 		
+		//==========================================================================================
 		return inputTypeData;
 	}
 
@@ -200,6 +209,7 @@ public class ModulInputTypeSelectController
 	 */
 	public void doInputTypeUpdated(ModulInputTypeSelectModel selectModel)
 	{
+		//==========================================================================================
 		Integer selectedRowNo = this.inputTypeSelectModel.getSelectedRowNo();
 		
 		if (selectedRowNo != null)
@@ -212,6 +222,7 @@ public class ModulInputTypeSelectController
 			
 			modulInputTypeTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -222,6 +233,7 @@ public class ModulInputTypeSelectController
 	 */
 	public void doRemoveSelectedEntry(ModulGeneratorTypeData editedModulGeneratorTypeData)
 	{
+		//==========================================================================================
 		ModulInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
 		
 		if (selectEntryModel != null)
@@ -245,14 +257,19 @@ public class ModulInputTypeSelectController
 			
 			tabelModel.removeInput(selectedRowNo);
 
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			this.appModelChangedObserver.notifyAppModelChanged();
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
+		//==========================================================================================
 	}
 
 	/**
 	 */
 	public void doCreateNew()
 	{
+		//==========================================================================================
 		ModulInputTypeSelectModel modulInputTypeSelectModel = this.getInputTypeSelectModel();
 		
 		ModulInputTypeTabelModel tabelModel = modulInputTypeSelectModel.getModulInputTypeTabelModel();
@@ -262,5 +279,6 @@ public class ModulInputTypeSelectController
 		int rowNo = tabelModel.addInputData(selectEntryModel);
 		
 		modulInputTypeSelectModel.setSelectedRowNo(rowNo);
+		//==========================================================================================
 	}
 }

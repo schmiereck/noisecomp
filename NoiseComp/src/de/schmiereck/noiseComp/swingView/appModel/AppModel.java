@@ -10,6 +10,19 @@ import java.io.File;
  * <p>
  * 	App Model.
  * </p>
+ * <p>
+ * 	see: http://de.wikipedia.org/wiki/Beobachter_%28Entwurfsmuster%29
+ * 
+ * 	AppModelChangedObserver
+ * 		ModulsModelChangedObserver
+ * 			- editedModul
+ * 			TimelinesModelChangedObserver
+ * 				- editedTimeline
+ * 			ModulInputTypesModelChangedObserver
+ * 				- editedModulInputType
+ * 			InputsModelChangedObserver
+ * 				- editedInput
+ * </p>
  * 
  * @author smk
  * @version <p>06.09.2010:	created, smk</p>

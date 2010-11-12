@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 
 /**
  * <p>
@@ -111,9 +112,21 @@ public class TimelinesDrawPanelModel
 		}
  	};
 	
+	//----------------------------------------------------------------------------------------------
+	private final AppModelChangedObserver appModelChangedObserver;
+ 	
 	//**********************************************************************************************
 	// Functions:
 	
+	/**
+	 * Constructor.
+	 * 
+	 */
+	public TimelinesDrawPanelModel(final AppModelChangedObserver appModelChangedObserver)
+	{
+		this.appModelChangedObserver = appModelChangedObserver;
+	}
+
 	/**
 	 * @return 
 	 * 			returns the {@link #timelineSelectEntryModels}.
@@ -128,10 +141,12 @@ public class TimelinesDrawPanelModel
 	 */
 	public void clearTimelineGenerators()
 	{
+		//==========================================================================================
 		this.timelineSelectEntryModels.clear();
 		
 		// Notify listeners.
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+		//==========================================================================================
 	}
 
 	/**
@@ -143,10 +158,12 @@ public class TimelinesDrawPanelModel
 	 */
 	public void addTimelineSelectEntryModel(TimelineSelectEntryModel timelineSelectEntryModel)
 	{
+		//==========================================================================================
 		this.timelineSelectEntryModels.add(timelineSelectEntryModel);
 		
 		// Notify listeners.
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+		//==========================================================================================
 	}
 
 	/**
@@ -155,12 +172,18 @@ public class TimelinesDrawPanelModel
 	 */
 	public void removeTimelineSelectEntryModel(TimelineSelectEntryModel timelineSelectEntryModel)
 	{
+		//==========================================================================================
 		this.timelineSelectEntryModels.remove(timelineSelectEntryModel);
 		
 		// Notify listeners.
 		this.removeTimelineGeneratorNotifier.notifyRemoveTimelineGeneratorListeners(this,
 		                                                                            timelineSelectEntryModel);
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		this.appModelChangedObserver.notifyAppModelChanged();
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -187,11 +210,13 @@ public class TimelinesDrawPanelModel
 	 */
 	public void setSelectedTimelineSelectEntryModel(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
 	{
+		//==========================================================================================
 		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
 		
 		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
+		//==========================================================================================
 	}
-//
+
 //	/**
 //	 * Notify the {@link #selectedTimelineChangedListeners}.
 //	 */
@@ -265,6 +290,7 @@ public class TimelinesDrawPanelModel
 	 */
 	public void changeTimelinesPosition(int firstTimelinePos, int secondTimelinePos)
 	{
+		//==========================================================================================
 		TimelineSelectEntryModel firstTimelineSelectEntryModel = this.timelineSelectEntryModels.get(firstTimelinePos);
 		TimelineSelectEntryModel secondTimelineSelectEntryModel = this.timelineSelectEntryModels.get(secondTimelinePos);
 		
@@ -280,6 +306,7 @@ public class TimelinesDrawPanelModel
 		//------------------------------------------------------------------------------------------
 		// Notify listeners.
 		this.changeTimelinesPositionChangedNotifier.notifyModelPropertyChangedListeners();
+		//==========================================================================================
 	}
 
 	/**
@@ -306,10 +333,12 @@ public class TimelinesDrawPanelModel
 	 */
 	public void setZoomX(float zoomX)
 	{
+		//==========================================================================================
 		this.zoomX = zoomX;
 		
 		// Notify listeners.
 		this.zoomXChangedNotifier.notifyModelPropertyChangedListeners();
+		//==========================================================================================
 	}
 
 	/**
@@ -338,10 +367,12 @@ public class TimelinesDrawPanelModel
 	 */
 	public void setDimensionSize(double width, double height)
 	{
+		//==========================================================================================
 		this.dimension.setSize(width, height);
 		
 		// Notify listeners.
 		this.dimensionChangedNotifier.notifyModelPropertyChangedListeners();
+		//==========================================================================================
 	}
 
 	/**

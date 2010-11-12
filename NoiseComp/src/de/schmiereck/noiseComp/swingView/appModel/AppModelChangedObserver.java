@@ -3,9 +3,6 @@
  */
 package de.schmiereck.noiseComp.swingView.appModel;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
-import de.schmiereck.noiseComp.swingView.modulsTree.ModulInsertedListener;
 
 /**
  * <p>
@@ -16,8 +13,7 @@ import de.schmiereck.noiseComp.swingView.modulsTree.ModulInsertedListener;
  * @version <p>10.11.2010:	created, smk</p>
  */
 public class AppModelChangedObserver 
-implements ModulInsertedListener, 
-		   ModelPropertyChangedListener
+//implements ModulInsertedListener
 {
 	//**********************************************************************************************
 	// Fields:
@@ -38,20 +34,25 @@ implements ModulInsertedListener,
 		this.appModel = appModel;
 	}
 
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.swingView.modulsTree.ModulInsertedListener#notifyModulInserted(de.schmiereck.noiseComp.generator.ModulGeneratorTypeData)
-	 */
-	@Override
-	public void notifyModulInserted(ModulGeneratorTypeData modulGeneratorTypeData)
-	{
-		this.appModel.setIsModelChanged(true);
-	}
-
-	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener#notifyModelPropertyChanged()
-	 */
-	@Override
-	public void notifyModelPropertyChanged()
+//	/* (non-Javadoc)
+//	 * @see de.schmiereck.noiseComp.swingView.modulsTree.ModulInsertedListener#notifyModulInserted(de.schmiereck.noiseComp.generator.ModulGeneratorTypeData)
+//	 */
+//	@Override
+//	public void notifyModulInserted(ModulGeneratorTypeData modulGeneratorTypeData)
+//	{
+//		this.appModel.setIsModelChanged(true);
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener#notifyModelPropertyChanged()
+//	 */
+//	@Override
+//	public void notifyModelPropertyChanged()
+//	{
+//		this.appModel.setIsModelChanged(true);
+//	}
+	
+	public void notifyAppModelChanged()
 	{
 		this.appModel.setIsModelChanged(true);
 	}

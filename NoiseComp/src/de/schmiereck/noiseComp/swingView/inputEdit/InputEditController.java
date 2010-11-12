@@ -20,6 +20,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.MultiValue;
 import de.schmiereck.noiseComp.swingView.SwingMain;
+import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
@@ -51,16 +52,25 @@ public class InputEditController
 	 */
 	private final InputEditView inputEditView;
 	
+	private final AppModelChangedObserver appModelChangedObserver;
+	
 	//**********************************************************************************************
 	// Functions:
 
 	/**
 	 * Constructor.
 	 * 
+	 * @param inputSelectModel
+	 * 			is the InputSelectModel.
+	 * @param appModelChangedObserver 
+	 * 			is the AppModelChangedObserver.
 	 */
-	public InputEditController(final InputSelectModel inputSelectModel)
+	public InputEditController(final InputSelectModel inputSelectModel, 
+	                           final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
+		this.appModelChangedObserver = appModelChangedObserver;
+		
 		this.inputEditModel = new InputEditModel();
 		
 		this.inputEditView = new InputEditView(this.inputEditModel);
@@ -247,6 +257,7 @@ public class InputEditController
 			modulInputTypeData = null;
 		}
 
+		//------------------------------------------------------------------------------------------
 		this.inputEditModel.setInputTypeSelectItems(inputTypeSelectItems);
 		this.inputEditModel.setInputTypeData(inputTypeData);
 		this.inputEditModel.setGeneratorSelectItems(generatorSelectItems);
@@ -336,6 +347,9 @@ public class InputEditController
 		this.inputEditModel.setInputTimeline(inputGeneratorSelectItem.getTimeline());
 		this.inputEditModel.setValue(valueStr);
 		this.inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
+		
+		//------------------------------------------------------------------------------------------
+		this.appModelChangedObserver.notifyAppModelChanged();
 		
 		//==========================================================================================
 	}

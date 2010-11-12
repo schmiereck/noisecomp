@@ -669,8 +669,19 @@ implements GeneratorBufferInterface,
 		
 		Timeline removedTimeline = this.inputTimelines.remove(inputData);
 		
-		float changedStartTimePos = removedTimeline.startTimePos;
-		float changedEndTimePos = removedTimeline.endTimePos;
+		float changedStartTimePos;
+		float changedEndTimePos;
+		
+		if (removedTimeline != null)
+		{
+			changedStartTimePos = removedTimeline.startTimePos;
+			changedEndTimePos = removedTimeline.endTimePos;
+		}
+		else
+		{
+			changedStartTimePos = this.startTimePos;
+			changedEndTimePos = this.endTimePos;
+		}
 		
 //		//------------------------------------------------------------------------------------------
 //		// Remove also from Output-Timelines:

@@ -28,8 +28,6 @@ public class ModulesTreeModel
 
 	private final DefaultTreeModel treeModel;
 	
-	private List<ModulInsertedListener> modulInsertedListeners = new Vector<ModulInsertedListener>();
-	
 	//----------------------------------------------------------------------------------------------
 	/**
 	 * Tree selection Path.
@@ -202,30 +200,7 @@ public class ModulesTreeModel
 		
 		this.treeModel.insertNodeInto(modulTreeNode, parentTreeNode, parentChildCount);
 
-		//------------------------------------------------------------------------------------------
-		for (ModulInsertedListener modulInsertedListener : this.modulInsertedListeners)
-		{
-			modulInsertedListener.notifyModulInserted(modulGeneratorTypeData);
-		}
 		//==========================================================================================
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #modulInsertedListeners}.
-	 */
-	public List<ModulInsertedListener> getModulInsertedListeners()
-	{
-		return this.modulInsertedListeners;
-	}
-
-	/**
-	 * @param modulInsertedListener 
-	 * 			to add to {@link #modulInsertedListeners}.
-	 */
-	public void addModulInsertedListener(ModulInsertedListener modulInsertedListener)
-	{
-		this.modulInsertedListeners.add(modulInsertedListener);
 	}
 
 	/**
