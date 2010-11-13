@@ -8,19 +8,25 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
@@ -29,6 +35,7 @@ import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditView;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView;
+import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
 /**
  * <p>
@@ -139,6 +146,14 @@ extends JFrame
 
 	private JButton	zoomOutButton;
 	
+	private JTextField ticksTextField;
+	
+	private JRadioButton ticksSecondsButton;
+	
+	private JRadioButton ticksMilliecondsButton;
+	
+	private JRadioButton ticksBpmButton;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -170,7 +185,7 @@ extends JFrame
 	 * @throws HeadlessException
 	 * 			if an Error occurse.
 	 */
-	public AppView(AppModel appModel)
+	public AppView(final AppModel appModel)
 		throws HeadlessException
 	{
 		//==========================================================================================
@@ -226,6 +241,14 @@ extends JFrame
 			toolBarPanel.add(zoomToolBar, BorderLayout.PAGE_START);
 		}
 		//------------------------------------------------------------------------------------------
+		{
+			JToolBar scaleToolBar = new JToolBar("Scale");
+	        
+			this.buildScaleToolBar(scaleToolBar);
+		    
+			toolBarPanel.add(scaleToolBar, BorderLayout.PAGE_START);
+		}
+		//------------------------------------------------------------------------------------------
 		// Modul Select Panel:
 		
 		this.modulesTreeScrollPane = new JScrollPane();
@@ -278,6 +301,60 @@ extends JFrame
 		this.modulSplitPane.setLeftComponent(this.modulesTreeScrollPane);
 		this.modulSplitPane.setRightComponent(this.modulEditSplitPane);
 
+	    //------------------------------------------------------------------------------------------
+		this.getTicksTextField().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					JTextField ticksTextField = getTicksTextField();
+					
+					String text = ticksTextField.getText();
+					
+					Float ticksCount = InputUtils.makeFloatValue(text);
+					
+					appModel.updateTicksCount(ticksCount);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.getTicksSecondsButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					appModel.updateTicksPer(AppModel.TicksPer.Seconds);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.getTicksMilliecondsButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					appModel.updateTicksPer(AppModel.TicksPer.Milliseconds);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.getTicksBpmButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					appModel.updateTicksPer(AppModel.TicksPer.BPM);
+				}
+		 	}
+		);
 		//------------------------------------------------------------------------------------------
 //		this.add(this.timelinePanel);
 		
@@ -410,7 +487,6 @@ extends JFrame
 		//==========================================================================================
 	}
 	
-
 	/**
 	 * @param toolBar
 	 * 			is the zoom Tool-bar.
@@ -418,6 +494,12 @@ extends JFrame
 	private final void buildZoomToolBar(JToolBar toolBar)
 	{
 		//==========================================================================================
+		{
+			JLabel label = new JLabel("Zoom ");
+			
+			toolBar.add(label);
+		}
+		//------------------------------------------------------------------------------------------
 		// Zoom-In-Button:
 		{
 			this.zoomInButton = 
@@ -436,6 +518,64 @@ extends JFrame
 				                          "-");
 			
 		    toolBar.add(this.zoomOutButton);
+		}
+		//==========================================================================================
+	}
+	
+	/**
+	 * @param toolBar
+	 * 			is the scale Tool-bar.
+	 */
+	private final void buildScaleToolBar(JToolBar toolBar)
+	{
+		//==========================================================================================
+		{
+			JLabel label = new JLabel("Ticks ");
+			
+			toolBar.add(label);
+		}
+		{
+			this.ticksTextField = new JTextField(10);
+			
+			toolBar.add(this.ticksTextField);
+		}
+		{
+			JLabel label = new JLabel(" per ");
+			
+			toolBar.add(label);
+		}
+		//------------------------------------------------------------------------------------------
+		ButtonGroup buttonGroup = new ButtonGroup();
+
+		//------------------------------------------------------------------------------------------
+		// Seconds:
+		{
+			this.ticksSecondsButton = new JRadioButton();
+			
+			this.ticksSecondsButton.setText("s ");
+			
+			toolBar.add(this.ticksSecondsButton);
+			buttonGroup.add(this.ticksSecondsButton);
+		}
+		//------------------------------------------------------------------------------------------
+		// Milliseconds:
+		{
+			this.ticksMilliecondsButton = new JRadioButton();
+			
+			this.ticksMilliecondsButton.setText("ms ");
+			
+			toolBar.add(this.ticksMilliecondsButton);
+			buttonGroup.add(this.ticksMilliecondsButton);
+		}
+		//------------------------------------------------------------------------------------------
+		// bpm:
+		{
+			this.ticksBpmButton = new JRadioButton();
+			
+			this.ticksBpmButton.setText("bpm ");
+			
+			toolBar.add(this.ticksBpmButton);
+			buttonGroup.add(this.ticksBpmButton);
 		}
 		//==========================================================================================
 	}
@@ -772,6 +912,42 @@ extends JFrame
 	public JButton getZoomOutButton()
 	{
 		return this.zoomOutButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #ticksTextField}.
+	 */
+	public JTextField getTicksTextField()
+	{
+		return this.ticksTextField;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #ticksSecondsButton}.
+	 */
+	public JRadioButton getTicksSecondsButton()
+	{
+		return this.ticksSecondsButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #ticksMilliecondsButton}.
+	 */
+	public JRadioButton getTicksMilliecondsButton()
+	{
+		return this.ticksMilliecondsButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #ticksBpmButton}.
+	 */
+	public JRadioButton getTicksBpmButton()
+	{
+		return this.ticksBpmButton;
 	}
 
 }

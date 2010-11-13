@@ -16,6 +16,8 @@ import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.Version;
@@ -38,6 +40,7 @@ import de.schmiereck.noiseComp.swingView.about.AboutDialogView;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.appModel.AppModel.TicksPer;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
@@ -66,6 +69,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleC
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelView;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
+import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
 import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
@@ -746,6 +750,67 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Models Changed:
 		//------------------------------------------------------------------------------------------
+		this.appModel.getTicksCountChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					JTextField ticksTextField = appView.getTicksTextField();
+					
+					Float ticksCount = appModel.getTicksCount();
+					
+					ticksTextField.setText(OutputUtils.makeFloatEditText(ticksCount));
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.appModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					JRadioButton ticksSecondsButton = appView.getTicksSecondsButton();
+					JRadioButton ticksMilliecondsButton = appView.getTicksMilliecondsButton();
+					JRadioButton ticksBpmButton = appView.getTicksBpmButton();
+					
+					TicksPer ticksPer = appModel.getTicksPer();
+					
+					switch (ticksPer)
+					{
+						case Seconds:
+						{
+							ticksSecondsButton.setSelected(true);
+							ticksMilliecondsButton.setSelected(false);
+							ticksBpmButton.setSelected(false);
+							break;
+						}
+						case Milliseconds:
+						{
+							ticksSecondsButton.setSelected(false);
+							ticksMilliecondsButton.setSelected(true);
+							ticksBpmButton.setSelected(false);
+							break;
+						}
+						case BPM:
+						{
+							ticksSecondsButton.setSelected(false);
+							ticksMilliecondsButton.setSelected(false);
+							ticksBpmButton.setSelected(true);
+							break;
+						}
+						default:
+						{
+							throw new RuntimeException("Unknown ticks per \"" + ticksPer + "\".");
+						}
+					}
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
 		ModulEditModel modulEditModel = this.modulEditController.getModulEditModel();
 		
 	 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1013,6 +1078,12 @@ implements RemoveTimelineGeneratorListenerInterface,
 		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
 		
 		this.modulesTreeController.addGeneratorTypes(generatorTypes);
+		
+	    //------------------------------------------------------------------------------------------
+		this.appModel.setTicksCount(new Float(1.0F));
+		
+	    //------------------------------------------------------------------------------------------
+		this.appModel.setTicksPer(AppModel.TicksPer.Seconds);
 		
 		//==========================================================================================
 	}
