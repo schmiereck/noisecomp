@@ -11,6 +11,8 @@ import java.awt.Rectangle;
 
 import javax.swing.JComponent;
 
+import de.schmiereck.noiseComp.swingView.appModel.AppModel.TicksPer;
+
 /**
  * <p>
  * 	Timelines-Time Rule View.
@@ -91,9 +93,6 @@ extends JComponent
 	{
 		//super.paintComponent(g);
 		 
-		int units = this.timelinesTimeRuleModel.getUnits();
-		int increment = this.timelinesTimeRuleModel.getIncrement();
-		
 		Rectangle drawHere = g.getClipBounds();
 		
 		// Fill clipping area with dirty brown/orange.
@@ -104,47 +103,74 @@ extends JComponent
 		g.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		g.setColor(Color.BLACK);
 
+//		int units = this.timelinesTimeRuleModel.getUnits();
+//		int increment = this.timelinesTimeRuleModel.getIncrement();
+		float zoomX = this.timelinesTimeRuleModel.getZoomX();
+
 		// Use clipping bounds to calculate first and last tick locations.
-		int start = ((drawHere.x / increment) * increment);
-		int end = ((((drawHere.x + drawHere.width) / increment) + 1) * increment);
+		int startTickNo	= (int)((drawHere.x / zoomX));
+		int endTickNo 	= (int)((drawHere.x + drawHere.width) / zoomX) + 1;
 
 		// ticks and labels
-		for (int tickPos = start; tickPos < end; tickPos += increment)
+		for (int tickPos = startTickNo; tickPos < endTickNo; tickPos += 1)
 		{
-			int tickLength;
+			int tickLineLength;
 			String text;
 			int textPosX;
 			
-			if (tickPos % units == 0)
+			tickLineLength = 10;
+			text = Integer.toString((int)(tickPos));
+			
+			if (tickPos == 0)
 			{
-				tickLength = 10;
-				text = Integer.toString((int)(tickPos / units));
+				// Make a special case of 0 to display the number
+				// within the rule and draw a units label.
 				
-				if (tickPos == 0)
+				TicksPer ticksPer = this.timelinesTimeRuleModel.getTicksPer();
+				
+				switch (ticksPer)
 				{
-					// Make a special case of 0 to display the number
-					// within the rule and draw a units label.
-					text += " s";
-					textPosX = 0;
+					case Seconds:
+					{
+						text += " s";
+						break;
+					}
+					case Milliseconds:
+					{
+						text += " ms";
+						break;
+					}
+					case BPM:
+					{
+						text += " bpm";
+						break;
+					}
+					default:
+					{
+						throw new RuntimeException("Unexpected TicksPer \"" + ticksPer + "\".");
+					}
 				}
-				else
-				{
-					textPosX = tickPos - 3;
-				}
-
+				textPosX = 0;
 			}
 			else
 			{
-				tickLength = 5;
-				text = null;
-				textPosX = 0;
+				textPosX = -3;
 			}
+
+//			{
+//				tickLineLength = 5;
+//				text = null;
+//				textPosX = 0;
+//			}
 			
-			g.drawLine(tickPos, SIZE - 1, tickPos, SIZE - tickLength - 1);
+			g.drawLine((int)(tickPos * zoomX), SIZE - 1, 
+			           (int)(tickPos * zoomX), SIZE - tickLineLength - 1);
 			
 			if (text != null)
 			{
-				g.drawString(text, textPosX, 21);
+				g.drawString(text, 
+				             (int)(tickPos * zoomX) + textPosX, 
+				             21);
 			}
 		}
 	}

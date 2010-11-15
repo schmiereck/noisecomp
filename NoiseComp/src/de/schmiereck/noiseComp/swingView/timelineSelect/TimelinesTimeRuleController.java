@@ -5,6 +5,7 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.awt.Dimension;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
 
 /**
@@ -46,6 +47,19 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		this.timelinesTimeRuleView = new TimelinesTimeRuleView(this.timelinesTimeRuleModel);
 		
+		//------------------------------------------------------------------------------------------
+		this.timelinesTimeRuleModel.getTicksChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					timelinesTimeRuleView.repaint();
+				}
+		 	}
+		);
+		
 		//==========================================================================================
 	}
 
@@ -84,9 +98,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public void doChangeZoomX(float zoomX)
 	{
 		//==========================================================================================
-		this.timelinesTimeRuleModel.setUnits((int)zoomX);
+//		this.timelinesTimeRuleModel.setUnits((int)zoomX);
+		this.timelinesTimeRuleModel.setZoomX(zoomX);
 		
 		this.timelinesTimeRuleView.repaint();
+		
 		//==========================================================================================
 	}
 

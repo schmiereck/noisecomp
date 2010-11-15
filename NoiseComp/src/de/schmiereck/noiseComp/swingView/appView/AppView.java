@@ -315,7 +315,7 @@ extends JFrame
 					
 					Float ticksCount = InputUtils.makeFloatValue(text);
 					
-					appModel.updateTicksCount(ticksCount);
+					appModel.setTicksCount(ticksCount);
 				}
 		 	}
 		);
@@ -327,7 +327,7 @@ extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					appModel.updateTicksPer(AppModel.TicksPer.Seconds);
+					appModel.setTicksPer(AppModel.TicksPer.Seconds);
 				}
 		 	}
 		);
@@ -339,7 +339,7 @@ extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					appModel.updateTicksPer(AppModel.TicksPer.Milliseconds);
+					appModel.setTicksPer(AppModel.TicksPer.Milliseconds);
 				}
 		 	}
 		);
@@ -351,7 +351,7 @@ extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					appModel.updateTicksPer(AppModel.TicksPer.BPM);
+					appModel.setTicksPer(AppModel.TicksPer.BPM);
 				}
 		 	}
 		);

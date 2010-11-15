@@ -58,6 +58,9 @@ public class AppModel
 	private final ModelPropertyChangedNotifier ticksCountChangedNotifier = new ModelPropertyChangedNotifier();
 
 	//----------------------------------------------------------------------------------------------
+	/**
+	 * Tick Units.
+	 */
 	public enum TicksPer
 	{
 		Seconds,

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.swingView.appModel.AppModel.TicksPer;
 
 /**
  * <p>
@@ -38,13 +39,39 @@ public class TimelinesTimeRuleModel
 	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//----------------------------------------------------------------------------------------------
-	private int				units = 1;
-	private int				increment = 1;
+//	/**
+//	 * Pixel increment between the unit markers.
+//	 */
+//	private int				units = 2;
+//	
+//	/**
+//	 * Pixel increment between the markers.
+//	 */
+//	private int				increment = 1;
 
+	private float zoomX = 1.0F;
+	
 	/**
 	 * {@link #units} changed listeners.
 	 */
-	private final ModelPropertyChangedNotifier unitsChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier zoomXChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	//----------------------------------------------------------------------------------------------
+	/**
+	 * {@link #ticksCount} per value.
+	 */
+	private TicksPer ticksPer = TicksPer.Seconds;
+	
+	/**
+	 * Count of ticks per {@link #ticksPer}.
+	 */
+	private Float ticksCount = 1.0F;
+	
+
+	/**
+	 * {@link #ticksPer} or {@link #ticksCount} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier ticksChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -98,40 +125,93 @@ public class TimelinesTimeRuleModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #units}.
+	 * 			returns the {@link #zoomX}.
 	 */
-	public int getUnits()
+	public float getZoomX()
 	{
-		return this.units;
+		return this.zoomX;
 	}
 
 	/**
 	 * @param units 
-	 * 			to set {@link #units}.
+	 * 			to set {@link #zoomX}.
 	 */
-	public void setUnits(int units)
+	public void setZoomX(float zoomX)
 	{
-		this.units = units;
-		this.increment = this.units / 2;
+//		this.units = units;
+//		this.increment = this.units / 2;
+//		
+//		this.zoomXChangedNotifier.notifyModelPropertyChangedListeners();
 		
-		this.unitsChangedNotifier.notifyModelPropertyChangedListeners();
+		this.zoomX = zoomX;
+		
+		this.zoomXChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #unitsChangedNotifier}.
+	 * 			returns the {@link #zoomXChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getUnitsChangedNotifier()
+	public ModelPropertyChangedNotifier getZoomXChangedNotifier()
 	{
-		return this.unitsChangedNotifier;
+		return this.zoomXChangedNotifier;
+	}
+
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #increment}.
+//	 */
+//	public int getIncrement()
+//	{
+//		return this.increment;
+//	}
+
+	/**
+	 * @param ticksPer
+	 * 			is the Tick Unit.
+	 * @param ticksCount
+	 * 			are the ticks.
+	 */
+	public void notifyTicksChangedNotifier(TicksPer ticksPer, Float ticksCount)
+	{
+		//==========================================================================================
+		this.ticksPer = ticksPer;
+
+		this.ticksCount = ticksCount;
+		
+		this.ticksChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		//this.timelinesTimeRuleModel.setUnits((int)zoomX);
+		
+		//this.timelinesTimeRuleView.repaint();
+
+		//==========================================================================================
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #increment}.
+	 * 			returns the {@link #ticksChangedNotifier}.
 	 */
-	public int getIncrement()
+	public ModelPropertyChangedNotifier getTicksChangedNotifier()
 	{
-		return this.increment;
+		return this.ticksChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #ticksPer}.
+	 */
+	public TicksPer getTicksPer()
+	{
+		return this.ticksPer;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #ticksCount}.
+	 */
+	public Float getTicksCount()
+	{
+		return this.ticksCount;
 	}
 }

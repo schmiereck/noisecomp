@@ -69,6 +69,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleC
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelView;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleModel;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -804,9 +805,26 @@ implements RemoveTimelineGeneratorListenerInterface,
 						}
 						default:
 						{
-							throw new RuntimeException("Unknown ticks per \"" + ticksPer + "\".");
+							throw new RuntimeException("Unexpected TicksPer \"" + ticksPer + "\".");
 						}
 					}
+				}
+		 	}
+		);
+		this.appModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					// Update TimelinesTimeRule
+					TicksPer ticksPer = appModel.getTicksPer();
+					Float ticksCount = appModel.getTicksCount();
+					
+					TimelinesTimeRuleModel timelinesTimeRuleModel = timelinesTimeRuleController.getTimelinesTimeRuleModel();
+					
+					timelinesTimeRuleModel.notifyTicksChangedNotifier(ticksPer, ticksCount);
 				}
 		 	}
 		);
