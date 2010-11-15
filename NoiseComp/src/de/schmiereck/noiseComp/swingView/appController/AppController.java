@@ -811,9 +811,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 				}
 		 	}
 		);
-		this.appModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
-		(
-		 	new ModelPropertyChangedListener()
+		{
+		 	ModelPropertyChangedListener ticksChangedListener = new ModelPropertyChangedListener()
 		 	{
 				@Override
 				public void notifyModelPropertyChanged()
@@ -826,8 +825,16 @@ implements RemoveTimelineGeneratorListenerInterface,
 					
 					timelinesTimeRuleModel.notifyTicksChangedNotifier(ticksPer, ticksCount);
 				}
-		 	}
-		);
+		 	};
+			this.appModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
+			(
+			 	ticksChangedListener
+			);
+			this.appModel.getTicksCountChangedNotifier().addModelPropertyChangedListener
+			(
+			 	ticksChangedListener
+			);
+		}
 		//------------------------------------------------------------------------------------------
 		ModulEditModel modulEditModel = this.modulEditController.getModulEditModel();
 		

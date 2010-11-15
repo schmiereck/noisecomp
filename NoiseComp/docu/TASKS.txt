@@ -54,10 +54,11 @@ WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
 #106:	IMPROVEMENT: Allow selecting seconds, milliseconds or bpm (Beats Per Minute) used for TimelinesTimeRule.
-		--> Global setting.
-		--> Modul setting.
 		--> Fix zoom issues if to mutch or to many ticks displayed in TimelinesTimeRule.
 		--> Allow set time positions in bpm.
+		--> Save Global setting.
+		--> Save Modul setting.
+		--> Save Timeline settings.
 
 DONE:
 =====

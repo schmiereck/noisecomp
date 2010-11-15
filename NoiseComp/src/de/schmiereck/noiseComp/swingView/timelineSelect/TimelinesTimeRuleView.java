@@ -106,10 +106,44 @@ extends JComponent
 //		int units = this.timelinesTimeRuleModel.getUnits();
 //		int increment = this.timelinesTimeRuleModel.getIncrement();
 		float zoomX = this.timelinesTimeRuleModel.getZoomX();
-
+		float tickPerSecond;
+		
+		String unitLabel;
+		
+		TicksPer ticksPer = this.timelinesTimeRuleModel.getTicksPer();
+		Float ticksCount = this.timelinesTimeRuleModel.getTicksCount();
+		
+		switch (ticksPer)
+		{
+			case Seconds:
+			{
+				tickPerSecond = 1.0F;
+				unitLabel = " s";
+				break;
+			}
+			case Milliseconds:
+			{
+				tickPerSecond = 1000.0F;
+				unitLabel = " ms";
+				break;
+			}
+			case BPM:
+			{
+				tickPerSecond = 1.0F / 60.0F;
+				unitLabel = " bpm";
+				break;
+			}
+			default:
+			{
+				throw new RuntimeException("Unexpected TicksPer \"" + ticksPer + "\".");
+			}
+		}
+		
+		float tickSize = (1.0F / (tickPerSecond * ticksCount)) * zoomX;
+		 
 		// Use clipping bounds to calculate first and last tick locations.
-		int startTickNo	= (int)((drawHere.x / zoomX));
-		int endTickNo 	= (int)((drawHere.x + drawHere.width) / zoomX) + 1;
+		int startTickNo	= (int)((drawHere.x / tickSize));
+		int endTickNo 	= (int)((drawHere.x + drawHere.width) / tickSize) + 1;
 
 		// ticks and labels
 		for (int tickPos = startTickNo; tickPos < endTickNo; tickPos += 1)
@@ -126,30 +160,7 @@ extends JComponent
 				// Make a special case of 0 to display the number
 				// within the rule and draw a units label.
 				
-				TicksPer ticksPer = this.timelinesTimeRuleModel.getTicksPer();
-				
-				switch (ticksPer)
-				{
-					case Seconds:
-					{
-						text += " s";
-						break;
-					}
-					case Milliseconds:
-					{
-						text += " ms";
-						break;
-					}
-					case BPM:
-					{
-						text += " bpm";
-						break;
-					}
-					default:
-					{
-						throw new RuntimeException("Unexpected TicksPer \"" + ticksPer + "\".");
-					}
-				}
+				text += unitLabel;
 				textPosX = 0;
 			}
 			else
@@ -163,13 +174,13 @@ extends JComponent
 //				textPosX = 0;
 //			}
 			
-			g.drawLine((int)(tickPos * zoomX), SIZE - 1, 
-			           (int)(tickPos * zoomX), SIZE - tickLineLength - 1);
+			g.drawLine((int)(tickPos * tickSize), SIZE - 1, 
+			           (int)(tickPos * tickSize), SIZE - tickLineLength - 1);
 			
 			if (text != null)
 			{
 				g.drawString(text, 
-				             (int)(tickPos * zoomX) + textPosX, 
+				             (int)(tickPos * tickSize) + textPosX, 
 				             21);
 			}
 		}
