@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
@@ -95,6 +97,78 @@ public class ModulEditController
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		this.modulEditModel.getZoomXChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					
+					if (modulGeneratorTypeData != null)
+					{
+						float zoomX = modulEditModel.getZoomX();
+						
+						modulGeneratorTypeData.setViewZoomX(zoomX);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						appModelChangedObserver.notifyAppModelChanged();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.modulEditModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					
+					if (modulGeneratorTypeData != null)
+					{
+						TicksPer ticksPer = modulEditModel.getTicksPer();
+						
+						modulGeneratorTypeData.setViewTicksPer(ticksPer);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						appModelChangedObserver.notifyAppModelChanged();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.modulEditModel.getTicksCountChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					
+					if (modulGeneratorTypeData != null)
+					{
+						Float ticksCount = modulEditModel.getTicksCount();
+						
+						modulGeneratorTypeData.setViewTicksCount(ticksCount);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						appModelChangedObserver.notifyAppModelChanged();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+		 	}
+		);
 		//==========================================================================================
 	}
 
@@ -116,27 +190,84 @@ public class ModulEditController
 		return this.modulEditModel;
 	}
 
+	public void doTimelinesZoomIn()
+	{
+		//==========================================================================================
+		float zoomX = this.modulEditModel.getZoomX();
+		
+		zoomX *= 1.5F;
+		
+		this.modulEditModel.setZoomX(zoomX);
+
+		//==========================================================================================
+	}
+
+	public void doTimelinesZoomOut()
+	{
+		//==========================================================================================
+		float zoomX = this.modulEditModel.getZoomX();
+		
+		zoomX /= 1.5F;
+		
+		this.modulEditModel.setZoomX(zoomX);
+
+		//==========================================================================================
+	}
+
 	/**
 	 * @param modulGeneratorTypeData
 	 * 			is the Modul-Generator-Type Data.
 	 */
 	public void doEditModuleChanged(ModulGeneratorTypeData modulGeneratorTypeData)
 	{
+		//==========================================================================================
 		String generatorTypeName;
 		Boolean modulIsMain;
+		Float viewZoomX;
+		TicksPer viewTicksPer;
+		Float viewTicksCount;
 		
 		if (modulGeneratorTypeData != null)
 		{
 			generatorTypeName = modulGeneratorTypeData.getGeneratorTypeName();
 			modulIsMain = modulGeneratorTypeData.getIsMainModulGeneratorType();
+			
+			viewZoomX = modulGeneratorTypeData.getViewZoomX();
+			viewTicksPer = modulGeneratorTypeData.getViewTicksPer();
+			viewTicksCount = modulGeneratorTypeData.getViewTicksCount();
+
+			if (viewZoomX == null)
+			{
+				viewZoomX = new Float(40.0F);
+			}
+			
+			if (viewTicksPer == null)
+			{
+				viewTicksPer = TicksPer.Seconds;
+			}
+			
+			if (viewTicksCount == null)
+			{
+				viewTicksCount = new Float(1.0F);
+			}
 		}
 		else
 		{
 			generatorTypeName = null;
 			modulIsMain = null;
+			viewZoomX = new Float(1.0F);
+			viewTicksPer = TicksPer.Seconds;
+			viewTicksCount = new Float(1.0F);
 		}
 
+		//------------------------------------------------------------------------------------------
 		this.modulEditModel.setModulName(generatorTypeName);
 		this.modulEditModel.setModulIsMain(modulIsMain);
+		
+		this.modulEditModel.setZoomX(viewZoomX);
+		this.modulEditModel.setTicksPer(viewTicksPer);
+		this.modulEditModel.setTicksCount(viewTicksCount);
+		
+		//==========================================================================================
 	}
 }

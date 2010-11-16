@@ -16,6 +16,7 @@ import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.MainActionException;
 import de.schmiereck.noiseComp.smkScreen.desktopController.actions.old.LoadFileGeneratorNodeData;
 import de.schmiereck.xmlTools.XMLData;
@@ -258,11 +259,40 @@ public class LoadFileOperationLogic
 		{
 			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
 			
-			String isMainName = XMLData.selectSingleNodeText(generatorTypeNode, "isMain");
-
-			if ("true".equals(isMainName) == true)
 			{
-				modulGeneratorTypeData.setIsMainModulGeneratorType(true);
+				String isMainName = XMLData.selectSingleNodeText(generatorTypeNode, "isMain");
+	
+				if ("true".equals(isMainName) == true)
+				{
+					modulGeneratorTypeData.setIsMainModulGeneratorType(true);
+				}
+			}
+			{
+				Node viewNode = XMLData.selectSingleNode(generatorTypeNode, "view");
+				
+				if (viewNode != null)
+				{
+					{
+						Float viewZoomX = XMLData.selectSingleNodeFloat(viewNode, "zoomX");
+						
+						modulGeneratorTypeData.setViewZoomX(viewZoomX);
+					}
+					{
+						Float viewTicksCount = XMLData.selectSingleNodeFloat(viewNode, "ticksCount");
+						
+						modulGeneratorTypeData.setViewTicksCount(viewTicksCount);
+					}
+					{
+						String ticksPer = XMLData.selectSingleNodeText(viewNode, "ticksPer");
+						
+						if (ticksPer != null)
+						{
+							TicksPer viewTicksPer = TicksPer.valueOf(ticksPer);
+							
+							modulGeneratorTypeData.setViewTicksPer(viewTicksPer);
+						}
+					}
+				}
 			}
 		}
 

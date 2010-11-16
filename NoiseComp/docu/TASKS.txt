@@ -53,12 +53,6 @@ TODO:
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
-#106:	IMPROVEMENT: Allow selecting seconds, milliseconds or bpm (Beats Per Minute) used for TimelinesTimeRule.
-		--> Fix zoom issues if to mutch or to many ticks displayed in TimelinesTimeRule.
-		--> Allow set time positions in bpm.
-		--> Save Global setting.
-		--> Save Modul setting.
-		--> Save Timeline settings.
 
 DONE:
 =====
@@ -170,3 +164,7 @@ DONE:
  		--> Don't know exacly what this is, but I think, is done.
 #60:	IMPROVEMENT: Buffering the output of a generator. Inform buffer if changes depends him. Calc average for scale view output signal.
  		--> Done. #81 #62
+#106:	IMPROVEMENT: Allow selecting seconds, milliseconds or bpm (Beats Per Minute) used for TimelinesTimeRule.
+		--> DONE: Fix zoom issues if to mutch or to many ticks displayed in TimelinesTimeRule.
+		--> DONE: Allow set time positions in s, ms and bpm.
+		--> DONE: Save settings per Module.

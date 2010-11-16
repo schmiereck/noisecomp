@@ -29,6 +29,7 @@ import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
@@ -40,7 +41,6 @@ import de.schmiereck.noiseComp.swingView.about.AboutDialogView;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
-import de.schmiereck.noiseComp.swingView.appModel.AppModel.TicksPer;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
@@ -70,6 +70,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelCont
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelView;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleModel;
+import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -318,8 +319,6 @@ implements RemoveTimelineGeneratorListenerInterface,
 				}
 		 	}
 		);
-		
-		this.timelinesTimeRuleController.doChangeZoomX(this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getZoomX());
 		
 		//------------------------------------------------------------------------------------------
 		this.inputSelectController = 
@@ -751,7 +750,26 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Models Changed:
 		//------------------------------------------------------------------------------------------
-		this.appModel.getTicksCountChangedNotifier().addModelPropertyChangedListener
+		final ModulEditModel modulEditModel = this.modulEditController.getModulEditModel();
+		
+		//------------------------------------------------------------------------------------------
+		modulEditModel.getZoomXChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+		 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+					
+					float zoomX = modulEditModel.getZoomX();
+					
+					timelinesDrawPanelModel.setZoomX(zoomX);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		modulEditModel.getTicksCountChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -760,14 +778,14 @@ implements RemoveTimelineGeneratorListenerInterface,
 				{
 					JTextField ticksTextField = appView.getTicksTextField();
 					
-					Float ticksCount = appModel.getTicksCount();
+					Float ticksCount = modulEditModel.getTicksCount();
 					
 					ticksTextField.setText(OutputUtils.makeFloatEditText(ticksCount));
 				}
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		this.appModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
+		modulEditModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -778,7 +796,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					JRadioButton ticksMilliecondsButton = appView.getTicksMilliecondsButton();
 					JRadioButton ticksBpmButton = appView.getTicksBpmButton();
 					
-					TicksPer ticksPer = appModel.getTicksPer();
+					TicksPer ticksPer = modulEditModel.getTicksPer();
 					
 					switch (ticksPer)
 					{
@@ -818,25 +836,25 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void notifyModelPropertyChanged()
 				{
 					// Update TimelinesTimeRule
-					TicksPer ticksPer = appModel.getTicksPer();
-					Float ticksCount = appModel.getTicksCount();
+					TicksPer ticksPer = modulEditModel.getTicksPer();
+					Float ticksCount = modulEditModel.getTicksCount();
 					
 					TimelinesTimeRuleModel timelinesTimeRuleModel = timelinesTimeRuleController.getTimelinesTimeRuleModel();
 					
 					timelinesTimeRuleModel.notifyTicksChangedNotifier(ticksPer, ticksCount);
 				}
 		 	};
-			this.appModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
+		 	modulEditModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
 			(
 			 	ticksChangedListener
 			);
-			this.appModel.getTicksCountChangedNotifier().addModelPropertyChangedListener
+		 	modulEditModel.getTicksCountChangedNotifier().addModelPropertyChangedListener
 			(
 			 	ticksChangedListener
 			);
 		}
 		//------------------------------------------------------------------------------------------
-		ModulEditModel modulEditModel = this.modulEditController.getModulEditModel();
+//		ModulEditModel modulEditModel = this.modulEditController.getModulEditModel();
 		
 	 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //		modulEditModel.getModulNameChangedNotifier().addModelPropertyChangedListener
@@ -1066,7 +1084,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					timelinesDrawPanelController.doTimelinesZoomIn();
+					modulEditController.doTimelinesZoomIn();
 				}
 		 	}
 		);
@@ -1078,7 +1096,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					timelinesDrawPanelController.doTimelinesZoomOut();
+					modulEditController.doTimelinesZoomOut();
 				}
 		 	}
 		);
@@ -1096,6 +1114,60 @@ implements RemoveTimelineGeneratorListenerInterface,
             	doExit();
             }
         });
+	    //------------------------------------------------------------------------------------------
+		this.appView.getTicksTextField().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					JTextField ticksTextField = appView.getTicksTextField();
+					
+					String text = ticksTextField.getText();
+					
+					Float ticksCount = InputUtils.makeFloatValue(text);
+					
+					modulEditModel.setTicksCount(ticksCount);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.appView.getTicksSecondsButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					modulEditModel.setTicksPer(TicksPer.Seconds);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.appView.getTicksMilliecondsButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					modulEditModel.setTicksPer(TicksPer.Milliseconds);
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.appView.getTicksBpmButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					modulEditModel.setTicksPer(TicksPer.BPM);
+				}
+		 	}
+		);
 		
 	    //------------------------------------------------------------------------------------------
 		// Init Generator-Types:
@@ -1105,10 +1177,14 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.modulesTreeController.addGeneratorTypes(generatorTypes);
 		
 	    //------------------------------------------------------------------------------------------
-		this.appModel.setTicksCount(new Float(1.0F));
+//		this.timelinesTimeRuleController.doChangeZoomX(this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getZoomX());
+		modulEditModel.setZoomX(this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getZoomX());
 		
 	    //------------------------------------------------------------------------------------------
-		this.appModel.setTicksPer(AppModel.TicksPer.Seconds);
+		modulEditModel.setTicksCount(new Float(1.0F));
+		
+	    //------------------------------------------------------------------------------------------
+		modulEditModel.setTicksPer(TicksPer.Seconds);
 		
 		//==========================================================================================
 	}

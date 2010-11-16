@@ -43,6 +43,31 @@ public class ModulGeneratorTypeData
 	 */
 	private TracksData tracksData = new TracksData();
 	
+	/**
+	 * View Zoom X.
+	 */
+	private Float viewZoomX = null;
+	
+	/**
+	 * Tick Units.
+	 */
+	public enum TicksPer
+	{
+		Seconds,
+		Milliseconds,
+		BPM
+	}
+	
+	/**
+	 * {@link #viewTicksCount} per value.
+	 */
+	private TicksPer viewTicksPer = null;
+	
+	/**
+	 * Count of ticks per {@link #viewTicksPer}.
+	 */
+	private Float viewTicksCount = null;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -332,5 +357,59 @@ public class ModulGeneratorTypeData
 		this.generators.switchTracksByPos(sourceTrackPos, tagetTrackPos);
 		
 		this.tracksData.switchTracksByPos(sourceTrackPos, tagetTrackPos);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #viewZoomX}.
+	 */
+	public Float getViewZoomX()
+	{
+		return this.viewZoomX;
+	}
+
+	/**
+	 * @param viewZoomX 
+	 * 			to set {@link #viewZoomX}.
+	 */
+	public void setViewZoomX(Float viewZoomX)
+	{
+		this.viewZoomX = viewZoomX;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #viewTicksPer}.
+	 */
+	public TicksPer getViewTicksPer()
+	{
+		return this.viewTicksPer;
+	}
+
+	/**
+	 * @param viewTicksPer 
+	 * 			to set {@link #viewTicksPer}.
+	 */
+	public void setViewTicksPer(TicksPer ticksPer)
+	{
+		this.viewTicksPer = ticksPer;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #viewTicksCount}.
+	 */
+	public Float getViewTicksCount()
+	{
+		return this.viewTicksCount;
+	}
+
+	/**
+	 * @param ticksCount 
+	 * 			to set {@link #viewTicksCount}.
+	 */
+	public void setViewTicksCount(Float ticksCount)
+	{
+		this.viewTicksCount = ticksCount;
 	}
 }

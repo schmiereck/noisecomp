@@ -194,7 +194,8 @@ public class ModulesTreeModel
 	
 //		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
 		
-		DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)this.selectionPath.getLastPathComponent();
+//		DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)this.selectionPath.getLastPathComponent();
+		DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
 	
 		int parentChildCount = parentTreeNode.getChildCount();
 		

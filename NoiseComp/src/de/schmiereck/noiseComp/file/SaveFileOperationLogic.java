@@ -13,6 +13,7 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.TrackData;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLPort;
 import de.schmiereck.xmlTools.XMLPortException;
@@ -103,11 +104,42 @@ public class SaveFileOperationLogic
 		{	
 			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
 			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			if (modulGeneratorTypeData.getIsMainModulGeneratorType() == true)
 			{
 //				Node isMainNode = 
 					XMLData.appendTextNode(xmlDoc, generatorTypeNode, "isMain", "true");
 			}
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			Node viewNode = XMLData.appendNode(xmlDoc, generatorTypeNode, "view");
+			
+			{
+				Float viewZoomX = modulGeneratorTypeData.getViewZoomX();
+				
+				XMLData.appendFloatNode(xmlDoc, viewNode, "zoomX", viewZoomX);
+			}
+			{
+				Float viewTicksCount = modulGeneratorTypeData.getViewTicksCount();
+				
+				XMLData.appendFloatNode(xmlDoc, viewNode, "ticksCount", viewTicksCount);
+			}
+			{
+				TicksPer viewTicksPer = modulGeneratorTypeData.getViewTicksPer();
+				String ticksPer;
+				
+				if (viewTicksPer != null)
+				{
+					ticksPer = viewTicksPer.name();
+				}
+				else
+				{
+					ticksPer = null;
+				}
+				
+				XMLData.appendTextNode(xmlDoc, viewNode, "ticksPer", ticksPer);
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		
 		Iterator<InputTypeData> inputTypesIterator = generatorTypeData.getInputTypesIterator();

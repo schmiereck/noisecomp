@@ -8,8 +8,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 
@@ -35,7 +33,6 @@ import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditView;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView;
-import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
 /**
  * <p>
@@ -301,60 +298,6 @@ extends JFrame
 		this.modulSplitPane.setLeftComponent(this.modulesTreeScrollPane);
 		this.modulSplitPane.setRightComponent(this.modulEditSplitPane);
 
-	    //------------------------------------------------------------------------------------------
-		this.getTicksTextField().addActionListener
-		(
-		 	new ActionListener()
-		 	{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					JTextField ticksTextField = getTicksTextField();
-					
-					String text = ticksTextField.getText();
-					
-					Float ticksCount = InputUtils.makeFloatValue(text);
-					
-					appModel.setTicksCount(ticksCount);
-				}
-		 	}
-		);
-		//------------------------------------------------------------------------------------------
-		this.getTicksSecondsButton().addActionListener
-		(
-		 	new ActionListener()
-		 	{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					appModel.setTicksPer(AppModel.TicksPer.Seconds);
-				}
-		 	}
-		);
-		//------------------------------------------------------------------------------------------
-		this.getTicksMilliecondsButton().addActionListener
-		(
-		 	new ActionListener()
-		 	{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					appModel.setTicksPer(AppModel.TicksPer.Milliseconds);
-				}
-		 	}
-		);
-		//------------------------------------------------------------------------------------------
-		this.getTicksBpmButton().addActionListener
-		(
-		 	new ActionListener()
-		 	{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					appModel.setTicksPer(AppModel.TicksPer.BPM);
-				}
-		 	}
-		);
 		//------------------------------------------------------------------------------------------
 //		this.add(this.timelinePanel);
 		

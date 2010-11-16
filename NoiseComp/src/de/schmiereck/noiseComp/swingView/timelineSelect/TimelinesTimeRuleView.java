@@ -11,7 +11,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JComponent;
 
-import de.schmiereck.noiseComp.swingView.appModel.AppModel.TicksPer;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 
 /**
  * <p>
@@ -110,7 +110,7 @@ extends JComponent
 		
 		String unitLabel;
 		
-		TicksPer ticksPer = this.timelinesTimeRuleModel.getTicksPer();
+		TicksPer ticksPer = this.timelinesTimeRuleModel.getViewTicksPer();
 		Float ticksCount = this.timelinesTimeRuleModel.getTicksCount();
 		
 		switch (ticksPer)

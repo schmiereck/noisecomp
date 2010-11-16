@@ -6,8 +6,8 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
 import java.util.List;
 import java.util.Vector;
 
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
-import de.schmiereck.noiseComp.swingView.appModel.AppModel.TicksPer;
 
 /**
  * <p>
@@ -201,7 +201,7 @@ public class TimelinesTimeRuleModel
 	 * @return 
 	 * 			returns the {@link #ticksPer}.
 	 */
-	public TicksPer getTicksPer()
+	public TicksPer getViewTicksPer()
 	{
 		return this.ticksPer;
 	}

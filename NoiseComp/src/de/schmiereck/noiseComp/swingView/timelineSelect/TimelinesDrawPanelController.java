@@ -289,30 +289,30 @@ implements TimelineContentChangedListenerInterface,
 		
 		//==========================================================================================
 	}
-
-	public void doTimelinesZoomIn()
-	{
-		//==========================================================================================
-		float zoomX = this.timelinesDrawPanelModel.getZoomX();
-		
-		zoomX *= 1.5F;
-		
-		this.timelinesDrawPanelModel.setZoomX(zoomX);
-
-		//==========================================================================================
-	}
-
-	public void doTimelinesZoomOut()
-	{
-		//==========================================================================================
-		float zoomX = this.timelinesDrawPanelModel.getZoomX();
-		
-		zoomX /= 1.5F;
-		
-		this.timelinesDrawPanelModel.setZoomX(zoomX);
-
-		//==========================================================================================
-	}
+//
+//	public void doTimelinesZoomIn()
+//	{
+//		//==========================================================================================
+//		float zoomX = this.timelinesDrawPanelModel.getZoomX();
+//		
+//		zoomX *= 1.5F;
+//		
+//		this.timelinesDrawPanelModel.setZoomX(zoomX);
+//
+//		//==========================================================================================
+//	}
+//
+//	public void doTimelinesZoomOut()
+//	{
+//		//==========================================================================================
+//		float zoomX = this.timelinesDrawPanelModel.getZoomX();
+//		
+//		zoomX /= 1.5F;
+//		
+//		this.timelinesDrawPanelModel.setZoomX(zoomX);
+//
+//		//==========================================================================================
+//	}
 
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface#notifyTimelineContentChanged(long, long)
