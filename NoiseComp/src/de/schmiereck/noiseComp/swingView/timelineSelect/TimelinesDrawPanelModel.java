@@ -63,14 +63,41 @@ public class TimelinesDrawPanelModel
 	 */
 	private TimelineSelectEntryModel selectedTimelineSelectEntryModel = null;
 	
-//	/**
-//	 * Selected Timeline Changed Listeners.
-//	 */
-//	private List<SelectedTimelineChangedListenerInterface> selectedTimelineChangedListeners = new Vector<SelectedTimelineChangedListenerInterface>();
 	/**
 	 * {@link #selectedTimelineSelectEntryModel} changed listeners.
 	 */
 	private final ModelPropertyChangedNotifier selectedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	//----------------------------------------------------------------------------------------------
+	/**
+	 * Highlighted (mouse over) Timeline Generator Model.
+	 */
+	private TimelineSelectEntryModel highlightedTimelineSelectEntryModel = null;
+	
+	/**
+	 * {@link #selectedTimelineSelectEntryModel} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier highlightedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	/**
+	 * Highlighted Timeline Handler.
+	 */
+	public enum HighlightedTimelineHandler
+	{
+		NONE,
+		LEFT,
+		RIGHT
+	}
+	
+	/**
+	 * Highlighted Handler.
+	 */
+	private HighlightedTimelineHandler highlightedTimelineHandler = HighlightedTimelineHandler.NONE;
+	
+	/**
+	 * <code>true</code> if the {@link #highlightedTimelineHandler} is moved.
+	 */
+	private boolean timelineHandlerMoved = false;
 	
 	//----------------------------------------------------------------------------------------------
 	
@@ -306,6 +333,7 @@ public class TimelinesDrawPanelModel
 		//------------------------------------------------------------------------------------------
 		// Notify listeners.
 		this.changeTimelinesPositionChangedNotifier.notifyModelPropertyChangedListeners();
+		
 		//==========================================================================================
 	}
 
@@ -427,5 +455,59 @@ public class TimelinesDrawPanelModel
 	public RemoveTimelineGeneratorNotifier getRemoveTimelineGeneratorNotifier()
 	{
 		return this.removeTimelineGeneratorNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #highlightedTimelineSelectEntryModel}.
+	 */
+	public TimelineSelectEntryModel getHighlightedTimelineSelectEntryModel()
+	{
+		return this.highlightedTimelineSelectEntryModel;
+	}
+
+	/**
+	 * @param highlightedTimelineSelectEntryModel 
+	 * 			to set {@link #highlightedTimelineSelectEntryModel}.
+	 */
+	public void setHighlightedTimelineSelectEntryModel(TimelineSelectEntryModel highlightedTimelineSelectEntryModel)
+	{
+		this.highlightedTimelineSelectEntryModel = highlightedTimelineSelectEntryModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #highlightedTimelineHandler}.
+	 */
+	public HighlightedTimelineHandler getHighlightedTimelineHandler()
+	{
+		return this.highlightedTimelineHandler;
+	}
+
+	/**
+	 * @param highlightedTimelineHandler 
+	 * 			to set {@link #highlightedTimelineHandler}.
+	 */
+	public void setHighlightedTimelineHandler(HighlightedTimelineHandler highlightedTimelineHandler)
+	{
+		this.highlightedTimelineHandler = highlightedTimelineHandler;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineHandlerMoved}.
+	 */
+	public boolean getTimelineHandlerMoved()
+	{
+		return this.timelineHandlerMoved;
+	}
+
+	/**
+	 * @param timelineHandlerMoved 
+	 * 			to set {@link #timelineHandlerMoved}.
+	 */
+	public void setTimelineHandlerMoved(boolean timelineHandlerMoved)
+	{
+		this.timelineHandlerMoved = timelineHandlerMoved;
 	}
 }

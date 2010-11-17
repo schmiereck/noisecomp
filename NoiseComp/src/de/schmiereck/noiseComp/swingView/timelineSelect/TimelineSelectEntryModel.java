@@ -199,23 +199,5 @@ public class TimelineSelectEntryModel
 	{
 		this.timeline = timeline;
 	}
-
-//	/**
-//	 * @return 
-//	 * 			returns the {@link #timelinePos}.
-//	 */
-//	public int getTimelinePos()
-//	{
-//		return this.timelinePos;
-//	}
-//
-//	/**
-//	 * @param timelinePos 
-//	 * 			to set {@link #timelinePos}.
-//	 */
-//	public void setTimelinePos(int timelinePos)
-//	{
-//		this.timelinePos = timelinePos;
-//	}
 	
 }

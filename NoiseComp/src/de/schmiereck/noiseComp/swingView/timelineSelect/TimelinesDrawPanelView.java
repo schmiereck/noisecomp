@@ -4,12 +4,16 @@
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -30,6 +34,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel.HighlightedTimelineHandler;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
@@ -61,11 +66,19 @@ implements Scrollable//, MouseMotionListener
 
 	private static final Color CTimelineNormalBackground = Color.WHITE;
 	private static final Color CTimelineSelectedBackground = new Color(128, 128, 192);
+	private static final Color CTimelineHighlightedBackground = new Color(128, 198, 192);
 	private static final Color CTimelineSignal = new Color(0, 0, 0, 160);
 	private static final Color CTimelineInputConnector = new Color(255, 0, 0, 192);
 	private static final Color CTimelineBuffer = new Color(0, 200, 0, 127);
+	private static final Color CTimelineHandlerBorder = new Color(200, 200, 255);
+	private static final Color CTimelineHandlerBackground = new Color(100, 100, 100);
 	
 	private final float DRAW_EVERY_SAMPLE = 5.0F;//1.0F;//25.0F;
+	
+	private static final int TimelineHandlerSizeX = 8;
+	private static final int TimelineHandlerSizeY = 8;
+	
+	private final Cursor defaultCursor;
 	
 	//**********************************************************************************************
 	// Fields:
@@ -117,6 +130,8 @@ implements Scrollable//, MouseMotionListener
 		this.setAutoscrolls(true); //enable synthetic drag events
 //		this.addMouseMotionListener(this); //handle mouse drags
 		
+		this.defaultCursor = getCursor();
+		
 		//------------------------------------------------------------------------------------------
 		this.addMouseListener
 		(
@@ -125,29 +140,32 @@ implements Scrollable//, MouseMotionListener
 				@Override
 				public void mouseClicked(MouseEvent e)
 				{
-					Point2D point2D = mousePos(e.getPoint());
-					
-					TimelineSelectEntryModel timelineSelectEntryModel = searchGenerator(point2D);
-					
-					//if (timelineGeneratorModel != null)
-					{
-						timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
-					}
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 
 				@Override
 				public void mouseEntered(MouseEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 
 				@Override
 				public void mouseExited(MouseEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					timelinesDrawPanelModel.setHighlightedTimelineSelectEntryModel(null);
+					
+					repaint();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 
 				@Override
 				public void mousePressed(MouseEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					Point2D point2D = mousePos(e.getPoint());
 					
 					TimelineSelectEntryModel timelineSelectEntryModel = searchGenerator(point2D);
@@ -155,13 +173,16 @@ implements Scrollable//, MouseMotionListener
 					timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 //					selectedTimelineGeneratorModel = timelineGeneratorModel;
 //					isMousePressed = true;
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //					selectedTimelineGeneratorModel = null;
 //					isMousePressed = false;
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -172,29 +193,186 @@ implements Scrollable//, MouseMotionListener
 				@Override
 				public void mouseDragged(MouseEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					Point2D point2D = mousePos(e.getPoint());
 					
-					TimelineSelectEntryModel timelineSelectEntryModel = searchTimeline(point2D);
+					HighlightedTimelineHandler timelineHandler = timelinesDrawPanelModel.getHighlightedTimelineHandler();
 					
-					if (timelineSelectEntryModel != null)
+					if (timelineHandler != HighlightedTimelineHandler.NONE)
 					{
-						TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
-							timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+						TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
 						
-						if (timelineSelectEntryModel != selectedTimelineSelectEntryModel)
+						if (highlightedTimelineSelectEntryModel != null)
 						{
-							notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel, 
-							                                         timelineSelectEntryModel);
+							Double timePos = point2D.getX();
+						
+							switch (timelineHandler)
+							{
+								case LEFT:
+								{
+									highlightedTimelineSelectEntryModel.setStartTimePos(timePos.floatValue());
+									repaint();
+									break;
+								}
+								case RIGHT:
+								{
+									highlightedTimelineSelectEntryModel.setEndTimePos(timePos.floatValue());
+									repaint();
+									break;
+								}
+							}
 						}
 					}
+					else
+					{
+						TimelineSelectEntryModel timelineSelectEntryModel = searchTimeline(point2D);
+						
+						if (timelineSelectEntryModel != null)
+						{
+							TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
+								timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+							
+							if (timelineSelectEntryModel != selectedTimelineSelectEntryModel)
+							{
+								notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel, 
+								                                         timelineSelectEntryModel);
+							}
+						}
+					}
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 
 				@Override
 				public void mouseMoved(MouseEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					Point point = e.getPoint();
+					Point2D point2D = mousePos(point);
+					
+					TimelineSelectEntryModel timelineSelectEntryModel = searchGenerator(point2D);
+					
+					if (timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel() != timelineSelectEntryModel)
+					{
+						timelinesDrawPanelModel.setHighlightedTimelineSelectEntryModel(timelineSelectEntryModel);
+						
+						repaint();
+					}
+
+					if (timelineSelectEntryModel != null)
+					{
+						float maxUnitIncrementY = timelinesDrawPanelModel.getMaxUnitIncrementY();
+						
+						int timelineGeneratorPos = (int)(point2D.getY() / maxUnitIncrementY);
+						
+						float startTimePos = timelineSelectEntryModel.getStartTimePos();
+						float endTimePos = timelineSelectEntryModel.getEndTimePos();
+						float generatorPosY = timelineGeneratorPos * maxUnitIncrementY;
+						
+						float timeLength = endTimePos - startTimePos;
+						
+						Rectangle2D rectangle = new Rectangle2D.Float(startTimePos,
+						                                              generatorPosY,
+						                                              timeLength,
+						                                              maxUnitIncrementY);
+						
+						Shape shape = at.createTransformedShape(rectangle);
+						
+						Rectangle2D bounds2D = shape.getBounds2D();
+						
+						TimelineHandlerModel timelineHandlerModel = makeTimelineHandlerModel(bounds2D);
+						
+						if (timelineHandlerModel.getRect1().contains(point))
+						{
+							timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.LEFT);
+							setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
+						}
+						else
+						{
+							if (timelineHandlerModel.getRect2().contains(point))
+							{
+								timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.RIGHT);
+								setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+							}
+							else
+							{
+								timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.NONE);
+								setCursor(defaultCursor);
+							}
+						}
+					}
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		this.addMouseListener
+		(
+		 	new MouseAdapter() 
+		 	{
+		 		@Override
+				public void mouseClicked(MouseEvent e) 
+				{
+					super.mouseClicked(e);
+					//setActive(true);
+		 			//Toolkit.getDefaultToolkit().
+
+					HighlightedTimelineHandler timelineHandler = timelinesDrawPanelModel.getHighlightedTimelineHandler();
+					
+					if (timelineHandler != HighlightedTimelineHandler.NONE)
+					{
+						timelinesDrawPanelModel.setTimelineHandlerMoved(true);
+					}
+				}
+
+				/* (non-Javadoc)
+				 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
+				 */
+				@Override
+				public void mouseReleased(MouseEvent e)
+				{
+					super.mouseReleased(e);
+
+					if (timelinesDrawPanelModel.getTimelineHandlerMoved() == true)
+					{
+						timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+						
+						TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
+						
+						if (highlightedTimelineSelectEntryModel != null)
+						{
+							HighlightedTimelineHandler timelineHandler = timelinesDrawPanelModel.getHighlightedTimelineHandler();
+							
+							if (timelineHandler != HighlightedTimelineHandler.NONE)
+							{
+								switch (timelineHandler)
+								{
+									case LEFT:
+									{
+										Float startTimePos = highlightedTimelineSelectEntryModel.getStartTimePos();
+										
+										timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(startTimePos);
+										
+										break;
+									}
+									case RIGHT:
+									{
+										Float endTimePos = highlightedTimelineSelectEntryModel.getEndTimePos();
+
+										timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(endTimePos);
+										
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+		 		
+		 		
+			}
+		);
+
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
@@ -493,6 +671,19 @@ implements Scrollable//, MouseMotionListener
 		
 		float timeLength = endTimePos - startTimePos;
 		
+		boolean highlighted;
+		
+		TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
+		
+		if (highlightedTimelineSelectEntryModel == timelineSelectEntryModel)
+		{
+			highlighted = true;
+		}
+		else
+		{
+			highlighted = false;
+		}
+		
 		//------------------------------------------------------------------------------------------
 		// Background:
 		
@@ -502,7 +693,14 @@ implements Scrollable//, MouseMotionListener
 		}
 		else
 		{
-			g2.setPaint(CTimelineNormalBackground);
+			if (highlighted == true)
+			{
+				g2.setPaint(CTimelineHighlightedBackground);
+			}
+			else
+			{
+				g2.setPaint(CTimelineNormalBackground);
+			}
 		}
 		
 		Rectangle2D rectangle = new Rectangle2D.Float(startTimePos,
@@ -510,7 +708,9 @@ implements Scrollable//, MouseMotionListener
 		                                              timeLength,
 		                                              maxUnitIncrementY);
 		
-		g2.fill(this.at.createTransformedShape(rectangle));
+		Shape shape = this.at.createTransformedShape(rectangle);
+		
+		g2.fill(shape);
 		
 		//------------------------------------------------------------------------------------------
 		// Display signal shapes:
@@ -519,6 +719,7 @@ implements Scrollable//, MouseMotionListener
 
 		if (timeline != null)
 		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			float valueMax = timeline.getValueMax();
 			float valueMin = timeline.getValueMin();
 			
@@ -625,8 +826,61 @@ implements Scrollable//, MouseMotionListener
 					}
 				}
 			}
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			if (highlighted == true)
+			{
+				Rectangle2D bounds2D = shape.getBounds2D();
+				
+				TimelineHandlerModel timelineHandlerModel = this.makeTimelineHandlerModel(bounds2D);
+				
+				g2.setColor(CTimelineHandlerBackground);
+				
+				g2.fill(timelineHandlerModel.getRect1());
+				g2.fill(timelineHandlerModel.getRect2());
+				
+				g2.setColor(CTimelineHandlerBorder);
+				
+				g2.draw(timelineHandlerModel.getRect1());
+				g2.draw(timelineHandlerModel.getRect2());
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		//==========================================================================================
+	}
+
+	/**
+	 * @param bounds2D
+	 * 			are the bounds of the timeline.
+	 * @return
+	 * 			the TimelineHandlerModel.
+	 */
+	private TimelineHandlerModel makeTimelineHandlerModel(Rectangle2D bounds2D)
+	{
+		double posX = bounds2D.getX();
+		double posY = bounds2D.getY();
+		
+		double width = bounds2D.getWidth();
+		double height = bounds2D.getHeight();
+		
+		int h = (int)height;
+		int w = (int)width;
+
+		int x1 = (int)posX;
+		int y1 = (int)(posY + h / 2 - TimelineHandlerSizeX / 2);
+
+		int x2 = (int)(posX + w - TimelineHandlerSizeX);
+		int y2 = (int)(posY + h / 2 - TimelineHandlerSizeX / 2);
+		
+		Rectangle rect1 = new Rectangle(x1, y1, 
+		    				            TimelineHandlerSizeX, TimelineHandlerSizeY);
+		
+		Rectangle rect2 = new Rectangle(x2, y2, 
+		    				            TimelineHandlerSizeX, TimelineHandlerSizeY);
+		
+		TimelineHandlerModel timelineHandlerModel = new TimelineHandlerModel(rect1,
+		                                                                     rect2);
+		return timelineHandlerModel;
 	}
 	
 	/* (non-Javadoc)
