@@ -70,6 +70,8 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelCont
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelView;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineEndTimePosChangedListenerInterface;
+import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineStartTimePosChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.swingView.utils.PreferencesUtils;
@@ -1029,6 +1031,63 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 	timelinesDrawPanelModel.getRemoveTimelineGeneratorNotifier().addRemoveTimelineGeneratorListeners
 	 	(
 	 	 	timelinesGeneratorsRuleController
+	 	);
+	 	
+	    //------------------------------------------------------------------------------------------
+	 	timelinesDrawPanelModel.getTimelineStartTimePosChangedListeners().add
+	 	(
+	 	 	new TimelineStartTimePosChangedListenerInterface()
+	 	 	{
+				@Override
+				public void notifyTimelineStartTimePosChangedListener(Timeline timeline, Float startTimePos)
+				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+					
+					TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+					
+					TimelineEditModel timelineEditModel = timelineEditController.getTimelineEditModel();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					timelineManagerLogic.updateStartTimePos(timeline, startTimePos);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					timelineEditModel.setGeneratorStartTimePos(startTimePos);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					appModelChangedObserver.notifyAppModelChanged();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+	 	 	}
+	 	);
+	    //------------------------------------------------------------------------------------------
+	 	timelinesDrawPanelModel.getTimelineEndTimePosChangedListeners().add
+	 	(
+	 	 	new TimelineEndTimePosChangedListenerInterface()
+	 	 	{
+				@Override
+				public void notifyTimelineEndTimePosChangedListener(Timeline timeline, Float endTimePos)
+				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+					
+					TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+					
+					TimelineEditModel timelineEditModel = timelineEditController.getTimelineEditModel();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					timelineManagerLogic.updateEndTimePos(timeline, endTimePos);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					timelineEditModel.setGeneratorEndTimePos(endTimePos);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					appModelChangedObserver.notifyAppModelChanged();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+	 	 	}
 	 	);
 	    //------------------------------------------------------------------------------------------
 	 	InputSelectModel inputSelectModel = this.inputSelectController.getInputSelectModel();

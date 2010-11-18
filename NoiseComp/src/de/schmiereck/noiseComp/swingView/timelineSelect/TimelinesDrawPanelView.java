@@ -12,7 +12,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -211,12 +210,14 @@ implements Scrollable//, MouseMotionListener
 								case LEFT:
 								{
 									highlightedTimelineSelectEntryModel.setStartTimePos(timePos.floatValue());
+									timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 									repaint();
 									break;
 								}
 								case RIGHT:
 								{
 									highlightedTimelineSelectEntryModel.setEndTimePos(timePos.floatValue());
+									timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 									repaint();
 									break;
 								}
@@ -349,18 +350,14 @@ implements Scrollable//, MouseMotionListener
 								{
 									case LEFT:
 									{
-										Float startTimePos = highlightedTimelineSelectEntryModel.getStartTimePos();
-										
-										timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(startTimePos);
-										
+										timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+										timelinesDrawPanelModel.setTimelineHandlerMoved(false);
 										break;
 									}
 									case RIGHT:
 									{
-										Float endTimePos = highlightedTimelineSelectEntryModel.getEndTimePos();
-
-										timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(endTimePos);
-										
+										timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+										timelinesDrawPanelModel.setTimelineHandlerMoved(false);
 										break;
 									}
 								}

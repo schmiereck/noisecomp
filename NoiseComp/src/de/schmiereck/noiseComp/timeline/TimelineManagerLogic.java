@@ -387,13 +387,43 @@ public class TimelineManagerLogic
 	public void updateTimePos(Timeline timeline, float generatorStartTimePos, float generatorEndTimePos)
 	{
 		//==========================================================================================
-//		Generator generator = timeline.getGenerator();
-		
 		timeline.setTimePos(generatorStartTimePos, generatorEndTimePos);
 
 		//==========================================================================================
 	}
 
+	/**
+	 * @param timeline
+	 * 			is the timeline.
+	 * @param generatorStartTimePos
+	 * 			is the generator StartTimePos.
+	 */
+	public void updateStartTimePos(Timeline timeline, float generatorStartTimePos)
+	{
+		//==========================================================================================
+		float endTimePos = timeline.getGeneratorEndTimePos();
+		
+		timeline.setTimePos(generatorStartTimePos, endTimePos);
+
+		//==========================================================================================
+	}
+
+	/**
+	 * @param timeline
+	 * 			is the timeline.
+	 * @param generatorStartTimePos
+	 * 			is the generator EndTimePos.
+	 */
+	public void updateEndTimePos(Timeline timeline, float generatorEndTimePos)
+	{
+		//==========================================================================================
+		float startTimePos = timeline.getGeneratorStartTimePos();
+		
+		timeline.setTimePos(startTimePos, generatorEndTimePos);
+
+		//==========================================================================================
+	}
+	
 	/**
 	 * @param timeline
 	 * 			is the timeline.

@@ -10,6 +10,9 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineEndTimePosChangedListenerInterface;
+import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineStartTimePosChangedListenerInterface;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -98,6 +101,16 @@ public class TimelinesDrawPanelModel
 	 * <code>true</code> if the {@link #highlightedTimelineHandler} is moved.
 	 */
 	private boolean timelineHandlerMoved = false;
+	
+	/**
+	 * Timeline Start-Time-Pos Changed Listeners.
+	 */
+	private final List<TimelineStartTimePosChangedListenerInterface> timelineStartTimePosChangedListeners = new Vector<TimelineStartTimePosChangedListenerInterface>();
+	
+	/**
+	 * Timeline End-Time-Pos Changed Listeners.
+	 */
+	private final List<TimelineEndTimePosChangedListenerInterface> timelineEndTimePosChangedListeners = new Vector<TimelineEndTimePosChangedListenerInterface>();
 	
 	//----------------------------------------------------------------------------------------------
 	
@@ -509,5 +522,55 @@ public class TimelinesDrawPanelModel
 	public void setTimelineHandlerMoved(boolean timelineHandlerMoved)
 	{
 		this.timelineHandlerMoved = timelineHandlerMoved;
+	}
+
+	/**
+	 * @param timelineSelectEntryModel
+	 * 			is the TimelineSelectEntryModel.
+	 */
+	public void notifyTimelineStartTimePosChangedListeners(TimelineSelectEntryModel timelineSelectEntryModel)
+	{
+		Timeline timeline = timelineSelectEntryModel.getTimeline();
+		Float startTimePos = timelineSelectEntryModel.getStartTimePos();
+		
+		for (TimelineStartTimePosChangedListenerInterface changedListener : this.timelineStartTimePosChangedListeners)
+		{
+			changedListener.notifyTimelineStartTimePosChangedListener(timeline,
+			                                                          startTimePos);
+		}
+	}
+
+	/**
+	 * @param timelineSelectEntryModel
+	 * 			is the TimelineSelectEntryModel.
+	 */
+	public void notifyTimelineEndTimePosChangedListeners(TimelineSelectEntryModel timelineSelectEntryModel)
+	{
+		Timeline timeline = timelineSelectEntryModel.getTimeline();
+		Float endTimePos = timelineSelectEntryModel.getEndTimePos();
+		
+		for (TimelineEndTimePosChangedListenerInterface changedListener : this.timelineEndTimePosChangedListeners)
+		{
+			changedListener.notifyTimelineEndTimePosChangedListener(timeline,
+			                                                        endTimePos);
+		}
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineStartTimePosChangedListeners}.
+	 */
+	public List<TimelineStartTimePosChangedListenerInterface> getTimelineStartTimePosChangedListeners()
+	{
+		return this.timelineStartTimePosChangedListeners;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineEndTimePosChangedListeners}.
+	 */
+	public List<TimelineEndTimePosChangedListenerInterface> getTimelineEndTimePosChangedListeners()
+	{
+		return this.timelineEndTimePosChangedListeners;
 	}
 }
