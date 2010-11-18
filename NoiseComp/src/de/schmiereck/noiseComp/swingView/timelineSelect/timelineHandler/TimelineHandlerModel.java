@@ -1,13 +1,13 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelineHandler;
 
 import java.awt.Rectangle;
 
 /**
  * <p>
- * 	Timeline Handler Model.
+ * 	Timeline-Handler Model.
  * </p>
  * 
  * @author smk

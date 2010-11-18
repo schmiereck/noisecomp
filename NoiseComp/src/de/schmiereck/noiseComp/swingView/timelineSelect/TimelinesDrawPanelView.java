@@ -34,6 +34,8 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel.HighlightedTimelineHandler;
+import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelineHandler.TimelineHandlerModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
@@ -197,26 +199,33 @@ implements Scrollable//, MouseMotionListener
 					
 					HighlightedTimelineHandler timelineHandler = timelinesDrawPanelModel.getHighlightedTimelineHandler();
 					
+					// Timeline Handler dragged?
 					if (timelineHandler != HighlightedTimelineHandler.NONE)
 					{
 						TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
 						
 						if (highlightedTimelineSelectEntryModel != null)
 						{
-							Double timePos = point2D.getX();
+							double timePos = point2D.getX();
 						
+							double nearestSnapToTimpePos = searchNearestSnapToTimpePos(timelinesDrawPanelModel, 
+							                                                           timePos);
+							System.out.println(nearestSnapToTimpePos);
+							
+							timelinesDrawPanelModel.setNearestSnapToTimpePos(nearestSnapToTimpePos);
+							
 							switch (timelineHandler)
 							{
 								case LEFT:
 								{
-									highlightedTimelineSelectEntryModel.setStartTimePos(timePos.floatValue());
+									highlightedTimelineSelectEntryModel.setStartTimePos((float)timePos);
 									timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 									repaint();
 									break;
 								}
 								case RIGHT:
 								{
-									highlightedTimelineSelectEntryModel.setEndTimePos(timePos.floatValue());
+									highlightedTimelineSelectEntryModel.setEndTimePos((float)timePos);
 									timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 									repaint();
 									break;
@@ -614,6 +623,21 @@ implements Scrollable//, MouseMotionListener
 			}
 			}
 		}
+		//------------------------------------------------------------------------------------------
+		Rectangle drawHere = g.getClipBounds();
+		
+		double nearestSnapToTimpePos = this.timelinesDrawPanelModel.getNearestSnapToTimpePos();
+		
+		if (Double.isNaN(nearestSnapToTimpePos) == false)
+		{
+			g2.setPaint(CTimelineInputConnector);
+			
+			int x = (int)(this.at.getScaleX() * nearestSnapToTimpePos);
+			
+			g2.drawLine(x, drawHere.y, 
+			            x, drawHere.y + drawHere.height);
+		}
+		
 		//==========================================================================================
 	}
 
@@ -1125,4 +1149,51 @@ implements Scrollable//, MouseMotionListener
 //		return new Dimension(1500, 1000);
 //	}
 
+	private double searchNearestSnapToTimpePos(TimelinesDrawPanelModel timelinesDrawPanelModel, 
+	                                           double timePos)
+	{
+		double snapToTimpePos = Double.MAX_VALUE;//Double.NaN;
+		
+//		double nearestTimePos = Double.MAX_VALUE;
+		
+		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelinesDrawPanelModel.getTimelineSelectEntryModels())
+		{
+			float startTimePos = timelineSelectEntryModel.getStartTimePos();
+			float endTimePos = timelineSelectEntryModel.getEndTimePos();
+			
+			snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, startTimePos);
+			snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, endTimePos);
+		}
+
+//		if (nearestTimePos < 6.0D)
+//		{
+//			snapToTimpePos = nearestTimePos;
+//		}
+//		else
+//		{
+//			snapToTimpePos = timePos;
+//		}
+		
+		return snapToTimpePos;
+	}
+	
+	private double calcNearestPos(double pos, double lastNearestPos, double newPos)
+	{
+		double ret;
+		xxx
+		double lastDif = Math.abs(lastNearestPos - pos);
+		
+		double newDif = Math.abs(newPos - pos);
+		
+		if (lastDif <= newDif)
+		{
+			ret = lastNearestPos;
+		}
+		else
+		{
+			ret = newPos;
+		}
+		
+		return ret;
+	}
 }

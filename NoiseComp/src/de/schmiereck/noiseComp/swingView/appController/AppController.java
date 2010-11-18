@@ -61,7 +61,6 @@ import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditModel;
-import de.schmiereck.noiseComp.swingView.timelineSelect.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
@@ -70,6 +69,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelCont
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelView;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineEndTimePosChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineStartTimePosChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;

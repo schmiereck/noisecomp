@@ -10,6 +10,7 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorNotifier;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineEndTimePosChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineStartTimePosChangedListenerInterface;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -111,6 +112,8 @@ public class TimelinesDrawPanelModel
 	 * Timeline End-Time-Pos Changed Listeners.
 	 */
 	private final List<TimelineEndTimePosChangedListenerInterface> timelineEndTimePosChangedListeners = new Vector<TimelineEndTimePosChangedListenerInterface>();
+	
+	private double nearestSnapToTimpePos = Double.NaN;
 	
 	//----------------------------------------------------------------------------------------------
 	
@@ -572,5 +575,23 @@ public class TimelinesDrawPanelModel
 	public List<TimelineEndTimePosChangedListenerInterface> getTimelineEndTimePosChangedListeners()
 	{
 		return this.timelineEndTimePosChangedListeners;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #nearestSnapToTimpePos}.
+	 */
+	public double getNearestSnapToTimpePos()
+	{
+		return this.nearestSnapToTimpePos;
+	}
+
+	/**
+	 * @param nearestSnapToTimpePos 
+	 * 			to set {@link #nearestSnapToTimpePos}.
+	 */
+	public void setNearestSnapToTimpePos(double nearestSnapToTimpePos)
+	{
+		this.nearestSnapToTimpePos = nearestSnapToTimpePos;
 	}
 }

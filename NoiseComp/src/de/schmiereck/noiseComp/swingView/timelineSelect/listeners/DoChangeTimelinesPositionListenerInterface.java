@@ -1,7 +1,9 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.listeners;
+
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 
 /**
  * <p>

@@ -5,6 +5,7 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.awt.Dimension;
 
+import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
 
 /**
