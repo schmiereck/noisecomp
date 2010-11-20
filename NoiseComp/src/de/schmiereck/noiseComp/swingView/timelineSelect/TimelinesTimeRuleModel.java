@@ -201,7 +201,7 @@ public class TimelinesTimeRuleModel
 	 * @return 
 	 * 			returns the {@link #ticksPer}.
 	 */
-	public TicksPer getViewTicksPer()
+	public TicksPer getTicksPer()
 	{
 		return this.ticksPer;
 	}

@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.util.List;
 import java.util.Vector;
 
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
@@ -115,6 +116,11 @@ public class TimelinesDrawPanelModel
 	
 	private double nearestSnapToTimpePos = Double.NaN;
 	
+	/**
+	 * <code>true</code> if a handler snaped to a line.
+	 */
+	private boolean handlerSnaped = false;
+	
 	//----------------------------------------------------------------------------------------------
 	
 //	/**
@@ -158,6 +164,23 @@ public class TimelinesDrawPanelModel
 	//----------------------------------------------------------------------------------------------
 	private final AppModelChangedObserver appModelChangedObserver;
  	
+	//----------------------------------------------------------------------------------------------
+	/**
+	 * {@link #ticksCount} per value.
+	 */
+	private TicksPer ticksPer = TicksPer.Seconds;
+	
+	/**
+	 * Count of ticks per {@link #ticksPer}.
+	 */
+	private Float ticksCount = 1.0F;
+	
+
+	/**
+	 * {@link #ticksPer} or {@link #ticksCount} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier ticksChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	//**********************************************************************************************
 	// Functions:
 	
@@ -593,5 +616,72 @@ public class TimelinesDrawPanelModel
 	public void setNearestSnapToTimpePos(double nearestSnapToTimpePos)
 	{
 		this.nearestSnapToTimpePos = nearestSnapToTimpePos;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #handlerSnaped}.
+	 */
+	public boolean getHandlerSnaped()
+	{
+		return this.handlerSnaped;
+	}
+
+	/**
+	 * @param handlerSnaped 
+	 * 			to set {@link #handlerSnaped}.
+	 */
+	public void setHandlerSnaped(boolean handlerSnaped)
+	{
+		this.handlerSnaped = handlerSnaped;
+	}
+
+	/**
+	 * @param ticksPer
+	 * 			is the Tick Unit.
+	 * @param ticksCount
+	 * 			are the ticks.
+	 */
+	public void notifyTicksChangedNotifier(TicksPer ticksPer, Float ticksCount)
+	{
+		//==========================================================================================
+		this.ticksPer = ticksPer;
+
+		this.ticksCount = ticksCount;
+		
+		this.ticksChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		//this.timelinesTimeRuleModel.setUnits((int)zoomX);
+		
+		//this.timelinesTimeRuleView.repaint();
+
+		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #ticksChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getTicksChangedNotifier()
+	{
+		return this.ticksChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #ticksPer}.
+	 */
+	public TicksPer getTicksPer()
+	{
+		return this.ticksPer;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #ticksCount}.
+	 */
+	public Float getTicksCount()
+	{
+		return this.ticksCount;
 	}
 }

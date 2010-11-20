@@ -39,7 +39,7 @@ extends JComponent
 	/**
 	 * Color - Background (dirty brown/orange).
 	 */
-	private static final Color	COLOR_BACKGROUND	= new Color(230, 163, 4);
+	private static final Color	COLOR_BACKGROUND	= new Color(0xFFF1E1); //230, 163, 4);
 	
 	//**********************************************************************************************
 	// Fields:

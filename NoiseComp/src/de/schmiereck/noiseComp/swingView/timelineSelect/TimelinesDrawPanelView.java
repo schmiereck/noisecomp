@@ -32,6 +32,7 @@ import javax.swing.SwingConstants;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.SoundSample;
+import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel.HighlightedTimelineHandler;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
@@ -65,14 +66,20 @@ implements Scrollable//, MouseMotionListener
 	 */
 	public static final double	INIT_ZOOM_Y	= 1.0D;
 
-	private static final Color CTimelineNormalBackground = Color.WHITE;
-	private static final Color CTimelineSelectedBackground = new Color(128, 128, 192);
-	private static final Color CTimelineHighlightedBackground = new Color(128, 198, 192);
-	private static final Color CTimelineSignal = new Color(0, 0, 0, 160);
-	private static final Color CTimelineInputConnector = new Color(255, 0, 0, 192);
-	private static final Color CTimelineBuffer = new Color(0, 200, 0, 127);
-	private static final Color CTimelineHandlerBorder = new Color(200, 200, 255);
-	private static final Color CTimelineHandlerBackground = new Color(100, 100, 100);
+	private static final Color CBackground = Color.WHITE;
+	private static final Color CBackgroundLines = new Color(0xFFF7E1);
+	
+	private static final Color CTimelineNormalBackground = new Color(0xFFF0C9);//Color.LIGHT_GRAY;
+	private static final Color CTimelineSelectedBackground = new Color(0xBFB7A1);//128, 128, 192);
+	private static final Color CTimelineHighlightedBackground = new Color(0xFFE6C9);//128, 198, 192);
+	private static final Color CTimelineSignal = new Color(0x1A, 0x23, 0x74, 160);//0x42, 0x82, 0xA4, 160);//0, 0, 0, 160);
+	private static final Color CTimelineInputConnector = new Color(0xA67841);//255, 0, 0, 192);
+	private static final Color CTimelineBuffer = new Color(0x434DA5);//0, 200, 0, 127);
+
+	private static final Color CTimelineHandlerBorder = new Color(0xA1B4BE);//200, 200, 255);
+	private static final Color CTimelineHandlerBackground = new Color(0x4282A4);//100, 100, 100);
+	private static final Color CTimelineHandlerNearestSnapLine = new Color(0x16, 0x76, 0x43, 64);//0, 0, 200, 200);
+	private static final Color CTimelineHandlerSnapLine = new Color(0x90CB4F);//60, 60, 255);
 	
 	private final float DRAW_EVERY_SAMPLE = 5.0F;//1.0F;//25.0F;
 	
@@ -125,7 +132,7 @@ implements Scrollable//, MouseMotionListener
 		
 	    this.setPreferredSize(this.timelinesDrawPanelModel.getDimension());
 		
-		this.setBackground(Color.LIGHT_GRAY);
+		this.setBackground(CBackground);
 
 		// Let the user scroll by dragging to outside the window.
 		this.setAutoscrolls(true); //enable synthetic drag events
@@ -213,6 +220,7 @@ implements Scrollable//, MouseMotionListener
 							                                                           timePos);
 //							System.out.println(nearestSnapToTimpePos);
 							
+							boolean handlerSnaped;
 							double pos;
 							double snapDif = Math.abs(timePos - nearestSnapToTimpePos);
 							double d = snapDif * at.getScaleX(); 
@@ -220,13 +228,16 @@ implements Scrollable//, MouseMotionListener
 							
 							if (d < 6.0D)
 							{
+								handlerSnaped = true;
 								pos = nearestSnapToTimpePos;
 							}
 							else
 							{
+								handlerSnaped = false;
 								pos = timePos;
 							}
 							
+							timelinesDrawPanelModel.setHandlerSnaped(handlerSnaped);
 							timelinesDrawPanelModel.setNearestSnapToTimpePos(nearestSnapToTimpePos);
 							
 							switch (timelineHandler)
@@ -246,6 +257,24 @@ implements Scrollable//, MouseMotionListener
 									break;
 								}
 							}
+							{
+//						        JViewport vport = scrollPane.getViewport();
+//						        Point viewPos = vport.getViewPosition();
+//						        Dimension size = vport.getExtentSize();
+//						        int vportx = viewPos.x;
+//						        int vporty = viewPos.y;
+//						        int dx = evt.getX() - startX;
+//						        int dy = evt.getY() - startY;
+//						 
+//						        int newvportx = vportx - dx;
+//						        int newvporty = vporty - dy;
+//						        Rectangle rect = new Rectangle(newvportx, newvporty, size.width, size.height);
+//						        mPanel.scrollRectToVisible(rect);
+								Rectangle rect = new Rectangle((int)(timePos * at.getScaleX()) - 32, 
+								                               (int)point2D.getY() - 32, 
+								                               64, 64);
+						        scrollRectToVisible(rect);
+						    }
 						}
 					}
 					else
@@ -262,6 +291,10 @@ implements Scrollable//, MouseMotionListener
 								notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel, 
 								                                         timelineSelectEntryModel);
 							}
+							Rectangle rect = new Rectangle((int)point2D.getX() - 32, 
+							                               (int)point2D.getY() - 32, 
+							                               64, 64);
+					        scrollRectToVisible(rect);
 						}
 					}
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -376,12 +409,14 @@ implements Scrollable//, MouseMotionListener
 									{
 										timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
 										timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+										timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
 										break;
 									}
 									case RIGHT:
 									{
 										timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
 										timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+										timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
 										break;
 									}
 								}
@@ -528,15 +563,21 @@ implements Scrollable//, MouseMotionListener
 		super.paintComponent(g);  // I was missing this code which caused "bleeding"
 	   
 		//==========================================================================================
-		Graphics2D g2 = (Graphics2D) g;
+		Graphics2D g2 = (Graphics2D)g;
 	   
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
 	   
+		Rectangle clipRect = g.getClipBounds();
+
+		//------------------------------------------------------------------------------------------
+		float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+		
 		//------------------------------------------------------------------------------------------
 		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels(); 
 		
 		TimelineSelectEntryModel selectedTimelineEntryModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+		
 		int selectedPos = 0;
 		
 		//------------------------------------------------------------------------------------------
@@ -546,6 +587,13 @@ implements Scrollable//, MouseMotionListener
 			
 			for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
 			{
+				g2.setColor(CBackgroundLines);
+				
+				int y = (int)((timelineGeneratorPos + 1) * maxUnitIncrementY);
+				
+				g2.drawLine(clipRect.x, y, 
+				            clipRect.x + clipRect.width, y);
+				
 				this.paintTimeline(g2, timelineGeneratorPos, timelineSelectEntryModel);
 				
 				if (selectedTimelineEntryModel == timelineSelectEntryModel)
@@ -645,12 +693,31 @@ implements Scrollable//, MouseMotionListener
 		
 		if (Double.isNaN(nearestSnapToTimpePos) == false)
 		{
-			g2.setPaint(CTimelineInputConnector);
+			if (this.timelinesDrawPanelModel.getHandlerSnaped() == true)
+			{
+				g2.setPaint(CTimelineHandlerSnapLine);
+			}
+			else
+			{
+				g2.setPaint(CTimelineHandlerNearestSnapLine);
+			}
 			
 			int x = (int)(this.at.getScaleX() * nearestSnapToTimpePos);
+			int y1 = drawHere.y;
+			int y2 = drawHere.y + drawHere.height;
 			
-			g2.drawLine(x, drawHere.y, 
-			            x, drawHere.y + drawHere.height);
+			g2.drawLine(x, y1, 
+			            x, y2);
+
+			if (this.timelinesDrawPanelModel.getHandlerSnaped() == true)
+			{
+				g2.setPaint(CTimelineHandlerNearestSnapLine);
+				
+				g2.drawLine(x - 1, y1, 
+				            x - 1, y2);
+				g2.drawLine(x + 1, y1, 
+				            x + 1, y2);
+			} 
 		}
 		
 		//==========================================================================================
@@ -858,7 +925,7 @@ implements Scrollable//, MouseMotionListener
 						int gy = (int)(generatorPosY * this.at.getScaleY());
 						
 						g2.drawLine(x, gy, 
-						            x, gy + 2);
+						            x, gy + 1);
 					}
 				}
 			}
@@ -1203,6 +1270,37 @@ implements Scrollable//, MouseMotionListener
 			}
 		}
 
+		//------------------------------------------------------------------------------------------
+		TicksPer ticksPer = timelinesDrawPanelModel.getTicksPer();
+		Float ticksCount = timelinesDrawPanelModel.getTicksCount();
+		
+		float tickPos;
+		
+		switch (ticksPer)
+		{
+			case Seconds:
+			{
+				tickPos = (float)(Math.round(timePos * ticksCount) / ticksCount);
+				break;
+			}
+			case Milliseconds:
+			{
+				tickPos = (float)(Math.round(timePos * ticksCount * 1000.0D) / (ticksCount * 1000.0D));
+				break;
+			}
+			case BPM:
+			{
+				tickPos = (float)(Math.round(timePos * ticksCount * (1.0D / 60.0D)) / (ticksCount * (1.0D / 60.0D)));
+				break;
+			}
+			default:
+			{
+				throw new RuntimeException("Unexpected ticksPer \"" + ticksPer + "\".");
+			}
+		}
+		
+		snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, tickPos);
+		
 //		if (nearestTimePos < 6.0D)
 //		{
 //			snapToTimpePos = nearestTimePos;

@@ -837,13 +837,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					TimelinesTimeRuleModel timelinesTimeRuleModel = timelinesTimeRuleController.getTimelinesTimeRuleModel();
+					
+					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+					
 					// Update TimelinesTimeRule
 					TicksPer ticksPer = modulEditModel.getTicksPer();
 					Float ticksCount = modulEditModel.getTicksCount();
 					
-					TimelinesTimeRuleModel timelinesTimeRuleModel = timelinesTimeRuleController.getTimelinesTimeRuleModel();
-					
 					timelinesTimeRuleModel.notifyTicksChangedNotifier(ticksPer, ticksCount);
+					
+					timelinesDrawPanelModel.notifyTicksChangedNotifier(ticksPer, ticksCount);
 				}
 		 	};
 		 	modulEditModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
