@@ -55,8 +55,8 @@ WORK:
 #16:	IMPROVEMENT: Implements mouse featured resize of timelines in timeline draw pane.
 		--> DONE: Show handers if mouse over timeline (highlighted).
 		--> DONE: Drag the begin/ end handlers of timeline.
-		--> Show snap lines of neares tick or timeline.
-		--> Snap to neares snap line.
+		--> DONE: Show snap lines of neares tick or timeline.
+		--> DONE/2: Snap to neares snap line.
 		--> java.awt.dnd.Autoscroll: http://www.dpunkt.de/java/Programmieren_mit_Java/Oberflaechenprogrammierung/69.html
 
 DONE:

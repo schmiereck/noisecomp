@@ -209,8 +209,23 @@ implements Scrollable//, MouseMotionListener
 							double timePos = point2D.getX();
 						
 							double nearestSnapToTimpePos = searchNearestSnapToTimpePos(timelinesDrawPanelModel, 
+							                                                           highlightedTimelineSelectEntryModel,
 							                                                           timePos);
-							System.out.println(nearestSnapToTimpePos);
+//							System.out.println(nearestSnapToTimpePos);
+							
+							double pos;
+							double snapDif = Math.abs(timePos - nearestSnapToTimpePos);
+							double d = snapDif * at.getScaleX(); 
+//							System.out.println(d + ", " + at.getScaleX());
+							
+							if (d < 6.0D)
+							{
+								pos = nearestSnapToTimpePos;
+							}
+							else
+							{
+								pos = timePos;
+							}
 							
 							timelinesDrawPanelModel.setNearestSnapToTimpePos(nearestSnapToTimpePos);
 							
@@ -218,14 +233,14 @@ implements Scrollable//, MouseMotionListener
 							{
 								case LEFT:
 								{
-									highlightedTimelineSelectEntryModel.setStartTimePos((float)timePos);
+									highlightedTimelineSelectEntryModel.setStartTimePos((float)pos);
 									timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 									repaint();
 									break;
 								}
 								case RIGHT:
 								{
-									highlightedTimelineSelectEntryModel.setEndTimePos((float)timePos);
+									highlightedTimelineSelectEntryModel.setEndTimePos((float)pos);
 									timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 									repaint();
 									break;
@@ -878,6 +893,7 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private TimelineHandlerModel makeTimelineHandlerModel(Rectangle2D bounds2D)
 	{
+		//==========================================================================================
 		double posX = bounds2D.getX();
 		double posY = bounds2D.getY();
 		
@@ -901,6 +917,7 @@ implements Scrollable//, MouseMotionListener
 		
 		TimelineHandlerModel timelineHandlerModel = new TimelineHandlerModel(rect1,
 		                                                                     rect2);
+		//==========================================================================================
 		return timelineHandlerModel;
 	}
 	
@@ -919,6 +936,7 @@ implements Scrollable//, MouseMotionListener
 										  int orientation,
 										  int direction) 
 	{
+		//==========================================================================================
 		int nearestTick;
 		
 		// Get the current position.
@@ -940,11 +958,13 @@ implements Scrollable//, MouseMotionListener
 			nearestTick = calcNearestTick(direction, currentPosition, maxUnitIncrementY);
 		}
 
+		//==========================================================================================
 		return nearestTick;
 	}
 
 	private int calcNearestTick(int direction, int currentPosition, int maxUnitIncrement)
 	{
+		//==========================================================================================
 		int nearestTick;
 		
 		// Return the number of pixels between currentPosition
@@ -961,6 +981,7 @@ implements Scrollable//, MouseMotionListener
 			nearestTick = ((currentPosition / maxUnitIncrement) + 1) * maxUnitIncrement - currentPosition;
 		}
 
+		//==========================================================================================
 		return nearestTick;
 	}
 	
@@ -971,6 +992,7 @@ implements Scrollable//, MouseMotionListener
 										   int orientation,
 										   int direction) 
 	{
+		//==========================================================================================
 		int maxUnitIncrementX = this.timelinesDrawPanelModel.getMaxUnitIncrementX();
 		int maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
 		
@@ -982,6 +1004,7 @@ implements Scrollable//, MouseMotionListener
 		{
 			return visibleRect.height - maxUnitIncrementY;
 		}
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
@@ -1008,6 +1031,7 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private TimelineSelectEntryModel searchTimeline(Point2D point2D)
 	{
+		//==========================================================================================
 		TimelineSelectEntryModel retTimelineSelectEntryModel;
 		
 		retTimelineSelectEntryModel = null;
@@ -1028,6 +1052,7 @@ implements Scrollable//, MouseMotionListener
 			generatorPosY += maxUnitIncrementY;
 		}
 		
+		//==========================================================================================
 		return retTimelineSelectEntryModel;
 	}
 
@@ -1039,6 +1064,7 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private TimelineSelectEntryModel searchGenerator(Point2D point2D)
 	{
+		//==========================================================================================
 		TimelineSelectEntryModel retTimelineSelectEntryModel;
 		
 		TimelineSelectEntryModel timelineSelectEntryModel = this.searchTimeline(point2D);
@@ -1063,6 +1089,7 @@ implements Scrollable//, MouseMotionListener
 			retTimelineSelectEntryModel = null;
 		}
 		
+		//==========================================================================================
 		return retTimelineSelectEntryModel;
 	}
 //
@@ -1092,11 +1119,13 @@ implements Scrollable//, MouseMotionListener
 	public void notifyDoChangeTimelinesPositionListeners(TimelineSelectEntryModel selectedTimelineSelectEntryModel,
 	                                                     TimelineSelectEntryModel newTimelineSelectEntryModel)
 	{
+		//==========================================================================================
 		for (DoChangeTimelinesPositionListenerInterface doTimelineSelectedListener : this.doChangeTimelinesPositionListeners)
 		{
 			doTimelineSelectedListener.changeTimelinesPosition(selectedTimelineSelectEntryModel,
 			                                                   newTimelineSelectEntryModel);
 		};
+		//==========================================================================================
 	}
 
 	/**
@@ -1123,6 +1152,7 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private void recalculateDimension()
 	{
+		//==========================================================================================
 		double width = 0.0D;
 		double height = 0.0D;
 		
@@ -1142,6 +1172,7 @@ implements Scrollable//, MouseMotionListener
 		
 		this.timelinesDrawPanelModel.setDimensionSize(width * timelinesDrawPanelModel.getZoomX(), 
 		                                              height * INIT_ZOOM_Y);
+		//==========================================================================================
 	}
 	
 //	public Dimension getPreferredSize()
@@ -1150,19 +1181,26 @@ implements Scrollable//, MouseMotionListener
 //	}
 
 	private double searchNearestSnapToTimpePos(TimelinesDrawPanelModel timelinesDrawPanelModel, 
+	                                           TimelineSelectEntryModel highlightedTimelineSelectEntryModel,
 	                                           double timePos)
 	{
+		//==========================================================================================
 		double snapToTimpePos = Double.MAX_VALUE;//Double.NaN;
 		
 //		double nearestTimePos = Double.MAX_VALUE;
 		
 		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelinesDrawPanelModel.getTimelineSelectEntryModels())
 		{
-			float startTimePos = timelineSelectEntryModel.getStartTimePos();
-			float endTimePos = timelineSelectEntryModel.getEndTimePos();
+			Timeline timeline = timelineSelectEntryModel.getTimeline();
 			
-			snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, startTimePos);
-			snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, endTimePos);
+			float startTimePos = timeline.getGeneratorStartTimePos();
+			float endTimePos = timeline.getGeneratorEndTimePos();
+			
+//			if (highlightedTimelineSelectEntryModel != timelineSelectEntryModel)
+			{
+				snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, startTimePos);
+				snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, endTimePos);
+			}
 		}
 
 //		if (nearestTimePos < 6.0D)
@@ -1174,13 +1212,25 @@ implements Scrollable//, MouseMotionListener
 //			snapToTimpePos = timePos;
 //		}
 		
+		//==========================================================================================
 		return snapToTimpePos;
 	}
 	
+	/**
+	 * @param pos
+	 * 			is the actual pos of mouse.
+	 * @param lastNearestPos
+	 * 			is the nearest pos found bevor.
+	 * @param newPos
+	 * 			is the new pos looking for.
+	 * @return
+	 * 			the nearest position of lastNearestPos and newPos to pos.
+	 */
 	private double calcNearestPos(double pos, double lastNearestPos, double newPos)
 	{
+		//==========================================================================================
 		double ret;
-		xxx
+		
 		double lastDif = Math.abs(lastNearestPos - pos);
 		
 		double newDif = Math.abs(newPos - pos);
@@ -1193,7 +1243,8 @@ implements Scrollable//, MouseMotionListener
 		{
 			ret = newPos;
 		}
-		
+		//==========================================================================================
+//		System.out.println(pos + ", " + lastNearestPos + ", " + newPos + ", " + ret);
 		return ret;
 	}
 }
