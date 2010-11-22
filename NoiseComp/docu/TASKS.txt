@@ -44,7 +44,6 @@ TODO:
 #101:	TASK: Change float to double.
 #105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
 		==> Reverted TimelineEditModelChangedObserver: Is not so easy: Selecting timeline updates timelineEditModel, this updates timelineSelectEntryModel fields bevor all fields are filled, that chrashes...
-#107:	IMPROVEMENT: Add a funktion to insert a copy of the selected timeline.
 #109:	BUG: View proper time, if Ticks-Per is not 1.
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
@@ -54,6 +53,7 @@ TODO:
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
+#107:	IMPROVEMENT: Add a funktion to insert a copy of the selected timeline.
 
 DONE:
 =====

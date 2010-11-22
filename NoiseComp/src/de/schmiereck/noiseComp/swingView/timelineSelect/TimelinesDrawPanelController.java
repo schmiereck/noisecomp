@@ -273,17 +273,37 @@ implements TimelineContentChangedListenerInterface,
 		//==========================================================================================
 		TimelinesDrawPanelModel timelinesDrawPanelModel = this.getTimelinesDrawPanelModel();
 		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		int timelinePos;
+		Float startTimePos;
+		Float endTimePos;
+		
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+		
+		if (selectedTimelineSelectEntryModel != null)
+		{
+			timelinePos = this.calcTimelineSelectEntryModelPos(selectedTimelineSelectEntryModel);
+			startTimePos = selectedTimelineSelectEntryModel.getStartTimePos();
+			endTimePos = selectedTimelineSelectEntryModel.getEndTimePos();
+		}
+		else
+		{
+			timelinePos = timelinesDrawPanelModel.getTimelineSelectEntryModels().size();
+			startTimePos = 0.0F;
+			endTimePos = 1.0F;
+		}
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// Update Timeline-Select-Model:
 		
-//		int timelinePos = timelinesDrawPanelModel.getTimelineSelectEntryModels().size();
+		timelinePos
 		
 		TimelineSelectEntryModel timelineSelectEntryModel = 
 			new TimelineSelectEntryModel(null,
-//			                           timelinePos,
-			                           "(new)",
-			                           0.0F,
-			                           1.0F);
+//			                             timelinePos,
+			                             "(new)",
+			                             startTimePos,
+			                             endTimePos);
 		
 		this.addTimelineSelectEntryModel(timelineSelectEntryModel);
 		
@@ -338,5 +358,66 @@ implements TimelineContentChangedListenerInterface,
 		this.timelinesDrawPanelView.repaint();
 		
 		//==========================================================================================
+	}
+
+	/**
+	 * @param searchedTimelineSelectEntryModel
+	 * 			is the searched TimelineSelectEntryModel;
+	 * @return
+	 * 			<code>null</code> if no next TimelineSelectEntryModel found.
+	 */
+	public TimelineSelectEntryModel calcNextTimelineSelectEntryModel(TimelineSelectEntryModel searchedTimelineSelectEntryModel)
+	{
+		//==========================================================================================
+		TimelineSelectEntryModel retTimelineSelectEntryModel;
+		
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels();
+		
+		boolean found = false;
+		retTimelineSelectEntryModel = null;
+		
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
+		{
+			if (found == true)
+			{
+				retTimelineSelectEntryModel = timelineSelectEntryModel;
+				break;
+			}
+			if (timelineSelectEntryModel == searchedTimelineSelectEntryModel)
+			{
+				found = true;
+			}
+		}
+		
+		//==========================================================================================
+		return retTimelineSelectEntryModel;
+	}
+
+	/**
+	 * @param searchedTimelineSelectEntryModel
+	 * 			is the searched TimelineSelectEntryModel;
+	 * @return
+	 * 			the pos of searched TimelineSelectEntryModel.
+	 */
+	public int calcTimelineSelectEntryModelPos(TimelineSelectEntryModel searchedTimelineSelectEntryModel)
+	{
+		//==========================================================================================
+		int ret;
+		
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels();
+		
+		ret = 0;
+		
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
+		{
+			if (timelineSelectEntryModel == searchedTimelineSelectEntryModel)
+			{
+				break;
+			}
+			ret++;
+		}
+		
+		//==========================================================================================
+		return ret;
 	}
 }

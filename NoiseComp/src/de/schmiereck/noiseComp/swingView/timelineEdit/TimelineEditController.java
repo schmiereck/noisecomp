@@ -208,12 +208,12 @@ public class TimelineEditController
 	 * 
 	 * @param editedModulGeneratorTypeData
 	 * 			is the editedModulGeneratorTypeData.
-	 * @param timelinesDrawPanelModel
-	 * 			is the TimelinesDrawPanelModel.
+	 * @param timelineSelectEntryModel
+	 * 			is the TimelineSelectEntryModel.
 	 */
 	public void doUpdateEditModel(final ModulGeneratorTypeData editedModulGeneratorTypeData,
 	                              //final Generator generator,
-	                              final TimelinesDrawPanelModel timelinesDrawPanelModel)
+	                              final TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		//==========================================================================================
 		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
@@ -222,7 +222,7 @@ public class TimelineEditController
 		
 		//==========================================================================================
 //		TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-		TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+//		TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 //		TimelineEditView timelineEditView = timelineEditController.getTimelineEditView();
 		
 		if (timelineSelectEntryModel != null)
@@ -276,7 +276,7 @@ public class TimelineEditController
 			// Update Timeline-Model:
 			
 			timelineSelectEntryModel.setTimeline(timeline);
-//			timelineGeneratorModel.setGeneratorTypeData(generatorTypeData);
+//			timelineSelectEntryModel.setGeneratorTypeData(generatorTypeData);
 			timelineSelectEntryModel.setName(generatorName);
 			timelineSelectEntryModel.setStartTimePos(generatorStartTimePos);
 			timelineSelectEntryModel.setEndTimePos(generatorEndTimePos);

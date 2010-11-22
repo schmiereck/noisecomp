@@ -164,6 +164,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	private final AppModel appModel;
 	
+	final AppModelChangedObserver appModelChangedObserver;
+	
 	private SoundSchedulerLogic soundSchedulerLogic = null;
 	
 	//**********************************************************************************************
@@ -189,7 +191,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.appView.setVisible(true);
 		
 		//------------------------------------------------------------------------------------------
-		final AppModelChangedObserver appModelChangedObserver = new AppModelChangedObserver(this.appModel);
+		this.appModelChangedObserver = new AppModelChangedObserver(this.appModel);
 		
 		//------------------------------------------------------------------------------------------
 		Preferences userPrefs = PreferencesUtils.getUserPreferences();
@@ -223,6 +225,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 			
 			this.appView.getFileSaveMenuItem().setAction(action);
 			this.appView.getFileSaveButtonView().setAction(action);
+		}
+		//------------------------------------------------------------------------------------------
+		// Edit:
+		{
+			DoubleTimelineAction action = new DoubleTimelineAction(this);
+			
+			this.appView.getDoubleTimelineMenuItem().setAction(action);
 		}
 		//------------------------------------------------------------------------------------------
 		// Help:
@@ -596,12 +605,14 @@ implements RemoveTimelineGeneratorListenerInterface,
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModulGeneratorTypeData editedModulGeneratorTypeData = getEditedModulGeneratorTypeData();
 					
+					TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+
 //					Generator generator = 
 //						retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
 					
 					timelineEditController.doUpdateEditModel(editedModulGeneratorTypeData,
 					                                         //generator,
-					                                         timelinesDrawPanelModel);
+					                                         timelineSelectEntryModel);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
@@ -643,6 +654,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 					
 					// TimelinesGeneratorsRule update.
 					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					appModelChangedObserver.notifyAppModelChanged();
+					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
@@ -1653,6 +1668,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	public void doFileSave()
 	{
+		//==========================================================================================
 		this.setEnableSaveFile(false);
 
 		File fileActionFile = this.getFileActionFile();
@@ -1695,12 +1711,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 			}
 		}
 
+		//==========================================================================================
 		this.setEnableSaveFile(true);
 	}
 
 	/**
 	 * @return
-	 * 			die Datei der letzten Datei-Operation.
+	 * 			the File of the last file operation.
 	 */
 	private File getFileActionFile()
 	{
@@ -1713,16 +1730,19 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	public void setEnableSaveFile(boolean enable)
 	{
+		//==========================================================================================
 		this.appView.getFileSaveMenuItem().setEnabled(enable);
 		this.appView.getFileSaveButtonView().setEnabled(enable);
+		//==========================================================================================
 	}
 
 	/**
 	 * @param file
-	 * 			die Datei der letzten Datei-Operation.
+	 * 			is the File of the last file operation.
 	 */
 	private void setFileActionFile(File file)
 	{
+		//==========================================================================================
 		if (file == null)
 		{
 			this.appView.setTitle("NoiseComp");
@@ -1742,6 +1762,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		PreferencesUtils.setValueString(userPrefs, 
 		                                "fileActionFile", 
 		                                fileActionFileStr);
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
@@ -1798,6 +1819,75 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public void initStartupModel()
 	{
 		this.appModel.setIsModelChanged(false);
+	}
+
+	/**
+	 * Double the selected Timeline
+	 */
+	public void doDoubleTimeline()
+	{
+		//==========================================================================================
+		ModulGeneratorTypeData editedModulGeneratorTypeData = this.getEditedModulGeneratorTypeData();
+		TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
+		TimelineEditModel timelineEditModel = this.timelineEditController.getTimelineEditModel();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		if (selectedTimelineSelectEntryModel != null)
+		{
+			this.timelinesDrawPanelController.doCreateNew();
+	
+			TimelineSelectEntryModel newTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+			
+			{
+				Timeline timeline = selectedTimelineSelectEntryModel.getTimeline();
+				timelineEditModel.setTimeline(timeline);
+				{
+					GeneratorTypeData generatorTypeData = timeline.getGenerator().getGeneratorTypeData();
+					timelineEditModel.setGeneratorTypeData(generatorTypeData);
+				}
+			}
+			{
+				String name = selectedTimelineSelectEntryModel.getName();
+				timelineEditModel.setGeneratorName(name + " (new)");
+			}
+			{
+				Float startTimePos = selectedTimelineSelectEntryModel.getStartTimePos();
+				timelineEditModel.setGeneratorStartTimePos(startTimePos);
+			}
+			{
+				Float endTimePos = selectedTimelineSelectEntryModel.getEndTimePos();
+				timelineEditModel.setGeneratorEndTimePos(endTimePos);
+			}
+			
+			this.timelineEditController.doUpdateEditModel(editedModulGeneratorTypeData, 
+			                                              newTimelineSelectEntryModel);
+			
+	//		{
+	//			TimelineSelectEntryModel nextTimelineSelectEntryModel =
+	//				this.timelinesDrawPanelController.calcNextTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
+	//			
+	//			if (nextTimelineSelectEntryModel != null)
+	//			{
+	//				this.timelinesDrawPanelController.doChangeTimelinesPosition(nextTimelineSelectEntryModel, 
+	//				                                                            newTimelineSelectEntryModel);
+	//			}
+	//		}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+			
+			// TimelinesTimeRule update.
+			this.timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+			
+			// TimelinesGeneratorsRule update.
+			this.timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			this.appModelChangedObserver.notifyAppModelChanged();
+		}
+		//==========================================================================================
 	}
 
 }

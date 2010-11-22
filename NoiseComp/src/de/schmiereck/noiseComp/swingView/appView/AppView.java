@@ -74,6 +74,11 @@ extends JFrame
 	private JMenuItem fileSaveMenuItem = null;
 	
 	/**
+	 * SubMenu Bar: Edit: Double-Timeline.
+	 */
+	private JMenuItem doubleTimelineMenuItem = null;
+	
+	/**
 	 * SubMenu Bar: File: Exit.
 	 */
 	private JMenuItem exitMenuItem = null;
@@ -588,31 +593,42 @@ extends JFrame
 	 */
 	public void buildMenuBar(/*ActionListener actionListener, ItemListener itemListener*/)
 	{
+		//==========================================================================================
+		// File:
 		{
-			//======================================================================
-			// File:
-
 			JMenu menu = new JMenu("File");
 			menu.setMnemonic(KeyEvent.VK_F);
 			this.menuBarView.add(menu);
 	
-			//----------------------------------------------------------------------
+			//--------------------------------------------------------------------------------------
 			// File-Open:
 			this.fileOpenMenuItem = new JMenuItem();
 			menu.add(this.fileOpenMenuItem);
 	
-			//----------------------------------------------------------------------
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// File-Save:
 			this.fileSaveMenuItem = new JMenuItem();
 			menu.add(this.fileSaveMenuItem);
 			
-			//----------------------------------------------------------------------
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			menu.addSeparator();
-			//----------------------------------------------------------------------
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Exit:
 			this.exitMenuItem = new JMenuItem(); //"Exit", KeyEvent.VK_X);
 			//this.exitMenuItem.setActionCommand(MainMenuActionListener.CMD_EXIT);
 			menu.add(this.exitMenuItem);
+		}
+		//------------------------------------------------------------------------------------------
+		// Edit:
+		{
+			JMenu menu = new JMenu("Edit");
+			menu.setMnemonic(KeyEvent.VK_E);
+			this.menuBarView.add(menu);
+	
+			//--------------------------------------------------------------------------------------
+			// Double Timeline:
+			this.doubleTimelineMenuItem = new JMenuItem();
+			menu.add(this.doubleTimelineMenuItem);
 		}
 		/*
 		//----------------------------------------------------------------------
@@ -783,6 +799,15 @@ extends JFrame
 	public JMenuItem getFileSaveMenuItem()
 	{
 		return this.fileSaveMenuItem;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #doubleTimelineMenuItem}.
+	 */
+	public JMenuItem getDoubleTimelineMenuItem()
+	{
+		return this.doubleTimelineMenuItem;
 	}
 
 	/**

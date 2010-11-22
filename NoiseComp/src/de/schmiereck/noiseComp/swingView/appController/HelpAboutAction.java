@@ -20,11 +20,17 @@ import javax.swing.Action;
 public class HelpAboutAction
 implements Action
 {
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * Ist der Main-Controller der Applikation. 
 	 */
-	private AppController appController;
+	final private AppController appController;
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 

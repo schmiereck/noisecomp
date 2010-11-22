@@ -12,13 +12,13 @@ import javax.swing.KeyStroke;
 
 /**
  * <p>
- * 	File-Save Action.
+ * 	Double-Timeline Action.
  * </p>
  * 
  * @author smk
- * @version <p>21.09.2010:	created, smk</p>
+ * @version <p>22.11.2010:	created, smk</p>
  */
-public class FileSaveAction
+public class DoubleTimelineAction
 implements Action
 {
 	//**********************************************************************************************
@@ -31,14 +31,13 @@ implements Action
 
 	//**********************************************************************************************
 	// Functions:
-
 	/**
 	 * Constructor.
 	 * 
 	 * @param appController 
 	 * 			ist der Main-Controller der Applikation. 
 	 */
-	public FileSaveAction(AppController appController)
+	public DoubleTimelineAction(AppController appController)
 	{
 		this.appController = appController;
 	}
@@ -53,25 +52,25 @@ implements Action
 		
 		if (Action.NAME.equals(key))
 		{
-			value = "Save...";
+			value = "Double Timeline";
 		}
 		else
 		{
 			if (Action.MNEMONIC_KEY.equals(key))
 			{
-				value = KeyEvent.VK_S;
+				value = KeyEvent.VK_D;
 			}
 			else
 			{
 				if (Action.ACCELERATOR_KEY.equals(key))
 				{
-					value = KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK);
+					value = KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK);
 				}
 				else
 				{
 					if (Action.SHORT_DESCRIPTION.equals(key))
 					{
-						value = "Save the file \"test01.xml\".";
+						value = "Double selected Timeline.";
 					}
 					else
 					{
@@ -103,7 +102,7 @@ implements Action
 
 	public void actionPerformed(ActionEvent e)
 	{
-		this.appController.doFileSave();
+		this.appController.doDoubleTimeline();
 	}
 
 }

@@ -21,11 +21,17 @@ import javax.swing.KeyStroke;
 public class FileOpenAction
 implements Action
 {
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * Ist der Main-Controller der Applikation. 
 	 */
-	private AppController appController;
+	final private AppController appController;
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
