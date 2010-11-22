@@ -142,7 +142,6 @@ extends JComponent
 			float valueMax;
 			float valueMin;
 			
-			
 			if (generatorPos < timelineSelectEntryModels.size())
 			{
 				TimelineSelectEntryModel timelineSelectEntryModel = timelineSelectEntryModels.get(generatorPos);
@@ -150,9 +149,6 @@ extends JComponent
 				generatorName = timelineSelectEntryModel.getName();
 
 				Timeline timeline = timelineSelectEntryModel.getTimeline();
-				
-				valueMax = timeline.getValueMax();
-				valueMin = timeline.getValueMin();
 				
 				if (timeline != null)
 				{

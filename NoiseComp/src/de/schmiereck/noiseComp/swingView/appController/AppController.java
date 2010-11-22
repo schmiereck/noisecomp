@@ -1081,7 +1081,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 					TimelineEditModel timelineEditModel = timelineEditController.getTimelineEditModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					timelineManagerLogic.updateEndTimePos(timeline, endTimePos);
+					if (timeline != null)
+					{
+						timelineManagerLogic.updateEndTimePos(timeline, endTimePos);
+					}
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					timelineEditModel.setGeneratorEndTimePos(endTimePos);

@@ -105,7 +105,7 @@ extends Generator
 								
 								if (Float.isNaN(leftValue) == false)
 								{
-									signalLeft += signalSample.getLeftValue();
+									signalLeft += leftValue;
 								}
 								
 								float reightValue = signalSample.getRightValue();

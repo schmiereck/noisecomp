@@ -79,7 +79,7 @@ extends Generator
 		}
 		
 		float right;
-		float rightValue = signalSample.getLeftValue();
+		float rightValue = signalSample.getRightValue();
 		
 		if (Float.isNaN(rightValue) == false)
 		{

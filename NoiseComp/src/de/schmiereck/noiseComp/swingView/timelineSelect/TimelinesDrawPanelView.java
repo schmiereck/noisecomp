@@ -1260,13 +1260,16 @@ implements Scrollable//, MouseMotionListener
 		{
 			Timeline timeline = timelineSelectEntryModel.getTimeline();
 			
-			float startTimePos = timeline.getGeneratorStartTimePos();
-			float endTimePos = timeline.getGeneratorEndTimePos();
-			
-//			if (highlightedTimelineSelectEntryModel != timelineSelectEntryModel)
+			if (timeline != null)
 			{
-				snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, startTimePos);
-				snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, endTimePos);
+				float startTimePos = timeline.getGeneratorStartTimePos();
+				float endTimePos = timeline.getGeneratorEndTimePos();
+				
+	//			if (highlightedTimelineSelectEntryModel != timelineSelectEntryModel)
+				{
+					snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, startTimePos);
+					snapToTimpePos = this.calcNearestPos(timePos, snapToTimpePos, endTimePos);
+				}
 			}
 		}
 

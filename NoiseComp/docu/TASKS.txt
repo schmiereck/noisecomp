@@ -7,7 +7,7 @@ TODO:
 #4:		TASK: Disable change Input-Type of existing Timeline-Generator.
 #5:		TASK: Implements obligate input fields (with default values).
 #6:		TASK: Disable unreachable functions (buttons).
-#9:		TASK: Do not allow more than one OutputGenerator for a Module (and othe single input inputs).
+#9:		TASK: Do not allow more than one OutputGenerator for a Module (and other single input inputs).
 #18:	IMPROVEMENT: Insert new timelines after selected timeline with same start- and stop-time.
 #19:	IMPROVEMENT: Add a Generators Category seperate to the Modules Category.
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
@@ -24,7 +24,6 @@ TODO:
 		--> Disable input fields and "update"-Button if no input-type is selected.
 #48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
 #51:	IMPROVEMENT: After selecting a module-generator for new timeline set length to his output length.
-#52:	IMPROVEMENT: Modul-Generators should repeat theire output signal if theire length is longer as the output (with defined sielent time between).
 #53:	IMPROVEMENT: Generator-Input-Types needs max, min and datatype definitions.
 #56:	IMPROVEMENT: Import noiseComp.xml files.
 #58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
@@ -45,12 +44,17 @@ TODO:
 #101:	TASK: Change float to double.
 #105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
 		==> Reverted TimelineEditModelChangedObserver: Is not so easy: Selecting timeline updates timelineEditModel, this updates timelineSelectEntryModel fields bevor all fields are filled, that chrashes...
-#107:
+#107:	IMPROVEMENT: Add a funktion to insert a copy of the selected timeline.
+#108:	BUG: Reset "changed" flag, if file is saved.
+#109:	BUG: View proper time, if Ticks-Per is not 1.
+#110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
+#55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
+#52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
+#112:	
 
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
-#55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 
 DONE:
 =====
@@ -174,3 +178,7 @@ DONE:
 		--> DONE: Autoscroll if necessary.
 #46:	IMPROVEMENT: Draw horizontal seperator lines between timenes in TimelinesDrawPanel.
 		--> Done while adjusting color schema.
+#111:	IMPROVEMENT: Add Echo-Generator.
+			--> DONE: Manages a count of echos, the delay (Verzögerung) and there decay (Dämpfung).
+			--> http://audacity.sourceforge.net/manual-1.2/effects_reverb.html
+			--> http://www.koders.com/java/fid17043839587562406607244543F9B82C0D5EB998.aspx?s=ShortDocument
