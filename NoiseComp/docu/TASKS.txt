@@ -45,7 +45,6 @@ TODO:
 #105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
 		==> Reverted TimelineEditModelChangedObserver: Is not so easy: Selecting timeline updates timelineEditModel, this updates timelineSelectEntryModel fields bevor all fields are filled, that chrashes...
 #107:	IMPROVEMENT: Add a funktion to insert a copy of the selected timeline.
-#108:	BUG: Reset "changed" flag, if file is saved.
 #109:	BUG: View proper time, if Ticks-Per is not 1.
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
@@ -182,3 +181,5 @@ DONE:
 			--> DONE: Manages a count of echos, the delay (Verzögerung) and there decay (Dämpfung).
 			--> http://audacity.sourceforge.net/manual-1.2/effects_reverb.html
 			--> http://www.koders.com/java/fid17043839587562406607244543F9B82C0D5EB998.aspx?s=ShortDocument
+#108:	BUG: Reset "changed" flag, if file is saved.
+			

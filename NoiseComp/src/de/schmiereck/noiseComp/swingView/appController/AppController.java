@@ -1628,6 +1628,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			generatorTypesData.addGeneratorTypeData(generatorTypeData);
 		}
 		
+		//------------------------------------------------------------------------------------------
 		String absolutePath = file.getAbsolutePath();
 		
 		try
@@ -1640,6 +1641,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 		{
 			throw new SaveFileException("Save file \"" + absolutePath + "\".", ex);
 		}
+		
+		//------------------------------------------------------------------------------------------
+		this.appModel.setIsModelChanged(false);
+		
 		//==========================================================================================
 	}
 
