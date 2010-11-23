@@ -219,13 +219,17 @@ public class TimelinesDrawPanelModel
 	 * Do not use this directly, use {@link TimelinesDrawPanelController#addTimelineSelectEntryModel(TimelineSelectEntryModel)}
 	 * because of registering change listeners for TimelineSelectEntryModel changes.
 	 * 
+	 * @param timelinePos
+	 * 			is the timeline Pos to insert the Timeline.
 	 * @param timelineSelectEntryModel
 	 * 			is a Timeline-Generator Model.
 	 */
-	public void addTimelineSelectEntryModel(TimelineSelectEntryModel timelineSelectEntryModel)
+	public void addTimelineSelectEntryModel(int timelinePos,
+	                                        TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		//==========================================================================================
-		this.timelineSelectEntryModels.add(timelineSelectEntryModel);
+		this.timelineSelectEntryModels.add(timelinePos,
+		                                   timelineSelectEntryModel);
 		
 		// Notify listeners.
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();

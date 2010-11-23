@@ -157,10 +157,14 @@ implements TimelineContentChangedListenerInterface,
 	/**
 	 * @param timelineSelectEntryModel
 	 * 			is a Timeline-Generator Model.
+	 * @param timelinePos
+	 * 			is the timeline Pos to insert the Timeline.
 	 */
-	public void addTimelineSelectEntryModel(TimelineSelectEntryModel timelineSelectEntryModel)
+	public void addTimelineSelectEntryModel(int timelinePos,
+	                                        TimelineSelectEntryModel timelineSelectEntryModel)
 	{
-		this.timelinesDrawPanelModel.addTimelineSelectEntryModel(timelineSelectEntryModel);
+		this.timelinesDrawPanelModel.addTimelineSelectEntryModel(timelinePos,
+		                                                         timelineSelectEntryModel);
 		
 		ModelPropertyChangedListener modelChangedListener = this.timelinesDrawPanelModel.getTimelineGeneratorModelChangedListener();
 		
@@ -282,7 +286,7 @@ implements TimelineContentChangedListenerInterface,
 		
 		if (selectedTimelineSelectEntryModel != null)
 		{
-			timelinePos = this.calcTimelineSelectEntryModelPos(selectedTimelineSelectEntryModel);
+			timelinePos = this.calcTimelineSelectEntryModelPos(selectedTimelineSelectEntryModel) + 1;
 			startTimePos = selectedTimelineSelectEntryModel.getStartTimePos();
 			endTimePos = selectedTimelineSelectEntryModel.getEndTimePos();
 		}
@@ -296,8 +300,6 @@ implements TimelineContentChangedListenerInterface,
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// Update Timeline-Select-Model:
 		
-		timelinePos
-		
 		TimelineSelectEntryModel timelineSelectEntryModel = 
 			new TimelineSelectEntryModel(null,
 //			                             timelinePos,
@@ -305,7 +307,8 @@ implements TimelineContentChangedListenerInterface,
 			                             startTimePos,
 			                             endTimePos);
 		
-		this.addTimelineSelectEntryModel(timelineSelectEntryModel);
+		this.addTimelineSelectEntryModel(timelinePos,
+		                                 timelineSelectEntryModel);
 		
 		timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 		

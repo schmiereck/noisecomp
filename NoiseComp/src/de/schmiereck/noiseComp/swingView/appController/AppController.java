@@ -1302,17 +1302,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 			
 			timelineManagerLogic.addTimelineContentChangedListener(this.timelinesGeneratorsRuleController);
 
-//			OutputGenerator outputGenerator = modulGeneratorTypeData.getOutputGenerator();
-//			
-//			Timeline outputTimeline = soundSourceLogic.setOutputGenerator(outputGenerator);
+			int timelinePos = 0;
 			
-//			int timelinePos = 0;
-			
-//			Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
-//			
-//			while (generatorsIterator.hasNext())
-//			{
-//				Generator generator = generatorsIterator.next();
 			for (Timeline timeline : timelines)
 			{
 				Generator generator = timeline.getGenerator();
@@ -1324,9 +1315,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 					                             generator.getStartTimePos(),
 					                             generator.getEndTimePos());
 				
-				this.timelinesDrawPanelController.addTimelineSelectEntryModel(timelineSelectEntryModel);
+				this.timelinesDrawPanelController.addTimelineSelectEntryModel(timelinePos,
+				                                                              timelineSelectEntryModel);
 				
-//				timelinePos++;
+				timelinePos++;
 			}
 		}
 		
