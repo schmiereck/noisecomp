@@ -1819,16 +1819,24 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public void doDoubleTimeline()
 	{
 		//==========================================================================================
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		//==========================================================================================
 		ModulGeneratorTypeData editedModulGeneratorTypeData = this.getEditedModulGeneratorTypeData();
 		TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
 		TimelineEditModel timelineEditModel = this.timelineEditController.getTimelineEditModel();
 		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		if (selectedTimelineSelectEntryModel != null)
 		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Copy timeline:
+			
 			this.timelinesDrawPanelController.doCreateNew();
 	
 			TimelineSelectEntryModel newTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
@@ -1857,17 +1865,65 @@ implements RemoveTimelineGeneratorListenerInterface,
 			this.timelineEditController.doUpdateEditModel(editedModulGeneratorTypeData, 
 			                                              newTimelineSelectEntryModel);
 			
-	//		{
-	//			TimelineSelectEntryModel nextTimelineSelectEntryModel =
-	//				this.timelinesDrawPanelController.calcNextTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
-	//			
-	//			if (nextTimelineSelectEntryModel != null)
-	//			{
-	//				this.timelinesDrawPanelController.doChangeTimelinesPosition(nextTimelineSelectEntryModel, 
-	//				                                                            newTimelineSelectEntryModel);
-	//			}
-	//		}
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Copy inputs:
+			{
+				Timeline newTimeline = newTimelineSelectEntryModel.getTimeline();
+				
+				Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+				Generator selectedGenerator = selectedTimeline.getGenerator();
+				
+				Iterator<InputData> inputsIterator = selectedGenerator.getInputsIterator();
+				
+				while (inputsIterator.hasNext())
+				{
+					InputData inputData = (InputData)inputsIterator.next();
+					
+					Generator inputGenerator = inputData.getInputGenerator();
+					
+					Timeline inputTimeline = timelineManagerLogic.searchGeneratorTimeline(inputGenerator);
+					
+                    InputTypeData inputTypeData = inputData.getInputTypeData(); 
+                    Float floatValue = inputData.getInputValue();
+                    String stringValue = inputData.getInputStringValue();
+                    InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
+                    
+					timelineManagerLogic.addInputGenerator(newTimeline,
+					                                       inputTimeline,
+					                                       inputTypeData, 
+					                                       floatValue, stringValue,
+					                                       modulInputTypeData);
+				}
+				
+//				Map<InputData, Timeline> inputTimelines = selectedTimeline.getInputTimelines();
+//				Set<Entry<InputData, Timeline>> inputTimelinesEntrySet = inputTimelines.entrySet();
+//				
+//				for (Map.Entry<InputData, Timeline> inputTimelineEntry : inputTimelinesEntrySet)
+//				{
+//					Timeline inputTimeline = inputTimelineEntry.getValue();
+//					InputData inputData = inputTimelineEntry.getKey();
+//					
+//                    InputTypeData inputTypeData = inputData.getInputTypeData(); 
+//                    Float floatValue = inputData.getInputValue();
+//                    String stringValue = inputData.getInputStringValue();
+//                    InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
+//                    
+////					InputData newInputData = 
+//						timelineManagerLogic.addInputGenerator(newTimeline,
+//						                                       inputTimeline,
+//						                                       inputTypeData, 
+//						                                       floatValue, stringValue,
+//						                                       modulInputTypeData);
+//					
+////					newTimelineSelectEntryModel.setInputData(newInputData);
+//				}
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Copy outputs:
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(newTimelineSelectEntryModel);
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
 			
 			// TimelinesTimeRule update.
@@ -1876,7 +1932,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			// TimelinesGeneratorsRule update.
 			this.timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
 			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			this.appModelChangedObserver.notifyAppModelChanged();
 		}
 		//==========================================================================================

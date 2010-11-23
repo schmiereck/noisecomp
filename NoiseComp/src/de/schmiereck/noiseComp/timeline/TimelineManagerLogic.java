@@ -518,7 +518,7 @@ public class TimelineManagerLogic
 		//==========================================================================================
 		InputData inputData;
 		
-		final Generator selectedGenerator = newTimeline.getGenerator();
+		final Generator generator = newTimeline.getGenerator();
 		
 		final Generator inputGenerator;
 		
@@ -532,10 +532,10 @@ public class TimelineManagerLogic
 		}
 		
 		inputData = 
-			selectedGenerator.addInputGenerator(inputGenerator, 
-			                                    inputTypeData, 
-			                                    floatValue, stringValue,
-			                                    modulInputTypeData);
+			generator.addInputGenerator(inputGenerator, 
+			                            inputTypeData, 
+			                            floatValue, stringValue,
+			                            modulInputTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		this.addInputTimeline(newTimeline, inputData, inputGenerator);
@@ -634,6 +634,18 @@ public class TimelineManagerLogic
 	public Iterator<Timeline> getTimelinesIterator()
 	{
 		return this.mainGeneratorTimelines.values().iterator();
+	}
+
+	/**
+	 * @param generator
+	 * 			is the Generator.
+	 * @return
+	 * 			the Timeline.<br/>
+	 * 			<code>null</code> if no timeline found.
+	 */
+	public Timeline searchGeneratorTimeline(Generator generator)
+	{
+		return mainGeneratorTimelines.get(generator);
 	}
 
 	/**

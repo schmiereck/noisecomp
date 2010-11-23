@@ -55,7 +55,7 @@ WORK:
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
 #107:	IMPROVEMENT: Add a funktion to insert a copy of the selected timeline.
 		--> DONE: Copy timeline.
-		--> Copy inputs.
+		--> DONE: Copy inputs.
 		--> Copy outputs.
 
 DONE:
