@@ -93,14 +93,25 @@ extends Generator
 		
 		//------------------------------------------------------------------------------------------
 		// Integrated Input of the Sinus-Signal.
-		float signalInput = 
-			this.calcInputMonoValue(framePosition, 
-                                    frameTime,
-			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_INPUT), 
-			                        parentModulGenerator,
-			                        generatorBuffer,
-			                        modulArguments);
-
+		float signalInput;
+		{
+			InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_INPUT);
+			
+			if (inputTypeData != null)
+			{
+				signalInput = 
+					this.calcInputMonoValue(framePosition, 
+		                                    frameTime,
+		                                    inputTypeData, 
+					                        parentModulGenerator,
+					                        generatorBuffer,
+					                        modulArguments);
+			}
+			else
+			{
+				signalInput = Float.NaN;
+			}
+		}
 		//------------------------------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
