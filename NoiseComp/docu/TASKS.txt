@@ -188,6 +188,6 @@ DONE:
 		--> DONE: Copy inputs.
 		--> DONE: Copy outputs.
 #112:	BUG: Change selction of input with the same type set InputType in Input-Edit-Comp to "--- No Input-Type ---".
-		--> DONE: Check if selected item is the same is not possible, 
+		--> DONE: Check if selected item is changed is not possible, 
 				  because the selection list changed, but the selected item is sometimes the same.
 		
