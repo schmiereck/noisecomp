@@ -209,14 +209,15 @@ implements Scrollable//, MouseMotionListener
 					// Timeline Handler dragged?
 					if (timelineHandler != HighlightedTimelineHandler.NONE)
 					{
-						TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
+						//TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
+						TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 						
-						if (highlightedTimelineSelectEntryModel != null)
+						if (selectedTimelineSelectEntryModel != null)
 						{
 							double timePos = point2D.getX();
 						
 							double nearestSnapToTimpePos = searchNearestSnapToTimpePos(timelinesDrawPanelModel, 
-							                                                           highlightedTimelineSelectEntryModel,
+							                                                           selectedTimelineSelectEntryModel,
 							                                                           timePos);
 //							System.out.println(nearestSnapToTimpePos);
 							
@@ -244,14 +245,14 @@ implements Scrollable//, MouseMotionListener
 							{
 								case LEFT:
 								{
-									highlightedTimelineSelectEntryModel.setStartTimePos((float)pos);
+									selectedTimelineSelectEntryModel.setStartTimePos((float)pos);
 									timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 									repaint();
 									break;
 								}
 								case RIGHT:
 								{
-									highlightedTimelineSelectEntryModel.setEndTimePos((float)pos);
+									selectedTimelineSelectEntryModel.setEndTimePos((float)pos);
 									timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 									repaint();
 									break;
@@ -270,8 +271,8 @@ implements Scrollable//, MouseMotionListener
 //						        int newvporty = vporty - dy;
 //						        Rectangle rect = new Rectangle(newvportx, newvporty, size.width, size.height);
 //						        mPanel.scrollRectToVisible(rect);
-								Rectangle rect = new Rectangle((int)(timePos * at.getScaleX()) - 32, 
-								                               (int)point2D.getY() - 32, 
+								Rectangle rect = new Rectangle((int)(point2D.getX() * at.getScaleX() - 32), 
+								                               (int)(point2D.getY() - 32), 
 								                               64, 64);
 						        scrollRectToVisible(rect);
 						    }
@@ -291,8 +292,8 @@ implements Scrollable//, MouseMotionListener
 								notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel, 
 								                                         timelineSelectEntryModel);
 							}
-							Rectangle rect = new Rectangle((int)point2D.getX() - 32, 
-							                               (int)point2D.getY() - 32, 
+							Rectangle rect = new Rectangle((int)(point2D.getX() * at.getScaleX() - 32), 
+							                               (int)(point2D.getY() - 32), 
 							                               64, 64);
 					        scrollRectToVisible(rect);
 						}
