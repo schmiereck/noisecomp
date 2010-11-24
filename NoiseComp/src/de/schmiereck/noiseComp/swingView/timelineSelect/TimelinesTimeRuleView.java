@@ -12,6 +12,7 @@ import java.awt.Rectangle;
 import javax.swing.JComponent;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
  * <p>
@@ -98,6 +99,7 @@ extends JComponent
 		// Fill clipping area with dirty brown/orange.
 		g.setColor(COLOR_BACKGROUND);
 		g.fillRect(drawHere.x, drawHere.y, drawHere.width, drawHere.height);
+		//System.out.println(drawHere.x + ", " + drawHere.width);
 		
 		// Do the ruler labels in a small font that's black.
 		g.setFont(new Font("SansSerif", Font.PLAIN, 10));
@@ -111,7 +113,7 @@ extends JComponent
 		String unitLabel;
 		
 		TicksPer ticksPer = this.timelinesTimeRuleModel.getTicksPer();
-		Float ticksCount = this.timelinesTimeRuleModel.getTicksCount();
+		float ticksCount = this.timelinesTimeRuleModel.getTicksCount();
 		
 		switch (ticksPer)
 		{
@@ -152,8 +154,38 @@ extends JComponent
 			String text;
 			int textPosX;
 			
-			tickLineLength = 10;
-			text = Integer.toString((int)(tickPos));
+			boolean showText;
+			
+			if (tickSize < 30)
+			{
+				int tickMod = ((int)(30 / tickSize) + 1);
+				
+				if ((tickPos % tickMod) == 0)
+				{
+					showText = true;
+				}
+				else
+				{
+					showText = false;
+				}
+			}
+			else
+			{
+				showText = true;
+			}
+			
+			if (showText == true)
+			{
+				tickLineLength = 10;
+			}
+			else
+			{
+				tickLineLength = 5;
+			}
+			
+			//text = Integer.toString((int)(tickPos));
+			//text = Integer.toString((int)(tickPos / ticksCount));
+			text = OutputUtils.makeFloatText((tickPos / ticksCount), 2);
 			
 			if (tickPos == 0)
 			{
@@ -167,21 +199,18 @@ extends JComponent
 			{
 				textPosX = -3;
 			}
-
-//			{
-//				tickLineLength = 5;
-//				text = null;
-//				textPosX = 0;
-//			}
 			
 			g.drawLine((int)(tickPos * tickSize), SIZE - 1, 
 			           (int)(tickPos * tickSize), SIZE - tickLineLength - 1);
 			
 			if (text != null)
 			{
-				g.drawString(text, 
-				             (int)(tickPos * tickSize) + textPosX, 
-				             21);
+				if (showText == true)
+				{
+					g.drawString(text, 
+					             (int)(tickPos * tickSize) + textPosX, 
+					             21);
+				}
 			}
 		}
 	}
