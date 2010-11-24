@@ -410,8 +410,13 @@ implements GeneratorChangeListenerInterface
 				long emptyBuffer1Start = this.soundSamplesBufferData.getEmptyBufferStart();
 				long emptyBuffer1End = this.soundSamplesBufferData.getEmptyBufferEnd();
 				
+				// Time in seconds.
+				float timeSchedulerIsWaiting = (actualWaitPerFramesMillis / 1000.0F);
+				
+				float timeBufferIsFilled = timeSchedulerIsWaiting * 2.0F;
+				
 				boolean bufferCompletelyFilled =
-					this.soundSamplesBufferData.calcWaitingSamplesPart(actualWaitPerFramesMillis / 1000.0F, 
+					this.soundSamplesBufferData.calcWaitingSamplesPart(timeBufferIsFilled, 
 																	   this.outputTimeline);
 				
 				if (bufferCompletelyFilled == true)
