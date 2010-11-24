@@ -47,7 +47,6 @@ TODO:
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
-#114:	
 #115:	
 
 WORK:
@@ -193,4 +192,4 @@ DONE:
 		--> Increase time between scheduler runs dynamicaly if possible.
 		--> Use different schedulers to calulate buffer of diffenrent independent sub-timelines parallel.
 #109:	BUG: View proper time, if Ticks-Per is not 1.
-		
+#114:	BUG: TimelineDrawPanel: Input connector time is scaled to integer.

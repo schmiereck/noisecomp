@@ -649,7 +649,7 @@ implements Scrollable//, MouseMotionListener
 						
 						float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
 
-						float inputScreenPosX = (int)inputGenerator.getEndTimePos(); //(int)((inputGenerator.getEndTimePos() - horizontalScrollStart) * scaleX);
+						float inputScreenPosX = inputGenerator.getEndTimePos(); //(int)((inputGenerator.getEndTimePos() - horizontalScrollStart) * scaleX);
 						
 						float inp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
 						float inp1Y = selectedPos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
@@ -661,14 +661,14 @@ implements Scrollable//, MouseMotionListener
 //							g2.drawLine(inp1X, inp1Y, 
 //							            inp1X, inp2Y);
 							Line2D line = new Line2D.Float(inp1X, inp1Y, 
-							                                     inp1X, inp2Y);
+							                               inp1X, inp2Y);
 							g2.draw(this.at.createTransformedShape(line));
 						}
 						{
 //							g2.drawLine(inp1X, inp2Y, 
 //							            inp2X, inp2Y);
 							Line2D line = new Line2D.Float(inp1X, inp2Y, 
-							                                     inp2X, inp2Y);
+							                               inp2X, inp2Y);
 							g2.draw(this.at.createTransformedShape(line));
 						}
 						{
