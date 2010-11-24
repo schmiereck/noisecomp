@@ -48,7 +48,9 @@ TODO:
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
-#112:	
+#113:	
+#114:	
+#115:	
 
 WORK:
 =====
@@ -185,3 +187,7 @@ DONE:
 		--> DONE: Copy timeline.
 		--> DONE: Copy inputs.
 		--> DONE: Copy outputs.
+#112:	BUG: Change selction of input with the same type set InputType in Input-Edit-Comp to "--- No Input-Type ---".
+		--> DONE: Check if selected item is the same is not possible, 
+				  because the selection list changed, but the selected item is sometimes the same.
+		

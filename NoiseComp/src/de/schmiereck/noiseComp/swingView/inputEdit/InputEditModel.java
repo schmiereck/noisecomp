@@ -173,7 +173,9 @@ public class InputEditModel
 	 */
 	public void setInputTimeline(Timeline inputTimeline)
 	{
-		if (this.inputTimeline != inputTimeline)
+		// Check is not possible, because the selection list changed, but the selected item
+		// is sometimes the same.
+		//if (this.inputTimeline != inputTimeline)
 		{
 			this.inputTimeline = inputTimeline;
 			
@@ -206,10 +208,13 @@ public class InputEditModel
 	 */
 	public void setInputTypeSelectItems(List<InputTypeSelectItem> inputTypeSelectItems)
 	{
-		this.inputTypeSelectItems = inputTypeSelectItems;
-		
-		// Notify Listeners.
-		this.inputTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+		if (this.inputTypeSelectItems != inputTypeSelectItems)
+		{
+			this.inputTypeSelectItems = inputTypeSelectItems;
+			
+			// Notify Listeners.
+			this.inputTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
@@ -236,7 +241,9 @@ public class InputEditModel
 	 */
 	public void setInputTypeData(InputTypeData inputTypeData)
 	{
-		if (this.inputTypeData != inputTypeData)
+		// Check is not possible, because the selection list changed, but the selected item
+		// is sometimes the same.
+		//if (this.inputTypeData != inputTypeData)
 		{
 			this.inputTypeData = inputTypeData;
 			
@@ -299,7 +306,9 @@ public class InputEditModel
 	 */
 	public void setModulInputTypeData(InputTypeData modulInputTypeData)
 	{
-		if (this.modulInputTypeData != modulInputTypeData)
+		// Check is not possible, because the selection list changed, but the selected item
+		// is sometimes the same.
+		//if (this.modulInputTypeData != modulInputTypeData)
 		{
 			this.modulInputTypeData = modulInputTypeData;
 			
