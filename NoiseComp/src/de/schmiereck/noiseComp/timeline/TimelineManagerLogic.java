@@ -248,7 +248,7 @@ public class TimelineManagerLogic
 		
 		return inputTimeline;
 	}
-
+	
 	/**
 	 * Add the given Input Data for the given input generator
 	 * to the given timeline

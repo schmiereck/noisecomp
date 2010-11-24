@@ -53,10 +53,6 @@ TODO:
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
-#107:	IMPROVEMENT: Add a funktion to insert a copy of the selected timeline.
-		--> DONE: Copy timeline.
-		--> DONE: Copy inputs.
-		--> Copy outputs.
 
 DONE:
 =====
@@ -185,4 +181,7 @@ DONE:
 			--> http://audacity.sourceforge.net/manual-1.2/effects_reverb.html
 			--> http://www.koders.com/java/fid17043839587562406607244543F9B82C0D5EB998.aspx?s=ShortDocument
 #108:	BUG: Reset "changed" flag, if file is saved.
-			
+#107:	IMPROVEMENT: Add a funktion to insert a copy of the selected timeline.
+		--> DONE: Copy timeline.
+		--> DONE: Copy inputs.
+		--> DONE: Copy outputs.

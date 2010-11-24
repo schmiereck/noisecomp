@@ -11,6 +11,9 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.prefs.Preferences;
 
 import javax.swing.JFileChooser;
@@ -1866,13 +1869,15 @@ implements RemoveTimelineGeneratorListenerInterface,
 			                                              newTimelineSelectEntryModel);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Copy:
+			Timeline newTimeline = newTimelineSelectEntryModel.getTimeline();
+			
+			Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+			Generator selectedGenerator = selectedTimeline.getGenerator();
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Copy inputs:
 			{
-				Timeline newTimeline = newTimelineSelectEntryModel.getTimeline();
-				
-				Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
-				Generator selectedGenerator = selectedTimeline.getGenerator();
-				
 				Iterator<InputData> inputsIterator = selectedGenerator.getInputsIterator();
 				
 				while (inputsIterator.hasNext())
@@ -1894,32 +1899,31 @@ implements RemoveTimelineGeneratorListenerInterface,
 					                                       floatValue, stringValue,
 					                                       modulInputTypeData);
 				}
-				
-//				Map<InputData, Timeline> inputTimelines = selectedTimeline.getInputTimelines();
-//				Set<Entry<InputData, Timeline>> inputTimelinesEntrySet = inputTimelines.entrySet();
-//				
-//				for (Map.Entry<InputData, Timeline> inputTimelineEntry : inputTimelinesEntrySet)
-//				{
-//					Timeline inputTimeline = inputTimelineEntry.getValue();
-//					InputData inputData = inputTimelineEntry.getKey();
-//					
-//                    InputTypeData inputTypeData = inputData.getInputTypeData(); 
-//                    Float floatValue = inputData.getInputValue();
-//                    String stringValue = inputData.getInputStringValue();
-//                    InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
-//                    
-////					InputData newInputData = 
-//						timelineManagerLogic.addInputGenerator(newTimeline,
-//						                                       inputTimeline,
-//						                                       inputTypeData, 
-//						                                       floatValue, stringValue,
-//						                                       modulInputTypeData);
-//					
-////					newTimelineSelectEntryModel.setInputData(newInputData);
-//				}
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Copy outputs:
+			{
+				Map<InputData, Timeline> outputTimelines = selectedTimeline.getOutputTimelines();
+				Set<Entry<InputData, Timeline>> outputTimelinesEntrySet = outputTimelines.entrySet();
+				
+				for (Entry<InputData, Timeline> outputTimelineEntry : outputTimelinesEntrySet)
+				{
+					Timeline outputTimeline = outputTimelineEntry.getValue();
+					InputData outputInputData = outputTimelineEntry.getKey();
+					
+                    InputTypeData inputTypeData = outputInputData.getInputTypeData(); 
+                    Float floatValue = outputInputData.getInputValue();
+                    String stringValue = outputInputData.getInputStringValue();
+                    InputTypeData modulInputTypeData = outputInputData.getInputModulInputTypeData();
+                    
+					timelineManagerLogic.addInputGenerator(outputTimeline, 
+					                                       newTimeline, 
+					                                       inputTypeData, 
+					                                       floatValue, 
+					                                       stringValue, 
+					                                       modulInputTypeData);
+				}
+			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(newTimelineSelectEntryModel);
 			
