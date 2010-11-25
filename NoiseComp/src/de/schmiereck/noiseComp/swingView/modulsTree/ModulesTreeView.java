@@ -202,5 +202,14 @@ implements EditModuleChangedListener
 		
 		//==========================================================================================
 	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulesTreeModel}.
+	 */
+	public ModulesTreeModel getModulesTreeModel()
+	{
+		return this.modulesTreeModel;
+	}
 	
 }

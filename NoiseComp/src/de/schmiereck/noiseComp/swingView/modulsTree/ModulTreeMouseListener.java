@@ -157,16 +157,16 @@ extends MouseAdapter
 	 */
 	public void mouseReleased(MouseEvent e) 
 	{
-		int row = modulesTreeView.getRowForLocation(e.getX(), e.getY());
+		int row = this.modulesTreeView.getRowForLocation(e.getX(), e.getY());
 
 		if (row != -1)
 		{
 //			TreePath oldSelectionPath = modulesTreeView.getSelectionPath();
 //			DefaultMutableTreeNode oldTreeNode = (DefaultMutableTreeNode)oldSelectionPath.getLastPathComponent();
 			
-			modulesTreeView.setSelectionRow(row);
+			this.modulesTreeView.setSelectionRow(row);
 			
-			TreePath selectionPath = modulesTreeView.getSelectionPath();
+			TreePath selectionPath = this.modulesTreeView.getSelectionPath();
 			
 			DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
 			
@@ -192,8 +192,14 @@ extends MouseAdapter
 					}
 					else
 					{
-						this.modulesCategoryPopupMenu.show(e.getComponent(),
-						                                   e.getX(), e.getY());
+						ModulesTreeModel modulesTreeModel = this.modulesTreeView.getModulesTreeModel();
+						DefaultMutableTreeNode modulesTreeNode = modulesTreeModel.getModulesTreeNode();
+						
+						if (modulesTreeNode == treeNode)
+						{
+							this.modulesCategoryPopupMenu.show(e.getComponent(),
+							                                   e.getX(), e.getY());
+						}
 					}
 				}
 			}
@@ -202,7 +208,7 @@ extends MouseAdapter
 				// Doubleclick?
 				if (e.getClickCount() == 2)
 				{
-					modulesTreeView.setSelectionRow(row);
+					this.modulesTreeView.setSelectionRow(row);
 					
 					Object userObject = treeNode.getUserObject();
 					

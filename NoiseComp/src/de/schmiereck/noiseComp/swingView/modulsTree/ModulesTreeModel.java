@@ -276,4 +276,22 @@ public class ModulesTreeModel
 		this.generatorsTreeNode.add(generatorTreeNode);
 	}
 
+	/**
+	 * @return 
+	 * 			returns the {@link #generatorsTreeNode}.
+	 */
+	public DefaultMutableTreeNode getGeneratorsTreeNode()
+	{
+		return this.generatorsTreeNode;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulesTreeNode}.
+	 */
+	public DefaultMutableTreeNode getModulesTreeNode()
+	{
+		return this.modulesTreeNode;
+	}
+
 }

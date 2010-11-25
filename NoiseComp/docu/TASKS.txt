@@ -52,7 +52,6 @@ TODO:
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
-#116:	IMPROVEMENT: View generators in a seperate module tree category.
 
 DONE:
 =====
@@ -198,4 +197,5 @@ DONE:
 		--> CAN'T REPRODUCE: maybe it is only if you manipulate the default generated model after startup app.
 #97:	BUG: Change a module default does not clear the depending timeline buffers.
 		--> see #115
+#116:	IMPROVEMENT: View generators in a seperate module tree category.
 		
