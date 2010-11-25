@@ -41,6 +41,11 @@ public class ModulesTreeModel
 	private ModulGeneratorTypeData editedModulGeneratorTypeData;
 	
 	private List<EditModuleChangedListener> editModuleChangedListeners = new Vector<EditModuleChangedListener>();
+
+	//----------------------------------------------------------------------------------------------
+	private final DefaultMutableTreeNode generatorsTreeNode;
+
+	private final DefaultMutableTreeNode modulesTreeNode;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -51,9 +56,23 @@ public class ModulesTreeModel
 	 * @param treeModel
 	 * 			is the tree Model.
 	 */
-	public ModulesTreeModel(DefaultTreeModel treeModel)
+	public ModulesTreeModel(final DefaultTreeModel treeModel,
+	                        final DefaultMutableTreeNode generatorsTreeNode,
+	                        final DefaultMutableTreeNode modulesTreeNode)
 	{
+		//==========================================================================================
 		this.treeModel = treeModel;
+		
+		this.generatorsTreeNode = generatorsTreeNode;
+		this.modulesTreeNode = modulesTreeNode;
+		
+		//------------------------------------------------------------------------------------------
+		DefaultMutableTreeNode fileTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
+		
+		fileTreeNode.add(generatorsTreeNode);
+		fileTreeNode.add(modulesTreeNode);
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -195,7 +214,8 @@ public class ModulesTreeModel
 //		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
 		
 //		DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)this.selectionPath.getLastPathComponent();
-		DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
+//		DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
+		DefaultMutableTreeNode parentTreeNode = this.modulesTreeNode;
 	
 		int parentChildCount = parentTreeNode.getChildCount();
 		
@@ -220,6 +240,40 @@ public class ModulesTreeModel
 	public void setSelectionPath(TreePath selectionPath)
 	{
 		this.selectionPath = selectionPath;
+	}
+
+	/**
+	 * 
+	 */
+	public void removeGeneratorNodes()
+	{
+		this.generatorsTreeNode.removeAllChildren();
+	}
+
+	/**
+	 * 
+	 */
+	public void removeModulNodes()
+	{
+		this.modulesTreeNode.removeAllChildren();
+	}
+
+	/**
+	 * @param modulTreeNode
+	 * 			is the modul TreeNode to add to {@link #modulesTreeNode}.
+	 */
+	public void addModuleNode(DefaultMutableTreeNode modulTreeNode)
+	{
+		this.modulesTreeNode.add(modulTreeNode);
+	}
+
+	/**
+	 * @param generatorTreeNode
+	 * 			is the generator TreeNode to add to {@link #generatorsTreeNode}..
+	 */
+	public void addGeneratoreNode(DefaultMutableTreeNode generatorTreeNode)
+	{
+		this.generatorsTreeNode.add(generatorTreeNode);
 	}
 
 }

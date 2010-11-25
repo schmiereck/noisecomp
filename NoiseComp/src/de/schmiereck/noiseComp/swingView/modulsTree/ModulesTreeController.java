@@ -38,7 +38,7 @@ public class ModulesTreeController
 	 * Modules Tree Model.
 	 */
 	private final ModulesTreeModel modulesTreeModel;
-
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -53,7 +53,16 @@ public class ModulesTreeController
 		//==========================================================================================
 		DefaultTreeModel treeModel = this.createTreeModel();
 		
-		this.modulesTreeModel = new ModulesTreeModel(treeModel);
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		DefaultMutableTreeNode generatorsTreeNode = new DefaultMutableTreeNode("Generators");
+
+		DefaultMutableTreeNode modulesTreeNode = new DefaultMutableTreeNode("Modules");
+
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		this.modulesTreeModel = new ModulesTreeModel(treeModel,
+		                                             generatorsTreeNode,
+		                                             modulesTreeNode);
+		
 		this.modulesTreeView = new ModulesTreeView(this.modulesTreeModel);
 		
 		//------------------------------------------------------------------------------------------
@@ -81,11 +90,11 @@ public class ModulesTreeController
 	private DefaultTreeModel createTreeModel()
 	{
 		//==========================================================================================
-		DefaultMutableTreeNode modulesTreeNode = new DefaultMutableTreeNode("Modules");
+		DefaultMutableTreeNode fileTreeNode = new DefaultMutableTreeNode("File");
 
 		//------------------------------------------------------------------------------------------
-		DefaultTreeModel treeModel = new DefaultTreeModel(modulesTreeNode);
-
+		DefaultTreeModel treeModel = new DefaultTreeModel(fileTreeNode);
+		
 		//==========================================================================================
 		return treeModel;
 	}
@@ -99,45 +108,24 @@ public class ModulesTreeController
 		//==========================================================================================
 		DefaultTreeModel treeModel = this.modulesTreeModel.getTreeModel();
 		
-		DefaultMutableTreeNode modulesTreeNode = (DefaultMutableTreeNode)treeModel.getRoot();
-		
-		modulesTreeNode.removeAllChildren();
-
-//		//------------------------------------------------------------------------------------------
-//		{
-//			DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode("Modul 1");
-//			modulesTreeNode.add(modulTreeNode);
-//			{
-//				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator A");
-//				modulTreeNode.add(generatorTreeNode);
-//			}
-//			{
-//				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator B");
-//				modulTreeNode.add(generatorTreeNode);
-//			}
-//		}
-//		
-//		{
-//			DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode("Modul 2");
-//			modulesTreeNode.add(modulTreeNode);
-//			{
-//				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator C");
-//				modulTreeNode.add(generatorTreeNode);
-//			}
-//			{
-//				DefaultMutableTreeNode generatorTreeNode = new DefaultMutableTreeNode("Generator D");
-//				modulTreeNode.add(generatorTreeNode);
-//			}
-//		}
-//		
 		//------------------------------------------------------------------------------------------
-//		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+		this.modulesTreeModel.removeGeneratorNodes();
+		this.modulesTreeModel.removeModulNodes();
 
+		//------------------------------------------------------------------------------------------
 		for (GeneratorTypeData generatorTypeData : generatorTypes)
 		{
-			//benutzt toString() für das Label, also eine eigene Funktion dafür schreiben
+			// Uses generator.toString() to view Label, so write a function for this.
 			DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(generatorTypeData);
-			modulesTreeNode.add(modulTreeNode);
+			
+			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			{			
+				this.modulesTreeModel.addModuleNode(modulTreeNode);
+			}
+			else
+			{
+				this.modulesTreeModel.addGeneratoreNode(modulTreeNode);
+			}
 		}
 		
 		//------------------------------------------------------------------------------------------

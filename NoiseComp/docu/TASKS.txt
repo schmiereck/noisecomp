@@ -38,7 +38,6 @@ TODO:
 			at de.schmiereck.noiseComp.swingView.appController.AppController$4.notifyEditModul(AppController.java:301)
 #95:	IMPROVEMENT: Allow switch timeline-rule and timeline/input positions between beats and time in seconds.
 		--> First fix #54.
-#97:	BUG: Change a module default does not clear the depending timeline buffers.
 #98:	IMPROVEMENT: Automatically ends playback if end of output reached.
 #99:	BUG: If Zoom changed to + some of the things of #54 treten erneut auf. 
 #101:	TASK: Change float to double.
@@ -47,11 +46,13 @@ TODO:
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
-#115:	
+#117:	
+#118:	
 
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
+#116:	IMPROVEMENT: View generators in a seperate module tree category.
 
 DONE:
 =====
@@ -193,3 +194,8 @@ DONE:
 		--> Use different schedulers to calulate buffer of diffenrent independent sub-timelines parallel.
 #109:	BUG: View proper time, if Ticks-Per is not 1.
 #114:	BUG: TimelineDrawPanel: Input connector time is scaled to integer.
+#115:	BUG: Do not recalculate soundbuffer after updating depending timeline, only clears all depending timeline buffers.
+		--> CAN'T REPRODUCE: maybe it is only if you manipulate the default generated model after startup app.
+#97:	BUG: Change a module default does not clear the depending timeline buffers.
+		--> see #115
+		
