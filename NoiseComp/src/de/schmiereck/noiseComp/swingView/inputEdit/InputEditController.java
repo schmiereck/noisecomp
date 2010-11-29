@@ -288,7 +288,7 @@ public class InputEditController
 		//==========================================================================================
 		InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
 		GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
-		String valueStr = this.inputEditView.getInputTypeValueTextField().getText();
+		String valueStr = this.inputEditView.getInputTypeValueTextField().getSelectedItem().toString();
 		ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)this.inputEditView.getModulInputTypeComboBox().getSelectedItem();
 			
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

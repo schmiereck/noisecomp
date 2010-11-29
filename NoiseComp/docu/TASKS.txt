@@ -43,7 +43,6 @@ TODO:
 #105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
 		==> Reverted TimelineEditModelChangedObserver: Is not so easy: Selecting timeline updates timelineEditModel, this updates timelineSelectEntryModel fields bevor all fields are filled, that chrashes...
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
-#55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
 #117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
 #120:	
@@ -55,6 +54,8 @@ WORK:
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
 		--> http://jb2works.com/memoryleak/index_de.html
 		--> http://www.eclipse.org/mat/
+#55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
+		-->  Editable Combobox with frequenz values.
 
 DONE:
 =====
