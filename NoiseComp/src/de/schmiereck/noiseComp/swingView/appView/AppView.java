@@ -276,10 +276,11 @@ extends JFrame
 		
 		this.timelineSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		this.timelineSplitPane.setOneTouchExpandable(true);
-		// All Space for Timeline-Select.
-		this.timelineSplitPane.setResizeWeight(1.0D);
 		
 		this.timelineSplitPane.setRightComponent(this.timelineEditSplitPane);
+
+		// All Space for Timeline-Select.
+		this.timelineSplitPane.setResizeWeight(1.0D);
 		
 		//------------------------------------------------------------------------------------------
 		// Modul-Edit Split-Pane:
@@ -316,7 +317,7 @@ extends JFrame
 		this.timelineSplitPane.setLeftComponent(timelineComponent);
 
 //		this.timelineSplitPane.setDividerLocation(timelineComponent.getPreferredSize().width);
-		this.timelineSplitPane.setDividerLocation(350);
+		this.timelineSplitPane.setDividerLocation(this.timelineSplitPane.getWidth() - 260);
 	}
 
 	/**

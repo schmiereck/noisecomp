@@ -43,3 +43,10 @@ clap
 http://www.musiksynthesizer.de/geraete/DL-909/DL-909_handclap.htm
 example:
 http://www.fotosearch.com/UNK104/u17461568/
+http://www.google.de/url?sa=t&source=web&cd=5&ved=0CDEQFjAE&url=http%3A%2F%2Fwww.acoustics.hut.fi%2Fpublications%2Ffiles%2Ftheses%2Flpeltola_mst%2Fpeltola_mst.pdf&rct=j&q=algorithmus%20synthesizer%20metallic%20clap&ei=pRLwTLO4KsLOswbQpLmKCw&usg=AFQjCNE-LneuiVjvlhL4jxf0xXQKE76xxg&cad=rja
+http://www.acoustics.hut.fi/publications/files/theses/lpeltola_mst/peltola_mst.pdf
+
+reverb
+======
+http://audacity.sourceforge.net/manual-1.2/effects_reverb.html
+http://www.koders.com/java/fid17043839587562406607244543F9B82C0D5EB998.aspx?s=ShortDocument

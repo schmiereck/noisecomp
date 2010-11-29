@@ -46,12 +46,15 @@ TODO:
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
-#117:	
-#118:	
+#117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
+#119:	
+#120:	
 
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
+		--> http://jb2works.com/memoryleak/index_de.html
+		--> http://www.eclipse.org/mat/
 
 DONE:
 =====
@@ -198,4 +201,5 @@ DONE:
 #97:	BUG: Change a module default does not clear the depending timeline buffers.
 		--> see #115
 #116:	IMPROVEMENT: View generators in a seperate module tree category.
+#118:	IMPROVEMENT: Save Window size and position.
 		

@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.appController;
 
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -189,8 +190,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.appView = new AppView(this.appModel);
 		
 		this.appView.setTitle("NoiseComp V" + Version.version);
-		this.appView.setSize(800, 600);
-		this.appView.setLocationRelativeTo(null);
+		this.restoreAppViewSize();
 		this.appView.setVisible(true);
 		
 		//------------------------------------------------------------------------------------------
@@ -1460,9 +1460,89 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		if (exitApp == true)
 		{
+			this.storeAppViewSize();
+			
 			System.exit(0);
 		}
 		
+		//==========================================================================================
+	}
+
+	/**
+	 * Store the app view size to registry.
+	 */
+	private void storeAppViewSize()
+	{
+		//==========================================================================================
+		Preferences userPrefs = PreferencesUtils.getUserPreferences();
+
+		//==========================================================================================
+		Dimension size = this.appView.getSize();
+		
+		PreferencesUtils.setValueDouble(userPrefs, 
+		                                "appWith", 
+		                                size.getWidth());
+
+		PreferencesUtils.setValueDouble(userPrefs, 
+		                                "appHeight", 
+		                                size.getHeight());
+
+		//------------------------------------------------------------------------------------------
+		Point location = this.appView.getLocation();
+		
+		PreferencesUtils.setValueDouble(userPrefs, 
+		                                "appLocationX", 
+		                                location.getX());
+
+		PreferencesUtils.setValueDouble(userPrefs, 
+		                                "appLocationY", 
+		                                location.getY());
+
+		//==========================================================================================
+	}
+	
+	/**
+	 * Store the app view size from registry.
+	 */
+	private void restoreAppViewSize()
+	{
+		//==========================================================================================
+		Preferences userPrefs = PreferencesUtils.getUserPreferences();
+
+		//==========================================================================================
+		double appWith = 
+			PreferencesUtils.getValueDouble(userPrefs, 
+			                                "appWith", 
+			                                800);
+		
+		double appHeight = 
+			PreferencesUtils.getValueDouble(userPrefs, 
+			                                "appHeight", 
+			                                600);
+		
+		this.appView.setSize((int)appWith, (int)appHeight);
+		
+		//------------------------------------------------------------------------------------------
+		boolean appLocationXFoundKey = PreferencesUtils.checkKeyExists(userPrefs, "appLocationX");
+		boolean appLocationYFoundKey = PreferencesUtils.checkKeyExists(userPrefs, "appLocationY");
+		
+		if (appLocationXFoundKey && appLocationYFoundKey)
+		{
+			double appLocationX = PreferencesUtils.getValueDouble(userPrefs, 
+			                                                      "appLocationX", 
+			                                                      0);
+
+			double appLocationY = PreferencesUtils.getValueDouble(userPrefs, 
+			                                                      "appLocationY", 
+			                                                      0);
+			
+			this.appView.setLocation((int)appLocationX, 
+			                         (int)appLocationY);
+		}
+		else
+		{
+			this.appView.setLocationRelativeTo(null);
+		}
 		//==========================================================================================
 	}
 
@@ -1738,6 +1818,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 	private void setFileActionFile(File file)
 	{
 		//==========================================================================================
+		Preferences userPrefs = PreferencesUtils.getUserPreferences();
+
+		//==========================================================================================
 		if (file == null)
 		{
 			this.appView.setTitle("NoiseComp");
@@ -1752,8 +1835,6 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		String fileActionFileStr = file.getAbsolutePath();
 		
-		Preferences userPrefs = PreferencesUtils.getUserPreferences();
-
 		PreferencesUtils.setValueString(userPrefs, 
 		                                "fileActionFile", 
 		                                fileActionFileStr);

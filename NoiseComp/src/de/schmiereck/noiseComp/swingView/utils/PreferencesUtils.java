@@ -43,15 +43,15 @@ public class PreferencesUtils
 	 * 			are the Preferenzes of Application.
 	 * @param name
 	 * 			is the Name of the Attribute.
-	 * @param def
-	 * 			is the Default-Value of the Atrribute returned if it is a newly created attribute.
 	 * @return
-	 * 			the value associated with the attribute bevor.
+	 * 			<code>true</code> if key exists.
 	 */
-	public static String getValueString(Preferences userPrefs, String name, String def)
+	public static boolean checkKeyExists(Preferences userPrefs, String name)
 	{
+		//==========================================================================================
 		boolean foundKey = false;
-		String value = null;
+		
+		//------------------------------------------------------------------------------------------
 		String[] keys;
 
 		try
@@ -69,29 +69,13 @@ public class PreferencesUtils
 			
 			if (name.equals(key) == true)
 			{
-				value = userPrefs.get(name, def);
 				foundKey = true;
 				break;
 			}
 		}
 		
-		if (foundKey == false)
-		{
-			String defStr;
-			
-			if (def == null)
-			{
-				defStr = "";
-			}
-			else
-			{
-				defStr = def;
-			}
-			
-			userPrefs.put(name, defStr);
-		}
-		
-		return value;
+		//==========================================================================================
+		return foundKey;
 	}
 	
 	/**
@@ -99,44 +83,135 @@ public class PreferencesUtils
 	 * 			are the Preferenzes of Application.
 	 * @param name
 	 * 			is the Name of the Attribute.
-	 * @param def
+	 * @param defValue
 	 * 			is the Default-Value of the Atrribute returned if it is a newly created attribute.
 	 * @return
 	 * 			the value associated with the attribute bevor.
 	 */
-	public static long getValueLong(Preferences userPrefs, String name, long def)
+	public static String getValueString(Preferences userPrefs, String name, String defValue)
 	{
-		boolean foundKey = false;
-		long value = def;
-		String[] keys;
+		//==========================================================================================
+		String retValue;
+		
+		//------------------------------------------------------------------------------------------
+		boolean foundKey = checkKeyExists(userPrefs, name);
 
-		try
+		if (foundKey == true)
 		{
-			keys = userPrefs.keys();
+			retValue = userPrefs.get(name, defValue);
 		}
-		catch (BackingStoreException ex)
+		else
 		{
-			throw new RuntimeException(ex);
-		}
-
-		for (int pos = 0; pos < keys.length; pos++)
-		{
-			String key = keys[pos];
-			
-			if (name.equals(key) == true)
+			if (defValue == null)
 			{
-				value = userPrefs.getLong(name, def);
-				foundKey = true;
-				break;
+				retValue = "";
 			}
+			else
+			{
+				retValue = defValue;
+			}
+			
+			//userPrefs.put(name, defStr);
 		}
 		
-		if (foundKey == false)
+		//==========================================================================================
+		return retValue;
+	}
+	
+	/**
+	 * @param userPrefs
+	 * 			are the Preferenzes of Application.
+	 * @param name
+	 * 			is the Name of the Attribute.
+	 * @param defValue
+	 * 			is the Default-Value of the Atrribute returned if it is a newly created attribute.
+	 * @return
+	 * 			the value associated with the attribute bevor.
+	 */
+	public static long getValueLong(Preferences userPrefs, String name, long defValue)
+	{
+		//==========================================================================================
+		long retValue;
+		
+		//------------------------------------------------------------------------------------------
+		boolean foundKey = checkKeyExists(userPrefs, name);
+		
+		if (foundKey == true)
 		{
-			userPrefs.putLong(name, def);
+			retValue = userPrefs.getLong(name, defValue);
+		}
+		else
+		{
+//			userPrefs.putLong(name, def);
+			retValue = defValue;
 		}
 		
-		return value;
+		//==========================================================================================
+		return retValue;
+	}
+	
+	/**
+	 * @param userPrefs
+	 * 			are the Preferenzes of Application.
+	 * @param name
+	 * 			is the Name of the Attribute.
+	 * @param defValue
+	 * 			is the Default-Value of the Atrribute returned if it is a newly created attribute.
+	 * @return
+	 * 			the value associated with the attribute bevor.
+	 */
+	public static int getValueInteger(Preferences userPrefs, String name, int defValue)
+	{
+		//==========================================================================================
+		int retValue;
+		
+		//------------------------------------------------------------------------------------------
+		boolean foundKey = checkKeyExists(userPrefs, name);
+		
+		if (foundKey == true)
+		{
+			retValue = userPrefs.getInt(name, defValue);
+		}
+		else
+		{
+//			userPrefs.putLong(name, def);
+			retValue = defValue;
+		}
+		
+		//==========================================================================================
+		return retValue;
+	}
+	
+	/**
+	 * @param userPrefs
+	 * 			are the Preferenzes of Application.
+	 * @param name
+	 * 			is the Name of the Attribute.
+	 * @param defValue
+	 * 			is the Default-Value of the Atrribute returned if it is a newly created attribute.
+	 * @return
+	 * 			the value associated with the attribute bevor.
+	 */
+	public static double getValueDouble(Preferences userPrefs, String name, double defValue)
+	{
+		//==========================================================================================
+		double retValue;
+		
+		//------------------------------------------------------------------------------------------
+		boolean foundKey = checkKeyExists(userPrefs, name);
+		
+		if (foundKey == true)
+		{
+			retValue = userPrefs.getDouble(name, defValue);
+		}
+		else
+		{
+//			userPrefs.putLong(name, def);
+			retValue = defValue;
+		}
+		
+		//==========================================================================================
+		return retValue;
 	}
 
 	/**
@@ -144,9 +219,37 @@ public class PreferencesUtils
 	 * 			are the Preferenzes of Application.
 	 * @param name
 	 * 			is the Name of the Attribute.
+	 * @param value
+	 * 			is the value of the Attribute.
 	 */
 	public static void setValueString(Preferences userPrefs, String name, String value)
 	{
 		userPrefs.put(name, value);
+	}
+
+	/**
+	 * @param userPrefs
+	 * 			are the Preferenzes of Application.
+	 * @param name
+	 * 			is the Name of the Attribute.
+	 * @param value
+	 * 			is the value of the Attribute.
+	 */
+	public static void setValueInteger(Preferences userPrefs, String name, int value)
+	{
+		userPrefs.putInt(name, value);
+	}
+
+	/**
+	 * @param userPrefs
+	 * 			are the Preferenzes of Application.
+	 * @param name
+	 * 			is the Name of the Attribute.
+	 * @param value
+	 * 			is the value of the Attribute.
+	 */
+	public static void setValueDouble(Preferences userPrefs, String name, double value)
+	{
+		userPrefs.putDouble(name, value);
 	}
 }
