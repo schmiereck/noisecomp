@@ -2035,6 +2035,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 			this.soundSchedulerLogic.stopThread();
 			
 			this.soundSchedulerLogic = null;
+
+			//--------------------------------------------------------------------------------------
+			this.timelinesDrawPanelController.doPlaybackTimeChanged(0.0F);
 		}
 		//==========================================================================================
 	}
