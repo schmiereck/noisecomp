@@ -47,8 +47,9 @@ TODO:
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 #52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
 #117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
-#119:	
 #120:	
+#121:	
+#122:	
 
 WORK:
 =====
@@ -202,4 +203,5 @@ DONE:
 		--> see #115
 #116:	IMPROVEMENT: View generators in a seperate module tree category.
 #118:	IMPROVEMENT: Save Window size and position.
+#119:	IMPROVEMENT: Show selected timeline in TimelineGeneratorRule.
 		

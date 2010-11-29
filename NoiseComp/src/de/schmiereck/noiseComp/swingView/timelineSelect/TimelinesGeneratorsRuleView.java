@@ -40,6 +40,7 @@ extends JComponent
 	 * Color - Background (dirty brown/orange).
 	 */
 	private static final Color	COLOR_BACKGROUND	= new Color(0xFFF1E1); //230, 163, 4);
+	private static final Color	COLOR_SELECTED_BACKGROUND	= new Color(0xBFB2AE);
 	
 	//**********************************************************************************************
 	// Fields:
@@ -49,15 +50,7 @@ extends JComponent
 	 */
 	private final TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel;
 	
-	private final ModelPropertyChangedListener timelineGeneratorModelChangedListener =
-	 	new ModelPropertyChangedListener()
- 	{
-		@Override
-		public void notifyModelPropertyChanged()
-		{
-			repaint();
-		}
- 	};
+	private final ModelPropertyChangedListener timelineGeneratorModelChangedListener;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -70,7 +63,19 @@ extends JComponent
 	 */
 	public TimelinesGeneratorsRuleView(TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel)
 	{
+		//==========================================================================================
 		this.timelinesGeneratorsRuleModel = timelinesGeneratorsRuleModel;
+		
+		//------------------------------------------------------------------------------------------
+		this.timelineGeneratorModelChangedListener = new ModelPropertyChangedListener()
+	 	{
+			@Override
+			public void notifyModelPropertyChanged()
+			{
+				repaint();
+			}
+	 	};
+		//==========================================================================================
 	}
 
 //	public void setGeneratorSizeY(int generatorSizeY)
@@ -81,10 +86,12 @@ extends JComponent
 
 	public void setHeight(int ph)
 	{
+		//==========================================================================================
 		Dimension dimension = new Dimension(SIZE_X, ph);
 		
 //		this.setSize(dimension);
 		this.setPreferredSize(dimension);
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
@@ -92,6 +99,10 @@ extends JComponent
 	 */
 	protected void paintComponent(Graphics g)
 	{
+		//==========================================================================================
+		TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
+		
+		//==========================================================================================
 		Rectangle drawHere = g.getClipBounds();
 		
 		// Fill clipping area.
@@ -102,11 +113,12 @@ extends JComponent
 		g.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		g.setColor(Color.BLACK);
 		
-		TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
-		
 		int generatorSizeY = timelinesScrollPanelModel.getGeneratorSizeY();
 
+		//------------------------------------------------------------------------------------------
 		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesGeneratorsRuleModel.getTimelineSelectEntryModels();
+		
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = this.timelinesGeneratorsRuleModel.getSelectedTimelineSelectEntryModel();
 		
 		// Use clipping bounds to calculate first and last tick locations.
 		int start = (drawHere.y / generatorSizeY) * generatorSizeY;
@@ -182,6 +194,14 @@ extends JComponent
 					valueMax = 1.0F;
 					valueMin = -1.0F;
 				}
+				
+				// Selected timeline?
+				if (selectedTimelineSelectEntryModel == timelineSelectEntryModel)
+				{
+					g.setColor(COLOR_SELECTED_BACKGROUND);
+					g.fillRect(0, tickPos, 
+					           SIZE_X, generatorSizeY);
+				}
 			}
 			else
 			{
@@ -191,6 +211,9 @@ extends JComponent
 				valueMax = 1.0F;
 				valueMin = -1.0F;
 			}
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			g.setColor(Color.BLACK);
 			
 			{
 				String text = Integer.toString(generatorPos) + ":" + generatorName;
@@ -223,6 +246,7 @@ extends JComponent
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -231,6 +255,7 @@ extends JComponent
 	 */
 	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener()
 	{
+		//==========================================================================================
 		return this.timelineGeneratorModelChangedListener;
 	}
 }

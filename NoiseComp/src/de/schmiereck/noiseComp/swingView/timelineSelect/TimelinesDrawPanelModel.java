@@ -284,7 +284,17 @@ public class TimelinesDrawPanelModel
 		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
 		
 		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
+		
 		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedTimelineChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getSelectedTimelineChangedNotifier()
+	{
+		return this.selectedTimelineChangedNotifier;
 	}
 
 //	/**
@@ -341,15 +351,6 @@ public class TimelinesDrawPanelModel
 	public void setMaxUnitIncrementY(int maxUnitIncrementY)
 	{
 		this.maxUnitIncrementY = maxUnitIncrementY;
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #selectedTimelineChangedNotifier}.
-	 */
-	public ModelPropertyChangedNotifier getSelectedTimelineChangedNotifier()
-	{
-		return this.selectedTimelineChangedNotifier;
 	}
 
 	/**

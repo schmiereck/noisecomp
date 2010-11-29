@@ -308,6 +308,8 @@ implements Scrollable//, MouseMotionListener
 					Point point = e.getPoint();
 					Point2D point2D = mousePos(point);
 					
+					boolean resetHighlightedTimelineHandler;
+					
 					TimelineSelectEntryModel timelineSelectEntryModel = searchGenerator(point2D);
 					
 					if (timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel() != timelineSelectEntryModel)
@@ -342,24 +344,43 @@ implements Scrollable//, MouseMotionListener
 						
 						if (timelineHandlerModel.getRect1().contains(point))
 						{
-							timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.LEFT);
-							setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
+							if (timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.LEFT)
+							{
+								timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.LEFT);
+								setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
+							}
+							resetHighlightedTimelineHandler = false;
 						}
 						else
 						{
 							if (timelineHandlerModel.getRect2().contains(point))
 							{
-								timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.RIGHT);
-								setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+								if (timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.RIGHT)
+								{
+									timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.RIGHT);
+									setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+								}
+								resetHighlightedTimelineHandler = false;
 							}
 							else
 							{
-								timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.NONE);
-								setCursor(defaultCursor);
+								resetHighlightedTimelineHandler = true;
 							}
 						}
 					}
+					else
+					{
+						resetHighlightedTimelineHandler = true;
+					}
 					
+					if (resetHighlightedTimelineHandler == true)
+					{
+						if (timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.NONE)
+						{
+							timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.NONE);
+							setCursor(defaultCursor);
+						}
+					}
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}

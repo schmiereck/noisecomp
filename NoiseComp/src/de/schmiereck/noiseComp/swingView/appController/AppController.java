@@ -156,19 +156,19 @@ implements RemoveTimelineGeneratorListenerInterface,
 	/**
 	 * Input-Select Controller.
 	 */
-	final InputSelectController inputSelectController;
+	private final InputSelectController inputSelectController;
 
 	/**
 	 * Input-Edit Controller.
 	 */
-	final InputEditController inputEditController;
+	private final InputEditController inputEditController;
 	
 	/**
 	 * App Model
 	 */
 	private final AppModel appModel;
 	
-	final AppModelChangedObserver appModelChangedObserver;
+	private final AppModelChangedObserver appModelChangedObserver;
 	
 	private SoundSchedulerLogic soundSchedulerLogic = null;
 	
@@ -917,7 +917,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		TimelineEditModel timelineEditModel = timelineEditController.getTimelineEditModel();
 		
 	 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
+		final TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
 		
 //		TimelineEditModelChangedObserver timelineEditModelChangedObserver = new TimelineEditModelChangedObserver(timelineEditModel,
 //		                                                                                                         timelinesDrawPanelModel);
@@ -1054,7 +1054,19 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 	(
 	 	 	timelinesGeneratorsRuleController
 	 	);
-	 	
+	 	timelinesDrawPanelModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
+	 	(
+	 	 	new ModelPropertyChangedListener()
+	 	 	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+					
+					timelinesGeneratorsRuleController.notifySelectedTimelineChanged(selectedTimelineSelectEntryModel);
+				}
+	 	 	}
+	 	);
 	    //------------------------------------------------------------------------------------------
 	 	timelinesDrawPanelModel.getTimelineStartTimePosChangedListeners().add
 	 	(

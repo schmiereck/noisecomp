@@ -31,9 +31,9 @@ implements TimelineContentChangedListenerInterface,
 	
 	private final ModulesTreeModel modulesTreeModel;
 	
-	private TimelinesDrawPanelModel timelinesDrawPanelModel;
+	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
-	final private TimelinesDrawPanelView timelinesDrawPanelView;
+	private final TimelinesDrawPanelView timelinesDrawPanelView;
 	
 	//**********************************************************************************************
 	// Functions:

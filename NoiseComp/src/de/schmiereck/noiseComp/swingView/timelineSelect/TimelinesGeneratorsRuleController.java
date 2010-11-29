@@ -5,6 +5,7 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.awt.Dimension;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
 
@@ -23,9 +24,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 	//**********************************************************************************************
 	// Fields:
 	
-	private TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel;
+	private final TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel;
 	
-	private TimelinesGeneratorsRuleView timelinesGeneratorsRuleView;
+	private final TimelinesGeneratorsRuleView timelinesGeneratorsRuleView;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -43,6 +44,21 @@ implements RemoveTimelineGeneratorListenerInterface,
 	    this.timelinesGeneratorsRuleView = 
 	    	new TimelinesGeneratorsRuleView(this.timelinesGeneratorsRuleModel);
 	    
+	    //------------------------------------------------------------------------------------------
+	    this.timelinesGeneratorsRuleModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
+	    (
+	     	new ModelPropertyChangedListener()
+	     	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					timelinesGeneratorsRuleView.repaint();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+	     	}
+	    );
 		//==========================================================================================
 	}
 
@@ -71,7 +87,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 	{
 		//==========================================================================================
 		this.timelinesGeneratorsRuleView.setHeight((int)timelinesDrawPanelHeight);
+		
 		this.timelinesGeneratorsRuleView.repaint();
+		
 		//==========================================================================================
 	}
 
@@ -109,6 +127,20 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//==========================================================================================
 		this.timelinesGeneratorsRuleView.repaint();
 
+		//==========================================================================================
+	}
+
+	/**
+	 * Called if selected timeline is changed.
+	 * 
+	 * @param selectedTimelineSelectEntryModel
+	 * 			is the selected timeline entry.
+	 */
+	public void notifySelectedTimelineChanged(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
+	{
+		//==========================================================================================
+		this.timelinesGeneratorsRuleModel.setSelectedTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
+		
 		//==========================================================================================
 	}
 

@@ -56,9 +56,11 @@ extends JComponent
 	 */
 	public TimelinesTimeRuleView(TimelinesTimeRuleModel timelinesTimeRuleModel)
 	{
+		//==========================================================================================
 		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
 		
 //		this.setIncrementAndUnits();
+		//==========================================================================================
 	}
 
 //	public void setIsMetric(boolean isMetric)
@@ -81,10 +83,12 @@ extends JComponent
 
 	public void setWidth(int pw)
 	{
+		//==========================================================================================
 		Dimension dimension = new Dimension(pw, SIZE);
 		
 		//this.setSize(dimension);
 		this.setPreferredSize(dimension);
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
@@ -92,6 +96,7 @@ extends JComponent
 	 */
 	protected void paintComponent(Graphics g)
 	{
+		//==========================================================================================
 		//super.paintComponent(g);
 		 
 		Rectangle drawHere = g.getClipBounds();
@@ -213,5 +218,6 @@ extends JComponent
 				}
 			}
 		}
+		//==========================================================================================
 	}
 }

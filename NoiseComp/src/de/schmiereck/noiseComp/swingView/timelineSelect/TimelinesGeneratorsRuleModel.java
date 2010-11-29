@@ -36,6 +36,17 @@ public class TimelinesGeneratorsRuleModel
 	 */
 	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	//----------------------------------------------------------------------------------------------
+	/**
+	 * Selected Timeline Generator Model.
+	 */
+	private TimelineSelectEntryModel selectedTimelineSelectEntryModel = null;
+	
+	/**
+	 * {@link #selectedTimelineSelectEntryModel} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier selectedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -84,5 +95,36 @@ public class TimelinesGeneratorsRuleModel
 		
 		// Notify listeners.
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedTimelineSelectEntryModel}.
+	 */
+	public TimelineSelectEntryModel getSelectedTimelineSelectEntryModel()
+	{
+		return this.selectedTimelineSelectEntryModel;
+	}
+
+	/**
+	 * @param selectedTimelineSelectEntryModel 
+	 * 			to set {@link #selectedTimelineSelectEntryModel}.
+	 */
+	public void setSelectedTimelineSelectEntryModel(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
+	{
+		//==========================================================================================
+		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
+		
+		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
+		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedTimelineChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getSelectedTimelineChangedNotifier()
+	{
+		return this.selectedTimelineChangedNotifier;
 	}
 }

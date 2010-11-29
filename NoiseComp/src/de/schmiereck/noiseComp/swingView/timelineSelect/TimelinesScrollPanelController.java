@@ -17,9 +17,9 @@ public class TimelinesScrollPanelController
 	//**********************************************************************************************
 	// Fields:
 	
-	private TimelinesScrollPanelView timelinesScrollPanelView;
+	private final TimelinesScrollPanelView timelinesScrollPanelView;
 	
-	private TimelinesScrollPanelModel timelinesScrollPanelModel;
+	private final TimelinesScrollPanelModel timelinesScrollPanelModel;
 	
 	private TimelinesTimeRuleController timelinesTimeRuleController = null; 
 	
