@@ -35,6 +35,7 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.service.SoundService;
+import de.schmiereck.noiseComp.soundData.PlaybackPosChangedListenerInterface;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
@@ -171,6 +172,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 	private final AppModelChangedObserver appModelChangedObserver;
 	
 	private SoundSchedulerLogic soundSchedulerLogic = null;
+
+	private final PlaybackPosChangedListenerInterface	playbackPosChangedListener;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -281,7 +284,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelController = 
-			new TimelinesDrawPanelController(modulesTreeController.getModulesTreeModel(),
+			new TimelinesDrawPanelController(//modulesTreeController.getModulesTreeModel(),
 			                                 appModelChangedObserver);
 
 		// TODO Change this dynamicaly with listener/notifier.
@@ -1282,6 +1285,15 @@ implements RemoveTimelineGeneratorListenerInterface,
 	    //------------------------------------------------------------------------------------------
 		modulEditModel.setTicksPer(TicksPer.Seconds);
 		
+	    //------------------------------------------------------------------------------------------
+		this.playbackPosChangedListener = new PlaybackPosChangedListenerInterface()
+		{
+			@Override
+			public void notifyPlaybackPosChanged(float actualTime)
+			{
+				timelinesDrawPanelController.doPlaybackTimeChanged(actualTime);
+			}
+		};
 		//==========================================================================================
 	}
 
@@ -1365,50 +1377,6 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public AppView getAppView()
 	{
 		return this.appView;
-	}
-
-	public void doPlaySound()
-	{
-		//==========================================================================================
-		if (this.soundSchedulerLogic == null)
-		{
-			SoundData soundData = SwingMain.getSoundData();
-			
-			this.soundSchedulerLogic = new SoundSchedulerLogic(25, soundData);
-			
-			this.soundSchedulerLogic.startThread();
-
-			this.soundSchedulerLogic.startPlayback();
-		}
-		else
-		{	
-			this.soundSchedulerLogic.resumePlayback();
-		}
-		//==========================================================================================
-	}
-
-	public void doStopSound()
-	{
-		//==========================================================================================
-		if (this.soundSchedulerLogic != null)
-		{
-			this.soundSchedulerLogic.stopPlayback();
-			
-			this.soundSchedulerLogic.stopThread();
-			
-			this.soundSchedulerLogic = null;
-		}
-		//==========================================================================================
-	}
-
-	public void doPauseSound()
-	{
-		//==========================================================================================
-		if (this.soundSchedulerLogic != null)
-		{
-			this.soundSchedulerLogic.pausePlayback();
-		}
-		//==========================================================================================
 	}
 
 	/**
@@ -2035,4 +2003,49 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//==========================================================================================
 	}
 
+	public void doPlaySound()
+	{
+		//==========================================================================================
+		if (this.soundSchedulerLogic == null)
+		{
+			SoundData soundData = SwingMain.getSoundData();
+			
+			this.soundSchedulerLogic = new SoundSchedulerLogic(25, soundData);
+			
+			this.soundSchedulerLogic.addPlaybackPosChangedListener(this.playbackPosChangedListener);
+			
+			this.soundSchedulerLogic.startThread();
+
+			this.soundSchedulerLogic.startPlayback();
+		}
+		else
+		{	
+			this.soundSchedulerLogic.resumePlayback();
+		}
+		//==========================================================================================
+	}
+
+	public void doStopSound()
+	{
+		//==========================================================================================
+		if (this.soundSchedulerLogic != null)
+		{
+			this.soundSchedulerLogic.stopPlayback();
+			
+			this.soundSchedulerLogic.stopThread();
+			
+			this.soundSchedulerLogic = null;
+		}
+		//==========================================================================================
+	}
+
+	public void doPauseSound()
+	{
+		//==========================================================================================
+		if (this.soundSchedulerLogic != null)
+		{
+			this.soundSchedulerLogic.pausePlayback();
+		}
+		//==========================================================================================
+	}
 }

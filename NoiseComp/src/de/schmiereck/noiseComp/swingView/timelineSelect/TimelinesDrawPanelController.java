@@ -5,14 +5,15 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import java.util.List;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
-import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.timeline.Timeline;
 import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
+import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
 
 /**
  * <p>
@@ -29,7 +30,7 @@ implements TimelineContentChangedListenerInterface,
 	//**********************************************************************************************
 	// Fields:
 	
-	private final ModulesTreeModel modulesTreeModel;
+//	private final ModulesTreeModel modulesTreeModel;
 	
 	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
@@ -46,12 +47,12 @@ implements TimelineContentChangedListenerInterface,
 	 * @param inputEditModel 
 	 * 			is the Input-Edit Model.
 	 */
-	public TimelinesDrawPanelController(final ModulesTreeModel modulesTreeModel,
+	public TimelinesDrawPanelController(//final ModulesTreeModel modulesTreeModel,
 	                                    //InputEditModel inputEditModel)
 	                                    final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
-		this.modulesTreeModel = modulesTreeModel;
+//		this.modulesTreeModel = modulesTreeModel;
 		
 		this.timelinesDrawPanelModel = new TimelinesDrawPanelModel(appModelChangedObserver);
 		
@@ -83,12 +84,14 @@ implements TimelineContentChangedListenerInterface,
 				public void changeTimelinesPosition(TimelineSelectEntryModel selectedTimelineSelectEntryModel,
 													TimelineSelectEntryModel newTimelineSelectEntryModel)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					if ((selectedTimelineSelectEntryModel != null) &&
 						(newTimelineSelectEntryModel != null))
 					{
 						doChangeTimelinesPosition(selectedTimelineSelectEntryModel,
 						                          newTimelineSelectEntryModel);
 					}
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 	     	}
 	    );
@@ -101,10 +104,26 @@ implements TimelineContentChangedListenerInterface,
 				public void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
 				                                          TimelineSelectEntryModel timelineSelectEntryModel)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					if (timelineSelectEntryModel == timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel())
 					{
 						timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(null);
 					}
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+	     	}
+	    );
+	    //------------------------------------------------------------------------------------------
+	    this.timelinesDrawPanelModel.getPlaybackTimeChangedNotifier().addModelPropertyChangedListener
+	    (
+	     	new ModelPropertyChangedListener()
+	     	{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					timelinesDrawPanelView.repaint();
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 	     	}
 	    );
@@ -229,6 +248,11 @@ implements TimelineContentChangedListenerInterface,
 	                                      TimelineSelectEntryModel secondTimelineSelectEntryModel)
 	{
 		//==========================================================================================
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		//==========================================================================================
 //		int firstTimelinePos = firstTimelineSelectEntryModel.getTimelinePos();
 //		int secondTimelinePos = secondTimelineSelectEntryModel.getTimelinePos();
 		int firstTimelinePos = this.timelinesDrawPanelModel.getTimelineSelectEntryPos(firstTimelineSelectEntryModel);
@@ -236,13 +260,18 @@ implements TimelineContentChangedListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Update edited Modul Data:
 		
-		ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
+//		TimelineSelectEntryModel selectedTimelineSelectEntryModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+		
+//		ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
 		
 //		Generator firstGenerator = selectedTimelineGeneratorModel.getGenerator();
 //		Generator secondGenerator = newTimelineGeneratorModel.getGenerator();
 		
-		editedModulGeneratorTypeData.switchTracksByPos(firstTimelinePos,
-		                                               secondTimelinePos);
+		timelineManagerLogic.switchTracksByPos(firstTimelinePos,
+                                               secondTimelinePos);
+		
+//		editedModulGeneratorTypeData.switchTracksByPos(firstTimelinePos,
+//		                                               secondTimelinePos);
 		
 		//------------------------------------------------------------------------------------------
 		// Update Timeline-Draw Model:
@@ -422,5 +451,17 @@ implements TimelineContentChangedListenerInterface,
 		
 		//==========================================================================================
 		return ret;
+	}
+
+	/**
+	 * @param actualTime
+	 * 			the actual play time in seconds.
+	 */
+	public void doPlaybackTimeChanged(float actualTime)
+	{
+		//==========================================================================================
+		this.timelinesDrawPanelModel.setPlaybackTime(actualTime);
+		
+		//==========================================================================================
 	}
 }

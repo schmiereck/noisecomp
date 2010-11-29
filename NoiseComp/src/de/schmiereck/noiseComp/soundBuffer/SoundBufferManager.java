@@ -79,6 +79,7 @@ extends AudioInputStream
 							  int bufferSize, 
 							  SoundSourceLogic soundSourceLogic)
 	{
+		//==========================================================================================
 		super(new ByteArrayInputStream(new byte[0]), 
 			  new AudioFormat(audioFormat.getEncoding(),
 							  audioFormat.getSampleRate(),
@@ -89,12 +90,15 @@ extends AudioInputStream
 							  audioFormat.isBigEndian()), 
 							  length);
 		
+		//==========================================================================================
 		this.frameRate = audioFormat.getFrameRate();
 		
 		this.bufferSize = bufferSize;
 		
 		///this.soundGenerator = soundGenerator;
 		this.soundSourceLogic = soundSourceLogic;
+		
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
@@ -103,6 +107,7 @@ extends AudioInputStream
 	public int read(byte[] abData, int nOffset, int nLength)
 		throws IOException
 	{
+		//==========================================================================================
 		if (nLength % getFormat().getFrameSize() != 0)
 		{
 			throw new IOException("length must be an integer multiple of frame size");
@@ -142,6 +147,7 @@ extends AudioInputStream
 			}
 		}
 		
+		//==========================================================================================
 		return copyiedBytes;
 	}
 
@@ -151,6 +157,7 @@ extends AudioInputStream
 	 */
 	public void pollGenerate()
 	{
+		//==========================================================================================
 		synchronized (this)
 		{
 			// Kein gefüllter Buffer wartet mehr, das er abgespielt wird ?
@@ -192,6 +199,7 @@ extends AudioInputStream
 			
 			this.isPolling = true;
 		}
+		//==========================================================================================
 	}
 	
 	/**	
@@ -207,6 +215,7 @@ extends AudioInputStream
 	 */
 	public int available()
 	{
+		//==========================================================================================
 		int len = 0;
 		
 		if (this.playingGeneratorBuffer != null)
@@ -218,6 +227,7 @@ extends AudioInputStream
 			len += this.waitingGeneratorBuffer.getGeneratedBytesInBuffer();
 		}
 		
+		//==========================================================================================
 		return len;
 	}
 
@@ -234,6 +244,10 @@ extends AudioInputStream
 		throw new IOException("cannot use this method currently");
 	}
 
+	/**
+	 * @return
+	 * 			the actual play time in seconds.
+	 */
 	public float getActualTime()
 	{
 		return this.actualFrame / this.frameRate;
@@ -241,6 +255,7 @@ extends AudioInputStream
 	
 	public void stopGenerate()
 	{
+		//==========================================================================================
 		synchronized (this)
 		{
 			this.isPolling = false;
@@ -256,6 +271,7 @@ extends AudioInputStream
 		
 			this.generatingGeneratorBuffer = null;
 		}
+		//==========================================================================================
 	}
 	/**
 	 * @return the attribute {@link #generatingGeneratorBuffer}.

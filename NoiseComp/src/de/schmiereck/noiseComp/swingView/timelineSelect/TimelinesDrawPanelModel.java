@@ -175,11 +175,18 @@ public class TimelinesDrawPanelModel
 	 */
 	private Float ticksCount = 1.0F;
 	
-
 	/**
 	 * {@link #ticksPer} or {@link #ticksCount} changed listeners.
 	 */
 	private final ModelPropertyChangedNotifier ticksChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	//----------------------------------------------------------------------------------------------
+	private float playbackTime = 0.0F;
+
+	/**
+	 * {@link #playbackTime} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier playbackTimeChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -688,5 +695,38 @@ public class TimelinesDrawPanelModel
 	public Float getTicksCount()
 	{
 		return this.ticksCount;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #playbackTime}.
+	 */
+	public float getPlaybackTime()
+	{
+		return this.playbackTime;
+	}
+
+	/**
+	 * @param playbackTime 
+	 * 			to set {@link #playbackTime}.
+	 */
+	public void setPlaybackTime(float playbackTime)
+	{
+		//==========================================================================================
+		this.playbackTime = playbackTime;
+		
+		this.playbackTimeChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #playbackTimeChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getPlaybackTimeChangedNotifier()
+	{
+		//==========================================================================================
+		return this.playbackTimeChangedNotifier;
 	}
 }

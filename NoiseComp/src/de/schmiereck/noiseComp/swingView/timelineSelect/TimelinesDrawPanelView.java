@@ -81,6 +81,9 @@ implements Scrollable//, MouseMotionListener
 	private static final Color CTimelineHandlerNearestSnapLine = new Color(0x16, 0x76, 0x43, 64);//0, 0, 200, 200);
 	private static final Color CTimelineHandlerSnapLine = new Color(0x90CB4F);//60, 60, 255);
 	
+	private static final Color CPlaybackTimeLine = new Color(0x561360);
+	private static final Color CPlaybackTimeLineGlow = new Color(0xBE, 0x6F, 0xC9, 128);
+	
 	private final float DRAW_EVERY_SAMPLE = 5.0F;//1.0F;//25.0F;
 	
 	private static final int TimelineHandlerSizeX = 8;
@@ -709,39 +712,60 @@ implements Scrollable//, MouseMotionListener
 			}
 		}
 		//------------------------------------------------------------------------------------------
-		Rectangle drawHere = g.getClipBounds();
-		
-		double nearestSnapToTimpePos = this.timelinesDrawPanelModel.getNearestSnapToTimpePos();
-		
-		if (Double.isNaN(nearestSnapToTimpePos) == false)
+		// Playback Time:
 		{
-			if (this.timelinesDrawPanelModel.getHandlerSnaped() == true)
-			{
-				g2.setPaint(CTimelineHandlerSnapLine);
-			}
-			else
-			{
-				g2.setPaint(CTimelineHandlerNearestSnapLine);
-			}
+			float playbackTime = this.timelinesDrawPanelModel.getPlaybackTime();
 			
-			int x = (int)(this.at.getScaleX() * nearestSnapToTimpePos);
-			int y1 = drawHere.y;
-			int y2 = drawHere.y + drawHere.height;
+			g2.setPaint(CPlaybackTimeLine);
+			
+			int x = (int)(this.at.getScaleX() * playbackTime);
+			int y1 = clipRect.y;
+			int y2 = clipRect.y + clipRect.height;
 			
 			g2.drawLine(x, y1, 
 			            x, y2);
-
-			if (this.timelinesDrawPanelModel.getHandlerSnaped() == true)
-			{
-				g2.setPaint(CTimelineHandlerNearestSnapLine);
-				
-				g2.drawLine(x - 1, y1, 
-				            x - 1, y2);
-				g2.drawLine(x + 1, y1, 
-				            x + 1, y2);
-			} 
+			
+			g2.setPaint(CPlaybackTimeLineGlow);
+			
+			g2.drawLine(x - 1, y1, 
+			            x - 1, y2);
+			g2.drawLine(x + 1, y1, 
+			            x + 1, y2);
 		}
-		
+		//------------------------------------------------------------------------------------------
+		// Snap Line:
+		{
+			double nearestSnapToTimpePos = this.timelinesDrawPanelModel.getNearestSnapToTimpePos();
+			
+			if (Double.isNaN(nearestSnapToTimpePos) == false)
+			{
+				if (this.timelinesDrawPanelModel.getHandlerSnaped() == true)
+				{
+					g2.setPaint(CTimelineHandlerSnapLine);
+				}
+				else
+				{
+					g2.setPaint(CTimelineHandlerNearestSnapLine);
+				}
+				
+				int x = (int)(this.at.getScaleX() * nearestSnapToTimpePos);
+				int y1 = clipRect.y;
+				int y2 = clipRect.y + clipRect.height;
+				
+				g2.drawLine(x, y1, 
+				            x, y2);
+	
+				if (this.timelinesDrawPanelModel.getHandlerSnaped() == true)
+				{
+					g2.setPaint(CTimelineHandlerNearestSnapLine);
+					
+					g2.drawLine(x - 1, y1, 
+					            x - 1, y2);
+					g2.drawLine(x + 1, y1, 
+					            x + 1, y2);
+				} 
+			}
+		}
 		//==========================================================================================
 	}
 

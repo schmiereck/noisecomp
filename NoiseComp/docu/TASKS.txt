@@ -22,7 +22,6 @@ TODO:
 			at de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController.doUpdate(ModulInputTypeEditController.java:133)
 			at de.schmiereck.noiseComp.swingView.appController.AppController$11.actionPerformed(AppController.java:435)
 		--> Disable input fields and "update"-Button if no input-type is selected.
-#48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
 #51:	IMPROVEMENT: After selecting a module-generator for new timeline set length to his output length.
 #53:	IMPROVEMENT: Generator-Input-Types needs max, min and datatype definitions.
 #56:	IMPROVEMENT: Import noiseComp.xml files.
@@ -204,4 +203,5 @@ DONE:
 #116:	IMPROVEMENT: View generators in a seperate module tree category.
 #118:	IMPROVEMENT: Save Window size and position.
 #119:	IMPROVEMENT: Show selected timeline in TimelineGeneratorRule.
+#48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
 		

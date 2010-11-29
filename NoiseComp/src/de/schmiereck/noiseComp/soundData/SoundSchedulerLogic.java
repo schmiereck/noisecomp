@@ -1,6 +1,9 @@
 package de.schmiereck.noiseComp.soundData;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
+
 import javax.sound.sampled.SourceDataLine;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.screenTools.scheduler.PipelineSchedulerLogic;
@@ -17,18 +20,42 @@ import de.schmiereck.screenTools.scheduler.PipelineSchedulerLogic;
 public class SoundSchedulerLogic 
 extends PipelineSchedulerLogic
 {
-	private SoundData soundData;
+	//**********************************************************************************************
+	// Fields:
+	
+	/**
+	 * Sound data to play.
+	 */
+	private final SoundData soundData;
+	
 	private boolean playbackPaused = false;
 
+	//==============================================================================================
+	/**
+	 * Playback-Pos Changed Listeners.
+	 */
+	private final List<PlaybackPosChangedListenerInterface> playbackPosChangedListeners = new Vector<PlaybackPosChangedListenerInterface>();
+	
+	//**********************************************************************************************
+	// Functions:
+	
 	/**
 	 * Constructor.
 	 * 
+	 * @param soundData
+	 * 			is the Sound data to play.
+	 * @param targetFramesPerSecond
+	 * 			are the Count of frames per second.
 	 */
 	public SoundSchedulerLogic(int targetFramesPerSecond, SoundData soundData)
 	{
+		//==========================================================================================
 		super(targetFramesPerSecond);
 		
+		//==========================================================================================
 		this.soundData = soundData;
+		
+		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
@@ -36,12 +63,14 @@ extends PipelineSchedulerLogic
 	 */
 	public void notifyRunSchedulCalc(long actualWaitPerFramesMillis)
 	{
+		//==========================================================================================
 		if (this.playbackPaused == false)
 		{	
 			SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
 
 			soundBufferManager.pollGenerate();
 		}
+		//==========================================================================================
 	}
 	
 	/* (non-Javadoc)
@@ -49,6 +78,7 @@ extends PipelineSchedulerLogic
 	 */
 	public void notifyRunSchedulOut(long actualWaitPerFramesMillis)
 	{
+		//==========================================================================================
 		if (this.playbackPaused == false)
 		{	
 //			System.out.println("OUT: " + actualWaitPerFramesMillis);
@@ -59,6 +89,8 @@ extends PipelineSchedulerLogic
 			System.out.println("PLAY: " + 
 			                   soundBufferManager.getActualTime() + 
 			                   " (" + actualWaitPerFramesMillis + ")");
+			
+			this.notifyPlaybackPosChangedListeners();
 			
 			//soundBufferManager.pollGenerate();
 			
@@ -83,6 +115,7 @@ extends PipelineSchedulerLogic
 				throw new RuntimeException("read sound data", ex);
 			}
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -98,9 +131,11 @@ extends PipelineSchedulerLogic
 	 */
 	public void pausePlayback()
 	{
+		//==========================================================================================
 		this.soundData.pausePlayback();
 		
 		this.playbackPaused = true;
+		//==========================================================================================
 	}
 	
 	/**
@@ -108,9 +143,11 @@ extends PipelineSchedulerLogic
 	 */
 	public void resumePlayback()
 	{
+		//==========================================================================================
 		this.playbackPaused = false;
 		
 		this.soundData.resumePlayback();
+		//==========================================================================================
 	}
 	
 	/**
@@ -119,6 +156,30 @@ extends PipelineSchedulerLogic
 	public void stopPlayback()
 	{
 		this.soundData.stopPlayback();
+	}
+
+	/**
+	 * @param playbackPosChangedListener 
+	 * 			to add to the {@link #playbackPosChangedListeners}.
+	 */
+	public void addPlaybackPosChangedListener(PlaybackPosChangedListenerInterface playbackPosChangedListener)
+	{
+		this.playbackPosChangedListeners.add(playbackPosChangedListener);
+	}
+
+	/**
+	 * Notify the {@link #playbackPosChangedListeners}.
+	 */
+	private void notifyPlaybackPosChangedListeners()
+	{
+		//==========================================================================================
+		SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
+		
+		for (PlaybackPosChangedListenerInterface playbackPosChangedListener : this.playbackPosChangedListeners)
+		{
+			playbackPosChangedListener.notifyPlaybackPosChanged(soundBufferManager.getActualTime());
+		}
+		//==========================================================================================
 	}
 
 }

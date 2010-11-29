@@ -726,5 +726,20 @@ public class TimelineManagerLogic
 		
 		//==========================================================================================
 	}
+
+	/**
+	 * @param firstTimelinePos
+	 * 			is the first Position of timelines.
+	 * @param secondTimelinePos
+	 * 			is the second Position of timelines.
+	 */
+	public void switchTracksByPos(int firstTimelinePos, int secondTimelinePos)
+	{
+		//==========================================================================================
+		this.mainModulGeneratorTypeData.switchTracksByPos(firstTimelinePos,
+		                                                  secondTimelinePos);
+		
+		//==========================================================================================
+	}
 	
 }
