@@ -1,0 +1,56 @@
+62 65 69 73 78
+
+294 311 330 349 370
+
+http://www.jsguitarforum.com/forum/showthread.php?t=98396
+The chart below is all the frequencies of a guitar neck up to the 12th fret. I have rounded all the numbers to make it simpler.
+
+0 1 2 3 4 5 6 7 8 9 10 11 12
+-----------------------------------------------------------------------------------
+E F F# G G# A A# B C C# D D# E
+330 349 370 392 415 440 466 494 523 554 587 622 659
+B C C# D D# E F F# G G# A A# B
+247 262 277 294 311 330 349 370 392 415 440 466 494
+G G# A A# B C C# D D# E F F# G
+196 208 220 233 247 262 277 294 311 330 349 370 392
+D D# E F F# G G# A A# B C C# D
+147 156 165 175 185 196 208 220 233 247 262 277 294
+A A# B C C# D D# E F F# G G# A
+110 117 123 131 140 147 156 165 175 185 196 208 220
+E F F# G G# A A# B C C# D D# E
+82 87 93 98 104 110 117 123 131 140 147 156 165
+
+
+http://msdn.microsoft.com/en-us/library/4fe3hdb1.aspx
+Console.Beep
+
+      GbelowC = 196
+      A = 220
+      Asharp = 233
+      B = 247
+      C = 262
+      Csharp = 277
+      D = 294
+      Dsharp = 311
+      E = 330
+      F = 349
+      Fsharp = 370
+      G = 392
+      Gsharp = 415
+
+http://www.ifi.uio.no/~inf3150/grupper/1/pcspeaker.html
+
+	 Octave 0    1    2    3    4    5    6    7
+	Note
+	 C     16   33   65  131  262  523 1046 2093
+	 C#    17   35   69  139  277  554 1109 2217
+	 D     18   37   73  147  294  587 1175 2349
+	 D#    19   39   78  155  311  622 1244 2489
+	 E     21   41   82  165  330  659 1328 2637
+	 F     22   44   87  175  349  698 1397 2794
+	 F#    23   46   92  185  370  740 1480 2960
+	 G     24   49   98  196  392  784 1568 3136
+	 G#    26   52  104  208  415  831 1661 3322
+	 A     27   55  110  220  440  880 1760 3520
+	 A#    29   58  116  233  466  932 1865 3729
+	 B     31   62  123  245  494  988 1975 3951

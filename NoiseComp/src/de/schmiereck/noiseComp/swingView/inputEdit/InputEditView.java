@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
@@ -192,6 +191,26 @@ extends BasicEditView
 			this.inputTypeValueTextField = this.addComboBox(4, "Value:");
 			this.inputTypeValueTextField.setEditable(true);
 			
+			inputEditModel.getValueSelectItemsChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+			 	{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						inputTypeValueTextField.removeAllItems();
+						
+						if (inputEditModel.getValueSelectItems() != null)
+						{
+//							for (ModulInputTypeSelectItem modulInputTypeSelectItem : inputEditModel.getModulInputTypeSelectItems())
+							for (ValueSelectItem valueSelectItem : inputEditModel.getValueSelectItems())
+							{
+								inputTypeValueTextField.addItem(valueSelectItem);
+							}
+						}
+					}
+			 	}
+			);
 			inputEditModel.getValueChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
@@ -295,7 +314,7 @@ extends BasicEditView
 	 * @return 
 	 * 			returns the {@link #inputTypeValueTextField}.
 	 */
-	public JTextField getInputTypeValueTextField()
+	public JComboBox getInputTypeValueTextField()
 	{
 		return this.inputTypeValueTextField;
 	}

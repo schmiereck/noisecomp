@@ -63,6 +63,13 @@ public class InputEditModel
 	private final ModelPropertyChangedNotifier generatorSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	private List<ValueSelectItem> valueSelectItems = new Vector<ValueSelectItem>();
+
+	/**
+	 * {@link #valueSelectItems} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier valueSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
+
 	/**
 	 * Value.
 	 */
@@ -324,5 +331,34 @@ public class InputEditModel
 	public ModelPropertyChangedNotifier getModulInputTypeDataChangedNotifier()
 	{
 		return this.modulInputTypeDataChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #valueSelectItems}.
+	 */
+	public List<ValueSelectItem> getValueSelectItems()
+	{
+		return this.valueSelectItems;
+	}
+
+	/**
+	 * @param valueSelectItems 
+	 * 			to set {@link #valueSelectItems}.
+	 */
+	public void setValueSelectItems(List<ValueSelectItem> valueSelectItems)
+	{
+		this.valueSelectItems = valueSelectItems;
+		
+		this.valueSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #valueSelectItemsChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getValueSelectItemsChangedNotifier()
+	{
+		return this.valueSelectItemsChangedNotifier;
 	}
 }

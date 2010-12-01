@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
 
+import de.schmiereck.noiseComp.frequences.ToneFrequences;
+import de.schmiereck.noiseComp.frequences.ToneFrequences.Tone;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
@@ -92,18 +93,55 @@ public class InputEditController
 						
 						if (inputTypeData != null)
 						{
-							JTextField inputTypeValueTextField = inputEditView.getInputTypeValueTextField();
-							
-							String valueStr = InputUtils.makeStringValue(inputTypeValueTextField.getText());
-							
-							if (valueStr == null)
+							JComboBox inputTypeValueTextField = inputEditView.getInputTypeValueTextField();
+//							
+//							String valueStr = InputUtils.makeStringValue(inputTypeValueTextField.getText());
+//							
+//							if (valueStr == null)
 							{
 								Float defaultValue = inputTypeData.getDefaultValue();
 								
 								String defaultValueStr = OutputUtils.makeFloatEditText(defaultValue);
 								
-								inputTypeValueTextField.setText(defaultValueStr);
+								inputTypeValueTextField.setSelectedItem(defaultValueStr);
 							}
+						}
+					}
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		this.inputEditView.getInputTypeValueTextField().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+//					JComboBox cb = (JComboBox)e.getSource();
+					JComboBox inputTypeValueTextField = inputEditView.getInputTypeValueTextField();
+					
+					if (inputTypeValueTextField != null)
+					{
+						String valueStr;
+						
+						Object selectedItem = inputTypeValueTextField.getSelectedItem();
+						
+						if (selectedItem instanceof ValueSelectItem)
+						{
+							ValueSelectItem valueSelectItem = (ValueSelectItem)selectedItem;
+							
+							valueStr = valueSelectItem.getValue();
+						}
+						else
+						{
+							valueStr = InputUtils.makeStringValue((String)selectedItem);
+						}
+						
+//						if (valueStr == null)
+						{
+//							inputTypeValueTextField.setSelectedItem(valueStr);
+							inputEditModel.setValue(valueStr);
 						}
 					}
 				}
@@ -157,12 +195,14 @@ public class InputEditController
 		InputTypeData inputTypeData;
 		List<GeneratorSelectItem> generatorSelectItems;
 		Timeline inputTimeline;
+		List<ValueSelectItem> valueSelectItems;
 		String value;
 		List<ModulInputTypeSelectItem> modulInputTypeSelectItems;
 		InputTypeData modulInputTypeData;
 		
 		if (editInput == true)
 		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Make InputType-SelectItems:
 			{
 				inputTypeSelectItems = new Vector<InputTypeSelectItem>();
@@ -181,6 +221,9 @@ public class InputEditController
 					}
 				}
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Input-Type:
+			
 			if (inputData != null)
 			{
 				inputTypeData = inputData.getInputTypeData();
@@ -189,6 +232,7 @@ public class InputEditController
 			{
 				inputTypeData = null;
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Make Generator-SelectItems:
 			{
 				generatorSelectItems = new Vector<GeneratorSelectItem>();
@@ -206,11 +250,49 @@ public class InputEditController
 					}
 				}
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Input-Timeline:
+			
 			if (inputData != null)
 			{
 //				inputTimeline = inputData.getInputGenerator();
 				inputTimeline = selectedTimeline.searchInputTimeline(inputData);
+			}
+			else
+			{
+				inputTimeline = null;
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Make Value-SelectItems:
+			{
+				valueSelectItems = new Vector<ValueSelectItem>();
 				
+				valueSelectItems.add(new ValueSelectItem("0,0"));
+				valueSelectItems.add(new ValueSelectItem("0,25"));
+				valueSelectItems.add(new ValueSelectItem("0,5"));
+				valueSelectItems.add(new ValueSelectItem("0,75"));
+				valueSelectItems.add(new ValueSelectItem("1,0"));
+				valueSelectItems.add(new ValueSelectItem("2,0"));
+				
+				for (int octave = ToneFrequences.OCTAVE_MIN; octave <= ToneFrequences.OCTAVE_MAX; octave++)
+				{
+					Tone[] tones = ToneFrequences.Tone.values();
+					
+					for (Tone tone : tones)
+					{
+						float frequence = ToneFrequences.makeFrequence(octave, tone);
+						
+						String frequenceValue = OutputUtils.makeFloatEditText(frequence);
+						
+						valueSelectItems.add(new ValueSelectItem(frequenceValue, octave, tone));
+					}
+				}
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Value:
+			
+			if (inputData != null)
+			{
 				MultiValue multiValue = new MultiValue();
 				multiValue.floatValue = inputData.getInputValue();
 				multiValue.stringValue = inputData.getInputStringValue();
@@ -218,9 +300,9 @@ public class InputEditController
 			}
 			else
 			{
-				inputTimeline = null;
 				value = null;
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Make ModulInputType-SelectItems:
 			{
 				modulInputTypeSelectItems = new Vector<ModulInputTypeSelectItem>();
@@ -237,6 +319,9 @@ public class InputEditController
 					}
 				}
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Modul-Input-Type:
+			
 			if (inputData != null)
 			{
 				modulInputTypeData = inputData.getInputModulInputTypeData();
@@ -245,16 +330,20 @@ public class InputEditController
 			{
 				modulInputTypeData = null;
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		else
 		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			inputTypeSelectItems = null;
 			inputTypeData = null;
 			generatorSelectItems = null;
 			inputTimeline = null;
+			valueSelectItems = null;
 			value = null;
 			modulInputTypeSelectItems = null;
 			modulInputTypeData = null;
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 
 		//------------------------------------------------------------------------------------------
@@ -262,6 +351,7 @@ public class InputEditController
 		this.inputEditModel.setInputTypeData(inputTypeData);
 		this.inputEditModel.setGeneratorSelectItems(generatorSelectItems);
 		this.inputEditModel.setInputTimeline(inputTimeline);
+		this.inputEditModel.setValueSelectItems(valueSelectItems);
 		this.inputEditModel.setValue(value);
 		this.inputEditModel.setModulInputTypeSelectItems(modulInputTypeSelectItems);
 		this.inputEditModel.setModulInputTypeData(modulInputTypeData);
