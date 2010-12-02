@@ -38,14 +38,13 @@ TODO:
 #95:	IMPROVEMENT: Allow switch timeline-rule and timeline/input positions between beats and time in seconds.
 		--> First fix #54.
 #98:	IMPROVEMENT: Automatically ends playback if end of output reached.
-#99:	BUG: If Zoom changed to + some of the things of #54 treten erneut auf. 
+#99:	BUG: If Zoom changed to + some of the things of #54 occur newly. 
 #101:	TASK: Change float to double.
 #105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
 		==> Reverted TimelineEditModelChangedObserver: Is not so easy: Selecting timeline updates timelineEditModel, this updates timelineSelectEntryModel fields bevor all fields are filled, that chrashes...
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
 #52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
 #117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
-#121:	
 #122:	
 
 WORK:
@@ -53,6 +52,9 @@ WORK:
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
 		--> http://jb2works.com/memoryleak/index_de.html
 		--> http://www.eclipse.org/mat/
+#121:	TASK: Bell sound.
+		--> http://music.nuim.ie/music/sites/cpaneltest.nuim.ie.music/files/images/documents/synth/additive.pdf
+		--> bell 2.noiseComp.xml
 
 DONE:
 =====

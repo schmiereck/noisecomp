@@ -37,7 +37,15 @@ sinus wave attack auf ca.5 bis 15 ms, decay = zw 150 und 800 ms oda länger komm
 drüber legst a noise wave mit attack=0 decay= 40 bis 100 ms sustain und release = 0 ...
 is jetz nur ein bsp wie ma z.B. ne minimal kick macht ... man kann da noch mehr rausholen mit pitch env. usw...
 und is nur EIN bsp und KEIN ultimatum...spiel dich einfach bissi mit synths. mach das gleiche mit nur einer noisewave und du hast a snare, mach decay kürzer und es wird ne hihat draus...usw...mach einfach mal!
- 
+
+bell
+====
+http://music.nuim.ie/music/sites/cpaneltest.nuim.ie.music/files/images/documents/synth/additive.pdf
+
+csound
+======
+http://www.adp-gmbh.ch/csound/opcodes/expon.html
+
 clap
 ====
 http://www.musiksynthesizer.de/geraete/DL-909/DL-909_handclap.htm
