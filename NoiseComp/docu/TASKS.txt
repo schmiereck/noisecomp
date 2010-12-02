@@ -54,8 +54,6 @@ WORK:
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
 		--> http://jb2works.com/memoryleak/index_de.html
 		--> http://www.eclipse.org/mat/
-#55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
-		-->  Editable Combobox with frequenz values.
 
 DONE:
 =====
@@ -205,4 +203,6 @@ DONE:
 #118:	IMPROVEMENT: Save Window size and position.
 #119:	IMPROVEMENT: Show selected timeline in TimelineGeneratorRule.
 #48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
+#55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
+		-->  DONE: Editable Combobox with frequenz values.
 		

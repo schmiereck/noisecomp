@@ -378,13 +378,29 @@ public class InputEditController
 		//==========================================================================================
 		InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
 		GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
-		String valueStr = this.inputEditView.getInputTypeValueTextField().getSelectedItem().toString();
+		Object valueSelectedValue = this.inputEditView.getInputTypeValueTextField().getSelectedItem();
 		ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)this.inputEditView.getModulInputTypeComboBox().getSelectedItem();
 			
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
 		Timeline inputTimeline = inputGeneratorSelectItem.getTimeline();
-		MultiValue multiValue = InputUtils.makeMultiValue(valueStr);
+		MultiValue multiValue;
+		{
+			String valueStr;
+			
+			if (valueSelectedValue instanceof ValueSelectItem)
+			{
+				ValueSelectItem valueSelectItem = (ValueSelectItem)valueSelectedValue;
+				
+				valueStr = valueSelectItem.getValue();
+			}
+			else
+			{
+				valueStr = valueSelectedValue.toString();
+			}
+			
+			multiValue = InputUtils.makeMultiValue(valueStr);
+		}
 		InputTypeData modulInputTypeData = modulInputTypeSelectItem.getInputTypeData();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -435,7 +451,10 @@ public class InputEditController
 		
 		this.inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
 		this.inputEditModel.setInputTimeline(inputGeneratorSelectItem.getTimeline());
-		this.inputEditModel.setValue(valueStr);
+		{
+			String valueStr = OutputUtils.makeMultiValueEditText(multiValue);
+			this.inputEditModel.setValue(valueStr);
+		}
 		this.inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
 		
 		//------------------------------------------------------------------------------------------
