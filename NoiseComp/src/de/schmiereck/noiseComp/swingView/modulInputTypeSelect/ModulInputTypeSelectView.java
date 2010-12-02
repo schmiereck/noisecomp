@@ -22,8 +22,8 @@ extends JTable
 	//**********************************************************************************************
 	// Fields:
 
-	@SuppressWarnings("unused")
-	private final JTable table;
+//	@SuppressWarnings("unused")
+//	private final JTable table;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -39,7 +39,7 @@ extends JTable
 		//==========================================================================================
 		super(modulInputTypeSelectModel.getModulInputTypeTabelModel());
 		
-		this.table = new JTable();
+//		this.table = new JTable();
 		
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);

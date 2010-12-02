@@ -45,7 +45,6 @@ TODO:
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
 #52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
 #117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
-#120:	
 #121:	
 #122:	
 
@@ -205,4 +204,5 @@ DONE:
 #48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 		-->  DONE: Editable Combobox with frequenz values.
+#120:	TASK: InputSelect: Enhance the default width of select columns.
 		

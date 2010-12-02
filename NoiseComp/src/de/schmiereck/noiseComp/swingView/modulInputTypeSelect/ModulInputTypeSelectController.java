@@ -6,6 +6,8 @@ package de.schmiereck.noiseComp.swingView.modulInputTypeSelect;
 import java.util.Iterator;
 
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -49,7 +51,15 @@ public class ModulInputTypeSelectController
 		//==========================================================================================
 		this.inputTypeSelectModel = new ModulInputTypeSelectModel();
 		this.inputTypeSelectView = new ModulInputTypeSelectView(this.inputTypeSelectModel);
-		
+		{
+			TableColumnModel columnModel = this.inputTypeSelectView.getColumnModel();
+	
+			TableColumn nameCol = columnModel.getColumn(0); 
+			nameCol.setPreferredWidth(70); 
+			
+			TableColumn valueCol = columnModel.getColumn(1); 
+			valueCol.setPreferredWidth(70); 
+		}		
 		this.appModelChangedObserver = appModelChangedObserver;
 		
 		//------------------------------------------------------------------------------------------

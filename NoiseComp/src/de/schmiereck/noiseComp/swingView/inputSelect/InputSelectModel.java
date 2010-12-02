@@ -3,6 +3,9 @@
  */
 package de.schmiereck.noiseComp.swingView.inputSelect;
 
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.timeline.Timeline;
