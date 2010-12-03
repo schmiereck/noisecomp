@@ -50,6 +50,7 @@ extends Generator
 	                                 GeneratorBufferInterface generatorBuffer,
 	                                 ModulArguments modulArguments)
 	{
+		//==========================================================================================
 		float multiplier = 1.0F;
 
 		float signalLeft = 0.0F;
@@ -127,10 +128,12 @@ extends Generator
 		}
 		
 		soundSample.setStereoValues(signalLeft * multiplier, signalRight * multiplier);
+		//==========================================================================================
 	}
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
+		//==========================================================================================
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MultiplierGenerator.class, "Multiplier", "Multiply multiple signal input lines and multiply them with a multiplier.");
 		
 		{
@@ -142,6 +145,7 @@ extends Generator
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		
+		//==========================================================================================
 		return generatorTypeData;
 	}
 }
