@@ -210,10 +210,13 @@ public class TimelineEditController
 	 * 			is the editedModulGeneratorTypeData.
 	 * @param timelineSelectEntryModel
 	 * 			is the TimelineSelectEntryModel.
+	 * @param entryModelPos
+	 * 			is the position of the timeline in the list of timelines.
 	 */
 	public void doUpdateEditModel(final ModulGeneratorTypeData editedModulGeneratorTypeData,
 	                              //final Generator generator,
-	                              final TimelineSelectEntryModel timelineSelectEntryModel)
+	                              final TimelineSelectEntryModel timelineSelectEntryModel,
+	                              int entryModelPos)
 	{
 		//==========================================================================================
 		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
@@ -253,7 +256,8 @@ public class TimelineEditController
 				
 				timeline = timelineManagerLogic.createTimeline(generatorTypeData,
 				                                               soundFrameRate,
-				                                               generatorName); 
+				                                               generatorName,
+				                                               entryModelPos); 
 			}
 			else
 			{
@@ -261,7 +265,8 @@ public class TimelineEditController
 			}
 
 			timelineManagerLogic.updateTimePos(timeline, 
-			                                   generatorStartTimePos, generatorEndTimePos);
+			                                   generatorStartTimePos, 
+			                                   generatorEndTimePos);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Timeline-Edit Model:

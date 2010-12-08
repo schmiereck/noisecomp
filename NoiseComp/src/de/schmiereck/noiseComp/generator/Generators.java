@@ -34,14 +34,18 @@ public class Generators
 	}
 
 	/**
-	 * @see #generators
-	 * @param generator is the Generator to add.
+	 * @param generatorPos
+	 * 			is the position of the generator in the list of generators.
+	 * @param generator 
+	 * 			is the Generator to add to {@link #generators}.
 	 */
-	public void addGenerator(Generator generator)
+	public void addGenerator(int generatorPos,
+	                         Generator generator)
 	{
 		synchronized (this)
 		{
-			this.generators.add(generator);
+			this.generators.add(generatorPos,
+			                    generator);
 		}
 	}
 
@@ -142,5 +146,14 @@ public class Generators
 			this.generators.set(secondPos,firstGenerator);
 			this.generators.set(firstPos, secondGenerator);
 		}
+	}
+	
+	/**
+	 * @return
+	 * 			the size of {@link #generators}.
+	 */
+	public int getSize()
+	{
+		return this.generators.size();
 	}
 }

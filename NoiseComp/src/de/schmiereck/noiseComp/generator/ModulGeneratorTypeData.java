@@ -137,6 +137,7 @@ public class ModulGeneratorTypeData
 	 */
 	private void notifyGeneratorsOfRemoving(Generator removedGenerator)
 	{
+		//==========================================================================================
 		if (removedGenerator != null)
 		{
 			Iterator<Generator> generatorsIterator = this.generators.getGeneratorsIterator();
@@ -154,6 +155,7 @@ public class ModulGeneratorTypeData
 				this.setOutputGenerator(null);
 			}
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -161,6 +163,7 @@ public class ModulGeneratorTypeData
 	 */
 	public void clear()
 	{
+		//==========================================================================================
 		synchronized (this)
 		{
 			Iterator<Generator> generatorsIterator = this.generators.getGeneratorsIterator();
@@ -174,18 +177,27 @@ public class ModulGeneratorTypeData
 
 			this.setOutputGenerator(null);
 		}
+		//==========================================================================================
 	}
 
 	/**
-	 * @param generator is the Generator to add.
+	 * @param generator 
+	 * 			is the Generator to add.
+	 * @param generatorPos
+	 * 			is the position of the generator in the list of {@link #generators}.
+	 * @return
+	 * 			the Track data.
 	 */
-	public TrackData addGenerator(Generator generator)
+	public TrackData addGenerator(int generatorPos,
+	                              Generator generator)
 	{
+		//==========================================================================================
 		TrackData trackData;
 		
 		synchronized (this)
 		{
-			this.addGeneratorWithoutTrack(generator);
+			this.addGeneratorWithoutTrack(generatorPos,
+			                              generator);
 			
 			trackData = this.addTrackForExistingGenerator(generator);
 
@@ -193,21 +205,55 @@ public class ModulGeneratorTypeData
 			//generator.getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 		}
 		
+		//==========================================================================================
 		return trackData;
 	}
 
-	public void addGeneratorWithoutTrack(Generator generator)
+	/**
+	 * Adds the given generator at the end of the list of {@link #generators}.
+	 * 
+	 * @param generator 
+	 * 			is the Generator to add.
+	 * @return
+	 * 			the Track data.
+	 */
+	public TrackData addGenerator(Generator generator)
 	{
-		this.generators.addGenerator(generator);
+		//==========================================================================================
+		TrackData trackData;
+		
+		int generatorPos = this.generators.getSize();
+		
+		trackData = 
+			this.addGenerator(generatorPos,
+			                  generator);
+		
+		//==========================================================================================
+		return trackData;
+	}
+	/**
+	 * @param generatorPos
+	 * 			is the position of the generator in the list of {@link #generators}.
+	 * @param generator
+	 * 			is the Generator to add.
+	 */
+	public void addGeneratorWithoutTrack(int generatorPos,
+	                                     Generator generator)
+	{
+		//==========================================================================================
+		this.generators.addGenerator(generatorPos,
+		                             generator);
 		
 		if (generator instanceof OutputGenerator)
 		{	
 			this.setOutputGenerator((OutputGenerator)generator);
 		}
+		//==========================================================================================
 	}
 	
 	public void addTrackForExistingGeneratorByName(String generatorName)
 	{
+		//==========================================================================================
 		Generator generator = this.searchGenerator(generatorName);
 		
 		if (generator == null)
@@ -216,21 +262,25 @@ public class ModulGeneratorTypeData
 		}
 
 		this.addTrackForExistingGenerator(generator);
+		//==========================================================================================
 	}
 	
 	public TrackData addTrackForExistingGenerator(Generator generator)
 	{
+		//==========================================================================================
 		TrackData trackData;
 
 		trackData = new TrackData(generator);
 		
 		this.tracksData.addTrack(trackData);
 		
+		//==========================================================================================
 		return trackData;
 	}
 	
 	public void removeGenerator(int trackPos)
 	{
+		//==========================================================================================
 		synchronized (this)
 		{
 			Generator removedGenerator = (Generator)this.generators.getGenerator(trackPos);
@@ -240,10 +290,12 @@ public class ModulGeneratorTypeData
 			// De-Registriert sich bei dem Generator als Listener.
 			//removedGenerator.getGeneratorChangeObserver().removeGeneratorChangeListener(this);
 		}
+		//==========================================================================================
 	}
 
 	public void removeGenerator(Generator generator)
 	{
+		//==========================================================================================
 		synchronized (this)
 		{
 			this.generators.removeGenerator(generator);
@@ -259,10 +311,12 @@ public class ModulGeneratorTypeData
 			// De-Registriert sich bei dem Generator als Listener.
 			//generator.getGeneratorChangeObserver().removeGeneratorChangeListener(this);
 		}
+		//==========================================================================================
 	}
 	
 	public Iterator<Generator> getGeneratorsIterator()
 	{
+		//==========================================================================================
 		Iterator<Generator> generatorsIterator;
 		
 		synchronized (this)
@@ -270,11 +324,13 @@ public class ModulGeneratorTypeData
 			generatorsIterator = this.generators.getGeneratorsIterator();
 		}
 		
+		//==========================================================================================
 		return generatorsIterator;
 	}
 
 	public Generator searchGenerator(String generatorName)
 	{
+		//==========================================================================================
 		Generator generator;
 		
 		synchronized (this)
@@ -282,6 +338,7 @@ public class ModulGeneratorTypeData
 			generator = this.generators.searchGenerator(generatorName);
 		}
 		
+		//==========================================================================================
 		return generator;
 	}
 
@@ -354,9 +411,11 @@ public class ModulGeneratorTypeData
 	 */
 	public void switchTracksByPos(int sourceTrackPos, int tagetTrackPos)
 	{
+		//==========================================================================================
 		this.generators.switchTracksByPos(sourceTrackPos, tagetTrackPos);
 		
 		this.tracksData.switchTracksByPos(sourceTrackPos, tagetTrackPos);
+		//==========================================================================================
 	}
 
 	/**

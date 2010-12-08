@@ -140,7 +140,8 @@ public class GeneratorTypeData
 	 * @return
 	 * 			the generator.
 	 */
-	public Generator createGeneratorInstance(String generatorName, float frameRate)//, ModulGenerator parentModulGenerator)
+	public Generator createGeneratorInstance(String generatorName, 
+	                                         float frameRate)//, ModulGenerator parentModulGenerator)
 	{
 		Generator generator = null;
 		

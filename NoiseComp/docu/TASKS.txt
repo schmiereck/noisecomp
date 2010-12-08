@@ -45,16 +45,19 @@ TODO:
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
 #52:	IMPROVEMENT: Modul Repeat-Output-Flag: Modul-Generators should repeat theire output signal if length is longer as the output.
 #117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
-#122:	
+#123:	IMPROVEMENT: Allow input values: $startTimeline, $endTimeline, $posTimeline, $startModule, $endModule, $posModule
+#124:	IMPROVEMENT: Allow matimatecaly instructions/ terms as input value (+-*/()^).
+#126:	
+#127:	
+#128:	
 
 WORK:
 =====
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
 		--> http://jb2works.com/memoryleak/index_de.html
 		--> http://www.eclipse.org/mat/
-#121:	TASK: Bell sound.
-		--> http://music.nuim.ie/music/sites/cpaneltest.nuim.ie.music/files/images/documents/synth/additive.pdf
-		--> bell 2.noiseComp.xml
+#122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
+		--> DONE: AddGenerator
 
 DONE:
 =====
@@ -207,4 +210,8 @@ DONE:
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 		-->  DONE: Editable Combobox with frequenz values.
 #120:	TASK: InputSelect: Enhance the default width of select columns.
+#125:	BUG: Inserting Timeline confuses inputs of timeline (not the visible Timeline in TimelineSelect, becomes visible after reselect module).
+#121:	TASK: Bell sound.
+		--> http://music.nuim.ie/music/sites/cpaneltest.nuim.ie.music/files/images/documents/synth/additive.pdf
+		--> bell 2.noiseComp.xml
 		

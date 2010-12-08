@@ -447,18 +447,22 @@ public class TimelineManagerLogic
 	 * 			is the frame rate.
 	 * @param generatorName
 	 * 			is the genrator name.
+	 * @param generatorPos
+	 * 			is the position of the generator in the list of generators.
 	 * @return
 	 * 			the generator.
 	 */
 	public Timeline createTimeline(GeneratorTypeData generatorTypeData,
 	                               Float soundFrameRate,
-	                               String generatorName)
+	                               String generatorName,
+                                   int generatorPos)
 	{
 		//==========================================================================================
 		Generator generator = generatorTypeData.createGeneratorInstance(generatorName, 
 		                                                                soundFrameRate);
 
-		this.mainModulGeneratorTypeData.addGenerator(generator);
+		this.mainModulGeneratorTypeData.addGenerator(generatorPos,
+		                                             generator);
 
 		Timeline timeline = 
 			this.createTimeline(generator);

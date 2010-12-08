@@ -10,6 +10,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.generator.ASRPulseGenerator;
+import de.schmiereck.noiseComp.generator.AddGenerator;
 import de.schmiereck.noiseComp.generator.CutGenerator;
 import de.schmiereck.noiseComp.generator.EchoGenerator;
 import de.schmiereck.noiseComp.generator.ExponentGenerator;
@@ -53,6 +54,7 @@ public class StartupService
 		soundService.addGeneratorType(FaderGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(MixerGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(MultiplierGenerator.createGeneratorTypeData());
+		soundService.addGeneratorType(AddGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(OutputGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(SinusGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(RectangleGenerator.createGeneratorTypeData());

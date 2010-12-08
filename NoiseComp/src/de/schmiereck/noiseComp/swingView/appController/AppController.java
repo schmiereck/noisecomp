@@ -613,12 +613,15 @@ implements RemoveTimelineGeneratorListenerInterface,
 					
 					TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 
+					int selectEntryModelPos = timelinesDrawPanelController.calcTimelineSelectEntryModelPos(timelineSelectEntryModel);
+					
 //					Generator generator = 
 //						retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
 					
 					timelineEditController.doUpdateEditModel(editedModulGeneratorTypeData,
 					                                         //generator,
-					                                         timelineSelectEntryModel);
+					                                         timelineSelectEntryModel,
+					                                         selectEntryModelPos);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
@@ -1926,8 +1929,12 @@ implements RemoveTimelineGeneratorListenerInterface,
 				timelineEditModel.setGeneratorEndTimePos(endTimePos);
 			}
 			
+			int newEntryModelPos = 
+				this.timelinesDrawPanelController.calcTimelineSelectEntryModelPos(newTimelineSelectEntryModel);
+			
 			this.timelineEditController.doUpdateEditModel(editedModulGeneratorTypeData, 
-			                                              newTimelineSelectEntryModel);
+			                                              newTimelineSelectEntryModel,
+			                                              newEntryModelPos);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Copy:

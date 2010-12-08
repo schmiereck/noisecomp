@@ -98,7 +98,8 @@ extends Generator
 		
 		float pos = (frameTime - startTimePos) * length;
 		
-		value = (float)Math.exp(pos);
+//		value = (float)Math.exp(pos);
+		value = (float)(2.0 * Math.pow(0.1, pos));
 		
 		soundSample.setStereoValues(value, 
 		                            value);

@@ -434,6 +434,7 @@ public class LoadFileOperationLogic
 
 		NodeIterator generatorsNodeIterator = XMLData.selectNodeIterator(generatorsNode, "generator");
 
+		int generatorPos = 0;
 		Node generatorNode;
 
 		while ((generatorNode = generatorsNodeIterator.nextNode()) != null)
@@ -475,7 +476,8 @@ public class LoadFileOperationLogic
 			}
 			*/
 			//this.controllerLogic.addGenerator(generator);
-			modulGeneratorTypeData.addGeneratorWithoutTrack(generator);
+			modulGeneratorTypeData.addGeneratorWithoutTrack(generatorPos,
+			                                                generator);
 			
 			//if (generator instanceof OutputGenerator)
 			//{	
@@ -483,6 +485,8 @@ public class LoadFileOperationLogic
 			//}
 			
 			loadFileGeneratorNodeDatas.add(new LoadFileGeneratorNodeData(generator, generatorNode));
+			
+			generatorPos++;
 		}
 	}
 	

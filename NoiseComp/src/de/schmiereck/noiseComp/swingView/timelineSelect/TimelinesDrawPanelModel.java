@@ -571,10 +571,13 @@ public class TimelinesDrawPanelModel
 		Timeline timeline = timelineSelectEntryModel.getTimeline();
 		Float startTimePos = timelineSelectEntryModel.getStartTimePos();
 		
-		for (TimelineStartTimePosChangedListenerInterface changedListener : this.timelineStartTimePosChangedListeners)
+		if (timeline != null)
 		{
-			changedListener.notifyTimelineStartTimePosChangedListener(timeline,
-			                                                          startTimePos);
+			for (TimelineStartTimePosChangedListenerInterface changedListener : this.timelineStartTimePosChangedListeners)
+			{
+				changedListener.notifyTimelineStartTimePosChangedListener(timeline,
+				                                                          startTimePos);
+			}
 		}
 	}
 
