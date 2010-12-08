@@ -6,8 +6,10 @@ package de.schmiereck.noiseComp.timeline;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 import java.util.Map.Entry;
 
 import de.schmiereck.noiseComp.generator.Generator;
@@ -99,6 +101,11 @@ implements GeneratorBufferInterface,
 	 * Sub-Modul Generator Timelines.
 	 */
 	private Map<Generator, Timeline> subGeneratorTimelines = new HashMap<Generator, Timeline>();
+	
+	/**
+	 * Timeline Changed Listerners.
+	 */
+	private List<TimelineChangedListernerInterface> timelineChangedListerners = new Vector<TimelineChangedListernerInterface>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -525,9 +532,10 @@ implements GeneratorBufferInterface,
 //		}
 //		else
 		{
+			//--------------------------------------------------------------------------------------
 			// Only a part of generator changed:
 			
-			//--------------------------------------------------------------------------------------
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			float startTimePos;
 			
 			if (changedStartTimePos < this.timelineStartTimePos)
@@ -539,6 +547,7 @@ implements GeneratorBufferInterface,
 				startTimePos = changedStartTimePos;
 			}
 
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			float endTimePos;
 
 			if (changedEndTimePos > this.timelineEndTimePos)
@@ -552,21 +561,28 @@ implements GeneratorBufferInterface,
 			
 //			float timeLength = startTimePos - endTimePos;
 			
-			//--------------------------------------------------------------------------------------
+			System.out.println("Timeline generator \"" + this.generator.getName() + "\" changed(" + startTimePos + ", " + endTimePos + ")");
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			int changedStartBufPos = (int)(this.generator.getSoundFrameRate() * (startTimePos - this.timelineStartTimePos));
 	
 			int changedEndBufSize = (int)(this.generator.getSoundFrameRate() * (endTimePos - this.timelineStartTimePos));
 			
-			//--------------------------------------------------------------------------------------
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			this.clearBuffer(changedStartBufPos, changedEndBufSize);
 		}
-		//==========================================================================================
-		// Notify also Output-Timelines:
+		//------------------------------------------------------------------------------------------
+		// Notify Output-Timelines:
 		
 		for (Timeline outputTimeline : this.outputTimelines.values())
 		{
 			outputTimeline.generatorChanged(changedStartTimePos, changedEndTimePos);
 		}
+		
+		//------------------------------------------------------------------------------------------
+		// Notify Changed-Listeners:
+		
+		this.notifyTimelineChangedListerners(changedStartTimePos, changedEndTimePos);
 		
 		//==========================================================================================
 	}
@@ -936,6 +952,41 @@ implements GeneratorBufferInterface,
 		}
 		//==========================================================================================
 		return super.toString() + "{" + generatorStr + "}";
+	}
+
+	/**
+	 * @param timelineChangedListerner 
+	 * 			to add to {@link #timelineChangedListerners}.
+	 */
+	public void addTimelineChangedListerner(TimelineChangedListernerInterface timelineChangedListerner)
+	{
+		this.timelineChangedListerners.add(timelineChangedListerner);
+	}
+
+	/**
+	 * @param timelineChangedListerner 
+	 * 			to remove form {@link #timelineChangedListerners}.
+	 */
+	public void removeTimelineChangedListerner(TimelineChangedListernerInterface timelineChangedListerner)
+	{
+		this.timelineChangedListerners.remove(timelineChangedListerner);
+	}
+
+	/**
+	 * Notify the {@link #timelineChangedListerners}.
+	 * 
+	 * @param changedStartTimePos
+	 * 			is the start time pos the data in generator changed.
+	 * @param changedEndTimePos
+	 * 			is the end time pos the data in generator changed.
+	 */
+	public void notifyTimelineChangedListerners(float changedStartTimePos, float changedEndTimePos)
+	{
+		for (TimelineChangedListernerInterface timelineChangedListerner : this.timelineChangedListerners)
+		{
+			timelineChangedListerner.notifyTimelineChanged(this,
+			                                               changedStartTimePos, changedEndTimePos);
+		}
 	}
 	
 }

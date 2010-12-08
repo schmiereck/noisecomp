@@ -12,6 +12,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.timeline.Timeline;
+import de.schmiereck.noiseComp.timeline.TimelineChangedListernerInterface;
 import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
 
 /**
@@ -35,7 +36,8 @@ import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
  * @version <p>06.06.2004: created, smk</p>
  */
 public class SoundSourceLogic
-implements GeneratorChangeListenerInterface
+implements GeneratorChangeListenerInterface, 
+		   TimelineChangedListernerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -536,6 +538,41 @@ implements GeneratorChangeListenerInterface
 	 */
 	public void setOutputTimeline(Timeline outputTimeline)
 	{
+		//==========================================================================================
+		// Remove last timeline change observer.
+		
+		if (this.outputTimeline != null)
+		{
+			this.outputTimeline.removeTimelineChangedListerner(this);
+		}
+		
+		//------------------------------------------------------------------------------------------
 		this.outputTimeline = outputTimeline;
+		
+		//------------------------------------------------------------------------------------------
+		// Register new timeline change observer.
+		if (this.outputTimeline != null)
+		{
+			this.outputTimeline.addTimelineChangedListerner(this);
+		}
+		
+		//==========================================================================================
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.timeline.TimelineChangedListernerInterface#notifyTimelineChanged(de.schmiereck.noiseComp.timeline.Timeline, float, float)
+	 */
+	@Override
+	public void notifyTimelineChanged(Timeline timeline, float changedStartTimePos, float changedEndTimePos)
+	{
+		//==========================================================================================
+		Generator generator = timeline.getGenerator();
+		
+		if (generator != null)
+		{
+			this.notifyGeneratorChanged(generator, changedStartTimePos, changedEndTimePos);
+		}
+		
+		//==========================================================================================
 	}
 }

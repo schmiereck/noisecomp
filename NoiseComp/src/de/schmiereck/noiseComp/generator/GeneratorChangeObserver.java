@@ -18,12 +18,18 @@ import java.util.Vector;
  */
 public class GeneratorChangeObserver
 {
+	//**********************************************************************************************
+	// Fields:
+	
 	/**
 	 * Liste aus Objekten die das {@link GeneratorChangeListenerInterface}-Interface
 	 * implementieren.<br/>
 	 * Werden beachrichtigt wenn sich im {@link Generator} etwas ändert.
 	 */
 	private Vector<GeneratorChangeListenerInterface> generatorChangeListeners = null;
+	
+	//**********************************************************************************************
+	// Functions:
 	
 	public synchronized void registerGeneratorChangeListener(GeneratorChangeListenerInterface generatorChangeListener)
 	{
