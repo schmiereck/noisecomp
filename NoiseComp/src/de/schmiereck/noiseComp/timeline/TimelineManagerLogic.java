@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.timeline;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -296,7 +297,7 @@ public class TimelineManagerLogic
 		
 		if (timeline == null)
 		{
-			timeline = new Timeline();
+			timeline = new Timeline(null);
 		
 			timeline.setGenerator(generator);
 			
@@ -326,7 +327,7 @@ public class TimelineManagerLogic
 		
 		if (timeline == null)
 		{
-			timeline = new Timeline();
+			timeline = new Timeline(modulTimeline);
 		
 			timeline.setGenerator(generator);
 			
@@ -551,7 +552,9 @@ public class TimelineManagerLogic
 	/**
 	 * @param updatedTimeline
 	 * @param inputData
+	 * 			to set {@link Timeline#getInputTimelines()} of updatedTimeline with key.
 	 * @param inputTimeline
+	 * 			to set to {@link Timeline#getInputTimelines()} of updatedTimeline as value with given key.
 	 * @param inputTypeData
 	 * @param floatValue
 	 * @param stringValue
@@ -566,52 +569,58 @@ public class TimelineManagerLogic
 	{
 		//==========================================================================================
 		// Update Timeline-Input for given Input-Data and Input-Generator:
-		
-		Timeline oldInputTimeline = updatedTimeline.updateInput(inputData, inputTimeline);
-		
-		if (oldInputTimeline != inputTimeline)
 		{
-			//------------------------------------------------------------------------------------------
-			// Update Timeline-Outputs for given Input-Data and Input-Generator:
-		
-//			Iterator<Timeline> timelinesIterator = this.getTimelinesIterator();
-//			
-//			while (timelinesIterator.hasNext())
-//			{
-//				Timeline timeline = timelinesIterator.next();
-//				
-//				Map<InputData, Timeline> outputTimelines = timeline.getOutputTimelines();
-//				
-//				for (Map.Entry<InputData, Timeline> outputTimelineEntry : outputTimelines.entrySet())
-//				{
-//					if (outputTimelineEntry.getValue() == oldInputTimeline)
-//					{ }
-//				}
-//			}
-			if (oldInputTimeline != null)
-			{
-				oldInputTimeline.removeOutputTimeline(inputData);
-			}
+			Timeline oldInputTimeline = updatedTimeline.updateInput(inputData, inputTimeline);
 			
-			if (inputTimeline != null)
+			if (oldInputTimeline != inputTimeline)
 			{
-				inputTimeline.addOutputTimeline(inputData, updatedTimeline);
-			}
-			//--------------------------------------------------------------------------------------
-			// Update Input-Data:
+				//------------------------------------------------------------------------------------------
+				// Update Timeline-Outputs for given Input-Data and Input-Generator:
 			
-			Generator inputGenerator;
-			
-			if (inputTimeline != null)
-			{
-				inputGenerator = inputTimeline.getGenerator();
+	//			Iterator<Timeline> timelinesIterator = this.getTimelinesIterator();
+	//			
+	//			while (timelinesIterator.hasNext())
+	//			{
+	//				Timeline timeline = timelinesIterator.next();
+	//				
+	//				Map<InputData, Timeline> outputTimelines = timeline.getOutputTimelines();
+	//				
+	//				for (Map.Entry<InputData, Timeline> outputTimelineEntry : outputTimelines.entrySet())
+	//				{
+	//					if (outputTimelineEntry.getValue() == oldInputTimeline)
+	//					{ }
+	//				}
+	//			}
+				if (oldInputTimeline != null)
+				{
+					oldInputTimeline.removeOutputTimeline(inputData);
+				}
+				
+				if (inputTimeline != null)
+				{
+					inputTimeline.addOutputTimeline(inputData, updatedTimeline);
+				}
+				//--------------------------------------------------------------------------------------
+				// Update Input-Data:
+				
+				Generator inputGenerator;
+				
+				if (inputTimeline != null)
+				{
+					inputGenerator = inputTimeline.getGenerator();
+				}
+				else
+				{
+					inputGenerator = null;
+				}
+				
+				inputData.setInputGenerator(inputGenerator);
 			}
-			else
-			{
-				inputGenerator = null;
-			}
-			
-			inputData.setInputGenerator(inputGenerator);
+		}
+		//------------------------------------------------------------------------------------------
+		// Notify Modul:
+		{
+			this.updateModuleTimelines(updatedTimeline);
 		}
 		
 		if ((CompareUtils.compareWithNull(inputData.getInputValue(), floatValue) == false) ||
@@ -627,6 +636,34 @@ public class TimelineManagerLogic
 			inputData.setInputModulInputTypeData(modulInputTypeData);
 			
 			updatedTimeline.generatorChanged();
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * @param updatedTimeline
+	 * 			is the updated timeline.
+	 */
+	private void updateModuleTimelines(Timeline updatedTimeline)
+	{
+		//==========================================================================================
+		Generator generator = updatedTimeline.getGenerator();
+		
+		if (generator != null)
+		{
+			if (generator instanceof ModulGenerator)
+			{
+				// Notify module timelines.
+
+				Collection<Timeline> subGeneratorTimelines = updatedTimeline.getSubGeneratorTimelines();
+				
+				for (Timeline subGeneratorTimeline : subGeneratorTimelines)
+				{
+					this.updateModuleTimelines(subGeneratorTimeline);
+					
+					subGeneratorTimeline.generatorChanged();
+				}
+			}
 		}
 		//==========================================================================================
 	}

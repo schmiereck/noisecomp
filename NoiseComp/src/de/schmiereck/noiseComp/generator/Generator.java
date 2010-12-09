@@ -879,7 +879,7 @@ implements GeneratorInterface,
 		this.calcInputValue(framePosition, 
 		                    frameTime, 
 		                    inputData, 
-		                    signal , 
+		                    signal, 
 		                    parentModulGenerator, 
 		                    generatorBuffer, 
 		                    modulArguments);

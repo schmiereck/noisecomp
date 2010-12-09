@@ -47,6 +47,7 @@ TODO:
 #117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
 #123:	IMPROVEMENT: Allow input values: $startTimeline, $endTimeline, $posTimeline, $startModule, $endModule, $posModule
 #124:	IMPROVEMENT: Allow mathematically instructions/ terms as input value (+-*/()^).
+#128:	BUG: If module input default is null it do not use the value of übergeorteten module.
 #128:	
 
 WORK:
@@ -56,8 +57,6 @@ WORK:
 		--> http://www.eclipse.org/mat/
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
-#127:	BUG: Do not update sub module output if change module input.
-		--> Clear also buffer of module if change a module timeline.
 		
 DONE:
 =====
@@ -216,4 +215,6 @@ DONE:
 		--> bell 2.noiseComp.xml
 #126:	BUG: Updating input do not recalculate output if ???.
 		--> DONE: Add TimelineChangedListernerInterface.
+#127:	BUG: Do not update sub module output if change module input.
+		--> Clear also buffer of module if change a module timeline input.
 		

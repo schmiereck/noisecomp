@@ -13,6 +13,9 @@ public class ModulGenerator
 extends Generator 
 //implements GeneratorChangeListenerInterface
 {
+	//**********************************************************************************************
+	// Functions:
+	
 	/**
 	 * Constructor.
 	 * 
@@ -22,7 +25,7 @@ extends Generator
 	{
 		super(name, frameRate, generatorTypeData);
 		
-		// F�gt sich als Listener zu dem seinem Typ hinzu, um über Änderungen informiert zu werden.
+		// Fügt sich als Listener zu dem seinem Typ hinzu, um über Änderungen informiert zu werden.
 		//((ModulGeneratorTypeData)generatorTypeData).getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 	}
 

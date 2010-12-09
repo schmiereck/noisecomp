@@ -42,6 +42,12 @@ implements GeneratorBufferInterface,
 	// Fields:
 	
 	/**
+	 * Modul Timeline.<br/>
+	 * <code>null</code> if there is no 'parent' module.
+	 */
+	final private Timeline modulTimeline;
+	
+	/**
 	 * Generator.
 	 */
 	private Generator generator = null;
@@ -109,6 +115,16 @@ implements GeneratorBufferInterface,
 	
 	//**********************************************************************************************
 	// Functions:
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param modulTimeline
+	 */
+	public Timeline(Timeline modulTimeline)
+	{
+		this.modulTimeline = modulTimeline;
+	}
 
 	/**
 	 * @return 
@@ -572,6 +588,16 @@ implements GeneratorBufferInterface,
 			this.clearBuffer(changedStartBufPos, changedEndBufSize);
 		}
 		//------------------------------------------------------------------------------------------
+//		// Notify Modul:
+//		
+//		if (this.generator != null)
+//		{
+//			if (this.generator instanceof ModulGenerator)
+//			{
+//				// No chance to notify module timeline
+//			}
+//		}
+		
 		// Notify Output-Timelines:
 		
 		for (Timeline outputTimeline : this.outputTimelines.values())
@@ -987,6 +1013,24 @@ implements GeneratorBufferInterface,
 			timelineChangedListerner.notifyTimelineChanged(this,
 			                                               changedStartTimePos, changedEndTimePos);
 		}
+	}
+
+	/**
+	 * Notify the {@link #timelineChangedListerners}.
+	 */
+	public void notifyTimelineChangedListerners()
+	{
+		this.notifyTimelineChangedListerners(this.timelineStartTimePos,
+		                                     this.timelineEndTimePos);
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #modulTimeline}.
+	 */
+	public Timeline getModulTimeline()
+	{
+		return this.modulTimeline;
 	}
 	
 }

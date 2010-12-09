@@ -36,23 +36,43 @@ public class InputUtils
 	 * @param value
 	 * 			is the string.
 	 * @return
-	 * 			the float value.
+	 * 			the float value.<br/>
+	 * 			<code>null</code> if value is <code>null</code> or <code>""</code>.
 	 */
 	public static Float makeFloatValue(String value)
 	{
+		//==========================================================================================
 //		return Float.parseFloat(value);
-		Number number;
+		Float ret;
 		
-		try
+		if (value != null)
 		{
-			number = format.parse(value);
+			if (value.length() > 0)
+			{
+				Number number;
+				
+				try
+				{
+					number = format.parse(value);
+				}
+				catch (ParseException ex)
+				{
+					throw new RuntimeException("Parse \"" + value + "\".", ex);
+				}
+				
+				ret = new Float(number.floatValue());
+			}
+			else
+			{
+				ret = null;
+			}
 		}
-		catch (ParseException ex)
+		else
 		{
-			throw new RuntimeException("Parse \"" + value + "\".", ex);
+			ret = null;
 		}
-		
-		return new Float(number.floatValue());
+		//==========================================================================================
+		return ret;
 	}
 
 	/**
