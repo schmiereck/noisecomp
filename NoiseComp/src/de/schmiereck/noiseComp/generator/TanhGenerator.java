@@ -67,6 +67,8 @@ extends Generator
 		
 		//------------------------------------------------------------------------------------------
 		float left;
+		float right;
+
 		float leftValue = signalSample.getLeftValue();
 		
 		if (Float.isNaN(leftValue) == false)
@@ -78,7 +80,6 @@ extends Generator
 			left = Float.NaN;
 		}
 		
-		float right;
 		float rightValue = signalSample.getRightValue();
 		
 		if (Float.isNaN(rightValue) == false)
