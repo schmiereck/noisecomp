@@ -1841,7 +1841,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		Timeline selectedTimeline = timelineSelectEntryModel.getTimeline();
 		
-		timelineManagerLogic.removeTimeline(selectedTimeline);
+		if (selectedTimeline != null)
+		{
+			timelineManagerLogic.removeTimeline(selectedTimeline);
+		}
 		
 		//==========================================================================================
 	}

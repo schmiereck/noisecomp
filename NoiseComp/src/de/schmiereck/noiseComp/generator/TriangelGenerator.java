@@ -1,23 +1,27 @@
+/*
+ * www.schmiereck.de (c) 2010
+ */
 package de.schmiereck.noiseComp.generator;
 
 /**
  * <p>
- * 	Generates a rectangle-signal based on the values of the input types.
+ * 	Triangel Generator.
  * </p>
+ * <p>
  * 	<code>
- * 		 ___
- * 		|   |
- * 		|   |
- * 			|   |
- * 			|   |
- * 			`---´
+ * 		  .
+ * 		 / \
+ * 		/   \
+ * 			 \   /
+ * 			  \ /
+ * 			   ´
  * 	</code>
  * </p>
  * 
  * @author smk
- * @version <p>13.04.2004: created, smk</p>
+ * @version <p>10.12.2010:	created, smk</p>
  */
-public class RectangleGenerator
+public class TriangelGenerator
 extends Generator
 {
 	//**********************************************************************************************
@@ -37,7 +41,7 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public RectangleGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public TriangelGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
 		super(name, frameRate, generatorTypeData);
 	}
@@ -83,25 +87,47 @@ extends Generator
 		
 		//----------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
-		//float timePos = frameTime - (this.getStartTimePos());
 		
 		// Länge einer Sinus-Periode in Frames.
-		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency);
-		float	periodPosition = (float)(framePosition) / (float)periodLengthInFrames;
-		//float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
+		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency) * 1.0F;
+		float periodPosition = (float)(framePosition / periodLengthInFrames) + signalShift;
 
+		float posInPeriod = (periodPosition % 1.0F);
+		
 		float value;
 		
-		if (((periodPosition + signalShift) % 1.0F) > 0.5F)
+		if (posInPeriod <= 0.25F)
 		{
-			value = signalAmplitude;
+			value = posInPeriod * 4.0F;
 		}
 		else
 		{
-			value = -signalAmplitude;
+			if (posInPeriod <= 0.5F)
+			{
+				value = 2.0F - (posInPeriod * 4.0F);
+			}
+			else
+			{
+				if (posInPeriod <= 0.75F)
+				{
+					value = 2.0F - (posInPeriod * 4.0F);
+				}
+				else
+				{
+					if (posInPeriod <= 1.0F)
+					{
+						value = (posInPeriod * 4.0F) - 4.0F;
+					}
+					else
+					{
+						value = 0.0F;
+					}
+				}
+			}
 		}
 		
-		soundSample.setStereoValues(value, value);
+		soundSample.setStereoValues(value * signalAmplitude, 
+		                            value * signalAmplitude);
 	}
 	
 	/* (non-Javadoc)
@@ -109,7 +135,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(RectangleGenerator.class, "Rectangle", "Generates a rectangle signal with a specified frequency and amplidude.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(TriangelGenerator.class, "Triangel", "Generates a triangel signal with a specified frequency and amplidude.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the signal in oscillations per second.");
@@ -120,7 +146,7 @@ extends Generator
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the rectangle between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the triangel between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

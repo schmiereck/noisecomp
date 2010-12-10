@@ -48,8 +48,9 @@ TODO:
 #123:	IMPROVEMENT: Allow input values: $startTimeline, $endTimeline, $posTimeline, $startModule, $endModule, $posModule
 #124:	IMPROVEMENT: Allow mathematically instructions/ terms as input value (+-*/()^).
 #128:	BUG: If module input default is null it do not use the value of übergeorteten module.
-#129:	
-#130:	
+#131:	
+#132:	
+#133:	
 
 WORK:
 =====
@@ -58,7 +59,8 @@ WORK:
 		--> http://www.eclipse.org/mat/
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
-		
+#130:	IMPROVEMENT: Sawtooth Generator.
+
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
@@ -220,4 +222,5 @@ DONE:
 		--> Clear also buffer of module if change a module timeline input.
 #128:	IMPROVEMENT: Add Filter.
 		--> DONE: FilterGenerator
+#129:	IMPROVEMENT: Triangel Generator.
 		
