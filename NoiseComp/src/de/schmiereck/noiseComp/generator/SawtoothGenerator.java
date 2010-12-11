@@ -5,23 +5,24 @@ package de.schmiereck.noiseComp.generator;
 
 /**
  * <p>
- * 	Triangel Generator.
+ * 	Sawtooth Generator.
  * </p>
  * <p>
  * 	<pre>
- * 	      .
- * 	     / \
- * 	    /   \
- * 	         \   /
- * 	          \ /
- * 	           ´
+ * 	    .
+ * 	    |\
+ * 	    | \
+ * 	       \ |
+ * 
+ * 	        \|
+ * 	         ´
  * 	</pre>
  * </p>
  * 
  * @author smk
- * @version <p>10.12.2010:	created, smk</p>
+ * @version <p>11.12.2010:	created, smk</p>
  */
-public class TriangelGenerator
+public class SawtoothGenerator
 extends Generator
 {
 	//**********************************************************************************************
@@ -41,7 +42,7 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public TriangelGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public SawtoothGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
 		super(name, frameRate, generatorTypeData);
 	}
@@ -96,35 +97,7 @@ extends Generator
 		
 		float value;
 		
-		if (posInPeriod <= 0.25F)
-		{
-			value = posInPeriod * 4.0F;
-		}
-		else
-		{
-			if (posInPeriod <= 0.5F)
-			{
-				value = 2.0F - (posInPeriod * 4.0F);
-			}
-			else
-			{
-				if (posInPeriod <= 0.75F)
-				{
-					value = 2.0F - (posInPeriod * 4.0F);
-				}
-				else
-				{
-					if (posInPeriod <= 1.0F)
-					{
-						value = (posInPeriod * 4.0F) - 4.0F;
-					}
-					else
-					{
-						value = 0.0F;
-					}
-				}
-			}
-		}
+		value = 1.0F - posInPeriod * 2.0F;
 		
 		soundSample.setStereoValues(value * signalAmplitude, 
 		                            value * signalAmplitude);
@@ -135,7 +108,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(TriangelGenerator.class, "Triangel", "Generates a triangel signal with a specified frequency and amplidude.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SawtoothGenerator.class, "Sawtooth", "Generates a sawtooth signal with a specified frequency and amplidude.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the signal in oscillations per second.");
@@ -146,7 +119,7 @@ extends Generator
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the triangel between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the sawtooth between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

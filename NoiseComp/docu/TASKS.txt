@@ -59,7 +59,6 @@ WORK:
 		--> http://www.eclipse.org/mat/
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
-#130:	IMPROVEMENT: Sawtooth Generator.
 
 DONE:
 =====
@@ -223,4 +222,5 @@ DONE:
 #128:	IMPROVEMENT: Add Filter.
 		--> DONE: FilterGenerator
 #129:	IMPROVEMENT: Triangel Generator.
+#130:	IMPROVEMENT: Sawtooth Generator.
 		
