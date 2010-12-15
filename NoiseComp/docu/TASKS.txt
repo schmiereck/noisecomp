@@ -63,8 +63,8 @@ WORK:
 		--> One thing is because the calculation of input do not starts with timeline pos, it starts with module pos.
 			Occourse of reselect modul or updating input.
 		--> Other thing is no recalculate starts if other timelines are updated.
-		--> DONE: Position of Modul input is calculated false if he is not the same as in master module.
- 
+		--> DONE: Position of Modul input is calculated false if it is not the same as in master module.
+
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 

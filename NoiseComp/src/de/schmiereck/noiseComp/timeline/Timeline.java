@@ -464,7 +464,7 @@ implements GeneratorBufferInterface,
 
 	/**
 	 * @param sampleFrame
-	 * 			is the sample Frame.
+	 * 			is the absulte sample Frame in module.
 	 * @return
 	 * 			is the buffer Frame or <code>-1</code> if not in buffer range.
 	 */
