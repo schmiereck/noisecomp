@@ -84,7 +84,7 @@ implements Scrollable//, MouseMotionListener
 	private static final Color CPlaybackTimeLine = new Color(0x561360);
 	private static final Color CPlaybackTimeLineGlow = new Color(0xBE, 0x6F, 0xC9, 128);
 	
-	private final float DRAW_EVERY_SAMPLE = 5.0F;//1.0F;//25.0F;
+	private final float DRAW_EVERY_SAMPLE = 4.0F;//1.0F;//25.0F;
 	
 	private static final int TimelineHandlerSizeX = 8;
 	private static final int TimelineHandlerSizeY = 8;

@@ -775,7 +775,12 @@ implements GeneratorInterface,
 					
 					if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
 					{
-						callingGenerator.calcInputValue(framePosition, frameTime, 
+						float callStartTimePos = callingGenerator.getStartTimePos();
+						
+						float callFrameTime = callStartTimePos + frameTime;
+						long callFramePosition = (long)(callFrameTime / this.soundFrameRate);
+						
+						callingGenerator.calcInputValue(callFramePosition, callFrameTime, //framePosition, frameTime, 
 						                                modulInputData, 
 						                                signal, 
 						                                parentModulGenerator, 

@@ -47,8 +47,7 @@ TODO:
 #117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
 #123:	IMPROVEMENT: Allow input values: $startTimeline, $endTimeline, $posTimeline, $startModule, $endModule, $posModule
 #124:	IMPROVEMENT: Allow mathematically instructions/ terms as input value (+-*/()^).
-#128:	BUG: If module input default is null it do not use the value of übergeorteten module.
-#131:	
+#128:	BUG: If module input default is null it do not use the value of master module.
 #132:	
 #133:	
 
@@ -59,7 +58,13 @@ WORK:
 		--> http://www.eclipse.org/mat/
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
-
+#131:	BUG: Modul input connected to a input timeline not calculated.
+		--> synth 2.noiseComp.xml, bug 131 demo 1.noiseComp.xml
+		--> One thing is because the calculation of input do not starts with timeline pos, it starts with module pos.
+			Occourse of reselect modul or updating input.
+		--> Other thing is no recalculate starts if other timelines are updated.
+		--> DONE: Position of Modul input is calculated false if he is not the same as in master module.
+ 
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
