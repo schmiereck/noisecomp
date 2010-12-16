@@ -19,22 +19,24 @@ import java.util.Vector;
  */
 public class TracksData
 {
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * List of {@link TrackData}-Objects.
 	 */
 	private Vector<TrackData>	tracks = new Vector<TrackData>();
 
-	/**
-	 * List of {@link TrackData}-Objects with the {@link Generator} as Key.
-	 */
-	private HashMap<Generator, TrackData>	tracksHash = new HashMap<Generator, TrackData>();
-	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * @return 
 	 * 			the count of {@link #tracks}.
 	 */
 	public int getTracksCount()
 	{
+		//==========================================================================================
 		return this.tracks.size();
 	}
 
@@ -46,6 +48,7 @@ public class TracksData
 	 */
 	public TrackData getTrack(int generatorPos)
 	{
+		//==========================================================================================
 		return (TrackData)this.tracks.get(generatorPos);
 	}
 
@@ -59,13 +62,14 @@ public class TracksData
 	 */
 	public synchronized void addTrack(TrackData trackData)
 	{
+		//==========================================================================================
 		int trackPos = this.getTracksCount();
 		
-		trackData.setTrackPos(trackPos);
+//		trackData.setTrackPos(trackPos);
 
 		this.tracks.add(trackData);
-
-		this.tracksHash.put(trackData.getGenerator(), trackData);
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -73,27 +77,31 @@ public class TracksData
 	 * from {@link #tracks} list and 
 	 * from the {@link #tracksHash} list.
 	 * 
-	 * @param trackPos
-	 * 			is the Position in the {@link #tracks} list.
-	 * @return
-	 * 			the removed Track.
+	 * @param removedTrackData
+	 * 			is the trackData in the {@link #tracks} list.
 	 */
-	public synchronized TrackData removeSelectedTrack(int trackPos)
+	public synchronized void removeSelectedTrack(TrackData removedTrackData)
 	{
-		TrackData retTrackData;
-
-		retTrackData = (TrackData)this.tracks.remove(trackPos);
-			
-		for (int pos = trackPos; pos < this.tracks.size(); pos++)
+		//==========================================================================================
+		int trackPos = 0;
+		
+		for (TrackData trackData : this.tracks)
 		{
-			this.tracks.get(pos).setTrackPos(pos);
+			if (trackData == removedTrackData)
+			{
+				break;
+			}
+			trackPos++;
 		}
-		
-		Generator generator = retTrackData.getGenerator();
+
+		this.tracks.remove(removedTrackData);
 			
-		this.tracksHash.remove(generator);
+//		for (int pos = trackPos; pos < this.tracks.size(); pos++)
+//		{
+//			this.tracks.get(pos).setTrackPos(pos);
+//		}
 		
-		return retTrackData;
+		//==========================================================================================
 	}
 	
 	/**
@@ -101,8 +109,9 @@ public class TracksData
 	 */
 	public synchronized void clearTracks()
 	{
+		//==========================================================================================
 		this.tracks.clear();
-		this.tracksHash.clear();
+		//==========================================================================================
 	}
 
 	/**
@@ -111,6 +120,7 @@ public class TracksData
 	 */
 	public Iterator<TrackData> getTracksIterator()
 	{
+		//==========================================================================================
 		return this.tracks.iterator();
 	}
 
@@ -122,35 +132,24 @@ public class TracksData
 	 */
 	public TrackData searchTrackData(Generator generator)
 	{
-		//String name = generator.getName();
-		//return (TrackData)this.tracksHash.get(name);
-		return (TrackData)this.tracksHash.get(generator);
-	}
+		//==========================================================================================
+		TrackData retTrackData;
 
-	/**
-	 * @param name 
-	 * 			of the Generator to search for.
-	 * @return 
-	 * 			the Track of the generator or <code>null</code>.
-	 */
-	public TrackData searchTrackData(String name)
-	{
-		TrackData retTrackData = null;
+		//------------------------------------------------------------------------------------------
+		retTrackData = null;
 		
-		Iterator<TrackData> trackDataIterator = this.tracksHash.values().iterator();
-		
-		while (trackDataIterator.hasNext())
+		for (TrackData trackData : this.tracks)
 		{
-			TrackData trackData = trackDataIterator.next();
+			Generator trackGenerator = trackData.getGenerator();
 			
-			if (trackData.getName().equals(name))
+			if (trackGenerator == generator)
 			{
 				retTrackData = trackData;
 				break;
 			}
 		}
-		
-		return retTrackData;
+		//==========================================================================================
+		return retTrackData;//(TrackData)this.tracksHash.get(generator);
 	}
 
 	/**
@@ -161,6 +160,7 @@ public class TracksData
 	 */
 	public void switchTracksByPos(int sourceTrackPos, int tagetTrackPos)
 	{
+		//==========================================================================================
 		if ((sourceTrackPos >= 0) &&
 			(tagetTrackPos >= 0) &&
 			(sourceTrackPos < this.getTracksCount()) &&
@@ -172,8 +172,9 @@ public class TracksData
 			this.tracks.setElementAt(sourceTrackData, tagetTrackPos);
 			this.tracks.setElementAt(targetTrackData, sourceTrackPos);
 			
-			targetTrackData.setTrackPos(sourceTrackPos);
-			sourceTrackData.setTrackPos(tagetTrackPos);
+//			targetTrackData.setTrackPos(sourceTrackPos);
+//			sourceTrackData.setTrackPos(tagetTrackPos);
 		}
+		//==========================================================================================
 	}
 }

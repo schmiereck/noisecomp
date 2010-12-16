@@ -302,7 +302,7 @@ public class ModulGeneratorTypeData
 			
 			TrackData trackData = this.tracksData.searchTrackData(generator);
 			
-			this.tracksData.removeSelectedTrack(trackData.getTrackPos());
+			this.tracksData.removeSelectedTrack(trackData);
 		
 			this.notifyGeneratorsOfRemoving(generator);
 

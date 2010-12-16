@@ -10,17 +10,17 @@ package de.schmiereck.noiseComp.generator;
  */
 public class TrackData
 {
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * Generator.
 	 */
 	private Generator	generator;
-	
-	/**
-	 * Position of the Generator Track in the List of Tracks.
-	 */
-	private int trackPos;
 
-	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
@@ -49,23 +49,5 @@ public class TrackData
 	public Generator getGenerator()
 	{
 		return this.generator;
-	}
-
-	/**
-	 * @return
-	 * 			the Position of the Generator Track in the List of Tracks.
-	 */
-	public int getTrackPos()
-	{
-		return this.trackPos;
-	}
-
-	/**
-	 * @param trackPos
-	 * 			is the Position of the Generator Track in the List of Tracks.
-	 */
-	public void setTrackPos(int trackPos)
-	{
-		this.trackPos = trackPos;
 	}
 }
