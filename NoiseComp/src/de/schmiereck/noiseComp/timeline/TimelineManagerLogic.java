@@ -107,6 +107,12 @@ public class TimelineManagerLogic
 		//------------------------------------------------------------------------------------------
 		this.createTimelineInputs(generator, timeline);
 		
+		//------------------------------------------------------------------------------------------
+		// Notify Modul:
+		{
+			this.updateModuleTimelines(timeline);
+		}
+		
 		//==========================================================================================
 		return timeline;
 	}
@@ -378,63 +384,79 @@ public class TimelineManagerLogic
 //	}
 
 	/**
-	 * @param timeline
+	 * @param updatedTimeline
+	 * 			is the timeline.
+	 * @param generatorStartTimePos
+	 * 			is the generator StartTimePos.
+	 */
+	public void updateStartTimePos(Timeline updatedTimeline, float generatorStartTimePos)
+	{
+		//==========================================================================================
+		float endTimePos = updatedTimeline.getGeneratorEndTimePos();
+		
+		this.updateTimePos(updatedTimeline, generatorStartTimePos, endTimePos);
+
+		//==========================================================================================
+	}
+
+	/**
+	 * @param updatedTimeline
+	 * 			is the timeline.
+	 * @param generatorStartTimePos
+	 * 			is the generator EndTimePos.
+	 */
+	public void updateEndTimePos(Timeline updatedTimeline, float generatorEndTimePos)
+	{
+		//==========================================================================================
+		float startTimePos = updatedTimeline.getGeneratorStartTimePos();
+		
+		this.updateTimePos(updatedTimeline, startTimePos, generatorEndTimePos);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @param updatedTimeline
 	 * 			is the timeline.
 	 * @param generatorStartTimePos
 	 * 			is the generator StartTimePos.
 	 * @param generatorEndTimePos
 	 * 			is the generator EndTimePos.
 	 */
-	public void updateTimePos(Timeline timeline, float generatorStartTimePos, float generatorEndTimePos)
+	public void updateTimePos(Timeline updatedTimeline, float generatorStartTimePos, float generatorEndTimePos)
 	{
 		//==========================================================================================
-		timeline.setTimePos(generatorStartTimePos, generatorEndTimePos);
+		updatedTimeline.setTimePos(generatorStartTimePos, generatorEndTimePos);
 
-		//==========================================================================================
-	}
-
-	/**
-	 * @param timeline
-	 * 			is the timeline.
-	 * @param generatorStartTimePos
-	 * 			is the generator StartTimePos.
-	 */
-	public void updateStartTimePos(Timeline timeline, float generatorStartTimePos)
-	{
-		//==========================================================================================
-		float endTimePos = timeline.getGeneratorEndTimePos();
-		
-		timeline.setTimePos(generatorStartTimePos, endTimePos);
-
-		//==========================================================================================
-	}
-
-	/**
-	 * @param timeline
-	 * 			is the timeline.
-	 * @param generatorStartTimePos
-	 * 			is the generator EndTimePos.
-	 */
-	public void updateEndTimePos(Timeline timeline, float generatorEndTimePos)
-	{
-		//==========================================================================================
-		float startTimePos = timeline.getGeneratorStartTimePos();
-		
-		timeline.setTimePos(startTimePos, generatorEndTimePos);
-
+		//------------------------------------------------------------------------------------------
+		// Notify Modul:
+		{
+			this.updateModuleTimelines(updatedTimeline);
+		}
+		//------------------------------------------------------------------------------------------
+		// Update all output Module-Timelines:
+		{
+			Map<InputData, Timeline> outputInputTimelines = updatedTimeline.getOutputTimelines();
+			Collection<Timeline> outputTimelines = outputInputTimelines.values();
+			
+			for (Timeline outputTimeline : outputTimelines)
+			{
+				this.updateModuleTimelines(outputTimeline);
+			}
+		}
 		//==========================================================================================
 	}
 	
 	/**
-	 * @param timeline
+	 * @param updatedTimeline
 	 * 			is the timeline.
 	 * @param generatorName
 	 * 			is the generator name.
 	 */
-	public void updateName(Timeline timeline, String generatorName)
+	public void updateName(Timeline updatedTimeline, String generatorName)
 	{
 		//==========================================================================================
-		Generator generator = timeline.getGenerator();
+		Generator generator = updatedTimeline.getGenerator();
 		
 		generator.setName(generatorName);
 		
@@ -618,23 +640,30 @@ public class TimelineManagerLogic
 			}
 		}
 		//------------------------------------------------------------------------------------------
-		// Notify Modul:
+		// Update Modul:
 		{
 			this.updateModuleTimelines(updatedTimeline);
 		}
+		//------------------------------------------------------------------------------------------
+		boolean generatorChanged = false;
 		
 		if ((CompareUtils.compareWithNull(inputData.getInputValue(), floatValue) == false) ||
 			(CompareUtils.compareWithNull(inputData.getInputStringValue(), stringValue) == false))
 		{
 			inputData.setInputValue(floatValue, stringValue);
 			
-			updatedTimeline.generatorChanged();
+			generatorChanged = true;
 		}
 		
 		if (inputData.getInputModulInputTypeData() != modulInputTypeData)
 		{
 			inputData.setInputModulInputTypeData(modulInputTypeData);
 			
+			generatorChanged = true;
+		}
+		
+		if (generatorChanged == true)
+		{
 			updatedTimeline.generatorChanged();
 		}
 		//==========================================================================================

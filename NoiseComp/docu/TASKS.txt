@@ -58,12 +58,6 @@ WORK:
 		--> http://www.eclipse.org/mat/
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
-#131:	BUG: Modul input connected to a input timeline not calculated.
-		--> synth 2.noiseComp.xml, bug 131 demo 1.noiseComp.xml
-		--> One thing is because the calculation of input do not starts with timeline pos, it starts with module pos.
-			Occourse of reselect modul or updating input.
-		--> Other thing is no recalculate starts if other timelines are updated.
-		--> DONE: Position of Modul input is calculated false if it is not the same as in master module.
 
 DONE:
 =====
@@ -228,4 +222,13 @@ DONE:
 		--> DONE: FilterGenerator
 #129:	IMPROVEMENT: Triangel Generator.
 #130:	IMPROVEMENT: Sawtooth Generator.
+#131:	BUG: Modul input connected to a input timeline not calculated.
+		--> synth 2.noiseComp.xml, bug 131 demo 1.noiseComp.xml
+		--> DONE: One thing is because the calculation of input do not starts with timeline pos, it starts with module pos.
+			Occourse of reselect modul or updating input.
+		--> Other thing is no recalculate starts if other timelines are updated.
+		--> DONE: Position of Modul input is calculated false if it is not the same as in master module.
+		--> DONE: Fader is not recalculated if he is updated.
+			subGeneratorTimelines are also updated if amodule updated.
+			Update all output Module-Timelines of input timeline.
 		
