@@ -57,8 +57,6 @@ WORK:
 		--> http://www.eclipse.org/mat/
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
-#33:	TASK: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
-		--> Remove de.schmiereck.noiseComp.smkScreen
 
 DONE:
 =====
@@ -232,4 +230,6 @@ DONE:
 		--> DONE: Fader is not recalculated if he is updated.
 			subGeneratorTimelines are also updated if amodule updated.
 			Update all output Module-Timelines of input timeline.
+#33:	TASK: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
+		--> Remove de.schmiereck.noiseComp.smkScreen
 		

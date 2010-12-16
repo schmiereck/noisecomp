@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.file;
 
 import java.util.Iterator;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -12,7 +13,6 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.TrackData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLPort;
@@ -262,16 +262,16 @@ public class SaveFileOperationLogic
 	{
 		Node tracksNode = XMLData.appendNode(xmlDoc, generatorTypeNode, "tracks");
 		
-		Iterator<TrackData> tracksIterator = modulGeneratorTypeData.getTracksIterator();
+		Iterator<Generator> tracksIterator = modulGeneratorTypeData.getTracksIterator();
 		
 		while (tracksIterator.hasNext())
 		{
-			TrackData trackData = tracksIterator.next();
+			Generator trackData = tracksIterator.next();
 			
 			Node trackNode = XMLData.appendNode(xmlDoc, tracksNode, "track");
 			
 //			Node generatorNameNode = 
-				XMLData.appendTextNode(xmlDoc, trackNode, "generatorName", trackData.getGenerator().getName());
+				XMLData.appendTextNode(xmlDoc, trackNode, "generatorName", trackData.getName());
 			
 		}
 	}

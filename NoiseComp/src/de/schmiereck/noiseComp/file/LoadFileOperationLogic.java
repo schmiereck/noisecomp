@@ -517,7 +517,8 @@ public class LoadFileOperationLogic
 			{
 				Generator generator = generatorsIterator.next();
 				
-				modulGeneratorTypeData.addTrackForExistingGenerator(generator);
+//				modulGeneratorTypeData.addTrackForExistingGenerator(generator);
+				modulGeneratorTypeData.addGenerator(generator);
 			}
 		}
 	}
