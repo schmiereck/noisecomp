@@ -58,6 +58,7 @@ WORK:
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
 #33:	TASK: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
+		--> Remove de.schmiereck.noiseComp.smkScreen
 
 DONE:
 =====
