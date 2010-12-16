@@ -15,7 +15,6 @@ TODO:
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
 #31:	IMPROVEMENT: Add Flag that markes a input-type as multiple or singele input-type.
-#33:	TASK: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
 #34:	IMPROVEMENT: Input-Edit: Do not serve the edited generator as input generator.
 #35:	TASK: Input-Type-Edit: Update Input-type without Create-New first:
 		Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
@@ -58,6 +57,7 @@ WORK:
 		--> http://www.eclipse.org/mat/
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
+#33:	TASK: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
 
 DONE:
 =====

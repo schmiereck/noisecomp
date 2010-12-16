@@ -18,7 +18,6 @@ import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.smkScreen.desctopPage.widgets.MainActionException;
-import de.schmiereck.noiseComp.smkScreen.desktopController.actions.old.LoadFileGeneratorNodeData;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLPort;
 import de.schmiereck.xmlTools.XMLPortException;
