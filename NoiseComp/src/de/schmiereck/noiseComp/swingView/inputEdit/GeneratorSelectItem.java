@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.inputEdit;
 
 import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
@@ -15,6 +16,7 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @version <p>16.09.2010:	created, smk</p>
  */
 public class GeneratorSelectItem
+implements Comparable<GeneratorSelectItem>
 {
 	//**********************************************************************************************
 	// Fields:
@@ -53,6 +55,7 @@ public class GeneratorSelectItem
 	@Override
 	public boolean equals(Object obj)
 	{
+		//==========================================================================================
 		boolean ret;
 		
 		if (obj != null)
@@ -64,6 +67,39 @@ public class GeneratorSelectItem
 			ret = false;
 		}
 		
+		//==========================================================================================
+		return ret;
+	}
+	
+	public int compareTo(GeneratorSelectItem otherGeneratorSelectItem)
+	{
+		//==========================================================================================
+		int ret;
+		
+		Timeline otherTimeline = otherGeneratorSelectItem.getTimeline();
+		
+		if (otherTimeline != null)
+		{
+			if (this.timeline != null)
+			{
+				Generator otherGenerator = otherTimeline.getGenerator();
+				Generator generator = this.timeline.getGenerator();
+				
+				String otherName = otherGenerator.getName();
+				String name = generator.getName();
+				
+				ret = CompareUtils.compareToWithNull(name, otherName);
+			}
+			else
+			{
+				ret = 1;
+			}
+		}
+		else
+		{
+			ret = -1;
+		}
+		//==========================================================================================
 		return ret;
 	}
 
