@@ -53,7 +53,6 @@ WORK:
 		--> http://www.eclipse.org/mat/
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
-#34:	IMPROVEMENT: Input-Edit: Do not serve the edited generator as input generator.
 
 DONE:
 =====
@@ -235,4 +234,7 @@ DONE:
 		--> DONE: 
 #26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
 		--> DONE: 
+#34:	IMPROVEMENT: Input-Edit: Do not serve unavailable input generator.
+		--> DONE: Do not serve the edited generator as input generator.
+		--> DONE: Do not serve the output generators of edited generator as input generator.
 		

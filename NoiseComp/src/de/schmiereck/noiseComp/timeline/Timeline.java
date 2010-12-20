@@ -1008,11 +1008,13 @@ implements GeneratorBufferInterface,
 	 */
 	public void notifyTimelineChangedListerners(float changedStartTimePos, float changedEndTimePos)
 	{
+		//==========================================================================================
 		for (TimelineChangedListernerInterface timelineChangedListerner : this.timelineChangedListerners)
 		{
 			timelineChangedListerner.notifyTimelineChanged(this,
 			                                               changedStartTimePos, changedEndTimePos);
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -1031,6 +1033,50 @@ implements GeneratorBufferInterface,
 	public Timeline getModulTimeline()
 	{
 		return this.modulTimeline;
+	}
+
+	/**
+	 * Check if timeline is output generators of given timeline (or sub timelines).
+	 * 
+	 * @param timeline
+	 * 			is the timeline.
+	 * @return
+	 * 			<code>true</code> if timeline is no output timeline.
+	 */
+	public boolean checkIsOutputTimeline(Timeline timeline)
+	{
+		//==========================================================================================
+		boolean ret;
+		
+		Set<Entry<InputData, Timeline>> entrySet = this.outputTimelines.entrySet();
+		
+		Iterator<Entry<InputData, Timeline>> entrySetIterator = entrySet.iterator();
+		
+		ret = false;
+		
+		while (entrySetIterator.hasNext())
+		{
+			Map.Entry<InputData, Timeline> entry = entrySetIterator.next();
+			
+			Timeline outputTimeline = entry.getValue();
+			
+			if (outputTimeline == timeline)
+			{
+				ret = true;
+				break;
+			}
+			else
+			{
+				if (outputTimeline.checkIsOutputTimeline(timeline) == true)
+				{
+					ret = true;
+					break;
+				}
+			}
+		}
+		
+		//==========================================================================================
+		return ret;
 	}
 	
 }

@@ -169,7 +169,7 @@ public class InputEditController
 	}
 
 	/**
-	 * Update the Edited-Input in the Input-Edit-Model.
+	 * Update the Edited-Input in the Input-Edit-Model if a input is selected.
 	 * 
 	 * @param editedModulGeneratorTypeData 
 	 * 			is the edited Modul-Generator-Type Data.
@@ -246,7 +246,18 @@ public class InputEditController
 					{
 						Timeline timeline = timelinesIterator.next();
 						
-						generatorSelectItems.add(new GeneratorSelectItem(timeline));
+						// Edited generator is not input generator?
+						if (selectedTimeline != timeline)
+						{
+							// Do not serve the edited generator as input generator.
+							
+							// Output generators of edited generator is not a input generator?
+							if (selectedTimeline.checkIsOutputTimeline(timeline) == false)
+							{
+								// Do not serve the output generators of edited generator as input generator.
+								generatorSelectItems.add(new GeneratorSelectItem(timeline));
+							}
+						}
 					}
 				}
 			}
