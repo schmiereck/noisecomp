@@ -8,14 +8,10 @@ TODO:
 #5:		TASK: Implements obligate input fields (with default values).
 #6:		TASK: Disable unreachable functions (buttons).
 #9:		TASK: Do not allow more than one OutputGenerator for a Module (and other single input inputs).
-#18:	IMPROVEMENT: Insert new timelines after selected timeline with same start- and stop-time.
-#19:	IMPROVEMENT: Add a Generators Category seperate to the Modules Category.
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
 #22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
-#26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
 #31:	IMPROVEMENT: Add Flag that markes a input-type as multiple or singele input-type.
-#34:	IMPROVEMENT: Input-Edit: Do not serve the edited generator as input generator.
 #35:	TASK: Input-Type-Edit: Update Input-type without Create-New first:
 		Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException
 			at de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController.doUpdate(ModulInputTypeEditController.java:133)
@@ -57,6 +53,7 @@ WORK:
 		--> http://www.eclipse.org/mat/
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator
+#34:	IMPROVEMENT: Input-Edit: Do not serve the edited generator as input generator.
 
 DONE:
 =====
@@ -232,4 +229,10 @@ DONE:
 			Update all output Module-Timelines of input timeline.
 #33:	TASK: TracksData in ModulGeneratorTypeData are very SmkScreen sprecific and should by removed (generators are enough).
 		--> Remove de.schmiereck.noiseComp.smkScreen
+#18:	IMPROVEMENT: Insert new timelines after selected timeline with same start- and stop-time.
+		--> DONE: With duplicate timeline.
+#19:	IMPROVEMENT: Add a Generators Category seperate to the Modules Category.
+		--> DONE: 
+#26:	IMPROVEMENT: Timeline-Select should reserve more place in with when resize application frame.
+		--> DONE: 
 		
