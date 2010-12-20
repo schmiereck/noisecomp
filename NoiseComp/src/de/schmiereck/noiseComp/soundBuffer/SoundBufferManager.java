@@ -34,6 +34,9 @@ extends AudioInputStream
 //	private static int bytesPerMonoSample = 2;
 //	private static int bytesPerStereoSample = 4;
 	
+	//**********************************************************************************************
+	// Fields:
+	
 	/**
 	 * Wenn != <code>null</code>, wird dieser Buffer gerade abgespielt.
 	 */
@@ -69,6 +72,9 @@ extends AudioInputStream
 	 * A try to prevent for: see: isPollingExceptionPoint
 	 */
 	private boolean isPolling = false;
+	
+	//**********************************************************************************************
+	// Functions:
 	
 	/**
 	 * Constructor.

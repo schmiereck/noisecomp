@@ -1322,16 +1322,21 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		if (mainModulGeneratorTypeData != null)
 		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Generates a new TimelineManagerLogic.
 			List<Timeline> timelines = soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
 			
 			TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
 			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Add new Listeners:
 			timelineManagerLogic.addTimelineContentChangedListener(this.timelinesDrawPanelController);
 
 			timelineManagerLogic.addTimelineContentChangedListener(this.timelinesTimeRuleController);
 			
 			timelineManagerLogic.addTimelineContentChangedListener(this.timelinesGeneratorsRuleController);
 
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			int timelinePos = 0;
 			
 			for (Timeline timeline : timelines)
@@ -1350,6 +1355,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				
 				timelinePos++;
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		
 		//==========================================================================================
