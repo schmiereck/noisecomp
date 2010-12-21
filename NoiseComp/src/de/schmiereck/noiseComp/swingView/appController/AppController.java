@@ -1295,6 +1295,19 @@ implements RemoveTimelineGeneratorListenerInterface,
 			public void notifyPlaybackPosChanged(float actualTime)
 			{
 				timelinesDrawPanelController.doPlaybackTimeChanged(actualTime);
+				
+				SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+				
+				Timeline outputTimeline = soundSourceLogic.getOutputTimeline();
+				
+				float generatorEndTimePos = outputTimeline.getGeneratorEndTimePos();
+				
+				if (actualTime > generatorEndTimePos)
+				{
+					//XXX do not work
+					doStopSound();
+//					doPauseSound();
+				}
 			}
 		};
 		//==========================================================================================
@@ -2019,7 +2032,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//==========================================================================================
 	}
 
-	public void doPlaySound()
+	public synchronized void doPlaySound()
 	{
 		//==========================================================================================
 		if (this.soundSchedulerLogic == null)
@@ -2041,7 +2054,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//==========================================================================================
 	}
 
-	public void doStopSound()
+	public synchronized void doStopSound()
 	{
 		//==========================================================================================
 		if (this.soundSchedulerLogic != null)
@@ -2058,7 +2071,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//==========================================================================================
 	}
 
-	public void doPauseSound()
+	public synchronized void doPauseSound()
 	{
 		//==========================================================================================
 		if (this.soundSchedulerLogic != null)

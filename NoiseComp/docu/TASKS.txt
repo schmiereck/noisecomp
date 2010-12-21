@@ -32,7 +32,6 @@ TODO:
 			at de.schmiereck.noiseComp.swingView.appController.AppController$4.notifyEditModul(AppController.java:301)
 #95:	IMPROVEMENT: Allow switch timeline-rule and timeline/input positions between beats and time in seconds.
 		--> First fix #54.
-#98:	IMPROVEMENT: Automatically ends playback if end of output reached.
 #99:	BUG: If Zoom changed to + some of the things of #54 occur newly. 
 #101:	TASK: Change float to double.
 #105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
@@ -237,4 +236,5 @@ DONE:
 		--> DONE: Do not serve the edited generator as input generator.
 		--> DONE: Do not serve the output generators of edited generator as input generator.
 #132:	IMPROVEMENT: Input-Edit: Sort input generators by name.
-		
+#98:	IMPROVEMENT: Automatically ends playback if end of output reached.
+		--> DONE: Fix (multiprozessor?) bug in SMKScreenTools PipelineSchedulerLogic.
