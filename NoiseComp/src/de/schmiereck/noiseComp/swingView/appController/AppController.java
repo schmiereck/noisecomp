@@ -1304,9 +1304,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				
 				if (actualTime > generatorEndTimePos)
 				{
-					//XXX do not work
 					doStopSound();
-//					doPauseSound();
 				}
 			}
 		};
