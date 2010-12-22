@@ -7,13 +7,13 @@ import java.util.Iterator;
 
 /**
  * <p>
- * 	Add Generator.
+ * 	Mult Generator.
  * </p>
  * 
  * @author smk
- * @version <p>03.12.2010:	created, smk</p>
+ * @version <p>22.12.2010:	created, smk</p>
  */
-public class AddGenerator
+public class MultGenerator
 extends Generator
 {
 	//**********************************************************************************************
@@ -37,7 +37,7 @@ extends Generator
 	 * @param generatorTypeData
 	 * 			is the Generator-Type Data.
 	 */
-	public AddGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public MultGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
 		super(name, frameRate, generatorTypeData);
 	}
@@ -50,8 +50,8 @@ extends Generator
 	                                 ModulArguments modulArguments)
 	{
 		//==========================================================================================
-		float signalLeft = 0.0F;
-		float signalRight = 0.0F;
+		float signalLeft = Float.NaN;
+		float signalRight = Float.NaN;
 
 		SoundSample signalSample = new SoundSample();
 		
@@ -85,14 +85,28 @@ extends Generator
 								
 								if (Float.isNaN(leftValue) == false)
 								{
-									signalLeft += leftValue;
+									if (Float.isNaN(signalLeft) == true)
+									{
+										signalLeft = leftValue;
+									}
+									else
+									{
+										signalLeft *= leftValue;
+									}
 								}
 								
 								float rightValue = signalSample.getRightValue();
 								
 								if (Float.isNaN(rightValue) == false)
 								{
-									signalRight += rightValue;
+									if (Float.isNaN(signalRight) == true)
+									{
+										signalRight = rightValue;
+									}
+									else
+									{
+										signalRight *= rightValue;
+									}
 								}
 								break;
 							}
@@ -113,7 +127,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(AddGenerator.class, "add", "Add signals Generator.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MultGenerator.class, "mult", "Multiplicate signals Generator.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "Is a signal.");

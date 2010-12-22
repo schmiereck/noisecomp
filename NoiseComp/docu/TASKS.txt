@@ -49,8 +49,6 @@ WORK:
 #103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
 		--> http://jb2works.com/memoryleak/index_de.html
 		--> http://www.eclipse.org/mat/
-#122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
-		--> DONE: AddGenerator
 
 DONE:
 =====
@@ -238,3 +236,6 @@ DONE:
 #132:	IMPROVEMENT: Input-Edit: Sort input generators by name.
 #98:	IMPROVEMENT: Automatically ends playback if end of output reached.
 		--> DONE: Fix (multiprozessor?) bug in SMKScreenTools PipelineSchedulerLogic.
+#122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
+		--> DONE: AddGenerator, ExponentGenerator, TanhGenerator, MultGenerator, PowGenerator
+		

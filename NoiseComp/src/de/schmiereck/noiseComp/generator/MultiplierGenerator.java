@@ -51,7 +51,8 @@ extends Generator
 	                                 ModulArguments modulArguments)
 	{
 		//==========================================================================================
-		float multiplier = 1.0F;
+		float multiplierLeft = Float.NaN;
+		float multiplierRight = Float.NaN;
 
 		float signalLeft = 0.0F;
 		float signalRight = 0.0F;
@@ -76,20 +77,56 @@ extends Generator
 						{
 							case INPUT_TYPE_MULTIPLIER:
 							{
-//								try
+//								float value = this.calcInputMonoValue(framePosition, 
+//								                                      frameTime,
+//								                                      inputData, 
+//								                                      parentModulGenerator,
+//								                                      generatorBuffer,
+//							        	                              modulArguments);
+//								
+//								if (Float.isNaN(multiplier) == true)
 //								{
-									float value = this.calcInputMonoValue(framePosition, 
-									                                      frameTime,
-									                                      inputData, 
-									                                      parentModulGenerator,
-									                                      generatorBuffer,
-								        	                              modulArguments);
-									
-									multiplier *= value;
+//									multiplier = value;
 //								}
-//								catch (NoInputSignalException ex)
+//								else
 //								{
+//									multiplier *= value;
 //								}
+								this.calcInputValue(framePosition, 
+								                    frameTime,
+								                    inputData, 
+								                    signalSample, 
+								                    parentModulGenerator,
+								                    generatorBuffer,
+								                    modulArguments);
+
+								float leftValue = signalSample.getLeftValue();
+								
+								if (Float.isNaN(leftValue) == false)
+								{
+									if (Float.isNaN(multiplierLeft) == true)
+									{
+										multiplierLeft = leftValue;
+									}
+									else
+									{
+										multiplierLeft *= leftValue;
+									}
+								}
+								
+								float rightValue = signalSample.getRightValue();
+								
+								if (Float.isNaN(rightValue) == false)
+								{
+									if (Float.isNaN(multiplierRight) == true)
+									{
+										multiplierRight = rightValue;
+									}
+									else
+									{
+										multiplierRight *= rightValue;
+									}
+								}
 								break;
 							}
 							case INPUT_TYPE_SIGNAL:
@@ -109,11 +146,11 @@ extends Generator
 									signalLeft += leftValue;
 								}
 								
-								float reightValue = signalSample.getRightValue();
+								float rightValue = signalSample.getRightValue();
 								
-								if (Float.isNaN(reightValue) == false)
+								if (Float.isNaN(rightValue) == false)
 								{
-									signalRight += reightValue;
+									signalRight += rightValue;
 								}
 								break;
 							}
@@ -127,7 +164,9 @@ extends Generator
 			}
 		}
 		
-		soundSample.setStereoValues(signalLeft * multiplier, signalRight * multiplier);
+		soundSample.setStereoValues(signalLeft * multiplierLeft, 
+		                            signalRight * multiplierRight);
+
 		//==========================================================================================
 	}
 

@@ -7,19 +7,20 @@ import java.util.Iterator;
 
 /**
  * <p>
- * 	Add Generator.
+ * 	Pow Generator.
  * </p>
  * 
  * @author smk
- * @version <p>03.12.2010:	created, smk</p>
+ * @version <p>22.12.2010:	created, smk</p>
  */
-public class AddGenerator
+public class PowGenerator
 extends Generator
 {
 	//**********************************************************************************************
 	// Constants:
 
-	public static final int	INPUT_TYPE_SIGNAL	= 1;
+	public static final int	INPUT_TYPE_EXPONENT	= 1;
+	public static final int	INPUT_TYPE_BASE	= 2;
 	
 	//**********************************************************************************************
 	// Fields:
@@ -31,13 +32,13 @@ extends Generator
 	 * Constructor.
 	 * 
 	 * @param name
-	 * 			is the generator name.
+	 * 			is the genrator name.
 	 * @param frameRate
 	 * 			is the frame rate.
 	 * @param generatorTypeData
 	 * 			is the Generator-Type Data.
 	 */
-	public AddGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public PowGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
 		super(name, frameRate, generatorTypeData);
 	}
@@ -50,8 +51,11 @@ extends Generator
 	                                 ModulArguments modulArguments)
 	{
 		//==========================================================================================
-		float signalLeft = 0.0F;
-		float signalRight = 0.0F;
+		float expLeft = 0.0F;
+		float expRight = 0.0F;
+
+		float baseLeft = 0.0F;
+		float baseRight = 0.0F;
 
 		SoundSample signalSample = new SoundSample();
 		
@@ -71,7 +75,7 @@ extends Generator
 						
 						switch (inputData.getInputTypeData().getInputType())
 						{
-							case INPUT_TYPE_SIGNAL:
+							case INPUT_TYPE_BASE:
 							{
 								this.calcInputValue(framePosition, 
 								                    frameTime,
@@ -85,14 +89,39 @@ extends Generator
 								
 								if (Float.isNaN(leftValue) == false)
 								{
-									signalLeft += leftValue;
+									expLeft += leftValue;
 								}
 								
 								float rightValue = signalSample.getRightValue();
 								
 								if (Float.isNaN(rightValue) == false)
 								{
-									signalRight += rightValue;
+									expRight += rightValue;
+								}
+								break;
+							}
+							case INPUT_TYPE_EXPONENT:
+							{
+								this.calcInputValue(framePosition, 
+								                    frameTime,
+								                    inputData, 
+								                    signalSample, 
+								                    parentModulGenerator,
+								                    generatorBuffer,
+								                    modulArguments);
+
+								float leftValue = signalSample.getLeftValue();
+								
+								if (Float.isNaN(leftValue) == false)
+								{
+									baseLeft += leftValue;
+								}
+								
+								float rightValue = signalSample.getRightValue();
+								
+								if (Float.isNaN(rightValue) == false)
+								{
+									baseRight += rightValue;
 								}
 								break;
 							}
@@ -106,21 +135,27 @@ extends Generator
 			}
 		}
 		
-		soundSample.setStereoValues(signalLeft, signalRight);
-		
+		soundSample.setStereoValues((float)Math.pow(baseLeft, expLeft), 
+		                            (float)Math.pow(baseRight, expRight));
+
 		//==========================================================================================
 	}
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(AddGenerator.class, "add", "Add signals Generator.");
+		//==========================================================================================
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(PowGenerator.class, "pow", "Calculates the value of the base (sum) raised to the power of the exponent (sum).");
 		
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "Is a signal.");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_BASE, "base", -1, -1, "The base singal.");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_EXPONENT, "exponent", -1, -1, "The exponent signal.");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		
+		//==========================================================================================
 		return generatorTypeData;
 	}
-
 }
