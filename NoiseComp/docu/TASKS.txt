@@ -239,3 +239,4 @@ DONE:
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator, ExponentGenerator, TanhGenerator, MultGenerator, PowGenerator
 		
+		

@@ -1968,24 +1968,27 @@ implements RemoveTimelineGeneratorListenerInterface,
 			{
 				Iterator<InputData> inputsIterator = selectedGenerator.getInputsIterator();
 				
-				while (inputsIterator.hasNext())
+				if (inputsIterator != null)
 				{
-					InputData inputData = (InputData)inputsIterator.next();
-					
-					Generator inputGenerator = inputData.getInputGenerator();
-					
-					Timeline inputTimeline = timelineManagerLogic.searchGeneratorTimeline(inputGenerator);
-					
-                    InputTypeData inputTypeData = inputData.getInputTypeData(); 
-                    Float floatValue = inputData.getInputValue();
-                    String stringValue = inputData.getInputStringValue();
-                    InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
-                    
-					timelineManagerLogic.addInputGenerator(newTimeline,
-					                                       inputTimeline,
-					                                       inputTypeData, 
-					                                       floatValue, stringValue,
-					                                       modulInputTypeData);
+					while (inputsIterator.hasNext())
+					{
+						InputData inputData = (InputData)inputsIterator.next();
+						
+						Generator inputGenerator = inputData.getInputGenerator();
+						
+						Timeline inputTimeline = timelineManagerLogic.searchGeneratorTimeline(inputGenerator);
+						
+	                    InputTypeData inputTypeData = inputData.getInputTypeData(); 
+	                    Float floatValue = inputData.getInputValue();
+	                    String stringValue = inputData.getInputStringValue();
+	                    InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
+	                    
+						timelineManagerLogic.addInputGenerator(newTimeline,
+						                                       inputTimeline,
+						                                       inputTypeData, 
+						                                       floatValue, stringValue,
+						                                       modulInputTypeData);
+					}
 				}
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
