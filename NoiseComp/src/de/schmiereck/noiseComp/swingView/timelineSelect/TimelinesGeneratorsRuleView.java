@@ -208,8 +208,8 @@ extends JComponent
 				generatorName = "";
 				generatorTypeName = null;
 				
-				valueMax = 1.0F;
-				valueMin = -1.0F;
+				valueMax = Float.NaN;
+				valueMin = Float.NaN;
 			}
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -227,22 +227,29 @@ extends JComponent
 			}
 			
 			{
-				String text = OutputUtils.makeFloatText(valueMax, 2);
-			
-				FontMetrics fm = getFontMetrics(g.getFont());
+				if (Float.isNaN(valueMax) == false)
+				{
+					String text = OutputUtils.makeFloatText(valueMax, 2);
 				
-				int stringWidth = fm.stringWidth(text);
-				
-				g.drawString(text, SIZE_X - stringWidth, stringPosY);
+					FontMetrics fm = getFontMetrics(g.getFont());
+					
+					int stringWidth = fm.stringWidth(text);
+					
+					g.drawString(text, SIZE_X - stringWidth, stringPosY);
+				}
 			}
 			{
-				String text = OutputUtils.makeFloatText(valueMin, 2);
-			
-				FontMetrics fm = getFontMetrics(g.getFont());
+				if ((Float.isNaN(valueMax) == false) ||
+					(Float.isNaN(valueMin) == false))
+				{
+					String text = OutputUtils.makeFloatText(valueMin, 2);
 				
-				int stringWidth = fm.stringWidth(text);
-				
-				g.drawString(text, SIZE_X - stringWidth, (int)(stringPosY + TimelinesDrawPanelModel.SIZE_TIMELINE_Y));
+					FontMetrics fm = getFontMetrics(g.getFont());
+					
+					int stringWidth = fm.stringWidth(text);
+					
+					g.drawString(text, SIZE_X - stringWidth, (int)(stringPosY + TimelinesDrawPanelModel.SIZE_TIMELINE_Y));
+				}
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
