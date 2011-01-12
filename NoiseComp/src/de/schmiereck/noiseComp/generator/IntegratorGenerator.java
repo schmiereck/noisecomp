@@ -149,7 +149,7 @@ extends Generator
 		}
 		
 		//------------------------------------------------------------------------------------------
-		float scale = this.getSoundFrameRate(); //44100.0F * 1.0F;//4.0F;//
+		float dTime = 1.0F / this.getSoundFrameRate(); //44100.0F * 1.0F;//4.0F;//
 		
 		float signalLeft = 0.0F;
 		float signalRight = 0.0F;
@@ -186,14 +186,14 @@ extends Generator
 			
 			if (Float.isNaN(intgrLeftValue) == false)
 			{
-				signalLeft = intgrLeftValue + signal2Left / scale;//(intgrLeftValue + (signal2Left - signal1Left));//(leftValue - intgrLeftValue);//intgrLeftValue ;// / 4.410F * 1.0F;
+				signalLeft = intgrLeftValue + (signal2Left * dTime);//(intgrLeftValue + (signal2Left - signal1Left));//(leftValue - intgrLeftValue);//intgrLeftValue ;// / 4.410F * 1.0F;
 			}
 			
 			float intgrRightValue = intgrSoundSample.getRightValue();
 			
 			if (Float.isNaN(intgrRightValue) == false)
 			{
-				signalRight = intgrRightValue + signal2Right / scale;//(intgrRightValue + (signal2Right - signal1Right));//(rightValue - intgrRightValue);//intgrRightValue;// / 4.410F * 1.0F;
+				signalRight = intgrRightValue + (signal2Right * dTime);//(intgrRightValue + (signal2Right - signal1Right));//(rightValue - intgrRightValue);//intgrRightValue;// / 4.410F * 1.0F;
 			}
 		}
 		//------------------------------------------------------------------------------------------
@@ -207,7 +207,7 @@ extends Generator
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData(IntegratorGenerator.class, "Integrator", "Integrates multiple signal input lines.");
 		
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", -1, -1, "The input signal between -1 and 1.");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", -1, -1, "The input signal.");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

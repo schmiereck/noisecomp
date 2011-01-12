@@ -1,9 +1,15 @@
+-----------------------------------------------------------------------------------
+What are the frequencies of music notes?
+	http://www.intmath.com/Trigonometric-graphs/music.php
+
+-----------------------------------------------------------------------------------
+
 62 65 69 73 78
 
 294 311 330 349 370
 
-http://www.jsguitarforum.com/forum/showthread.php?t=98396
 The chart below is all the frequencies of a guitar neck up to the 12th fret. I have rounded all the numbers to make it simpler.
+	http://www.jsguitarforum.com/forum/showthread.php?t=98396
 
 0 1 2 3 4 5 6 7 8 9 10 11 12
 -----------------------------------------------------------------------------------

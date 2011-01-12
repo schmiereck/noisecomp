@@ -122,7 +122,7 @@
 					<description><![CDATA[The offset of the sinus between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).]]></description>
 				</inputType>
 				<inputType>
-					<name><![CDATA[signalInput]]></name>
+					<name><![CDATA[signalIIFreq]]></name>
 					<type><![CDATA[4]]></type>
 					<countMin><![CDATA[-1]]></countMin>
 					<countMax><![CDATA[-1]]></countMax>

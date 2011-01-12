@@ -158,7 +158,7 @@
 					<countMin><![CDATA[1]]></countMin>
 					<countMax><![CDATA[1]]></countMax>
 					<defaultValue />
-					<description><![CDATA[Frequency of the signal in oscillations per second (alternativ to signalInput).]]></description>
+					<description><![CDATA[Frequency of the signal in oscillations per second (alternativ to signalIIFreq).]]></description>
 				</inputType>
 				<inputType>
 					<name><![CDATA[signalAmplitude]]></name>
@@ -177,7 +177,7 @@
 					<description><![CDATA[The offset of the sinus between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).]]></description>
 				</inputType>
 				<inputType>
-					<name><![CDATA[signalInput]]></name>
+					<name><![CDATA[signalIIFreq]]></name>
 					<type><![CDATA[4]]></type>
 					<countMin><![CDATA[-1]]></countMin>
 					<countMax><![CDATA[-1]]></countMax>

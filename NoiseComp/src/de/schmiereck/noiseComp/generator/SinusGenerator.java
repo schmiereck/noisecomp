@@ -33,7 +33,7 @@ extends Generator
 	public static final int	INPUT_TYPE_FREQ		= 1;
 	public static final int	INPUT_TYPE_AMPL		= 2;
 	public static final int	INPUT_TYPE_SHIFT	= 3;
-	public static final int	INPUT_TYPE_INPUT	= 4;
+	public static final int	INPUT_TYPE_IIFREQ	= 4;
 	
 	//**********************************************************************************************
 	// Fields:
@@ -92,14 +92,14 @@ extends Generator
 			                        modulArguments);
 		
 		//------------------------------------------------------------------------------------------
-		// Integrated Input of the Sinus-Signal.
-		float signalInput;
+		// Integrated Input of the Frequenz Signal.
+		float signalIIFreq;
 		{
-			InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_INPUT);
+			InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_IIFREQ);
 			
 			if (inputTypeData != null)
 			{
-				signalInput = 
+				signalIIFreq = 
 					this.calcInputMonoValue(framePosition, 
 		                                    frameTime,
 		                                    inputTypeData, 
@@ -109,7 +109,7 @@ extends Generator
 			}
 			else
 			{
-				signalInput = Float.NaN;
+				signalIIFreq = Float.NaN;
 			}
 		}
 		//------------------------------------------------------------------------------------------
@@ -118,15 +118,20 @@ extends Generator
 		
 		float periodPosition;
 		
-		if (Float.isNaN(signalInput) == false)
-		{
-			periodPosition = signalInput;
-		}
-		else
+		if (Float.isNaN(signalFrequency) == false)
 		{
 			// Länge einer Sinus-Periode in Frames.
 			float periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
 			periodPosition = (float)(framePosition / periodLengthInFrames);
+		}
+		else
+		{
+			periodPosition = 0.0F;
+		}
+		
+		if (Float.isNaN(signalIIFreq) == false)
+		{
+			periodPosition += signalIIFreq;
 		}
 		
 		float value;
@@ -168,7 +173,8 @@ extends Generator
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_INPUT, "signalInput", -1, -1, null, "Input of the sinus signal (alternativ to signalFrequency).");
+//			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_INPUT, "signalInput", -1, -1, null, "Integrated Input of the frequenz signal (alternativ to signalFrequency).");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_IIFREQ, "signalIIFreq", -1, -1, null, "Integrated Input of the frequenz signal (alternativ to signalFrequency).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

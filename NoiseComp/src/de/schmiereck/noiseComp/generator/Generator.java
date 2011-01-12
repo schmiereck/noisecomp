@@ -828,6 +828,9 @@ implements GeneratorInterface,
 	 * 			<code>null</code> if there is no buffer available.
 	 * @param modulArguments
 	 * 			are the Arguments of calling Modul.
+	 * @return
+	 * 			the default value.<br/>
+	 * 			{@link Float#NaN} if no default input defined.
 	 */
 	protected float calcInputMonoValue(long framePosition, 
 	                                   float frameTime,

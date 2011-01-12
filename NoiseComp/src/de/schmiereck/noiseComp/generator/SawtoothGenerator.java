@@ -31,6 +31,7 @@ extends Generator
 	public static final int	INPUT_TYPE_FREQ		= 1;
 	public static final int	INPUT_TYPE_AMPL		= 2;
 	public static final int	INPUT_TYPE_SHIFT	= 3;
+	public static final int	INPUT_TYPE_IIFREQ	= 4;
 	
 	//**********************************************************************************************
 	// Fields:
@@ -86,14 +87,50 @@ extends Generator
 		                                      generatorBuffer,
 		                                      modulArguments);
 		
+		//------------------------------------------------------------------------------------------
+		// Integrated Input of the Frequenz Signal.
+		float signalIIFreq;
+		{
+			InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_IIFREQ);
+			
+			if (inputTypeData != null)
+			{
+				signalIIFreq = 
+					this.calcInputMonoValue(framePosition, 
+		                                    frameTime,
+		                                    inputTypeData, 
+					                        parentModulGenerator,
+					                        generatorBuffer,
+					                        modulArguments);
+			}
+			else
+			{
+				signalIIFreq = Float.NaN;
+			}
+		}
 		//----------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
 		
 		// Länge einer Sinus-Periode in Frames.
-		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency) * 1.0F;
-		float periodPosition = (float)(framePosition / periodLengthInFrames) + signalShift;
-
-		float posInPeriod = (periodPosition % 1.0F);
+		float periodPosition;
+		
+		if (Float.isNaN(signalFrequency) == false)
+		{
+			// Länge einer Sinus-Periode in Frames.
+			float periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
+			periodPosition = (float)(framePosition / periodLengthInFrames);
+		}
+		else
+		{
+			periodPosition = 0.0F;
+		}
+		
+		if (Float.isNaN(signalIIFreq) == false)
+		{
+			periodPosition += signalIIFreq;
+		}
+		
+		float posInPeriod = ((periodPosition + signalShift) % 1.0F);
 		
 		float value;
 		
@@ -120,6 +157,10 @@ extends Generator
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the sawtooth between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_IIFREQ, "signalIIFreq", -1, -1, null, "Integrated Input of the frequenz signal (alternativ to signalFrequency).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		
