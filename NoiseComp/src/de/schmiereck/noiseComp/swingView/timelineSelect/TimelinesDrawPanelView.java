@@ -875,13 +875,14 @@ implements Scrollable//, MouseMotionListener
 			float frameRate = timeline.getSoundFrameRate();
 			float frameStep = timeLength / (frameRate / DRAW_EVERY_SAMPLE);
 	
-			float pointSizeX = (float)(1.0F / this.at.getScaleX());
-			float pointSizeY = (float)(1.0F / this.at.getScaleY());
+//			float pointSizeX = (float)(1.0F / this.at.getScaleX());
+//			float pointSizeY = (float)(1.0F / this.at.getScaleY());
 			
 //			Rectangle2D point = new Rectangle2D.Float();
 			Point2D srcPoint = new Point2D.Float();
 			Point2D dstPoint = new Point2D.Float();
 			
+			boolean haveLastSample = false;
 			int lastX = 0;
 			int lastY = 0;
 			
@@ -935,10 +936,12 @@ implements Scrollable//, MouseMotionListener
 					}
 					else
 					{
+						if (haveLastSample == true)
+						{
+							break;
+						}
 						posY = 0.0F;
 					}
-					
-					srcPoint.setLocation(pointSizeX, pointSizeY);
 					
 //					Shape shape = this.at.createTransformedShape(point);
 					srcPoint.setLocation(posX, posY);
@@ -947,18 +950,23 @@ implements Scrollable//, MouseMotionListener
 					int x = (int)dstPoint.getX();
 					int y = (int)dstPoint.getY();
 					
-					// x or y changed after last draw?
-					if (((x != lastX) ||
-						 (y != lastY)) &&
-						(timePos > 0.0F))
+					if (haveLastSample == true)
 					{
-						// Draw line.
-						
-						g2.setColor(CTimelineSignal);
-						
-	//					g2.fill(shape);
-						g2.drawLine(lastX, lastY, 
-						            x, y);
+						// x or y changed after last draw?
+						if ((x != lastX) || (y != lastY))
+						{
+							// Draw line.
+							
+							g2.setColor(CTimelineSignal);
+							
+		//					g2.fill(shape);
+							g2.drawLine(lastX, lastY, 
+							            x, y);
+						}
+					}
+					else
+					{
+						haveLastSample = true;
 					}
 					
 					lastX = x;
