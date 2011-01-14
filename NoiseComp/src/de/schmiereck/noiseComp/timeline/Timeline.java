@@ -1078,5 +1078,21 @@ implements GeneratorBufferInterface,
 		//==========================================================================================
 		return ret;
 	}
+
+	/**
+	 * XXX Because of a memory leake clear timelines explicitely.
+	 */
+	public void clearTimeline()
+	{
+		this.bufSoundSamples = null;
+		
+		this.inputTimelines.clear();
+		
+		this.outputTimelines.clear();
+		
+		this.subGeneratorTimelines.clear();
+		
+		this.timelineChangedListerners.clear();
+	}
 	
 }

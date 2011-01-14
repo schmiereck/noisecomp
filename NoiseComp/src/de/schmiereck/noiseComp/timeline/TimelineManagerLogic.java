@@ -811,5 +811,27 @@ public class TimelineManagerLogic
 		
 		//==========================================================================================
 	}
+
+	/**
+	 * XXX Because of a memory leake clear timelines explicitely.
+	 */
+	public void clearTimelines()
+	{
+		//==========================================================================================
+		Iterator<Timeline> timelinesIterator = this.getTimelinesIterator();
+		
+		while (timelinesIterator.hasNext())
+		{
+			Timeline timeline = timelinesIterator.next();
+			
+			timeline.clearTimeline();
+		}
+		
+		this.mainGeneratorTimelines.clear();
+		
+		this.timelineContentChangedListeners.clear();
+		
+		//==========================================================================================
+	}
 	
 }

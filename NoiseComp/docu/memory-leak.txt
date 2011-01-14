@@ -1,0 +1,4 @@
+http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
+
+jmap -histo:live 3728 > c:\temp\jmap\mem2.txt
+

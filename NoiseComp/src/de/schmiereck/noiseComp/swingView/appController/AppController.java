@@ -1335,6 +1335,16 @@ implements RemoveTimelineGeneratorListenerInterface,
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Generates a new TimelineManagerLogic.
+			{
+				// XXX Because of a memory leake clear timelines explicitely.
+				
+				TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+				
+				if (timelineManagerLogic != null)
+				{
+					timelineManagerLogic.clearTimelines();
+				}
+			}
 			List<Timeline> timelines = soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
 			
 			TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();

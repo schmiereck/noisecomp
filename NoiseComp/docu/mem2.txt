@@ -1,0 +1,1200 @@
+
+ num     #instances         #bytes  class name
+----------------------------------------------
+   1:       1543500       37044000  de.schmiereck.noiseComp.generator.SoundSample
+   2:             9       14112216  [Lde.schmiereck.noiseComp.generator.SoundSample;
+   3:          4230        6004328  [I
+   4:         24789        3113544  <constMethodKlass>
+   5:         24789        2989384  <methodKlass>
+   6:          2077        2378208  <constantPoolKlass>
+   7:          2077        1876760  <instanceKlassKlass>
+   8:         37296        1733040  <symbolKlass>
+   9:          1980        1652416  <constantPoolCacheKlass>
+  10:          2603         695592  [B
+  11:          8121         552504  [C
+  12:          2288         420992  java.lang.Class
+  13:          3403         328952  [[I
+  14:          8129         325160  java.lang.String
+  15:          3364         251464  [S
+  16:           450         170120  <methodDataKlass>
+  17:          1550         126352  [Ljava.lang.Object;
+  18:          2609         125232  java.util.HashMap$Entry
+  19:           182         104832  <objArrayKlassKlass>
+  20:          1626          78048  java.util.Hashtable$Entry
+  21:           312          73344  [Ljava.util.HashMap$Entry;
+  22:           523          66944  java.lang.reflect.Field
+  23:           338          51376  java.lang.reflect.Method
+  24:           105          38128  [Ljava.util.Hashtable$Entry;
+  25:            26          21632  com.sun.java.swing.plaf.windows.WindowsScrollBarUI$WindowsArrowButton
+  26:           308          19712  java.util.HashMap
+  27:           440          17600  sun.font.TrueTypeFont$DirectoryEntry
+  28:           388          15520  java.util.ArrayList
+  29:           169          15120  [Ljava.lang.String;
+  30:            19          15048  javax.swing.JButton
+  31:           199          14328  sun.java2d.loops.Blit
+  32:           163          11736  sun.java2d.loops.ScaledBlit
+  33:            17          11288  javax.swing.JLabel
+  34:           454          10896  java.lang.Integer
+  35:           272          10880  java.util.Vector
+  36:            90          10800  java.lang.reflect.Constructor
+  37:           354          10672  [Ljava.lang.Class;
+  38:           648          10368  java.lang.Object
+  39:           184          10304  java.lang.ref.SoftReference
+  40:           207           9936  java.beans.PropertyChangeSupport
+  41:           411           9864  javax.swing.event.EventListenerList
+  42:           405           9720  java.lang.Short
+  43:            13           8424  javax.swing.JScrollPane$ScrollBar
+  44:            38           8248  [J
+  45:            12           7872  javax.swing.JViewport
+  46:             9           7560  javax.swing.JTextField
+  47:           209           7400  [Ljava.beans.PropertyChangeListener;
+  48:            15           7200  javax.swing.CellRendererPane
+  49:           210           6720  java.awt.AWTEventMulticaster
+  50:             2           6536  [Lsun.java2d.loops.GraphicsPrimitive;
+  51:            40           6520  [[I
+  52:             8           6464  javax.swing.JMenuItem
+  53:            88           6336  sun.java2d.loops.MaskBlit
+  54:            93           5952  java.util.Hashtable
+  55:            61           5856  java.awt.Font
+  56:             8           5568  javax.swing.JScrollPane
+  57:            86           5504  java.lang.ref.Finalizer
+  58:           113           5424  java.util.concurrent.locks.ReentrantLock$NonfairSync
+  59:           112           5376  java.util.concurrent.ConcurrentHashMap$Segment
+  60:           216           5184  javax.swing.ArrayTable
+  61:           209           5016  sun.awt.EventListenerAggregate
+  62:             6           4800  javax.swing.plaf.basic.BasicSplitPaneDivider$1
+  63:             6           4800  javax.swing.plaf.basic.BasicSplitPaneDivider$2
+  64:            73           4672  javax.swing.DefaultButtonModel
+  65:            64           4608  java.util.WeakHashMap$Entry
+  66:            32           4608  sun.awt.image.IntegerInterleavedRaster
+  67:             8           4608  <typeArrayKlassKlass>
+  68:           141           4512  javax.swing.ActionMap
+  69:            21           4368  sun.font.TrueTypeFont
+  70:            36           4320  java.awt.GridBagConstraints
+  71:             5           4200  javax.swing.plaf.basic.BasicComboBoxEditor$BorderlessTextField
+  72:           130           4160  javax.swing.InputMap
+  73:            86           4128  com.sun.java.swing.plaf.windows.TMSchema$Part
+  74:            24           4064  [F
+  75:             5           4040  com.sun.java.swing.plaf.windows.WindowsComboBoxUI$XPComboBoxButton
+  76:            21           4024  [Lsun.font.TrueTypeFont$DirectoryEntry;
+  77:             6           3984  javax.swing.JPopupMenu
+  78:            62           3968  java.awt.Color
+  79:            15           3952  [Ljava.lang.reflect.Field;
+  80:           112           3928  [Ljava.util.concurrent.ConcurrentHashMap$HashEntry;
+  81:             5           3920  javax.swing.plaf.basic.BasicComboPopup
+  82:             6           3888  javax.swing.JSplitPane
+  83:            59           3776  javax.swing.plaf.ColorUIResource
+  84:           117           3744  javax.swing.KeyStroke
+  85:             5           3520  javax.swing.plaf.basic.BasicComboPopup$1
+  86:            46           3480  [Ljava.lang.reflect.Method;
+  87:            72           3456  java.lang.ref.WeakReference
+  88:             5           3400  javax.swing.JComboBox
+  89:            47           3384  sun.java2d.loops.MaskFill
+  90:             6           3360  com.sun.java.swing.plaf.windows.WindowsSplitPaneDivider
+  91:            22           3344  sun.font.CompositeFont
+  92:             5           3320  com.sun.java.swing.plaf.windows.WindowsComboBoxUI$WindowsComboBoxRenderer
+  93:            19           3192  java.lang.Thread
+  94:            30           3120  [Z
+  95:           130           3120  java.lang.Character
+  96:            35           3080  sun.awt.image.BufImgSurfaceData
+  97:            64           3072  java.lang.ref.PhantomReference
+  98:             5           3000  javax.swing.JPanel
+  99:            51           2856  de.schmiereck.noiseComp.generator.InputTypeData
+ 100:            16           2816  java.awt.image.DirectColorModel
+ 101:            13           2808  com.sun.java.swing.plaf.windows.WindowsScrollBarUI
+ 102:            26           2704  java.net.URL
+ 103:            42           2688  javax.swing.text.GapContent$MarkData
+ 104:             3           2568  javax.swing.JMenu
+ 105:            53           2544  sun.java2d.loops.SurfaceType
+ 106:            35           2520  java.awt.image.BufferedImage
+ 107:            26           2496  java.lang.Package
+ 108:             4           2464  javax.swing.JToolBar
+ 109:            12           2400  <klassKlass>
+ 110:             3           2376  javax.swing.JRadioButton
+ 111:            11           2376  [Ljava.util.WeakHashMap$Entry;
+ 112:            37           2368  java.util.LinkedHashMap$Entry
+ 113:            14           2352  com.sun.java.swing.plaf.windows.WindowsTextFieldUI$WindowsFieldCaret
+ 114:            22           2304  [Lsun.font.PhysicalFont;
+ 115:            71           2272  com.sun.java.swing.plaf.windows.TMSchema$State
+ 116:            47           2256  java.security.AccessControlContext
+ 117:            26           2256  [Lcom.sun.java.swing.plaf.windows.TMSchema$State;
+ 118:             6           2256  javax.swing.plaf.basic.BasicSplitPaneUI$1
+ 119:            40           2240  com.sun.java.swing.plaf.windows.XPStyle$Skin
+ 120:            35           2240  sun.java2d.d3d.D3DCachingSurfaceManager
+ 121:            31           2232  javax.swing.Timer
+ 122:            32           2192  [D
+ 123:            30           2160  sun.java2d.loops.DrawGlyphListAA
+ 124:            66           2112  javax.swing.plaf.basic.BasicButtonListener
+ 125:            65           2080  java.awt.Rectangle
+ 126:             1           2072  [Ljava.lang.Short;
+ 127:             1           2072  [Ljava.lang.Integer;
+ 128:            32           2048  java.awt.image.SinglePixelPackedSampleModel
+ 129:            35           1960  com.sun.java.swing.plaf.windows.DesktopProperty
+ 130:            27           1944  sun.java2d.loops.BlitBg
+ 131:            28           1904  [Ljavax.swing.text.GapContent$MarkData;
+ 132:            17           1904  java.util.logging.Logger
+ 133:            14           1904  sun.java2d.d3d.D3DSurfaceData
+ 134:            26           1872  com.sun.java.swing.plaf.windows.DesktopProperty$WeakPCL
+ 135:            58           1856  sun.java2d.DefaultDisposerRecord
+ 136:            77           1848  javax.swing.AbstractButton$Handler
+ 137:            38           1824  sun.reflect.UnsafeQualifiedStaticIntegerFieldAccessorImpl
+ 138:            32           1792  java.awt.image.DataBufferInt
+ 139:            14           1792  javax.swing.text.PlainDocument
+ 140:            20           1760  sun.nio.ch.FileChannelImpl
+ 141:            36           1728  java.util.concurrent.ConcurrentHashMap$HashEntry
+ 142:            24           1728  java.awt.geom.AffineTransform
+ 143:            42           1680  sun.reflect.NativeConstructorAccessorImpl
+ 144:            26           1664  java.awt.SystemColor
+ 145:            41           1640  java.util.LinkedList$Entry
+ 146:            34           1632  sun.reflect.UnsafeQualifiedStaticObjectFieldAccessorImpl
+ 147:            68           1632  java.lang.Float
+ 148:            67           1608  java.awt.Dimension
+ 149:            49           1568  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$XPValue
+ 150:            16           1536  de.schmiereck.noiseComp.timeline.Timeline
+ 151:            63           1512  java.util.HashMap$Values
+ 152:            27           1512  javax.swing.DefaultBoundedRangeModel
+ 153:            63           1512  de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier
+ 154:            46           1472  javax.swing.SizeRequirements
+ 155:             2           1456  com.sun.java.swing.plaf.windows.WindowsTableHeaderUI$XPDefaultRenderer
+ 156:            14           1456  javax.swing.text.FieldView
+ 157:            30           1440  sun.swing.ImageCache$Entry
+ 158:            45           1440  java.awt.Insets
+ 159:            36           1440  sun.reflect.NativeMethodAccessorImpl
+ 160:            44           1424  [Ljava.lang.reflect.Constructor;
+ 161:             2           1424  [Lcom.sun.java.swing.plaf.windows.TMSchema$Part;
+ 162:             2           1408  sun.swing.table.DefaultTableCellHeaderRenderer
+ 163:            57           1368  java.awt.geom.Point2D$Float
+ 164:             2           1328  javax.swing.JRootPane
+ 165:            33           1320  java.lang.ref.ReferenceQueue
+ 166:             8           1312  [Lsun.java2d.loops.RenderCache$Entry;
+ 167:             2           1296  javax.swing.table.JTableHeader
+ 168:            32           1280  sun.awt.SunHints$Value
+ 169:            26           1248  javax.swing.tree.DefaultMutableTreeNode
+ 170:             2           1232  javax.swing.JLayeredPane
+ 171:            14           1232  javax.swing.TransferHandler$SwingDropTarget
+ 172:            17           1224  sun.java2d.loops.DrawGlyphList
+ 173:            17           1224  sun.java2d.loops.FillRect
+ 174:             8           1216  com.sun.java.swing.plaf.windows.WindowsMenuItemUI
+ 175:            25           1200  sun.font.FontManager$FontRegistrationInfo
+ 176:             6           1200  com.sun.java.swing.plaf.windows.WindowsSplitPaneUI
+ 177:            29           1160  java.util.logging.LogManager$LogNode
+ 178:            24           1152  java.util.Locale
+ 179:            24           1152  sun.font.EAttribute
+ 180:            16           1152  sun.java2d.loops.DrawPath
+ 181:            16           1152  sun.java2d.loops.DrawPolygons
+ 182:            16           1152  sun.java2d.loops.FillSpans
+ 183:            16           1152  sun.java2d.loops.DrawLine
+ 184:            16           1152  sun.java2d.loops.FillPath
+ 185:            16           1152  sun.java2d.loops.DrawRect
+ 186:            28           1120  [Ljavax.swing.text.AbstractDocument$AbstractElement;
+ 187:             7           1064  [Ljava.util.concurrent.ConcurrentHashMap$Segment;
+ 188:            33           1056  java.io.ExpiringCache$Entry
+ 189:            22           1056  de.schmiereck.noiseComp.generator.GeneratorTypeData
+ 190:            12           1056  sun.java2d.loops.GraphicsPrimitiveProxy
+ 191:            22           1056  javax.swing.UIDefaults$ProxyLazyValue
+ 192:             1           1048  [Ljava.lang.Character;
+ 193:             5           1040  com.sun.java.swing.plaf.windows.WindowsComboBoxUI
+ 194:            43           1032  sun.reflect.DelegatingConstructorAccessorImpl
+ 195:            43           1032  sun.font.Font2DHandle
+ 196:            16           1024  de.schmiereck.noiseComp.generator.InputData
+ 197:            18           1008  java.io.ObjectStreamField
+ 198:            14           1008  javax.swing.text.AbstractDocument$BidiElement
+ 199:            14           1008  javax.swing.text.AbstractDocument$BidiRootElement
+ 200:            42           1008  java.util.HashSet
+ 201:            14           1008  sun.java2d.loops.TransformHelper
+ 202:            25           1000  sun.swing.SwingLazyValue
+ 203:             5           1000  sun.font.FileFontStrike
+ 204:            41            984  sun.reflect.DelegatingMethodAccessorImpl
+ 205:            20            960  com.sun.java.swing.plaf.windows.TMSchema$Prop
+ 206:            39            936  java.util.regex.Pattern$CharPropertyNames$1
+ 207:             1            936  de.schmiereck.noiseComp.swingView.appView.AppView
+ 208:            13            936  sun.java2d.loops.DrawGlyphListLCD
+ 209:            29            928  javax.swing.plaf.InputMapUIResource
+ 210:            14            896  javax.swing.text.GapContent
+ 211:            14            896  javax.swing.text.AbstractDocument$BranchElement
+ 212:            14            896  javax.swing.text.AbstractDocument$LeafElement
+ 213:            14            896  com.sun.java.swing.plaf.windows.WindowsTextFieldUI
+ 214:            28            896  javax.swing.text.GapContent$StickyPosition
+ 215:            37            888  javax.swing.event.ChangeEvent
+ 216:             9            864  javax.swing.plaf.basic.BasicScrollPaneUI
+ 217:             9            864  javax.swing.ScrollPaneLayout$UIResource
+ 218:             4            832  com.sun.java.swing.plaf.windows.WindowsToolBarUI
+ 219:            25            808  [Ljava.security.ProtectionDomain;
+ 220:            10            800  sun.java2d.d3d.D3DMaskFill
+ 221:            20            800  java.io.RandomAccessFile
+ 222:             1            800  javax.swing.JCheckBox
+ 223:            11            792  java.util.WeakHashMap
+ 224:             9            792  [Lsun.awt.SunHints$Value;
+ 225:             1            784  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectView
+ 226:            14            784  javax.swing.plaf.basic.BasicTextUI$TextActionWrapper
+ 227:             1            784  de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView
+ 228:             1            776  de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView$1
+ 229:            24            768  de.schmiereck.dataTools.VectorHash
+ 230:             1            760  de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView
+ 231:            19            760  sun.java2d.loops.CompositeType
+ 232:            31            744  javax.swing.Timer$DoPostEvent
+ 233:             1            736  de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesView
+ 234:            23            736  java.io.FileDescriptor
+ 235:             1            728  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelView
+ 236:            10            720  sun.misc.URLClassPath$JarLoader
+ 237:            10            720  javax.swing.DefaultListSelectionModel
+ 238:            11            704  sun.font.FontFamily
+ 239:             5            680  javax.swing.plaf.basic.BasicListUI
+ 240:            14            672  javax.swing.text.DefaultHighlighter$SafeDamager
+ 241:            14            672  javax.swing.plaf.basic.BasicTextUI$FocusAction
+ 242:            14            672  javax.swing.plaf.basic.BasicTextUI$BasicHighlighter
+ 243:            14            672  javax.swing.plaf.basic.BasicTextUI$RootView
+ 244:             1            664  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView
+ 245:             1            664  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView
+ 246:             1            664  javax.swing.DefaultListCellRenderer
+ 247:             1            656  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView
+ 248:             3            648  [Lsun.font.EAttribute;
+ 249:             9            648  javax.swing.BoxLayout
+ 250:            20            640  sun.nio.ch.NativeThreadSet
+ 251:             8            640  sun.java2d.d3d.D3DSwToSurfaceScale
+ 252:             8            640  sun.font.FontStrikeDisposer
+ 253:             8            640  java.nio.DirectByteBuffer
+ 254:             1            640  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditView
+ 255:             8            640  sun.java2d.d3d.D3DSwToSurfaceTransform
+ 256:             8            640  sun.java2d.d3d.D3DSwToTextureBlit
+ 257:             1            640  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView
+ 258:             8            640  sun.java2d.d3d.D3DSwToSurfaceBlit
+ 259:            20            640  java.lang.StringBuffer
+ 260:             1            624  javax.swing.JMenuBar
+ 261:             6            624  sun.reflect.DelegatingClassLoader
+ 262:            11            616  javax.sound.sampled.AudioFormat
+ 263:             1            616  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleView
+ 264:             7            616  sun.java2d.windows.GDIBlitLoops
+ 265:             1            608  javax.swing.JPopupMenu$Separator
+ 266:             1            608  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleView
+ 267:            19            608  java.lang.StringBuilder
+ 268:            15            600  javax.swing.plaf.basic.LazyActionMap
+ 269:             3            600  com.sun.java.swing.plaf.windows.WindowsMenuUI
+ 270:             8            576  de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel
+ 271:             9            576  sun.java2d.pipe.PixelToParallelogramConverter
+ 272:             6            576  sun.java2d.d3d.D3DMaskBlit
+ 273:            14            560  javax.swing.text.GapContent$MarkVector
+ 274:            10            560  sun.java2d.loops.RenderCache$Entry
+ 275:            14            560  javax.swing.text.JTextComponent$KeymapActionMap
+ 276:             5            560  sun.java2d.loops.RenderLoops
+ 277:            14            560  javax.swing.plaf.basic.BasicTextUI$UpdateHandler
+ 278:            14            560  javax.swing.text.JTextComponent$KeymapWrapper
+ 279:            14            560  javax.swing.text.JTextComponent$MutableCaretEvent
+ 280:            14            560  java.awt.dnd.DropTargetContext
+ 281:            35            560  java.lang.ref.ReferenceQueue$Lock
+ 282:            23            552  de.schmiereck.noiseComp.generator.InputTypesData
+ 283:            23            552  java.awt.font.TextAttribute
+ 284:            10            528  [Ljavax.swing.SizeRequirements;
+ 285:            13            520  com.sun.java.swing.plaf.windows.WindowsScrollBarUI$1
+ 286:            13            520  javax.swing.plaf.basic.BasicScrollBarUI$TrackListener
+ 287:            13            520  javax.swing.KeyboardManager$ComponentKeyStrokePair
+ 288:            13            520  javax.swing.ComponentInputMap
+ 289:            16            512  com.sun.java.swing.plaf.windows.TMSchema$Control
+ 290:             8            512  sun.font.StrikeCache$SoftDisposerRef
+ 291:            16            512  javax.swing.border.EmptyBorder
+ 292:            21            504  sun.font.TrueTypeFont$TTDisposerRecord
+ 293:             7            504  java.util.concurrent.ConcurrentHashMap
+ 294:             9            504  java.util.Collections$SynchronizedMap
+ 295:             9            504  [Ljava.util.Set;
+ 296:             3            504  sun.awt.image.ByteInterleavedRaster
+ 297:             7            504  javax.swing.plaf.basic.DefaultMenuLayout
+ 298:             2            496  [Ljavax.swing.Action;
+ 299:            15            480  javax.swing.plaf.ActionMapUIResource
+ 300:            20            480  java.nio.channels.spi.AbstractInterruptibleChannel$1
+ 301:            15            480  com.sun.java.swing.plaf.windows.WindowsIconFactory$VistaMenuItemCheckIconFactory$VistaMenuItemCheckIcon
+ 302:             5            480  javax.swing.UIDefaults
+ 303:            15            480  sun.awt.windows.WDesktopProperties$WinPlaySound
+ 304:             5            480  java.util.prefs.WindowsPreferences
+ 305:            15            480  java.util.regex.Pattern$GroupTail
+ 306:            12            480  javax.swing.DefaultSingleSelectionModel
+ 307:            15            480  java.util.regex.Pattern$GroupHead
+ 308:            14            448  javax.swing.plaf.InsetsUIResource
+ 309:            14            448  java.io.File
+ 310:             8            448  javax.swing.ActionPropertyChangeListener$OwnedWeakReference
+ 311:             8            448  sun.font.StrikeMetrics
+ 312:             8            448  sun.font.FontStrikeDesc
+ 313:            14            448  sun.awt.CausedFocusEvent$Cause
+ 314:            11            440  com.sun.java.swing.plaf.windows.WindowsPopupMenuUI
+ 315:            11            440  javax.swing.plaf.ComponentInputMapUIResource
+ 316:            18            432  java.util.Collections$UnmodifiableSet
+ 317:            13            416  javax.swing.plaf.basic.BasicScrollBarUI$ScrollListener
+ 318:             5            400  java.util.ResourceBundle$CacheKey
+ 319:             1            400  [Ljava.awt.Image;
+ 320:             5            400  sun.font.CMap$CMapFormat4
+ 321:             7            392  java.lang.ThreadLocal$ThreadLocalMap$Entry
+ 322:             3            392  [[J
+ 323:             7            392  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$WindowsFontProperty
+ 324:             8            384  java.util.regex.Pattern$Branch
+ 325:            16            384  java.util.regex.Pattern$CharPropertyNames$4
+ 326:             4            384  javax.swing.table.TableColumn
+ 327:            12            384  javax.swing.plaf.basic.BasicSplitPaneDivider$OneTouchActionHandler
+ 328:             8            384  java.lang.OutOfMemoryError
+ 329:            16            384  javax.swing.UIDefaults$LazyInputMap
+ 330:             8            384  javax.swing.text.DefaultEditorKit$NextVisualPositionAction
+ 331:             8            384  java.util.regex.Pattern$Curly
+ 332:             1            376  javax.swing.ImageIcon$3
+ 333:             1            368  javax.swing.ImageIcon$1
+ 334:             3            360  sun.font.FontDesignMetrics
+ 335:             9            360  java.util.logging.Level
+ 336:             9            360  com.sun.java.swing.plaf.windows.XPStyle$XPFillBorder
+ 337:             9            360  [Ljava.io.ObjectStreamField;
+ 338:             5            360  sun.java2d.loops.DrawParallelogram
+ 339:             9            360  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$XPBorderValue
+ 340:             5            360  java.util.Properties
+ 341:             5            360  sun.java2d.loops.FillParallelogram
+ 342:             9            360  sun.swing.SwingUtilities2$2
+ 343:            11            352  java.util.BitSet
+ 344:             4            352  javax.swing.tree.VariableHeightLayoutCache$TreeStateNode
+ 345:            11            352  javax.swing.plaf.basic.BasicPopupMenuUI$BasicMenuKeyListener
+ 346:            11            352  javax.swing.tree.TreePath
+ 347:             3            336  sun.nio.cs.MS1252$Encoder
+ 348:             6            336  javax.swing.plaf.basic.BasicSplitPaneUI$BasicHorizontalLayoutManager
+ 349:            14            336  javax.swing.JTextField$ScrollRepainter
+ 350:             6            336  javax.swing.event.SwingPropertyChangeSupport
+ 351:            14            336  javax.swing.text.DefaultCaret$Handler
+ 352:             6            336  com.sun.media.sound.HeadspaceMixer$MixerReverbControl$MixerReverbType
+ 353:             3            336  java.awt.image.IndexColorModel
+ 354:            14            336  com.sun.java.swing.plaf.windows.AnimationController$PartUIClientPropertyKey
+ 355:             7            336  java.lang.ClassLoader$NativeLibrary
+ 356:             3            328  [Lsun.font.CharToGlyphMapper;
+ 357:             3            328  [Lsun.font.PhysicalStrike;
+ 358:             3            328  [[Ljava.lang.String;
+ 359:             5            320  java.util.IdentityHashMap
+ 360:             8            320  java.util.LinkedList
+ 361:             4            320  java.util.jar.JarFile
+ 362:             5            320  javax.swing.border.TitledBorder
+ 363:             8            320  java.util.Stack
+ 364:             8            320  [Ljava.util.regex.Pattern$Node;
+ 365:             5            320  java.util.ResourceBundle$BundleReference
+ 366:            13            312  javax.swing.plaf.basic.BasicScrollBarUI$Handler
+ 367:            13            312  java.lang.Long
+ 368:            13            312  java.awt.Point
+ 369:             7            312  [Ljava.awt.Component;
+ 370:            13            312  javax.swing.JScrollBar$ModelListener
+ 371:            13            312  javax.swing.plaf.basic.BasicScrollBarUI$ModelListener
+ 372:            12            288  javax.swing.JViewport$ViewListener
+ 373:             9            288  sun.awt.SunHints$Key
+ 374:             9            288  javax.swing.plaf.BorderUIResource$CompoundBorderUIResource
+ 375:             9            288  sun.misc.MetaIndex
+ 376:            12            288  java.awt.AlphaComposite
+ 377:             9            288  <compiledICHolderKlass>
+ 378:             9            288  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$LazyWindowsIcon
+ 379:             4            288  de.schmiereck.noiseComp.generator.SinusGenerator
+ 380:             1            288  com.sun.java.swing.plaf.windows.WindowsTreeUI
+ 381:             5            280  com.sun.java.swing.plaf.windows.TMSchema$TypeEnum
+ 382:             5            280  [[S
+ 383:             5            280  javax.swing.plaf.basic.BasicListUI$Handler
+ 384:             5            280  java.util.ResourceBundle$LoaderReference
+ 385:             5            280  [[Lsun.awt.FontDescriptor;
+ 386:             2            272  [Ljava.awt.Cursor;
+ 387:             3            264  java.awt.GridBagLayout
+ 388:            11            264  javax.swing.plaf.basic.BasicPopupMenuUI$BasicPopupMenuListener
+ 389:             8            256  javax.swing.AbstractButton$ButtonActionPropertyChangeListener
+ 390:             4            256  javax.swing.JToggleButton$ToggleButtonModel
+ 391:             8            256  javax.swing.DropMode
+ 392:             8            256  java.util.regex.Pattern$BitClass
+ 393:             4            256  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$TriggerDesktopProperty
+ 394:            10            240  java.util.Formatter$Flags
+ 395:             5            240  java.awt.font.FontRenderContext
+ 396:             5            240  sun.font.TrueTypeGlyphMapper
+ 397:             3            240  sun.font.CompositeStrike
+ 398:             3            240  sun.swing.ImageIconUIResource
+ 399:             3            232  [Ljava.lang.Thread;
+ 400:             2            232  [[D
+ 401:             1            232  sun.awt.windows.WFramePeer
+ 402:             2            224  java.util.jar.JarFile$JarFileEntry
+ 403:             2            224  sun.net.www.protocol.jar.URLJarFile
+ 404:             3            216  sun.misc.Cleaner
+ 405:             9            216  javax.swing.plaf.basic.BasicScrollPaneUI$Handler
+ 406:             9            216  javax.sound.sampled.FloatControl$Type
+ 407:             9            216  javax.swing.text.StyleConstants$ParagraphConstants
+ 408:             1            208  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel
+ 409:             2            208  javax.swing.JRootPane$1
+ 410:             5            200  java.lang.RuntimePermission
+ 411:             5            200  javax.swing.AncestorNotifier
+ 412:             5            200  javax.swing.DefaultComboBoxModel
+ 413:             5            200  javax.swing.plaf.basic.BasicComboBoxUI$DefaultKeySelectionManager
+ 414:             5            200  java.awt.FlowLayout
+ 415:             2            192  java.awt.GridBagLayoutInfo
+ 416:             3            192  sun.font.FontDesignMetrics$KeyReference
+ 417:             3            192  com.sun.media.sound.SimpleInputDeviceProvider$InputDeviceInfo
+ 418:             8            192  de.schmiereck.noiseComp.generator.GeneratorChangeObserver
+ 419:             8            192  java.util.HashMap$KeySet
+ 420:             2            192  sun.nio.cs.StreamEncoder
+ 421:             6            192  java.util.regex.Pattern$Ctype
+ 422:             2            192  java.util.regex.Pattern
+ 423:             2            192  java.awt.BorderLayout
+ 424:             4            192  javax.swing.text.DefaultEditorKit$VerticalPageAction
+ 425:             2            192  javax.swing.plaf.FontUIResource
+ 426:             8            192  com.sun.java.swing.plaf.windows.WindowsMenuItemUI$1
+ 427:             8            192  sun.java2d.loops.RenderCache
+ 428:             3            192  sun.awt.FontDescriptor
+ 429:             1            192  java.awt.EventDispatchThread
+ 430:             3            192  java.awt.image.PixelInterleavedSampleModel
+ 431:             8            192  java.lang.ThreadLocal
+ 432:             4            192  javax.swing.plaf.basic.BasicToolBarUI$Handler
+ 433:             8            192  javax.swing.plaf.basic.BasicMenuItemUI$Handler
+ 434:             4            192  java.util.Collections$UnmodifiableMap
+ 435:             8            192  java.util.regex.Pattern$CharPropertyNames$3
+ 436:             6            192  java.util.regex.Pattern$Single
+ 437:             8            192  java.util.regex.Pattern$BranchConn
+ 438:             4            192  java.security.Permissions
+ 439:             1            184  com.sun.media.sound.MixerThread
+ 440:             1            184  [Lcom.sun.java.swing.plaf.windows.TMSchema$Prop;
+ 441:             1            184  [Lsun.font.CompositeFont;
+ 442:             1            184  [Lsun.font.FileFont;
+ 443:             2            176  sun.java2d.d3d.D3DGeneralBlit
+ 444:             1            176  java.util.logging.LogManager$Cleaner
+ 445:            11            176  javax.swing.JMenuItem$MenuItemFocusListener
+ 446:             1            176  sun.java2d.d3d.D3DGraphicsDevice
+ 447:             2            176  java.io.ExpiringCache$1
+ 448:             1            168  java.lang.ref.Finalizer$FinalizerThread
+ 449:             1            168  sun.awt.windows.WFontConfiguration
+ 450:             1            168  javax.swing.ToolTipManager
+ 451:             3            168  java.security.CodeSource
+ 452:             1            168  java.lang.ref.Reference$ReferenceHandler
+ 453:             3            168  com.sun.media.sound.PortMixerProvider$PortMixerInfo
+ 454:             3            168  sun.misc.URLClassPath
+ 455:             3            168  sun.font.CompositeGlyphMapper
+ 456:             3            168  java.awt.Cursor
+ 457:             7            168  javax.swing.text.StyleConstants$CharacterConstants
+ 458:             3            168  java.security.ProtectionDomain
+ 459:             3            168  java.awt.image.DataBufferByte
+ 460:             2            160  java.util.LinkedHashMap
+ 461:             1            160  [Ljava.awt.geom.AffineTransform;
+ 462:             5            160  sun.font.FileFont$FileFontDisposer
+ 463:             5            160  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$XPColorValue
+ 464:             5            160  com.sun.java.swing.plaf.windows.WindowsComboBoxUI$3
+ 465:             5            160  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$XPColorValue$XPColorValueKey
+ 466:             2            160  sun.java2d.loops.DrawGlyphListAA$General
+ 467:             2            160  sun.java2d.loops.DrawGlyphList$General
+ 468:             5            160  javax.swing.UIManager$LookAndFeelInfo
+ 469:             5            160  com.sun.java.swing.plaf.windows.WindowsComboBoxUI$WindowsComboBoxEditor
+ 470:             1            152  [Lcom.sun.java.swing.plaf.windows.TMSchema$Control;
+ 471:             1            152  [Ljava.lang.ThreadLocal$ThreadLocalMap$Entry;
+ 472:             1            152  de.schmiereck.noiseComp.swingView.appController.AppController
+ 473:             2            144  java.io.BufferedWriter
+ 474:             3            144  javax.swing.text.DefaultEditorKit$EndLineAction
+ 475:             3            144  javax.swing.text.DefaultEditorKit$EndParagraphAction
+ 476:             2            144  java.lang.ThreadGroup
+ 477:             6            144  javax.swing.plaf.basic.BasicSplitPaneUI$Handler
+ 478:             6            144  javax.swing.plaf.basic.BasicSplitPaneDivider$MouseHandler
+ 479:             6            144  javax.swing.plaf.basic.BasicSplitPaneDivider$DividerLayout
+ 480:             3            144  javax.swing.text.DefaultEditorKit$BeginWordAction
+ 481:             3            144  javax.swing.text.DefaultEditorKit$BeginLineAction
+ 482:             3            144  javax.swing.text.DefaultEditorKit$EndWordAction
+ 483:             3            144  javax.swing.text.DefaultEditorKit$BeginParagraphAction
+ 484:             1            144  sun.font.AttributeValues
+ 485:             1            144  sun.misc.Launcher$ExtClassLoader
+ 486:             1            144  de.schmiereck.noiseComp.soundBuffer.SoundBufferManager
+ 487:             6            144  sun.java2d.pipe.TextRenderer
+ 488:             2            144  java.util.EnumMap
+ 489:             6            144  java.util.regex.Pattern$CharPropertyNames$2
+ 490:             1            144  com.sun.media.sound.MixerSourceLine
+ 491:             3            144  javax.swing.plaf.basic.BasicBorders$RadioButtonBorder
+ 492:             2            144  javax.swing.plaf.basic.BasicTableUI
+ 493:             2            144  de.schmiereck.noiseComp.generator.FaderGenerator
+ 494:             6            144  sun.java2d.pipe.DuctusShapeRenderer
+ 495:             1            144  de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel
+ 496:             1            136  sun.java2d.d3d.D3DSurfaceData$D3DWindowSurfaceData
+ 497:             1            136  com.sun.media.sound.HeadspaceMixer
+ 498:             1            136  sun.misc.Launcher$AppClassLoader
+ 499:             1            136  sun.awt.image.ImageRepresentation
+ 500:             1            136  [Lsun.awt.CausedFocusEvent$Cause;
+ 501:             4            128  [Ljava.awt.AWTKeyStroke;
+ 502:             4            128  java.util.Arrays$ArrayList
+ 503:             2            128  javax.swing.table.DefaultTableColumnModel
+ 504:             4            128  java.awt.AWTKeyStroke
+ 505:             2            128  javax.swing.plaf.basic.BasicTableUI$Handler
+ 506:             4            128  java.awt.Queue
+ 507:             4            128  sun.swing.table.DefaultTableCellHeaderRenderer$EmptyIcon
+ 508:             4            128  javax.swing.JToolBar$DefaultToolBarLayout
+ 509:             4            128  java.awt.Dialog$ModalityType
+ 510:             4            128  java.util.Collections$UnmodifiableRandomAccessList
+ 511:             1            128  sun.awt.windows.WToolkit
+ 512:             4            128  sun.misc.FormattedFloatingDecimal$Form
+ 513:             1            120  javax.swing.RepaintManager
+ 514:             1            120  sun.awt.im.InputMethodContext
+ 515:             5            120  javax.swing.plaf.basic.BasicComboPopup$Handler
+ 516:             5            120  javax.swing.plaf.basic.BasicComboBoxUI$Handler
+ 517:             5            120  [Ljava.util.prefs.PreferenceChangeListener;
+ 518:             1            120  java.util.logging.LogManager$RootLogger
+ 519:             5            120  javax.swing.JComboBox$1
+ 520:             3            120  sun.java2d.pipe.hw.ExtendedBufferCapabilities$VSyncType
+ 521:             5            120  javax.swing.plaf.DimensionUIResource
+ 522:             1            120  sun.reflect.misc.MethodUtil
+ 523:             1            120  com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+ 524:             3            120  sun.font.FontDesignMetrics$MetricsKey
+ 525:             1            120  java.awt.DefaultKeyboardFocusManager
+ 526:             3            120  sun.awt.util.IdentityArrayList
+ 527:             3            120  javax.swing.text.StyleContext$SmallAttributeSet
+ 528:             5            120  [Ljava.util.prefs.NodeChangeListener;
+ 529:             2            112  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$ActiveWindowsIcon
+ 530:             1            112  java.awt.color.ICC_ColorSpace
+ 531:             2            112  sun.misc.SoftCache
+ 532:             1            112  sun.font.GlyphList
+ 533:             2            112  com.sun.java.swing.plaf.windows.WindowsTableHeaderUI
+ 534:             2            112  java.io.PrintStream
+ 535:             2            112  java.nio.HeapByteBuffer
+ 536:             2            112  javax.swing.border.BevelBorder
+ 537:             1            104  javax.swing.tree.DefaultTreeSelectionModel
+ 538:             1            104  sun.java2d.d3d.D3DContext
+ 539:             1            104  javax.swing.MultiUIDefaults
+ 540:             1            104  java.util.ResourceBundle$RBClassLoader
+ 541:             1            104  [Ljava.lang.Runnable;
+ 542:             1            104  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditModel
+ 543:             1            104  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditModel
+ 544:             1            104  [Ljava.util.Locale;
+ 545:             2             96  sun.java2d.pipe.Region$ImmutableRegion
+ 546:             4             96  javax.swing.text.StyleConstants$FontConstants
+ 547:             2             96  javax.swing.text.DefaultEditorKit$PreviousWordAction
+ 548:             3             96  java.nio.DirectByteBuffer$Deallocator
+ 549:             2             96  javax.swing.text.JTextComponent$DefaultKeymap
+ 550:             3             96  com.sun.java.swing.plaf.windows.WindowsMenuUI$WindowsMouseInputHandler
+ 551:             1             96  de.schmiereck.noiseComp.generator.ModulGeneratorTypeData
+ 552:             3             96  javax.swing.plaf.basic.BasicMenuUI$Handler
+ 553:             2             96  java.io.OutputStreamWriter
+ 554:             3             96  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel$HighlightedTimelineHandler
+ 555:             4             96  sun.java2d.pipe.PixelToShapeConverter
+ 556:             4             96  com.sun.java.swing.plaf.windows.WindowsIconFactory$FrameButtonIcon
+ 557:             2             96  javax.swing.text.DefaultEditorKit$EndAction
+ 558:             2             96  javax.swing.text.DefaultEditorKit$BeginAction
+ 559:             3             96  java.util.regex.Pattern$2
+ 560:             1             96  sun.awt.im.ExecutableInputMethodManager
+ 561:             2             96  javax.swing.text.DefaultEditorKit$PageAction
+ 562:             4             96  javax.swing.text.StyleConstants
+ 563:             3             96  java.awt.EventFilter$FilterAction
+ 564:             4             96  javax.sound.sampled.AudioFormat$Encoding
+ 565:             3             96  javax.swing.JMenu$WinListener
+ 566:             1             96  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditModel
+ 567:             4             96  javax.sound.sampled.LineEvent$Type
+ 568:             2             96  javax.swing.text.StyleContext$NamedStyle
+ 569:             2             96  java.io.ExpiringCache
+ 570:             1             96  [[Lsun.awt.SunHints$Value;
+ 571:             1             96  com.sun.media.sound.MixerSourceLine$MixerSourceLineGainControl
+ 572:             3             96  java.awt.Dialog$ModalExclusionType
+ 573:             2             96  java.util.zip.Inflater
+ 574:             2             96  java.io.FilePermission
+ 575:             1             96  sun.awt.Win32GraphicsEnvironment
+ 576:             3             96  com.sun.awt.AWTUtilities$Translucency
+ 577:             1             96  java.awt.EventQueue
+ 578:             1             96  javax.swing.tree.VariableHeightLayoutCache
+ 579:             2             96  java.security.BasicPermissionCollection
+ 580:             3             96  de.schmiereck.noiseComp.generator.ModulGeneratorTypeData$TicksPer
+ 581:             3             96  javax.swing.JMenu$MenuChangeListener
+ 582:             3             96  sun.nio.cs.Surrogate$Parser
+ 583:             3             96  [[B
+ 584:             2             96  sun.util.LocaleServiceProviderPool
+ 585:             2             96  javax.swing.text.DefaultEditorKit$NextWordAction
+ 586:             2             88  [Ljavax.sound.sampled.Control;
+ 587:             1             88  [Ljavax.swing.DropMode;
+ 588:             1             88  [Lsun.font.FontStrike;
+ 589:             1             88  com.sun.media.sound.MixerSourceLine$MixerSourceLineSampleRateControl
+ 590:             1             88  com.sun.media.sound.MixerSourceLine$MixerSourceLinePanControl
+ 591:             1             88  com.sun.java.swing.plaf.windows.WindowsCheckBoxUI
+ 592:             1             88  sun.awt.AppContext
+ 593:             1             88  [Ljavax.sound.sampled.AudioFormat;
+ 594:             1             88  sun.awt.image.SunVolatileImage
+ 595:             1             80  com.sun.java.swing.plaf.windows.WindowsRadioButtonUI
+ 596:             1             80  sun.java2d.d3d.D3DVolatileSurfaceManager
+ 597:             1             80  sun.awt.image.ToolkitImage
+ 598:             1             80  javax.swing.TransferHandler$DropHandler
+ 599:             1             80  [[C
+ 600:             2             80  java.lang.ref.ReferenceQueue$Null
+ 601:             1             80  sun.nio.cs.UTF_16$Decoder
+ 602:             1             80  sun.awt.windows.WInputMethod
+ 603:             2             80  sun.awt.im.InputMethodLocator
+ 604:             2             80  javax.swing.plaf.basic.BasicRootPaneUI$RootPaneInputMap
+ 605:             1             80  [Lsun.misc.FDBigInt;
+ 606:             1             80  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleModel
+ 607:             2             80  javax.swing.text.DefaultEditorKit$DefaultKeyTypedAction
+ 608:             2             80  javax.swing.plaf.basic.BasicTableHeaderUI$MouseInputHandler
+ 609:             1             80  sun.java2d.pipe.BufferedRenderPipe$BufferedDrawHandler
+ 610:             2             80  javax.sound.sampled.DataLine$Info
+ 611:             2             80  java.util.regex.Pattern$6
+ 612:             1             80  sun.java2d.d3d.D3DSurfaceToSwBlit
+ 613:             1             80  javax.swing.UIManager$LAFState
+ 614:             2             80  java.io.BufferedOutputStream
+ 615:             2             80  java.util.regex.Pattern$Ques
+ 616:             2             80  javax.swing.text.DefaultEditorKit$DeleteWordAction
+ 617:             2             80  com.sun.java.swing.plaf.windows.XPStyle$XPEmptyBorder
+ 618:             1             80  javax.swing.plaf.basic.BasicPopupMenuUI$MenuKeyboardHelper
+ 619:             5             80  javax.swing.plaf.basic.BasicBorders$MarginBorder
+ 620:             2             80  java.awt.Window$WindowDisposerRecord
+ 621:             2             80  javax.swing.text.Segment
+ 622:             2             80  java.io.FileOutputStream
+ 623:             3             72  [Ljava.security.Principal;
+ 624:             1             72  sun.java2d.d3d.D3DRTTSurfaceToSurfaceBlit
+ 625:             1             72  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$FontDesktopProperty
+ 626:             3             72  javax.swing.TransferHandler$TransferAction
+ 627:             1             72  sun.java2d.d3d.D3DSurfaceToSurfaceBlit
+ 628:             1             72  sun.text.resources.FormatData
+ 629:             1             72  sun.java2d.d3d.D3DSurfaceToGDIWindowSurfaceTransform
+ 630:             1             72  java.awt.LightweightDispatcher
+ 631:             1             72  sun.java2d.loops.SetDrawPathANY
+ 632:             1             72  sun.awt.windows.WingDings$Encoder
+ 633:             1             72  sun.java2d.loops.SetFillSpansANY
+ 634:             1             72  sun.java2d.d3d.D3DSurfaceToSurfaceTransform
+ 635:             3             72  sun.java2d.pipe.SpanClipRenderer
+ 636:             1             72  sun.java2d.loops.SetDrawRectANY
+ 637:             1             72  sun.java2d.d3d.D3DSurfaceToGDIWindowSurfaceScale
+ 638:             1             72  sun.text.resources.FormatData_de_DE
+ 639:             1             72  sun.java2d.d3d.D3DSurfaceToSurfaceScale
+ 640:             1             72  de.schmiereck.noiseComp.generator.OutputGenerator
+ 641:             1             72  de.schmiereck.noiseComp.generator.MixerGenerator
+ 642:             1             72  sun.util.resources.CurrencyNames
+ 643:             1             72  sun.java2d.loops.SetFillPathANY
+ 644:             3             72  java.text.AttributedCharacterIterator$Attribute
+ 645:             1             72  java.util.logging.LogManager
+ 646:             1             72  javax.swing.plaf.basic.BasicTreeUI$Handler
+ 647:             1             72  [Ljavax.sound.sampled.ReverbType;
+ 648:             3             72  com.sun.java.swing.plaf.windows.WindowsMenuUI$1
+ 649:             1             72  sun.java2d.loops.SetFillRectANY
+ 650:             1             72  sun.java2d.d3d.D3DTextureToSurfaceTransform
+ 651:             1             72  sun.java2d.loops.TransformBlit
+ 652:             1             72  com.sun.java.swing.plaf.windows.WindowsMenuBarUI
+ 653:             1             72  sun.awt.Symbol$Encoder
+ 654:             1             72  sun.java2d.d3d.D3DSurfaceToGDIWindowSurfaceBlit
+ 655:             1             72  sun.java2d.d3d.D3DRTTSurfaceToSurfaceScale
+ 656:             3             72  javax.swing.event.DocumentEvent$EventType
+ 657:             1             72  sun.java2d.d3d.D3DRTTSurfaceToSurfaceTransform
+ 658:             1             72  sun.java2d.d3d.D3DTextureToSurfaceBlit
+ 659:             1             72  sun.text.resources.FormatData_de
+ 660:             1             72  [Lsun.swing.SwingUtilities2$LSBCacheEntry;
+ 661:             1             72  sun.util.resources.CurrencyNames_de_DE
+ 662:             1             72  sun.java2d.d3d.D3DTextureToSurfaceScale
+ 663:             3             72  java.util.HashMap$EntrySet
+ 664:             1             72  sun.awt.windows.WFontPeer
+ 665:             3             72  java.nio.charset.CodingErrorAction
+ 666:             1             72  sun.awt.resources.awt_de
+ 667:             3             72  java.awt.ComponentOrientation
+ 668:             1             72  sun.awt.resources.awt
+ 669:             1             72  sun.java2d.loops.SetDrawPolygonsANY
+ 670:             1             72  sun.java2d.loops.SetDrawLineANY
+ 671:             1             64  [Ljava.awt.EventQueueItem;
+ 672:             1             64  [Lsun.java2d.loops.SurfaceType;
+ 673:             2             64  sun.awt.MostRecentKeyValue
+ 674:             2             64  [Ljavax.swing.tree.TreePath;
+ 675:             2             64  [Ljavax.swing.text.Position$Bias;
+ 676:             1             64  sun.awt.AWTAutoShutdown
+ 677:             1             64  [Lsun.java2d.loops.RenderLoops;
+ 678:             1             64  [Ljavax.swing.UIManager$LookAndFeelInfo;
+ 679:             2             64  java.io.FilePermissionCollection
+ 680:             1             64  [[[I
+ 681:             2             64  java.util.regex.Pattern$Start
+ 682:             1             64  sun.awt.image.ByteArrayImageSource
+ 683:             1             64  java.util.ResourceBundle$1
+ 684:             1             64  java.util.concurrent.locks.ReentrantReadWriteLock$NonfairSync
+ 685:             1             64  com.sun.java.swing.plaf.windows.WindowsButtonUI
+ 686:             1             64  sun.java2d.d3d.D3DGraphicsConfig
+ 687:             2             64  sun.misc.FDBigInt
+ 688:             1             64  sun.java2d.NullSurfaceData
+ 689:             2             64  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$SkinIcon
+ 690:             1             64  java.awt.datatransfer.SystemFlavorMap
+ 691:             1             64  [[[Lsun.awt.FontDescriptor;
+ 692:             1             64  [[[S
+ 693:             1             64  de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel
+ 694:             2             64  java.awt.MediaTracker
+ 695:             1             64  [Lsun.font.FontDesignMetrics;
+ 696:             1             64  javax.swing.text.StyleContext
+ 697:             2             64  sun.misc.Signal
+ 698:             1             64  [Lcom.sun.java.swing.plaf.windows.TMSchema$TypeEnum;
+ 699:             2             64  sun.misc.URLClassPath$FileLoader
+ 700:             2             64  [Ljava.io.File;
+ 701:             1             64  sun.awt.AWTAutoShutdown$PeerMap
+ 702:             1             56  com.sun.media.sound.MixerSourceLine$MixerSourceLineMuteControl
+ 703:             1             56  [Ljava.lang.ThreadGroup;
+ 704:             1             56  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleModel
+ 705:             1             56  javax.swing.text.DefaultEditorKit$SelectWordAction
+ 706:             1             56  sun.nio.cs.StandardCharsets$Cache
+ 707:             1             56  javax.swing.LayoutFocusTraversalPolicy
+ 708:             1             56  sun.java2d.d3d.D3DScreenUpdateManager
+ 709:             1             56  de.schmiereck.noiseComp.soundData.SoundData
+ 710:             1             56  sun.java2d.pipe.RenderBuffer
+ 711:             1             56  sun.nio.cs.StandardCharsets$Classes
+ 712:             1             56  java.awt.Toolkit$DesktopPropertyChangeSupport
+ 713:             1             56  java.text.AttributedString
+ 714:             1             56  sun.dc.pr.Rasterizer
+ 715:             1             56  javax.swing.text.DefaultEditorKit$SelectLineAction
+ 716:             1             56  javax.swing.plaf.basic.BasicTextUI$TextTransferHandler
+ 717:             1             56  java.text.AttributedString$AttributedStringIterator
+ 718:             1             56  [Ljava.util.Map;
+ 719:             1             56  com.sun.media.sound.CircularBuffer
+ 720:             1             56  sun.nio.cs.StandardCharsets$Aliases
+ 721:             1             56  javax.swing.plaf.basic.BasicTextUI$BasicCursor
+ 722:             1             56  [[Ljava.awt.AWTKeyStroke;
+ 723:             1             56  [Ljava.awt.Queue;
+ 724:             1             56  javax.swing.text.DefaultEditorKit$SelectParagraphAction
+ 725:             1             56  [Ljava.lang.OutOfMemoryError;
+ 726:             1             56  [Lsun.misc.FormattedFloatingDecimal$Form;
+ 727:             1             56  java.awt.color.ICC_ProfileRGB
+ 728:             1             56  [Ljava.awt.Dialog$ModalityType;
+ 729:             2             48  javax.sound.sampled.BooleanControl$Type
+ 730:             2             48  java.util.LinkedHashSet
+ 731:             1             48  [Lcom.sun.awt.AWTUtilities$Translucency;
+ 732:             2             48  java.nio.ByteOrder
+ 733:             2             48  [Ljava.util.logging.Handler;
+ 734:             1             48  sun.awt.windows.WGlobalCursorManager
+ 735:             1             48  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController
+ 736:             1             48  de.schmiereck.noiseComp.swingView.modulsTree.ModulTreeMouseListener
+ 737:             1             48  java.lang.NullPointerException
+ 738:             1             48  java.util.concurrent.atomic.AtomicReferenceFieldUpdater$AtomicReferenceFieldUpdaterImpl
+ 739:             1             48  [Lde.schmiereck.noiseComp.generator.ModulGeneratorTypeData$TicksPer;
+ 740:             1             48  de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesController
+ 741:             1             48  java.awt.BasicStroke
+ 742:             1             48  sun.java2d.d3d.D3DRenderer
+ 743:             1             48  [Lcom.sun.media.sound.SimpleInputDevice;
+ 744:             1             48  de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel
+ 745:             1             48  [Ljava.awt.Dialog$ModalExclusionType;
+ 746:             1             48  [Lde.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel$HighlightedTimelineHandler;
+ 747:             1             48  [Lsun.awt.FontDescriptor;
+ 748:             2             48  java.awt.Cursor$CursorDisposer
+ 749:             1             48  java.io.BufferedInputStream
+ 750:             1             48  de.schmiereck.noiseComp.soundSource.SoundSourceLogic
+ 751:             2             48  java.util.IdentityHashMap$KeySet
+ 752:             1             48  [Ljava.lang.ThreadLocal;
+ 753:             1             48  javax.swing.plaf.basic.BasicBorders$ButtonBorder
+ 754:             3             48  sun.net.www.protocol.jar.Handler
+ 755:             2             48  java.nio.charset.CoderResult
+ 756:             1             48  com.sun.media.sound.EventDispatcher
+ 757:             1             48  javax.swing.plaf.basic.BasicRadioButtonUI
+ 758:             2             48  sun.misc.NativeSignalHandler
+ 759:             1             48  [Lcom.sun.media.sound.SimpleInputDeviceProvider$InputDeviceInfo;
+ 760:             1             48  [Lcom.sun.media.sound.PortMixer;
+ 761:             2             48  [Ljavax.swing.MenuElement;
+ 762:             1             48  [Ljava.awt.Rectangle;
+ 763:             2             48  com.sun.java.swing.plaf.windows.WindowsScrollBarUI$Grid
+ 764:             1             48  de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic
+ 765:             1             48  javax.swing.TransferHandler$TransferSupport
+ 766:             1             48  [Lcom.sun.media.sound.PortMixerProvider$PortMixerInfo;
+ 767:             2             48  javax.swing.text.StyleConstants$ColorConstants
+ 768:             2             48  sun.java2d.pipe.SpanShapeRenderer$Composite
+ 769:             2             48  javax.swing.JRootPane$RootLayout
+ 770:             1             48  java.lang.ArithmeticException
+ 771:             2             48  sun.awt.SunDisplayChanger
+ 772:             1             48  sun.java2d.pipe.Region
+ 773:             1             48  java.lang.VirtualMachineError
+ 774:             2             48  [Ljava.security.cert.Certificate;
+ 775:             1             48  sun.nio.cs.StandardCharsets
+ 776:             1             48  java.lang.ref.Reference
+ 777:             1             48  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelController
+ 778:             1             48  com.sun.media.sound.HeadspaceMixer$MixerInfo
+ 779:             1             48  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$XPDLUValue
+ 780:             1             48  java.awt.Toolkit$SelectiveAWTEventListener
+ 781:             2             48  java.lang.Boolean
+ 782:             2             48  javax.swing.ToolTipManager$Actions
+ 783:             1             48  [Ljava.awt.EventFilter$FilterAction;
+ 784:             2             48  javax.swing.text.Position$Bias
+ 785:             1             48  [Lsun.java2d.pipe.hw.ExtendedBufferCapabilities$VSyncType;
+ 786:             1             40  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel
+ 787:             1             40  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController
+ 788:             1             40  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController$4
+ 789:             1             40  [Ljavax.sound.sampled.Line$Info;
+ 790:             1             40  sun.awt.shell.Win32ShellFolderManager2
+ 791:             1             40  java.util.logging.LoggingPermission
+ 792:             1             40  java.io.ByteArrayInputStream
+ 793:             1             40  sun.awt.windows.WDesktopProperties
+ 794:             1             40  de.schmiereck.noiseComp.timeline.TimelineManagerLogic
+ 795:             1             40  javax.swing.text.DefaultEditorKit$CutAction
+ 796:             1             40  javax.swing.text.DefaultEditorKit$BeepAction
+ 797:             1             40  de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController$1
+ 798:             1             40  java.util.concurrent.locks.ReentrantReadWriteLock
+ 799:             1             40  [Ljavax.swing.UIDefaults;
+ 800:             1             40  sun.awt.color.ProfileDeferralInfo
+ 801:             1             40  com.sun.java.swing.plaf.windows.XPStyle
+ 802:             1             40  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController$2
+ 803:             1             40  sun.nio.cs.UTF_8
+ 804:             1             40  com.sun.java.swing.plaf.windows.WindowsMenuBarUI$TakeFocus
+ 805:             1             40  javax.swing.text.DefaultEditorKit$WritableAction
+ 806:             1             40  javax.swing.tree.DefaultTreeModel
+ 807:             1             40  javax.swing.text.DefaultEditorKit$DumpModelAction
+ 808:             1             40  javax.swing.text.DefaultEditorKit$CopyAction
+ 809:             1             40  javax.swing.text.DefaultEditorKit$InsertContentAction
+ 810:             1             40  javax.swing.text.DefaultEditorKit$UnselectAction
+ 811:             1             40  javax.swing.JTextField$NotifyAction
+ 812:             1             40  java.lang.StringCoding$StringDecoder
+ 813:             1             40  javax.swing.text.SegmentCache$CachedSegment
+ 814:             1             40  sun.nio.cs.UTF_16
+ 815:             1             40  de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController
+ 816:             1             40  javax.swing.text.DefaultEditorKit$InsertBreakAction
+ 817:             1             40  javax.swing.text.DefaultEditorKit$PasteAction
+ 818:             1             40  java.io.WinNTFileSystem
+ 819:             1             40  sun.awt.Symbol
+ 820:             1             40  sun.swing.SwingUtilities2$AATextInfo
+ 821:             1             40  javax.swing.text.DefaultEditorKit$InsertTabAction
+ 822:             1             40  de.schmiereck.noiseComp.soundSource.SoundSamplesBufferData
+ 823:             1             40  sun.awt.PostEventQueue
+ 824:             1             40  com.sun.media.sound.HeadspaceMixer$MixerReverbControl
+ 825:             1             40  de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel
+ 826:             1             40  sun.awt.windows.WingDings
+ 827:             1             40  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeTabelModel
+ 828:             1             40  javax.swing.MenuSelectionManager
+ 829:             1             40  java.lang.reflect.ReflectPermission
+ 830:             1             40  javax.swing.text.DefaultEditorKit$ReadOnlyAction
+ 831:             1             40  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController$1
+ 832:             1             40  javax.swing.text.DefaultEditorKit$DeletePrevCharAction
+ 833:             1             40  javax.swing.text.DefaultEditorKit$DeleteNextCharAction
+ 834:             1             40  javax.swing.text.DefaultEditorKit$SelectAllAction
+ 835:             1             40  javax.swing.text.DefaultEditorKit$ToggleComponentOrientationAction
+ 836:             1             40  sun.nio.cs.MS1252
+ 837:             1             40  java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject
+ 838:             1             40  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController$1
+ 839:             1             40  sun.awt.image.FetcherInfo
+ 840:             1             40  sun.dc.pr.Rasterizer$ConsumerDisposer
+ 841:             1             40  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController$3
+ 842:             1             40  javax.swing.border.EtchedBorder
+ 843:             1             40  de.schmiereck.noiseComp.swingView.inputEdit.InputEditController
+ 844:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$23
+ 845:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$4
+ 846:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleController
+ 847:             1             32  com.sun.java.swing.plaf.windows.WindowsBorders$ToolBarBorder
+ 848:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$36
+ 849:             2             32  java.lang.Shutdown$Lock
+ 850:             1             32  sun.dc.pr.PathDasher
+ 851:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$3
+ 852:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$8
+ 853:             1             32  javax.swing.plaf.basic.BasicToggleButtonUI
+ 854:             1             32  de.schmiereck.noiseComp.swingView.modulsTree.ModulTreeMouseListener$1
+ 855:             1             32  java.awt.VKCollection
+ 856:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView$1
+ 857:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$7
+ 858:             1             32  com.sun.java.swing.plaf.windows.XPStyle$XPImageBorder
+ 859:             1             32  sun.reflect.UnsafeObjectFieldAccessorImpl
+ 860:             1             32  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView$5
+ 861:             1             32  javax.swing.ButtonGroup
+ 862:             1             32  javax.swing.plaf.basic.BasicTreeUI$TreeTransferHandler
+ 863:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController
+ 864:             1             32  com.sun.java.swing.plaf.windows.AnimationController
+ 865:             1             32  javax.swing.border.CompoundBorder
+ 866:             1             32  javax.swing.RepaintManager$PaintManager
+ 867:             1             32  java.util.Collections$SynchronizedSet
+ 868:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$24
+ 869:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$1
+ 870:             1             32  de.schmiereck.noiseComp.swingView.appModel.AppModel
+ 871:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView$2
+ 872:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$8
+ 873:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController
+ 874:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$22
+ 875:             1             32  javax.swing.plaf.basic.BasicPopupMenuUI$MouseGrabber
+ 876:             1             32  sun.java2d.d3d.D3DRenderQueue
+ 877:             1             32  java.lang.ThreadLocal$ThreadLocalMap
+ 878:             1             32  com.sun.media.sound.JDK13Services$ProviderCache
+ 879:             1             32  [[Ljava.lang.Object;
+ 880:             1             32  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditView$2
+ 881:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$37
+ 882:             1             32  de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView$1
+ 883:             1             32  java.security.Policy$UnsupportedEmptyCollection
+ 884:             1             32  de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController
+ 885:             1             32  javax.swing.plaf.basic.BasicBorders$SplitPaneBorder
+ 886:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$2
+ 887:             2             32  javax.swing.plaf.basic.BasicLabelUI
+ 888:             1             32  [Ljava.text.AttributedCharacterIterator$Attribute;
+ 889:             1             32  com.sun.java.swing.plaf.windows.WindowsPopupMenuSeparatorUI
+ 890:             1             32  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView$4
+ 891:             1             32  sun.awt.SunHints$LCDContrastKey
+ 892:             1             32  java.util.concurrent.locks.ReentrantReadWriteLock$Sync$HoldCounter
+ 893:             1             32  javax.swing.KeyboardManager
+ 894:             1             32  de.schmiereck.noiseComp.swingView.modulsTree.ModulTreeMouseListener$2
+ 895:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$3
+ 896:             1             32  sun.misc.PerformanceLogger$TimeData
+ 897:             1             32  javax.swing.plaf.basic.BasicBorders$SplitPaneDividerBorder
+ 898:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$21
+ 899:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$6
+ 900:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$5
+ 901:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController
+ 902:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView$4
+ 903:             1             32  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView$3
+ 904:             1             32  javax.swing.SystemEventQueueUtilities$ComponentWorkRequest
+ 905:             1             32  sun.reflect.UnsafeBooleanFieldAccessorImpl
+ 906:             1             32  javax.swing.plaf.basic.BasicBorders$RolloverMarginBorder
+ 907:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$39
+ 908:             1             32  sun.java2d.d3d.D3DContext$D3DContextCaps
+ 909:             1             32  sun.awt.GlobalCursorManager$NativeUpdater
+ 910:             1             32  sun.swing.ImageCache
+ 911:             1             32  java.util.Collections$SynchronizedCollection
+ 912:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$7
+ 913:             1             32  java.util.Currency
+ 914:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$2
+ 915:             1             32  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditView$1
+ 916:             1             32  java.util.Collections$EmptyMap
+ 917:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView$3
+ 918:             1             32  javax.swing.border.LineBorder
+ 919:             1             32  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView$2
+ 920:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$1
+ 921:             1             32  [Ljava.awt.GraphicsDevice;
+ 922:             1             32  sun.dc.pr.PathStroker
+ 923:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectView$1
+ 924:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$38
+ 925:             1             32  javax.swing.text.StyleContext$FontKey
+ 926:             1             32  java.awt.KeyboardFocusManager$HeavyweightFocusRequest
+ 927:             1             32  javax.swing.plaf.basic.BasicBorders$MenuBarBorder
+ 928:             1             32  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView$1
+ 929:             1             32  javax.swing.TimerQueue
+ 930:             1             32  javax.swing.plaf.basic.BasicButtonUI
+ 931:             1             32  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController
+ 932:             1             32  de.schmiereck.noiseComp.swingView.modulsTree.ModulTreeMouseListener$3
+ 933:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$27
+ 934:             1             32  java.io.FileInputStream
+ 935:             1             32  java.security.AllPermissionCollection
+ 936:             1             24  de.schmiereck.noiseComp.swingView.inputEdit.InputEditController$1
+ 937:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$8
+ 938:             1             24  sun.awt.image.PixelConverter$ArgbPre
+ 939:             1             24  [Ljavax.sound.sampled.DataLine$Info;
+ 940:             1             24  javax.swing.LayoutComparator
+ 941:             1             24  [Ljava.lang.Enum;
+ 942:             1             24  [Ljava.util.prefs.AbstractPreferences;
+ 943:             1             24  de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver
+ 944:             1             24  java.util.concurrent.atomic.AtomicInteger
+ 945:             1             24  sun.dc.pr.PathFiller
+ 946:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$14
+ 947:             1             24  de.schmiereck.noiseComp.generator.GeneratorTypesData
+ 948:             1             24  java.util.regex.Pattern$CharPropertyNames$21
+ 949:             1             24  javax.swing.plaf.basic.BasicLookAndFeel$AWTEventHelper
+ 950:             1             24  java.util.regex.Pattern$CharPropertyNames$7
+ 951:             1             24  sun.awt.image.PixelConverter$Xbgr
+ 952:             1             24  sun.awt.image.PixelConverter$ArgbBm
+ 953:             1             24  com.sun.java.swing.plaf.windows.WindowsPopupMenuUI$MnemonicListener
+ 954:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$26
+ 955:             1             24  java.util.regex.Pattern$CharPropertyNames$8
+ 956:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$28
+ 957:             1             24  java.util.regex.Pattern$CharPropertyNames$6
+ 958:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$7
+ 959:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$17
+ 960:             1             24  java.nio.charset.CoderResult$2
+ 961:             1             24  sun.awt.image.PixelConverter$Argb
+ 962:             1             24  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController$1
+ 963:             1             24  sun.awt.image.PixelConverter$Rgba
+ 964:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorNotifier
+ 965:             1             24  sun.java2d.d3d.D3DScreenUpdateManager$1$1
+ 966:             1             24  [Lcom.sun.media.sound.DirectAudioDeviceProvider$DirectAudioDeviceInfo;
+ 967:             1             24  java.util.regex.Pattern$LastNode
+ 968:             1             24  java.util.regex.Pattern$CharPropertyNames$9
+ 969:             1             24  java.util.regex.Pattern$CharPropertyNames$20
+ 970:             1             24  de.schmiereck.noiseComp.service.SoundService
+ 971:             1             24  java.util.Collections$EmptyList
+ 972:             1             24  javax.swing.text.SimpleAttributeSet
+ 973:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$16
+ 974:             1             24  javax.swing.plaf.basic.BasicTextUI$DragListener
+ 975:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$4
+ 976:             1             24  sun.awt.image.PixelConverter$RgbaPre
+ 977:             1             24  java.awt.EventDispatchThread$1
+ 978:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$9
+ 979:             1             24  java.util.regex.Pattern$CharPropertyNames$10
+ 980:             1             24  javax.swing.plaf.basic.BasicLookAndFeel$2
+ 981:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$25
+ 982:             1             24  sun.awt.shell.ShellFolderManager$1
+ 983:             1             24  javax.swing.plaf.basic.BasicPopupMenuUI$MenuKeyboardHelper$1
+ 984:             1             24  sun.awt.image.PixelConverter$Bgrx
+ 985:             1             24  sun.awt.image.PixelConverter$Xrgb
+ 986:             1             24  javax.swing.SwingDefaultFocusTraversalPolicy
+ 987:             1             24  sun.misc.FloatingDecimal$1
+ 988:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$29
+ 989:             1             24  sun.font.CMap$NullCMapClass
+ 990:             1             24  javax.swing.ToolTipManager$insideTimerAction
+ 991:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$5
+ 992:             1             24  de.schmiereck.noiseComp.swingView.appController.DoubleTimelineAction
+ 993:             1             24  sun.misc.Launcher
+ 994:             1             24  sun.awt.RepaintArea
+ 995:             1             24  sun.awt.image.PixelConverter$Ushort565Rgb
+ 996:             1             24  sun.awt.image.PixelConverter
+ 997:             1             24  java.util.concurrent.locks.ReentrantReadWriteLock$WriteLock
+ 998:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$6
+ 999:             1             24  javax.swing.text.SegmentCache
+1000:             1             24  java.util.regex.Pattern$CharPropertyNames$11
+1001:             1             24  java.util.regex.Pattern$CharPropertyNames$19
+1002:             1             24  sun.awt.shell.Win32ShellFolderManager2$1
+1003:             1             24  javax.swing.SwingContainerOrderFocusTraversalPolicy
+1004:             1             24  de.schmiereck.noiseComp.swingView.appController.FileSaveAction
+1005:             1             24  sun.reflect.BootstrapConstructorAccessorImpl
+1006:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$30
+1007:             1             24  de.schmiereck.noiseComp.swingView.appController.FileOpenAction
+1008:             1             24  java.util.IdentityHashMap$Values
+1009:             1             24  sun.jkernel.DownloadManager$1
+1010:             1             24  sun.awt.image.PixelConverter$Rgbx
+1011:             1             24  java.util.regex.Pattern$CharPropertyNames$12
+1012:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$10
+1013:             1             24  sun.awt.image.PixelConverter$Ushort555Rgb
+1014:             1             24  sun.java2d.d3d.D3DTextRenderer
+1015:             1             24  sun.awt.SunToolkit$ModalityListenerList
+1016:             1             24  javax.swing.ToolTipManager$outsideTimerAction
+1017:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$3
+1018:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel$1
+1019:             1             24  de.schmiereck.noiseComp.swingView.inputEdit.InputEditController$2
+1020:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelModel
+1021:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$9
+1022:             1             24  javax.swing.text.DefaultHighlighter$DefaultHighlightPainter
+1023:             1             24  de.schmiereck.noiseComp.swingView.inputSelect.RemoveInputSelectEntryNotifier
+1024:             1             24  javax.swing.plaf.basic.BasicLookAndFeel$1
+1025:             1             24  java.util.Hashtable$KeySet
+1026:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$18
+1027:             1             24  java.awt.MutableBoolean
+1028:             1             24  sun.awt.shell.Win32ShellFolderManager2$2
+1029:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$31
+1030:             1             24  java.util.regex.Pattern$CharPropertyNames$13
+1031:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$2
+1032:             1             24  javax.swing.plaf.basic.BasicTreeUI$NodeDimensionsHandler
+1033:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$6
+1034:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$5
+1035:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesTimeRuleController$1
+1036:             1             24  java.util.regex.Pattern$CharPropertyNames$18
+1037:             1             24  sun.awt.image.PixelConverter$Ushort555Rgbx
+1038:             1             24  java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock
+1039:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$13
+1040:             1             24  sun.awt.windows.WToolkit$3
+1041:             1             24  javax.sound.sampled.EnumControl$Type
+1042:             1             24  [Lcom.sun.media.sound.DirectAudioDevice;
+1043:             1             24  sun.java2d.d3d.D3DGraphicsConfig$D3DImageCaps
+1044:             1             24  javax.sound.sampled.Line$Info
+1045:             1             24  java.util.concurrent.atomic.AtomicBoolean
+1046:             1             24  javax.swing.ToolTipManager$stillInsideTimerAction
+1047:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$11
+1048:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$32
+1049:             1             24  sun.misc.FormattedFloatingDecimal$1
+1050:             1             24  java.util.regex.Pattern$CharPropertyNames$14
+1051:             1             24  javax.swing.ToolTipManager$MoveBeforeEnterListener
+1052:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$1
+1053:             1             24  java.awt.EventDispatchThread$HierarchyEventFilter
+1054:             1             24  java.nio.charset.CoderResult$1
+1055:             1             24  sun.awt.image.PixelConverter$UshortGray
+1056:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$15
+1057:             1             24  java.awt.ImageCapabilities
+1058:             1             24  javax.swing.plaf.basic.BasicTreeUI$Actions
+1059:             1             24  java.util.regex.Pattern$5
+1060:             1             24  sun.awt.image.PixelConverter$Ushort4444Argb
+1061:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$35
+1062:             1             24  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$1
+1063:             1             24  java.util.concurrent.locks.ReentrantReadWriteLock$Sync$ThreadLocalHoldCounter
+1064:             1             24  de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController$2
+1065:             1             24  java.util.concurrent.locks.ReentrantLock
+1066:             1             24  [Ljavax.swing.text.Highlighter$Highlight;
+1067:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleController$1
+1068:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController$1
+1069:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController$3
+1070:             1             24  java.util.regex.Pattern$CharPropertyNames$17
+1071:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$4
+1072:             1             24  java.awt.RenderingHints
+1073:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$40
+1074:             1             24  java.awt.color.ICC_Profile$1
+1075:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$33
+1076:             1             24  sun.java2d.pipe.BufferedRenderPipe$AAParallelogramPipe
+1077:             1             24  javax.swing.JTree$TreeModelHandler
+1078:             1             24  java.util.regex.Pattern$CharPropertyNames$15
+1079:             1             24  sun.java2d.d3d.D3DScreenUpdateManager$1
+1080:             1             24  javax.swing.plaf.basic.BasicMenuBarUI$Handler
+1081:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$20
+1082:             1             24  [Ljava.lang.StackTraceElement;
+1083:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$12
+1084:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesGeneratorsRuleView$1
+1085:             1             24  de.schmiereck.noiseComp.swingView.appController.ExitAction
+1086:             1             24  javax.swing.plaf.basic.BasicTableUI$TableTransferHandler
+1087:             1             24  sun.awt.image.PixelConverter$ByteGray
+1088:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController$2
+1089:             1             24  sun.util.CoreResourceBundleControl
+1090:             1             24  com.sun.java.swing.plaf.windows.WindowsMenuBarUI$1
+1091:             1             24  java.util.regex.Pattern$CharPropertyNames$16
+1092:             1             24  java.util.regex.Pattern$Node
+1093:             1             24  javax.swing.plaf.basic.BasicListUI$ListTransferHandler
+1094:             1             24  com.sun.java.swing.plaf.windows.WindowsMenuBarUI$2
+1095:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$34
+1096:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$19
+1097:             1             24  de.schmiereck.noiseComp.swingView.appController.HelpAboutAction
+1098:             1             16  javax.swing.UIManager$2
+1099:             1             16  java.lang.Runtime
+1100:             1             16  java.awt.Image$1
+1101:             1             16  java.lang.ApplicationShutdownHooks$1
+1102:             1             16  javax.swing.ViewportLayout
+1103:             1             16  sun.java2d.pipe.AlphaPaintPipe
+1104:             1             16  sun.awt.DebugHelperStub
+1105:             1             16  sun.java2d.pipe.SolidTextRenderer
+1106:             1             16  com.sun.java.swing.plaf.windows.WindowsTreeUI$ExpandedIcon
+1107:             1             16  javax.swing.text.DefaultEditorKit
+1108:             1             16  javax.swing.plaf.basic.BasicTableHeaderUI$1
+1109:             1             16  sun.java2d.windows.GDIRenderer
+1110:             1             16  com.sun.java.swing.plaf.windows.WindowsComboBoxUI$1
+1111:             1             16  sun.awt.NullComponentPeer
+1112:             1             16  sun.java2d.pipe.AATextRenderer
+1113:             1             16  java.awt.Window$1
+1114:             1             16  com.sun.java.swing.plaf.windows.WindowsTreeUI$CollapsedIcon
+1115:             1             16  javax.swing.plaf.basic.BasicViewportUI
+1116:             1             16  sun.reflect.GeneratedConstructorAccessor1
+1117:             1             16  java.awt.Component$1
+1118:             1             16  sun.java2d.pipe.LCDTextRenderer
+1119:             1             16  com.sun.java.swing.plaf.windows.WindowsComboBoxUI$2
+1120:             1             16  com.sun.java.swing.plaf.windows.WindowsRootPaneUI$AltProcessor
+1121:             1             16  java.lang.System$2
+1122:             1             16  javax.swing.plaf.basic.BasicIconFactory$CheckBoxMenuItemIcon
+1123:             1             16  java.util.regex.Pattern$CharPropertyNames$5
+1124:             1             16  javax.swing.plaf.basic.BasicIconFactory$MenuItemCheckIcon
+1125:             1             16  java.util.Collections$EmptySet
+1126:             1             16  sun.java2d.pipe.ValidatePipe
+1127:             1             16  sun.awt.image.ImageWatched$Link
+1128:             1             16  java.net.URLClassLoader$7
+1129:             1             16  sun.java2d.pipe.OutlineTextRenderer
+1130:             1             16  javax.swing.SwingPaintEventDispatcher
+1131:             1             16  sun.java2d.pipe.AlphaColorPipe
+1132:             1             16  java.util.Hashtable$EmptyIterator
+1133:             1             16  sun.reflect.GeneratedMethodAccessor3
+1134:             1             16  sun.reflect.GeneratedMethodAccessor4
+1135:             1             16  sun.java2d.SunGraphicsEnvironment$T1Filter
+1136:             1             16  java.util.jar.JavaUtilJarAccessImpl
+1137:             1             16  com.sun.media.sound.HeadspaceMixerProvider
+1138:             1             16  sun.misc.Launcher$Factory
+1139:             1             16  javax.swing.plaf.basic.BasicComboPopup$EmptyListModelClass
+1140:             1             16  java.net.UnknownContentHandler
+1141:             1             16  javax.swing.JComponent$1
+1142:             1             16  com.sun.java.swing.plaf.windows.WindowsIconFactory$MenuArrowIcon
+1143:             1             16  sun.awt.windows.WWindowPeer$ActiveWindowListener
+1144:             1             16  sun.awt.windows.WToolkit$ToolkitDisposer
+1145:             1             16  sun.net.www.protocol.jar.JarFileFactory
+1146:             1             16  com.sun.java.swing.plaf.windows.WindowsIconFactory$CheckBoxIcon
+1147:             1             16  sun.java2d.pipe.GeneralCompositePipe
+1148:             1             16  com.sun.java.swing.plaf.windows.WindowsIconFactory$RadioButtonIcon
+1149:             1             16  sun.reflect.GeneratedMethodAccessor1
+1150:             1             16  sun.awt.KeyboardFocusManagerPeerImpl
+1151:             1             16  java.awt.AWTEvent$1
+1152:             1             16  sun.java2d.loops.ProcessPath$1
+1153:             1             16  java.awt.GraphicsCallback$PaintCallback
+1154:             1             16  sun.nio.ch.FileDispatcher
+1155:             1             16  javax.swing.text.SimpleAttributeSet$EmptyAttributeSet
+1156:             1             16  sun.java2d.SunGraphicsEnvironment$TTFilter
+1157:             1             16  java.util.Hashtable$EmptyEnumerator
+1158:             1             16  de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesModel
+1159:             1             16  com.sun.java.swing.plaf.windows.WindowsIconFactory$RadioButtonMenuItemIcon
+1160:             1             16  com.sun.media.sound.DirectAudioDeviceProvider
+1161:             1             16  java.util.Collections$ReverseComparator
+1162:             1             16  sun.java2d.Disposer
+1163:             1             16  com.sun.media.sound.PortMixerProvider
+1164:             1             16  sun.java2d.d3d.D3DDrawImage
+1165:             1             16  sun.awt.windows.WInputMethodDescriptor
+1166:             1             16  com.sun.java.swing.plaf.windows.WindowsLabelUI
+1167:             1             16  sun.java2d.pipe.NullPipe
+1168:             1             16  java.lang.String$CaseInsensitiveComparator
+1169:             1             16  com.sun.media.sound.SimpleInputDeviceProvider
+1170:             1             16  sun.reflect.ReflectionFactory
+1171:             1             16  javax.swing.plaf.basic.BasicPanelUI
+1172:             1             16  sun.misc.Unsafe
+1173:             1             16  com.sun.java.swing.plaf.windows.WindowsIconFactory$VistaMenuItemCheckIconFactory
+1174:             1             16  java.lang.reflect.ReflectAccess
+1175:             1             16  sun.reflect.GeneratedMethodAccessor5
+1176:             1             16  java.awt.Container$MouseEventTargetFilter
+1177:             1             16  java.util.prefs.WindowsPreferencesFactory
+1178:             1             16  com.sun.java.swing.plaf.windows.WindowsRootPaneUI
+1179:             1             16  java.lang.ref.Reference$Lock
+1180:             1             16  com.sun.java.swing.plaf.windows.WindowsIconFactory$MenuItemCheckIcon
+1181:             1             16  sun.util.resources.LocaleData$LocaleDataResourceBundleControl
+1182:             1             16  sun.java2d.loops.GraphicsPrimitiveMgr$2
+1183:             1             16  sun.net.www.protocol.file.Handler
+1184:             1             16  com.sun.java.swing.plaf.windows.XPStyle$SkinPainter
+1185:             1             16  sun.awt.windows.WWindowPeer$GuiDisposedListener
+1186:             1             16  javax.swing.tree.DefaultMutableTreeNode$1
+1187:             1             16  sun.reflect.GeneratedMethodAccessor2
+1188:             1             16  sun.java2d.pipe.DrawImage
+1189:             1             16  javax.swing.plaf.basic.BasicRootPaneUI
+1190:             1             16  sun.java2d.loops.GraphicsPrimitiveMgr$1
+1191:             1             16  java.util.ResourceBundle$Control
+1192:             1             16  javax.swing.text.SimpleAttributeSet$1
+1193:             1             16  java.awt.Component$AWTTreeLock
+1194:             1             16  sun.java2d.pipe.LoopPipe
+1195:             1             16  java.lang.Terminator$1
+1196:             1             16  com.sun.java.swing.plaf.windows.WindowsIconFactory$MenuItemArrowIcon
+Total       1690142       75138048
