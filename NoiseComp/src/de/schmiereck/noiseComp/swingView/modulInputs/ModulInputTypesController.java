@@ -42,6 +42,8 @@ public class ModulInputTypesController
 	 * 
 	 * @param appController
 	 * 			is the App Controller.
+	 * @param appModelChangedObserver 
+	 * 			is the AppModelChangedObserver.
 	 */
 	public ModulInputTypesController(final AppController appController,
 	                                 final AppModelChangedObserver appModelChangedObserver)

@@ -80,7 +80,99 @@ extends MouseAdapter
 					public void actionPerformed(ActionEvent e)
 					{
 						//--------------------------------------------------------------------------
-						modulesTreeController.doInsert();
+						modulesTreeController.doInsertModul();
+						
+						//--------------------------------------------------------------------------
+					}
+			 	}
+			);
+			this.modulesCategoryPopupMenu.add(menuItem);
+		}
+		{
+			JMenuItem menuItem = new JMenuItem("Insert Folder");
+			menuItem.addActionListener
+			(
+			 	new ActionListener()
+			 	{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						//--------------------------------------------------------------------------
+						modulesTreeController.doInsertFolder();
+						
+						//--------------------------------------------------------------------------
+					}
+			 	}
+			);
+			this.modulesCategoryPopupMenu.add(menuItem);
+		}
+		this.modulesCategoryPopupMenu.addSeparator();
+		{
+			JMenuItem menuItem = new JMenuItem("Cut");
+			menuItem.addActionListener
+			(
+			 	new ActionListener()
+			 	{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						//--------------------------------------------------------------------------
+						modulesTreeController.doCut();
+						
+						//--------------------------------------------------------------------------
+					}
+			 	}
+			);
+			this.modulesCategoryPopupMenu.add(menuItem);
+		}
+		{
+			JMenuItem menuItem = new JMenuItem("Paste");
+			menuItem.addActionListener
+			(
+			 	new ActionListener()
+			 	{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						//--------------------------------------------------------------------------
+						modulesTreeController.doPaste();
+						
+						//--------------------------------------------------------------------------
+					}
+			 	}
+			);
+			this.modulesCategoryPopupMenu.add(menuItem);
+		}
+		{
+			JMenuItem menuItem = new JMenuItem("Delete");
+			menuItem.addActionListener
+			(
+			 	new ActionListener()
+			 	{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						//--------------------------------------------------------------------------
+						modulesTreeController.doDelete();
+						
+						//--------------------------------------------------------------------------
+					}
+			 	}
+			);
+			this.modulesCategoryPopupMenu.add(menuItem);
+		}
+		this.modulesCategoryPopupMenu.addSeparator();
+		{
+			JMenuItem menuItem = new JMenuItem("Rename...");
+			menuItem.addActionListener
+			(
+			 	new ActionListener()
+			 	{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						//--------------------------------------------------------------------------
+						modulesTreeController.doRename();
 						
 						//--------------------------------------------------------------------------
 					}
@@ -145,11 +237,11 @@ extends MouseAdapter
 
 						modulesTreeView.notifyDoEditGeneratorListeners(generatorTypeData);
 					}
-			 		
 			 	}
 			);
 			this.generatorPopupMenu.add(menuItem);
 		}
+		//==========================================================================================
 	}
 	
 	/* (non-Javadoc)
@@ -157,10 +249,13 @@ extends MouseAdapter
 	 */
 	public void mouseReleased(MouseEvent e) 
 	{
+		//==========================================================================================
 		int row = this.modulesTreeView.getRowForLocation(e.getX(), e.getY());
 
+		// Row selected?
 		if (row != -1)
 		{
+			//--------------------------------------------------------------------------------------
 //			TreePath oldSelectionPath = modulesTreeView.getSelectionPath();
 //			DefaultMutableTreeNode oldTreeNode = (DefaultMutableTreeNode)oldSelectionPath.getLastPathComponent();
 			
@@ -170,6 +265,8 @@ extends MouseAdapter
 			
 			DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
 			
+			//--------------------------------------------------------------------------------------
+			// Popup?
 			if (e.isPopupTrigger()) 
 			{
 				Object userObject = treeNode.getUserObject();
@@ -205,6 +302,7 @@ extends MouseAdapter
 			}
 			else
 			{
+				//----------------------------------------------------------------------------------
 				// Doubleclick?
 				if (e.getClickCount() == 2)
 				{
@@ -233,5 +331,6 @@ extends MouseAdapter
 				}
 			}
 		}
+		//==========================================================================================
 	}
 }

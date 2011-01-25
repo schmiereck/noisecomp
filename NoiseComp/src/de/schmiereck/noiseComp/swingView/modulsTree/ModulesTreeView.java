@@ -9,6 +9,7 @@ import java.awt.FontMetrics;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.Icon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -76,10 +77,12 @@ implements EditModuleChangedListener
 														  int row,
 														  boolean hasFocus)
 			{
-				// Die Originalmethode die Standardeinstellungen machen lassen
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Let the original mathod do the default settings.
 				super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
 				
-				// Den Wert des Knotens abfragen
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Calulate the type of node.
 				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)value;
 				Object userObject = treeNode.getUserObject();
 				
@@ -114,9 +117,29 @@ implements EditModuleChangedListener
 				}
 				else
 				{
-					this.setText(userObject.toString());
+			        Icon icon;
+			        
+//			        if (leaf) 
+//			        {
+//			            icon = this.getLeafIcon();
+//			        } 
+//			        else
+			        {
+			        	if (expanded) 
+			        	{
+			        		icon = this.getOpenIcon();
+			        	} 
+			        	else 
+			        	{
+			        		icon = this.getClosedIcon();
+			        	}
+			        }
+			        
+			        this.setIcon(icon);
+			        this.setText(userObject.toString());
 				}
 				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				return this;
 			}
 			

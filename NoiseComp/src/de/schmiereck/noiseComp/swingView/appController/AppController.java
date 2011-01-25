@@ -64,6 +64,7 @@ import de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesController;
 import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
+import de.schmiereck.noiseComp.swingView.renameFolder.RenameFolderController;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
@@ -118,6 +119,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * Modul-Input-Types Controller.
 	 */
 	private final ModulInputTypesController modulInputTypesController;
+	
+	/**
+	 * Rename-Module Controller.
+	 */
+	private final RenameFolderController renameFolderController;
 	
 	/**
 	 * Modul-Input-Type Edit Controller.
@@ -254,16 +260,20 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		this.modulEditController = new ModulEditController(this,
 		                                                   this.modulesTreeController.getModulesTreeModel(),
-		                                                   appModelChangedObserver);
+		                                                   this.appModelChangedObserver);
 		
 		this.appView.setModulEditView(this.modulEditController.getModulEditView());
 		
 		//------------------------------------------------------------------------------------------
 		this.modulInputTypesController = new ModulInputTypesController(this,
-		                                                               appModelChangedObserver);
+		                                                               this.appModelChangedObserver);
 		
 		this.modulInputTypeEditController = modulInputTypesController.getModulInputTypeEditController();
 		this.modulInputTypeSelectController = modulInputTypesController.getModulInputTypeSelectController();
+		
+		//------------------------------------------------------------------------------------------
+		this.renameFolderController = new RenameFolderController(this,
+		                                                         this.appModelChangedObserver);
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesTimeRuleController = new TimelinesTimeRuleController();
@@ -341,14 +351,14 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.inputSelectController = 
 			new InputSelectController(this,
 			                          this.timelinesDrawPanelController.getTimelinesDrawPanelModel(),
-			                          appModelChangedObserver);
+			                          this.appModelChangedObserver);
 		
 		this.appView.setInputSelectView(this.inputSelectController.getInputSelectView());
 		
 		//------------------------------------------------------------------------------------------
 		this.inputEditController = 
 			new InputEditController(this.inputSelectController.getInputSelectModel(),
-			                        appModelChangedObserver);
+			                        this.appModelChangedObserver);
 		
 		this.appView.setInputEditView(this.inputEditController.getInputEditView());
 		
@@ -356,7 +366,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.timelineEditController = 
 			new TimelineEditController(this,
 			                           this.timelinesDrawPanelController.getTimelinesDrawPanelModel(),
-			                           appModelChangedObserver);
+			                           this.appModelChangedObserver);
 		
 		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
 		
@@ -2089,6 +2099,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 		{
 			this.soundSchedulerLogic.pausePlayback();
 		}
+		//==========================================================================================
+	}
+
+	/**
+	 * Do Rename Module.
+	 */
+	public void doRenameModule()
+	{
+		//==========================================================================================
+		this.renameFolderController.doRenameModule();
+		
 		//==========================================================================================
 	}
 }

@@ -294,4 +294,17 @@ public class ModulesTreeModel
 		return this.modulesTreeNode;
 	}
 
+	/**
+	 * @param folderTreeNode
+	 * 			is the selected folder Tree-Node.
+	 * @param newFolderTreeNode
+	 * 			is the new folder Tree-Node.
+	 */
+	public void addFolderNode(DefaultMutableTreeNode folderTreeNode, 
+	                          DefaultMutableTreeNode newFolderTreeNode)
+	{
+		this.treeModel.insertNodeInto(newFolderTreeNode, folderTreeNode, 0);
+		//folderTreeNode.add(newFolderTreeNode);
+	}
+
 }

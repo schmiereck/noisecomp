@@ -39,6 +39,11 @@ public class ModulesTreeController
 	 */
 	private final ModulesTreeModel modulesTreeModel;
 	
+	/**
+	 * App Controller.
+	 */
+	private final AppController appController;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -51,6 +56,8 @@ public class ModulesTreeController
 	public ModulesTreeController(final AppController appController)
 	{
 		//==========================================================================================
+		this.appController = appController;
+		
 		DefaultTreeModel treeModel = this.createTreeModel();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -161,7 +168,6 @@ public class ModulesTreeController
 		if (treePath != null)
 		{
 			treeNode = (DefaultMutableTreeNode)treePath.getLastPathComponent();
-			
 		}
 		else
 		{
@@ -190,7 +196,7 @@ public class ModulesTreeController
 	 * Changed model notfier because of AppModelChanged.
 	 * 
 	 */
-	public void doInsert()
+	public void doInsertModul()
 	{
 		//==========================================================================================
 		SoundService soundService = SoundService.getInstance();
@@ -200,7 +206,7 @@ public class ModulesTreeController
 	
 		//modulGeneratorTypeData.setIsMainModulGeneratorType(true);
 		
-		modulGeneratorTypeData.setGeneratorTypeName("(new)");
+		modulGeneratorTypeData.setGeneratorTypeName("Module (new)");
 	
 		soundService.addGeneratorType(modulGeneratorTypeData);
 		
@@ -210,6 +216,78 @@ public class ModulesTreeController
 		//--------------------------------------------------------------------------
 		this.modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
 
+		//==========================================================================================
+	}
+
+	/**
+	 * 
+	 */
+	public void doInsertFolder()
+	{
+		//==========================================================================================
+		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
+		
+		DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
+		
+		if (treeNode != null)
+		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			//Object userObject = treeNode.getUserObject();
+			
+			DefaultMutableTreeNode newFolderTreeNode = new DefaultMutableTreeNode("Folder (new)");
+
+			DefaultMutableTreeNode folderTreeNode = (DefaultMutableTreeNode)treeNode;
+
+			this.modulesTreeModel.addFolderNode(folderTreeNode,
+			                                    newFolderTreeNode);
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * 
+	 */
+	public void doCut()
+	{
+		//==========================================================================================
+		// TODO Auto-generated method stub
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * 
+	 */
+	public void doPaste()
+	{
+		//==========================================================================================
+		// TODO Auto-generated method stub
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * 
+	 */
+	public void doDelete()
+	{
+		//==========================================================================================
+		// TODO Auto-generated method stub
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Do Rename Module.
+	 */
+	public void doRename()
+	{
+		//==========================================================================================
+		this.appController.doRenameModule();
+		
 		//==========================================================================================
 	}
 

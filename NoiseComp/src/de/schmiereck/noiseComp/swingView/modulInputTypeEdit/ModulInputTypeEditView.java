@@ -64,6 +64,7 @@ extends BasicEditView
 		//==========================================================================================
 		this.modulInputTypeEditModel = modulInputTypeEditModel;
 		
+		//------------------------------------------------------------------------------------------
 		this.setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Input-Type:"));
 		
