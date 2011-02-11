@@ -5,6 +5,8 @@ package de.schmiereck.noiseComp.swingView.appModel;
 
 import java.io.File;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 
 /**
  * <p>
@@ -43,6 +45,11 @@ public class AppModel
 	 */
 	private boolean isModelChanged = false;
 
+	/**
+	 * Edited Folder Tree-Node.
+	 */
+	private DefaultMutableTreeNode editedModuleTreeNode = null;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -80,6 +87,24 @@ public class AppModel
 	public void setIsModelChanged(boolean isModelChanged)
 	{
 		this.isModelChanged = isModelChanged;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #editedModuleTreeNode}.
+	 */
+	public DefaultMutableTreeNode getEditedModuleTreeNode()
+	{
+		return this.editedModuleTreeNode;
+	}
+
+	/**
+	 * @param editedModuleTreeNode 
+	 * 			to set {@link #editedModuleTreeNode}.
+	 */
+	public void setEditedModuleTreeNode(DefaultMutableTreeNode editedModuleTreeNode)
+	{
+		this.editedModuleTreeNode = editedModuleTreeNode;
 	}
 
 }

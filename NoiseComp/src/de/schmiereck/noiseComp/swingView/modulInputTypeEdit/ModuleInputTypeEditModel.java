@@ -14,7 +14,7 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
  * @author smk
  * @version <p>20.09.2010:	created, smk</p>
  */
-public class ModulInputTypeEditModel
+public class ModuleInputTypeEditModel
 {
 	//**********************************************************************************************
 	// Fields:

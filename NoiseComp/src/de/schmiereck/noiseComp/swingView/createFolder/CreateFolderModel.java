@@ -1,20 +1,20 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.renameFolder;
+package de.schmiereck.noiseComp.swingView.createFolder;
 
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 /**
  * <p>
- * 	Rename-Folder Model.
+ * 	Create-Folder Model.
  * </p>
  * 
  * @author smk
- * @version <p>25.01.2011:	created, smk</p>
+ * @version <p>31.01.2011:	created, smk</p>
  */
-public class RenameFolderModel
+public class CreateFolderModel
 {
 	//**********************************************************************************************
 	// Fields:
@@ -52,12 +52,12 @@ public class RenameFolderModel
 		if (CompareUtils.compareWithNull(this.folderName, folderName) == false)
 		{
 			this.folderName = folderName;
-
+			
 			// Notify listeners.
 			this.folderNameChangedNotifier.notifyModelPropertyChangedListeners();
 		}
 	}
-	
+
 	/**
 	 * @return 
 	 * 			returns the {@link #inputTypeDataChangedNotifier}.

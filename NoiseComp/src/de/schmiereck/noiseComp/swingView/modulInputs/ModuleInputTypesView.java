@@ -12,8 +12,8 @@ import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 
 import de.schmiereck.noiseComp.swingView.appView.AppView;
-import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectView;
+import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModuleInputTypeEditView;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectView;
 
 /**
  * <p>
@@ -23,7 +23,7 @@ import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSele
  * @author smk
  * @version <p>12.09.2010:	created, smk</p>
  */
-public class ModulInputTypesView
+public class ModuleInputTypesView
 extends JDialog
 {
 	//**********************************************************************************************
@@ -42,7 +42,7 @@ extends JDialog
 	 * @param appView 
 	 * 			this is the App View.
 	 */
-	public ModulInputTypesView(AppView appView)
+	public ModuleInputTypesView(AppView appView)
 	{
 		super(appView, false);
 		//==========================================================================================
@@ -67,15 +67,15 @@ extends JDialog
 	}
 
 	/**
-	 * @param modulInputTypeSelectView
+	 * @param moduleInputTypeSelectView
 	 * 			set the Modul-Input-Type Select View.
 	 */
-	public void setModulInputTypeSelectView(ModulInputTypeSelectView modulInputTypeSelectView)
+	public void setModuleInputTypeSelectView(ModuleInputTypeSelectView moduleInputTypeSelectView)
 	{
-		JScrollPane scrollpane = new JScrollPane(modulInputTypeSelectView);
+		JScrollPane scrollpane = new JScrollPane(moduleInputTypeSelectView);
 
 		int vScrollBarWidth = scrollpane.getVerticalScrollBar().getPreferredSize().width;
-		Dimension dimTable = modulInputTypeSelectView.getPreferredSize();
+		Dimension dimTable = moduleInputTypeSelectView.getPreferredSize();
 		dimTable.setSize(dimTable.getWidth() + vScrollBarWidth, 
 		                 dimTable.getHeight());
 		
@@ -88,8 +88,8 @@ extends JDialog
 	 * @param inputTypeSelectView
 	 * 			set the Modul-Input-Type Edit View.
 	 */
-	public void setModulInputTypeEditView(ModulInputTypeEditView modulInputTypeEditView)
+	public void setModuleInputTypeEditView(ModuleInputTypeEditView moduleInputTypeEditView)
 	{
-		this.splitPane.setRightComponent(modulInputTypeEditView);
+		this.splitPane.setRightComponent(moduleInputTypeEditView);
 	}
 }

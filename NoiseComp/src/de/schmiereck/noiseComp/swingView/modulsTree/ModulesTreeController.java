@@ -6,15 +6,19 @@ package de.schmiereck.noiseComp.swingView.modulsTree;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.appView.AppView;
 
 /**
  * <p>
@@ -78,7 +82,7 @@ public class ModulesTreeController
 		//------------------------------------------------------------------------------------------
 		{
 			// Add listener to components that can bring up popup menus.
-			MouseListener popupListener = new ModulTreeMouseListener(this,
+			MouseListener popupListener = new ModuleTreeMouseListener(this,
 			                                                         this.modulesTreeView);
 			//output.addMouseListener(popupListener);
 			//menuBar.addMouseListener(popupListener);
@@ -122,17 +126,61 @@ public class ModulesTreeController
 		//------------------------------------------------------------------------------------------
 		for (GeneratorTypeData generatorTypeData : generatorTypes)
 		{
-			// Uses generator.toString() to view Label, so write a function for this.
-			DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(generatorTypeData);
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			String folderPath = generatorTypeData.getFolderPath();
 			
-			if (generatorTypeData instanceof ModulGeneratorTypeData)
-			{			
-				this.modulesTreeModel.addModuleNode(modulTreeNode);
-			}
-			else
+			DefaultMutableTreeNode insertTreeNode = this.modulesTreeModel.getModulesTreeNode();
+			
+			// Folder-Path?
+			if (folderPath != null)
 			{
-				this.modulesTreeModel.addGeneratoreNode(modulTreeNode);
+				String folderNames[] = folderPath.split("\\/");
+				
+				for (int folderPos = 3; folderPos < folderNames.length; folderPos++)
+				{
+					String folderName = folderNames[folderPos];
+					
+					DefaultMutableTreeNode folderTreeNode = this.modulesTreeModel.searchFolderTreeNode(insertTreeNode, folderName);
+					
+					// Not found?
+					if (folderTreeNode == null)
+					{
+						DefaultMutableTreeNode newFolderTreeNode = new DefaultMutableTreeNode(folderName);
+						
+						this.modulesTreeModel.addModuleNode(insertTreeNode, 
+						                                    newFolderTreeNode);
+						
+						insertTreeNode = newFolderTreeNode;
+					}
+					else
+					{
+						insertTreeNode = folderTreeNode;
+					}
+				}
 			}
+
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			Class< ? extends Generator> generatorClass = generatorTypeData.getGeneratorClass();
+			
+			// Module?
+			if (generatorClass != null)
+			{
+				// Uses generator.toString() to view Label, so write a function for this.
+				DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(generatorTypeData);
+				
+				if (generatorTypeData instanceof ModulGeneratorTypeData)
+				{			
+//					String folderPath2 = generatorTypeData.getFolderPath();
+					
+					this.modulesTreeModel.addModuleNode(insertTreeNode,
+					                                    modulTreeNode);
+				}
+				else
+				{
+					this.modulesTreeModel.addGeneratoreNode(modulTreeNode);
+				}
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		
 		//------------------------------------------------------------------------------------------
@@ -176,9 +224,43 @@ public class ModulesTreeController
 		
 		//------------------------------------------------------------------------------------------
 		treeModel.nodeChanged(treeNode);
-		//		treeModel.reload(treeNode);
-				
-		//		this.modulesTree.repaint();
+
+		//treeModel.reload(treeNode);
+		//this.modulesTree.repaint();
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Update Edited Folder-Tree-Entry.
+	 */
+	public void updateEditedFolderTreeNode(DefaultMutableTreeNode editedFolderTreeNode,
+	                                       String folderName)
+	{
+		//==========================================================================================
+		DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
+
+		//==========================================================================================
+		DefaultMutableTreeNode treeNode;
+		
+		TreePath treePath = this.modulesTreeModel.searchFolderTreeNode(editedFolderTreeNode);
+		
+		if (treePath != null)
+		{
+			treeNode = (DefaultMutableTreeNode)treePath.getLastPathComponent();
+
+			editedFolderTreeNode.setUserObject(folderName);
+		}
+		else
+		{
+			treeNode = null;
+		}
+		
+		//------------------------------------------------------------------------------------------
+		treeModel.nodeChanged(treeNode);
+
+		//treeModel.reload(treeNode);
+		//this.modulesTree.repaint();
 		
 		//==========================================================================================
 	}
@@ -195,14 +277,17 @@ public class ModulesTreeController
 	/**
 	 * Changed model notfier because of AppModelChanged.
 	 * 
+	 * @param folderPath
+	 * 			is the Folder-Path in Format <code>"/folder1/folder2/"</code>.
 	 */
-	public void doInsertModul()
+	public void doInsertModul(String folderPath)
 	{
 		//==========================================================================================
 		SoundService soundService = SoundService.getInstance();
 		
 		//==========================================================================================
-		final ModulGeneratorTypeData modulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+		final ModulGeneratorTypeData modulGeneratorTypeData = 
+			ModulGenerator.createModulGeneratorTypeData(folderPath);
 	
 		//modulGeneratorTypeData.setIsMainModulGeneratorType(true);
 		
@@ -210,36 +295,145 @@ public class ModulesTreeController
 	
 		soundService.addGeneratorType(modulGeneratorTypeData);
 		
-		//--------------------------------------------------------------------------
-		this.modulesTreeModel.insertModul(modulGeneratorTypeData);
+		//------------------------------------------------------------------------------------------
+		DefaultMutableTreeNode folderTreeNode = this.modulesTreeModel.searchModuleTreeNode(folderPath);
 		
-		//--------------------------------------------------------------------------
+		DefaultMutableTreeNode modulTreeNode = 
+			this.modulesTreeModel.insertModul(folderTreeNode,
+			                                  modulGeneratorTypeData);
+		
+		this.modulesTreeView.setSelectionPath(modulTreeNode);
+		
+		//------------------------------------------------------------------------------------------
 		this.modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
 
 		//==========================================================================================
 	}
 
 	/**
-	 * 
+	 * Do Create Folder.
 	 */
-	public void doInsertFolder()
+	public void doCreateFolder()
+	{
+		//==========================================================================================
+		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
+		
+		DefaultMutableTreeNode folderTreeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
+
+		this.appController.doCreateFolder(folderTreeNode);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Do cut Folder or Module.
+	 */
+	public void doCut()
+	{
+		//==========================================================================================
+		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
+		
+		DefaultMutableTreeNode folderTreeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
+
+		this.appController.doCutModule(folderTreeNode);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Do paste Folder or Module.
+	 */
+	public void doPaste()
+	{
+		//==========================================================================================
+		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
+		
+		DefaultMutableTreeNode folderTreeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
+
+		this.appController.doPasteModule(folderTreeNode);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Delete selected module or folder.<br/>
+	 * Alert if Module is used by other modules.
+	 */
+	public void doDelete()
 	{
 		//==========================================================================================
 		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
 		
 		DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
 		
-		if (treeNode != null)
+		Object userObject = treeNode.getUserObject();
+		
+		// Delete Module?
+		if (userObject instanceof ModulGeneratorTypeData)
+		{
+			this.doDeleteModule(treeNode);
+		}
+		else
+		{
+			// Delete Folder:
+			
+			this.doDeleteFolder(treeNode);
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * Do Rename Module.
+	 * 
+	 */
+	public void doRename()
+	{
+		//==========================================================================================
+		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
+		
+		DefaultMutableTreeNode folderTreeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
+
+		this.appController.doRenameModule(folderTreeNode);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Do Create Folder.
+	 * 
+	 * @param editedFolderTreeNode
+	 * 			is the edited Folder Tree-Node.
+	 * @param folderName
+	 * 			is the folder name.
+	 */
+	public void doCreateFolder(DefaultMutableTreeNode editedFolderTreeNode,
+	                           String folderName)
+	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
+		String folderPath = this.modulesTreeModel.makeFolderPath(editedFolderTreeNode);
+		
+		soundService.addFolder(folderPath,
+		                       folderName);
+
+		//------------------------------------------------------------------------------------------
+//		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
+//		
+//		DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
+//		
+//		if (treeNode != null)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			//Object userObject = treeNode.getUserObject();
 			
-			DefaultMutableTreeNode newFolderTreeNode = new DefaultMutableTreeNode("Folder (new)");
+			DefaultMutableTreeNode newFolderTreeNode = new DefaultMutableTreeNode(folderName);
 
-			DefaultMutableTreeNode folderTreeNode = (DefaultMutableTreeNode)treeNode;
-
-			this.modulesTreeModel.addFolderNode(folderTreeNode,
+			this.modulesTreeModel.addModuleNode(editedFolderTreeNode,
 			                                    newFolderTreeNode);
+			
+			this.modulesTreeView.setSelectionPath(newFolderTreeNode);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
@@ -248,47 +442,185 @@ public class ModulesTreeController
 	}
 
 	/**
-	 * 
+	 * @param cutFolderTreeNode
+	 * 			is the cut folder Tree-Node.
+	 * @param pasteFolderTreeNode
+	 * 			is the paste folder Tree-Node.
 	 */
-	public void doCut()
+	public void doPasteFolder(DefaultMutableTreeNode cutFolderTreeNode, 
+	                          DefaultMutableTreeNode pasteFolderTreeNode)
+	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
+		// Update Service:
+		
+		String cutFolderPath = this.modulesTreeModel.makeFolderPath(cutFolderTreeNode);
+		String pasteFolderPath = this.modulesTreeModel.makeFolderPath(pasteFolderTreeNode);
+		
+		soundService.moveFolder(cutFolderPath,
+		                        pasteFolderPath);
+		
+		//------------------------------------------------------------------------------------------
+		// Update View:
+		
+		this.modulesTreeModel.moveFolder(cutFolderTreeNode, pasteFolderTreeNode);
+
+		this.modulesTreeView.setSelectionPath(cutFolderTreeNode);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @param cutModuleTreeNode
+	 * 			is the cut module Tree-Node.
+	 * @param pasteFolderTreeNode
+	 * 			is the paste folder Tree-Node.
+	 * @param modulGeneratorTypeData
+	 * 			is the Module.
+	 */
+	public void doPasteModule(DefaultMutableTreeNode cutModuleTreeNode, 
+	                          DefaultMutableTreeNode pasteFolderTreeNode,
+	                          ModulGeneratorTypeData modulGeneratorTypeData)
+	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
+		// Update Service:
+		
+		DefaultMutableTreeNode cutFolderTreeNode = (DefaultMutableTreeNode)cutModuleTreeNode.getParent();
+		
+		String cutFolderPath = this.modulesTreeModel.makeFolderPath(cutFolderTreeNode);
+		String pasteFolderPath = this.modulesTreeModel.makeFolderPath(pasteFolderTreeNode);
+		
+		soundService.moveModule(cutFolderPath,
+		                        pasteFolderPath,
+		                        modulGeneratorTypeData);
+		
+		//------------------------------------------------------------------------------------------
+		// Update View:
+		
+		this.modulesTreeModel.moveFolder(cutModuleTreeNode, pasteFolderTreeNode);
+
+		this.modulesTreeView.setSelectionPath(cutModuleTreeNode);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @param cutTreeNode
+	 * 			is the cut module od folder Tree-Node.
+	 * @param pasteFolderTreeNode
+	 * 			is the paste folder Tree-Node.
+	 */
+	public void pasteModule(DefaultMutableTreeNode cutTreeNode, 
+	                        DefaultMutableTreeNode pasteFolderTreeNode)
+	{
+		//==========================================================================================
+		Object userObject = cutTreeNode.getUserObject();
+		
+		// Paste Module?
+		if (userObject instanceof ModulGeneratorTypeData)
+		{
+			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+			
+			this.doPasteModule(cutTreeNode,
+			                   pasteFolderTreeNode,
+			                   modulGeneratorTypeData);
+		}
+		else
+		{
+			// Paste Folder:
+			
+			this.doPasteFolder(cutTreeNode,
+			                   pasteFolderTreeNode);
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * Delete module.<br/>
+	 * Alert if Module is used by other modules.
+	 * 
+	 * @param moduleTreeNode
+	 * 			is the module Tree-Node.
+	 */
+	private void doDeleteModule(DefaultMutableTreeNode moduleTreeNode)
+	{
+		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
+		Object userObject = moduleTreeNode.getUserObject();
+		
+		ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+		
+		// Module is used by other modules?
+		if (soundService.checkModuleIsUsed(modulGeneratorTypeData) == true)
+		{
+			//--------------------------------------------------------------------------------------
+			// Alert Module is used by other modules.
+			
+			AppView appView = appController.getAppView();
+			
+			JOptionPane.showMessageDialog(appView, "Module is used by other modules.");
+			
+			//--------------------------------------------------------------------------------------
+		}
+		else
+		{
+			// Module is Main-Module?
+			if (modulGeneratorTypeData.getIsMainModulGeneratorType() == true)
+			{
+				//----------------------------------------------------------------------------------
+				// Alert Module is main module.
+				
+				AppView appView = appController.getAppView();
+				
+				JOptionPane.showMessageDialog(appView, "Module is main module.");
+				
+				//----------------------------------------------------------------------------------
+			}
+			else
+			{
+				//----------------------------------------------------------------------------------
+				// Remove Module:
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Service:
+				
+				soundService.removeGeneratorType(modulGeneratorTypeData);
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// View:
+				
+				DefaultMutableTreeNode parenTreeNode = (DefaultMutableTreeNode)moduleTreeNode.getParent();
+				
+				this.modulesTreeModel.deleteModule(moduleTreeNode);
+				
+				this.modulesTreeView.setSelectionPath(parenTreeNode);
+				
+				//-----------------------------------------------------------------------------------
+			}
+		}
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Delete folder.<br/>
+	 * Alert if one Module in folder is used by other modules.
+	 * 
+	 * @param moduleTreeNode
+	 * 			is the folder Tree-Node.
+	 */
+	private void doDeleteFolder(DefaultMutableTreeNode folderTreeNode)
 	{
 		//==========================================================================================
 		// TODO Auto-generated method stub
 		
 		//==========================================================================================
 	}
-
-	/**
-	 * 
-	 */
-	public void doPaste()
-	{
-		//==========================================================================================
-		// TODO Auto-generated method stub
-		
-		//==========================================================================================
-	}
-
-	/**
-	 * 
-	 */
-	public void doDelete()
-	{
-		//==========================================================================================
-		// TODO Auto-generated method stub
-		
-		//==========================================================================================
-	}
-
-	/**
-	 * Do Rename Module.
-	 */
-	public void doRename()
-	{
-		//==========================================================================================
-		this.appController.doRenameModule();
-		
-		//==========================================================================================
-	}
-
 }

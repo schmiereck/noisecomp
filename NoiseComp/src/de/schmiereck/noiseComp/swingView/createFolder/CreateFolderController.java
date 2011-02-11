@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.renameFolder;
+package de.schmiereck.noiseComp.swingView.createFolder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,29 +10,28 @@ import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
-
 /**
  * <p>
- * 	Rename-Folder Controller.
+ * 	Create-Folder Controller.
  * </p>
  * 
  * @author smk
- * @version <p>25.01.2011:	created, smk</p>
+ * @version <p>31.01.2011:	created, smk</p>
  */
-public class RenameFolderController
+public class CreateFolderController
 {
 	//**********************************************************************************************
 	// Fields:
 	
 	/**
-	 * Rename-Module View.
+	 * Create-Module View.
 	 */
-	private final RenameFolderView renameFolderView;
+	private final CreateFolderView createFolderView;
 
 	/**
-	 * Rename-Module Model.
+	 * Create-Module Model.
 	 */
-	private final RenameFolderModel renameFolderModel;
+	private final CreateFolderModel createFolderModel;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -45,20 +44,20 @@ public class RenameFolderController
 	 * @param appModelChangedObserver 
 	 * 			is the AppModelChangedObserver.
 	 */
-	public RenameFolderController(final AppController appController, 
+	public CreateFolderController(final AppController appController, 
 	                              final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
-		this.renameFolderModel = new RenameFolderModel();
+		this.createFolderModel = new CreateFolderModel();
 		
 		//------------------------------------------------------------------------------------------
-		this.renameFolderView = new RenameFolderView(appController.getAppView(),
-		                                            this.renameFolderModel);
+		this.createFolderView = new CreateFolderView(appController.getAppView(),
+		                                            this.createFolderModel);
 		
 		//------------------------------------------------------------------------------------------
 		// Modul-Input-Type Edit Update-Button: Update Modul-Input-Type Data and Modul-Input-Type Edit-Model:
 		// TODO Move to controller.
-		this.renameFolderView.getUpdateButton().addActionListener
+		this.createFolderView.getUpdateButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -69,13 +68,13 @@ public class RenameFolderController
 					// Das Model updaten und der App-Controller reagiert auf den change event.
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					renameFolderView.setVisible(false);
+					createFolderView.setVisible(false);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					String folderName = InputUtils.makeStringValue(renameFolderView.getFolderNameTextField().getText());
+					String folderName = InputUtils.makeStringValue(createFolderView.getFolderNameTextField().getText());
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					renameFolderModel.setFolderName(folderName);
+					appController.doCreateFolder(folderName);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
@@ -85,28 +84,27 @@ public class RenameFolderController
 	}
 
 	/**
-	 * Do Rename Module.
+	 * Do Create Module.
 	 * 
 	 * @param folderName
 	 * 			is the folder name.
 	 */
-	public void doRenameFolder(String folderName)
+	public void doCreateFolder(String folderName)
 	{
 		//==========================================================================================
-		this.renameFolderView.getFolderNameTextField().setText(InputUtils.makeStringValue(folderName));
+		this.createFolderView.getFolderNameTextField().setText(InputUtils.makeStringValue(folderName));
 		
-		this.renameFolderView.setVisible(true);	
+		this.createFolderView.setVisible(true);	
 		
 		//==========================================================================================
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #renameFolderModel}.
+	 * 			returns the {@link #createFolderModel}.
 	 */
-	public RenameFolderModel getRenameFolderModel()
+	public CreateFolderModel getCreateFolderModel()
 	{
-		return this.renameFolderModel;
+		return this.createFolderModel;
 	}
-	
 }

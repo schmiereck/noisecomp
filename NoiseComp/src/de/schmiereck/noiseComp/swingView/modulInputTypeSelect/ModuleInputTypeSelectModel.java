@@ -14,13 +14,13 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
  * @author smk
  * @version <p>20.09.2010:	created, smk</p>
  */
-public class ModulInputTypeSelectModel
+public class ModuleInputTypeSelectModel
 {
 	//**********************************************************************************************
 	// Fields:
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	private final ModulInputTypeTabelModel modulInputTypeTabelModel = new ModulInputTypeTabelModel();
+	private final ModuleInputTypeTabelModel moduleInputTypeTabelModel = new ModuleInputTypeTabelModel();
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
@@ -40,7 +40,7 @@ public class ModulInputTypeSelectModel
 	 * Constructor.
 	 * 
 	 */
-	public ModulInputTypeSelectModel()
+	public ModuleInputTypeSelectModel()
 	{
 		//==========================================================================================
 		//------------------------------------------------------------------------------------------
@@ -52,25 +52,25 @@ public class ModulInputTypeSelectModel
 	 */
 	public void clearInputs()
 	{
-		this.modulInputTypeTabelModel.clearInputs();
+		this.moduleInputTypeTabelModel.clearInputs();
 	}
 
 	/**
-	 * @param modulInputTypeSelectEntryModel
+	 * @param moduleInputTypeSelectEntryModel
 	 * 			is the Modul-Input-Type Select-Entry Model.
 	 */
-	public void addInputData(ModulInputTypeSelectEntryModel modulInputTypeSelectEntryModel)
+	public void addInputData(ModuleInputTypeSelectEntryModel moduleInputTypeSelectEntryModel)
 	{
-		this.modulInputTypeTabelModel.addInputData(modulInputTypeSelectEntryModel);
+		this.moduleInputTypeTabelModel.addInputData(moduleInputTypeSelectEntryModel);
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputTypeTabelModel}.
+	 * 			returns the {@link #moduleInputTypeTabelModel}.
 	 */
-	public ModulInputTypeTabelModel getModulInputTypeTabelModel()
+	public ModuleInputTypeTabelModel getModuleInputTypeTabelModel()
 	{
-		return this.modulInputTypeTabelModel;
+		return this.moduleInputTypeTabelModel;
 	}
 
 	/**
@@ -110,15 +110,15 @@ public class ModulInputTypeSelectModel
 	 * @return
 	 * 			the selected Modul-Input-Type Select-Entry Model.
 	 */
-	public ModulInputTypeSelectEntryModel getSelectedRow()
+	public ModuleInputTypeSelectEntryModel getSelectedRow()
 	{
-		ModulInputTypeSelectEntryModel selectEntryModel;
+		ModuleInputTypeSelectEntryModel selectEntryModel;
 		
 		Integer selectedRowNo = this.getSelectedRowNo();
 		
 		if (selectedRowNo != null)
 		{
-			ModulInputTypeTabelModel tabelModel = this.getModulInputTypeTabelModel();
+			ModuleInputTypeTabelModel tabelModel = this.getModuleInputTypeTabelModel();
 			
 			selectEntryModel = tabelModel.getRow(selectedRowNo);
 		}

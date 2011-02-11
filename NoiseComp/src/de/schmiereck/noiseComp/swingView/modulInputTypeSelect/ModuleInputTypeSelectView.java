@@ -16,7 +16,7 @@ import javax.swing.event.ListSelectionListener;
  * @author smk
  * @version <p>20.09.2010:	created, smk</p>
  */
-public class ModulInputTypeSelectView
+public class ModuleInputTypeSelectView
 extends JTable
 {
 	//**********************************************************************************************
@@ -31,13 +31,13 @@ extends JTable
 	/**
 	 * Constructor.
 	 * 
-	 * @param modulInputTypeSelectModel
+	 * @param moduleInputTypeSelectModel
 	 * 			is the Modul-Input-Type Select Model.
 	 */
-	public ModulInputTypeSelectView(final ModulInputTypeSelectModel modulInputTypeSelectModel)
+	public ModuleInputTypeSelectView(final ModuleInputTypeSelectModel moduleInputTypeSelectModel)
 	{
 		//==========================================================================================
-		super(modulInputTypeSelectModel.getModulInputTypeTabelModel());
+		super(moduleInputTypeSelectModel.getModuleInputTypeTabelModel());
 		
 //		this.table = new JTable();
 		
@@ -76,7 +76,7 @@ extends JTable
 							selectedRowNo = null;
 						}
 						
-						modulInputTypeSelectModel.setSelectedRowNo(selectedRowNo);
+						moduleInputTypeSelectModel.setSelectedRowNo(selectedRowNo);
 		            }
 				}
 		 	}

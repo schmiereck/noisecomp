@@ -63,7 +63,7 @@ extends BasicEditView
 	{
 		//==========================================================================================
 		this.setLayout(new GridBagLayout());
-		this.setBorder(BorderFactory.createTitledBorder("Timelines:"));
+		this.setBorder(BorderFactory.createTitledBorder("Timeline:"));
 		
 		//------------------------------------------------------------------------------------------
 		{

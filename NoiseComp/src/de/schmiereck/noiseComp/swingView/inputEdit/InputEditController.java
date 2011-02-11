@@ -5,7 +5,6 @@ package de.schmiereck.noiseComp.swingView.inputEdit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.Collator;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;

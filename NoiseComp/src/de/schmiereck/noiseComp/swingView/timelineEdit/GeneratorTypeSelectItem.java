@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.service.StartupService;
 
 /**
  * <p>
@@ -76,7 +77,20 @@ public class GeneratorTypeSelectItem
 		
 		if (this.generatorTypeData != null)
 		{
-			ret = this.generatorTypeData.getGeneratorTypeName();
+			String folderPath = this.generatorTypeData.getFolderPath();
+			
+			String path;
+			
+			if (folderPath.startsWith(StartupService.MODULE_FOLDER_PATH))
+			{
+				path = folderPath.substring(StartupService.MODULE_FOLDER_PATH.length() - 1);
+			}
+			else
+			{
+				path = "";
+			}
+			
+			ret = path + this.generatorTypeData.getGeneratorTypeName();
 		}
 		else
 		{

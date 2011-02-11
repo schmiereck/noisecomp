@@ -158,7 +158,7 @@ extends Generator
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SinusGenerator.class, "Sinus", "Generates a sinus signal with a specified frequency and amplidude.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", SinusGenerator.class, "Sinus", "Generates a sinus signal with a specified frequency and amplidude.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, null, "Frequency of the signal in oscillations per second (alternativ to signalInput).");

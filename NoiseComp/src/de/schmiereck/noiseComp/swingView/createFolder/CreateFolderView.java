@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.renameFolder;
+package de.schmiereck.noiseComp.swingView.createFolder;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -13,25 +13,25 @@ import de.schmiereck.noiseComp.swingView.appView.AppView;
 
 /**
  * <p>
- * 	Rename-Folder View.
+ * 	Create-Folder View.
  * </p>
  * 
  * @author smk
- * @version <p>25.01.2011:	created, smk</p>
+ * @version <p>31.01.2011:	created, smk</p>
  */
-public class RenameFolderView
+public class CreateFolderView
 extends JDialog
 {
 	//**********************************************************************************************
 	// Fields:
 
 	@SuppressWarnings("unused")
-	private final RenameFolderModel renameFolderModel;
+	private final CreateFolderModel createFolderModel;
 	
 	/**
-	 * Rename-Folder Edit-View.
+	 * Create-Folder Edit-View.
 	 */
-	private final RenameFolderEditView renameFolderEditView;
+	private final CreateFolderEditView createFolderEditView;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -43,19 +43,19 @@ extends JDialog
 	 * 
 	 * @param appView 
 	 * 			is the App View.
-	 * @param renameFolderModel
-	 * 			is the Rename-Module Model.
+	 * @param createFolderModel
+	 * 			is the Create-Module Model.
 	 */
-	public RenameFolderView(final AppView appView, final RenameFolderModel renameFolderModel)
+	public CreateFolderView(final AppView appView, final CreateFolderModel createFolderModel)
 	{
 		super(appView, false);
 		//==========================================================================================
-		this.renameFolderModel = renameFolderModel;
+		this.createFolderModel = createFolderModel;
 		
 		//------------------------------------------------------------------------------------------
 		this.setVisible(false);
 		
-		this.setTitle("Rename Folder");
+		this.setTitle("Create Folder");
 		this.setModal(true);
 		
 		this.setSize(400, 100);
@@ -65,9 +65,9 @@ extends JDialog
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		//------------------------------------------------------------------------------------------
-		this.renameFolderEditView = new RenameFolderEditView(renameFolderModel);
+		this.createFolderEditView = new CreateFolderEditView(createFolderModel);
 		
-		this.add(this.renameFolderEditView);
+		this.add(this.createFolderEditView);
 		
 		//==========================================================================================
 	}
@@ -79,7 +79,7 @@ extends JDialog
 	public JButton getUpdateButton()
 	{
 		//==========================================================================================
-		JButton updateButton = this.renameFolderEditView.getUpdateButton();
+		JButton updateButton = this.createFolderEditView.getUpdateButton();
 		
 		//==========================================================================================
 		return updateButton;
@@ -87,10 +87,10 @@ extends JDialog
 
 	/**
 	 * @return 
-	 * 			returns the {@link RenameFolderEditView#getFolderNameTextField()}.
+	 * 			returns the {@link CreateFolderEditView#getFolderNameTextField()}.
 	 */
 	public JTextField getFolderNameTextField()
 	{
-		return this.renameFolderEditView.getFolderNameTextField();
+		return this.createFolderEditView.getFolderNameTextField();
 	}
 }

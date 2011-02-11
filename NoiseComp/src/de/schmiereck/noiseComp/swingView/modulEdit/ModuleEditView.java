@@ -21,7 +21,7 @@ import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
  * @author smk
  * @version <p>09.09.2010:	created, smk</p>
  */
-public class ModulEditView
+public class ModuleEditView
 extends BasicEditView
 {
 	//**********************************************************************************************
@@ -30,7 +30,7 @@ extends BasicEditView
 	/**
 	 * Modul-Edit Model.
 	 */
-	private final ModulEditModel modulEditModel;
+	private final ModuleEditModel moduleEditModel;
 
 	/**
 	 * Modul-Name Text-Field
@@ -58,28 +58,28 @@ extends BasicEditView
 	/**
 	 * Constructor.
 	 * 
-	 * @param modulEditModel
+	 * @param moduleEditModel
 	 * 			is the Modul-Edit Model.
 	 */
-	public ModulEditView(final ModulEditModel modulEditModel)
+	public ModuleEditView(final ModuleEditModel moduleEditModel)
 	{
 		//==========================================================================================
 		this.setLayout(new FlowLayout());
 		
-		this.modulEditModel = modulEditModel;
+		this.moduleEditModel = moduleEditModel;
 		
 		//------------------------------------------------------------------------------------------
 		{
 			this.modulNameTextField = this.addTextField(0, "Modul-Name:");
 			
-			this.modulEditModel.getModulNameChangedNotifier().addModelPropertyChangedListener
+			this.moduleEditModel.getModulNameChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						modulNameTextField.setText(OutputUtils.makeStringText(modulEditModel.getModulName()));
+						modulNameTextField.setText(OutputUtils.makeStringText(moduleEditModel.getModulName()));
 					}
 			 	}
 			);
@@ -88,14 +88,14 @@ extends BasicEditView
 		{
 			this.modulIsMainCheckBox = this.addCheckBox(1, "Is Main:");
 			
-			this.modulEditModel.getModulIsMainChangedNotifier().addModelPropertyChangedListener
+			this.moduleEditModel.getModulIsMainChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						boolean modulIsMain = OutputUtils.makeBoolean(modulEditModel.getModulIsMain());
+						boolean modulIsMain = OutputUtils.makeBoolean(moduleEditModel.getModulIsMain());
 						
 						modulIsMainCheckBox.setSelected(modulIsMain);
 					}

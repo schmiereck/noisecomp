@@ -30,7 +30,7 @@ import javax.swing.JToolBar;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditView;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView;
-import de.schmiereck.noiseComp.swingView.modulEdit.ModulEditView;
+import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditView;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView;
 
@@ -330,12 +330,12 @@ extends JFrame
 	}
 
 	/**
-	 * @param modulEditView 
+	 * @param moduleEditView 
 	 * 			to set {@link #modulEditView}.
 	 */
-	public void setModulEditView(ModulEditView modulEditView)
+	public void setModuleEditView(ModuleEditView moduleEditView)
 	{
-		this.modulEditSplitPane.setTopComponent(modulEditView);
+		this.modulEditSplitPane.setTopComponent(moduleEditView);
 	}
 
 	/**

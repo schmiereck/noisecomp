@@ -21,14 +21,14 @@ import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
  * @author smk
  * @version <p>20.09.2010:	created, smk</p>
  */
-public class ModulInputTypeEditView
+public class ModuleInputTypeEditView
 extends BasicEditView
 {
 	//**********************************************************************************************
 	// Fields:
 
 	@SuppressWarnings("unused")
-	private final ModulInputTypeEditModel modulInputTypeEditModel;
+	private final ModuleInputTypeEditModel moduleInputTypeEditModel;
 	
 	private final JTextField inputTypeIDTextField;
 	private final JTextField inputTypeDefaultValueTextField;
@@ -56,13 +56,13 @@ extends BasicEditView
 	/**
 	 * Constructor.
 	 * 
-	 * @param modulInputTypeEditModel
+	 * @param moduleInputTypeEditModel
 	 * 			is the Modul-Input-Type Edit Model.
 	 */
-	public ModulInputTypeEditView(final ModulInputTypeEditModel modulInputTypeEditModel)
+	public ModuleInputTypeEditView(final ModuleInputTypeEditModel moduleInputTypeEditModel)
 	{
 		//==========================================================================================
-		this.modulInputTypeEditModel = modulInputTypeEditModel;
+		this.moduleInputTypeEditModel = moduleInputTypeEditModel;
 		
 		//------------------------------------------------------------------------------------------
 		this.setLayout(new GridBagLayout());
@@ -84,14 +84,14 @@ extends BasicEditView
 		{
 			this.inputTypeIDTextField = this.addTextField(2, "ID:");
 			
-			modulInputTypeEditModel.getInputTypeIDChangedNotifier().addModelPropertyChangedListener
+			moduleInputTypeEditModel.getInputTypeIDChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						inputTypeIDTextField.setText(OutputUtils.makeIntegerText(modulInputTypeEditModel.getInputTypeID()));
+						inputTypeIDTextField.setText(OutputUtils.makeIntegerText(moduleInputTypeEditModel.getInputTypeID()));
 					}
 			 	}
 			);
@@ -100,14 +100,14 @@ extends BasicEditView
 		{
 			this.inputTypeDefaultValueTextField = this.addTextField(3, "Default-Value:");
 			
-			modulInputTypeEditModel.getInputTypeDefaultValueChangedNotifier().addModelPropertyChangedListener
+			moduleInputTypeEditModel.getInputTypeDefaultValueChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						inputTypeDefaultValueTextField.setText(OutputUtils.makeFloatEditText(modulInputTypeEditModel.getInputTypeDefaultValue()));
+						inputTypeDefaultValueTextField.setText(OutputUtils.makeFloatEditText(moduleInputTypeEditModel.getInputTypeDefaultValue()));
 					}
 			 	}
 			);
@@ -116,14 +116,14 @@ extends BasicEditView
 		{
 			this.inputTypeNameTextField = this.addTextField(4, "Name:");
 			
-			modulInputTypeEditModel.getInputTypeNameChangedNotifier().addModelPropertyChangedListener
+			moduleInputTypeEditModel.getInputTypeNameChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						inputTypeNameTextField.setText(OutputUtils.makeStringText(modulInputTypeEditModel.getInputTypeName()));
+						inputTypeNameTextField.setText(OutputUtils.makeStringText(moduleInputTypeEditModel.getInputTypeName()));
 					}
 			 	}
 			);
@@ -132,14 +132,14 @@ extends BasicEditView
 		{
 			this.inputTypeDescriptionTextField = this.addTextField(5, "Description:");
 			
-			modulInputTypeEditModel.getInputTypeDescriptionChangedNotifier().addModelPropertyChangedListener
+			moduleInputTypeEditModel.getInputTypeDescriptionChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						inputTypeDescriptionTextField.setText(OutputUtils.makeStringText(modulInputTypeEditModel.getInputTypeDescription()));
+						inputTypeDescriptionTextField.setText(OutputUtils.makeStringText(moduleInputTypeEditModel.getInputTypeDescription()));
 					}
 			 	}
 			);

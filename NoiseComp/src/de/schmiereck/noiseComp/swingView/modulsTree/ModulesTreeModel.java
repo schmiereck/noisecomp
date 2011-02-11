@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -125,9 +126,9 @@ public class ModulesTreeModel
 			
 			DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
 			
-			ModulTreePath modulTreePath = this.searchModulTreeNode(rootTreeNode, modulGeneratorTypeData);
+			ModuleTreePath moduleTreePath = this.searchModulTreeNode(rootTreeNode, modulGeneratorTypeData);
 			
-			treePath = modulTreePath.createTreePath();
+			treePath = moduleTreePath.createTreePath();
 		}
 		else
 		{
@@ -148,17 +149,17 @@ public class ModulesTreeModel
 	 * @return
 	 * 			the path or <code>null</code>.
 	 */
-	private ModulTreePath searchModulTreeNode(DefaultMutableTreeNode rootTreeNode, 
+	private ModuleTreePath searchModulTreeNode(DefaultMutableTreeNode rootTreeNode, 
 	                                          ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		//==========================================================================================
-		ModulTreePath retTreePath;
+		ModuleTreePath retTreePath;
 		
 		Object userObject = rootTreeNode.getUserObject();
 		
 		if (modulGeneratorTypeData == userObject)
 		{
-			retTreePath = new ModulTreePath(rootTreeNode);//rootTreePath.pathByAddingChild(userObject);
+			retTreePath = new ModuleTreePath(rootTreeNode);//rootTreePath.pathByAddingChild(userObject);
 		}
 		else
 		{
@@ -168,11 +169,11 @@ public class ModulesTreeModel
 			{
 				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)rootTreeNode.getChildAt(childPos);
 				
-				ModulTreePath treePath = this.searchModulTreeNode(treeNode, modulGeneratorTypeData);
+				ModuleTreePath treePath = this.searchModulTreeNode(treeNode, modulGeneratorTypeData);
 				
 				if (treePath != null)
 				{
-					retTreePath = new ModulTreePath(rootTreeNode, treePath);
+					retTreePath = new ModuleTreePath(rootTreeNode, treePath);
 					break;
 				}
 			}
@@ -180,6 +181,170 @@ public class ModulesTreeModel
 		
 		//==========================================================================================
 		return retTreePath;
+	}
+
+	/**
+	 * @param folderTreeNode
+	 * 			is the Modul-Generator-Type.
+	 * @return
+	 * 			the tree path or <code>null</code> if the Modul-Generator-Type is not found.
+	 */
+	public TreePath searchFolderTreeNode(DefaultMutableTreeNode folderTreeNode)
+	{
+		//==========================================================================================
+		TreePath treePath;
+		
+		if (folderTreeNode != null)
+		{
+//			DefaultTreeModel treeModel = (DefaultTreeModel)this.getModel();
+			
+			DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
+			
+			ModuleTreePath moduleTreePath = this.searchFolderTreeNode(rootTreeNode, folderTreeNode);
+			
+			treePath = moduleTreePath.createTreePath();
+		}
+		else
+		{
+			treePath = null;
+		}
+		
+		//==========================================================================================
+		return treePath;
+	}
+
+	/**
+	 * Search given Folder starting from given node.
+	 * 
+	 * @param rootTreeNode
+	 * 			is the node.
+	 * @param folderTreeNode
+	 * 			is the Folder.
+	 * @return
+	 * 			the path or <code>null</code>.
+	 */
+	private ModuleTreePath searchFolderTreeNode(DefaultMutableTreeNode rootTreeNode, 
+	                                            DefaultMutableTreeNode folderTreeNode)
+	{
+		//==========================================================================================
+		ModuleTreePath retTreePath;
+		
+		if (folderTreeNode == rootTreeNode)
+		{
+			retTreePath = new ModuleTreePath(rootTreeNode);//rootTreePath.pathByAddingChild(userObject);
+		}
+		else
+		{
+			retTreePath = null;
+			
+			for (int childPos = 0; childPos < rootTreeNode.getChildCount(); childPos++)
+			{
+				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)rootTreeNode.getChildAt(childPos);
+				
+				ModuleTreePath treePath = this.searchFolderTreeNode(treeNode, folderTreeNode);
+				
+				if (treePath != null)
+				{
+					retTreePath = new ModuleTreePath(rootTreeNode, treePath);
+					break;
+				}
+			}
+		}
+		
+		//==========================================================================================
+		return retTreePath;
+	}
+
+	/**
+	 * @param parentTreeNode
+	 * 			is the parent node.
+	 * @param folderName
+	 * 			is the child folder name.
+	 * @return
+	 * 			the folde Tree-Node.<br/>
+	 * 			<code>null</code> if no folder with given name found.
+	 */
+	public DefaultMutableTreeNode searchFolderTreeNode(DefaultMutableTreeNode parentTreeNode, String folderName)
+	{
+		//==========================================================================================
+		DefaultMutableTreeNode retFolderTreeNode;
+		
+		retFolderTreeNode = null;
+		
+		for (int childPos = 0; childPos < parentTreeNode.getChildCount(); childPos++)
+		{
+			TreeNode treeNode = parentTreeNode.getChildAt(childPos);
+			
+			// Folder?
+			if (treeNode instanceof DefaultMutableTreeNode)
+			{
+				DefaultMutableTreeNode folderTreeNode = (DefaultMutableTreeNode)treeNode;
+				
+				Object userObject = folderTreeNode.getUserObject();
+				
+				if (folderName.equals(userObject) == true)
+				{
+					retFolderTreeNode = folderTreeNode;
+					break;
+				}
+			}
+		}
+		
+		//==========================================================================================
+		return retFolderTreeNode;
+	}
+
+	/**
+	 * @param folderPath
+	 * 			is the Folder-Path in Format <code>"/File/folder1/folder2/"</code>.
+	 * @return
+	 * 			the folder Tree-Node.
+	 */
+	public DefaultMutableTreeNode searchModuleTreeNode(String folderPath)
+	{
+		//==========================================================================================
+		DefaultMutableTreeNode retTreeNode;
+		
+		String[] folderNames = folderPath.split("\\/");
+		
+		DefaultTreeModel treeModel = this.getTreeModel();
+		
+		retTreeNode = (DefaultMutableTreeNode)treeModel.getRoot();
+		
+		for (int folderPos = 2; folderPos < folderNames.length; folderPos++)
+		{
+			String folderName = folderNames[folderPos];
+			
+			retTreeNode = 
+				this.searchFolderTreeNode(retTreeNode, folderName);
+		}
+		
+		//==========================================================================================
+		return retTreeNode;
+	}
+
+	/**
+	 * @param folderTreeNode
+	 * 			is the Folder Tree-Node.
+	 * @return
+	 * 			the Folder-Path in format <code>"/folder1/folder2/"</code>.
+	 */
+	public String makeFolderPath(DefaultMutableTreeNode folderTreeNode)
+	{
+		//==========================================================================================
+		String folderPath = "/";
+		
+		DefaultMutableTreeNode parenTreeNode = (DefaultMutableTreeNode)folderTreeNode;
+
+		while (parenTreeNode != null)
+		{
+			folderPath = "/" + parenTreeNode.getUserObject() + folderPath;
+
+			parenTreeNode = (DefaultMutableTreeNode)parenTreeNode.getParent();
+		}
+		
+		//==========================================================================================
+		return folderPath;
 	}
 
 	/**
@@ -201,27 +366,34 @@ public class ModulesTreeModel
 	}
 
 	/**
+	 * @param parentFolderTreeNode
+	 * 			is the  parentFolderTreeNode.
 	 * @param modulGeneratorTypeData
 	 * 			is the new Modul-Generator-Type Data.
+	 * @return
+	 * 			the Module Tree-Node.
 	 */
-	public void insertModul(final ModulGeneratorTypeData modulGeneratorTypeData)
+	public DefaultMutableTreeNode insertModul(final DefaultMutableTreeNode parentFolderTreeNode, 
+	                                          final ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		//==========================================================================================
 //		DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
 		
-		DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(modulGeneratorTypeData);
+		DefaultMutableTreeNode newModulTreeNode = new DefaultMutableTreeNode(modulGeneratorTypeData);
 	
 //		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
 		
 //		DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)this.selectionPath.getLastPathComponent();
 //		DefaultMutableTreeNode parentTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
-		DefaultMutableTreeNode parentTreeNode = this.modulesTreeNode;
-	
-		int parentChildCount = parentTreeNode.getChildCount();
+//		DefaultMutableTreeNode parentTreeNode = this.modulesTreeNode;
+//		int parentChildCount = parentTreeNode.getChildCount();
+
+		int parentChildCount = parentFolderTreeNode.getChildCount();
 		
-		this.treeModel.insertNodeInto(modulTreeNode, parentTreeNode, parentChildCount);
+		this.treeModel.insertNodeInto(newModulTreeNode, parentFolderTreeNode, parentChildCount);
 
 		//==========================================================================================
+		return newModulTreeNode;
 	}
 
 	/**
@@ -258,14 +430,14 @@ public class ModulesTreeModel
 		this.modulesTreeNode.removeAllChildren();
 	}
 
-	/**
-	 * @param modulTreeNode
-	 * 			is the modul TreeNode to add to {@link #modulesTreeNode}.
-	 */
-	public void addModuleNode(DefaultMutableTreeNode modulTreeNode)
-	{
-		this.modulesTreeNode.add(modulTreeNode);
-	}
+//	/**
+//	 * @param modulTreeNode
+//	 * 			is the modul TreeNode to add to {@link #modulesTreeNode}.
+//	 */
+//	public void addModuleNode(DefaultMutableTreeNode modulTreeNode)
+//	{
+//		this.modulesTreeNode.add(modulTreeNode);
+//	}
 
 	/**
 	 * @param generatorTreeNode
@@ -300,11 +472,59 @@ public class ModulesTreeModel
 	 * @param newFolderTreeNode
 	 * 			is the new folder Tree-Node.
 	 */
-	public void addFolderNode(DefaultMutableTreeNode folderTreeNode, 
+	public void addModuleNode(DefaultMutableTreeNode folderTreeNode, 
 	                          DefaultMutableTreeNode newFolderTreeNode)
 	{
 		this.treeModel.insertNodeInto(newFolderTreeNode, folderTreeNode, 0);
 		//folderTreeNode.add(newFolderTreeNode);
 	}
 
+	/**
+	 * @param cutFolderTreeNode
+	 * 			is the cut folder Tree-Node.
+	 * @param pasteFolderTreeNode
+	 * 			is the paste folder Tree-Node.
+	 */
+	public void moveFolder(DefaultMutableTreeNode cutFolderTreeNode, 
+	                       DefaultMutableTreeNode pasteFolderTreeNode)
+	{
+		//==========================================================================================
+		pasteFolderTreeNode.add(cutFolderTreeNode);
+		
+		this.treeModel.reload();
+		
+		//==========================================================================================
+	}
+	
+	/**
+	 * @param cutModuleTreeNode
+	 * 			is the cut module Tree-Node.
+	 * @param pasteFolderTreeNode
+	 * 			is the paste folder Tree-Node.
+	 */
+	public void moveModule(DefaultMutableTreeNode cutModuleTreeNode, 
+	                       DefaultMutableTreeNode pasteFolderTreeNode)
+	{
+		//==========================================================================================
+		pasteFolderTreeNode.add(cutModuleTreeNode);
+		
+		this.treeModel.reload();
+		
+		//==========================================================================================
+	}
+
+
+	/**
+	 * @param parenTreeNode
+	 * 			is the Tree-Node.
+	 */
+	public void deleteModule(DefaultMutableTreeNode treeNode)
+	{
+		//==========================================================================================
+		treeNode.removeFromParent();
+		
+		this.treeModel.reload();
+		
+		//==========================================================================================
+	}
 }

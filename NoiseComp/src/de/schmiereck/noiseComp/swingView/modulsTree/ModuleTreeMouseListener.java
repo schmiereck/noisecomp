@@ -26,7 +26,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
  * @author smk
  * @version <p>04.09.2010:	created, smk</p>
  */
-public class ModulTreeMouseListener
+public class ModuleTreeMouseListener
 extends MouseAdapter 
 {
 	//**********************************************************************************************
@@ -35,17 +35,22 @@ extends MouseAdapter
 	private final ModulesTreeView modulesTreeView;
 	
 	/**
-	 * Modules-Category popup menu.
+	 * Main Modules-Category Popup-Menu.
 	 */
 	private JPopupMenu modulesCategoryPopupMenu;
 	
 	/**
-	 * Module popup menu.
+	 * Folder Popup-Menu.
+	 */
+	private JPopupMenu folderPopupMenu;
+	
+	/**
+	 * Module Popup-Menu.
 	 */
 	private JPopupMenu modulePopupMenu;
 	
 	/**
-	 * Generator popup menu.
+	 * Generator Popup-Menu.
 	 */
 	private JPopupMenu generatorPopupMenu;
 	
@@ -60,57 +65,81 @@ extends MouseAdapter
 	 * @param modulesTreeView
 	 * 			is the Modules Tree View.
 	 */
-	public ModulTreeMouseListener(final ModulesTreeController modulesTreeController,
+	public ModuleTreeMouseListener(final ModulesTreeController modulesTreeController,
 	                              final ModulesTreeView modulesTreeView)
 	{
 		//==========================================================================================
 		this.modulesTreeView = modulesTreeView;
 		
 		//==========================================================================================
-		// Modules-Category Popup Menu:
-		
+		// Main-Modules-Category, Module and -Folder Popup Menu.
 		this.modulesCategoryPopupMenu = new JPopupMenu();
+		// Folder Popup-Menu.
+		this.folderPopupMenu = new JPopupMenu();
+		// Module Popup-Menu.
+		this.modulePopupMenu = new JPopupMenu();
+		
 		{
-			JMenuItem menuItem = new JMenuItem("Insert Modul");
-			menuItem.addActionListener
-			(
+			ActionListener actionListener =
 			 	new ActionListener()
 			 	{
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
 						//--------------------------------------------------------------------------
-						modulesTreeController.doInsertModul();
+						final ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
+						
+						//--------------------------------------------------------------------------
+						TreePath selectionPath = modulesTreeView.getSelectionPath();
+						
+						DefaultMutableTreeNode folderTreeNode = (DefaultMutableTreeNode)selectionPath.getLastPathComponent();
+						
+						String folderPath = modulesTreeModel.makeFolderPath(folderTreeNode);
+						
+						modulesTreeController.doInsertModul(folderPath);
 						
 						//--------------------------------------------------------------------------
 					}
-			 	}
-			);
-			this.modulesCategoryPopupMenu.add(menuItem);
+			 	};
+			{
+				JMenuItem menuItem = new JMenuItem("Insert Modul");
+				menuItem.addActionListener(actionListener);
+				this.modulesCategoryPopupMenu.add(menuItem);
+			}
+			{
+				JMenuItem menuItem = new JMenuItem("Insert Modul");
+				menuItem.addActionListener(actionListener);
+				this.folderPopupMenu.add(menuItem);
+			}
 		}
 		{
-			JMenuItem menuItem = new JMenuItem("Insert Folder");
-			menuItem.addActionListener
-			(
+			ActionListener actionListener =
 			 	new ActionListener()
 			 	{
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
 						//--------------------------------------------------------------------------
-						modulesTreeController.doInsertFolder();
+						modulesTreeController.doCreateFolder();
 						
 						//--------------------------------------------------------------------------
 					}
-			 	}
-			);
-			this.modulesCategoryPopupMenu.add(menuItem);
+			 	};
+			{
+				JMenuItem menuItem = new JMenuItem("Insert Folder");
+				menuItem.addActionListener(actionListener);
+				this.modulesCategoryPopupMenu.add(menuItem);
+			}
+			{
+				JMenuItem menuItem = new JMenuItem("Insert Folder");
+				menuItem.addActionListener(actionListener);
+				this.folderPopupMenu.add(menuItem);
+			}
 		}
 		this.modulesCategoryPopupMenu.addSeparator();
+		this.folderPopupMenu.addSeparator();
 		{
-			JMenuItem menuItem = new JMenuItem("Cut");
-			menuItem.addActionListener
-			(
+			ActionListener actionListener =
 			 	new ActionListener()
 			 	{
 					@Override
@@ -121,14 +150,20 @@ extends MouseAdapter
 						
 						//--------------------------------------------------------------------------
 					}
-			 	}
-			);
-			this.modulesCategoryPopupMenu.add(menuItem);
+			 	};
+			{
+				JMenuItem menuItem = new JMenuItem("Cut Module");
+				menuItem.addActionListener(actionListener);
+				this.modulePopupMenu.add(menuItem);
+			}
+			{
+				JMenuItem menuItem = new JMenuItem("Cut Folder");
+				menuItem.addActionListener(actionListener);
+				this.folderPopupMenu.add(menuItem);
+			}
 		}
 		{
-			JMenuItem menuItem = new JMenuItem("Paste");
-			menuItem.addActionListener
-			(
+			ActionListener actionListener =
 			 	new ActionListener()
 			 	{
 					@Override
@@ -139,14 +174,20 @@ extends MouseAdapter
 						
 						//--------------------------------------------------------------------------
 					}
-			 	}
-			);
-			this.modulesCategoryPopupMenu.add(menuItem);
+			 	};
+			{
+				JMenuItem menuItem = new JMenuItem("Paste");
+				menuItem.addActionListener(actionListener);
+				this.modulesCategoryPopupMenu.add(menuItem);
+			}
+			{
+				JMenuItem menuItem = new JMenuItem("Paste");
+				menuItem.addActionListener(actionListener);
+				this.folderPopupMenu.add(menuItem);
+			}
 		}
 		{
-			JMenuItem menuItem = new JMenuItem("Delete");
-			menuItem.addActionListener
-			(
+			ActionListener actionListener =
 			 	new ActionListener()
 			 	{
 					@Override
@@ -157,11 +198,19 @@ extends MouseAdapter
 						
 						//--------------------------------------------------------------------------
 					}
-			 	}
-			);
-			this.modulesCategoryPopupMenu.add(menuItem);
+			 	};
+			{
+				JMenuItem menuItem = new JMenuItem("Delete");
+				menuItem.addActionListener(actionListener);
+				this.modulePopupMenu.add(menuItem);
+			}
+			{
+				JMenuItem menuItem = new JMenuItem("Delete");
+				menuItem.addActionListener(actionListener);
+				this.folderPopupMenu.add(menuItem);
+			}
 		}
-		this.modulesCategoryPopupMenu.addSeparator();
+		this.folderPopupMenu.addSeparator();
 		{
 			JMenuItem menuItem = new JMenuItem("Rename...");
 			menuItem.addActionListener
@@ -178,12 +227,11 @@ extends MouseAdapter
 					}
 			 	}
 			);
-			this.modulesCategoryPopupMenu.add(menuItem);
+			this.folderPopupMenu.add(menuItem);
 		}
 		//==========================================================================================
 		// Modul Popup Menu:
 		
-		this.modulePopupMenu = new JPopupMenu();
 		{
 			JMenuItem menuItem = new JMenuItem("Edit Modul");
 			menuItem.addActionListener
@@ -193,6 +241,7 @@ extends MouseAdapter
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
+						//--------------------------------------------------------------------------
 						// Notify edit modul event to listeners.
 						//JMenuItem jMenuItem = (JMenuItem)e.getSource();
 						
@@ -205,6 +254,7 @@ extends MouseAdapter
 						ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
 
 						modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
+						//--------------------------------------------------------------------------
 					}
 			 		
 			 	}
@@ -224,6 +274,7 @@ extends MouseAdapter
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
+						//--------------------------------------------------------------------------
 						// Notify edit modul event to listeners.
 						//JMenuItem jMenuItem = (JMenuItem)e.getSource();
 						
@@ -236,6 +287,7 @@ extends MouseAdapter
 						GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 
 						modulesTreeView.notifyDoEditGeneratorListeners(generatorTypeData);
+						//--------------------------------------------------------------------------
 					}
 			 	}
 			);
@@ -292,10 +344,20 @@ extends MouseAdapter
 						ModulesTreeModel modulesTreeModel = this.modulesTreeView.getModulesTreeModel();
 						DefaultMutableTreeNode modulesTreeNode = modulesTreeModel.getModulesTreeNode();
 						
+						// "Modules" Tree-Node?
 						if (modulesTreeNode == treeNode)
 						{
 							this.modulesCategoryPopupMenu.show(e.getComponent(),
 							                                   e.getX(), e.getY());
+						}
+						else
+						{
+							// Folder Tree-Node?
+							if (this.checkIsFolderTreeNode(modulesTreeNode, treeNode) == true)
+							{
+								this.folderPopupMenu.show(e.getComponent(),
+								                                 e.getX(), e.getY());
+							}
 						}
 					}
 				}
@@ -332,5 +394,37 @@ extends MouseAdapter
 			}
 		}
 		//==========================================================================================
+	}
+
+	/**
+	 * @param modulesTreeNode
+	 * 			is the "Modules" Tree-Node.
+	 * @param treeNode
+	 * 			is the Tree-Node.
+	 * @return
+	 * 			<code>true</code> if given Tree-Node is a Folder Tree-Node.
+	 */
+	private boolean checkIsFolderTreeNode(DefaultMutableTreeNode modulesTreeNode, DefaultMutableTreeNode treeNode)
+	{
+		//==========================================================================================
+		boolean isFolderTreeNode;
+		
+		DefaultMutableTreeNode checkedTreeNode = (DefaultMutableTreeNode)treeNode.getParent();
+		
+		isFolderTreeNode = false;
+		
+		while (checkedTreeNode != null)
+		{
+			if (checkedTreeNode == modulesTreeNode)
+			{
+				isFolderTreeNode = true;
+				break;
+			}
+			
+			checkedTreeNode = (DefaultMutableTreeNode)checkedTreeNode.getParent();
+		}
+		
+		//==========================================================================================
+		return isFolderTreeNode;
 	}
 }

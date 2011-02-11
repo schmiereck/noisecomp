@@ -291,7 +291,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(WaveGenerator.class, 
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", WaveGenerator.class, 
 																	"Wave File", "Plays a Wave file from file system.");
 		
 		{

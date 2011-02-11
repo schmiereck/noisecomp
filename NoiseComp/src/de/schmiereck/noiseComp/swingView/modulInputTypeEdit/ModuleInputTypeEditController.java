@@ -6,9 +6,9 @@ package de.schmiereck.noiseComp.swingView.modulInputTypeEdit;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectEntryModel;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectController;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectModel;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
@@ -22,7 +22,7 @@ import de.schmiereck.noiseComp.swingView.utils.InputUtils;
  * @author smk
  * @version <p>20.09.2010:	created, smk</p>
  */
-public class ModulInputTypeEditController
+public class ModuleInputTypeEditController
 {
 	//**********************************************************************************************
 	// Fields:
@@ -30,12 +30,12 @@ public class ModulInputTypeEditController
 	/**
 	 * Modul-Input-Type Edit Model.
 	 */
-	private final ModulInputTypeEditModel	modulInputTypeEditModel;
+	private final ModuleInputTypeEditModel	moduleInputTypeEditModel;
 
 	/**
 	 * Modul-Input-Type Edit View.
 	 */
-	private final ModulInputTypeEditView	modulInputTypeEditView;
+	private final ModuleInputTypeEditView	moduleInputTypeEditView;
 
 	//**********************************************************************************************
 	// Functions:
@@ -44,31 +44,31 @@ public class ModulInputTypeEditController
 	 * Constructor.
 	 * 
 	 */
-	public ModulInputTypeEditController()
+	public ModuleInputTypeEditController()
 	{
 		//==========================================================================================
-		this.modulInputTypeEditModel = new ModulInputTypeEditModel();
-		this.modulInputTypeEditView = new ModulInputTypeEditView(this.modulInputTypeEditModel);
+		this.moduleInputTypeEditModel = new ModuleInputTypeEditModel();
+		this.moduleInputTypeEditView = new ModuleInputTypeEditView(this.moduleInputTypeEditModel);
 		
 		//==========================================================================================
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputTypeEditModel}.
+	 * 			returns the {@link #moduleInputTypeEditModel}.
 	 */
-	public ModulInputTypeEditModel getModulInputTypeEditModel()
+	public ModuleInputTypeEditModel getModuleInputTypeEditModel()
 	{
-		return this.modulInputTypeEditModel;
+		return this.moduleInputTypeEditModel;
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputTypeEditView}.
+	 * 			returns the {@link #moduleInputTypeEditView}.
 	 */
-	public ModulInputTypeEditView getModulInputTypeEditView()
+	public ModuleInputTypeEditView getModuleInputTypeEditView()
 	{
-		return this.modulInputTypeEditView;
+		return this.moduleInputTypeEditView;
 	}
 
 	/**
@@ -79,13 +79,13 @@ public class ModulInputTypeEditController
 	 * @param editedModulGeneratorTypeData
 	 * 			is the edited Modul-Generator-Type Data.
 	 */
-	public void doUpdate(final ModulInputTypeSelectModel selectModel, 
+	public void doUpdate(final ModuleInputTypeSelectModel selectModel, 
 	                     //final InputTypeData selectedInputTypeData,
 	                     ModulGeneratorTypeData editedModulGeneratorTypeData)
 	{
 		//==========================================================================================
-		ModulInputTypeEditModel inputEditModel = this.getModulInputTypeEditModel();
-		ModulInputTypeEditView inputEditView = this.getModulInputTypeEditView();
+		ModuleInputTypeEditModel inputEditModel = this.getModuleInputTypeEditModel();
+		ModuleInputTypeEditView inputEditView = this.getModuleInputTypeEditView();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		String inputTypeIDStr = inputEditView.getInputTypeIDTextField().getText();
@@ -133,7 +133,7 @@ public class ModulInputTypeEditController
 				
 				editedModulGeneratorTypeData.addInputTypeData(inputTypeData);
 				
-				ModulInputTypeSelectEntryModel selectEntryModel = selectModel.getSelectedRow();
+				ModuleInputTypeSelectEntryModel selectEntryModel = selectModel.getSelectedRow();
 				
 				selectEntryModel.setInputTypeData(inputTypeData);
 			}
@@ -156,7 +156,7 @@ public class ModulInputTypeEditController
 	public void updateEditedInputType(InputTypeData editedInputTypeData)
 	{
 		//==========================================================================================
-		this.modulInputTypeEditModel.setInputTypeData(editedInputTypeData);
+		this.moduleInputTypeEditModel.setInputTypeData(editedInputTypeData);
 		
 		Integer inputTypeID;
 		Float inputTypeDefaultValue;
@@ -178,10 +178,10 @@ public class ModulInputTypeEditController
 			inputTypeDescription = null;
 		}
 
-		this.modulInputTypeEditModel.setInputTypeID(inputTypeID);
-		this.modulInputTypeEditModel.setInputTypeDefaultValue(inputTypeDefaultValue);
-		this.modulInputTypeEditModel.setInputTypeName(inputTypeName);
-		this.modulInputTypeEditModel.setInputTypeDescription(inputTypeDescription);
+		this.moduleInputTypeEditModel.setInputTypeID(inputTypeID);
+		this.moduleInputTypeEditModel.setInputTypeDefaultValue(inputTypeDefaultValue);
+		this.moduleInputTypeEditModel.setInputTypeName(inputTypeName);
+		this.moduleInputTypeEditModel.setInputTypeDescription(inputTypeDescription);
 
 		//==========================================================================================
 	}
@@ -190,7 +190,7 @@ public class ModulInputTypeEditController
 	 * @param appModelChangedObserver
 	 */
 	public void doUpdateModulInputType(final ModulesTreeController modulesTreeController,
-	                                   final ModulInputTypeSelectController modulInputTypeSelectController,
+	                                   final ModuleInputTypeSelectController moduleInputTypeSelectController,
 	                                   final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
@@ -198,7 +198,7 @@ public class ModulInputTypeEditController
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
-		ModulInputTypeSelectModel selectModel = modulInputTypeSelectController.getInputTypeSelectModel();
+		ModuleInputTypeSelectModel selectModel = moduleInputTypeSelectController.getInputTypeSelectModel();
 		
 //		InputTypeData inputTypeData = modulInputTypeSelectController.getSelectedModulInputType();
 		

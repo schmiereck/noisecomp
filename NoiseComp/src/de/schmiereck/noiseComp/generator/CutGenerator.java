@@ -114,7 +114,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(CutGenerator.class, "Cut", "Cut the input singnal to the given minimum and maximum values.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", CutGenerator.class, "Cut", "Cut the input singnal to the given minimum and maximum values.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MAX_AMPL, "signalMaximum", 1, 1, Float.valueOf(1.0F), "Mamximum of the signal value.");

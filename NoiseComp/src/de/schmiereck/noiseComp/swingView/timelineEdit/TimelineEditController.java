@@ -9,6 +9,7 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
@@ -113,9 +114,17 @@ public class TimelineEditController
 								GeneratorTypeSelectItem noSelectItem = new GeneratorTypeSelectItem(null);
 								generatorTypeSelectItems.add(noSelectItem);
 
-								for (GeneratorTypeData generatorTypeData2 : generatorTypes)
+								for (GeneratorTypeData itemGeneratorTypeData : generatorTypes)
 								{
-									generatorTypeSelectItems.add(new GeneratorTypeSelectItem(generatorTypeData2));
+									Class< ? extends Generator> generatorClass = itemGeneratorTypeData.getGeneratorClass();
+									
+									// Not a folder?
+									//if (itemGeneratorTypeData instanceof ModulGeneratorTypeData)
+									//if (folderPath.startsWith(StartupService.MODULE_FOLDER_PATH))
+									if (generatorClass != null)
+									{
+										generatorTypeSelectItems.add(new GeneratorTypeSelectItem(itemGeneratorTypeData));
+									}
 								}
 							}
 						}

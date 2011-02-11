@@ -84,9 +84,10 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeData createGeneratorTypeData(String folderPath)
 	{
-		ModulGeneratorTypeData generatorTypeData = new ModulGeneratorTypeData(ModulGenerator.class, 
+		ModulGeneratorTypeData generatorTypeData = new ModulGeneratorTypeData(folderPath,
+		                                                                      ModulGenerator.class, 
 																			  "Modul", 
 																			  "Manages a Group of other generators.");
 		
@@ -95,10 +96,13 @@ extends Generator
 
 	/**
 	 * @see #createGeneratorTypeData() with cast to {@link ModulGeneratorTypeData}
+	 * 
+	 * @param folderPath
+	 * 			is the Folder-Path in Format <code>"/folder1/folder2/"</code>.
 	 */
-	public static ModulGeneratorTypeData createModulGeneratorTypeData()
+	public static ModulGeneratorTypeData createModulGeneratorTypeData(String folderPath)
 	{
-		return (ModulGeneratorTypeData)ModulGenerator.createGeneratorTypeData();
+		return (ModulGeneratorTypeData)ModulGenerator.createGeneratorTypeData(folderPath);
 	}
 
 	/* (non-Javadoc)

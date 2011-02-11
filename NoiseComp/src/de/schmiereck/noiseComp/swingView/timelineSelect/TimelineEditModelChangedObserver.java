@@ -3,9 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
-import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditModel;
-import de.schmiereck.noiseComp.timeline.Timeline;
 
 
 /**
@@ -22,8 +20,10 @@ public class TimelineEditModelChangedObserver
 	//**********************************************************************************************
 	// Fields:
 
+	@SuppressWarnings("unused")
 	private TimelineEditModel timelineEditModel;
 	
+	@SuppressWarnings("unused")
 	private TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	//**********************************************************************************************

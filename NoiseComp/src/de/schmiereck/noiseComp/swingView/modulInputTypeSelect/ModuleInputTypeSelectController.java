@@ -22,7 +22,7 @@ import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
  * @author smk
  * @version <p>20.09.2010:	created, smk</p>
  */
-public class ModulInputTypeSelectController
+public class ModuleInputTypeSelectController
 {
 	//**********************************************************************************************
 	// Fields:
@@ -30,12 +30,12 @@ public class ModulInputTypeSelectController
 	/**
 	 * Modul-Input-Type Select Model.
 	 */
-	private final ModulInputTypeSelectModel inputTypeSelectModel;
+	private final ModuleInputTypeSelectModel inputTypeSelectModel;
 	
 	/**
 	 * Modul-Input-Type Select View.
 	 */
-	private final ModulInputTypeSelectView inputTypeSelectView;
+	private final ModuleInputTypeSelectView inputTypeSelectView;
 	
 	private final AppModelChangedObserver appModelChangedObserver;
 	
@@ -46,11 +46,11 @@ public class ModulInputTypeSelectController
 	 * Constructor.
 	 * 
 	 */
-	public ModulInputTypeSelectController(final AppModelChangedObserver appModelChangedObserver)
+	public ModuleInputTypeSelectController(final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
-		this.inputTypeSelectModel = new ModulInputTypeSelectModel();
-		this.inputTypeSelectView = new ModulInputTypeSelectView(this.inputTypeSelectModel);
+		this.inputTypeSelectModel = new ModuleInputTypeSelectModel();
+		this.inputTypeSelectView = new ModuleInputTypeSelectView(this.inputTypeSelectModel);
 		{
 			TableColumnModel columnModel = this.inputTypeSelectView.getColumnModel();
 	
@@ -144,7 +144,7 @@ public class ModulInputTypeSelectController
 	 * @return 
 	 * 			returns the {@link #inputTypeSelectModel}.
 	 */
-	public ModulInputTypeSelectModel getInputTypeSelectModel()
+	public ModuleInputTypeSelectModel getInputTypeSelectModel()
 	{
 		return this.inputTypeSelectModel;
 	}
@@ -153,7 +153,7 @@ public class ModulInputTypeSelectController
 	 * @return 
 	 * 			returns the {@link #inputTypeSelectView}.
 	 */
-	public ModulInputTypeSelectView getInputTypeSelectView()
+	public ModuleInputTypeSelectView getInputTypeSelectView()
 	{
 		return this.inputTypeSelectView;
 	}
@@ -180,8 +180,8 @@ public class ModulInputTypeSelectController
 				{
 					InputTypeData inputTypeData = inputTypesIterator.next();
 					
-					ModulInputTypeSelectEntryModel selectEntryModel = 
-						new ModulInputTypeSelectEntryModel(inputTypeData);
+					ModuleInputTypeSelectEntryModel selectEntryModel = 
+						new ModuleInputTypeSelectEntryModel(inputTypeData);
 					
 					this.inputTypeSelectModel.addInputData(selectEntryModel);
 				}
@@ -199,7 +199,7 @@ public class ModulInputTypeSelectController
 		//==========================================================================================
 		InputTypeData inputTypeData;
 		
-		ModulInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
+		ModuleInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
 		
 		if (selectEntryModel != null)
 		{
@@ -217,20 +217,20 @@ public class ModulInputTypeSelectController
 	/**
 	 * @param selectModel
 	 */
-	public void doInputTypeUpdated(ModulInputTypeSelectModel selectModel)
+	public void doInputTypeUpdated(ModuleInputTypeSelectModel selectModel)
 	{
 		//==========================================================================================
 		Integer selectedRowNo = this.inputTypeSelectModel.getSelectedRowNo();
 		
 		if (selectedRowNo != null)
 		{
-			ModulInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
+			ModuleInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
 			
-			ModulInputTypeTabelModel modulInputTypeTabelModel = this.inputTypeSelectModel.getModulInputTypeTabelModel();
+			ModuleInputTypeTabelModel moduleInputTypeTabelModel = this.inputTypeSelectModel.getModuleInputTypeTabelModel();
 			
 			selectEntryModel.updateInputData();
 			
-			modulInputTypeTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
+			moduleInputTypeTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
 		}
 		//==========================================================================================
 	}
@@ -244,11 +244,11 @@ public class ModulInputTypeSelectController
 	public void doRemoveSelectedEntry(ModulGeneratorTypeData editedModulGeneratorTypeData)
 	{
 		//==========================================================================================
-		ModulInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
+		ModuleInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
 		
 		if (selectEntryModel != null)
 		{
-			ModulInputTypeTabelModel tabelModel = this.inputTypeSelectModel.getModulInputTypeTabelModel();
+			ModuleInputTypeTabelModel tabelModel = this.inputTypeSelectModel.getModuleInputTypeTabelModel();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Modul Input-Type Data:
@@ -280,15 +280,15 @@ public class ModulInputTypeSelectController
 	public void doCreateNew()
 	{
 		//==========================================================================================
-		ModulInputTypeSelectModel modulInputTypeSelectModel = this.getInputTypeSelectModel();
+		ModuleInputTypeSelectModel moduleInputTypeSelectModel = this.getInputTypeSelectModel();
 		
-		ModulInputTypeTabelModel tabelModel = modulInputTypeSelectModel.getModulInputTypeTabelModel();
+		ModuleInputTypeTabelModel tabelModel = moduleInputTypeSelectModel.getModuleInputTypeTabelModel();
 		
-		ModulInputTypeSelectEntryModel selectEntryModel = new ModulInputTypeSelectEntryModel(null);
+		ModuleInputTypeSelectEntryModel selectEntryModel = new ModuleInputTypeSelectEntryModel(null);
 		
 		int rowNo = tabelModel.addInputData(selectEntryModel);
 		
-		modulInputTypeSelectModel.setSelectedRowNo(rowNo);
+		moduleInputTypeSelectModel.setSelectedRowNo(rowNo);
 		//==========================================================================================
 	}
 }

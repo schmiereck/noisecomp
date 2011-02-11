@@ -50,6 +50,7 @@ public class LoadFileOperationLogic
 														   float frameRate) 
 	throws XMLPortException
 	{
+		//==========================================================================================
 		Document xmlDoc;
 		
 		xmlDoc = XMLPort.open(fileName);
@@ -80,7 +81,7 @@ public class LoadFileOperationLogic
 			//-----------------------------------------------------
 			// Generate a new one:
 			
-			mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+			mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData("/");
 			
 			mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
 			
@@ -103,6 +104,7 @@ public class LoadFileOperationLogic
 			generatorTypesData.addGeneratorTypeData(mainModulGeneratorTypeData);
 		}
 		
+		//==========================================================================================
 		return mainModulGeneratorTypeData;
 	}
 
@@ -113,6 +115,7 @@ public class LoadFileOperationLogic
 	 */
 	private static void createModulGeneratorTypesGenerators(GeneratorTypeNodesData generatorTypeNodesData, GeneratorTypesData generatorTypesData, float frameRate)
 	{
+		//==========================================================================================
 		Iterator<GeneratorTypeNodeData> generatorTypeNodesIterator = generatorTypeNodesData.getGeneratorTypeNodesIterator();
 		
 		while (generatorTypeNodesIterator.hasNext())
@@ -136,6 +139,7 @@ public class LoadFileOperationLogic
 			//modulGeneratorTypeData.setGenerators(modulGenerators);
 			LoadFileOperationLogic.createTracks(generatorTypeNode, modulGeneratorTypeData);
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -150,6 +154,7 @@ public class LoadFileOperationLogic
 										 //Generators generators, 
 										 ModulGeneratorTypeData modulGeneratorTypeData) //, ModulGenerator parentModulGenerator)
 	{
+		//==========================================================================================
 		// List with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 		Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas = new Vector<LoadFileGeneratorNodeData>();
 		
@@ -163,6 +168,7 @@ public class LoadFileOperationLogic
 		LoadFileOperationLogic.createGeneratorInputs(//generators, 
 		                                             loadFileGeneratorNodeDatas, 
 		                                             modulGeneratorTypeData);
+		//==========================================================================================
 	}
 
 	private static ModulGeneratorTypeData createGeneratorTypes(GeneratorTypesData generatorTypesData,
@@ -170,6 +176,7 @@ public class LoadFileOperationLogic
 															   Node noiseNode, 
 															   float frameRate)//, Vector loadFileGeneratorNodeDatas)
 	{
+		//==========================================================================================
 		ModulGeneratorTypeData mainModulGeneratorTypeData = null;
 		
 		Node generatorTypesNode = XMLData.selectSingleNode(noiseNode, "generatorTypes");
@@ -201,6 +208,7 @@ public class LoadFileOperationLogic
 			}
 		}
 		
+		//==========================================================================================
 		return mainModulGeneratorTypeData;
 	}
 
@@ -210,8 +218,10 @@ public class LoadFileOperationLogic
 														 Node generatorTypeNode, 
 														 float frameRate)//, Vector loadFileGeneratorNodeDatas)
 	{
+		//==========================================================================================
 		//ModulGeneratorTypeData modulGeneratorTypeData = null;
 		
+		String folderPath = XMLData.selectSingleNodeText(generatorTypeNode, "folderPath");
 		String generatorTypeClassName = XMLData.selectSingleNodeText(generatorTypeNode, "generatorTypeClassName");
 		String generatorClassName = XMLData.selectSingleNodeText(generatorTypeNode, "generatorClassName");
 		String generatorTypeName = XMLData.selectSingleNodeText(generatorTypeNode, "name");
@@ -219,139 +229,163 @@ public class LoadFileOperationLogic
 		
 //		String generatorModulTypeName;	// Not realy needed, because 'generatorTypeName' should be the same.
 		
-		GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorTypeClassName);
+		GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(folderPath,
+		                                                                                 generatorTypeClassName);
 		
 		if (generatorTypeData != null)
 		{
-			throw new RuntimeException("generator type \"" + generatorTypeClassName + "\" allready exist");
+			throw new RuntimeException("Generator type \"" + folderPath + "\" + \"" + generatorTypeClassName + "\" allready exist.");
 		}
 		
-		Class<? extends Generator> generatorClass;
-		try
+		if (generatorClassName != null)
 		{
-			int namePartPos = generatorClassName.indexOf("#");
-
-			// Class name with appended name of a generic modul type ?
-			if (namePartPos != -1)
+			//--------------------------------------------------------------------------------------
+			Class<? extends Generator> generatorClass;
+			try
 			{
-//				generatorModulTypeName = generatorClassName.substring(namePartPos + 1);
-				generatorClassName = generatorClassName.substring(0, namePartPos);
-			}
-			else
-			{
-//				generatorModulTypeName = null;
-			}
-			generatorClass = (Class< ? extends Generator>)Class.forName(generatorClassName);
-		}
-		catch (ClassNotFoundException ex)
-		{
-			throw new RuntimeException("Class not found", ex);
-		}
-		
-		generatorTypeData = LoadFileOperationLogic.createGeneratorTypeData(generatorTypeClassName, 
-																		   generatorClass, 
-																		   generatorTypeName, 
-																		   generatorTypeDescription);
-		
-		if (generatorTypeData instanceof ModulGeneratorTypeData)
-		{
-			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
-			
-			{
-				String isMainName = XMLData.selectSingleNodeText(generatorTypeNode, "isMain");
+				int namePartPos = generatorClassName.indexOf("#");
 	
-				if ("true".equals(isMainName) == true)
+				// Class name with appended name of a generic modul type ?
+				if (namePartPos != -1)
 				{
-					modulGeneratorTypeData.setIsMainModulGeneratorType(true);
+	//				generatorModulTypeName = generatorClassName.substring(namePartPos + 1);
+					generatorClassName = generatorClassName.substring(0, namePartPos);
 				}
-			}
-			{
-				Node viewNode = XMLData.selectSingleNode(generatorTypeNode, "view");
-				
-				if (viewNode != null)
+				else
 				{
+	//				generatorModulTypeName = null;
+				}
+				generatorClass = (Class< ? extends Generator>)Class.forName(generatorClassName);
+			}
+			catch (ClassNotFoundException ex)
+			{
+				throw new RuntimeException("Class \"" + folderPath + "\" + \"" + generatorTypeClassName + "\" not found.", ex);
+			}
+			
+			generatorTypeData = LoadFileOperationLogic.createGeneratorTypeData(folderPath,
+			                                                                   generatorTypeClassName, 
+																			   generatorClass, 
+																			   generatorTypeName, 
+																			   generatorTypeDescription);
+			
+			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			{
+				ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				
+				{
+					String isMainName = XMLData.selectSingleNodeText(generatorTypeNode, "isMain");
+		
+					if ("true".equals(isMainName) == true)
 					{
-						Float viewZoomX = XMLData.selectSingleNodeFloat(viewNode, "zoomX");
-						
-						modulGeneratorTypeData.setViewZoomX(viewZoomX);
+						modulGeneratorTypeData.setIsMainModulGeneratorType(true);
 					}
+				}
+				{
+					Node viewNode = XMLData.selectSingleNode(generatorTypeNode, "view");
+					
+					if (viewNode != null)
 					{
-						Float viewTicksCount = XMLData.selectSingleNodeFloat(viewNode, "ticksCount");
-						
-						modulGeneratorTypeData.setViewTicksCount(viewTicksCount);
-					}
-					{
-						String ticksPer = XMLData.selectSingleNodeText(viewNode, "ticksPer");
-						
-						if (ticksPer != null)
 						{
-							TicksPer viewTicksPer = TicksPer.valueOf(ticksPer);
+							Float viewZoomX = XMLData.selectSingleNodeFloat(viewNode, "zoomX");
 							
-							modulGeneratorTypeData.setViewTicksPer(viewTicksPer);
+							modulGeneratorTypeData.setViewZoomX(viewZoomX);
+						}
+						{
+							Float viewTicksCount = XMLData.selectSingleNodeFloat(viewNode, "ticksCount");
+							
+							modulGeneratorTypeData.setViewTicksCount(viewTicksCount);
+						}
+						{
+							String ticksPer = XMLData.selectSingleNodeText(viewNode, "ticksPer");
+							
+							if (ticksPer != null)
+							{
+								TicksPer viewTicksPer = TicksPer.valueOf(ticksPer);
+								
+								modulGeneratorTypeData.setViewTicksPer(viewTicksPer);
+							}
 						}
 					}
 				}
 			}
+
+			generatorTypesData.addGeneratorTypeData(generatorTypeData);
+				
+			//--------------------------------------------------------
+			// inputTypes:
+			
+			Node inputTypesNode = XMLData.selectSingleNode(generatorTypeNode, "inputTypes");
+
+			NodeIterator inputTypeNodesIterator = XMLData.selectNodeIterator(inputTypesNode, "inputType");
+
+			Node inputTypeNode;
+
+			while ((inputTypeNode = inputTypeNodesIterator.nextNode()) != null)
+			{
+				String inputTypeName = XMLData.selectSingleNodeText(inputTypeNode, "name");
+				Integer inputTypeType = XMLData.selectSingleNodeInteger(inputTypeNode, "type");
+				Integer inputTypeCountMin = XMLData.selectSingleNodeInteger(inputTypeNode, "countMin");
+				Integer inputTypeCountMax = XMLData.selectSingleNodeInteger(inputTypeNode, "countMax");
+				Float inputTypeDefaultValue = XMLData.selectSingleNodeFloat(inputTypeNode, "defaultValue");
+				String inputDescription = XMLData.selectSingleNodeText(inputTypeNode, "description");
+				
+				InputTypeData inputTypeData = new InputTypeData(inputTypeType, inputTypeName, inputTypeCountMax, inputTypeCountMin, inputTypeDefaultValue, inputDescription);
+
+				generatorTypeData.addInputTypeData(inputTypeData);
+			}
+			
+			//--------------------------------------------------------
+			// ModulGeneratorType:
+			
+			//if (generatorTypeClassName.equals(ModulGeneratorTypeData.class.getName()))
+			if (generatorTypeData instanceof ModulGeneratorTypeData)	
+			{
+				ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				
+				generatorTypeNodesData.addTempGeneratorTypeData(new GeneratorTypeNodeData(modulGeneratorTypeData,
+																						  generatorTypeNode));
+
+				/*
+				//Generators modulGenerators = modulGeneratorTypeData.getGenerators();
+				
+				LoadFileOperationLogic.createGenerators(generatorTypesData,
+														generatorTypeNode, frameRate, 
+														//modulGenerators, 
+														modulGeneratorTypeData);
+				
+				//modulGeneratorTypeData.setGenerators(modulGenerators);
+				LoadFileOperationLogic.createTracks(generatorTypeNode, modulGeneratorTypeData);
+				*/
+			}
+			//--------------------------------------------------------------------------------------
 		}
-
-		generatorTypesData.addGeneratorTypeData(generatorTypeData);
-		
-		//--------------------------------------------------------
-		// inputTypes:
-		
-		Node inputTypesNode = XMLData.selectSingleNode(generatorTypeNode, "inputTypes");
-
-		NodeIterator inputTypeNodesIterator = XMLData.selectNodeIterator(inputTypesNode, "inputType");
-
-		Node inputTypeNode;
-
-		while ((inputTypeNode = inputTypeNodesIterator.nextNode()) != null)
+		else
 		{
-			String inputTypeName = XMLData.selectSingleNodeText(inputTypeNode, "name");
-			Integer inputTypeType = XMLData.selectSingleNodeInteger(inputTypeNode, "type");
-			Integer inputTypeCountMin = XMLData.selectSingleNodeInteger(inputTypeNode, "countMin");
-			Integer inputTypeCountMax = XMLData.selectSingleNodeInteger(inputTypeNode, "countMax");
-			Float inputTypeDefaultValue = XMLData.selectSingleNodeFloat(inputTypeNode, "defaultValue");
-			String inputDescription = XMLData.selectSingleNodeText(inputTypeNode, "description");
+			//--------------------------------------------------------------------------------------
+			// Folder:
 			
-			InputTypeData inputTypeData = new InputTypeData(inputTypeType, inputTypeName, inputTypeCountMax, inputTypeCountMin, inputTypeDefaultValue, inputDescription);
-
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeData = new ModulGeneratorTypeData(folderPath,
+			                                               null, 
+			                                               null, 
+														   null);
+			
+			generatorTypesData.addGeneratorTypeData(generatorTypeData);
+			
+			//--------------------------------------------------------------------------------------
 		}
 		
-		//--------------------------------------------------------
-		// ModulGeneratorType:
-		
-		//if (generatorTypeClassName.equals(ModulGeneratorTypeData.class.getName()))
-		if (generatorTypeData instanceof ModulGeneratorTypeData)	
-		{
-			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
-			
-			generatorTypeNodesData.addTempGeneratorTypeData(new GeneratorTypeNodeData(modulGeneratorTypeData,
-																					  generatorTypeNode));
-
-			/*
-			//Generators modulGenerators = modulGeneratorTypeData.getGenerators();
-			
-			LoadFileOperationLogic.createGenerators(generatorTypesData,
-													generatorTypeNode, frameRate, 
-													//modulGenerators, 
-													modulGeneratorTypeData);
-			
-			//modulGeneratorTypeData.setGenerators(modulGenerators);
-			LoadFileOperationLogic.createTracks(generatorTypeNode, modulGeneratorTypeData);
-			*/
-		}
-		
+		//==========================================================================================
 		return generatorTypeData;
 	}
 
 	@SuppressWarnings("unchecked")
-	public static GeneratorTypeData createGeneratorTypeData(String generatorTypeClassName, 
+	public static GeneratorTypeData createGeneratorTypeData(String folderPath,
+	                                                        String generatorTypeClassName, 
 															Class<? extends Generator> generatorClass, 
 															String generatorTypeName, 
 															String generatorTypeDescription)
 	{
+		//==========================================================================================
 		GeneratorTypeData generatorTypeData = null;
 		
 		Class<? extends GeneratorTypeData> generatorTypeDataClass;
@@ -362,23 +396,25 @@ public class LoadFileOperationLogic
 		}
 		catch (ClassNotFoundException ex)
 		{
-			throw new RuntimeException("class not found: " + generatorTypeClassName, ex);
+			throw new RuntimeException("Class not found: \"" + folderPath + "\" + \"" + generatorTypeClassName + "\".", ex) ;
 		}
 		
-		Class<?>[]	params		= new Class[3];
+		Class<?>[]	params		= new Class[4];
 		
-		params[0] = Class.class;	// generatorClass
-		params[1] = String.class;	// generatorTypeName
-		params[2] = String.class;	// generatorTypeDescription
+		params[0] = String.class;	// folderPath
+		params[1] = Class.class;	// generatorClass
+		params[2] = String.class;	// generatorTypeName
+		params[3] = String.class;	// generatorTypeDescription
 		
 		try
 		{
 			Constructor<?> generatorConstructor = generatorTypeDataClass.getConstructor(params);
-			Object[]	args	= new Object[3];
+			Object[]	args	= new Object[4];
 
-			args[0] = generatorClass;
-			args[1] = generatorTypeName;
-			args[2] = generatorTypeDescription;
+			args[0] = folderPath;
+			args[1] = generatorClass;
+			args[2] = generatorTypeName;
+			args[3] = generatorTypeDescription;
 			
 			try
 			{
@@ -387,11 +423,11 @@ public class LoadFileOperationLogic
 			}
 			catch (java.lang.InstantiationException ex)
 			{
-				throw new RuntimeException("new instance: " + generatorTypeClassName, ex);
+				throw new RuntimeException("New instance: \"" + folderPath + "\" + \"" + generatorTypeClassName + "\".", ex);
 			}
 			catch (java.lang.IllegalAccessException ex)
 			{
-				throw new RuntimeException("access exception for class: " + generatorTypeClassName, ex);
+				throw new RuntimeException("Access exception for class: \"" + folderPath + "\" + " + generatorTypeClassName+ "\".", ex);
 			}
 			//catch (java.lang.ClassNotFoundException ex)
 			//{
@@ -399,18 +435,19 @@ public class LoadFileOperationLogic
 			//} 
 			catch (IllegalArgumentException ex)
 			{
-				throw new RuntimeException("illegal argument: " + generatorTypeClassName, ex);
+				throw new RuntimeException("Illegal argument: \"" + folderPath + "\" + \"" + generatorTypeClassName + "\".", ex);
 			} 
 			catch (InvocationTargetException ex)
 			{
-				throw new RuntimeException("invocation target: " + generatorTypeClassName, ex);
+				throw new RuntimeException("Invocation target: \"" + folderPath + "\" + \"" + generatorTypeClassName + "\".", ex);
 			}
 		}
 		catch (java.lang.NoSuchMethodException ex)
 		{
-			throw new RuntimeException("no such method exception for class: " + generatorTypeClassName, ex);
+			throw new RuntimeException("No such method exception for class: \"" + folderPath + "\" + \"" + generatorTypeClassName + "\".", ex);
 		}
 		
+		//==========================================================================================
 		return generatorTypeData;
 	}
 	
@@ -428,6 +465,7 @@ public class LoadFileOperationLogic
 										 ModulGeneratorTypeData modulGeneratorTypeData) 
 			//ModulGenerator parentModulGenerator)
 	{
+		//==========================================================================================
 		Node generatorsNode = XMLData.selectSingleNode(generatorTypeNode, "generators");
 
 		NodeIterator generatorsNodeIterator = XMLData.selectNodeIterator(generatorsNode, "generator");
@@ -437,17 +475,19 @@ public class LoadFileOperationLogic
 
 		while ((generatorNode = generatorsNodeIterator.nextNode()) != null)
 		{
+			String folderPath = XMLData.selectSingleNodeText(generatorNode, "folderPath");
 			String generatorType = XMLData.selectSingleNodeText(generatorNode, "type");
 			//String generatorModulTypeName = XMLData.selectSingleNodeText(generatorNode, "modulTypeName");
 			String generatorName = XMLData.selectSingleNodeText(generatorNode, "name");
 			Float generatorStartTime = XMLData.selectSingleNodeFloat(generatorNode, "startTime");
 			Float generatorEndTime = XMLData.selectSingleNodeFloat(generatorNode, "endTime");
 			
-			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(generatorType);
+			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(folderPath,
+			                                                                                 generatorType);
 			
 			if (generatorTypeData == null)
 			{
-				throw new RuntimeException("Unknown Generator-Type \"" + generatorType + "\".");
+				throw new RuntimeException("Unknown Generator-Type \"" + folderPath + "\" + \"" + generatorType + "\".");
 			}
 			
 			Generator generator;
@@ -456,7 +496,7 @@ public class LoadFileOperationLogic
 
 			if (generator == null)
 			{
-				throw new PopupRuntimeException("can't create generator by type: " + generatorTypeData);
+				throw new PopupRuntimeException("can't create generator by type \"" + folderPath + "\" + \"" + generatorType + "\".");
 			}
 
 			generator.setTimePos(generatorStartTime.floatValue(),
@@ -486,6 +526,7 @@ public class LoadFileOperationLogic
 			
 			generatorPos++;
 		}
+		//==========================================================================================
 	}
 	
 	/**
@@ -494,6 +535,7 @@ public class LoadFileOperationLogic
 	 */
 	private static void createTracks(Node generatorTypeNode, ModulGeneratorTypeData modulGeneratorTypeData)
 	{
+		//==========================================================================================
 		Node tracksNode = XMLData.selectSingleNode(generatorTypeNode, "tracks");
 
 		if (tracksNode != null)
@@ -521,6 +563,7 @@ public class LoadFileOperationLogic
 				modulGeneratorTypeData.addGenerator(generator);
 			}
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -532,6 +575,7 @@ public class LoadFileOperationLogic
 											  Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas, 
 											  ModulGeneratorTypeData modulGeneratorTypeData)
 	{
+		//==========================================================================================
 		Iterator<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatasIterator = loadFileGeneratorNodeDatas.iterator();
 		
 		while (loadFileGeneratorNodeDatasIterator.hasNext())
@@ -580,5 +624,6 @@ public class LoadFileOperationLogic
 				}
 			}
 		}
-	}
+		//==========================================================================================
+ 	}
 }

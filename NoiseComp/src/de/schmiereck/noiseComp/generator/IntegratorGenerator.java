@@ -204,7 +204,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(IntegratorGenerator.class, "Integrator", "Integrates multiple signal input lines.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", IntegratorGenerator.class, "Integrator", "Integrates multiple signal input lines.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", -1, -1, "The input signal.");

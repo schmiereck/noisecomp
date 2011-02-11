@@ -11,7 +11,7 @@ package de.schmiereck.noiseComp.swingView.modulInputs;
  * @author smk
  * @version <p>12.09.2010:	created, smk</p>
  */
-public class ModulInputTypesModel
+public class ModuleInputTypesModel
 {
 	//**********************************************************************************************
 	// Fields:

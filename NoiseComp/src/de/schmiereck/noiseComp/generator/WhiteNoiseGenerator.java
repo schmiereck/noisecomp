@@ -165,7 +165,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(WhiteNoiseGenerator.class, "White Gaussian Noise", "Generate White Gaussian Noise with variance and mean.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", WhiteNoiseGenerator.class, "White Gaussian Noise", "Generate White Gaussian Noise with variance and mean.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VARIANCE, "variance", -1, -1, "The variance.");

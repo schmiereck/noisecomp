@@ -76,11 +76,12 @@ public class ModulGeneratorTypeData
 	 * Constructor.
 	 * 
 	 */
-	public ModulGeneratorTypeData(Class<? extends Generator> generatorClass, 
+	public ModulGeneratorTypeData(String folderPath,
+	                              Class<? extends Generator> generatorClass, 
 								  String generatorTypeName, 
 								  String generatorTypeDescription)
 	{
-		super(generatorClass, generatorTypeName, generatorTypeDescription);
+		super(folderPath, generatorClass, generatorTypeName, generatorTypeDescription);
 	}
 	
 	/**

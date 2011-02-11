@@ -82,6 +82,7 @@ public class TimelinesDrawPanelModel
 	/**
 	 * {@link #selectedTimelineSelectEntryModel} changed listeners.
 	 */
+	@SuppressWarnings("unused")
 	private final ModelPropertyChangedNotifier highlightedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	/**

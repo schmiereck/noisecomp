@@ -181,7 +181,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MixerGenerator.class, "Mixer", "Mixes multiple signal input lines and scale them with a volume.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", MixerGenerator.class, "Mixer", "Mixes multiple signal input lines and scale them with a volume.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VOLUME, "volume", -1, -1, "The volume of the output singal between 0 and 1 (average is calculated if more then one volume is connected).");

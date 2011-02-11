@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
  * @author smk
  * @version <p>20.09.2010:	created, smk</p>
  */
-public class ModulInputTypeTabelModel
+public class ModuleInputTypeTabelModel
 extends AbstractTableModel
 {
 	//**********************************************************************************************
@@ -24,7 +24,7 @@ extends AbstractTableModel
 
 	private String columnNames[] = new String[]{"Name", "Value"};
 	
-	private List<ModulInputTypeSelectEntryModel> inputs = new Vector<ModulInputTypeSelectEntryModel>();
+	private List<ModuleInputTypeSelectEntryModel> inputs = new Vector<ModuleInputTypeSelectEntryModel>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -50,14 +50,14 @@ extends AbstractTableModel
 	}
 
 	/**
-	 * @param modulInputTypeSelectEntryModel
+	 * @param moduleInputTypeSelectEntryModel
 	 * 			is the Modul-Input-Type Select-Entry Model
 	 * @return
 	 * 			the row number.
 	 */
-	public int addInputData(ModulInputTypeSelectEntryModel modulInputTypeSelectEntryModel)
+	public int addInputData(ModuleInputTypeSelectEntryModel moduleInputTypeSelectEntryModel)
 	{
-		this.inputs.add(modulInputTypeSelectEntryModel);
+		this.inputs.add(moduleInputTypeSelectEntryModel);
 		
 		int rowNo = this.inputs.size() - 1;
 		
@@ -72,7 +72,7 @@ extends AbstractTableModel
 		return this.inputs.size();
 	}
 	
-	public ModulInputTypeSelectEntryModel getRow(int rowNo) 
+	public ModuleInputTypeSelectEntryModel getRow(int rowNo) 
 	{ 
 		return this.inputs.get(rowNo);
 	}
@@ -88,18 +88,18 @@ extends AbstractTableModel
 	{
 		String value;
 		
-		ModulInputTypeSelectEntryModel modulInputTypeSelectEntryModel = this.inputs.get(row);
+		ModuleInputTypeSelectEntryModel moduleInputTypeSelectEntryModel = this.inputs.get(row);
 		
 		switch (col)
 		{
 			case 0:		// Type name.
 			{
-				value = modulInputTypeSelectEntryModel.getInputTypeName();
+				value = moduleInputTypeSelectEntryModel.getInputTypeName();
 				break;
 			}
 			case 1:		// Label.
 			{
-				value = modulInputTypeSelectEntryModel.getInputTypeLabel();
+				value = moduleInputTypeSelectEntryModel.getInputTypeLabel();
 //				value = this.makeInputLabel(inputData);
 				break;
 			}

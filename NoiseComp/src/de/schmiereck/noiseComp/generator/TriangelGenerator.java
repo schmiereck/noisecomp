@@ -135,7 +135,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(TriangelGenerator.class, "Triangel", "Generates a triangel signal with a specified frequency and amplidude.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", TriangelGenerator.class, "Triangel", "Generates a triangel signal with a specified frequency and amplidude.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the signal in oscillations per second.");

@@ -15,15 +15,15 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
  * @author smk
  * @version <p>09.09.2010:	created, smk</p>
  */
-public class ModulEditModel
+public class ModuleEditModel
 {
 	//**********************************************************************************************
 	// Fields:
 
 	/**
-	 * {@link ModulEditModel} changed listeners.
+	 * {@link ModuleEditModel} changed listeners.
 	 */
-	private final ModelPropertyChangedNotifier modulEditModelChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier moduleEditModelChangedNotifier = new ModelPropertyChangedNotifier();
 
 	//----------------------------------------------------------------------------------------------
 	/**
@@ -107,7 +107,7 @@ public class ModulEditModel
 			// Notify listeners.
 			this.modulNameChangedNotifier.notifyModelPropertyChangedListeners();
 			
-			this.modulEditModelChangedNotifier.notifyModelPropertyChangedListeners();
+			this.moduleEditModelChangedNotifier.notifyModelPropertyChangedListeners();
 		}
 	}
 
@@ -122,11 +122,11 @@ public class ModulEditModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulEditModelChangedNotifier}.
+	 * 			returns the {@link #moduleEditModelChangedNotifier}.
 	 */
 	public ModelPropertyChangedNotifier getModulEditModelChangedNotifier()
 	{
-		return this.modulEditModelChangedNotifier;
+		return this.moduleEditModelChangedNotifier;
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class ModulEditModel
 		// Notify listeners.
 		this.modulIsMainChangedNotifier.notifyModelPropertyChangedListeners();
 		
-		this.modulEditModelChangedNotifier.notifyModelPropertyChangedListeners();
+		this.moduleEditModelChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
 	/**

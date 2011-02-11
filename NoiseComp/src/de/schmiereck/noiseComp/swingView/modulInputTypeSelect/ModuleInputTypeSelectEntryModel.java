@@ -13,7 +13,7 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
  * @author smk
  * @version <p>20.09.2010:	created, smk</p>
  */
-public class ModulInputTypeSelectEntryModel
+public class ModuleInputTypeSelectEntryModel
 {
 	//**********************************************************************************************
 	// Fields:
@@ -36,7 +36,7 @@ public class ModulInputTypeSelectEntryModel
 	 * @param inputTypeData
 	 * 			is the Input-Type Data.
 	 */
-	public ModulInputTypeSelectEntryModel(InputTypeData inputTypeData)
+	public ModuleInputTypeSelectEntryModel(InputTypeData inputTypeData)
 	{
 		this.inputTypeData = inputTypeData;
 		

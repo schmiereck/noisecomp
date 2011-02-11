@@ -14,7 +14,7 @@ import javax.swing.tree.TreePath;
  * @author smk
  * @version <p>17.09.2010:	created, smk</p>
  */
-public class ModulTreePath
+public class ModuleTreePath
 {
 	//**********************************************************************************************
 	// Fields:
@@ -22,7 +22,7 @@ public class ModulTreePath
 	/**
 	 * Child Tree-Path.
 	 */
-	private final ModulTreePath childTreePath;
+	private final ModuleTreePath childTreePath;
 	
 	/**
 	 * Tree-Node.
@@ -42,8 +42,8 @@ public class ModulTreePath
 	 * @param childTreePath
 	 * 			is a Child Tree-Path.
 	 */
-	public ModulTreePath(DefaultMutableTreeNode treeNode,
-	                     ModulTreePath childTreePath)
+	public ModuleTreePath(DefaultMutableTreeNode treeNode,
+	                     ModuleTreePath childTreePath)
 	{
 		this.treeNode = treeNode;
 		this.childTreePath = childTreePath;
@@ -55,7 +55,7 @@ public class ModulTreePath
 	 * @param treeNode
 	 * 			is a single node path.
 	 */
-	public ModulTreePath(DefaultMutableTreeNode treeNode)
+	public ModuleTreePath(DefaultMutableTreeNode treeNode)
 	{
 		this.treeNode = treeNode;
 		this.childTreePath = null;
@@ -65,7 +65,7 @@ public class ModulTreePath
 	 * @return 
 	 * 			returns the {@link #childTreePath}.
 	 */
-	public ModulTreePath getChildTreePath()
+	public ModuleTreePath getChildTreePath()
 	{
 		return this.childTreePath;
 	}

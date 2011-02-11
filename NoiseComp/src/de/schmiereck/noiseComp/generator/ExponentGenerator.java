@@ -109,7 +109,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(ExponentGenerator.class, "exponent", "Exponent Generator.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", ExponentGenerator.class, "exponent", "Exponent Generator.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "Is a signal between -1 and 1 send to output speakers.");

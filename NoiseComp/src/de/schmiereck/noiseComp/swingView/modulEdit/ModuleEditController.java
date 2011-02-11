@@ -23,7 +23,7 @@ import de.schmiereck.noiseComp.swingView.utils.InputUtils;
  * @author smk
  * @version <p>09.09.2010:	created, smk</p>
  */
-public class ModulEditController
+public class ModuleEditController
 {
 	//**********************************************************************************************
 	// Fields:
@@ -31,12 +31,12 @@ public class ModulEditController
 	/**
 	 * Modul-Edit View.
 	 */
-	private final ModulEditView	modulEditView;
+	private final ModuleEditView	moduleEditView;
 
 	/**
 	 * Modul-Edit Model.
 	 */
-	private final ModulEditModel modulEditModel;
+	private final ModuleEditModel moduleEditModel;
 
 	//**********************************************************************************************
 	// Functions:
@@ -51,18 +51,18 @@ public class ModulEditController
 	 * @param appModelChangedObserver 
 	 * 			is the AppModelChangedObserver.
 	 */
-	public ModulEditController(final AppController appController,
+	public ModuleEditController(final AppController appController,
 	                           final ModulesTreeModel modulesTreeModel, 
 	                           final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
-		this.modulEditModel = new ModulEditModel();
-		this.modulEditView = new ModulEditView(this.modulEditModel);
+		this.moduleEditModel = new ModuleEditModel();
+		this.moduleEditView = new ModuleEditView(this.moduleEditModel);
 		
 		//------------------------------------------------------------------------------------------
 		// Update-Button: Update Modul:
 		
-		this.modulEditView.getUpdateButton().addActionListener
+		this.moduleEditView.getUpdateButton().addActionListener
 		(
 		 	new ActionListener()
 		 	{
@@ -74,20 +74,20 @@ public class ModulEditController
 					if (modulGeneratorTypeData != null)
 					{
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						String generatorTypeName = InputUtils.makeStringValue(modulEditView.getModulNameTextField().getText());
-						Boolean modulIsMain = InputUtils.makeBooleanValue(modulEditView.getModulIsMainCheckBox().isSelected());
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						// Update Edit-Model:
-						
-						modulEditModel.setModulName(generatorTypeName);
-						modulEditModel.setModulIsMain(modulIsMain);
+						String generatorTypeName = InputUtils.makeStringValue(moduleEditView.getModulNameTextField().getText());
+						Boolean modulIsMain = InputUtils.makeBooleanValue(moduleEditView.getModulIsMainCheckBox().isSelected());
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						// Update Modul:
 						
 						modulGeneratorTypeData.setGeneratorTypeName(generatorTypeName);
 						modulGeneratorTypeData.setIsMainModulGeneratorType(modulIsMain);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Edit-Model:
+						
+						moduleEditModel.setModulName(generatorTypeName);
+						moduleEditModel.setModulIsMain(modulIsMain);
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						appModelChangedObserver.notifyAppModelChanged();
@@ -98,7 +98,7 @@ public class ModulEditController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		this.modulEditModel.getZoomXChangedNotifier().addModelPropertyChangedListener
+		this.moduleEditModel.getZoomXChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -109,7 +109,7 @@ public class ModulEditController
 					
 					if (modulGeneratorTypeData != null)
 					{
-						float zoomX = modulEditModel.getZoomX();
+						float zoomX = moduleEditModel.getZoomX();
 						
 						modulGeneratorTypeData.setViewZoomX(zoomX);
 						
@@ -122,7 +122,7 @@ public class ModulEditController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		this.modulEditModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
+		this.moduleEditModel.getTicksPerChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -133,7 +133,7 @@ public class ModulEditController
 					
 					if (modulGeneratorTypeData != null)
 					{
-						TicksPer ticksPer = modulEditModel.getTicksPer();
+						TicksPer ticksPer = moduleEditModel.getTicksPer();
 						
 						modulGeneratorTypeData.setViewTicksPer(ticksPer);
 						
@@ -146,7 +146,7 @@ public class ModulEditController
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		this.modulEditModel.getTicksCountChangedNotifier().addModelPropertyChangedListener
+		this.moduleEditModel.getTicksCountChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -157,7 +157,7 @@ public class ModulEditController
 					
 					if (modulGeneratorTypeData != null)
 					{
-						Float ticksCount = modulEditModel.getTicksCount();
+						Float ticksCount = moduleEditModel.getTicksCount();
 						
 						modulGeneratorTypeData.setViewTicksCount(ticksCount);
 						
@@ -174,30 +174,30 @@ public class ModulEditController
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulEditView}.
+	 * 			returns the {@link #moduleEditView}.
 	 */
-	public ModulEditView getModulEditView()
+	public ModuleEditView getModuleEditView()
 	{
-		return this.modulEditView;
+		return this.moduleEditView;
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulEditModel}.
+	 * 			returns the {@link #moduleEditModel}.
 	 */
-	public ModulEditModel getModulEditModel()
+	public ModuleEditModel getModuleEditModel()
 	{
-		return this.modulEditModel;
+		return this.moduleEditModel;
 	}
 
 	public void doTimelinesZoomIn()
 	{
 		//==========================================================================================
-		float zoomX = this.modulEditModel.getZoomX();
+		float zoomX = this.moduleEditModel.getZoomX();
 		
 		zoomX *= 1.5F;
 		
-		this.modulEditModel.setZoomX(zoomX);
+		this.moduleEditModel.setZoomX(zoomX);
 
 		//==========================================================================================
 	}
@@ -205,11 +205,11 @@ public class ModulEditController
 	public void doTimelinesZoomOut()
 	{
 		//==========================================================================================
-		float zoomX = this.modulEditModel.getZoomX();
+		float zoomX = this.moduleEditModel.getZoomX();
 		
 		zoomX /= 1.5F;
 		
-		this.modulEditModel.setZoomX(zoomX);
+		this.moduleEditModel.setZoomX(zoomX);
 
 		//==========================================================================================
 	}
@@ -261,12 +261,12 @@ public class ModulEditController
 		}
 
 		//------------------------------------------------------------------------------------------
-		this.modulEditModel.setModulName(generatorTypeName);
-		this.modulEditModel.setModulIsMain(modulIsMain);
+		this.moduleEditModel.setModulName(generatorTypeName);
+		this.moduleEditModel.setModulIsMain(modulIsMain);
 		
-		this.modulEditModel.setZoomX(viewZoomX);
-		this.modulEditModel.setTicksPer(viewTicksPer);
-		this.modulEditModel.setTicksCount(viewTicksCount);
+		this.moduleEditModel.setZoomX(viewZoomX);
+		this.moduleEditModel.setTicksPer(viewTicksPer);
+		this.moduleEditModel.setTicksCount(viewTicksCount);
 		
 		//==========================================================================================
 	}

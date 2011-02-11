@@ -8,8 +8,8 @@ import de.schmiereck.noiseComp.PopupRuntimeException;
 
 /**
  * <p>
- * 	Implementiert die Logik eines Generators der einen Sample f�r eine
- * 	Frameposition in einem Buffer ablegt, um ihn nicht mehrfach zu berechnen.
+ * 	Implements the Logic of a Generator is managing Samples in an Buffer at Framepositions:
+ *  So he is calulating Samples only one time.
  * <p>
  * </p>
  * 	The "ouput signal" is calculated based on the internal logic of the generator 
@@ -1042,7 +1042,7 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 
 		if (generator == this)
 		{
-			throw new RuntimeException("Generator \"" + generator + "\" notify himself of changes.");
+			throw new RuntimeException("Generator \"" + generator + "\" notifies himself of changes.");
 		}
 		
 		try

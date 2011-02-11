@@ -234,5 +234,19 @@ implements EditModuleChangedListener
 	{
 		return this.modulesTreeModel;
 	}
+
+	/**
+	 * @param treeNode
+	 * 			is the Tree-Node.
+	 */
+	public void setSelectionPath(DefaultMutableTreeNode treeNode)
+	{
+		//==========================================================================================
+		TreePath selectionTreePath = this.modulesTreeModel.searchFolderTreeNode(treeNode);
+		
+		this.setSelectionPath(selectionTreePath);
+		
+		//==========================================================================================
+	}
 	
 }

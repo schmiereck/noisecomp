@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.renameFolder;
+package de.schmiereck.noiseComp.swingView.createFolder;
 
 import java.awt.GridBagLayout;
 
@@ -15,20 +15,20 @@ import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
  * <p>
- * 	Rename-Folder Edit-View.
+ * 	Create-Folder Edit-View.
  * </p>
  * 
  * @author smk
- * @version <p>25.01.2011:	created, smk</p>
+ * @version <p>31.01.2011:	created, smk</p>
  */
-public class RenameFolderEditView
+public class CreateFolderEditView
 extends BasicEditView
 {
 	//**********************************************************************************************
 	// Fields:
 
 	@SuppressWarnings("unused")
-	private final RenameFolderModel renameFolderModel;
+	private final CreateFolderModel createFolderModel;
 	
 	/**
 	 * Folder-Name Text-Field.
@@ -46,13 +46,13 @@ extends BasicEditView
 	/**
 	 * Constructor.
 	 * 
-	 * @param renameFolderModel
-	 * 			is the Rename-Module Model.
+	 * @param createFolderModel
+	 * 			is the Create-Module Model.
 	 */
-	public RenameFolderEditView(final RenameFolderModel renameFolderModel)
+	public CreateFolderEditView(final CreateFolderModel createFolderModel)
 	{
 		//==========================================================================================
-		this.renameFolderModel = renameFolderModel;
+		this.createFolderModel = createFolderModel;
 		
 		//------------------------------------------------------------------------------------------
 		this.setLayout(new GridBagLayout());
@@ -62,14 +62,14 @@ extends BasicEditView
 		{
 			this.folderNameTextField = this.addTextField(0, "Name:");
 			
-			this.renameFolderModel.getFolderNameChangedNotifier().addModelPropertyChangedListener
+			this.createFolderModel.getFolderNameChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						folderNameTextField.setText(OutputUtils.makeStringText(renameFolderModel.getFolderName()));
+						folderNameTextField.setText(OutputUtils.makeStringText(createFolderModel.getFolderName()));
 					}
 			 	}
 			);

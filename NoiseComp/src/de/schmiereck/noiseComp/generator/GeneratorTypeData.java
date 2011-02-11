@@ -17,6 +17,14 @@ public class GeneratorTypeData
 	//**********************************************************************************************
 	// Fields:
 	
+	/**
+	 * Folder-Path in Format <code>"/folder1/folder2/"</code>.
+	 */
+	private String folderPath;
+	
+	/**
+	 * Class-name of Generator.
+	 */
 	private Class<? extends Generator> generatorClass;
 	
 	/**
@@ -40,15 +48,22 @@ public class GeneratorTypeData
 	/**
 	 * Constructor.
 	 * 
+	 * @param folderPath
+	 * 			is the Folder-Path in format <code>"/folder1/folder2/"</code>.
 	 * @param generatorTypeName
 	 * 			is the {@link GeneratorTypeData#generatorTypeName} of the generator type.
 	 */
-	public GeneratorTypeData(Class<? extends Generator> generatorClass, String generatorTypeName, String generatorTypeDescription)
+	public GeneratorTypeData(String folderPath,
+	                         Class<? extends Generator> generatorClass, 
+	                         String generatorTypeName, 
+	                         String generatorTypeDescription)
 	{
-		super();
+		//==========================================================================================
+		this.folderPath = folderPath;
 		this.generatorClass = generatorClass;
 		this.generatorTypeName = generatorTypeName;
 		this.generatorTypeDescription = generatorTypeDescription;
+		//==========================================================================================
 	}
 
 	/**
@@ -66,6 +81,24 @@ public class GeneratorTypeData
 	{
 		this.inputTypesData.removeInputTypeData(inputTypeData);
 	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #folderPath}.
+	 */
+	public String getFolderPath()
+	{
+		return this.folderPath;
+	}
+
+	/**
+	 * @param folderPath 
+	 * 			to set {@link #folderPath}.
+	 */
+	public void setFolderPath(String path)
+	{
+		this.folderPath = path;
+	}
 	
 	/**
 	 * @return 
@@ -82,17 +115,26 @@ public class GeneratorTypeData
 	 */
 	public String getGeneratorTypeClassName()
 	{
+		//==========================================================================================
 		String generatorTypeClassName;
 		
-		if (this.generatorClass.equals(ModulGenerator.class) == true)
+		if (this.generatorClass != null)
 		{
-			generatorTypeClassName = this.getGeneratorClass().getName() + "#" + this.getGeneratorTypeName();
+			if (this.generatorClass.equals(ModulGenerator.class) == true)
+			{
+				generatorTypeClassName = this.getGeneratorClass().getName() + "#" + this.getGeneratorTypeName();
+			}
+			else
+			{
+				generatorTypeClassName = this.getGeneratorClass().getName();
+			}
 		}
 		else
 		{
-			generatorTypeClassName = this.getGeneratorClass().getName();
+			generatorTypeClassName = "";
 		}
 		
+		//==========================================================================================
 		return generatorTypeClassName;
 	}
 	
@@ -143,6 +185,7 @@ public class GeneratorTypeData
 	public Generator createGeneratorInstance(String generatorName, 
 	                                         float frameRate)//, ModulGenerator parentModulGenerator)
 	{
+		//==========================================================================================
 		Generator generator = null;
 		
 		//try
@@ -201,6 +244,7 @@ public class GeneratorTypeData
 		//	throw new RuntimeException("class not found: " + this.generatorClass.getName(), ex);
 		//}
 		
+		//==========================================================================================
 		return generator;
 	}
 	/**
@@ -226,6 +270,5 @@ public class GeneratorTypeData
 	{
 		return this.generatorTypeName + " (" + this.generatorTypeDescription + ")";
 	}
-	
 	
 }

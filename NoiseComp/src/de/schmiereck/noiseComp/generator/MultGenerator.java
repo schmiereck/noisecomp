@@ -127,7 +127,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MultGenerator.class, "mult", "Multiplicate signals Generator.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", MultGenerator.class, "mult", "Multiplicate signals Generator.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "Is a signal.");
