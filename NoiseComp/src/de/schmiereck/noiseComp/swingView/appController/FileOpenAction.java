@@ -25,7 +25,7 @@ implements Action
 	// Fields:
 
 	/**
-	 * Ist der Main-Controller der Applikation. 
+	 * Main-Controller of Application. 
 	 */
 	final private AppController appController;
 	
@@ -36,19 +36,25 @@ implements Action
 	 * Constructor.
 	 * 
 	 * @param appController 
-	 * 			ist der Main-Controller der Applikation. 
+	 * 			is the Main-Controller of Application. 
 	 * @param mainController 
-	 * 			ist der Main-Controller des View. 
+	 * 			is the Main-Controller of View. 
 	 */
 	public FileOpenAction(AppController appController)
 	{
 		this.appController = appController;
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#addPropertyChangeListener(java.beans.PropertyChangeListener)
+	 */
 	public void addPropertyChangeListener(PropertyChangeListener listener)
 	{
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#getValue(java.lang.String)
+	 */
 	public Object getValue(String key)
 	{
 		Object value;
@@ -73,7 +79,7 @@ implements Action
 				{
 					if (Action.SHORT_DESCRIPTION.equals(key))
 					{
-						value = "Load the file \"test01.xml\".";
+						value = "Load the file \"*.noiseComp.xml\".";
 					}
 					else
 					{
@@ -86,23 +92,38 @@ implements Action
 		return value;
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#isEnabled()
+	 */
 	public boolean isEnabled()
 	{
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#putValue(java.lang.String, java.lang.Object)
+	 */
 	public void putValue(String key, Object value)
 	{
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#removePropertyChangeListener(java.beans.PropertyChangeListener)
+	 */
 	public void removePropertyChangeListener(PropertyChangeListener listener)
 	{
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#setEnabled(boolean)
+	 */
 	public void setEnabled(boolean b)
 	{
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		this.appController.doFileOpen();

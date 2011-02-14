@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
 import java.util.Iterator;
+
 import de.schmiereck.dataTools.VectorHash;
 
 /**

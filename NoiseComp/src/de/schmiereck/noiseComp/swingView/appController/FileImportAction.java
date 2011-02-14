@@ -12,13 +12,13 @@ import javax.swing.KeyStroke;
 
 /**
  * <p>
- * 	File-Save Action.
+ * 	File-Import Action.
  * </p>
  * 
  * @author smk
- * @version <p>21.09.2010:	created, smk</p>
+ * @version <p>14.02.2011:	created, smk</p>
  */
-public class FileSaveAction
+public class FileImportAction
 implements Action
 {
 	//**********************************************************************************************
@@ -28,7 +28,7 @@ implements Action
 	 * Main-Controller of Application. 
 	 */
 	final private AppController appController;
-
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -37,8 +37,10 @@ implements Action
 	 * 
 	 * @param appController 
 	 * 			is the Main-Controller of Application. 
+	 * @param mainController 
+	 * 			is the Main-Controller of View. 
 	 */
-	public FileSaveAction(AppController appController)
+	public FileImportAction(AppController appController)
 	{
 		this.appController = appController;
 	}
@@ -59,25 +61,25 @@ implements Action
 		
 		if (Action.NAME.equals(key))
 		{
-			value = "Save...";
+			value = "Import...";
 		}
 		else
 		{
 			if (Action.MNEMONIC_KEY.equals(key))
 			{
-				value = KeyEvent.VK_S;
+				value = KeyEvent.VK_I;
 			}
 			else
 			{
 				if (Action.ACCELERATOR_KEY.equals(key))
 				{
-					value = KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK);
+					value = KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK);
 				}
 				else
 				{
 					if (Action.SHORT_DESCRIPTION.equals(key))
 					{
-						value = "Save the file \"*.noiseComp.xml\".";
+						value = "Import the file \"*.noiseComp.xml\".";
 					}
 					else
 					{
@@ -124,7 +126,7 @@ implements Action
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		this.appController.doFileSave();
+		this.appController.doFileImport();
 	}
 
 }

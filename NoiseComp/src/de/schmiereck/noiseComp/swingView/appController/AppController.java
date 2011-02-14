@@ -26,6 +26,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.Version;
+import de.schmiereck.noiseComp.file.ImportFileOperationLogic;
 import de.schmiereck.noiseComp.file.LoadFileOperationLogic;
 import de.schmiereck.noiseComp.file.SaveFileOperationLogic;
 import de.schmiereck.noiseComp.generator.Generator;
@@ -65,6 +66,7 @@ import de.schmiereck.noiseComp.swingView.modulInputs.ModuleInputTypesController;
 import de.schmiereck.noiseComp.swingView.modulsTree.DoEditModuleListener;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
+import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView;
 import de.schmiereck.noiseComp.swingView.renameFolder.RenameFolderController;
 import de.schmiereck.noiseComp.swingView.renameFolder.RenameFolderModel;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController;
@@ -244,6 +246,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 			
 			this.appView.getFileSaveMenuItem().setAction(action);
 			this.appView.getFileSaveButtonView().setAction(action);
+		}
+		{
+			FileImportAction action = new FileImportAction(this);
+			
+			this.appView.getFileImportMenuItem().setAction(action);
 		}
 		//------------------------------------------------------------------------------------------
 		// Edit:
@@ -1646,6 +1653,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//==========================================================================================
 		this.setEnableOpenFile(false);
 
+		//------------------------------------------------------------------------------------------
 		File fileActionFile = this.getFileActionFile();
 		
 		JFileChooser chooser = new JFileChooser();
@@ -1686,7 +1694,125 @@ implements RemoveTimelineGeneratorListenerInterface,
 			}
 		}
 
+		//------------------------------------------------------------------------------------------
 		this.setEnableOpenFile(true);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * File-Save.
+	 */
+	public void doFileSave()
+	{
+		//==========================================================================================
+		this.setEnableSaveFile(false);
+
+		//------------------------------------------------------------------------------------------
+		File fileActionFile = this.getFileActionFile();
+		
+		JFileChooser chooser = new JFileChooser();
+
+		chooser.setFileHidingEnabled(true);
+		chooser.setMultiSelectionEnabled(false);
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+		chooser.setSelectedFile(fileActionFile);
+		
+//		ExtensionFileFilter filter = new ExtensionFileFilter();
+//		filter.addExtension("lwx");
+//		filter.setDescription("Geneden XML-File");
+//		chooser.setFileFilter(filter);
+
+		int state = chooser.showDialog(this.appView, "Save");
+
+		if (state == JFileChooser.APPROVE_OPTION)
+		{ 
+			//File dir = chooser.getCurrentDirectory();
+			File file = chooser.getSelectedFile();
+
+			try
+			{
+				this.doSave(file);
+				
+				this.setFileActionFile(file);
+			}
+			catch (SaveFileException ex)
+			{
+				ex.printStackTrace(System.err);
+
+				JOptionPane.showMessageDialog(this.appView,
+				                              "Error while saving \"" + file + "\".\n" +
+				                              "Message: " + ex,
+				                              "Save File Error",
+				                              JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		//------------------------------------------------------------------------------------------
+		this.setEnableSaveFile(true);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * File-Import.
+	 */
+	public void doFileImport()
+	{
+		//==========================================================================================
+		this.setEnableOpenFile(false);
+
+		//------------------------------------------------------------------------------------------
+		File fileActionFile = this.getFileActionFile();
+		
+		JFileChooser chooser = new JFileChooser();
+
+		chooser.setFileHidingEnabled(true);
+		chooser.setMultiSelectionEnabled(false);
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+		chooser.setSelectedFile(fileActionFile);
+		
+//		ExtensionFileFilter filter = new ExtensionFileFilter();
+//		filter.addExtension("lwx");
+//		filter.setDescription("Geneden XML-File");
+//		chooser.setFileFilter(filter);
+
+		int state = chooser.showDialog(this.appView, "Import");
+
+		if (state == JFileChooser.APPROVE_OPTION)
+		{ 
+			//File dir = chooser.getCurrentDirectory();
+			File file = chooser.getSelectedFile();
+
+			try
+			{
+				this.doImport(file);
+				
+				this.setFileActionFile(file);
+			}
+			catch (LoadFileException ex)
+			{
+				ex.printStackTrace(System.err);
+
+				JOptionPane.showMessageDialog(this.appView,
+				                              "Error while importing \"" + file + "\".\n" +
+				                              "Message: " + ex,
+				                              "Import File Error",
+				                              JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		//------------------------------------------------------------------------------------------
+		ModulesTreeModel modulesTreeModel = this.modulesTreeController.getModulesTreeModel();
+		ModulesTreeView modulesTreeView = this.modulesTreeController.getModulesTreeView();
+		
+		modulesTreeView.setSelectionPath(modulesTreeModel.getSelectionPath());
+		
+		//------------------------------------------------------------------------------------------
+		this.setEnableOpenFile(true);
+		
 		//==========================================================================================
 	}
 	
@@ -1699,6 +1825,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//==========================================================================================
 		this.appView.getFileOpenMenuItem().setEnabled(enable);
 		this.appView.getFileOpenButtonView().setEnabled(enable);
+		this.appView.getFileImportMenuItem().setEnabled(enable);
 		//==========================================================================================
 	}
 
@@ -1708,7 +1835,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * @param file
 	 * 			is the file to load. 
 	 * @throws LoadFileException 
-	 * 			wenn einFehler beim Laden Auftritt.
+	 * 			if a Error occourse while loading.
 	 */
 	public void doLoad(File file) 
 	throws LoadFileException
@@ -1766,7 +1893,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * @param file
 	 * 			is the file to save. 
 	 * @throws SaveFileException
-	 * 			wenn ein Fehler beim Speichern Auftritt. 
+	 * 			if a Error occourse while saving.
 	 */
 	public void doSave(File file) throws SaveFileException
 	{
@@ -1817,55 +1944,74 @@ implements RemoveTimelineGeneratorListenerInterface,
 	}
 
 	/**
-	 * File-Save.
+	 * Import the Application data.
+	 * 
+	 * @param file
+	 * 			is the file to import. 
+	 * @throws LoadFileException 
+	 * 			if a Error occourse while importing.
 	 */
-	public void doFileSave()
+	public void doImport(File file) 
+	throws LoadFileException
 	{
 		//==========================================================================================
-		this.setEnableSaveFile(false);
-
-		File fileActionFile = this.getFileActionFile();
+		SoundService soundService = SoundService.getInstance();
 		
-		JFileChooser chooser = new JFileChooser();
+		//==========================================================================================
+		float frameRate = SwingMain.getSoundData().getFrameRate();
+		String absolutePath = file.getAbsolutePath();
 
-		chooser.setFileHidingEnabled(true);
-		chooser.setMultiSelectionEnabled(false);
-		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		chooser.setDialogType(JFileChooser.SAVE_DIALOG);
-		chooser.setSelectedFile(fileActionFile);
+		ModulGeneratorTypeData mainModulGeneratorTypeData;
+		GeneratorTypesData generatorTypesData = new GeneratorTypesData();
+
+		try
+		{
+			mainModulGeneratorTypeData =
+				ImportFileOperationLogic.importNoiseCompFile(generatorTypesData, absolutePath, frameRate);
+		}
+		catch (Exception ex)
+		{
+			throw new LoadFileException("Import \"" + absolutePath + "\".", ex);
+		}
 		
-//		ExtensionFileFilter filter = new ExtensionFileFilter();
-//		filter.addExtension("lwx");
-//		filter.setDescription("Geneden XML-File");
-//		chooser.setFileFilter(filter);
+		//------------------------------------------------------------------------------------------
+		mainModulGeneratorTypeData.setIsMainModulGeneratorType(false);
+		
+		//------------------------------------------------------------------------------------------
+		// Check imported generator type is not existing:
+		
+		GeneratorTypesData addedGeneratorTypesData = new GeneratorTypesData();
+		
+		Iterator<GeneratorTypeData> generatorTypesIterator = generatorTypesData.getGeneratorTypesIterator();
+		
+		while (generatorTypesIterator.hasNext())
+		{
+			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
 
-		int state = chooser.showDialog(this.appView, "Save");
-
-		if (state == JFileChooser.APPROVE_OPTION)
-		{ 
-			//File dir = chooser.getCurrentDirectory();
-			File file = chooser.getSelectedFile();
-
-			try
+			// Not a existing generator type?
+			if (soundService.checkGeneratorTypeIsExisting(generatorTypeData) == false)
 			{
-				this.doSave(file);
-				
-				this.setFileActionFile(file);
-			}
-			catch (SaveFileException ex)
-			{
-				ex.printStackTrace(System.err);
-
-				JOptionPane.showMessageDialog(this.appView,
-				                              "Error while saving \"" + file + "\".\n" +
-				                              "Message: " + ex,
-				                              "Save File Error",
-				                              JOptionPane.ERROR_MESSAGE);
+				soundService.addGeneratorType(generatorTypeData);
+				 
+				addedGeneratorTypesData.addGeneratorTypeData(generatorTypeData);
 			}
 		}
-
+		
+		//------------------------------------------------------------------------------------------
+		this.modulesTreeController.importGeneratorTypes(addedGeneratorTypesData.getGeneratorTypesIterator());
+		
+//		this.selectEditModule(null);
+//		
+//		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+//		
+//		this.modulesTreeController.addGeneratorTypes(generatorTypes);
+//		
+//		this.selectEditModule(mainModulGeneratorTypeData);
+		
+		//------------------------------------------------------------------------------------------
+		this.appModel.setIsModelChanged(true);
+		
 		//==========================================================================================
-		this.setEnableSaveFile(true);
 	}
 
 	/**

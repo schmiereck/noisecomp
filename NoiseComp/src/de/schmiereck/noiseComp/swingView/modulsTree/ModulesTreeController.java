@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.modulsTree;
 
 import java.awt.event.MouseListener;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -108,23 +109,39 @@ public class ModulesTreeController
 		//==========================================================================================
 		return treeModel;
 	}
-	
+
 	/**
 	 * @param generatorTypes
-	 * 			are the  generator Types.
+	 * 			are the generator Types.
 	 */
 	public void addGeneratorTypes(List<GeneratorTypeData> generatorTypes)
+	{
+		//==========================================================================================
+		this.modulesTreeModel.removeGeneratorNodes();
+		this.modulesTreeModel.removeModulNodes();
+
+		//------------------------------------------------------------------------------------------
+		Iterator<GeneratorTypeData> generatorTypesIterator = generatorTypes.iterator();
+		
+		this.importGeneratorTypes(generatorTypesIterator);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @param generatorTypesIterator
+	 * 			is the generator Types iterator.
+	 */
+	public void importGeneratorTypes(Iterator<GeneratorTypeData> generatorTypesIterator)
 	{
 		//==========================================================================================
 		DefaultTreeModel treeModel = this.modulesTreeModel.getTreeModel();
 		
 		//------------------------------------------------------------------------------------------
-		this.modulesTreeModel.removeGeneratorNodes();
-		this.modulesTreeModel.removeModulNodes();
-
-		//------------------------------------------------------------------------------------------
-		for (GeneratorTypeData generatorTypeData : generatorTypes)
+		while (generatorTypesIterator.hasNext())
 		{
+			GeneratorTypeData generatorTypeData = (GeneratorTypeData)generatorTypesIterator.next();
+			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			String folderPath = generatorTypeData.getFolderPath();
 			

@@ -72,6 +72,11 @@ extends JFrame
 	 * SubMenu Bar: File: File-Save.
 	 */
 	private JMenuItem fileSaveMenuItem = null;
+
+	/**
+	 * SubMenu Bar: File: File-Open.
+	 */
+	private JMenuItem fileImportMenuItem = null;
 	
 	/**
 	 * SubMenu Bar: Edit: Double-Timeline.
@@ -614,6 +619,13 @@ extends JFrame
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			menu.addSeparator();
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// File-Import:
+			this.fileImportMenuItem = new JMenuItem();
+			menu.add(this.fileImportMenuItem);
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			menu.addSeparator();
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Exit:
 			this.exitMenuItem = new JMenuItem(); //"Exit", KeyEvent.VK_X);
 			//this.exitMenuItem.setActionCommand(MainMenuActionListener.CMD_EXIT);
@@ -800,6 +812,15 @@ extends JFrame
 	public JMenuItem getFileSaveMenuItem()
 	{
 		return this.fileSaveMenuItem;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #fileSaveMenuItem}.
+	 */
+	public JMenuItem getFileImportMenuItem()
+	{
+		return this.fileImportMenuItem;
 	}
 
 	/**

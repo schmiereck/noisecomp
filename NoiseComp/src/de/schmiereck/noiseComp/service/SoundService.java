@@ -11,6 +11,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.swingView.CompareUtils;
 
 /**
  * <p>
@@ -467,5 +468,50 @@ public class SoundService
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		//==========================================================================================
+	}
+
+	/**
+	 * @param generatorTypeData
+	 * 			is the Module-Generator.
+	 * @return
+	 * 			<code>true</code> if Module-Generator is existing.
+	 */
+	public boolean checkGeneratorTypeIsExisting(GeneratorTypeData generatorTypeData)
+	{
+		//==========================================================================================
+		boolean isExisting;
+		
+		isExisting = false;
+		
+		String folderPath = generatorTypeData.getFolderPath();
+		String generatorTypeName = generatorTypeData.getGeneratorTypeName();
+		
+		//------------------------------------------------------------------------------------------
+		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		
+		while (generatorTypesIterator.hasNext())
+		{
+			GeneratorTypeData gtData = generatorTypesIterator.next();
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//			if (gtData instanceof ModulGeneratorTypeData)
+			{
+//				ModulGeneratorTypeData checkedGeneratorTypeData = (ModulGeneratorTypeData)gtData;
+
+				String gtFolderPath = gtData.getFolderPath();
+				String gtName = gtData.getGeneratorTypeName();
+				
+				// Folder path and Module Name is the same?
+				if (CompareUtils.compareWithNull(folderPath, gtFolderPath) && 
+					CompareUtils.compareWithNull(generatorTypeName, gtName))
+				{
+					isExisting = true;
+					break;
+				}
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
+		//==========================================================================================
+		return isExisting;
 	}
 }

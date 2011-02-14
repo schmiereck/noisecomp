@@ -50,8 +50,6 @@ WORK:
 		--> http://www.eclipse.org/mat/
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
-#89:	IMPROVEMENT: Import and export of modules (and all required modules) in/from files.
-		--> Import from file.
 
 DONE:
 =====
@@ -246,5 +244,5 @@ DONE:
 		--> DONE: Insert, Cut, Paste, Rename Folder.
 		--> DONE: Cut, Paste Module.
 		--> DONE: Delete Module or Folder. Alert if (Folder-Sub-)Module is used by other modules or it is the Main-Module.
-		
-		
+#89:	IMPROVEMENT: Import and export of modules (and all required modules) in/from files.
+		--> DONE: Import from file.

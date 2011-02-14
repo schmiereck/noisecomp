@@ -26,7 +26,7 @@ import de.schmiereck.xmlTools.XMLPortException;
  */
 /**
  * <p>
- * 	Provedes functions to load and save NoiseComp XML files.
+ * 	Provides functions to load and save NoiseComp XML files.
  * </p>
  * 
  * @author smk
@@ -37,7 +37,7 @@ public class LoadFileOperationLogic
 
 	/**
 	 * Load a NoiseComp XML File into the generator types object and the
-	 * main genrator object.
+	 * main generator object.
 	 * 
 	 * @param fileName
 	 * 			is the file name of the xml file to load.
@@ -51,6 +51,9 @@ public class LoadFileOperationLogic
 	throws XMLPortException
 	{
 		//==========================================================================================
+		ModulGeneratorTypeData mainModulGeneratorTypeData;
+		
+		//------------------------------------------------------------------------------------------
 		Document xmlDoc;
 		
 		xmlDoc = XMLPort.open(fileName);
@@ -59,10 +62,8 @@ public class LoadFileOperationLogic
 
 //		String version = XMLData.selectSingleNodeText(noiseNode, "version");
 		
-		//-----------------------------------------------------
+		//------------------------------------------------------------------------------------------
 		// GeneratorTypesData:
-		
-		ModulGeneratorTypeData mainModulGeneratorTypeData;
 		
 		GeneratorTypeNodesData generatorTypeNodesData = new GeneratorTypeNodesData();
 		
