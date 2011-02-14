@@ -518,10 +518,24 @@ public class ModulesTreeModel
 	 * @param parenTreeNode
 	 * 			is the Tree-Node.
 	 */
-	public void deleteModule(DefaultMutableTreeNode treeNode)
+	public void deleteModule(DefaultMutableTreeNode moduleTreeNode)
 	{
 		//==========================================================================================
-		treeNode.removeFromParent();
+		moduleTreeNode.removeFromParent();
+		
+		this.treeModel.reload();
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @param folderTreeNode
+	 * 			is the Tree-Node.
+	 */
+	public void deleteFolder(DefaultMutableTreeNode folderTreeNode)
+	{
+		//==========================================================================================
+		folderTreeNode.removeFromParent();
 		
 		this.treeModel.reload();
 		

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.Generator;
@@ -357,7 +356,7 @@ public class ModulesTreeController
 
 	/**
 	 * Delete selected module or folder.<br/>
-	 * Alert if Module is used by other modules.
+	 * Alert if Module is used by other modules or it is the Main-Module.
 	 */
 	public void doDelete()
 	{
@@ -542,7 +541,7 @@ public class ModulesTreeController
 
 	/**
 	 * Delete module.<br/>
-	 * Alert if Module is used by other modules.
+	 * Alert if Module is used by other modules or it is the Main-Module.
 	 * 
 	 * @param moduleTreeNode
 	 * 			is the module Tree-Node.
@@ -611,7 +610,7 @@ public class ModulesTreeController
 
 	/**
 	 * Delete folder.<br/>
-	 * Alert if one Module in folder is used by other modules.
+	 * Alert if one Module in folder is used by other modules or it is the Main-Module.
 	 * 
 	 * @param moduleTreeNode
 	 * 			is the folder Tree-Node.
@@ -619,7 +618,64 @@ public class ModulesTreeController
 	private void doDeleteFolder(DefaultMutableTreeNode folderTreeNode)
 	{
 		//==========================================================================================
-		// TODO Auto-generated method stub
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
+//		for (int childPos = 0; childPos < folderTreeNode.getChildCount(); childPos++)
+//		{
+//			DefaultMutableTreeNode childTreeNode = (DefaultMutableTreeNode)folderTreeNode.getChildAt(childPos);
+//		}
+
+		String folderPath = this.modulesTreeModel.makeFolderPath(folderTreeNode);
+		
+		// Folder is used by other modules?
+		if (soundService.checkModuleInFolderIsUsed(folderPath) == true)
+		{
+			//--------------------------------------------------------------------------------------
+			// Alert Module is used by other modules.
+			
+			AppView appView = appController.getAppView();
+			
+			JOptionPane.showMessageDialog(appView, "Sub-Module in folder is used by other modules.");
+			
+			//--------------------------------------------------------------------------------------
+		}
+		else
+		{
+			// Module in Folder is Main-Module?
+			if (soundService.checkModuleInFolderIsMainModul(folderPath) == true)
+			{
+				//----------------------------------------------------------------------------------
+				// Alert Module is main module.
+				
+				AppView appView = appController.getAppView();
+				
+				JOptionPane.showMessageDialog(appView, "Sub-Module in folder is main module.");
+				
+				//----------------------------------------------------------------------------------
+			}
+			else
+			{
+				//----------------------------------------------------------------------------------
+				// Remove Module:
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Service:
+				
+				soundService.removeFolder(folderPath);
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// View:
+				
+				DefaultMutableTreeNode parenTreeNode = (DefaultMutableTreeNode)folderTreeNode.getParent();
+				
+				this.modulesTreeModel.deleteFolder(folderTreeNode);
+				
+				this.modulesTreeView.setSelectionPath(parenTreeNode);
+				
+				//-----------------------------------------------------------------------------------
+			}
+		}
 		
 		//==========================================================================================
 	}

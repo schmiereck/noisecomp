@@ -50,10 +50,6 @@ WORK:
 		--> http://www.eclipse.org/mat/
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
-#117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
-		--> DONE: Insert, Cut, Paste, Rename Folder.
-		--> DONE: Cut, Paste Module.
-		--> Delete Module. Alert if Module is used by other modules.
 #89:	IMPROVEMENT: Import and export of modules (and all required modules) in/from files.
 		--> Import from file.
 
@@ -246,5 +242,9 @@ DONE:
 #122:	IMPROVEMENT: Implements generators for add, Math.exp, Math.pow, ...
 		--> DONE: AddGenerator, ExponentGenerator, TanhGenerator, MultGenerator, PowGenerator
 #133:	BUG: Now INPUT_TYPE_IIFREQ is the changing frequenze and INPUT_TYPE_FREQ is the constante base frequenz.
+#117:	IMPROVEMENT: Allow creating subfolders in Module-Tree to organize Modules. 
+		--> DONE: Insert, Cut, Paste, Rename Folder.
+		--> DONE: Cut, Paste Module.
+		--> DONE: Delete Module or Folder. Alert if (Folder-Sub-)Module is used by other modules or it is the Main-Module.
 		
 		

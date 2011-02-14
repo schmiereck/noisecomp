@@ -347,4 +347,125 @@ public class SoundService
 		//==========================================================================================
 		return moduleIsUsed;
 	}
+
+	/**
+	 * @param folderPath
+	 * 			is the Folder-Path in format <code>"/folder1/folder2/"</code>.
+	 * @return
+	 * 			<code>true</code> if a module in folder or sub folder is in use.
+	 */
+	public boolean checkModuleInFolderIsUsed(String folderPath)
+	{
+		//==========================================================================================
+		boolean moduleIsUsed;
+		
+		moduleIsUsed = false;
+		
+		//------------------------------------------------------------------------------------------
+		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		
+		while (generatorTypesIterator.hasNext())
+		{
+			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			{
+				ModulGeneratorTypeData checkedGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				
+				Iterator<Generator> tracksIterator = checkedGeneratorTypeData.getTracksIterator();
+				
+				while (tracksIterator.hasNext())
+				{
+					Generator trackGenerator = (Generator)tracksIterator.next();
+					
+					GeneratorTypeData trackGeneratorTypeData = trackGenerator.getGeneratorTypeData();
+					
+					String gtFolderPath = trackGeneratorTypeData.getFolderPath();
+					
+					if (gtFolderPath.startsWith(folderPath))
+					{
+						moduleIsUsed = true;
+					}
+				}
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
+		
+		//==========================================================================================
+		return moduleIsUsed;
+	}
+
+	/**
+	 * @param folderPath
+	 * 			is the Folder-Path in format <code>"/folder1/folder2/"</code>.
+	 * @return
+	 * 			<code>true</code> if a module in folder or sub folder is the main module.
+	 */
+	public boolean checkModuleInFolderIsMainModul(String folderPath)
+	{
+		//==========================================================================================
+		boolean moduleIsMainModul;
+		
+		moduleIsMainModul = false;
+		
+		//------------------------------------------------------------------------------------------
+		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		
+		while (generatorTypesIterator.hasNext())
+		{
+			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			{
+				ModulGeneratorTypeData checkedGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				
+				String gtFolderPath = checkedGeneratorTypeData.getFolderPath();
+				
+				if (gtFolderPath.startsWith(folderPath))
+				{
+					if (checkedGeneratorTypeData.getIsMainModulGeneratorType() == true)
+					{
+						moduleIsMainModul = true;
+						break;
+					}
+				}
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
+		
+		//==========================================================================================
+		return moduleIsMainModul;
+	}
+
+	/**
+	 * @param folderPath
+	 * 			is the Folder-Path in format <code>"/folder1/folder2/"</code>.
+	 */
+	public void removeFolder(String folderPath)
+	{
+		//==========================================================================================
+		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		
+		while (generatorTypesIterator.hasNext())
+		{
+			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			{
+				ModulGeneratorTypeData checkedGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+
+				String gtFolderPath = checkedGeneratorTypeData.getFolderPath();
+				
+				if (gtFolderPath.startsWith(folderPath))
+				{
+					generatorTypesIterator.remove();
+				}
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
+		//==========================================================================================
+	}
 }
