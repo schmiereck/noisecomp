@@ -17,6 +17,7 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLPort;
 import de.schmiereck.xmlTools.XMLPortException;
@@ -192,10 +193,10 @@ public class LoadFileOperationLogic
 	
 			while ((generatorTypeNode = generatorTypesNodeIterator.nextNode()) != null)
 			{
-				GeneratorTypeData generatorTypeData = LoadFileOperationLogic.createGeneratorType(generatorTypesData,
-																								 generatorTypeNodesData,
-																								 generatorTypeNode, 
-																								 frameRate);
+				GeneratorTypeData generatorTypeData = createGeneratorType(generatorTypesData,
+				                                                          generatorTypeNodesData,
+				                                                          generatorTypeNode, 
+				                                                          frameRate);
 				
 				if (generatorTypeData instanceof ModulGeneratorTypeData)	
 				{
@@ -229,6 +230,11 @@ public class LoadFileOperationLogic
 		String generatorTypeDescription = XMLData.selectSingleNodeText(generatorTypeNode, "description");
 		
 //		String generatorModulTypeName;	// Not realy needed, because 'generatorTypeName' should be the same.
+		
+		if (folderPath == null)
+		{
+			folderPath = makeMissingFolderPath(generatorTypeClassName);
+		}
 		
 		GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(folderPath,
 		                                                                                 generatorTypeClassName);
@@ -379,6 +385,30 @@ public class LoadFileOperationLogic
 		return generatorTypeData;
 	}
 
+	/**
+	 * @param generatorTypeClassName
+	 * @return
+	 */
+	private static String makeMissingFolderPath(String generatorTypeClassName)
+	{
+		String folderPath;
+		//if (generatorTypeClassName == null)	"de.schmiereck.noiseComp.generator.GeneratorTypeData"
+		//if (generatorClassName == null)		"de.schmiereck.noiseComp.generator.MixerGenerator"
+		//if (generatorTypeName == null)		"Mixer"
+		if ("de.schmiereck.noiseComp.generator.GeneratorTypeData".equals(generatorTypeClassName))
+		{
+			folderPath = StartupService.GENERATOR_FOLDER_PATH;
+		}
+		else
+		{
+			//if (generatorTypeClassName == null)	"de.schmiereck.noiseComp.generator.ModulGeneratorTypeData"
+			//if (generatorClassName == null)		"de.schmiereck.noiseComp.generator.ModulGenerator#drum-set 1"
+			//if (generatorTypeName == null)		"drum-set 1"
+			folderPath = StartupService.MODULE_FOLDER_PATH;
+		}
+		return folderPath;
+	}
+
 	@SuppressWarnings("unchecked")
 	public static GeneratorTypeData createGeneratorTypeData(String folderPath,
 	                                                        String generatorTypeClassName, 
@@ -482,6 +512,21 @@ public class LoadFileOperationLogic
 			String generatorName = XMLData.selectSingleNodeText(generatorNode, "name");
 			Float generatorStartTime = XMLData.selectSingleNodeFloat(generatorNode, "startTime");
 			Float generatorEndTime = XMLData.selectSingleNodeFloat(generatorNode, "endTime");
+			
+			if (folderPath == null)
+			{
+//				folderPath = makeMissingFolderPath(generatorType);
+				
+				//"de.schmiereck.noiseComp.generator.ModulGenerator#drum-set 1"
+				if (generatorType.startsWith("de.schmiereck.noiseComp.generator.ModulGenerator#"))
+				{
+					folderPath = StartupService.MODULE_FOLDER_PATH;
+				}
+				else
+				{
+					folderPath = StartupService.GENERATOR_FOLDER_PATH;
+				}
+			}
 			
 			GeneratorTypeData generatorTypeData = generatorTypesData.searchGeneratorTypeData(folderPath,
 			                                                                                 generatorType);

@@ -40,7 +40,7 @@ TODO:
 #123:	IMPROVEMENT: Allow input values: $startTimeline, $endTimeline, $posTimeline, $startModule, $endModule, $posModule
 #124:	IMPROVEMENT: Allow mathematically instructions/ terms as input value (+-*/()^).
 #128:	BUG: If module input default is null it do not use the value of master module.
-#134:	IMPROVEMENT: Tick-Type "Beats" and a seperate, dynamical setting if how many Beates per Minute are used.
+#134:	IMPROVEMENT: Tick-Type "Beats" and a seperate, dynamical setting, with how many Beates per Minute are used.
 #135:	
 
 WORK:

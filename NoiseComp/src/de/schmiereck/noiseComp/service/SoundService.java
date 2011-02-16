@@ -276,6 +276,8 @@ public class SoundService
 	                       ModulGeneratorTypeData modulGeneratorTypeData)
 	{
 		//==========================================================================================
+		boolean moduleMoved = false;
+		
 		String moduleName = modulGeneratorTypeData.getGeneratorTypeName();
 		
 		//------------------------------------------------------------------------------------------
@@ -286,16 +288,23 @@ public class SoundService
 			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
 			
 			String gtFolderPath = generatorTypeData.getFolderPath();
-			String generatorTypeName = generatorTypeData.getGeneratorTypeName();
+			String gtName = generatorTypeData.getGeneratorTypeName();
 			
-			if (gtFolderPath.equals(cutFolderPath) && moduleName.equals(generatorTypeName))
+			if (cutFolderPath.equals(gtFolderPath) && moduleName.equals(gtName))
 			{
 				//----------------------------------------------------------------------------------
 				generatorTypeData.setFolderPath(pasteFolderPath);
 
+				moduleMoved = true;
+				
 				//----------------------------------------------------------------------------------
 				break;
 			}
+		}
+		
+		if (moduleMoved == false)
+		{
+			throw new RuntimeException("Moved module \"" + cutFolderPath + modulGeneratorTypeData.getGeneratorTypeName() + "\" not found.");
 		}
 		
 		//==========================================================================================

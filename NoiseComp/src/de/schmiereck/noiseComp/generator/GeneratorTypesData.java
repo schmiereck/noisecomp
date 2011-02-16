@@ -14,13 +14,13 @@ import de.schmiereck.dataTools.VectorHash;
  */
 public class GeneratorTypesData
 {
-	//**********************************************************************************************
-	// Fields:
-
-	/**
-	 * Generator Folder-Path.
-	 */
-	private static final String	GENERATOR_FOLDER_PATH	= "/";
+//	//**********************************************************************************************
+//	// Fields:
+//
+//	/**
+//	 * Generator Folder-Path.
+//	 */
+//	public static final String	GENERATOR_FOLDER_PATH	= "/";
 	
 	//**********************************************************************************************
 	// Fields:
@@ -94,11 +94,11 @@ public class GeneratorTypesData
 		//==========================================================================================
 		String key;
 		
-		if (folderPath == null)
-		{
-			key = GENERATOR_FOLDER_PATH + generatorTypeClassName;
-		}
-		else
+//		if (folderPath == null)
+//		{
+//			key = StartupService.GENERATOR_FOLDER_PATH + generatorTypeClassName;
+//		}
+//		else
 		{
 			key = folderPath + generatorTypeClassName;
 		}

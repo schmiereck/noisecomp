@@ -13,7 +13,6 @@ package de.schmiereck.noiseComp.generator;
  * 	    |\
  * 	    | \
  * 	       \ |
- * 
  * 	        \|
  * 	         ´
  * 	</pre>
