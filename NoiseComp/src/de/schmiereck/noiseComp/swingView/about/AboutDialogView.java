@@ -46,7 +46,7 @@ extends JDialog
 	    this.setLayout(gridBagLayout);
 	    
 	    this.setVisible(false);
-	    this.setSize(320, 200);
+	    this.setSize(420, 200);
 	    this.setBackground(Color.WHITE);
 	    this.setTitle("About NoiseComp");
 	    this.setResizable(true);
@@ -86,7 +86,7 @@ extends JDialog
 			this.add(label);
 	    }
 	    {
-	    	JLabel label = new JLabel("(c) Copyright by schmiereck 2004 - 2010",
+	    	JLabel label = new JLabel("(c) Copyright by schmiereck " + Version.years,
 	    	                          JLabel.LEFT);
 		    
 		    GridBagConstraints gbc = new GridBagConstraints( );
@@ -101,7 +101,9 @@ extends JDialog
 			this.add(label);
 	    }
 	    {
-	    	JLabel label = new JLabel("Visit http://www.schmiereck.de",
+	    	//http://www.coderanch.com/t/345547/GUI/java/Making-clickable-links-HTML-JLabel
+	    	
+	    	JLabel label = new JLabel("Visit http://www.schmiereck.de/jawiki/user/coders/NoiseComp",
 	    	                          JLabel.LEFT);
 		    
 		    GridBagConstraints gbc = new GridBagConstraints( );

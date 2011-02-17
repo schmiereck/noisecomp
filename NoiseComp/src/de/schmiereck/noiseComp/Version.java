@@ -16,5 +16,10 @@ public class Version
 	/**
 	 * Version Number of Application.
 	 */
-	public static final String version = "2.0";
+	public static final String version = "2.0.1";
+	
+	/**
+	 * Copyright years.
+	 */
+	public static final String years = "2004 - 2011";
 }
