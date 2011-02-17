@@ -12,10 +12,15 @@ import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.net.URL;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import de.schmiereck.noiseComp.Version;
 
@@ -101,11 +106,6 @@ extends JDialog
 			this.add(label);
 	    }
 	    {
-	    	//http://www.coderanch.com/t/345547/GUI/java/Making-clickable-links-HTML-JLabel
-	    	
-	    	JLabel label = new JLabel("Visit http://www.schmiereck.de/jawiki/user/coders/NoiseComp",
-	    	                          JLabel.LEFT);
-		    
 		    GridBagConstraints gbc = new GridBagConstraints( );
 		    
 		    gbc.gridx = 1;
@@ -113,9 +113,63 @@ extends JDialog
 		    gbc.fill = GridBagConstraints.NONE;
 		    gbc.insets = new Insets(9, 0, 0, 0);
 		    
-			gridBagLayout.setConstraints(label, gbc);
+//	    	JLabel label = new JLabel("Visit http://www.schmiereck.de/jawiki/user/coders/NoiseComp",
+//	    	                          JLabel.LEFT);
+//		    
+//			gridBagLayout.setConstraints(label, gbc);
+//		    
+//			this.add(label);
+
+	    	//http://www.coderanch.com/t/345547/GUI/java/Making-clickable-links-HTML-JLabel
+	    	
+	    	final JEditorPane jep = 
+	    		new JEditorPane("text/html", 
+	    		                "<div style=\"font-family:Verdana,Arial,Helvetica,sans-serif;font-size:11pt;\">" +
+	    		                "Visit " +
+	    		                "<a href=\"http://www.schmiereck.de/jawiki/user/coders/NoiseComp\">" +
+	    		                "http://www.schmiereck.de/jawiki/user/coders/NoiseComp" + 
+	    		                "</a>." +
+	    		                "</div>");
+	    	
+	    	jep.setEditable(false);  
+	    	jep.setOpaque(false);  
+	    	jep.addHyperlinkListener(new HyperlinkListener() 
+	    	{  
+	    		/* (non-Javadoc)
+	    		 * @see javax.swing.event.HyperlinkListener#hyperlinkUpdate(javax.swing.event.HyperlinkEvent)
+	    		 */
+	    		public void hyperlinkUpdate(HyperlinkEvent hle) 
+	    		{  
+	    			if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) 
+	    			{  
+	    				System.out.println(hle.getURL());
+	    				
+	    				URL url = hle.getURL();
+	    				
+//	    				try
+//						{
+//							jep.setPage(hle.getURL());
+//						}
+//						catch (IOException ex)
+//						{
+//							throw new RuntimeException(ex);
+//						}
+	    				
+	    				try
+						{
+							Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+						}
+						catch (IOException ex)
+						{
+							throw new RuntimeException(ex);
+						}  
+	    			}  
+	    		}  
+	    	});  
+	    	
+	    	gridBagLayout.setConstraints(jep, gbc);
 		    
-			this.add(label);
+			this.add(jep);
 	    }
 	    {
 			this.okButton = new JButton();
