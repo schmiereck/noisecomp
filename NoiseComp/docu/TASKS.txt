@@ -9,7 +9,6 @@ TODO:
 #6:		TASK: Disable unreachable functions (buttons).
 #9:		TASK: Do not allow more than one OutputGenerator for a Module (and other single input inputs).
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
-#22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
 #31:	IMPROVEMENT: Add Flag that markes a input-type as multiple or singele input-type.
 #35:	TASK: Input-Type-Edit: Update Input-type without Create-New first:
@@ -41,7 +40,14 @@ TODO:
 #124:	IMPROVEMENT: Allow mathematically instructions/ terms as input value (+-*/()^).
 #128:	BUG: If module input default is null it do not use the value of master module.
 #134:	IMPROVEMENT: Tick-Type "Beats" and a seperate, dynamical setting, with how many Beates per Minute are used.
-#135:	
+#136:	IMPROVEMENT: Snap to end of generator position.
+#137:	IMPROVEMENT: If duplicate timeline: generate new line name if ends with "-<x>" with "-<x+maxUsedNumber>" of same timeline namnes.
+#138:	IMPROVEMENT: If inserting new module: Add Output("o") and connected Mixer("m") generator as default.
+#139:	BUG: Drag end position of timleine bigger than module end position the end position of timeline is not updated.
+#140:	IMPROVEMENT: Rename Folder Dialog thould be accepted Enter in input line.
+#141:	IMPROVEMENT: Drag&Dopw Timeline-(Start) also drags end Position?
+		Or drag whole timeline does that by snapping to start position.
+#142:	
 
 WORK:
 =====
@@ -50,7 +56,9 @@ WORK:
 		--> http://www.eclipse.org/mat/
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
-
+#135:	BUG: Do not store last imported file as save file name.	
+#22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
+		--> Remove the main-flag from other module automaticaly.
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
