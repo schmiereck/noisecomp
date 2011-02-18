@@ -27,7 +27,6 @@ extends BasicEditView
 	//**********************************************************************************************
 	// Fields:
 
-	@SuppressWarnings("unused")
 	private final RenameFolderModel renameFolderModel;
 	
 	/**
@@ -80,6 +79,10 @@ extends BasicEditView
 			
 			this.addField(1, this.updateButton);
 		}
+		
+		//------------------------------------------------------------------------------------------
+//		this.getRootPane().setDefaultButton(this.updateButton);
+		
 		//==========================================================================================
 	}
 

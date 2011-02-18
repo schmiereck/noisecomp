@@ -68,6 +68,8 @@ extends JDialog
 		this.createFolderEditView = new CreateFolderEditView(createFolderModel);
 		
 		this.add(this.createFolderEditView);
+
+		this.getRootPane().setDefaultButton(this.createFolderEditView.getUpdateButton());
 		
 		//==========================================================================================
 	}

@@ -68,6 +68,8 @@ extends JDialog
 		this.renameFolderEditView = new RenameFolderEditView(renameFolderModel);
 		
 		this.add(this.renameFolderEditView);
+
+		this.getRootPane().setDefaultButton(this.renameFolderEditView.getUpdateButton());
 		
 		//==========================================================================================
 	}

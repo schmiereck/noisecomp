@@ -44,7 +44,6 @@ TODO:
 #137:	IMPROVEMENT: If duplicate timeline: generate new line name if ends with "-<x>" with "-<x+maxUsedNumber>" of same timeline namnes.
 #138:	IMPROVEMENT: If inserting new module: Add Output("o") and connected Mixer("m") generator as default.
 #139:	BUG: Drag end position of timleine bigger than module end position the end position of timeline is not updated.
-#140:	IMPROVEMENT: Rename Folder Dialog thould be accepted Enter in input line.
 #141:	IMPROVEMENT: Drag&Dopw Timeline-(Start) also drags end Position?
 		Or drag whole timeline does that by snapping to start position.
 #142:	
@@ -256,3 +255,4 @@ DONE:
 		--> DONE: Store extra import file name.
 #22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
 		--> DONE: Remove the main-flag from other module automaticaly.
+#140:	IMPROVEMENT: Rename- and Create-Folder Dialog thould be accepted Enter in input line.
