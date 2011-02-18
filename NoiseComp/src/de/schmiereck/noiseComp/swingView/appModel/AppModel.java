@@ -35,9 +35,14 @@ public class AppModel
 	// Fields:
 	
 	/**
-	 * Die Datei der letzten Datei-Operation.
+	 * File of last file load or save operation.
 	 */
-	private File fileActionFile = null;
+	private File loadFile = null;
+
+	/**
+	 * File of last file load or save operation.
+	 */
+	private File importFile = null;
 
 	//----------------------------------------------------------------------------------------------
 	/**
@@ -55,20 +60,38 @@ public class AppModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #fileActionFile}.
+	 * 			returns the {@link #loadFile}.
 	 */
-	public File getFileActionFile()
+	public File getLoadFile()
 	{
-		return this.fileActionFile;
+		return this.loadFile;
 	}
 
 	/**
-	 * @param fileActionFile 
-	 * 			to set {@link #fileActionFile}.
+	 * @param loadFile 
+	 * 			to set {@link #loadFile}.
 	 */
-	public void setFileActionFile(File fileActionFile)
+	public void setLoadFile(File fileActionFile)
 	{
-		this.fileActionFile = fileActionFile;
+		this.loadFile = fileActionFile;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #importFile}.
+	 */
+	public File getImportFile()
+	{
+		return this.importFile;
+	}
+
+	/**
+	 * @param importFile 
+	 * 			to set {@link #importFile}.
+	 */
+	public void setImportFile(File importFile)
+	{
+		this.importFile = importFile;
 	}
 
 	/**

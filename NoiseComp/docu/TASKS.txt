@@ -56,9 +56,9 @@ WORK:
 		--> http://www.eclipse.org/mat/
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
-#135:	BUG: Do not store last imported file as save file name.	
 #22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
 		--> Remove the main-flag from other module automaticaly.
+
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
@@ -254,3 +254,5 @@ DONE:
 		--> DONE: Delete Module or Folder. Alert if (Folder-Sub-)Module is used by other modules or it is the Main-Module.
 #89:	IMPROVEMENT: Import and export of modules (and all required modules) in/from files.
 		--> DONE: Import from file.
+#135:	BUG: Do not store last imported file as save file name.	
+		--> DONE: Store extra import file name.

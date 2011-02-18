@@ -13,8 +13,8 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.prefs.Preferences;
 
 import javax.swing.JFileChooser;
@@ -101,6 +101,19 @@ public class AppController
 implements RemoveTimelineGeneratorListenerInterface, 
 		   RemoveInputSelectEntryListenerInterface
 {
+	//**********************************************************************************************
+	// Constants:
+	
+	/**
+	 * Preferences-Name: File of the last file load or save operation.
+	 */
+	private static final String	PREF_LOAD_FILE	= "fileActionFile";
+	
+	/**
+	 * Preferences-Name: File of the last file import operation.
+	 */
+	private static final String	PREF_IMPORT_FILE	= "importFile";
+	
 	//**********************************************************************************************
 	// Fields:
 	
@@ -216,21 +229,40 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		//------------------------------------------------------------------------------------------
 		Preferences userPrefs = PreferencesUtils.getUserPreferences();
-		
-		File fileActionFile = this.appModel.getFileActionFile();
-		
-		if (fileActionFile == null)
 		{
-			String fileActionFileStr = 
-				PreferencesUtils.getValueString(userPrefs, 
-				                                "fileActionFile", 
-				                                null);
+			File loadFile = this.appModel.getLoadFile();
 			
-			if (fileActionFileStr != null)
+			if (loadFile == null)
 			{
-				File file = new File(fileActionFileStr);
+				String loadFileStr = 
+					PreferencesUtils.getValueString(userPrefs, 
+					                                PREF_LOAD_FILE, 
+					                                null);
 				
-				this.appModel.setFileActionFile(file);
+				if (loadFileStr != null)
+				{
+					File file = new File(loadFileStr);
+					
+					this.appModel.setLoadFile(file);
+				}
+			}
+		}
+		{
+			File importFile = this.appModel.getImportFile();
+			
+			if (importFile == null)
+			{
+				String importFileStr = 
+					PreferencesUtils.getValueString(userPrefs, 
+					                                PREF_IMPORT_FILE, 
+					                                null);
+				
+				if (importFileStr != null)
+				{
+					File file = new File(importFileStr);
+					
+					this.appModel.setImportFile(file);
+				}
 			}
 		}
 		//------------------------------------------------------------------------------------------
@@ -1654,7 +1686,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.setEnableOpenFile(false);
 
 		//------------------------------------------------------------------------------------------
-		File fileActionFile = this.getFileActionFile();
+		File fileActionFile = this.getLoadFile();
 		
 		JFileChooser chooser = new JFileChooser();
 
@@ -1680,7 +1712,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			{
 				this.doLoad(file);
 				
-				this.setFileActionFile(file);
+				this.setLoadFile(file);
 			}
 			catch (LoadFileException ex)
 			{
@@ -1709,7 +1741,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.setEnableSaveFile(false);
 
 		//------------------------------------------------------------------------------------------
-		File fileActionFile = this.getFileActionFile();
+		File fileActionFile = this.getLoadFile();
 		
 		JFileChooser chooser = new JFileChooser();
 
@@ -1735,7 +1767,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			{
 				this.doSave(file);
 				
-				this.setFileActionFile(file);
+				this.setLoadFile(file);
 			}
 			catch (SaveFileException ex)
 			{
@@ -1764,7 +1796,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.setEnableOpenFile(false);
 
 		//------------------------------------------------------------------------------------------
-		File fileActionFile = this.getFileActionFile();
+		File importFile = this.getImportFile();
 		
 		JFileChooser chooser = new JFileChooser();
 
@@ -1772,7 +1804,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		chooser.setMultiSelectionEnabled(false);
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		chooser.setDialogType(JFileChooser.OPEN_DIALOG);
-		chooser.setSelectedFile(fileActionFile);
+		chooser.setSelectedFile(importFile);
 		
 //		ExtensionFileFilter filter = new ExtensionFileFilter();
 //		filter.addExtension("lwx");
@@ -1790,7 +1822,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			{
 				this.doImport(file);
 				
-				this.setFileActionFile(file);
+				this.setImportFile(file);
 			}
 			catch (LoadFileException ex)
 			{
@@ -2016,30 +2048,18 @@ implements RemoveTimelineGeneratorListenerInterface,
 
 	/**
 	 * @return
-	 * 			the File of the last file operation.
+	 * 			the File of the last file save or load operation.
 	 */
-	private File getFileActionFile()
+	private File getLoadFile()
 	{
-		return this.appModel.getFileActionFile();
-	}
-	
-	/**
-	 * @param enable
-	 * 			<code>true</code> wenn die Save-Auswahlfunktionen für Files zugelassen werden sollen.
-	 */
-	public void setEnableSaveFile(boolean enable)
-	{
-		//==========================================================================================
-		this.appView.getFileSaveMenuItem().setEnabled(enable);
-		this.appView.getFileSaveButtonView().setEnabled(enable);
-		//==========================================================================================
+		return this.appModel.getLoadFile();
 	}
 
 	/**
 	 * @param file
-	 * 			is the File of the last file operation.
+	 * 			is the File of the last file load or save operation.
 	 */
-	private void setFileActionFile(File file)
+	private void setLoadFile(File file)
 	{
 		//==========================================================================================
 		Preferences userPrefs = PreferencesUtils.getUserPreferences();
@@ -2055,13 +2075,57 @@ implements RemoveTimelineGeneratorListenerInterface,
 			
 			this.appView.setTitle(fileName + " - NoiseComp");
 		}
-		this.appModel.setFileActionFile(file);
+		this.appModel.setLoadFile(file);
 		
-		String fileActionFileStr = file.getAbsolutePath();
+		//------------------------------------------------------------------------------------------
+		String loadFileStr = file.getAbsolutePath();
 		
 		PreferencesUtils.setValueString(userPrefs, 
-		                                "fileActionFile", 
-		                                fileActionFileStr);
+		                                PREF_LOAD_FILE, 
+		                                loadFileStr);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @return
+	 * 			the File of the last file import operation.
+	 */
+	private File getImportFile()
+	{
+		return this.appModel.getImportFile();
+	}
+
+	/**
+	 * @param file
+	 * 			is the File of the last file import operation.
+	 */
+	private void setImportFile(File file)
+	{
+		//==========================================================================================
+		Preferences userPrefs = PreferencesUtils.getUserPreferences();
+
+		//==========================================================================================
+		this.appModel.setImportFile(file);
+		
+		String importFileStr = file.getAbsolutePath();
+		
+		PreferencesUtils.setValueString(userPrefs, 
+		                                PREF_IMPORT_FILE, 
+		                                importFileStr);
+		
+		//==========================================================================================
+	}
+	
+	/**
+	 * @param enable
+	 * 			<code>true</code> wenn die Save-Auswahlfunktionen für Files zugelassen werden sollen.
+	 */
+	public void setEnableSaveFile(boolean enable)
+	{
+		//==========================================================================================
+		this.appView.getFileSaveMenuItem().setEnabled(enable);
+		this.appView.getFileSaveButtonView().setEnabled(enable);
 		//==========================================================================================
 	}
 
