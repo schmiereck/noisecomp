@@ -56,8 +56,6 @@ WORK:
 		--> http://www.eclipse.org/mat/
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
-#22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
-		--> Remove the main-flag from other module automaticaly.
 
 DONE:
 =====
@@ -256,3 +254,5 @@ DONE:
 		--> DONE: Import from file.
 #135:	BUG: Do not store last imported file as save file name.	
 		--> DONE: Store extra import file name.
+#22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
+		--> DONE: Remove the main-flag from other module automaticaly.

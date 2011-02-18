@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
@@ -74,14 +75,19 @@ public class ModuleEditController
 					if (modulGeneratorTypeData != null)
 					{
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						SoundService soundService = SoundService.getInstance();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						String generatorTypeName = InputUtils.makeStringValue(moduleEditView.getModulNameTextField().getText());
 						Boolean modulIsMain = InputUtils.makeBooleanValue(moduleEditView.getModulIsMainCheckBox().isSelected());
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						// Update Modul:
 						
-						modulGeneratorTypeData.setGeneratorTypeName(generatorTypeName);
-						modulGeneratorTypeData.setIsMainModulGeneratorType(modulIsMain);
+						ModulGeneratorTypeData lastMainModulGeneratorTypeData =
+							soundService.updateModulGeneratorTypeData(modulGeneratorTypeData,
+							                                          generatorTypeName,
+							                                          modulIsMain);
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						// Update Edit-Model:

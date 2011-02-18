@@ -523,4 +523,85 @@ public class SoundService
 		//==========================================================================================
 		return isExisting;
 	}
+
+	/**
+	 * @param modulGeneratorTypeData
+	 * 			is the Modul-Generator-Type-Data.
+	 * @param generatorTypeName
+	 * 			is the generator name.
+	 * @param modulIsMain
+	 * 			<code>true</code> if the module generator is main.
+	 * @return
+	 * 			the last Main Modul-Generator.</br>
+	 * 			<code>null</code> if the given Modul-Generator was main or 
+	 * 			the generator is set to not main.
+	 */
+	public ModulGeneratorTypeData 
+	updateModulGeneratorTypeData(ModulGeneratorTypeData modulGeneratorTypeData, 
+	                             String generatorTypeName,
+	                             Boolean modulIsMain)
+	{
+		//==========================================================================================
+		ModulGeneratorTypeData lastMainModulGeneratorTypeData;
+		
+		//------------------------------------------------------------------------------------------
+		// Set main module?
+		if (modulIsMain == true)
+		{
+			if (modulGeneratorTypeData.getIsMainModulGeneratorType() == false)
+			{
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				lastMainModulGeneratorTypeData = null;
+				
+				// Search last Main Modul-Generator:
+				
+				Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+				
+				while (generatorTypesIterator.hasNext())
+				{
+					GeneratorTypeData generatorTypeData = (GeneratorTypeData)generatorTypesIterator.next();
+					
+					if (generatorTypeData instanceof ModulGeneratorTypeData)
+					{
+						ModulGeneratorTypeData checkedModulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+						
+						if (checkedModulGeneratorTypeData.getIsMainModulGeneratorType() == true)
+						{
+							checkedModulGeneratorTypeData.setIsMainModulGeneratorType(false);
+							
+							lastMainModulGeneratorTypeData = checkedModulGeneratorTypeData;
+							break;
+						}
+					}
+				}
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				modulGeneratorTypeData.setIsMainModulGeneratorType(modulIsMain);
+
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			}
+			else
+			{
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				lastMainModulGeneratorTypeData = null;
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			}
+		}
+		else
+		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			modulGeneratorTypeData.setIsMainModulGeneratorType(modulIsMain);
+
+			lastMainModulGeneratorTypeData = null;
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
+
+		//------------------------------------------------------------------------------------------
+		modulGeneratorTypeData.setGeneratorTypeName(generatorTypeName);
+		
+		//==========================================================================================
+		return lastMainModulGeneratorTypeData;
+	}
 }
