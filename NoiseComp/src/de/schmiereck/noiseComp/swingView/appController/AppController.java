@@ -344,7 +344,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelController = 
-			new TimelinesDrawPanelController(//modulesTreeController.getModulesTreeModel(),
+			new TimelinesDrawPanelController(this,
+			                                 //modulesTreeController.getModulesTreeModel(),
 			                                 appModelChangedObserver);
 
 		// TODO Change this dynamicaly with listener/notifier.
@@ -710,23 +711,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void actionPerformed(ActionEvent e)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+//					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					timelinesDrawPanelController.doCreateNew();
+					doCreateNewTimeline();
 
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
-					
-					// TimelinesTimeRule update.
-					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
-					
-					// TimelinesGeneratorsRule update.
-					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					appModelChangedObserver.notifyAppModelChanged();
-					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
@@ -1416,6 +1405,16 @@ implements RemoveTimelineGeneratorListenerInterface,
 			}
 		};
 		//==========================================================================================
+	}
+
+	/**
+	 * Do Create New Timeline.
+	 */
+	public void doCreateNewTimeline()
+	{
+		this.timelinesDrawPanelController.doCreateNew(this.timelinesTimeRuleController,
+		                                              this.timelinesGeneratorsRuleController,
+		                                              this.appModelChangedObserver);
 	}
 
 	/**
@@ -2235,7 +2234,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Copy timeline:
 			
-			this.timelinesDrawPanelController.doCreateNew();
+			this.doCreateNewTimeline();
 	
 			TimelineSelectEntryModel newTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 			
@@ -2329,17 +2328,6 @@ implements RemoveTimelineGeneratorListenerInterface,
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(newTimelineSelectEntryModel);
 			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
-			
-			// TimelinesTimeRule update.
-			this.timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
-			
-			// TimelinesGeneratorsRule update.
-			this.timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
-			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			this.appModelChangedObserver.notifyAppModelChanged();
 		}
 		//==========================================================================================
 	}

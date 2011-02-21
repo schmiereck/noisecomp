@@ -16,7 +16,7 @@ import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 
 /**
  * <p>
- * 	Modules Tree Model.
+ * 	Modules Tree-Model.
  * </p>
  * 
  * @author smk

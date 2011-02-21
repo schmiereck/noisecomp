@@ -256,6 +256,7 @@ public class TimelinesDrawPanelModel
 		// Notify listeners.
 		this.removeTimelineGeneratorNotifier.notifyRemoveTimelineGeneratorListeners(this,
 		                                                                            timelineSelectEntryModel);
+		
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

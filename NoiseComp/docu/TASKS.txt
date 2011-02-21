@@ -40,7 +40,7 @@ TODO:
 #124:	IMPROVEMENT: Allow mathematically instructions/ terms as input value (+-*/()^).
 #128:	BUG: If module input default is null it do not use the value of master module.
 #134:	IMPROVEMENT: Tick-Type "Beats" and a seperate, dynamical setting, with how many Beates per Minute are used.
-#136:	IMPROVEMENT: Snap to end of generator position.
+ #136:	IMPROVEMENT: Snap to end of generator position.
 #137:	IMPROVEMENT: If duplicate timeline: generate new line name if ends with "-<x>" with "-<x+maxUsedNumber>" of same timeline namnes.
 #138:	IMPROVEMENT: If inserting new module: Add Output("o") and connected Mixer("m") generator as default.
 #139:	BUG: Drag end position of timleine bigger than module end position the end position of timeline is not updated.
@@ -48,10 +48,10 @@ TODO:
 		Or drag whole timeline does that by snapping to start position.
 #142:	IMPROVEMENT: Add Resonance-Filter.
 #143:	IMPROVEMENT: Add Cutoff-Filter.
-#144:	IMPROVEMENT: Add Timeline Kontextmenu.
-#148:	
-#149:	
-#150:	
+#148:	IMPROVEMENT: Add Graphically mouse editor for inputs of generators.
+#149:	BUG: Timeline-Edit: Do not allow the edited Module as Generator-Type.
+#150:	BUG: Timeline-Edit: Exception if no Genertor selected.
+#151:	
 
 WORK:
 =====
@@ -200,7 +200,7 @@ DONE:
 		--> Increase time between scheduler runs dynamicaly if possible.
 		--> Use different schedulers to calulate buffer of diffenrent independent sub-timelines parallel.
 #109:	BUG: View proper time, if Ticks-Per is not 1.
-#114:	BUG: TimelineDrawPanel: Input connector time is scaled to integer.
+#114:	BUG: TimelinesDrawPanel: Input connector time is scaled to integer.
 #115:	BUG: Do not recalculate soundbuffer after updating depending timeline, only clears all depending timeline buffers.
 		--> CAN'T REPRODUCE: maybe it is only if you manipulate the default generated model after startup app.
 #97:	BUG: Change a module default does not clear the depending timeline buffers.
@@ -208,7 +208,7 @@ DONE:
 #116:	IMPROVEMENT: View generators in a seperate module tree category.
 #118:	IMPROVEMENT: Save Window size and position.
 #119:	IMPROVEMENT: Show selected timeline in TimelineGeneratorRule.
-#48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
+ #48:	IMPROVEMENT: Draw a vertical play position marker in TimelinesDrawPanel
 #55:	IMPROVEMENT: Tone-Frequenc selector for input-value.
 		-->  DONE: Editable Combobox with frequenz values.
 #120:	TASK: InputSelect: Enhance the default width of select columns.
@@ -268,4 +268,5 @@ Release V2.0.2:
 		--> DONE: Dialogs use this.renameFolderEditView.getRootPane().setDefaultButton(...).
 		--> DONE: BasicEditView extends from JRootPane and use this.getRootPane().setDefaultButton(...).
 #147:	IMPROVEMENT: DONE: Change Message on app-exit from "Really Exit?" to "File changed. Save file?".
-		
+#144:	IMPROVEMENT: Add Timeline contextmenu.
+		--> DONE: Double-, Create- and Remove-Genertor-Timeline.

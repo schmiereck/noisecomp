@@ -3,11 +3,14 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
+import java.awt.Dimension;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
+import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
@@ -47,7 +50,8 @@ implements TimelineContentChangedListenerInterface,
 	 * @param inputEditModel 
 	 * 			is the Input-Edit Model.
 	 */
-	public TimelinesDrawPanelController(//final ModulesTreeModel modulesTreeModel,
+	public TimelinesDrawPanelController(final AppController appController,
+	                                    //final ModulesTreeModel modulesTreeModel,
 	                                    //InputEditModel inputEditModel)
 	                                    final AppModelChangedObserver appModelChangedObserver)
 	{
@@ -127,6 +131,18 @@ implements TimelineContentChangedListenerInterface,
 				}
 	     	}
 	    );
+		//------------------------------------------------------------------------------------------
+		{
+			// Add listener to components that can bring up popup menus.
+			MouseListener popupListener = new TimelinesDrawMouseListener(appController,
+			                                                             this,
+			                                                             this.timelinesDrawPanelModel,
+			                                                             this.timelinesDrawPanelView);
+			//output.addMouseListener(popupListener);
+			//menuBar.addMouseListener(popupListener);
+			this.timelinesDrawPanelView.addMouseListener(popupListener);
+		}
+
 	    //==========================================================================================
 	}
 
@@ -301,7 +317,9 @@ implements TimelineContentChangedListenerInterface,
 	/**
 	 * 
 	 */
-	public void doCreateNew()
+	public void doCreateNew(final TimelinesTimeRuleController timelinesTimeRuleController,
+	                        final TimelinesGeneratorsRuleController timelinesGeneratorsRuleController,
+	                        final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
 		TimelinesDrawPanelModel timelinesDrawPanelModel = this.getTimelinesDrawPanelModel();
@@ -340,6 +358,32 @@ implements TimelineContentChangedListenerInterface,
 		                                 timelineSelectEntryModel);
 		
 		timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+		
+		// TimelinesTimeRule update.
+		timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+		
+		// TimelinesGeneratorsRule update.
+		timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		appModelChangedObserver.notifyAppModelChanged();
+		
+		
+//		
+//		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+//		
+//		// TimelinesTimeRule update.
+//		timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+//		
+//		// TimelinesGeneratorsRule update.
+//		timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+//		
+//		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//		appModelChangedObserver.notifyAppModelChanged();
 		
 		//==========================================================================================
 	}

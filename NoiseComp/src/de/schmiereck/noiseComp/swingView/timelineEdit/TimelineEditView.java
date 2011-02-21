@@ -67,7 +67,7 @@ extends BasicEditView
 		
 		//------------------------------------------------------------------------------------------
 		{
-			this.createNewButton = new JButton("Create new Timeline");
+			this.createNewButton = new JButton("Create Timeline");
 			
 			this.addField(0, this.createNewButton);
 		}
@@ -79,7 +79,7 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.generatorTypeComboBox = this.addComboBox(2, "Input-Type:");
+			this.generatorTypeComboBox = this.addComboBox(2, "Generator-Type:");
 			
 			timelineEditModel.getGeneratorTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
 			(

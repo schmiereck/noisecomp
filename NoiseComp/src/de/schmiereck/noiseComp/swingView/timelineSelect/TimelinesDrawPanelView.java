@@ -12,7 +12,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -31,8 +30,8 @@ import javax.swing.SwingConstants;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel.HighlightedTimelineHandler;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
@@ -389,72 +388,6 @@ implements Scrollable//, MouseMotionListener
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		this.addMouseListener
-		(
-		 	new MouseAdapter() 
-		 	{
-		 		@Override
-				public void mouseClicked(MouseEvent e) 
-				{
-					super.mouseClicked(e);
-					//setActive(true);
-		 			//Toolkit.getDefaultToolkit().
-
-					HighlightedTimelineHandler timelineHandler = timelinesDrawPanelModel.getHighlightedTimelineHandler();
-					
-					if (timelineHandler != HighlightedTimelineHandler.NONE)
-					{
-						timelinesDrawPanelModel.setTimelineHandlerMoved(true);
-					}
-				}
-
-				/* (non-Javadoc)
-				 * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
-				 */
-				@Override
-				public void mouseReleased(MouseEvent e)
-				{
-					super.mouseReleased(e);
-
-					if (timelinesDrawPanelModel.getTimelineHandlerMoved() == true)
-					{
-						timelinesDrawPanelModel.setTimelineHandlerMoved(false);
-						
-						TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
-						
-						if (highlightedTimelineSelectEntryModel != null)
-						{
-							HighlightedTimelineHandler timelineHandler = timelinesDrawPanelModel.getHighlightedTimelineHandler();
-							
-							if (timelineHandler != HighlightedTimelineHandler.NONE)
-							{
-								switch (timelineHandler)
-								{
-									case LEFT:
-									{
-										timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
-										timelinesDrawPanelModel.setTimelineHandlerMoved(false);
-										timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
-										break;
-									}
-									case RIGHT:
-									{
-										timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
-										timelinesDrawPanelModel.setTimelineHandlerMoved(false);
-										timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
-										break;
-									}
-								}
-							}
-						}
-					}
-				}
-		 		
-		 		
-			}
-		);
-
-		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
@@ -565,7 +498,7 @@ implements Scrollable//, MouseMotionListener
 	 * @return
 	 * 			the Point of tranformated to view.
 	 */
-	private Point2D mousePos(Point point)
+	public Point2D mousePos(Point point)
 	{
 		Point2D point2D;
 		try
@@ -1181,9 +1114,10 @@ implements Scrollable//, MouseMotionListener
 	 * @param point2D
 	 * 			is the point.
 	 * @return
-	 * 			is the generator at given point.
+	 * 			is the generator at given point.<br/>
+	 * 			<code>null</code> if no generator is selected.
 	 */
-	private TimelineSelectEntryModel searchGenerator(Point2D point2D)
+	public TimelineSelectEntryModel searchGenerator(Point2D point2D)
 	{
 		//==========================================================================================
 		TimelineSelectEntryModel retTimelineSelectEntryModel;

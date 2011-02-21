@@ -32,6 +32,9 @@ extends MouseAdapter
 	//**********************************************************************************************
 	// Fields:
 
+	/**
+	 * Modules Tree-Model.
+	 */
 	private final ModulesTreeView modulesTreeView;
 	
 	/**
@@ -66,7 +69,7 @@ extends MouseAdapter
 	 * 			is the Modules Tree View.
 	 */
 	public ModuleTreeMouseListener(final ModulesTreeController modulesTreeController,
-	                              final ModulesTreeView modulesTreeView)
+	                               final ModulesTreeView modulesTreeView)
 	{
 		//==========================================================================================
 		this.modulesTreeView = modulesTreeView;
@@ -262,7 +265,7 @@ extends MouseAdapter
 			this.modulePopupMenu.add(menuItem);
 		}
 		//==========================================================================================
-		// Genertor Popup Menu:
+		// Generator Popup Menu:
 		
 		this.generatorPopupMenu = new JPopupMenu();
 		{
