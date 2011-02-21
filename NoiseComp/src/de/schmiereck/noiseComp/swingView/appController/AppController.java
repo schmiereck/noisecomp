@@ -1558,15 +1558,24 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		if (isModelChanged == true)
 		{
-			int option = JOptionPane.showConfirmDialog(this.appView, "Model changed.\nReally Exit?");
+			int option = JOptionPane.showConfirmDialog(this.appView, "File has been modified.\nSave Changes?");
 	
 			if (option == JOptionPane.YES_OPTION)
 			{
-				exitApp = true;
+				boolean fileSaved = this.doFileSave();
+				
+				if (fileSaved == true)
+				{
+					exitApp = true;
+				}
+				else
+				{
+					exitApp = false;
+				}
 			}
 			else
 			{
-				exitApp = false;
+				exitApp = true;
 			}
 		}
 		else
@@ -1734,10 +1743,16 @@ implements RemoveTimelineGeneratorListenerInterface,
 
 	/**
 	 * File-Save.
+	 * 
+	 * @return
+	 * 			<code>true</code> if file is saved.<br/>
+	 *	 		<code>false</code> if operation canceled or errors occourse.
 	 */
-	public void doFileSave()
+	public boolean doFileSave()
 	{
 		//==========================================================================================
+		boolean ret;
+		
 		this.setEnableSaveFile(false);
 
 		//------------------------------------------------------------------------------------------
@@ -1768,6 +1783,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 				this.doSave(file);
 				
 				this.setLoadFile(file);
+
+				ret = true;
 			}
 			catch (SaveFileException ex)
 			{
@@ -1778,13 +1795,19 @@ implements RemoveTimelineGeneratorListenerInterface,
 				                              "Message: " + ex,
 				                              "Save File Error",
 				                              JOptionPane.ERROR_MESSAGE);
+
+				ret = false;
 			}
 		}
-
+		else
+		{
+			ret = false;
+		}
 		//------------------------------------------------------------------------------------------
 		this.setEnableSaveFile(true);
 		
 		//==========================================================================================
+		return ret;
 	}
 
 	/**

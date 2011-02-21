@@ -49,8 +49,9 @@ TODO:
 #142:	IMPROVEMENT: Add Resonance-Filter.
 #143:	IMPROVEMENT: Add Cutoff-Filter.
 #144:	IMPROVEMENT: Add Timeline Kontextmenu.
-#147:	IMPROVEMENT: Change Message on app-exit from "Realy exit?" to "File changed. Save file?".
 #148:	
+#149:	
+#150:	
 
 WORK:
 =====
@@ -59,7 +60,7 @@ WORK:
 		--> http://www.eclipse.org/mat/
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
-		
+
 DONE:
 =====
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
@@ -266,3 +267,5 @@ Release V2.0.2:
 #146:	IMPROVEMENT: Allow Enter to store values with default button in edit pannels like in dialogs.
 		--> DONE: Dialogs use this.renameFolderEditView.getRootPane().setDefaultButton(...).
 		--> DONE: BasicEditView extends from JRootPane and use this.getRootPane().setDefaultButton(...).
+#147:	IMPROVEMENT: DONE: Change Message on app-exit from "Really Exit?" to "File changed. Save file?".
+		
