@@ -9,7 +9,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
 /**
@@ -21,7 +21,8 @@ import javax.swing.JTextField;
  * @version <p>10.09.2010:	created, smk</p>
  */
 public class BasicEditView
-extends JPanel
+//extends JPanel
+extends JRootPane
 {
 	//**********************************************************************************************
 	// Fields:

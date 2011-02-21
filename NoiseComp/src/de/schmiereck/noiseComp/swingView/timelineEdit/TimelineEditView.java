@@ -181,6 +181,8 @@ extends BasicEditView
 			this.updateButton = new JButton("Update");
 			
 			this.addField(6, this.updateButton);
+
+			this.getRootPane().setDefaultButton(this.updateButton);
 		}
 		//==========================================================================================
 	}

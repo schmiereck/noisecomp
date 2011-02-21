@@ -113,6 +113,8 @@ extends BasicEditView
 			this.updateButton = new JButton("Update");
 			
 			this.addField(3, this.updateButton);
+
+			this.getRootPane().setDefaultButton(this.updateButton);
 		}
 		//==========================================================================================
 	}
@@ -152,4 +154,5 @@ extends BasicEditView
 	{
 		return this.modulIsMainCheckBox;
 	}
+	
 }

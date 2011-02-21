@@ -69,7 +69,7 @@ extends JDialog
 		
 		this.add(this.renameFolderEditView);
 
-		this.getRootPane().setDefaultButton(this.renameFolderEditView.getUpdateButton());
+		this.renameFolderEditView.getRootPane().setDefaultButton(this.renameFolderEditView.getUpdateButton());
 		
 		//==========================================================================================
 	}
