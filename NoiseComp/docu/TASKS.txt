@@ -46,7 +46,12 @@ TODO:
 #139:	BUG: Drag end position of timleine bigger than module end position the end position of timeline is not updated.
 #141:	IMPROVEMENT: Drag&Dopw Timeline-(Start) also drags end Position?
 		Or drag whole timeline does that by snapping to start position.
-#142:	
+#142:	IMPROVEMENT: Add Resonanz-Filter.
+#143:	IMPROVEMENT: Add Cutoff-Filter.
+#144:	IMPROVEMENT: Add Timeline Kontextmenu.
+#146:	IMPROVEMENT: Allow Enter to store values with default button in edit pannels like in dialogs.
+#147:	IMPROVEMENT: Change Message on app-exit from "Realy exit?" to "File changed. Save file?".
+#148:	
 
 WORK:
 =====
@@ -251,8 +256,11 @@ DONE:
 		--> DONE: Delete Module or Folder. Alert if (Folder-Sub-)Module is used by other modules or it is the Main-Module.
 #89:	IMPROVEMENT: Import and export of modules (and all required modules) in/from files.
 		--> DONE: Import from file.
+Release V2.0.1:
 #135:	BUG: Do not store last imported file as save file name.	
 		--> DONE: Store extra import file name.
 #22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
 		--> DONE: Remove the main-flag from other module automaticaly.
 #140:	IMPROVEMENT: Rename- and Create-Folder Dialog thould be accepted Enter in input line.
+Release V2.0.2:
+#145:	BUG: DONE: Input-Type Select do not show the value.

@@ -8,6 +8,9 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
+import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
+
 /**
  * <p>
  * 	Modul-Input-Type Tabel-Model.
@@ -86,7 +89,7 @@ extends AbstractTableModel
 	@Override
 	public Object getValueAt(int row, int col) 
 	{
-		String value;
+		String valueStr;
 		
 		ModuleInputTypeSelectEntryModel moduleInputTypeSelectEntryModel = this.inputs.get(row);
 		
@@ -94,13 +97,24 @@ extends AbstractTableModel
 		{
 			case 0:		// Type name.
 			{
-				value = moduleInputTypeSelectEntryModel.getInputTypeName();
+				valueStr = OutputUtils.makeStringText(moduleInputTypeSelectEntryModel.getInputTypeName());
 				break;
 			}
 			case 1:		// Label.
 			{
-				value = moduleInputTypeSelectEntryModel.getInputTypeLabel();
 //				value = this.makeInputLabel(inputData);
+//				value = moduleInputTypeSelectEntryModel.getInputTypeLabel();
+				Float value;
+				InputTypeData inputTypeData = moduleInputTypeSelectEntryModel.getInputTypeData();
+				if (inputTypeData != null)
+				{
+					value = inputTypeData.getDefaultValue();
+				}
+				else
+				{
+					value = null;
+				}
+				valueStr = OutputUtils.makeFloatEditText(value);
 				break;
 			}
 			default:
@@ -109,6 +123,6 @@ extends AbstractTableModel
 			}
 		}
 		
-		return value; //new Integer(row * col); 
+		return valueStr; //new Integer(row * col); 
 	}
 }
