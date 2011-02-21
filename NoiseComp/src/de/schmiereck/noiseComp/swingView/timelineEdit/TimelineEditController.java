@@ -6,15 +6,17 @@ package de.schmiereck.noiseComp.swingView.timelineEdit;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
@@ -34,6 +36,11 @@ public class TimelineEditController
 	//**********************************************************************************************
 	// Fields:
 
+	/**
+	 * App Controller.
+	 */
+	private final AppController appController;
+	
 	/**
 	 * Timeline-Edit View.
 	 */
@@ -68,6 +75,8 @@ public class TimelineEditController
 	                              final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
+		this.appController = appController;
+		
 		this.timelineEditModel = new TimelineEditModel();
 		this.timelineEditView = new TimelineEditView(this.timelineEditModel);
 
@@ -252,53 +261,59 @@ public class TimelineEditController
 			
 			if (generatorTypeData == null)
 			{
-				throw new RuntimeException("GeneratorTypeData not selected.");
-			}
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Update Timeline-Generator:
+//				throw new RuntimeException("GeneratorTypeData not selected.");
+				AppView appView = this.appController.getAppView();
 			
-			Timeline timeline = timelineSelectEntryModel.getTimeline();
-			
-			if (timeline == null)
-			{
-				Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
-				
-				timeline = timelineManagerLogic.createTimeline(generatorTypeData,
-				                                               soundFrameRate,
-				                                               generatorName,
-				                                               entryModelPos); 
+				JOptionPane.showMessageDialog(appView, "Generator-Type is not selected.");
 			}
 			else
 			{
-				timelineManagerLogic.updateName(timeline, generatorName);
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Update Timeline-Generator:
+				
+				Timeline timeline = timelineSelectEntryModel.getTimeline();
+				
+				if (timeline == null)
+				{
+					Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
+					
+					timeline = timelineManagerLogic.createTimeline(generatorTypeData,
+					                                               soundFrameRate,
+					                                               generatorName,
+					                                               entryModelPos); 
+				}
+				else
+				{
+					timelineManagerLogic.updateName(timeline, generatorName);
+				}
+	
+				timelineManagerLogic.updateTimePos(timeline, 
+				                                   generatorStartTimePos, 
+				                                   generatorEndTimePos);
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Update Timeline-Edit Model:
+				
+				this.timelineEditModel.setTimeline(timeline);
+				this.timelineEditModel.setGeneratorTypeData(generatorTypeData);
+				this.timelineEditModel.setGeneratorName(generatorName);
+				this.timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
+				this.timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Update Timeline-Model:
+				
+				timelineSelectEntryModel.setTimeline(timeline);
+	//			timelineSelectEntryModel.setGeneratorTypeData(generatorTypeData);
+				timelineSelectEntryModel.setName(generatorName);
+				timelineSelectEntryModel.setStartTimePos(generatorStartTimePos);
+				timelineSelectEntryModel.setEndTimePos(generatorEndTimePos);
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				this.appModelChangedObserver.notifyAppModelChanged();
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			}
-
-			timelineManagerLogic.updateTimePos(timeline, 
-			                                   generatorStartTimePos, 
-			                                   generatorEndTimePos);
-			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Update Timeline-Edit Model:
-			
-			this.timelineEditModel.setTimeline(timeline);
-			this.timelineEditModel.setGeneratorTypeData(generatorTypeData);
-			this.timelineEditModel.setGeneratorName(generatorName);
-			this.timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
-			this.timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
-			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Update Timeline-Model:
-			
-			timelineSelectEntryModel.setTimeline(timeline);
-//			timelineSelectEntryModel.setGeneratorTypeData(generatorTypeData);
-			timelineSelectEntryModel.setName(generatorName);
-			timelineSelectEntryModel.setStartTimePos(generatorStartTimePos);
-			timelineSelectEntryModel.setEndTimePos(generatorEndTimePos);
-			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			this.appModelChangedObserver.notifyAppModelChanged();
-			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		//==========================================================================================
 	}
