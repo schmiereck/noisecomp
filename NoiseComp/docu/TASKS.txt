@@ -4,7 +4,6 @@ TASKS
 TODO:
 =====
 #2:		IMPROVEMENT: Mail: Florian und ich empfehlen eine BSD-style license. Mit GNU-Lizenzen hatten wir schon jede Menge Ärger.
-#4:		TASK: Disable change Input-Type of existing Timeline-Generator.
 #5:		TASK: Implements obligate input fields (with default values).
 #6:		TASK: Disable unreachable functions (buttons).
 #9:		TASK: Do not allow more than one OutputGenerator for a Module (and other single input inputs).
@@ -271,3 +270,4 @@ Release V2.0.2:
 		--> DONE: Double-, Create- and Remove-Genertor-Timeline.
 #150:	BUG: Timeline-Edit: Alert instead of Exception if no Genertor selected.
 #149:	BUG: DONE: Timeline-Edit: Do not allow the edited Module as Generator-Type.
+#4:		TASK: DONE: Disable change Input-Type of existing Timeline-Generator.

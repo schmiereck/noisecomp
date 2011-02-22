@@ -6,6 +6,7 @@ package de.schmiereck.noiseComp.swingView.timelineEdit;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import de.schmiereck.noiseComp.generator.Generator;
@@ -184,7 +185,30 @@ public class TimelineEditController
 				}
 		 	}
 		);
-//		//------------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------------------
+		this.timelineEditModel.getGeneratorTypeDataChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+			{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					GeneratorTypeData generatorTypeData = timelineEditModel.getGeneratorTypeData();
+					
+					JComboBox generatorTypeComboBox = timelineEditView.getGeneratorTypeComboBox();
+					
+					if (generatorTypeData != null)
+					{
+						generatorTypeComboBox.setEnabled(false);
+					}
+					else
+					{
+						generatorTypeComboBox.setEnabled(true);
+					}
+				}
+			}
+		);
+		//------------------------------------------------------------------------------------------
 //		// Timeline-Edit Update-Button: Update Generator, Update Timeline-Edit Model and Timeline-Generator Model:
 //		
 //		this.timelineEditView.getUpdateButton().addActionListener
