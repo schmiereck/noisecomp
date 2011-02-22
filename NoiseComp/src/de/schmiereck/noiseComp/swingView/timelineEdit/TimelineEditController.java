@@ -108,13 +108,12 @@ public class TimelineEditController
 					
 					if (timelineSelectEntryModel != null)
 					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						timeline = timelineSelectEntryModel.getTimeline();
-						String name = timelineSelectEntryModel.getName();
-						
-						Generator generator = appController.retrieveGeneratorOfEditedModul(name);
-						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						{
+							ModulGeneratorTypeData editedModulGeneratorTypeData = appController.getEditedModulGeneratorTypeData();
+							
 							generatorTypeSelectItems = new Vector<GeneratorTypeSelectItem>();
 							List<GeneratorTypeData> generatorTypes = appController.retrieveGeneratorTypesForSelect();
 
@@ -132,32 +131,45 @@ public class TimelineEditController
 									//if (folderPath.startsWith(StartupService.MODULE_FOLDER_PATH))
 									if (generatorClass != null)
 									{
-										generatorTypeSelectItems.add(new GeneratorTypeSelectItem(itemGeneratorTypeData));
+										// Is not the edited Module as Generator-Type?
+										if (editedModulGeneratorTypeData != itemGeneratorTypeData)
+										{
+											generatorTypeSelectItems.add(new GeneratorTypeSelectItem(itemGeneratorTypeData));
+										}
 									}
 								}
 							}
 						}
-						if (generator != null)
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						generatorName = timelineSelectEntryModel.getName();
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						{
-							generatorTypeData = generator.getGeneratorTypeData();
-						}
-						else
-						{
-							generatorTypeData = null;
+							Generator generator = appController.retrieveGeneratorOfEditedModul(generatorName);
+							
+							if (generator != null)
+							{
+								generatorTypeData = generator.getGeneratorTypeData();
+							}
+							else
+							{
+								generatorTypeData = null;
+							}
 						}
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						generatorName = name;
 						generatorStartTimePos = timelineSelectEntryModel.getStartTimePos();
 						generatorEndTimePos = timelineSelectEntryModel.getEndTimePos();
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}
 					else
 					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						timeline = null;
 						generatorTypeSelectItems = null;
 						generatorTypeData = null;
 						generatorName = null;
 						generatorStartTimePos = null;
 						generatorEndTimePos = null;
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}
 
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

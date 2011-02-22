@@ -50,7 +50,6 @@ TODO:
 		--> http://mathdemos.gcsu.edu/mathdemos/filterdemo/
 #143:	IMPROVEMENT: Add Cutoff-Filter.
 #148:	IMPROVEMENT: Add Graphically mouse editor for inputs of generators.
-#149:	BUG: Timeline-Edit: Do not allow the edited Module as Generator-Type.
 #151:	
 
 WORK:
@@ -271,3 +270,4 @@ Release V2.0.2:
 #144:	IMPROVEMENT: Add Timeline contextmenu.
 		--> DONE: Double-, Create- and Remove-Genertor-Timeline.
 #150:	BUG: Timeline-Edit: Alert instead of Exception if no Genertor selected.
+#149:	BUG: DONE: Timeline-Edit: Do not allow the edited Module as Generator-Type.
