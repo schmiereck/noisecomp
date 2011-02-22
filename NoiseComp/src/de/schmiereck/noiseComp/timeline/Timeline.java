@@ -187,6 +187,11 @@ implements GeneratorBufferInterface,
 		
 		float timeLength = endTimePos - startTimePos;
 		
+		if (timeLength < 0)
+		{
+			timeLength = 0.F;
+		}
+		
 		int bufSize = (int)(this.generator.getSoundFrameRate() * timeLength);
 		
 		this.bufSoundSamples = new SoundSample[bufSize];

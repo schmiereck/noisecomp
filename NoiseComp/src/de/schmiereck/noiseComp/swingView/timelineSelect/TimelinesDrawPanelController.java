@@ -134,7 +134,7 @@ implements TimelineContentChangedListenerInterface,
 		//------------------------------------------------------------------------------------------
 		{
 			// Add listener to components that can bring up popup menus.
-			MouseListener popupListener = new TimelinesDrawMouseListener(appController,
+			MouseListener popupListener = new TimelinesDrawMouseAdapter(appController,
 			                                                             this,
 			                                                             this.timelinesDrawPanelModel,
 			                                                             this.timelinesDrawPanelView);

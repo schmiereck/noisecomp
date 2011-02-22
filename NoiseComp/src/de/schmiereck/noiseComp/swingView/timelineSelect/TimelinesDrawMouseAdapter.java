@@ -17,13 +17,13 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel.
 
 /**
  * <p>
- * 	Timelines-Draw Mouse-Listener.
+ * 	Timelines-Draw Mouse-Adapter.
  * </p>
  * 
  * @author smk
  * @version <p>21.02.2011:	created, smk</p>
  */
-public class TimelinesDrawMouseListener
+public class TimelinesDrawMouseAdapter
 extends MouseAdapter 
 {
 	//**********************************************************************************************
@@ -58,7 +58,7 @@ extends MouseAdapter
 	 * @param timelinesDrawPanelView
 	 * 			is the Timelines-Draw Panel-View.
 	 */
-	public TimelinesDrawMouseListener(final AppController appController,
+	public TimelinesDrawMouseAdapter(final AppController appController,
 	                                  final TimelinesDrawPanelController timelinesDrawPanelController,
 	                                  final TimelinesDrawPanelModel timelinesDrawPanelModel,
 	                                  final TimelinesDrawPanelView timelinesDrawPanelView)
@@ -209,6 +209,7 @@ extends MouseAdapter
 							case LEFT:
 							{
 								this.timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+								this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
 								this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
 								this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
 								break;
