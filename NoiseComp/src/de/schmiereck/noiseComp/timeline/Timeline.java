@@ -179,7 +179,8 @@ implements GeneratorBufferInterface,
 	 * @param endTimePos
 	 * 			is the endTimePos.
 	 */
-	private void changeTimePos(float startTimePos, float endTimePos)
+	private synchronized 
+	void changeTimePos(float startTimePos, float endTimePos)
 	{
 		//==========================================================================================
 		this.timelineStartTimePos = startTimePos;
@@ -362,9 +363,10 @@ implements GeneratorBufferInterface,
 	 * @return
 	 * 			the sound sample.
 	 */
-	public SoundSample generateFrameSample(long framePosition, 
-	                                       ModulGenerator parentModulGenerator,
-	                                       ModulArguments modulArguments)
+	public synchronized 
+	SoundSample generateFrameSample(long framePosition, 
+	                                ModulGenerator parentModulGenerator,
+	                                ModulArguments modulArguments)
 	{
 		//==========================================================================================
 		SoundSample retSoundSample;
@@ -429,7 +431,8 @@ implements GeneratorBufferInterface,
 	 * @return
 	 * 			is the buffered sample.
 	 */
-	public SoundSample getBufSoundSample(long sampleFramePos)
+	public synchronized 
+	SoundSample getBufSoundSample(long sampleFramePos)
 	{
 		//==========================================================================================
 		SoundSample soundSample;
@@ -454,7 +457,8 @@ implements GeneratorBufferInterface,
 	 * @param soundSample
 	 * 			is sample.
 	 */
-	private void setBufSoundSample(long sampleFramePos, SoundSample soundSample)
+	private synchronized 
+	void setBufSoundSample(long sampleFramePos, SoundSample soundSample)
 	{
 		//==========================================================================================
 		int bufFramePos = this.makeBufferFramePos(sampleFramePos);
@@ -473,21 +477,30 @@ implements GeneratorBufferInterface,
 	 * @return
 	 * 			is the buffer Frame or <code>-1</code> if not in buffer range.
 	 */
-	private int makeBufferFramePos(long sampleFrame)
+	private synchronized 
+	int makeBufferFramePos(long sampleFrame)
 	{
 		//==========================================================================================
-		float startTimePos = this.generator.getStartTimePos();
+		int bufFramePos;
 		
-		long startFrame = (long)(this.generator.getSoundFrameRate() * startTimePos);
-		
-		int bufFramePos = (int)(sampleFrame - startFrame);
-		
-		// Frame is not in buffer range?
-		if (((bufFramePos >= 0) && (bufFramePos < this.bufSoundSamples.length)) == false)
+		if (this.bufSoundSamples != null)
+		{
+			float startTimePos = this.generator.getStartTimePos();
+			
+			long startFrame = (long)(this.generator.getSoundFrameRate() * startTimePos);
+			
+			bufFramePos = (int)(sampleFrame - startFrame);
+			
+			// Frame is not in buffer range?
+			if (((bufFramePos >= 0) && (bufFramePos < this.bufSoundSamples.length)) == false)
+			{
+				bufFramePos = -1;
+			}
+		}
+		else
 		{
 			bufFramePos = -1;
 		}
-		
 		//==========================================================================================
 		return bufFramePos;
 	}
@@ -634,7 +647,8 @@ implements GeneratorBufferInterface,
 	 * @param changedEndBufSize
 	 * 			is the start position of changed buffer area.
 	 */
-	private void clearBuffer(int changedStartBufPos, int changedEndBufSize)
+	private synchronized 
+	void clearBuffer(int changedStartBufPos, int changedEndBufSize)
 	{
 		//==========================================================================================
 		this.bufferIsDirty = true;
@@ -916,7 +930,8 @@ implements GeneratorBufferInterface,
 	/**
 	 * Calculate min and max values of timeline buffer.
 	 */
-	public void calcMinMaxValues()
+	public synchronized 
+	void calcMinMaxValues()
 	{
 		//==========================================================================================
 		float max = Float.MIN_VALUE;
@@ -1087,7 +1102,8 @@ implements GeneratorBufferInterface,
 	/**
 	 * XXX Because of a memory leake clear timelines explicitely.
 	 */
-	public void clearTimeline()
+	public synchronized 
+	void clearTimeline()
 	{
 		this.bufSoundSamples = null;
 		
