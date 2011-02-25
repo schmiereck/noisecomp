@@ -15,7 +15,7 @@ import java.awt.geom.Point2D;
  * @author  smk
  * @version  <p>22.02.2011:	created, smk</p>
  */
-public class TimelinesDrawMouseListerner
+public class TimelinesDrawMouseListener
 implements MouseListener
 {
 	//**********************************************************************************************
@@ -42,7 +42,7 @@ implements MouseListener
 	 * @param timelinesDrawPanelView 
 	 * 			is the Timeline Draw-Panel View.
 	 */
-	public TimelinesDrawMouseListerner(TimelinesDrawPanelModel timelinesDrawPanelModel, 
+	public TimelinesDrawMouseListener(TimelinesDrawPanelModel timelinesDrawPanelModel, 
 	                                   TimelinesDrawPanelView timelinesDrawPanelView)
 	{
 		//==========================================================================================
@@ -81,12 +81,14 @@ implements MouseListener
 	public void mousePressed(MouseEvent e)
 	{
 		//==========================================================================================
+		SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
 		Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
 		
 		TimelineSelectEntryModel timelineSelectEntryModel = 
 			this.timelinesDrawPanelView.searchGenerator(point2D);
 		
-		this.timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
+		selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 //				selectedTimelineGeneratorModel = timelineGeneratorModel;
 //				isMousePressed = true;
 		//==========================================================================================

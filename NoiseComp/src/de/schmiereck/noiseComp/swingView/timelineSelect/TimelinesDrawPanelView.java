@@ -19,7 +19,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.Scrollable;
@@ -30,7 +29,6 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
-import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelineHandler.TimelineHandlerModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
@@ -135,11 +133,6 @@ implements Scrollable//, MouseMotionListener
 	{
 		return this.at;
 	}
-
-	/**
-	 * Do Timeline Selected Listeners.
-	 */
-	private List<DoChangeTimelinesPositionListenerInterface> doChangeTimelinesPositionListeners = new Vector<DoChangeTimelinesPositionListenerInterface>();
  	
 	//**********************************************************************************************
 	// Functions:
@@ -155,6 +148,8 @@ implements Scrollable//, MouseMotionListener
 		//==========================================================================================
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
+		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		
 	    this.setPreferredSize(this.timelinesDrawPanelModel.getDimension());
 		
 		this.setBackground(CBackground);
@@ -168,16 +163,16 @@ implements Scrollable//, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		this.addMouseListener
 		(
-		 	new TimelinesDrawMouseListerner(timelinesDrawPanelModel,
+		 	new TimelinesDrawMouseListener(timelinesDrawPanelModel,
 		 	                                this)
 		);
 		this.addMouseMotionListener
 		(
-		 	new TimelinesDrawMouseMotionListerner(timelinesDrawPanelModel,
+		 	new TimelinesDrawMouseMotionListener(timelinesDrawPanelModel,
 		 	                                      this)
 		);
 		//------------------------------------------------------------------------------------------
-		this.timelinesDrawPanelModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
+		selectedTimelineModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -310,6 +305,8 @@ implements Scrollable//, MouseMotionListener
 		super.paintComponent(g);  // I was missing this code which caused "bleeding"
 	   
 		//==========================================================================================
+		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		
 		Graphics2D g2 = (Graphics2D)g;
 	   
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -323,7 +320,7 @@ implements Scrollable//, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels(); 
 		
-		TimelineSelectEntryModel selectedTimelineEntryModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+		TimelineSelectEntryModel selectedTimelineEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 		
 		int selectedPos = 0;
 		
@@ -512,10 +509,13 @@ implements Scrollable//, MouseMotionListener
 		{
 			Timeline timeline = timelineSelectEntryModel.getTimeline();
 			
-			if (timeline.getGenerator() == generator)
+			if (timeline != null)
 			{
-				retTimelineSelectEntryModel = timelineSelectEntryModel;
-				break;
+				if (timeline.getGenerator() == generator)
+				{
+					retTimelineSelectEntryModel = timelineSelectEntryModel;
+					break;
+				}
 			}
 		}
 		
@@ -533,6 +533,9 @@ implements Scrollable//, MouseMotionListener
 	 */
 	private void paintTimeline(Graphics2D g2, int timelineGeneratorPos, TimelineSelectEntryModel timelineSelectEntryModel)
 	{
+		//==========================================================================================
+		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		
 		//==========================================================================================
 		float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
 		
@@ -558,7 +561,7 @@ implements Scrollable//, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		// Background:
 		
-		if (timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel() == timelineSelectEntryModel)
+		if (selectedTimelineModel.getSelectedTimelineSelectEntryModel() == timelineSelectEntryModel)
 		{
 			g2.setPaint(CTimelineSelectedBackground);
 		}
@@ -956,30 +959,21 @@ implements Scrollable//, MouseMotionListener
 //	{
 //		this.doTimelineSelectedListeners.add(doTimelineSelectedListener);
 //	}
-
-	/**
-	 * Notify the {@link #doChangeTimelinesPositionListeners}.
-	 */
-	public void notifyDoChangeTimelinesPositionListeners(TimelineSelectEntryModel selectedTimelineSelectEntryModel,
-	                                                     TimelineSelectEntryModel newTimelineSelectEntryModel)
-	{
-		//==========================================================================================
-		for (DoChangeTimelinesPositionListenerInterface doTimelineSelectedListener : this.doChangeTimelinesPositionListeners)
-		{
-			doTimelineSelectedListener.changeTimelinesPosition(selectedTimelineSelectEntryModel,
-			                                                   newTimelineSelectEntryModel);
-		};
-		//==========================================================================================
-	}
-
-	/**
-	 * @param doChangeTimelinesPositionListener 
-	 * 			to add to {@link #doChangeTimelinesPositionListeners}.
-	 */
-	public void addChangeTimelinesPositionListeners(DoChangeTimelinesPositionListenerInterface doChangeTimelinesPositionListener)
-	{
-		this.doChangeTimelinesPositionListeners.add(doChangeTimelinesPositionListener);
-	}
+//
+//	/**
+//	 * Notify the {@link #doChangeTimelinesPositionListeners}.
+//	 */
+//	public void notifyDoChangeTimelinesPositionListeners(TimelineSelectEntryModel selectedTimelineSelectEntryModel,
+//	                                                     TimelineSelectEntryModel newTimelineSelectEntryModel)
+//	{
+//		//==========================================================================================
+//		for (DoChangeTimelinesPositionListenerInterface doTimelineSelectedListener : this.doChangeTimelinesPositionListeners)
+//		{
+//			doTimelineSelectedListener.changeTimelinesPosition(selectedTimelineSelectEntryModel,
+//			                                                   newTimelineSelectEntryModel);
+//		};
+//		//==========================================================================================
+//	}
 
 	/**
 	 * @return 

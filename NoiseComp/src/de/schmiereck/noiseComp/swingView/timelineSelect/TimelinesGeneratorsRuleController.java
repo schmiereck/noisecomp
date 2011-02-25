@@ -34,18 +34,20 @@ implements RemoveTimelineGeneratorListenerInterface,
 	/**
 	 * Constructor.
 	 * 
+	 * @param selectedTimelineModel
+	 * 			is the Selected-Timeline Model.
 	 */
-	public TimelinesGeneratorsRuleController()
+	public TimelinesGeneratorsRuleController(final SelectedTimelineModel selectedTimelineModel)
 	{
 		//==========================================================================================
 	    this.timelinesGeneratorsRuleModel = 
-	    	new TimelinesGeneratorsRuleModel();
+	    	new TimelinesGeneratorsRuleModel(selectedTimelineModel);
 	    
 	    this.timelinesGeneratorsRuleView = 
 	    	new TimelinesGeneratorsRuleView(this.timelinesGeneratorsRuleModel);
 	    
 	    //------------------------------------------------------------------------------------------
-	    this.timelinesGeneratorsRuleModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
+	    selectedTimelineModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 	    (
 	     	new ModelPropertyChangedListener()
 	     	{
@@ -139,7 +141,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public void notifySelectedTimelineChanged(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
 	{
 		//==========================================================================================
-		this.timelinesGeneratorsRuleModel.setSelectedTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
+		SelectedTimelineModel selectedTimelineModel = this.timelinesGeneratorsRuleModel.getSelectedTimelineModel();
+		
+		selectedTimelineModel.setSelectedTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
 		
 		//==========================================================================================
 	}

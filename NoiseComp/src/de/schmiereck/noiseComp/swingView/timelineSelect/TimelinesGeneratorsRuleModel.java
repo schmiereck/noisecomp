@@ -37,15 +37,41 @@ public class TimelinesGeneratorsRuleModel
 	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//----------------------------------------------------------------------------------------------
-	/**
-	 * Selected Timeline Generator Model.
-	 */
-	private TimelineSelectEntryModel selectedTimelineSelectEntryModel = null;
+//	/**
+//	 * Selected Timeline Generator Model.
+//	 */
+//	private TimelineSelectEntryModel selectedTimelineSelectEntryModel = null;
+//	
+//	/**
+//	 * {@link #selectedTimelineSelectEntryModel} changed listeners.
+//	 */
+//	private final ModelPropertyChangedNotifier selectedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	/**
-	 * {@link #selectedTimelineSelectEntryModel} changed listeners.
+	 * Selected-Timeline Model.
 	 */
-	private final ModelPropertyChangedNotifier selectedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
+	private final SelectedTimelineModel selectedTimelineModel;
+	
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedTimelineModel}.
+	 */
+	public SelectedTimelineModel getSelectedTimelineModel()
+	{
+		return this.selectedTimelineModel;
+	}
+
+	//----------------------------------------------------------------------------------------------
+	/**
+	 * Highlighted (mouse over) Timeline Generator Model.
+	 */
+	private TimelineSelectEntryModel highlightedTimelineSelectEntryModel = null;
+	
+	/**
+	 * {@link #highlightedTimelineSelectEntryModel} changed listeners.
+	 */
+	@SuppressWarnings("unused")
+	private final ModelPropertyChangedNotifier highlightedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -53,9 +79,15 @@ public class TimelinesGeneratorsRuleModel
 	/**
 	 * Constructor.
 	 * 
+	 * @param selectedTimelineModel
+	 * 			is the Selected-Timeline Model.
 	 */
-	public TimelinesGeneratorsRuleModel()
+	public TimelinesGeneratorsRuleModel(final SelectedTimelineModel selectedTimelineModel)
 	{
+		//==========================================================================================
+		this.selectedTimelineModel = selectedTimelineModel;
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -97,34 +129,52 @@ public class TimelinesGeneratorsRuleModel
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #selectedTimelineSelectEntryModel}.
+//	 */
+//	public TimelineSelectEntryModel getSelectedTimelineSelectEntryModel()
+//	{
+//		return this.selectedTimelineSelectEntryModel;
+//	}
+//
+//	/**
+//	 * @param selectedTimelineSelectEntryModel 
+//	 * 			to set {@link #selectedTimelineSelectEntryModel}.
+//	 */
+//	public void setSelectedTimelineSelectEntryModel(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
+//	{
+//		//==========================================================================================
+//		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
+//		
+//		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
+//		//==========================================================================================
+//	}
+//
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #selectedTimelineChangedNotifier}.
+//	 */
+//	public ModelPropertyChangedNotifier getSelectedTimelineChangedNotifier()
+//	{
+//		return this.selectedTimelineChangedNotifier;
+//	}
+
 	/**
 	 * @return 
-	 * 			returns the {@link #selectedTimelineSelectEntryModel}.
+	 * 			returns the {@link #highlightedTimelineSelectEntryModel}.
 	 */
-	public TimelineSelectEntryModel getSelectedTimelineSelectEntryModel()
+	public TimelineSelectEntryModel getHighlightedTimelineSelectEntryModel()
 	{
-		return this.selectedTimelineSelectEntryModel;
+		return this.highlightedTimelineSelectEntryModel;
 	}
 
 	/**
-	 * @param selectedTimelineSelectEntryModel 
-	 * 			to set {@link #selectedTimelineSelectEntryModel}.
+	 * @param highlightedTimelineSelectEntryModel 
+	 * 			to set {@link #highlightedTimelineSelectEntryModel}.
 	 */
-	public void setSelectedTimelineSelectEntryModel(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
+	public void setHighlightedTimelineSelectEntryModel(TimelineSelectEntryModel highlightedTimelineSelectEntryModel)
 	{
-		//==========================================================================================
-		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
-		
-		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
-		//==========================================================================================
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #selectedTimelineChangedNotifier}.
-	 */
-	public ModelPropertyChangedNotifier getSelectedTimelineChangedNotifier()
-	{
-		return this.selectedTimelineChangedNotifier;
+		this.highlightedTimelineSelectEntryModel = highlightedTimelineSelectEntryModel;
 	}
 }

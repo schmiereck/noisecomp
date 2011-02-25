@@ -67,6 +67,8 @@ extends MouseAdapter
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		this.timelinesDrawPanelView = timelinesDrawPanelView;
 		
+		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
 		//==========================================================================================
 		// Generator Popup Menu:
 		
@@ -132,7 +134,7 @@ extends MouseAdapter
 					{
 						//--------------------------------------------------------------------------
 						TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
-							timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+							selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 						
 						timelinesDrawPanelModel.removeTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
 						
@@ -168,6 +170,9 @@ extends MouseAdapter
 		//==========================================================================================
 		super.mouseReleased(e);
 
+		//==========================================================================================
+		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
 		//------------------------------------------------------------------------------------------
 		// Popup?
 		if (e.isPopupTrigger()) 
@@ -180,7 +185,7 @@ extends MouseAdapter
 			
 			if (timelineSelectEntryModel != null)
 			{
-				this.timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
+				selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 				
 				this.generatorPopupMenu.show(e.getComponent(),
 				                             e.getX(), e.getY());

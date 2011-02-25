@@ -18,6 +18,7 @@ import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
@@ -86,11 +87,14 @@ public class TimelineEditController
 		
 		this.appModelChangedObserver = appModelChangedObserver;
 		
+		//==========================================================================================
+		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
 		//------------------------------------------------------------------------------------------
 		// Selected Timeline changed: Update Timeline-Edit Model:
 		
 		//------------------------------------------------------------------------------------------
-		this.timelinesDrawPanelModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
+		selectedTimelineModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -105,7 +109,7 @@ public class TimelineEditController
 					Float generatorStartTimePos;
 					Float generatorEndTimePos;
 
-					TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+					TimelineSelectEntryModel timelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 					
 					if (timelineSelectEntryModel != null)
 					{

@@ -14,7 +14,6 @@ TODO:
 #53:	IMPROVEMENT: Generator-Input-Types needs max, min and datatype definitions.
 #56:	IMPROVEMENT: Import noiseComp.xml files.
 #58:	IMPROVEMENT: Timeline-Select: Show input Source in the middle of the timeline, not on the top.
-#84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.
 #86:	BUG: Update Modul Input-type default Value do not refresh timelines.
 #88:	IMPROVEMENT: Time-Scretching of timelines/modules, only the positions shifting, not the Freqences.
 #91:	IMPROVEMENT: Allow remove modules if they are not used.
@@ -39,9 +38,14 @@ TODO:
 		Or drag whole timeline does that by snapping to start position.
 #142:	IMPROVEMENT: Add Resonance-Filter.
 		--> http://mathdemos.gcsu.edu/mathdemos/filterdemo/
-#143:	IMPROVEMENT: Add Cutoff-Filter.
-#148:	IMPROVEMENT: Add Graphically mouse editor for inputs of generators.
-#151:	
+		--> http://www.musicdsp.org/archive.php?classid=3
+#148:	IMPROVEMENT: Add Graphically mouse editor for inputs of generators (double click Timeline-Generator?).
+#151:	IMPROVEMENT: Add play Start- and Stop-Marker to Timeline-Select per Module.
+#152:	IMPROVEMENT: Add Play-Loop-Button depending on #151.
+#153:	IMPROVEMENT: Add Mute-Button per Timeline.
+#154:	IMPROVEMENT: Add New-File Menu-Entry.
+#155:	
+#156:	
 
 WORK:
 =====
@@ -50,13 +54,21 @@ WORK:
 		--> http://www.eclipse.org/mat/
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
-#139:	BUG: Drag end position of timleine bigger than module end position the end position of timeline is not updated.
+#139:	BUG: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
+#143:	IMPROVEMENT: Add Cutoff-Filter.
+		--> LowpassFilterGenerator
+		--> ideal lowpass filter
+		--> http://baumdevblog.blogspot.com/2010/11/butterworth-lowpass-filter-coefficients.html
 
 DONE:
 =====
+Release V1.0
+------------
 #1:		es ist gut, wenn die Kommentare in Englisch geschrieben sind. Mit 
 		Deutsch sind ein größteil der möglichen Mitwirkenden von vorneherein ausgeschlossen.
 		-> I will try...
+Release V2.0
+------------
 #3:		No timeline repaint after Update Timeline-Edit for new insertet timelines (works after a new "Edit Modul").
 #7:		IMPROVEMENT: Add "Realy Exit?" dialog.
 #8:		Add file operations.
@@ -253,7 +265,8 @@ Release V2.0.1:
 #22:	TASK: Make sure that only one module have IsMainModulGeneratorType Flag.
 		--> DONE: Remove the main-flag from other module automaticaly.
 #140:	IMPROVEMENT: Rename- and Create-Folder Dialog thould be accepted Enter in input line.
-Release V2.0.2:
+Release V2.0.2
+--------------
 #145:	BUG: DONE: Input-Type Select do not show the value.
 #146:	IMPROVEMENT: Allow Enter to store values with default button in edit pannels like in dialogs.
 		--> DONE: Dialogs use this.renameFolderEditView.getRootPane().setDefaultButton(...).
@@ -274,3 +287,6 @@ Release V2.0.2:
 		--> DONE a long time ago.
 #141:	IMPROVEMENT: Drag&Drop Timeline-Start also drags End-Position.
 		--> DONE: TimelinesDrawMouseMotionListerner
+Release V2.0.3
+--------------
+#84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.

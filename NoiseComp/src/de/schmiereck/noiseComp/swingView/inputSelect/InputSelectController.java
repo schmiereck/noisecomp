@@ -14,6 +14,7 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -61,6 +62,12 @@ public class InputSelectController
 		//==========================================================================================
 		this.inputSelectModel = new InputSelectModel();
 		this.inputSelectView = new InputSelectView(this.inputSelectModel);
+		this.appModelChangedObserver = appModelChangedObserver;
+		
+		//==========================================================================================
+		final SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		
+		//------------------------------------------------------------------------------------------
 		{
 			TableColumnModel columnModel = this.inputSelectView.getColumnModel();
 	
@@ -70,12 +77,10 @@ public class InputSelectController
 			TableColumn valueCol = columnModel.getColumn(1); 
 			valueCol.setPreferredWidth(100); 
 		}		
-		this.appModelChangedObserver = appModelChangedObserver;
-		
 		//------------------------------------------------------------------------------------------
 		// Selected Timeline changed -> update Input-Select-Model:
 		
-		timelinesDrawPanelModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
+		selectedTimelineModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -84,7 +89,7 @@ public class InputSelectController
 				{
 					Iterator<InputData> inputsIterator;
 					
-					TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+					TimelineSelectEntryModel timelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 					
 					if (timelineSelectEntryModel != null)
 					{

@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.geom.Point2D;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -34,13 +35,15 @@ extends JComponent
 	// Constats:
 
 //	public static final int	DPI		= Toolkit.getDefaultToolkit().getScreenResolution();
-	public static final int	SIZE_X	= 120;
+	public static final int	SIZE_X	= 140;
 	
 	/**
 	 * Color - Background (dirty brown/orange).
 	 */
-	private static final Color	COLOR_BACKGROUND	= new Color(0xFFF1E1); //230, 163, 4);
+	private static final Color	COLOR_BACKGROUND			= new Color(0xFFF1E1); //230, 163, 4);
 	private static final Color	COLOR_SELECTED_BACKGROUND	= new Color(0xBFB2AE);
+	private static final Color	COLOR_SELECTED_BORDER		= new Color(0xAFA29E);
+	private static final Color	COLOR_HIGHLIGHTED_BORDER	= new Color(0x8F827E);
 	
 	//**********************************************************************************************
 	// Fields:
@@ -66,6 +69,17 @@ extends JComponent
 		//==========================================================================================
 		this.timelinesGeneratorsRuleModel = timelinesGeneratorsRuleModel;
 		
+		//------------------------------------------------------------------------------------------
+		this.addMouseListener
+		(
+		 	new TimelinesGeneratorsRuleMouseListener(timelinesGeneratorsRuleModel,
+		 	                                          this)
+		);
+		this.addMouseMotionListener
+		(
+		 	new TimelinesGeneratorsRuleMouseMotionListener(timelinesGeneratorsRuleModel,
+		 	                                               this)
+		);
 		//------------------------------------------------------------------------------------------
 		this.timelineGeneratorModelChangedListener = new ModelPropertyChangedListener()
 	 	{
@@ -102,6 +116,8 @@ extends JComponent
 		//==========================================================================================
 		TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
 		
+		SelectedTimelineModel selectedTimelineModel = this.timelinesGeneratorsRuleModel.getSelectedTimelineModel();
+		
 		//==========================================================================================
 		Rectangle drawHere = g.getClipBounds();
 		
@@ -116,9 +132,15 @@ extends JComponent
 		int generatorSizeY = timelinesScrollPanelModel.getGeneratorSizeY();
 
 		//------------------------------------------------------------------------------------------
-		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesGeneratorsRuleModel.getTimelineSelectEntryModels();
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
+			selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 		
-		TimelineSelectEntryModel selectedTimelineSelectEntryModel = this.timelinesGeneratorsRuleModel.getSelectedTimelineSelectEntryModel();
+		TimelineSelectEntryModel highlightedTimelineSelectEntryModel = 
+			this.timelinesGeneratorsRuleModel.getHighlightedTimelineSelectEntryModel();
+		
+		//------------------------------------------------------------------------------------------
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = 
+			this.timelinesGeneratorsRuleModel.getTimelineSelectEntryModels();
 		
 		// Use clipping bounds to calculate first and last tick locations.
 		int start = (drawHere.y / generatorSizeY) * generatorSizeY;
@@ -200,7 +222,21 @@ extends JComponent
 				{
 					g.setColor(COLOR_SELECTED_BACKGROUND);
 					g.fillRect(0, tickPos, 
-					           SIZE_X, generatorSizeY);
+					           SIZE_X - 1, generatorSizeY - 1);
+					g.setColor(COLOR_SELECTED_BORDER);
+					g.draw3DRect(0, tickPos, 
+					             SIZE_X - 1, generatorSizeY - 1,
+					             true);
+				}
+				
+				if (highlightedTimelineSelectEntryModel == timelineSelectEntryModel)
+				{
+					boolean raised = true;
+					
+					g.setColor(COLOR_HIGHLIGHTED_BORDER);
+					g.draw3DRect(0, tickPos, 
+					             SIZE_X - 1, generatorSizeY - 1,
+					             raised);
 				}
 			}
 			else
@@ -235,7 +271,9 @@ extends JComponent
 					
 					int stringWidth = fm.stringWidth(text);
 					
-					g.drawString(text, SIZE_X - stringWidth, stringPosY);
+					g.drawString(text, 
+					             SIZE_X - stringWidth - 2, 
+					             stringPosY);
 				}
 			}
 			{
@@ -248,7 +286,9 @@ extends JComponent
 					
 					int stringWidth = fm.stringWidth(text);
 					
-					g.drawString(text, SIZE_X - stringWidth, (int)(stringPosY + TimelinesDrawPanelModel.SIZE_TIMELINE_Y));
+					g.drawString(text, 
+					             SIZE_X - stringWidth - 2, 
+					             (int)(stringPosY + TimelinesDrawPanelModel.SIZE_TIMELINE_Y));
 				}
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -264,5 +304,41 @@ extends JComponent
 	{
 		//==========================================================================================
 		return this.timelineGeneratorModelChangedListener;
+	}
+
+	/**
+	 * @param point2D
+	 * 			is the point.
+	 * @return
+	 * 			is the Timeline at given point.
+	 */
+	public TimelineSelectEntryModel searchGenerator(Point2D point2D)
+	{
+		//==========================================================================================
+		TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
+		
+		//==========================================================================================
+		TimelineSelectEntryModel retTimelineSelectEntryModel;
+		
+		retTimelineSelectEntryModel = null;
+		
+		int generatorSizeY = timelinesScrollPanelModel.getGeneratorSizeY();
+		
+		double generatorPosY = 0.0D;
+		
+		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelinesGeneratorsRuleModel.getTimelineSelectEntryModels())
+		{
+			if ((point2D.getY() >= generatorPosY) &&
+				(point2D.getY() <= (generatorPosY + generatorSizeY)))
+			{
+				retTimelineSelectEntryModel = timelineSelectEntryModel;
+				break;
+			}
+			
+			generatorPosY += generatorSizeY;
+		}
+		
+		//==========================================================================================
+		return retTimelineSelectEntryModel;
 	}
 }

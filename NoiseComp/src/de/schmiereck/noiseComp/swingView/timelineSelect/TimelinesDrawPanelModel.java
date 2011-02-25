@@ -63,15 +63,20 @@ public class TimelinesDrawPanelModel
 	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//----------------------------------------------------------------------------------------------
-	/**
-	 * Selected Timeline Generator Model.
-	 */
-	private TimelineSelectEntryModel selectedTimelineSelectEntryModel = null;
+//	/**
+//	 * Selected Timeline Generator Model.
+//	 */
+//	private TimelineSelectEntryModel selectedTimelineSelectEntryModel = null;
+//	
+//	/**
+//	 * {@link #selectedTimelineSelectEntryModel} changed listeners.
+//	 */
+//	private final ModelPropertyChangedNotifier selectedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	/**
-	 * {@link #selectedTimelineSelectEntryModel} changed listeners.
+	 * Selected-Timeline Model.
 	 */
-	private final ModelPropertyChangedNotifier selectedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
+	private final SelectedTimelineModel selectedTimelineModel;
 	
 	//----------------------------------------------------------------------------------------------
 	/**
@@ -80,7 +85,7 @@ public class TimelinesDrawPanelModel
 	private TimelineSelectEntryModel highlightedTimelineSelectEntryModel = null;
 	
 	/**
-	 * {@link #selectedTimelineSelectEntryModel} changed listeners.
+	 * {@link #highlightedTimelineSelectEntryModel} changed listeners.
 	 */
 	@SuppressWarnings("unused")
 	private final ModelPropertyChangedNotifier highlightedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
@@ -195,10 +200,27 @@ public class TimelinesDrawPanelModel
 	/**
 	 * Constructor.
 	 * 
+	 * @param selectedTimelineModel
+	 * 			is the Selected-Timeline Model.
 	 */
-	public TimelinesDrawPanelModel(final AppModelChangedObserver appModelChangedObserver)
+	public TimelinesDrawPanelModel(final AppModelChangedObserver appModelChangedObserver,
+	                               final SelectedTimelineModel selectedTimelineModel)
 	{
+		//==========================================================================================
 		this.appModelChangedObserver = appModelChangedObserver;
+		
+		this.selectedTimelineModel = selectedTimelineModel;
+
+		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedTimelineModel}.
+	 */
+	public SelectedTimelineModel getSelectedTimelineModel()
+	{
+		return this.selectedTimelineModel;
 	}
 
 	/**
@@ -273,38 +295,38 @@ public class TimelinesDrawPanelModel
 	{
 		return this.timelineGeneratorModelsChangedNotifier;
 	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #selectedTimelineSelectEntryModel}.
-	 */
-	public TimelineSelectEntryModel getSelectedTimelineSelectEntryModel()
-	{
-		return this.selectedTimelineSelectEntryModel;
-	}
-
-	/**
-	 * @param selectedTimelineSelectEntryModel 
-	 * 			to set {@link #selectedTimelineSelectEntryModel}.
-	 */
-	public void setSelectedTimelineSelectEntryModel(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
-	{
-		//==========================================================================================
-		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
-		
-		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
-		
-		//==========================================================================================
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #selectedTimelineChangedNotifier}.
-	 */
-	public ModelPropertyChangedNotifier getSelectedTimelineChangedNotifier()
-	{
-		return this.selectedTimelineChangedNotifier;
-	}
+//
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #selectedTimelineSelectEntryModel}.
+//	 */
+//	public TimelineSelectEntryModel getSelectedTimelineSelectEntryModel()
+//	{
+//		return this.selectedTimelineSelectEntryModel;
+//	}
+//
+//	/**
+//	 * @param selectedTimelineSelectEntryModel 
+//	 * 			to set {@link #selectedTimelineSelectEntryModel}.
+//	 */
+//	public void setSelectedTimelineSelectEntryModel(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
+//	{
+//		//==========================================================================================
+//		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
+//		
+//		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
+//		
+//		//==========================================================================================
+//	}
+//
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #selectedTimelineChangedNotifier}.
+//	 */
+//	public ModelPropertyChangedNotifier getSelectedTimelineChangedNotifier()
+//	{
+//		return this.selectedTimelineChangedNotifier;
+//	}
 
 //	/**
 //	 * Notify the {@link #selectedTimelineChangedListeners}.

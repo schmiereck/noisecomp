@@ -25,7 +25,7 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @author smk
  * @version <p>22.02.2011:	created, smk</p>
  */
-public class TimelinesDrawMouseMotionListerner
+public class TimelinesDrawMouseMotionListener
 implements MouseMotionListener
 {
 	//**********************************************************************************************
@@ -52,7 +52,7 @@ implements MouseMotionListener
 	 * @param timelinesDrawPanelView 
 	 * 			is the Timeline Draw-Panel View.
 	 */
-	public TimelinesDrawMouseMotionListerner(TimelinesDrawPanelModel timelinesDrawPanelModel, 
+	public TimelinesDrawMouseMotionListener(TimelinesDrawPanelModel timelinesDrawPanelModel, 
 	                                         TimelinesDrawPanelView timelinesDrawPanelView)
 	{
 		//==========================================================================================
@@ -66,6 +66,8 @@ implements MouseMotionListener
 	public void mouseDragged(MouseEvent e)
 	{
 		//==========================================================================================
+		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
 		final AffineTransform at = this.timelinesDrawPanelView.getAt();
 		
 		Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
@@ -77,7 +79,7 @@ implements MouseMotionListener
 		{
 			//TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
 			TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
-				this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+				selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 			
 			if (selectedTimelineSelectEntryModel != null)
 			{
@@ -156,18 +158,19 @@ implements MouseMotionListener
 		}
 		else
 		{
+			//--------------------------------------------------------------------------------------
 			TimelineSelectEntryModel timelineSelectEntryModel = 
 				this.timelinesDrawPanelView.searchTimeline(point2D);
 			
 			if (timelineSelectEntryModel != null)
 			{
 				TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
-					this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+					selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 				
 				if (timelineSelectEntryModel != selectedTimelineSelectEntryModel)
 				{
-					this.timelinesDrawPanelView.notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel, 
-					                                                                     timelineSelectEntryModel);
+					selectedTimelineModel.notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel, 
+					                                                               timelineSelectEntryModel);
 				}
 				Rectangle rect = new Rectangle((int)(point2D.getX() * at.getScaleX() - 32), 
 				                               (int)(point2D.getY() - 32), 
@@ -175,6 +178,7 @@ implements MouseMotionListener
 				
 				this.timelinesDrawPanelView.scrollRectToVisible(rect);
 			}
+			//--------------------------------------------------------------------------------------
 		}
 		//==========================================================================================
 	}
@@ -188,11 +192,13 @@ implements MouseMotionListener
 		Point point = e.getPoint();
 		Point2D point2D = this.timelinesDrawPanelView.mousePos(point);
 		
+		//------------------------------------------------------------------------------------------
 		boolean resetHighlightedTimelineHandler;
 		
 		TimelineSelectEntryModel timelineSelectEntryModel = 
 			this.timelinesDrawPanelView.searchGenerator(point2D);
 		
+		//------------------------------------------------------------------------------------------
 		if (this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel() != timelineSelectEntryModel)
 		{
 			this.timelinesDrawPanelModel.setHighlightedTimelineSelectEntryModel(timelineSelectEntryModel);
@@ -200,6 +206,7 @@ implements MouseMotionListener
 			this.timelinesDrawPanelView.repaint();
 		}
 
+		//------------------------------------------------------------------------------------------
 		if (timelineSelectEntryModel != null)
 		{
 			float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();

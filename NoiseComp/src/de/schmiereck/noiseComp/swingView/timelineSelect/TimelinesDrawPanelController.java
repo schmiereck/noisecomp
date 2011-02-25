@@ -49,16 +49,20 @@ implements TimelineContentChangedListenerInterface,
 	 * 			is the Modules-Tree Model.
 	 * @param inputEditModel 
 	 * 			is the Input-Edit Model.
+	 * @param selectedTimelineModel
+	 * 			is the Selected-Timeline Model.
 	 */
 	public TimelinesDrawPanelController(final AppController appController,
 	                                    //final ModulesTreeModel modulesTreeModel,
 	                                    //InputEditModel inputEditModel)
-	                                    final AppModelChangedObserver appModelChangedObserver)
+	                                    final AppModelChangedObserver appModelChangedObserver,
+	                                    final SelectedTimelineModel selectedTimelineModel)
 	{
 		//==========================================================================================
 //		this.modulesTreeModel = modulesTreeModel;
 		
-		this.timelinesDrawPanelModel = new TimelinesDrawPanelModel(appModelChangedObserver);
+		this.timelinesDrawPanelModel = new TimelinesDrawPanelModel(appModelChangedObserver,
+		                                                           selectedTimelineModel);
 		
 	    this.timelinesDrawPanelView = new TimelinesDrawPanelView(this.timelinesDrawPanelModel);
 	    
@@ -80,7 +84,7 @@ implements TimelineContentChangedListenerInterface,
 //	     	this.timelineGeneratorModelChangedListener
 //	    );
 	    //------------------------------------------------------------------------------------------
-	    this.timelinesDrawPanelView.addChangeTimelinesPositionListeners
+	    selectedTimelineModel.addChangeTimelinesPositionListeners
 	    (
 	     	new DoChangeTimelinesPositionListenerInterface()
 	     	{
@@ -109,9 +113,11 @@ implements TimelineContentChangedListenerInterface,
 				                                          TimelineSelectEntryModel timelineSelectEntryModel)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					if (timelineSelectEntryModel == timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel())
+					SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+					
+					if (timelineSelectEntryModel == selectedTimelineModel.getSelectedTimelineSelectEntryModel())
 					{
-						timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(null);
+						selectedTimelineModel.setSelectedTimelineSelectEntryModel(null);
 					}
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
@@ -198,6 +204,7 @@ implements TimelineContentChangedListenerInterface,
 	public void addTimelineSelectEntryModel(int timelinePos,
 	                                        TimelineSelectEntryModel timelineSelectEntryModel)
 	{
+		//==========================================================================================
 		this.timelinesDrawPanelModel.addTimelineSelectEntryModel(timelinePos,
 		                                                         timelineSelectEntryModel);
 		
@@ -208,6 +215,7 @@ implements TimelineContentChangedListenerInterface,
 		timelineSelectEntryModel.getEndTimePosChangedNotifier().addModelPropertyChangedListener(modelChangedListener);
 		
 		// TODO remove listeners if timeline is removed.
+		//==========================================================================================
 	}
 
 	/**
@@ -216,9 +224,12 @@ implements TimelineContentChangedListenerInterface,
 	 */
 	public Timeline getSelectedTimeline()
 	{
+		//==========================================================================================
 		Timeline retSelectedTimeline;
 		
-		TimelineSelectEntryModel selectedTimelineSelectEntryModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 
 		if (selectedTimelineSelectEntryModel != null)
 		{
@@ -250,6 +261,7 @@ implements TimelineContentChangedListenerInterface,
 			retSelectedTimeline = null;
 		}
 		
+		//==========================================================================================
 		return retSelectedTimeline;
 	}
 	
@@ -324,12 +336,14 @@ implements TimelineContentChangedListenerInterface,
 		//==========================================================================================
 		TimelinesDrawPanelModel timelinesDrawPanelModel = this.getTimelinesDrawPanelModel();
 		
+		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		int timelinePos;
 		Float startTimePos;
 		Float endTimePos;
 		
-		TimelineSelectEntryModel selectedTimelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 		
 		if (selectedTimelineSelectEntryModel != null)
 		{
@@ -357,7 +371,7 @@ implements TimelineContentChangedListenerInterface,
 		this.addTimelineSelectEntryModel(timelinePos,
 		                                 timelineSelectEntryModel);
 		
-		timelinesDrawPanelModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
+		selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
@@ -505,6 +519,22 @@ implements TimelineContentChangedListenerInterface,
 	{
 		//==========================================================================================
 		this.timelinesDrawPanelModel.setPlaybackTime(actualTime);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Called if selected timeline is changed.
+	 * 
+	 * @param selectedTimelineSelectEntryModel
+	 * 			is the selected timeline entry.
+	 */
+	public void notifySelectedTimelineChanged(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
+	{
+		//==========================================================================================
+		SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
+		selectedTimelineModel.setSelectedTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
 		
 		//==========================================================================================
 	}
