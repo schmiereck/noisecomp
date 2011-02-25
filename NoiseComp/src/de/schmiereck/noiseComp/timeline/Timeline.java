@@ -674,18 +674,26 @@ implements GeneratorBufferInterface,
 	public GeneratorBufferInterface getInputGeneratorBuffer(InputData inputData)
 	{
 		//==========================================================================================
-		GeneratorBufferInterface inputTimeline = this.inputTimelines.get(inputData);
+		GeneratorBufferInterface inputTimeline;
 		
-		if (inputTimeline == null)
+		if (inputData != null)
 		{
-			Generator inputGenerator = inputData.getInputGenerator();
-			
-			if (inputGenerator instanceof ModulGenerator)
+			inputTimeline = this.inputTimelines.get(inputData);
+
+			if (inputTimeline == null)
 			{
-				inputTimeline = this.subGeneratorTimelines.get(inputGenerator);
+				Generator inputGenerator = inputData.getInputGenerator();
+				
+				if (inputGenerator instanceof ModulGenerator)
+				{
+					inputTimeline = this.subGeneratorTimelines.get(inputGenerator);
+				}
 			}
 		}
-		
+		else
+		{
+			inputTimeline = null;
+		}
 		//==========================================================================================
 		return inputTimeline;
 	}

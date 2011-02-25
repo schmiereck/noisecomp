@@ -55,10 +55,6 @@ WORK:
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
 #139:	BUG: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
-#143:	IMPROVEMENT: Add Cutoff-Filter.
-		--> LowpassFilterGenerator
-		--> ideal lowpass filter
-		--> http://baumdevblog.blogspot.com/2010/11/butterworth-lowpass-filter-coefficients.html
 
 DONE:
 =====
@@ -290,3 +286,7 @@ Release V2.0.2
 Release V2.0.3
 --------------
 #84:	IMPROVEMENT: Allow select and Drag&Drop on TimelineGeneratorRule view.
+#143:	IMPROVEMENT: Add Cutoff-Filter.
+		--> LowpassFilterGenerator
+		--> ideal lowpass filter
+		--> http://baumdevblog.blogspot.com/2010/11/butterworth-lowpass-filter-coefficients.html

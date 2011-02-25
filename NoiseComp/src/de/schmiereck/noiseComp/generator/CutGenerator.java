@@ -9,14 +9,21 @@ package de.schmiereck.noiseComp.generator;
 public class CutGenerator
 extends Generator
 {
+	//**********************************************************************************************
+	// Constants:
+
 	public static final int	INPUT_TYPE_MAX_AMPL		= 1;
 	public static final int	INPUT_TYPE_MIN_AMPL		= 2;
 	public static final int	INPUT_TYPE_SIGNAL		= 3;
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
-	 * @param frameRate	Frames per Second
+	 * @param frameRate	
+	 * 			are the Frames per Second.
 	 */
 	public CutGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
@@ -26,50 +33,42 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample signalSample, ModulGenerator parentModulGenerator, 
+	public void calculateSoundSample(long framePosition, float frameTime, 
+	                                 SoundSample signalSample, 
+	                                 ModulGenerator parentModulGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-   	                              	ModulArguments modulArguments)
+	                                 ModulArguments modulArguments)
 	{
-		//----------------------------------------------------------------------
-		float maxValue;
-//		try
-//		{
-			maxValue = this.calcInputMonoValue(framePosition, 
-			                                   frameTime,
-			                                   this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MAX_AMPL), 
-			                                   parentModulGenerator,
-			                                   generatorBuffer,
-			                                   modulArguments);
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			maxValue = 0.0F;
-//		}
-		//----------------------------------------------------------------------
-		float minValue;
-//		try
-//		{
-			minValue = this.calcInputMonoValue(framePosition, 
-			                                   frameTime,
-			                                   this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MIN_AMPL), 
-			                                   parentModulGenerator,
-			                                   generatorBuffer,
-			                                   modulArguments);
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			minValue = 0.0F;
-//		}
+		//==========================================================================================
+		float maxValue = 
+			this.calcInputMonoValue(framePosition, 
+			                        frameTime,
+			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MAX_AMPL), 
+			                        parentModulGenerator,
+			                        generatorBuffer,
+			                        modulArguments);
+		//------------------------------------------------------------------------------------------
+		float minValue = 
+			this.calcInputMonoValue(framePosition, 
+			                        frameTime,
+			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MIN_AMPL), 
+			                        parentModulGenerator,
+			                        generatorBuffer,
+			                        modulArguments);
 
+		//------------------------------------------------------------------------------------------
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
-		this.calcInputValue(framePosition, 
-                            frameTime,
-		                    signalInputData, 
-		                    signalSample, 
-		                    parentModulGenerator, 
-		                    generatorBuffer,
-                            modulArguments);
-		
+		if (signalInputData != null)
+		{
+			this.calcInputValue(framePosition, 
+	                            frameTime,
+			                    signalInputData, 
+			                    signalSample, 
+			                    parentModulGenerator, 
+			                    generatorBuffer,
+	                            modulArguments);
+		}
+		//------------------------------------------------------------------------------------------
 		float leftValue = signalSample.getLeftValue();
 		
 		if (Float.isNaN(leftValue) == false)
@@ -107,6 +106,7 @@ extends Generator
 		}
 		
 		signalSample.setStereoValues(leftValue, rightValue);
+		//==========================================================================================
 	}
 	
 	/* (non-Javadoc)
@@ -114,6 +114,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
+		//==========================================================================================
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", CutGenerator.class, "Cut", "Cut the input singnal to the given minimum and maximum values.");
 		
 		{
@@ -129,6 +130,7 @@ extends Generator
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		
+		//==========================================================================================
 		return generatorTypeData;
 	}
 }

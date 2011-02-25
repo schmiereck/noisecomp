@@ -18,6 +18,7 @@ import de.schmiereck.noiseComp.generator.FaderGenerator;
 import de.schmiereck.noiseComp.generator.FilterGenerator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.IntegratorGenerator;
+import de.schmiereck.noiseComp.generator.LowpassFilterGenerator;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
 import de.schmiereck.noiseComp.generator.ModulGenerator;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
@@ -94,6 +95,8 @@ public class StartupService
 		soundService.addGeneratorType(IntegratorGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(EchoGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(FilterGenerator.createGeneratorTypeData());
+		soundService.addGeneratorType(LowpassFilterGenerator.createGeneratorTypeData());
+		
 		//==========================================================================================
 	}
 	
