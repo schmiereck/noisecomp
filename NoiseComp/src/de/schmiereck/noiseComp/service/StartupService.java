@@ -29,6 +29,7 @@ import de.schmiereck.noiseComp.generator.PinkNoise2Generator;
 import de.schmiereck.noiseComp.generator.PinkNoiseGenerator;
 import de.schmiereck.noiseComp.generator.PowGenerator;
 import de.schmiereck.noiseComp.generator.RectangleGenerator;
+import de.schmiereck.noiseComp.generator.ResonanceFilterGenerator;
 import de.schmiereck.noiseComp.generator.SawtoothGenerator;
 import de.schmiereck.noiseComp.generator.SinusGenerator;
 import de.schmiereck.noiseComp.generator.TanhGenerator;
@@ -96,6 +97,7 @@ public class StartupService
 		soundService.addGeneratorType(EchoGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(FilterGenerator.createGeneratorTypeData());
 		soundService.addGeneratorType(LowpassFilterGenerator.createGeneratorTypeData());
+		soundService.addGeneratorType(ResonanceFilterGenerator.createGeneratorTypeData());
 		
 		//==========================================================================================
 	}

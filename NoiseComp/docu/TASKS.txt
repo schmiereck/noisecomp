@@ -36,16 +36,15 @@ TODO:
 #137:	IMPROVEMENT: If duplicate timeline: generate new line name if ends with "-<x>" with "-<x+maxUsedNumber>" of same timeline namnes.
 #138:	IMPROVEMENT: If inserting new module: Add Output("o") and connected Mixer("m") generator as default.
 		Or drag whole timeline does that by snapping to start position.
-#142:	IMPROVEMENT: Add Resonance-Filter.
-		--> http://mathdemos.gcsu.edu/mathdemos/filterdemo/
-		--> http://www.musicdsp.org/archive.php?classid=3
 #148:	IMPROVEMENT: Add Graphically mouse editor for inputs of generators (double click Timeline-Generator?).
 #151:	IMPROVEMENT: Add play Start- and Stop-Marker to Timeline-Select per Module.
 #152:	IMPROVEMENT: Add Play-Loop-Button depending on #151.
 #153:	IMPROVEMENT: Add Mute-Button per Timeline.
 #154:	IMPROVEMENT: Add New-File Menu-Entry.
-#155:	
 #156:	
+#157:	
+#158:	
+#159:	
 
 WORK:
 =====
@@ -55,6 +54,7 @@ WORK:
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
 #139:	BUG: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
+#155:	BUG: Input-Edit: No update, if Input-Generator is set to "no generator" after a generator was selected.
 
 DONE:
 =====
@@ -290,3 +290,8 @@ Release V2.0.3
 		--> LowpassFilterGenerator
 		--> ideal lowpass filter
 		--> http://baumdevblog.blogspot.com/2010/11/butterworth-lowpass-filter-coefficients.html
+#142:	IMPROVEMENT: Add Resonance-Filter.
+		--> http://mathdemos.gcsu.edu/mathdemos/filterdemo/
+		--> http://www.musicdsp.org/archive.php?classid=3
+		--> http://www.musicdsp.org/showArchiveComment.php?ArchiveID=243
+		--> DONE: ResonanceFilterGenerator based on http://sourceforge.net/projects/venomtwist

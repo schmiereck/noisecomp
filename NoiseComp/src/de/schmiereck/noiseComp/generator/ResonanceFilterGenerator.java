@@ -5,15 +5,15 @@ package de.schmiereck.noiseComp.generator;
 
 /**
  * <p>
- * 	Lowpass-Filter Generator.
+ * 	Resonance-Filter Generator
  * </p>
  * 
- * see: http://baumdevblog.blogspot.com/2010/11/butterworth-lowpass-filter-coefficients.html
+ * see: http://sourceforge.net/projects/venomtwist
  * 
  * @author smk
- * @version <p>23.02.2011:	created, smk</p>
+ * @version <p>28.02.2011:	created, smk</p>
  */
-public class LowpassFilterGenerator
+public class ResonanceFilterGenerator
 extends Generator
 {
 	//**********************************************************************************************
@@ -21,15 +21,27 @@ extends Generator
 
 	public static final int	INPUT_TYPE_SIGNAL		= 1;
 	public static final int	INPUT_CUTOFF			= 2;
-	
-    private final static double sqrt2 = 1.4142135623730950488;
+	public static final int	INPUT_RESONANCE			= 3;
+	public static final int	INPUT_AMP				= 4;
 
     //**********************************************************************************************
 	// Fields:
 
-	private double xv[] = new double[3];
-	private double yv[] = new double[3];
-    
+	/**
+	 * Last input value.
+	 */
+	private double lp_input = 0.0D;
+	
+	private double lp_cutoff	= 10.0D;
+	private double lp_resonance	= 1.0D;
+	private double lp_amp		= 0.1D;
+
+	private double lp_low = 0.0D;
+	private double lp_band = 0.0D;
+	private double lp_high = 0.0D;
+	private double lp_d1 = 0.0D;
+	private double lp_d2 = 0.0D;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -39,7 +51,7 @@ extends Generator
 	 * @param frameRate	
 	 * 			are the Frames per Second.
 	 */
-	public LowpassFilterGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public ResonanceFilterGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
 	{
 		super(name, frameRate, generatorTypeData);
 	}
@@ -74,18 +86,35 @@ extends Generator
 			                        modulArguments);
 
 		//------------------------------------------------------------------------------------------
-		float soundFrameRate = this.getSoundFrameRate();
+		float resonance = 
+			this.calcInputMonoValue(framePosition, 
+			                        frameTime,
+			                        this.getGeneratorTypeData().getInputTypeData(INPUT_RESONANCE), 
+			                        parentModulGenerator,
+			                        generatorBuffer,
+			                        modulArguments);
+
+		//------------------------------------------------------------------------------------------
+		float amp = 
+			this.calcInputMonoValue(framePosition, 
+			                        frameTime,
+			                        this.getGeneratorTypeData().getInputTypeData(INPUT_AMP), 
+			                        parentModulGenerator,
+			                        generatorBuffer,
+			                        modulArguments);
+
+		//------------------------------------------------------------------------------------------
+//		float soundFrameRate = this.getSoundFrameRate();
 		
-		double ax[] = new double[3];
-		double by[] = new double[3];
-
-		this.calcLPCoefficientsButterworth2Pole((int)soundFrameRate, cutoff, ax, by);
-
+		this.lp_cutoff = cutoff;
+		this.lp_resonance = resonance;
+		this.lp_amp = amp;
+		
 		float value = signalSample.getMonoValue();
 		
 		if (Float.isNaN(value) == false)
 		{
-			value = (float)this.filter(ax, by, value);
+			value = (float)this.tb303LPResoFilter(value);
 		}
 		else
 		{
@@ -109,64 +138,22 @@ extends Generator
 		//==========================================================================================
 	}
 
-	void calcLPCoefficientsButterworth2Pole(final int samplerate, 
-	                                        final double cutoff, 
-	                                        final double ax[], 
-	                                        final double by[])
+	double tb303LPResoFilter(double input) 
 	{
-		//==========================================================================================
-	    // Find cutoff frequency in [0..PI]
-	    double qcRaw  = (2 * Math.PI * cutoff) / samplerate;
-	    // Warp cutoff frequency
-	    double qcWarp = Math.tan(qcRaw); 
-
-	    double gain = 1 / ( 1 + sqrt2 / qcWarp + 2 / (qcWarp * qcWarp));
-	    
-	    by[2] = (1 - sqrt2 / qcWarp + 2 / (qcWarp * qcWarp)) * gain;
-	    by[1] = (2 - 2 * 2 / (qcWarp * qcWarp)) * gain;
-	    by[0] = 1;
-	    ax[0] = 1 * gain;
-	    ax[1] = 2 * gain;
-	    ax[2] = 1 * gain;
-	    
-		//==========================================================================================
-	}
-
-	void filter(final double samples[], int count)
-	{
-		//==========================================================================================
-		double ax[] = new double[3];
-		double by[] = new double[3];
-
-		this.calcLPCoefficientsButterworth2Pole(44100, 5000, ax, by);
-
-		for (int i = 0; i < count; i++)
-		{
-			double sample = this.filter(ax, by, samples[i]);
-			
-			samples[i] = sample;
-		}
-		//==========================================================================================
-	}
-	
-	private double filter(double ax[], double by[],
-	                      final double sample)
-	{
-		//==========================================================================================
-		xv[2] = xv[1]; 
-		xv[1] = xv[0];
-		xv[0] = sample;
+		this.lp_input = input;
 		
-		yv[2] = yv[1]; 
-		yv[1] = yv[0];
-		yv[0] = (ax[0] * xv[0] + 
-				 ax[1] * xv[1] + 
-				 ax[2] * xv[2] - 
-    		     by[1] * yv[0] - 
-    		     by[2] * yv[1]);
+		this.lp_low = this.lp_d2 + 
+					  this.lp_cutoff * this.lp_amp * this.lp_d1;
+		this.lp_high = this.lp_input - 
+					   this.lp_low - 
+					   this.lp_resonance * this.lp_d1;
+		this.lp_band = this.lp_cutoff * this.lp_amp * this.lp_high + 
+					   this.lp_d1;
 		
-		//==========================================================================================
-		return yv[0];
+		this.lp_d1 = this.lp_band;
+		this.lp_d2 = this.lp_low;
+		
+		return this.lp_low;
 	}
 	
 	/* (non-Javadoc)
@@ -175,14 +162,22 @@ extends Generator
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", LowpassFilterGenerator.class, "Lowpass", "Lowpass filter (Cutoff).");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", ResonanceFilterGenerator.class, "Resonance", "Resonance filter.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, Float.valueOf(0.0F), "Signal value.");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		{
-			InputTypeData inputTypeData = new InputTypeData(INPUT_CUTOFF, "cutoff", 1, 1, Float.valueOf(5000.0F), "Cutoff value.");
+			InputTypeData inputTypeData = new InputTypeData(INPUT_CUTOFF, "cutoff", 1, 1, Float.valueOf(10.0F), "Cutoff value.");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_RESONANCE, "resonance", 1, 1, Float.valueOf(1.0F), "Resonance value.");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_AMP, "amp", 1, 1, Float.valueOf(0.1F), "Amp value.");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		
