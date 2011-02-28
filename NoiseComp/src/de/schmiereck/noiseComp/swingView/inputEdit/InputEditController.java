@@ -464,7 +464,7 @@ public class InputEditController
 		// Update Input-Edit-Model:
 		
 		this.inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
-		this.inputEditModel.setInputTimeline(inputGeneratorSelectItem.getTimeline());
+		this.inputEditModel.setInputTimeline(inputTimeline);
 		{
 			String valueStr = OutputUtils.makeMultiValueEditText(multiValue);
 			this.inputEditModel.setValue(valueStr);

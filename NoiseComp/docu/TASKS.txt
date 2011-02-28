@@ -54,7 +54,6 @@ WORK:
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
 #139:	BUG: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
-#155:	BUG: Input-Edit: No update, if Input-Generator is set to "no generator" after a generator was selected.
 
 DONE:
 =====
@@ -295,3 +294,4 @@ Release V2.0.3
 		--> http://www.musicdsp.org/archive.php?classid=3
 		--> http://www.musicdsp.org/showArchiveComment.php?ArchiveID=243
 		--> DONE: ResonanceFilterGenerator based on http://sourceforge.net/projects/venomtwist
+#155:	BUG: DONE: Input-Edit: No update, if Input-Generator is set to "no generator" after a generator was selected.

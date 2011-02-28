@@ -261,7 +261,7 @@ implements GeneratorBufferInterface,
 		//==========================================================================================
 		Timeline oldInputTimeline;
 		
-		if (inputTimeline != null)
+//		if (inputTimeline != null)
 		{
 			oldInputTimeline = this.inputTimelines.put(inputData, inputTimeline);
 			
@@ -271,8 +271,16 @@ implements GeneratorBufferInterface,
 			
 			if (oldInputTimeline != null)
 			{
-				changedStartTimePos = Math.min(oldInputTimeline.getGeneratorStartTimePos(), inputTimeline.getGeneratorStartTimePos());
-				changedEndTimePos = Math.max(oldInputTimeline.getGeneratorEndTimePos(), inputTimeline.getGeneratorEndTimePos());
+				if (inputTimeline != null)
+				{
+					changedStartTimePos = Math.min(oldInputTimeline.getGeneratorStartTimePos(), inputTimeline.getGeneratorStartTimePos());
+					changedEndTimePos = Math.max(oldInputTimeline.getGeneratorEndTimePos(), inputTimeline.getGeneratorEndTimePos());
+				}
+				else
+				{
+					changedStartTimePos = oldInputTimeline.getGeneratorStartTimePos();
+					changedEndTimePos = oldInputTimeline.getGeneratorEndTimePos();
+				}
 			}
 			else
 			{
@@ -282,10 +290,10 @@ implements GeneratorBufferInterface,
 			
 			this.generatorChanged(changedStartTimePos, changedEndTimePos);
 		}
-		else
-		{
-			oldInputTimeline = null;
-		}
+//		else
+//		{
+//			oldInputTimeline = null;
+//		}
 		
 		//==========================================================================================
 		return oldInputTimeline;
