@@ -1,35 +1,39 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+
 /**
  * <p>
- * 	Timelines-Draw Mouse-Listerner.
+ * 	Timelines-Generators-Rule Mouse-Listener.
  * </p>
  * 
- * @author  smk
- * @version  <p>22.02.2011:	created, smk</p>
+ * @author smk
+ * @version <p>25.02.2011:	created, smk</p>
  */
-public class TimelinesDrawMouseListener
+public class TimelinesGeneratorsRuleMouseListener
 implements MouseListener
 {
 	//**********************************************************************************************
 	// Fields:
 	
 	/**
-	 * Timeline Draw-Panel Model. 
+	 * Timelines-Generators-Rule Model. 
 	 */
-	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
+	private final TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel;
 
 	/**
-	 * Timeline Draw-Panel View. 
+	 * Timelines-Generators-Rule View. 
 	 */
-	private final TimelinesDrawPanelView timelinesDrawPanelView;
+	private final TimelinesGeneratorsRuleView timelinesGeneratorsRuleView;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -37,17 +41,17 @@ implements MouseListener
 	/**
 	 * Constructor.
 	 * 
-	 * @param timelinesDrawPanelModel
-	 * 			is the Timeline Draw-Panel Model.
-	 * @param timelinesDrawPanelView 
-	 * 			is the Timeline Draw-Panel View.
+	 * @param timelinesGeneratorsRuleModel
+	 * 			is the Timelines-Generators-Rule Model.
+	 * @param timelinesGeneratorsRuleView 
+	 * 			is the Timelines-Generators-Rule View.
 	 */
-	public TimelinesDrawMouseListener(TimelinesDrawPanelModel timelinesDrawPanelModel, 
-	                                   TimelinesDrawPanelView timelinesDrawPanelView)
+	public TimelinesGeneratorsRuleMouseListener(TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel, 
+	                                            TimelinesGeneratorsRuleView timelinesGeneratorsRuleView)
 	{
 		//==========================================================================================
-		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
-		this.timelinesDrawPanelView = timelinesDrawPanelView;
+		this.timelinesGeneratorsRuleModel = timelinesGeneratorsRuleModel;
+		this.timelinesGeneratorsRuleView = timelinesGeneratorsRuleView;
 		
 		//==========================================================================================
 	}
@@ -70,9 +74,9 @@ implements MouseListener
 	public void mouseExited(MouseEvent e)
 	{
 		//==========================================================================================
-		this.timelinesDrawPanelModel.setHighlightedTimelineSelectEntryModel(null);
+		this.timelinesGeneratorsRuleModel.setHighlightedTimelineSelectEntryModel(null);
 		
-		this.timelinesDrawPanelView.repaint();
+		this.timelinesGeneratorsRuleView.repaint();
 		
 		//==========================================================================================
 	}
@@ -81,12 +85,13 @@ implements MouseListener
 	public void mousePressed(MouseEvent e)
 	{
 		//==========================================================================================
-		SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		SelectedTimelineModel selectedTimelineModel = this.timelinesGeneratorsRuleModel.getSelectedTimelineModel();
 		
-		Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
+		Point point = e.getPoint();
+		Point2D point2D = point;
 		
 		TimelineSelectEntryModel timelineSelectEntryModel = 
-			this.timelinesDrawPanelView.searchGenerator(point2D);
+			this.timelinesGeneratorsRuleView.searchGenerator(point2D);
 		
 		selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 //				selectedTimelineGeneratorModel = timelineGeneratorModel;
@@ -102,4 +107,5 @@ implements MouseListener
 //				isMousePressed = false;
 		//==========================================================================================
 	}
+
 }

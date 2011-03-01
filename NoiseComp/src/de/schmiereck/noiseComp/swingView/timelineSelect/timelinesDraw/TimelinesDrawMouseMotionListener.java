@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw;
 
 import java.awt.Cursor;
 import java.awt.Point;
@@ -13,8 +13,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel.HighlightedTimelineHandler;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelineHandler.TimelineHandlerModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel.HighlightedTimelineHandler;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**

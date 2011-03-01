@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -44,7 +44,6 @@ extends JComponent
 	/**
 	 * Timelines-Time-Rule Model.
 	 */
-	@SuppressWarnings("unused")
 	private final TimelinesTimeRuleModel timelinesTimeRuleModel;
 
 	//**********************************************************************************************

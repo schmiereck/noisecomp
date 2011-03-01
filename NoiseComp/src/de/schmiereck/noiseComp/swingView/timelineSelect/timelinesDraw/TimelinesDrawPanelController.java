@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw;
 
 import java.awt.Dimension;
 import java.awt.event.MouseListener;
@@ -12,8 +12,12 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule.TimelinesGeneratorsRuleController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleController;
 import de.schmiereck.noiseComp.timeline.Timeline;
 import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
 import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;

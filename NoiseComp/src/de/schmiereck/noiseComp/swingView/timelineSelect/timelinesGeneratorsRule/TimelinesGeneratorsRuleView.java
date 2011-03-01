@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,6 +17,10 @@ import javax.swing.JComponent;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
 

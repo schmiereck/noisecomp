@@ -8,6 +8,8 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule.TimelinesGeneratorsRuleModel;
 
 /**
  * <p>

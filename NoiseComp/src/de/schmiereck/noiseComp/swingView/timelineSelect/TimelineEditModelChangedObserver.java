@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 
 
 /**

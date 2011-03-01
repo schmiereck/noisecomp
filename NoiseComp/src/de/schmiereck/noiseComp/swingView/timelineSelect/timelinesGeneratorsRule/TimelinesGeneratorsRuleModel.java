@@ -1,12 +1,15 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule;
 
 import java.util.List;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;
 
 /**
  * <p>

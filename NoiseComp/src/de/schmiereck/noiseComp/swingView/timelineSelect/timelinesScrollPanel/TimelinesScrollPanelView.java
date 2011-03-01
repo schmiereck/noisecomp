@@ -1,13 +1,17 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel;
 
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
+
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelView;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule.TimelinesGeneratorsRuleView;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleView;
 
 
 /**
@@ -29,7 +33,6 @@ extends JScrollPane
 	/**
 	 * Timelines Scroll-Panel Model.
 	 */
-	@SuppressWarnings("unused")
 	private final TimelinesScrollPanelModel timelinesScrollPanelModel;
 	
 	private TimelinesTimeRuleView timelinesTimeRuleView = null;

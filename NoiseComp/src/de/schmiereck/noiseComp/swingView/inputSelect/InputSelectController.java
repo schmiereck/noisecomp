@@ -16,7 +16,7 @@ import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
-import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**

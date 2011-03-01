@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +13,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel.HighlightedTimelineHandler;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel.HighlightedTimelineHandler;
 
 /**
  * <p>
