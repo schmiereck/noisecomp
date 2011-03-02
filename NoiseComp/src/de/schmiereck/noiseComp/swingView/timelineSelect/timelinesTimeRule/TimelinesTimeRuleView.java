@@ -8,10 +8,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.List;
 
 import javax.swing.JComponent;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
@@ -217,6 +220,24 @@ extends JComponent
 				}
 			}
 		}
+		//------------------------------------------------------------------------------------------
+		double startTimeMarker = this.timelinesTimeRuleModel.getStartTimeMarker();
+		double endTimeMarker = this.timelinesTimeRuleModel.getEndTimeMarker();
+		
+		if (Double.isNaN(startTimeMarker) == true)
+		{
+			startTimeMarker = 0.0D;
+		}
+		
+		if (Double.isNaN(endTimeMarker) == true)
+		{
+			TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
+			
+			List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModels();
+			
+			endTimeMarker = 0.0D;
+		}
+		
 		//==========================================================================================
 	}
 }

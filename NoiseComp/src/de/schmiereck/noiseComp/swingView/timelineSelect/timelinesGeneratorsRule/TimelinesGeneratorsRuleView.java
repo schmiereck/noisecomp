@@ -18,6 +18,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;
@@ -143,8 +144,11 @@ extends JComponent
 			this.timelinesGeneratorsRuleModel.getHighlightedTimelineSelectEntryModel();
 		
 		//------------------------------------------------------------------------------------------
+		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+			this.timelinesGeneratorsRuleModel.getTimelineSelectEntriesModel();
+		
 		List<TimelineSelectEntryModel> timelineSelectEntryModels = 
-			this.timelinesGeneratorsRuleModel.getTimelineSelectEntryModels();
+			timelineSelectEntriesModel.getTimelineSelectEntryModels();
 		
 		// Use clipping bounds to calculate first and last tick locations.
 		int start = (drawHere.y / generatorSizeY) * generatorSizeY;
@@ -328,9 +332,12 @@ extends JComponent
 		
 		int generatorSizeY = timelinesScrollPanelModel.getGeneratorSizeY();
 		
+		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+			this.timelinesGeneratorsRuleModel.getTimelineSelectEntriesModel();
+		
 		double generatorPosY = 0.0D;
 		
-		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelinesGeneratorsRuleModel.getTimelineSelectEntryModels())
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntriesModel.getTimelineSelectEntryModels())
 		{
 			if ((point2D.getY() >= generatorPosY) &&
 				(point2D.getY() <= (generatorPosY + generatorSizeY)))

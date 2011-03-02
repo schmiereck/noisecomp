@@ -6,6 +6,7 @@ package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule;
 import java.awt.Dimension;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
@@ -42,11 +43,14 @@ implements RemoveTimelineGeneratorListenerInterface,
 	/**
 	 * Constructor.
 	 * 
+	 * 
+	 * @param timelineSelectEntriesModel
+	 * 			are the Timeline-Select-Entries Model.
 	 */
-	public TimelinesTimeRuleController()
+	public TimelinesTimeRuleController(final TimelineSelectEntriesModel timelineSelectEntriesModel)
 	{
 		//==========================================================================================
-		this.timelinesTimeRuleModel = new TimelinesTimeRuleModel();
+		this.timelinesTimeRuleModel = new TimelinesTimeRuleModel(timelineSelectEntriesModel);
 		
 		this.timelinesTimeRuleView = new TimelinesTimeRuleView(this.timelinesTimeRuleModel);
 		

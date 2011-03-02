@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;
 
@@ -29,15 +30,20 @@ public class TimelinesGeneratorsRuleModel
 	private TimelinesScrollPanelModel timelinesScrollPanelModel = null;
 
 	//----------------------------------------------------------------------------------------------
+//	/**
+//	 * Timeline-Generator Models.
+//	 */
+//	private List<TimelineSelectEntryModel> timelineSelectEntryModels = new Vector<TimelineSelectEntryModel>();
+//
+//	/**
+//	 * {@link #timelineSelectEntryModels} changed (insert or remove) listeners.
+//	 */
+//	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	/**
-	 * Timeline-Generator Models.
+	 * Timeline-Select-Entries Model.
 	 */
-	private List<TimelineSelectEntryModel> timelineSelectEntryModels = new Vector<TimelineSelectEntryModel>();
-
-	/**
-	 * {@link #timelineSelectEntryModels} changed (insert or remove) listeners.
-	 */
-	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
+	private final TimelineSelectEntriesModel timelineSelectEntriesModel;
 	
 	//----------------------------------------------------------------------------------------------
 //	/**
@@ -82,12 +88,16 @@ public class TimelinesGeneratorsRuleModel
 	/**
 	 * Constructor.
 	 * 
+	 * @param timelineSelectEntriesModel
+	 * 			are the Timeline-Select-Entries Model.
 	 * @param selectedTimelineModel
 	 * 			is the Selected-Timeline Model.
 	 */
-	public TimelinesGeneratorsRuleModel(final SelectedTimelineModel selectedTimelineModel)
+	public TimelinesGeneratorsRuleModel(final TimelineSelectEntriesModel timelineSelectEntriesModel,
+	                                    final SelectedTimelineModel selectedTimelineModel)
 	{
 		//==========================================================================================
+		this.timelineSelectEntriesModel = timelineSelectEntriesModel;
 		this.selectedTimelineModel = selectedTimelineModel;
 		
 		//==========================================================================================
@@ -111,26 +121,26 @@ public class TimelinesGeneratorsRuleModel
 		this.timelinesScrollPanelModel = timelinesScrollPanelModel;
 	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #timelineSelectEntryModels}.
-	 */
-	public List<TimelineSelectEntryModel> getTimelineSelectEntryModels()
-	{
-		return this.timelineSelectEntryModels;
-	}
-
-	/**
-	 * @param timelineSelectEntryModels 
-	 * 			to set {@link #timelineSelectEntryModels}.
-	 */
-	public void setTimelineSelectEntryModels(List<TimelineSelectEntryModel> timelineSelectEntryModels)
-	{
-		this.timelineSelectEntryModels = timelineSelectEntryModels;
-		
-		// Notify listeners.
-		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
-	}
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #timelineSelectEntryModels}.
+//	 */
+//	public List<TimelineSelectEntryModel> getTimelineSelectEntryModels()
+//	{
+//		return this.timelineSelectEntryModels;
+//	}
+//
+//	/**
+//	 * @param timelineSelectEntryModels 
+//	 * 			to set {@link #timelineSelectEntryModels}.
+//	 */
+//	public void setTimelineSelectEntryModels(List<TimelineSelectEntryModel> timelineSelectEntryModels)
+//	{
+//		this.timelineSelectEntryModels = timelineSelectEntryModels;
+//		
+//		// Notify listeners.
+//		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+//	}
 
 //	/**
 //	 * @return 
@@ -179,5 +189,14 @@ public class TimelinesGeneratorsRuleModel
 	public void setHighlightedTimelineSelectEntryModel(TimelineSelectEntryModel highlightedTimelineSelectEntryModel)
 	{
 		this.highlightedTimelineSelectEntryModel = highlightedTimelineSelectEntryModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineSelectEntriesModel}.
+	 */
+	public TimelineSelectEntriesModel getTimelineSelectEntriesModel()
+	{
+		return this.timelineSelectEntriesModel;
 	}
 }

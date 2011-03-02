@@ -30,6 +30,7 @@ import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelineHandler.TimelineHandlerModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -150,8 +151,14 @@ implements Scrollable//, MouseMotionListener
 		//==========================================================================================
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		
-		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		//------------------------------------------------------------------------------------------
+		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+			this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
 		
+		SelectedTimelineModel selectedTimelineModel = 
+			this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
+		//------------------------------------------------------------------------------------------
 	    this.setPreferredSize(this.timelinesDrawPanelModel.getDimension());
 		
 		this.setBackground(CBackground);
@@ -186,7 +193,7 @@ implements Scrollable//, MouseMotionListener
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		this.timelinesDrawPanelModel.getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
+		timelineSelectEntriesModel.getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -199,7 +206,7 @@ implements Scrollable//, MouseMotionListener
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		this.timelinesDrawPanelModel.getChangeTimelinesPositionChangedNotifier().addModelPropertyChangedListener
+		timelineSelectEntriesModel.getChangeTimelinesPositionChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 		 	{
@@ -307,8 +314,13 @@ implements Scrollable//, MouseMotionListener
 		super.paintComponent(g);  // I was missing this code which caused "bleeding"
 	   
 		//==========================================================================================
-		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		SelectedTimelineModel selectedTimelineModel = 
+			this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
+		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+			this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
+		
+		//==========================================================================================
 		Graphics2D g2 = (Graphics2D)g;
 	   
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -320,7 +332,7 @@ implements Scrollable//, MouseMotionListener
 		float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
 		
 		//------------------------------------------------------------------------------------------
-		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels(); 
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModels(); 
 		
 		TimelineSelectEntryModel selectedTimelineEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 		
@@ -391,7 +403,7 @@ implements Scrollable//, MouseMotionListener
 					if (inputTimelineEntryModel != null)
 					{	
 //						int timelinePos = inputTimelineModel.getTimelinePos();
-						int timelinePos = this.timelinesDrawPanelModel.getTimelineSelectEntryPos(inputTimelineEntryModel);
+						int timelinePos = timelineSelectEntriesModel.getTimelineSelectEntryPos(inputTimelineEntryModel);
 						
 						float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
 
@@ -499,10 +511,14 @@ implements Scrollable//, MouseMotionListener
 	private TimelineSelectEntryModel searchTimelineModel(Generator generator)
 	{
 		//==========================================================================================
+		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+			this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
+		
+		//==========================================================================================
 		TimelineSelectEntryModel retTimelineSelectEntryModel;
 		
 		//------------------------------------------------------------------------------------------
-		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelinesDrawPanelModel.getTimelineSelectEntryModels(); 
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModels(); 
 		
 		//------------------------------------------------------------------------------------------
 		retTimelineSelectEntryModel = null;
@@ -880,6 +896,10 @@ implements Scrollable//, MouseMotionListener
 	public TimelineSelectEntryModel searchTimeline(Point2D point2D)
 	{
 		//==========================================================================================
+		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+			this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
+		
+		//==========================================================================================
 		TimelineSelectEntryModel retTimelineSelectEntryModel;
 		
 		retTimelineSelectEntryModel = null;
@@ -888,7 +908,7 @@ implements Scrollable//, MouseMotionListener
 		
 		double generatorPosY = 0.0D;
 		
-		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelinesDrawPanelModel.getTimelineSelectEntryModels())
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntriesModel.getTimelineSelectEntryModels())
 		{
 			if ((point2D.getY() >= generatorPosY) &&
 				(point2D.getY() <= (generatorPosY + maxUnitIncrementY)))
@@ -993,10 +1013,14 @@ implements Scrollable//, MouseMotionListener
 	private void recalculateDimension()
 	{
 		//==========================================================================================
+		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+			this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
+		
+		//==========================================================================================
 		double width = 0.0D;
 		double height = 0.0D;
 		
-		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelinesDrawPanelModel.getTimelineSelectEntryModels())
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntriesModel.getTimelineSelectEntryModels())
 		{
 			float endTimePos = timelineSelectEntryModel.getEndTimePos();
 			
@@ -1025,11 +1049,15 @@ implements Scrollable//, MouseMotionListener
 	                                          double timePos)
 	{
 		//==========================================================================================
+		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+			this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
+		
+		//==========================================================================================
 		double snapToTimpePos = Double.MAX_VALUE;//Double.NaN;
 		
 //		double nearestTimePos = Double.MAX_VALUE;
 		
-		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelinesDrawPanelModel.getTimelineSelectEntryModels())
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntriesModel.getTimelineSelectEntryModels())
 		{
 			Timeline timeline = timelineSelectEntryModel.getTimeline();
 			

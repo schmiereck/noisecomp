@@ -19,11 +19,17 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesD
  */
 public class RemoveTimelineGeneratorNotifier
 {
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * RemoveTimelineGeneratorListeners.
 	 */
 	private List<RemoveTimelineGeneratorListenerInterface> removeTimelineGeneratorListeners = new Vector<RemoveTimelineGeneratorListenerInterface>();
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * @param timelinesDrawPanelModel
 	 * 			is the timelinesDrawPanelModel.

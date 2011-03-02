@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;
 
@@ -23,22 +24,26 @@ public class TimelinesTimeRuleModel
 {
 	//**********************************************************************************************
 	// Fields:
-
 	
 	//----------------------------------------------------------------------------------------------
 //	private int generatorSizeY = 0;;
 	private TimelinesScrollPanelModel timelinesScrollPanelModel = null;
 
 	//----------------------------------------------------------------------------------------------
+//	/**
+//	 * Timeline-Generator Models.
+//	 */
+//	private List<TimelineSelectEntryModel> timelineSelectEntryModels = new Vector<TimelineSelectEntryModel>();
+//
+//	/**
+//	 * {@link #timelineSelectEntryModels} changed (insert or remove) listeners.
+//	 */
+//	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	/**
-	 * Timeline-Generator Models.
+	 * Timeline-Select-Entries Model.
 	 */
-	private List<TimelineSelectEntryModel> timelineSelectEntryModels = new Vector<TimelineSelectEntryModel>();
-
-	/**
-	 * {@link #timelineSelectEntryModels} changed (insert or remove) listeners.
-	 */
-	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
+	private final TimelineSelectEntriesModel timelineSelectEntriesModel;
 	
 	//----------------------------------------------------------------------------------------------
 //	/**
@@ -75,15 +80,37 @@ public class TimelinesTimeRuleModel
 	 */
 	private final ModelPropertyChangedNotifier ticksChangedNotifier = new ModelPropertyChangedNotifier();
 	
+	//----------------------------------------------------------------------------------------------
+	
+	/**
+	 * Start time marker.
+	 * {@link Double#NaN} if no marker is defined.
+	 */
+	private double startTimeMarker = Double.NaN;
+	
+	//----------------------------------------------------------------------------------------------
+
+	/**
+	 * End time marker.
+	 * {@link Double#NaN} if no marker is defined.
+	 */
+	private double endTimeMarker = Double.NaN;
+	
 	//**********************************************************************************************
 	// Functions:
 
 	/**
 	 * Constructor.
 	 * 
+	 * @param timelineSelectEntriesModel
+	 * 			are the Timeline-Select-Entries Model.
 	 */
-	public TimelinesTimeRuleModel()
+	public TimelinesTimeRuleModel(final TimelineSelectEntriesModel timelineSelectEntriesModel)
 	{
+		//==========================================================================================
+		this.timelineSelectEntriesModel = timelineSelectEntriesModel;
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -104,26 +131,26 @@ public class TimelinesTimeRuleModel
 		this.timelinesScrollPanelModel = timelinesScrollPanelModel;
 	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #timelineSelectEntryModels}.
-	 */
-	public List<TimelineSelectEntryModel> getTimelineSelectEntryModels()
-	{
-		return this.timelineSelectEntryModels;
-	}
-
-	/**
-	 * @param timelineSelectEntryModels 
-	 * 			to set {@link #timelineSelectEntryModels}.
-	 */
-	public void setTimelineSelectEntryModels(List<TimelineSelectEntryModel> timelineSelectEntryModels)
-	{
-		this.timelineSelectEntryModels = timelineSelectEntryModels;
-		
-		// Notify listeners.
-		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
-	}
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #timelineSelectEntryModels}.
+//	 */
+//	public List<TimelineSelectEntryModel> getTimelineSelectEntryModels()
+//	{
+//		return this.timelineSelectEntryModels;
+//	}
+//
+//	/**
+//	 * @param timelineSelectEntryModels 
+//	 * 			to set {@link #timelineSelectEntryModels}.
+//	 */
+//	public void setTimelineSelectEntryModels(List<TimelineSelectEntryModel> timelineSelectEntryModels)
+//	{
+//		this.timelineSelectEntryModels = timelineSelectEntryModels;
+//		
+//		// Notify listeners.
+//		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+//	}
 
 	/**
 	 * @return 
@@ -215,5 +242,50 @@ public class TimelinesTimeRuleModel
 	public Float getTicksCount()
 	{
 		return this.ticksCount;
+	}
+	
+	/**
+	 * @return 
+	 * 			returns the {@link #startTimeMarker}.
+	 */
+	public double getStartTimeMarker()
+	{
+		return this.startTimeMarker;
+	}
+
+	/**
+	 * @param startTimeMarker 
+	 * 			to set {@link #startTimeMarker}.
+	 */
+	public void setStartTimeMarker(double startTimeMarker)
+	{
+		this.startTimeMarker = startTimeMarker;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #endTimeMarker}.
+	 */
+	public double getEndTimeMarker()
+	{
+		return this.endTimeMarker;
+	}
+
+	/**
+	 * @param endTimeMarker 
+	 * 			to set {@link #endTimeMarker}.
+	 */
+	public void setEndTimeMarker(double endTimeMarker)
+	{
+		this.endTimeMarker = endTimeMarker;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineSelectEntriesModel}.
+	 */
+	public TimelineSelectEntriesModel getTimelineSelectEntriesModel()
+	{
+		return this.timelineSelectEntriesModel;
 	}
 }

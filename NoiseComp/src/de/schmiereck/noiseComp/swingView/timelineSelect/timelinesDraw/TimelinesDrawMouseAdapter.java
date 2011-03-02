@@ -14,6 +14,7 @@ import javax.swing.JPopupMenu;
 
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel.HighlightedTimelineHandler;
 
@@ -135,10 +136,14 @@ extends MouseAdapter
 					public void actionPerformed(ActionEvent e)
 					{
 						//--------------------------------------------------------------------------
+						TimelineSelectEntriesModel timelineSelectEntriesModel = 
+							timelinesDrawPanelModel.getTimelineSelectEntriesModel();
+						
 						TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
 							selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 						
-						timelinesDrawPanelModel.removeTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
+						timelineSelectEntriesModel.removeTimelineSelectEntryModel(timelinesDrawPanelModel,
+						                                                          selectedTimelineSelectEntryModel);
 						
 						//--------------------------------------------------------------------------
 					}

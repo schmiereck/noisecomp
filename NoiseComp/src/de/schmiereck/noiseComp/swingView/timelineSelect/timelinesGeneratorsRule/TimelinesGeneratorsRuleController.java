@@ -7,6 +7,7 @@ import java.awt.Dimension;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
@@ -37,14 +38,18 @@ implements RemoveTimelineGeneratorListenerInterface,
 	/**
 	 * Constructor.
 	 * 
+	 * @param timelineSelectEntriesModel
+	 * 			are the Timeline-Select-Entries Model.
 	 * @param selectedTimelineModel
 	 * 			is the Selected-Timeline Model.
 	 */
-	public TimelinesGeneratorsRuleController(final SelectedTimelineModel selectedTimelineModel)
+	public TimelinesGeneratorsRuleController(final TimelineSelectEntriesModel timelineSelectEntriesModel,
+	                                         final SelectedTimelineModel selectedTimelineModel)
 	{
 		//==========================================================================================
 	    this.timelinesGeneratorsRuleModel = 
-	    	new TimelinesGeneratorsRuleModel(selectedTimelineModel);
+	    	new TimelinesGeneratorsRuleModel(timelineSelectEntriesModel,
+	    	                                 selectedTimelineModel);
 	    
 	    this.timelinesGeneratorsRuleView = 
 	    	new TimelinesGeneratorsRuleView(this.timelinesGeneratorsRuleModel);
@@ -113,13 +118,14 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	@Override
 	public void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
-												TimelineSelectEntryModel timelineSelectEntryModel)
+	                                          TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		//==========================================================================================
 		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
 		
 		// TimelinesGeneratorsRule update.
 		this.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+		
 		//==========================================================================================
 	}
 

@@ -56,7 +56,7 @@ public class TimelinesScrollPanelController
 	 * @param timelinesDrawPanelController 
 	 * 			is the Timelines Draw-Panel Controller.
 	 */
-	public void setTimelinesDrawPanelController(TimelinesDrawPanelController timelinesDrawPanelController)
+	public void setTimelinesDrawPanelController(final TimelinesDrawPanelController timelinesDrawPanelController)
 	{
 		//==========================================================================================
 	    TimelinesDrawPanelView timelinesDrawPanelView = timelinesDrawPanelController.getTimelinesDrawPanelView();
@@ -66,14 +66,14 @@ public class TimelinesScrollPanelController
 	    this.timelinesScrollPanelView.setTimelinesDrawPanelView(timelinesDrawPanelView);
 	    
 	    //------------------------------------------------------------------------------------------
-	    TimelinesTimeRuleModel timelinesTimeRuleModel = this.timelinesTimeRuleController.getTimelinesTimeRuleModel();
-	    
-		timelinesTimeRuleModel.setTimelineSelectEntryModels(timelinesDrawPanelModel.getTimelineSelectEntryModels());
+//	    TimelinesTimeRuleModel timelinesTimeRuleModel = this.timelinesTimeRuleController.getTimelinesTimeRuleModel();
+//	    
+//		timelinesTimeRuleModel.setTimelineSelectEntryModels(timelinesDrawPanelModel.getTimelineSelectEntryModels());
 		
 	    //------------------------------------------------------------------------------------------
-	    TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel = this.timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleModel();
-	    
-		timelinesGeneratorsRuleModel.setTimelineSelectEntryModels(timelinesDrawPanelModel.getTimelineSelectEntryModels());
+//	    TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel = this.timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleModel();
+//	    
+//		timelinesGeneratorsRuleModel.setTimelineSelectEntryModels(timelinesDrawPanelModel.getTimelineSelectEntryModels());
 		
 		//==========================================================================================
 	}
