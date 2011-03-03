@@ -3,14 +3,11 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule;
 
-import java.util.List;
-import java.util.Vector;
-
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
-import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel.MarkerType;
 
 /**
  * <p>
@@ -80,21 +77,30 @@ public class TimelinesTimeRuleModel
 	 */
 	private final ModelPropertyChangedNotifier ticksChangedNotifier = new ModelPropertyChangedNotifier();
 	
+//	//----------------------------------------------------------------------------------------------
+//	/**
+//	 * Start time marker.
+//	 * {@link Double#NaN} if no marker is defined.
+//	 */
+//	private double startTimeMarker = Double.NaN;
+//	
+//	//----------------------------------------------------------------------------------------------
+//	/**
+//	 * End time marker.
+//	 * {@link Double#NaN} if no marker is defined.
+//	 */
+//	private double endTimeMarker = Double.NaN;
+//	
 	//----------------------------------------------------------------------------------------------
-	
-	/**
-	 * Start time marker.
-	 * {@link Double#NaN} if no marker is defined.
-	 */
-	private double startTimeMarker = Double.NaN;
+	final private TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = 
+		new TimeMarkerSelectEntryModel(MarkerType.START);
 	
 	//----------------------------------------------------------------------------------------------
-
-	/**
-	 * End time marker.
-	 * {@link Double#NaN} if no marker is defined.
-	 */
-	private double endTimeMarker = Double.NaN;
+	final private TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel =
+		new TimeMarkerSelectEntryModel(MarkerType.END);
+	
+	//----------------------------------------------------------------------------------------------
+	private TimeMarkerSelectEntryModel selectedTimeMarkerSelectEntryModel = null;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -244,41 +250,41 @@ public class TimelinesTimeRuleModel
 		return this.ticksCount;
 	}
 	
-	/**
-	 * @return 
-	 * 			returns the {@link #startTimeMarker}.
-	 */
-	public double getStartTimeMarker()
-	{
-		return this.startTimeMarker;
-	}
-
-	/**
-	 * @param startTimeMarker 
-	 * 			to set {@link #startTimeMarker}.
-	 */
-	public void setStartTimeMarker(double startTimeMarker)
-	{
-		this.startTimeMarker = startTimeMarker;
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #endTimeMarker}.
-	 */
-	public double getEndTimeMarker()
-	{
-		return this.endTimeMarker;
-	}
-
-	/**
-	 * @param endTimeMarker 
-	 * 			to set {@link #endTimeMarker}.
-	 */
-	public void setEndTimeMarker(double endTimeMarker)
-	{
-		this.endTimeMarker = endTimeMarker;
-	}
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #startTimeMarker}.
+//	 */
+//	public double getStartTimeMarker()
+//	{
+//		return this.startTimeMarker;
+//	}
+//
+//	/**
+//	 * @param startTimeMarker 
+//	 * 			to set {@link #startTimeMarker}.
+//	 */
+//	public void setStartTimeMarker(double startTimeMarker)
+//	{
+//		this.startTimeMarker = startTimeMarker;
+//	}
+//
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #endTimeMarker}.
+//	 */
+//	public double getEndTimeMarker()
+//	{
+//		return this.endTimeMarker;
+//	}
+//
+//	/**
+//	 * @param endTimeMarker 
+//	 * 			to set {@link #endTimeMarker}.
+//	 */
+//	public void setEndTimeMarker(double endTimeMarker)
+//	{
+//		this.endTimeMarker = endTimeMarker;
+//	}
 
 	/**
 	 * @return 
@@ -287,5 +293,41 @@ public class TimelinesTimeRuleModel
 	public TimelineSelectEntriesModel getTimelineSelectEntriesModel()
 	{
 		return this.timelineSelectEntriesModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #startTimeMarkerSelectEntryModel}.
+	 */
+	public TimeMarkerSelectEntryModel getStartTimeMarkerSelectEntryModel()
+	{
+		return this.startTimeMarkerSelectEntryModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #endTimeMarkerSelectEntryModel}.
+	 */
+	public TimeMarkerSelectEntryModel getEndTimeMarkerSelectEntryModel()
+	{
+		return this.endTimeMarkerSelectEntryModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedTimeMarkerSelectEntryModel}.
+	 */
+	public TimeMarkerSelectEntryModel getSelectedTimeMarkerSelectEntryModel()
+	{
+		return this.selectedTimeMarkerSelectEntryModel;
+	}
+
+	/**
+	 * @param selectedTimeMarkerSelectEntryModel 
+	 * 			to set {@link #selectedTimeMarkerSelectEntryModel}.
+	 */
+	public void setSelectedTimeMarkerSelectEntryModel(TimeMarkerSelectEntryModel selectedTimeMarkerSelectEntryModel)
+	{
+		this.selectedTimeMarkerSelectEntryModel = selectedTimeMarkerSelectEntryModel;
 	}
 }

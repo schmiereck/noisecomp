@@ -4,12 +4,15 @@
 package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule;
 
 import java.awt.Dimension;
+import java.util.List;
 
+import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
+import de.schmiereck.noiseComp.timeline.Timeline;
 import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
 
 /**
@@ -67,6 +70,18 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	}
 		);
 		
+		//------------------------------------------------------------------------------------------
+		timelineSelectEntriesModel.getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+			{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					resetTime();
+				}
+			}
+		);
 		//==========================================================================================
 	}
 
@@ -136,6 +151,43 @@ implements RemoveTimelineGeneratorListenerInterface,
 	{
 		//==========================================================================================
 		this.timelinesTimeRuleView.repaint();
+
+		//==========================================================================================
+	}
+
+	/**
+	 * Reset time markers and end time.
+	 */
+	public void resetTime()
+	{
+		//==========================================================================================
+		double endTime = 0.0D;
+		
+		TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
+	
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModels();
+		
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
+		{
+			Timeline timeline = timelineSelectEntryModel.getTimeline();
+			
+			Generator generator = timeline.getGenerator();
+			
+			float endTimePos = generator.getEndTimePos();
+			
+			if (endTimePos > endTime)
+			{
+				endTime = endTimePos;
+			}
+		}
+		
+		timelineSelectEntriesModel.setEndTime(endTime);
+
+		TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
+		TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
+		
+		startTimeMarkerSelectEntryModel.setTimeMarker(0.0D);
+		endTimeMarkerSelectEntryModel.setTimeMarker(endTime);
 
 		//==========================================================================================
 	}

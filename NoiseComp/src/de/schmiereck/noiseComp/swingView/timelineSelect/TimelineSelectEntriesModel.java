@@ -26,6 +26,12 @@ public class TimelineSelectEntriesModel
 	// Fields:
 	
 	/**
+	 * End time of timelines.
+	 */
+	private double endTime = 0.0D;
+	
+	//----------------------------------------------------------------------------------------------
+	/**
 	 * Timeline-Generator Models.
 	 */
 	private List<TimelineSelectEntryModel> timelineSelectEntryModels = new Vector<TimelineSelectEntryModel>();
@@ -226,6 +232,24 @@ public class TimelineSelectEntriesModel
 	public ModelPropertyChangedNotifier getChangeTimelinesPositionChangedNotifier()
 	{
 		return this.changeTimelinesPositionChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #endTime}.
+	 */
+	public double getEndTime()
+	{
+		return this.endTime;
+	}
+
+	/**
+	 * @param endTime 
+	 * 			to set {@link #endTime}.
+	 */
+	public void setEndTime(double endTime)
+	{
+		this.endTime = endTime;
 	}
 	
 }

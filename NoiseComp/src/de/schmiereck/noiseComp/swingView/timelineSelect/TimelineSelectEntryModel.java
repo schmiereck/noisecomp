@@ -9,7 +9,7 @@ import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
- * 	Timeline Generator Model.
+ * 	Timeline Select-Entry-Model.
  * </p>
  * 
  * @author smk

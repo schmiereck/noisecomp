@@ -55,6 +55,7 @@ WORK:
 #139:	BUG: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
 #151:	IMPROVEMENT: Add play Start- and Stop-Marker to Timeline-Select per Module.
 		--> DONE: Add TimelineSelectEntriesModel and remove Entry-List from other Models.
+		--> DONE: View and D&D Start- and End-Marker.
 
 DONE:
 =====

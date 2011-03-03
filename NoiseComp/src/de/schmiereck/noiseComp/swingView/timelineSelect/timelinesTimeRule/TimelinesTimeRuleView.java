@@ -7,14 +7,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.List;
+import java.awt.RenderingHints;
+import java.awt.geom.Point2D;
 
 import javax.swing.JComponent;
 
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
-import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel.MarkerType;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
@@ -33,13 +35,58 @@ extends JComponent
 	//**********************************************************************************************
 	// Constats:
 
-//	public static final int	DPI		= 20;//Toolkit.getDefaultToolkit().getScreenResolution();
+	/**
+	 * Marker size Y.
+	 */
+	private static final int MARKER_SIZE_Y	= 11;
+
+	/**
+	 * Marker size X.
+	 */
+	private static final int MARKER_SIZE_X	= 8;
+	
+	//	public static final int	DPI		= 20;//Toolkit.getDefaultToolkit().getScreenResolution();
 	public static final int	SIZE	= 35;
 
 	/**
 	 * Color - Background (dirty brown/orange).
 	 */
-	private static final Color	COLOR_BACKGROUND	= new Color(0xFFF1E1); //230, 163, 4);
+	private static final Color COLOR_BACKGROUND	= new Color(0xFFF1E1); //230, 163, 4);
+	
+	/**
+	 * Color - Time Border.
+	 */
+	private static final Color COLOR_TIME_BORDER	= new Color(0x808080);
+	
+	/**
+	 * Color - Time Background.
+	 */
+	private static final Color COLOR_TIME_BACKGROUND	= new Color(0xFFFFFF);
+	
+	/**
+	 * Color - Marker light border.
+	 */
+	private static final Color COLOR_MARKER_LIGHT_BORDER	= new Color(0xA0A0A0);
+	
+	/**
+	 * Color - Marker bright border.
+	 */
+	private static final Color COLOR_MARKER_BRIGHT_BORDER	= new Color(0x808080);
+	
+	/**
+	 * Color - Marker dark border.
+	 */
+	private static final Color COLOR_MARKER_DARK_BORDER	= new Color(0x303030);
+	
+	/**
+	 * Color - Marker Background.
+	 */
+	private static final Color COLOR_MARKER_BACKGROUND	= new Color(0x606060);
+	
+	/**
+	 * Color - Marker Background.
+	 */
+	private static final Color COLOR_MARKER_TIME_BACKGROUND	= new Color(0xD0D0D0);
 	
 	//**********************************************************************************************
 	// Fields:
@@ -61,7 +108,17 @@ extends JComponent
 		//==========================================================================================
 		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
 		
-//		this.setIncrementAndUnits();
+		//------------------------------------------------------------------------------------------
+		this.addMouseListener
+		(
+		 	new TimelinesTimeRuleMouseListener(timelinesTimeRuleModel,
+		 	                                   this)
+		);
+		this.addMouseMotionListener
+		(
+		 	new TimelinesTimeRuleMouseMotionListener(timelinesTimeRuleModel,
+		 	                                         this)
+		);
 		//==========================================================================================
 	}
 
@@ -101,6 +158,12 @@ extends JComponent
 		//==========================================================================================
 		//super.paintComponent(g);
 		 
+		Graphics2D g2 = (Graphics2D)g;
+		   
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+							RenderingHints.VALUE_ANTIALIAS_ON);
+	   
+		//------------------------------------------------------------------------------------------
 		Rectangle drawHere = g.getClipBounds();
 		
 		// Fill clipping area with dirty brown/orange.
@@ -115,36 +178,36 @@ extends JComponent
 //		int units = this.timelinesTimeRuleModel.getUnits();
 //		int increment = this.timelinesTimeRuleModel.getIncrement();
 		float zoomX = this.timelinesTimeRuleModel.getZoomX();
-		float tickPerSecond;
+
+		float tickPerSecond = this.calcTickPerSecond();
 		
-		String unitLabel;
-		
-		TicksPer ticksPer = this.timelinesTimeRuleModel.getTicksPer();
 		float ticksCount = this.timelinesTimeRuleModel.getTicksCount();
 		
-		switch (ticksPer)
+		String unitLabel;
 		{
-			case Seconds:
+			TicksPer ticksPer = this.timelinesTimeRuleModel.getTicksPer();
+			
+			switch (ticksPer)
 			{
-				tickPerSecond = 1.0F;
-				unitLabel = " s";
-				break;
-			}
-			case Milliseconds:
-			{
-				tickPerSecond = 1000.0F;
-				unitLabel = " ms";
-				break;
-			}
-			case BPM:
-			{
-				tickPerSecond = 1.0F / 60.0F;
-				unitLabel = " bpm";
-				break;
-			}
-			default:
-			{
-				throw new RuntimeException("Unexpected TicksPer \"" + ticksPer + "\".");
+				case Seconds:
+				{
+					unitLabel = " s";
+					break;
+				}
+				case Milliseconds:
+				{
+					unitLabel = " ms";
+					break;
+				}
+				case BPM:
+				{
+					unitLabel = " bpm";
+					break;
+				}
+				default:
+				{
+					throw new RuntimeException("Unexpected TicksPer \"" + ticksPer + "\".");
+				}
 			}
 		}
 		
@@ -221,23 +284,288 @@ extends JComponent
 			}
 		}
 		//------------------------------------------------------------------------------------------
-		double startTimeMarker = this.timelinesTimeRuleModel.getStartTimeMarker();
-		double endTimeMarker = this.timelinesTimeRuleModel.getEndTimeMarker();
+		TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
 		
-		if (Double.isNaN(startTimeMarker) == true)
+		TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
+		
+		TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
+		
+		//------------------------------------------------------------------------------------------
+		double startTimeMarker = startTimeMarkerSelectEntryModel.getTimeMarker();
+		
+		double endTimeMarker = endTimeMarkerSelectEntryModel.getTimeMarker();
+		
+		double endTime = timelineSelectEntriesModel.getEndTime();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		{
-			startTimeMarker = 0.0D;
+			g.setColor(COLOR_TIME_BORDER);
+			
+			g.draw3DRect((int)(0.0D * tickSize), 0, 
+			             (int)(endTime * tickSize), MARKER_SIZE_Y, 
+			             false);
+			
+			g.setColor(COLOR_TIME_BACKGROUND);
+			
+			g.fillRect((int)(0.0D * tickSize) + 1, 1, 
+			           (int)(endTime * tickSize) - 2, MARKER_SIZE_Y - 2);
+		}
+		{
+			g.setColor(COLOR_MARKER_TIME_BACKGROUND);
+			
+			int startX = (int)(startTimeMarker * tickSize) + 1;
+			int endX = (int)(endTimeMarker * tickSize) - 1 - startX;
+			
+			g.fillRect(startX, 4, 
+			           endX, MARKER_SIZE_Y - 8);
 		}
 		
-		if (Double.isNaN(endTimeMarker) == true)
+		// Left Marker:
 		{
-			TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
+			int ltx = (int)(startTimeMarker * tickSize);
+			int lty = 1;
+			int lbx = (int)(startTimeMarker * tickSize);
+			int lby = MARKER_SIZE_Y - 1;
+			int lhx = ltx + MARKER_SIZE_X;
+			int lhy = lty + ((MARKER_SIZE_Y - 2) / 2);
 			
-			List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModels();
+			g.setColor(COLOR_MARKER_BACKGROUND);
 			
-			endTimeMarker = 0.0D;
+			int xPoints[] = { ltx, lbx, lhx };
+			int yPoints[] = { lty, lby, lhy };
+			
+			g.fillPolygon(xPoints, yPoints, 3);
+			
+			g.setColor(COLOR_MARKER_LIGHT_BORDER);
+			
+			g.drawLine(ltx, lty, 
+			           lbx, lby);
+			
+			g.setColor(COLOR_MARKER_BRIGHT_BORDER);
+			
+			g.drawLine(ltx, lty, 
+			           lhx, lhy);
+			
+			g.setColor(COLOR_MARKER_DARK_BORDER);
+			
+			g.drawLine(lbx, lby, 
+			           lhx, lhy);
+		}
+		{
+			int ltx = (int)(endTimeMarker * tickSize);
+			int lty = 1;
+			int lbx = (int)(endTimeMarker * tickSize);
+			int lby = MARKER_SIZE_Y - 1;
+			int lhx = ltx - MARKER_SIZE_X;
+			int lhy = lty + ((MARKER_SIZE_Y - 2) / 2);
+			
+			g.setColor(COLOR_MARKER_BACKGROUND);
+			
+			int xPoints[] = { ltx, lbx, lhx };
+			int yPoints[] = { lty, lby, lhy };
+			
+			g.fillPolygon(xPoints, yPoints, 3);
+			
+			g.setColor(COLOR_MARKER_DARK_BORDER);
+			
+			g.drawLine(ltx, lty, 
+			           lbx, lby);
+			
+			g.setColor(COLOR_MARKER_LIGHT_BORDER);
+			
+			g.drawLine(ltx, lty, 
+			           lhx, lhy);
+			
+			g.setColor(COLOR_MARKER_BRIGHT_BORDER);
+			
+			g.drawLine(lbx, lby, 
+			           lhx, lhy);
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * @param point2D
+	 * 			is the point.
+	 * @return
+	 * 			is the Time-Marker at given point.<br/>
+	 * 			<code>null</code> if no marker is at the given point.
+	 */
+	public TimeMarkerSelectEntryModel searchTimeMarker(Point2D point2D)
+	{
+		//==========================================================================================
+		TimeMarkerSelectEntryModel timeMarkerSelectEntryModel;
+		
+		// Search left or right Time-Marker.
+		TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
+		TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
+
+		// Start Marker?
+		if (this.checkHitMarker(startTimeMarkerSelectEntryModel, point2D) == true)
+		{
+			timeMarkerSelectEntryModel = startTimeMarkerSelectEntryModel;
+		}
+		else
+		{
+			if (this.checkHitMarker(endTimeMarkerSelectEntryModel, point2D) == true)
+			{
+				timeMarkerSelectEntryModel = endTimeMarkerSelectEntryModel;
+			}
+			else
+			{
+				timeMarkerSelectEntryModel = null;
+			}
+		}
+		//==========================================================================================
+		return timeMarkerSelectEntryModel;
+	}
+
+	/**
+	 * @return
+	 * 		the tiks per second.
+	 */
+	public float calcTickPerSecond()
+	{
+		float tickPerSecond;
+		
+		TicksPer ticksPer = this.timelinesTimeRuleModel.getTicksPer();
+		
+		switch (ticksPer)
+		{
+			case Seconds:
+			{
+				tickPerSecond = 1.0F;
+				break;
+			}
+			case Milliseconds:
+			{
+				tickPerSecond = 1000.0F;
+				break;
+			}
+			case BPM:
+			{
+				tickPerSecond = 1.0F / 60.0F;
+				break;
+			}
+			default:
+			{
+				throw new RuntimeException("Unexpected TicksPer \"" + ticksPer + "\".");
+			}
+		}
+		return tickPerSecond;
+	}
+
+	/**
+	 * @return
+	 * 			the tick size in pixel.
+	 */
+	public float calcTickSize()
+	{
+		//==========================================================================================
+		float zoomX = this.timelinesTimeRuleModel.getZoomX();
+		float ticksCount = this.timelinesTimeRuleModel.getTicksCount();
+		
+		float tickPerSecond = this.calcTickPerSecond();
+		
+		float tickSize = (1.0F / (tickPerSecond * ticksCount)) * zoomX;
+		
+		//==========================================================================================
+		return tickSize;
+	}
+
+	/**
+	 * @param timeMarkerSelectEntryModel
+	 * 			is the marker model.
+	 * @param point2D
+	 * 			is the point.
+	 * @return
+	 * 			<code>true</code> if the given marker is at the given point.
+	 */
+	private boolean checkHitMarker(TimeMarkerSelectEntryModel timeMarkerSelectEntryModel, 
+	                               Point2D point2D)
+	{
+		//==========================================================================================
+		boolean hit;
+		
+		//------------------------------------------------------------------------------------------
+		double timeMarker = timeMarkerSelectEntryModel.getTimeMarker();
+		MarkerType markerType = timeMarkerSelectEntryModel.getMarkerType();
+
+		double markerOffsetX;
+		double markerOffsetY;
+		double markerSizeX;
+		double markerSizeY;
+		
+		switch (markerType)
+		{
+			case START:
+			{
+				markerOffsetX = 0.0D;
+				markerOffsetY = 0.0D;
+				markerSizeX = MARKER_SIZE_X;
+				markerSizeY = MARKER_SIZE_Y;
+				break;
+			}
+			case POS:
+			{
+				markerOffsetX = -(MARKER_SIZE_X / 2);
+				markerOffsetY = 0.0D;
+				markerSizeX = MARKER_SIZE_X;
+				markerSizeY = MARKER_SIZE_Y;
+				break;
+			}
+			case END:
+			{
+				markerOffsetX = -MARKER_SIZE_X;
+				markerOffsetY = 0.0D;
+				markerSizeX = MARKER_SIZE_X;
+				markerSizeY = MARKER_SIZE_Y;
+				break;
+			}
+			default:
+			{
+				throw new RuntimeException("Unexpected marker type \"" + markerType + "\".");
+			}
+		}
+		
+		//------------------------------------------------------------------------------------------
+		float tickSize = this.calcTickSize();
+		 
+		//------------------------------------------------------------------------------------------
+		double x = point2D.getX();
+		double y = point2D.getY();
+		
+		if (x >= ((timeMarker * tickSize) + markerOffsetX))
+		{
+			if (x <= ((timeMarker * tickSize) + markerOffsetX + markerSizeX))
+			{
+				if (y >= (markerOffsetY))
+				{
+					if (y <= (markerOffsetY + markerSizeY))
+					{
+						hit = true;
+					}
+					else
+					{
+						hit = false;
+					}
+				}
+				else
+				{
+					hit = false;
+				}
+			}
+			else
+			{
+				hit = false;
+			}
+		}
+		else
+		{
+			hit = false;
 		}
 		
 		//==========================================================================================
+		return hit;
 	}
 }

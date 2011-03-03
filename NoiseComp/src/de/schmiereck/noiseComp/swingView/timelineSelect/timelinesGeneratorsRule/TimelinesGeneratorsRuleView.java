@@ -8,7 +8,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 import java.util.List;
 
@@ -124,14 +126,21 @@ extends JComponent
 		SelectedTimelineModel selectedTimelineModel = this.timelinesGeneratorsRuleModel.getSelectedTimelineModel();
 		
 		//==========================================================================================
+		Graphics2D g2 = (Graphics2D)g;
+		   
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+							RenderingHints.VALUE_ANTIALIAS_ON);
+	   
+		//------------------------------------------------------------------------------------------
 		Rectangle drawHere = g.getClipBounds();
 		
 		// Fill clipping area.
 		g.setColor(COLOR_BACKGROUND);
 		g.fillRect(drawHere.x, drawHere.y, drawHere.width, drawHere.height);
 		
-		// Do the ruler labels in a small font that's black.
-		g.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		Font labelFont = new Font("SansSerif", Font.PLAIN, 11);
+		Font numFont = new Font("SansSerif", Font.PLAIN, 10);
+
 		g.setColor(Color.BLACK);
 		
 		int generatorSizeY = timelinesScrollPanelModel.getGeneratorSizeY();
@@ -257,6 +266,7 @@ extends JComponent
 			}
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			g.setFont(labelFont);
 			g.setColor(Color.BLACK);
 			
 			{
@@ -267,9 +277,10 @@ extends JComponent
 			
 			if (generatorTypeName != null)
 			{
-				g.drawString("(" + generatorTypeName + ")", 17, stringPosY + 10);
+				g.drawString("(" + generatorTypeName + ")", 17, stringPosY + 12);
 			}
 			
+			g.setFont(numFont);
 			{
 				if (Float.isNaN(valueMax) == false)
 				{

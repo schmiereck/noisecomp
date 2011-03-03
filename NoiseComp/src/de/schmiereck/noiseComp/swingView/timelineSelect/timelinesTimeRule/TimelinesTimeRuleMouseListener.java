@@ -1,39 +1,40 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule;
+package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 
-import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleView;
 
 /**
  * <p>
- * 	Timelines-Generators-Rule Mouse-Listener.
+ * 	Timelines-Time-Rule Mouse-Listener.
  * </p>
  * 
  * @author smk
- * @version <p>25.02.2011:	created, smk</p>
+ * @version <p>02.03.2011:	created, smk</p>
  */
-public class TimelinesGeneratorsRuleMouseListener
+public class TimelinesTimeRuleMouseListener
 implements MouseListener
 {
 	//**********************************************************************************************
 	// Fields:
 	
 	/**
-	 * Timelines-Generators-Rule Model. 
+	 * Timelines-Time-Rule Model. 
 	 */
-	private final TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel;
+	private final TimelinesTimeRuleModel timelinesTimeRuleModel;
 
 	/**
-	 * Timelines-Generators-Rule View. 
+	 * Timelines-Time-Rule View. 
 	 */
-	private final TimelinesGeneratorsRuleView timelinesGeneratorsRuleView;
+	private final TimelinesTimeRuleView timelinesTimeRuleView;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -41,17 +42,17 @@ implements MouseListener
 	/**
 	 * Constructor.
 	 * 
-	 * @param timelinesGeneratorsRuleModel
-	 * 			is the Timelines-Generators-Rule Model.
-	 * @param timelinesGeneratorsRuleView 
-	 * 			is the Timelines-Generators-Rule View.
+	 * @param timelinesTimeRuleModel
+	 * 			is the Timelines-Time-Rule Model.
+	 * @param timelinesTimeRuleView 
+	 * 			is the Timelines-Time-Rule View.
 	 */
-	public TimelinesGeneratorsRuleMouseListener(TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel, 
-	                                            TimelinesGeneratorsRuleView timelinesGeneratorsRuleView)
+	public TimelinesTimeRuleMouseListener(TimelinesTimeRuleModel timelinesTimeRuleModel, 
+	                                      TimelinesTimeRuleView timelinesTimeRuleView)
 	{
 		//==========================================================================================
-		this.timelinesGeneratorsRuleModel = timelinesGeneratorsRuleModel;
-		this.timelinesGeneratorsRuleView = timelinesGeneratorsRuleView;
+		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
+		this.timelinesTimeRuleView = timelinesTimeRuleView;
 		
 		//==========================================================================================
 	}
@@ -74,9 +75,9 @@ implements MouseListener
 	public void mouseExited(MouseEvent e)
 	{
 		//==========================================================================================
-		this.timelinesGeneratorsRuleModel.setHighlightedTimelineSelectEntryModel(null);
-		
-		this.timelinesGeneratorsRuleView.repaint();
+//		this.timelinesTimeRuleModel.setHighlightedTimelineSelectEntryModel(null);
+//		
+//		this.timelinesTimeRuleView.repaint();
 		
 		//==========================================================================================
 	}
@@ -85,18 +86,14 @@ implements MouseListener
 	public void mousePressed(MouseEvent e)
 	{
 		//==========================================================================================
-		SelectedTimelineModel selectedTimelineModel = this.timelinesGeneratorsRuleModel.getSelectedTimelineModel();
-		
-		//------------------------------------------------------------------------------------------
 		Point point = e.getPoint();
 		Point2D point2D = point;
 		
-		TimelineSelectEntryModel timelineSelectEntryModel = 
-			this.timelinesGeneratorsRuleView.searchGenerator(point2D);
+		TimeMarkerSelectEntryModel timeMarkerSelectEntryModel = 
+			this.timelinesTimeRuleView.searchTimeMarker(point2D);
 		
-		selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
-//				selectedTimelineGeneratorModel = timelineGeneratorModel;
-//				isMousePressed = true;
+		this.timelinesTimeRuleModel.setSelectedTimeMarkerSelectEntryModel(timeMarkerSelectEntryModel);
+		
 		//==========================================================================================
 	}
 
@@ -104,9 +101,8 @@ implements MouseListener
 	public void mouseReleased(MouseEvent e)
 	{
 		//==========================================================================================
-//				selectedTimelineGeneratorModel = null;
-//				isMousePressed = false;
+		this.timelinesTimeRuleModel.setSelectedTimeMarkerSelectEntryModel(null);
+		
 		//==========================================================================================
 	}
-
 }
