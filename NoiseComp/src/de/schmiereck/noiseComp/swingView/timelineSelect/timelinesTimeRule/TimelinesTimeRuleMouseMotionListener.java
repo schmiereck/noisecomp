@@ -72,10 +72,12 @@ implements MouseMotionListener
 		if (selectedTimeMarkerSelectEntryModel != null)
 		{
 			TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
+			TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
 			TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
 			TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
 			
 			double startTimeMarker = startTimeMarkerSelectEntryModel.getTimeMarker();
+			double playTimeMarker = playTimeMarkerSelectEntryModel.getTimeMarker();
 			double endTimeMarker = endTimeMarkerSelectEntryModel.getTimeMarker();
 			double endTime = timelineSelectEntriesModel.getEndTime();
 			
@@ -105,6 +107,14 @@ implements MouseMotionListener
 					{
 						timeMarker = endTimeMarker;
 					}
+					
+					if (playTimeMarker < timeMarker)
+					{
+						playTimeMarker = timeMarker;
+						playTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
+					}
+					
+					selectedTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
 					break;
 				}
 				case POS:
@@ -120,6 +130,7 @@ implements MouseMotionListener
 							timeMarker = startTimeMarker;
 						}
 					}
+					selectedTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
 					break;
 				}
 				case END:
@@ -128,6 +139,14 @@ implements MouseMotionListener
 					{
 						timeMarker = startTimeMarker;
 					}
+					
+					if (playTimeMarker > timeMarker)
+					{
+						playTimeMarker = timeMarker;
+						playTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
+					}
+					
+					selectedTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
 					break;
 				}
 				default:
@@ -135,8 +154,6 @@ implements MouseMotionListener
 					throw new RuntimeException("Unexpected marker type \"" + markerType + "\".");
 				}
 			}
-			
-			selectedTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
 			
 			this.timelinesTimeRuleView.repaint();
 		}

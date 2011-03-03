@@ -36,14 +36,44 @@ extends JComponent
 	// Constats:
 
 	/**
-	 * Marker size Y.
+	 * Marker box size Y.
 	 */
-	private static final int MARKER_SIZE_Y	= 11;
+	private static final int MARKER_BOX_SIZE_Y	= 12;
+
+	/**
+	 * Marker box offset Y.
+	 */
+	private static final int MARKER_BOX_OFFSET_Y	= 0;
 
 	/**
 	 * Marker size X.
 	 */
 	private static final int MARKER_SIZE_X	= 8;
+	
+	/**
+	 * Marker size Y.
+	 */
+	private static final int MARKER_SIZE_Y	= 11;
+
+	/**
+	 * Marker Play offset Y.
+	 */
+	private static final int MARKER_OFFSET_Y = 1;
+	
+	/**
+	 * Marker Play size X.
+	 */
+	private static final int MARKER_PLAY_SIZE_X = 13;
+
+	/**
+	 * Marker Play offset Y.
+	 */
+	private static final int MARKER_PLAY_OFFSET_Y = 25;
+	
+	/**
+	 * Marker Play size Y.
+	 */
+	private static final int MARKER_PLAY_SIZE_Y = 8;
 	
 	//	public static final int	DPI		= 20;//Toolkit.getDefaultToolkit().getScreenResolution();
 	public static final int	SIZE	= 35;
@@ -76,7 +106,7 @@ extends JComponent
 	/**
 	 * Color - Marker dark border.
 	 */
-	private static final Color COLOR_MARKER_DARK_BORDER	= new Color(0x303030);
+	private static final Color COLOR_MARKER_DARK_BORDER	= new Color(0x202020);
 	
 	/**
 	 * Color - Marker Background.
@@ -287,30 +317,30 @@ extends JComponent
 		TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
 		
 		TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
-		
+		TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
 		TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
 		
 		//------------------------------------------------------------------------------------------
 		double startTimeMarker = startTimeMarkerSelectEntryModel.getTimeMarker();
-		
+		double playTimeMarker = playTimeMarkerSelectEntryModel.getTimeMarker();
 		double endTimeMarker = endTimeMarkerSelectEntryModel.getTimeMarker();
 		
 		double endTime = timelineSelectEntriesModel.getEndTime();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Marker box:
 		{
 			g.setColor(COLOR_TIME_BORDER);
 			
-			g.draw3DRect((int)(0.0D * tickSize), 0, 
-			             (int)(endTime * tickSize), MARKER_SIZE_Y, 
+			g.draw3DRect((int)(0.0D * tickSize), MARKER_BOX_OFFSET_Y, 
+			             (int)(endTime * tickSize), MARKER_BOX_SIZE_Y, 
 			             false);
 			
 			g.setColor(COLOR_TIME_BACKGROUND);
 			
-			g.fillRect((int)(0.0D * tickSize) + 1, 1, 
-			           (int)(endTime * tickSize) - 2, MARKER_SIZE_Y - 2);
-		}
-		{
+			g.fillRect((int)(0.0D * tickSize) + 1, MARKER_BOX_OFFSET_Y + 1, 
+			           (int)(endTime * tickSize) - 2, MARKER_BOX_SIZE_Y - 2);
+
 			g.setColor(COLOR_MARKER_TIME_BACKGROUND);
 			
 			int startX = (int)(startTimeMarker * tickSize) + 1;
@@ -323,9 +353,9 @@ extends JComponent
 		// Left Marker:
 		{
 			int ltx = (int)(startTimeMarker * tickSize);
-			int lty = 1;
+			int lty = MARKER_OFFSET_Y;
 			int lbx = (int)(startTimeMarker * tickSize);
-			int lby = MARKER_SIZE_Y - 1;
+			int lby = MARKER_OFFSET_Y + MARKER_SIZE_Y - 1;
 			int lhx = ltx + MARKER_SIZE_X;
 			int lhy = lty + ((MARKER_SIZE_Y - 2) / 2);
 			
@@ -355,7 +385,7 @@ extends JComponent
 			int ltx = (int)(endTimeMarker * tickSize);
 			int lty = 1;
 			int lbx = (int)(endTimeMarker * tickSize);
-			int lby = MARKER_SIZE_Y - 1;
+			int lby = MARKER_OFFSET_Y + MARKER_SIZE_Y - 1;
 			int lhx = ltx - MARKER_SIZE_X;
 			int lhy = lty + ((MARKER_SIZE_Y - 2) / 2);
 			
@@ -381,6 +411,36 @@ extends JComponent
 			g.drawLine(lbx, lby, 
 			           lhx, lhy);
 		}
+		{
+			int bx = (int)(playTimeMarker * tickSize);
+			int by = MARKER_PLAY_OFFSET_Y + MARKER_PLAY_SIZE_Y;
+			int ltx = bx - (MARKER_PLAY_SIZE_X / 2);
+			int lty = MARKER_PLAY_OFFSET_Y;
+			int rtx = ltx + MARKER_PLAY_SIZE_X;
+			int rty = MARKER_PLAY_OFFSET_Y;
+			
+			g.setColor(COLOR_MARKER_BACKGROUND);
+			
+			int xPoints[] = { ltx, rtx, bx };
+			int yPoints[] = { lty, rty, by };
+			
+			g.fillPolygon(xPoints, yPoints, 3);
+			
+			g.setColor(COLOR_MARKER_LIGHT_BORDER);
+			
+			g.drawLine(ltx, lty, 
+			           rtx, rty);
+			
+			g.setColor(COLOR_MARKER_BRIGHT_BORDER);
+			
+			g.drawLine(ltx, lty, 
+			           bx, by);
+			
+			g.setColor(COLOR_MARKER_DARK_BORDER);
+			
+			g.drawLine(rtx, rty, 
+			           bx, by);
+		}
 		//==========================================================================================
 	}
 
@@ -398,6 +458,7 @@ extends JComponent
 		
 		// Search left or right Time-Marker.
 		TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
+		TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
 		TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
 
 		// Start Marker?
@@ -407,13 +468,20 @@ extends JComponent
 		}
 		else
 		{
-			if (this.checkHitMarker(endTimeMarkerSelectEntryModel, point2D) == true)
+			if (this.checkHitMarker(playTimeMarkerSelectEntryModel, point2D) == true)
 			{
-				timeMarkerSelectEntryModel = endTimeMarkerSelectEntryModel;
+				timeMarkerSelectEntryModel = playTimeMarkerSelectEntryModel;
 			}
 			else
 			{
-				timeMarkerSelectEntryModel = null;
+				if (this.checkHitMarker(endTimeMarkerSelectEntryModel, point2D) == true)
+				{
+					timeMarkerSelectEntryModel = endTimeMarkerSelectEntryModel;
+				}
+				else
+				{
+					timeMarkerSelectEntryModel = null;
+				}
 			}
 		}
 		//==========================================================================================
@@ -508,10 +576,10 @@ extends JComponent
 			}
 			case POS:
 			{
-				markerOffsetX = -(MARKER_SIZE_X / 2);
-				markerOffsetY = 0.0D;
-				markerSizeX = MARKER_SIZE_X;
-				markerSizeY = MARKER_SIZE_Y;
+				markerOffsetX = -(MARKER_PLAY_SIZE_X / 2);
+				markerOffsetY = MARKER_PLAY_OFFSET_Y;
+				markerSizeX = MARKER_PLAY_SIZE_X;
+				markerSizeY = MARKER_PLAY_SIZE_Y;
 				break;
 			}
 			case END:

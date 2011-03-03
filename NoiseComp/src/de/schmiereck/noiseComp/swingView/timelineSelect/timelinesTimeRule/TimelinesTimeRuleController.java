@@ -184,9 +184,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 		timelineSelectEntriesModel.setEndTime(endTime);
 
 		TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
+		TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
 		TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
 		
 		startTimeMarkerSelectEntryModel.setTimeMarker(0.0D);
+		playTimeMarkerSelectEntryModel.setTimeMarker(0.0D);
 		endTimeMarkerSelectEntryModel.setTimeMarker(endTime);
 
 		//==========================================================================================

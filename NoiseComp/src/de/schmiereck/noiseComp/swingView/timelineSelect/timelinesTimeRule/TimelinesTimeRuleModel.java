@@ -100,6 +100,10 @@ public class TimelinesTimeRuleModel
 		new TimeMarkerSelectEntryModel(MarkerType.END);
 	
 	//----------------------------------------------------------------------------------------------
+	final private TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel =
+		new TimeMarkerSelectEntryModel(MarkerType.POS);
+	
+	//----------------------------------------------------------------------------------------------
 	private TimeMarkerSelectEntryModel selectedTimeMarkerSelectEntryModel = null;
 	
 	//**********************************************************************************************
@@ -311,6 +315,15 @@ public class TimelinesTimeRuleModel
 	public TimeMarkerSelectEntryModel getEndTimeMarkerSelectEntryModel()
 	{
 		return this.endTimeMarkerSelectEntryModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #playTimeMarkerSelectEntryModel}.
+	 */
+	public TimeMarkerSelectEntryModel getPlayTimeMarkerSelectEntryModel()
+	{
+		return this.playTimeMarkerSelectEntryModel;
 	}
 
 	/**
