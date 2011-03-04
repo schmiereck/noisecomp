@@ -175,6 +175,7 @@ extends PipelineSchedulerLogic
 		//==========================================================================================
 		SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
 		
+		//==========================================================================================
 		for (PlaybackPosChangedListenerInterface playbackPosChangedListener : this.playbackPosChangedListeners)
 		{
 			playbackPosChangedListener.notifyPlaybackPosChanged(soundBufferManager.getActualTime());
@@ -182,4 +183,18 @@ extends PipelineSchedulerLogic
 		//==========================================================================================
 	}
 
+	/**
+	 * @param playbackPos
+	 * 			is the playbackPos in seconds.
+	 */
+	public void submitPlaybackPos(float playbackPos)
+	{
+		//==========================================================================================
+		SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
+		
+		//==========================================================================================
+		soundBufferManager.setActualTime(playbackPos);
+		
+		//==========================================================================================
+	}
 }

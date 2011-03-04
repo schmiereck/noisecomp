@@ -18,7 +18,9 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule.TimelinesGeneratorsRuleController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 import de.schmiereck.noiseComp.timeline.TimelineContentChangedListenerInterface;
 import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
@@ -56,13 +58,16 @@ implements TimelineContentChangedListenerInterface,
 	 * 			is the Input-Edit Model.
 	 * @param selectedTimelineModel
 	 * 			is the Selected-Timeline Model.
+	 * @param timelinesTimeRuleModel
+	 * 			is the Timelines-Time-Rule Model.
 	 */
 	public TimelinesDrawPanelController(final AppController appController,
 	                                    //final ModulesTreeModel modulesTreeModel,
 	                                    //InputEditModel inputEditModel)
 	                                    final AppModelChangedObserver appModelChangedObserver,
 	                                    final TimelineSelectEntriesModel timelineSelectEntriesModel,
-	                                    final SelectedTimelineModel selectedTimelineModel)
+	                                    final SelectedTimelineModel selectedTimelineModel,
+	                                    final TimelinesTimeRuleModel timelinesTimeRuleModel)
 	{
 		//==========================================================================================
 //		this.modulesTreeModel = modulesTreeModel;
@@ -71,7 +76,8 @@ implements TimelineContentChangedListenerInterface,
 		                                                           timelineSelectEntriesModel,
 		                                                           selectedTimelineModel);
 		
-	    this.timelinesDrawPanelView = new TimelinesDrawPanelView(this.timelinesDrawPanelModel);
+	    this.timelinesDrawPanelView = new TimelinesDrawPanelView(this.timelinesDrawPanelModel,
+	                                                             timelinesTimeRuleModel);
 	    
 	    //------------------------------------------------------------------------------------------
 //	    this.timelinesDrawPanelView.addDoTimelineSelectedListeners
@@ -131,7 +137,9 @@ implements TimelineContentChangedListenerInterface,
 	     	}
 	    );
 	    //------------------------------------------------------------------------------------------
-	    this.timelinesDrawPanelModel.getPlaybackTimeChangedNotifier().addModelPropertyChangedListener
+	    TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
+	    
+	    playTimeMarkerSelectEntryModel.getTimeMarkerChangedNotifier().addModelPropertyChangedListener
 	    (
 	     	new ModelPropertyChangedListener()
 	     	{
@@ -542,18 +550,6 @@ implements TimelineContentChangedListenerInterface,
 		
 		//==========================================================================================
 		return ret;
-	}
-
-	/**
-	 * @param actualTime
-	 * 			the actual play time in seconds.
-	 */
-	public void doPlaybackTimeChanged(float actualTime)
-	{
-		//==========================================================================================
-		this.timelinesDrawPanelModel.setPlaybackTime(actualTime);
-		
-		//==========================================================================================
 	}
 
 	/**

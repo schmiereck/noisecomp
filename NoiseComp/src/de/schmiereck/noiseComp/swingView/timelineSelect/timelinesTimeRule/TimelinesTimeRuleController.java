@@ -8,6 +8,7 @@ import java.util.List;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
@@ -46,16 +47,22 @@ implements RemoveTimelineGeneratorListenerInterface,
 	/**
 	 * Constructor.
 	 * 
-	 * 
+	 * @param appController
+	 * 			is the App-Controller.
 	 * @param timelineSelectEntriesModel
 	 * 			are the Timeline-Select-Entries Model.
 	 */
-	public TimelinesTimeRuleController(final TimelineSelectEntriesModel timelineSelectEntriesModel)
+	public TimelinesTimeRuleController(final AppController appController,
+	                                   final TimelineSelectEntriesModel timelineSelectEntriesModel)
 	{
 		//==========================================================================================
 		this.timelinesTimeRuleModel = new TimelinesTimeRuleModel(timelineSelectEntriesModel);
 		
-		this.timelinesTimeRuleView = new TimelinesTimeRuleView(this.timelinesTimeRuleModel);
+		final PlayTimeMarkerMovedCommand timeMarkerMovedCommand = 
+			new PlayTimeMarkerMovedCommand(appController);
+		
+		this.timelinesTimeRuleView = new TimelinesTimeRuleView(this.timelinesTimeRuleModel,
+		                                                       timeMarkerMovedCommand);
 		
 		//------------------------------------------------------------------------------------------
 		this.timelinesTimeRuleModel.getTicksChangedNotifier().addModelPropertyChangedListener
@@ -69,7 +76,6 @@ implements RemoveTimelineGeneratorListenerInterface,
 				}
 		 	}
 		);
-		
 		//------------------------------------------------------------------------------------------
 		timelineSelectEntriesModel.getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
 		(
@@ -79,6 +85,24 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void notifyModelPropertyChanged()
 				{
 					resetTime();
+				}
+			}
+		);
+		//------------------------------------------------------------------------------------------
+		TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
+		
+		playTimeMarkerSelectEntryModel.getTimeMarkerChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+			{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+//					SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+//					
+//					soundSourceLogic.set
+					
+					timelinesTimeRuleView.repaint();
 				}
 			}
 		);

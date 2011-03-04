@@ -53,6 +53,14 @@ public class TimelineSelectEntriesModel
 	 */
 	private final ModelPropertyChangedNotifier changeTimelinesPositionChangedNotifier = new ModelPropertyChangedNotifier();
 	
+//	//----------------------------------------------------------------------------------------------
+//	private float playbackTime = 0.0F;
+//
+//	/**
+//	 * {@link #playbackTime} changed listeners.
+//	 */
+//	private final ModelPropertyChangedNotifier playbackTimeChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	//----------------------------------------------------------------------------------------------
 	private final AppModelChangedObserver appModelChangedObserver;
  	
@@ -251,5 +259,38 @@ public class TimelineSelectEntriesModel
 	{
 		this.endTime = endTime;
 	}
+
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #playbackTime}.
+//	 */
+//	public float getPlaybackTime()
+//	{
+//		return this.playbackTime;
+//	}
+//
+//	/**
+//	 * @param playbackTime 
+//	 * 			to set {@link #playbackTime}.
+//	 */
+//	public void setPlaybackTime(float playbackTime)
+//	{
+//		//==========================================================================================
+//		this.playbackTime = playbackTime;
+//		
+//		this.playbackTimeChangedNotifier.notifyModelPropertyChangedListeners();
+//		
+//		//==========================================================================================
+//	}
+//
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #playbackTimeChangedNotifier}.
+//	 */
+//	public ModelPropertyChangedNotifier getPlaybackTimeChangedNotifier()
+//	{
+//		//==========================================================================================
+//		return this.playbackTimeChangedNotifier;
+//	}
 	
 }

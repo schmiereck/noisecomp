@@ -33,6 +33,8 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelineHandler.TimelineHandlerModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
@@ -114,6 +116,11 @@ implements Scrollable//, MouseMotionListener
 	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	/**
+	 * Timelines-Time-Rule Model.
+	 */
+	private final TimelinesTimeRuleModel timelinesTimeRuleModel;
+	
+	/**
 	 * Tranforma positions to view.
 	 */
 	private final AffineTransform at = AffineTransform.getScaleInstance(INIT_ZOOM_X, INIT_ZOOM_Y);
@@ -145,11 +152,16 @@ implements Scrollable//, MouseMotionListener
 	* 
 	* @param timelinesDrawPanelModel
 	* 			is the Timeline Draw Panel Model.
+	 * @param timelinesTimeRuleModel
+	 * 			is the Timelines-Time-Rule Model.
 	*/
-	public TimelinesDrawPanelView(final TimelinesDrawPanelModel timelinesDrawPanelModel) 
+	public TimelinesDrawPanelView(final TimelinesDrawPanelModel timelinesDrawPanelModel,
+	                              final TimelinesTimeRuleModel timelinesTimeRuleModel) 
 	{
 		//==========================================================================================
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
+		
+		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
 		
 		//------------------------------------------------------------------------------------------
 		TimelineSelectEntriesModel timelineSelectEntriesModel = 
@@ -447,7 +459,9 @@ implements Scrollable//, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		// Playback Time:
 		{
-			float playbackTime = this.timelinesDrawPanelModel.getPlaybackTime();
+			TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
+			
+			double playbackTime = playTimeMarkerSelectEntryModel.getTimeMarker();
 			
 			g2.setPaint(CPlaybackTimeLine);
 			

@@ -259,6 +259,15 @@ extends AudioInputStream
 		return this.actualFrame / this.frameRate;
 	}
 	
+	/**
+	 * @param actualTime
+	 * 			the actual play time in seconds.
+	 */
+	public void setActualTime(float actualTime)
+	{
+		this.actualFrame = (long)(actualTime * this.frameRate);
+	}
+	
 	public void stopGenerate()
 	{
 		//==========================================================================================

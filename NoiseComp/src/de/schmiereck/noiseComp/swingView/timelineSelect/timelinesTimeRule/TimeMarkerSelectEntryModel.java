@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule;
 
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+
 /**
  * <p>
  * 	Time-Marker Select-Entry-Model.
@@ -20,6 +22,11 @@ public class TimeMarkerSelectEntryModel
 	 * Time marker.
 	 */
 	private double timeMarker = 0.0D;
+
+	/**
+	 * {@link #timeMarker} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier timeMarkerChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//----------------------------------------------------------------------------------------------
 	/**
@@ -66,7 +73,14 @@ public class TimeMarkerSelectEntryModel
 	 */
 	public void setTimeMarker(double timeMarker)
 	{
-		this.timeMarker = timeMarker;
+		//==========================================================================================
+		if (this.timeMarker != timeMarker)
+		{
+			this.timeMarker = timeMarker;
+			
+			this.timeMarkerChangedNotifier.notifyModelPropertyChangedListeners();
+		}
+		//==========================================================================================
 	}
 
 	/**
@@ -76,5 +90,14 @@ public class TimeMarkerSelectEntryModel
 	public MarkerType getMarkerType()
 	{
 		return this.markerType;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timeMarkerChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getTimeMarkerChangedNotifier()
+	{
+		return this.timeMarkerChangedNotifier;
 	}
 }

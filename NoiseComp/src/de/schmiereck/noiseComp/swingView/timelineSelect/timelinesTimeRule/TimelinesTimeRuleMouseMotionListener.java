@@ -28,6 +28,11 @@ implements MouseMotionListener
 	// Fields:
 	
 	/**
+	 * Play-Time-Marker Moved Command.
+	 */
+	private final PlayTimeMarkerMovedCommand playTimeMarkerMovedCommand;
+	
+	/**
 	 * Timelines-Time-Rule Model. 
 	 */
 	private final TimelinesTimeRuleModel timelinesTimeRuleModel;
@@ -47,13 +52,17 @@ implements MouseMotionListener
 	 * 			is the Timelines-Time-Rule Model.
 	 * @param timelinesTimeRuleView 
 	 * 			is the Timelines-Time-Rule View.
+	 * @param playTimeMarkerMovedCommand
+	 * 			is the Play-Time-Marker Moved Command.
 	 */
-	public TimelinesTimeRuleMouseMotionListener(TimelinesTimeRuleModel timelinesTimeRuleModel, 
-	                                            TimelinesTimeRuleView timelinesTimeRuleView)
+	public TimelinesTimeRuleMouseMotionListener(final TimelinesTimeRuleModel timelinesTimeRuleModel, 
+	                                            final TimelinesTimeRuleView timelinesTimeRuleView,
+	                                            final PlayTimeMarkerMovedCommand playTimeMarkerMovedCommand)
 	{
 		//==========================================================================================
 		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
 		this.timelinesTimeRuleView = timelinesTimeRuleView;
+		this.playTimeMarkerMovedCommand = playTimeMarkerMovedCommand;
 		
 		//==========================================================================================
 	}
@@ -131,6 +140,8 @@ implements MouseMotionListener
 						}
 					}
 					selectedTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
+					
+					this.playTimeMarkerMovedCommand.doSetPlayMarker(timeMarker);
 					break;
 				}
 				case END:

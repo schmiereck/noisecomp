@@ -53,10 +53,6 @@ WORK:
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
 #139:	BUG: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
-#151:	IMPROVEMENT: Add play Start- and Stop-Marker to Timeline-Select per Module.
-		--> DONE: Add TimelineSelectEntriesModel and remove Entry-List from other Models.
-		--> DONE: TimelinesTimeRule: View and D&D Start- and End-Marker.
-		--> DONE: TimelinesTimeRule: View and D&D Play-Marker.
 
 DONE:
 =====
@@ -300,3 +296,9 @@ Release V2.0.3
 #155:	BUG: DONE: Input-Edit: No update, if Input-Generator is set to "no generator" after a generator was selected.
 Release V2.0.4
 --------------
+#151:	IMPROVEMENT: Add play Start- and Stop-Marker to Timeline-Select per Module.
+		--> DONE: Add TimelineSelectEntriesModel and remove Entry-List from other Models.
+		--> DONE: TimelinesTimeRule: View and D&D Start- and End-Marker.
+		--> DONE: TimelinesTimeRule: View and D&D Play-Marker.
+		--> DONE: TimelinesTimeRule: Syncronize Play-Marker with Service.
+		--> DONE: TimelinesTimeRule: Syncronize Start- and End-Marker with Service.

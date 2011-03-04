@@ -132,8 +132,11 @@ extends JComponent
 	/**
 	 * Constructor.
 	 * 
+	 * @param playTimeMarkerMovedCommand
+	 * 			is the Play-Time-Marker Moved Command.
 	 */
-	public TimelinesTimeRuleView(TimelinesTimeRuleModel timelinesTimeRuleModel)
+	public TimelinesTimeRuleView(final TimelinesTimeRuleModel timelinesTimeRuleModel,
+	                             final PlayTimeMarkerMovedCommand playTimeMarkerMovedCommand)
 	{
 		//==========================================================================================
 		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
@@ -147,7 +150,8 @@ extends JComponent
 		this.addMouseMotionListener
 		(
 		 	new TimelinesTimeRuleMouseMotionListener(timelinesTimeRuleModel,
-		 	                                         this)
+		 	                                         this,
+		 	                                         playTimeMarkerMovedCommand)
 		);
 		//==========================================================================================
 	}
