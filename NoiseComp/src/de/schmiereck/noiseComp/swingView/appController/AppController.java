@@ -37,9 +37,6 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.service.SoundService;
-import de.schmiereck.noiseComp.soundData.PlaybackPosChangedListenerInterface;
-import de.schmiereck.noiseComp.soundData.SoundData;
-import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
@@ -83,7 +80,6 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule.
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelView;
-import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
@@ -197,6 +193,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 	private final TimelineEditController timelineEditController;
 	
 	/**
+	 * Play Controller.
+	 */
+	private final PlayController playController;
+	
+	/**
 	 * Input-Select Controller.
 	 */
 	private final InputSelectController inputSelectController;
@@ -212,11 +213,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	private final AppModel appModel;
 	
 	private final AppModelChangedObserver appModelChangedObserver;
-	
-	private SoundSchedulerLogic soundSchedulerLogic = null;
 
-	private final PlaybackPosChangedListenerInterface	playbackPosChangedListener;
-	
 	//**********************************************************************************************
 	// Functions:
 
@@ -456,6 +453,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 			                           this.appModelChangedObserver);
 		
 		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
+		
+		//------------------------------------------------------------------------------------------
+		this.playController = new PlayController(this.timelinesTimeRuleController);
 		
 		//==========================================================================================
 		// Exit:
@@ -1313,7 +1313,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					doPlaySound();
+					playController.doPlaySound();
 				}
 		 	}
 		);
@@ -1325,7 +1325,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					doPauseSound();
+					playController.doPauseSound();
 				}
 		 	}
 		);
@@ -1337,7 +1337,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					doStopSound();
+					playController.doStopSound();
 				}
 		 	}
 		);
@@ -1450,47 +1450,6 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 	    //------------------------------------------------------------------------------------------
 		modulEditModel.setTicksPer(TicksPer.Seconds);
-		
-	    //------------------------------------------------------------------------------------------
-		this.playbackPosChangedListener = new PlaybackPosChangedListenerInterface()
-		{
-			@Override
-			public void notifyPlaybackPosChanged(float actualTime)
-			{
-				TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
-				
-				double endTime = endTimeMarkerSelectEntryModel.getTimeMarker();
-				
-				SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-				
-				doPlaybackTimeChanged(actualTime);
-				
-				Timeline outputTimeline = soundSourceLogic.getOutputTimeline();
-				
-				float generatorEndTimePos = outputTimeline.getGeneratorEndTimePos();
-				
-				if ((actualTime > generatorEndTimePos) || (actualTime > endTime))
-				{
-					doStopSound();
-				}
-			}
-		};
-		//==========================================================================================
-	}
-
-	/**
-	 * @param actualTime
-	 * 			the actual play time in seconds.
-	 */
-	public void doPlaybackTimeChanged(float actualTime)
-	{
-		//==========================================================================================
-		TimelinesTimeRuleModel timelinesTimeRuleModel = this.timelinesTimeRuleController.getTimelinesTimeRuleModel();
-		
-		//==========================================================================================
-		TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
-		
-		playTimeMarkerSelectEntryModel.setTimeMarker(actualTime);
 		
 		//==========================================================================================
 	}
@@ -2423,93 +2382,6 @@ implements RemoveTimelineGeneratorListenerInterface,
 		}
 		//==========================================================================================
 	}
-
-	public synchronized void doPlaySound()
-	{
-		//==========================================================================================
-		TimelinesTimeRuleModel timelinesTimeRuleModel = this.timelinesTimeRuleController.getTimelinesTimeRuleModel();
-		
-		//==========================================================================================
-		if (this.soundSchedulerLogic == null)
-		{
-			//--------------------------------------------------------------------------------------
-			TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
-			
-			double playTime = playTimeMarkerSelectEntryModel.getTimeMarker();
-			
-			//--------------------------------------------------------------------------------------
-			SoundData soundData = SwingMain.getSoundData();
-			
-			this.soundSchedulerLogic = new SoundSchedulerLogic(25, soundData);
-
-			this.soundSchedulerLogic.submitPlaybackPos((float)playTime);
-			
-			this.soundSchedulerLogic.addPlaybackPosChangedListener(this.playbackPosChangedListener);
-			
-			this.soundSchedulerLogic.startThread();
-
-			this.soundSchedulerLogic.startPlayback();
-			
-			//--------------------------------------------------------------------------------------
-		}
-		else
-		{	
-			//--------------------------------------------------------------------------------------
-			this.soundSchedulerLogic.resumePlayback();
-			
-			//--------------------------------------------------------------------------------------
-		}
-		//==========================================================================================
-	}
-
-	public synchronized void doStopSound()
-	{
-		//==========================================================================================
-		TimelinesTimeRuleModel timelinesTimeRuleModel = this.timelinesTimeRuleController.getTimelinesTimeRuleModel();
-		
-		//==========================================================================================
-		if (this.soundSchedulerLogic != null)
-		{
-			this.soundSchedulerLogic.stopPlayback();
-			
-			this.soundSchedulerLogic.stopThread();
-			
-			this.soundSchedulerLogic = null;
-
-			//--------------------------------------------------------------------------------------
-			// Set to start marker.
-			
-			TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
-			
-			double startTime = startTimeMarkerSelectEntryModel.getTimeMarker();
-			
-			this.doPlaybackTimeChanged((float)startTime); //0.0F);
-		}
-		//==========================================================================================
-	}
-
-	public synchronized void doPauseSound()
-	{
-		//==========================================================================================
-		if (this.soundSchedulerLogic != null)
-		{
-			this.soundSchedulerLogic.pausePlayback();
-		}
-		//==========================================================================================
-	}
-
-	/**
-	 * @param playbackPos
-	 * 			is the playbackPos in seconds.
-	 */
-	public synchronized void doSubmitPlaybackPos(float playbackPos)
-	{
-		//==========================================================================================
-		if (this.soundSchedulerLogic != null)
-		{
-			this.soundSchedulerLogic.submitPlaybackPos(playbackPos);
-		}
-	}
 	
 	/**
 	 * Do Rename Module.
@@ -2586,6 +2458,18 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		this.modulesTreeController.pasteModule(cutTreeNode,
 		                                       pasteFolderTreeNode);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @param playbackPos
+	 * 			is the playbackPos in seconds.
+	 */
+	public void doSubmitPlaybackPos(float playTimePos)
+	{
+		//==========================================================================================
+		this.playController.doSubmitPlaybackPos(playTimePos);
 		
 		//==========================================================================================
 	}

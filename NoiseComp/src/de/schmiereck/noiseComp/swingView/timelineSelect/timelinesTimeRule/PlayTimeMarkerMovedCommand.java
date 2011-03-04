@@ -29,10 +29,10 @@ public class PlayTimeMarkerMovedCommand
 	/**
 	 * Constructor.
 	 * 
-	 * @param appController
+	 * @param playController
 	 * 			is the App Controller.
 	 */
-	public PlayTimeMarkerMovedCommand(AppController appController)
+	public PlayTimeMarkerMovedCommand(final AppController appController)
 	{
 		//==========================================================================================
 		this.appController = appController;

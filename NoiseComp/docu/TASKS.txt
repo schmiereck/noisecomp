@@ -37,7 +37,6 @@ TODO:
 #138:	IMPROVEMENT: If inserting new module: Add Output("o") and connected Mixer("m") generator as default.
 		Or drag whole timeline does that by snapping to start position.
 #148:	IMPROVEMENT: Add Graphically mouse editor for inputs of generators (double click Timeline-Generator?).
-#152:	IMPROVEMENT: Add Play-Loop-Button depending on #151.
 #153:	IMPROVEMENT: Add Mute-Button per Timeline.
 #154:	IMPROVEMENT: Add New-File Menu-Entry.
 #156:	IMPROVEMENT: Update values of Edit-Comps without "Update"-Button.
@@ -53,6 +52,8 @@ WORK:
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
 #139:	BUG: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
+#152:	IMPROVEMENT: Add Play-Loop-Button depending on #151.
+		--> DONE: Extract PlayController.
 
 DONE:
 =====
