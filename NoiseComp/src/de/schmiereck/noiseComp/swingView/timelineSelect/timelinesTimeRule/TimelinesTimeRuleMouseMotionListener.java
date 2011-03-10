@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 
+import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel.MarkerType;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleModel;
@@ -71,6 +72,9 @@ implements MouseMotionListener
 	public void mouseDragged(MouseEvent e)
 	{
 		//==========================================================================================
+		SoundService soundService = SoundService.getInstance();
+		
+		//==========================================================================================
 		Point point = e.getPoint();
 		Point2D point2D = point;
 		
@@ -124,6 +128,8 @@ implements MouseMotionListener
 					}
 					
 					selectedTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
+					
+					soundService.submitStartTime(timeMarker);
 					break;
 				}
 				case POS:
@@ -158,6 +164,8 @@ implements MouseMotionListener
 					}
 					
 					selectedTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
+					
+					soundService.submitEndTime(timeMarker);
 					break;
 				}
 				default:

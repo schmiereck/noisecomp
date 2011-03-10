@@ -37,10 +37,15 @@ public class TimelineSelectEntriesModel
 	private List<TimelineSelectEntryModel> timelineSelectEntryModels = new Vector<TimelineSelectEntryModel>();
 
 	/**
-	 * {@link #timelineSelectEntryModels} changed (insert or remove) listeners.
+	 * {@link #timelineSelectEntryModels} changed (set new, insert or remove) listeners.
 	 */
 	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
 
+	/**
+	 * {@link #timelineSelectEntryModels} changed (set new) listeners.
+	 */
+	private final ModelPropertyChangedNotifier timelineSelectEntryModelsChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	/**
 	 * {@link #timelineSelectEntryModels} removed listeners.
 	 */
@@ -88,17 +93,20 @@ public class TimelineSelectEntriesModel
 		return this.timelineSelectEntryModels;
 	}
 
-
 	/**
 	 * @param timelineSelectEntryModels 
 	 * 			to set {@link #timelineSelectEntryModels}.
 	 */
 	public void setTimelineSelectEntryModels(List<TimelineSelectEntryModel> timelineSelectEntryModels)
 	{
+		//==========================================================================================
 		this.timelineSelectEntryModels = timelineSelectEntryModels;
 		
 		// Notify listeners.
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
+		this.timelineSelectEntryModelsChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -258,6 +266,15 @@ public class TimelineSelectEntriesModel
 	public void setEndTime(double endTime)
 	{
 		this.endTime = endTime;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #timelineSelectEntryModelsChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getTimelineSelectEntryModelsChangedNotifier()
+	{
+		return this.timelineSelectEntryModelsChangedNotifier;
 	}
 
 //	/**

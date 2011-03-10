@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.prefs.Preferences;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -1341,6 +1342,22 @@ implements RemoveTimelineGeneratorListenerInterface,
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		this.appView.getLoopButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					JCheckBox loopButton = appView.getLoopButton();
+					
+					boolean looped = loopButton.getModel().isSelected();
+					
+					playController.doLoopSound(looped);
+				}
+		 	}
+		);
 	    //------------------------------------------------------------------------------------------
 		this.appView.getZoomInButton().addActionListener
 		(
@@ -1531,6 +1548,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 				
 				timelinePos++;
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			this.timelinesTimeRuleController.resetTime();
+			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		

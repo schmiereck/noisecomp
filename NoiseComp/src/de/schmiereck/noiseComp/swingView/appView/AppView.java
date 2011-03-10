@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -148,7 +149,9 @@ extends JFrame
 	private JButton	pauseButton;
 
 	private JButton	stopButton;
-
+	
+	private JCheckBox loopButton;
+	
 	private JButton	zoomInButton;
 
 	private JButton	zoomOutButton;
@@ -437,6 +440,16 @@ extends JFrame
 				                          "Stop");
 			
 		    toolBar.add(this.stopButton);
+		}
+		//------------------------------------------------------------------------------------------
+		// Seconds:
+		{
+			this.loopButton = new JCheckBox();
+			
+			this.loopButton.setText("Loop");
+			
+			toolBar.add(this.loopButton);
+			//buttonGroup.add(this.loopButton);
 		}
 		//==========================================================================================
 	}
@@ -938,6 +951,15 @@ extends JFrame
 	public JRadioButton getTicksBpmButton()
 	{
 		return this.ticksBpmButton;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #loopButton}.
+	 */
+	public JCheckBox getLoopButton()
+	{
+		return this.loopButton;
 	}
 
 }

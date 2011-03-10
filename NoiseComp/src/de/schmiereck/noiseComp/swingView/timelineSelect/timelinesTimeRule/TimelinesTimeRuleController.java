@@ -77,7 +77,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
-		timelineSelectEntriesModel.getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
+		timelineSelectEntriesModel.getTimelineSelectEntryModelsChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()
 			{
@@ -85,6 +85,18 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void notifyModelPropertyChanged()
 				{
 					resetTime();
+				}
+			}
+		);
+		//------------------------------------------------------------------------------------------
+		timelineSelectEntriesModel.getTimelineGeneratorModelsChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+			{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					adjustTime();
 				}
 			}
 		);
@@ -180,13 +192,96 @@ implements RemoveTimelineGeneratorListenerInterface,
 	}
 
 	/**
+	 * Adjust time markers and end time.
+	 */
+	public void adjustTime()
+	{
+		//==========================================================================================
+		TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
+		TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
+		TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
+		
+		double startMarkerTime = startTimeMarkerSelectEntryModel.getTimeMarker();
+		double playMarkerTime = playTimeMarkerSelectEntryModel.getTimeMarker();
+		double endMarkerTime = endTimeMarkerSelectEntryModel.getTimeMarker();
+		
+		double startTime = Double.MAX_VALUE;
+		double endTime = Double.MIN_VALUE;
+		double endTimelinesTime = 0.0D;
+		
+		//------------------------------------------------------------------------------------------
+		TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
+	
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModels();
+		
+		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
+		{
+			Timeline timeline = timelineSelectEntryModel.getTimeline();
+			
+			Generator generator = timeline.getGenerator();
+			
+			float startTimePos = generator.getStartTimePos();
+			float endTimePos = generator.getEndTimePos();
+			
+			if (startTimePos < startTime)
+			{
+				startTime = startTimePos;
+			}
+			
+			if (endTimePos > endTime)
+			{
+				endTime = endTimePos;
+			}
+			
+			if (endTimePos > endTimelinesTime)
+			{
+				endTimelinesTime = endTimePos;
+			}
+		}
+		
+		if (startTime > startMarkerTime)
+		{
+			startMarkerTime = startTime;
+		}
+		
+		if (endTime < playMarkerTime)
+		{
+			playMarkerTime = endTime;
+		}
+		else
+		{
+			if (startTime > playMarkerTime)
+			{
+				playMarkerTime = startTime;
+			}
+		}
+		
+		if (endTime < endMarkerTime)
+		{
+			endMarkerTime = endTime;
+		}
+		
+		//------------------------------------------------------------------------------------------
+		this.setTime(startMarkerTime,
+		             playMarkerTime,
+		             endMarkerTime,
+		             endTimelinesTime);
+
+		//==========================================================================================
+	}
+	
+	/**
 	 * Reset time markers and end time.
 	 */
 	public void resetTime()
 	{
 		//==========================================================================================
-		double endTime = 0.0D;
+		double startMarkerTime = 0.0D;
+		double playMarkerTime = 0.0D;
+		double endMarkerTime = 0.0D;
+		double endTimelinesTime = 0.0D;
 		
+		//------------------------------------------------------------------------------------------
 		TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
 	
 		List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModels();
@@ -199,22 +294,54 @@ implements RemoveTimelineGeneratorListenerInterface,
 			
 			float endTimePos = generator.getEndTimePos();
 			
-			if (endTimePos > endTime)
+			if (endTimePos > endMarkerTime)
 			{
-				endTime = endTimePos;
+				endMarkerTime = endTimePos;
+			}
+
+			if (endTimePos > endTimelinesTime)
+			{
+				endTimelinesTime = endTimePos;
 			}
 		}
 		
-		timelineSelectEntriesModel.setEndTime(endTime);
+		//------------------------------------------------------------------------------------------
+		this.setTime(startMarkerTime,
+		             playMarkerTime,
+		             endMarkerTime,
+		             endTimelinesTime);
+
+		//==========================================================================================
+	}
+
+	/**
+	 * @param startTime
+	 * 			is the marker start time.
+	 * @param playTime
+	 * 			is the marker play time.
+	 * @param endTime
+	 * 			is the marker end time.
+	 * @param endTimelinesTime
+	 * 			is the max end time of all timelines.
+	 */
+	public void setTime(double startTime,
+	                    double playTime,
+	                    double endTime,
+	                    double endTimelinesTime)
+	{
+		//==========================================================================================
+		TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
+
+		timelineSelectEntriesModel.setEndTime(endTimelinesTime);
 
 		TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
 		TimeMarkerSelectEntryModel playTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getPlayTimeMarkerSelectEntryModel();
 		TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = this.timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
 		
-		startTimeMarkerSelectEntryModel.setTimeMarker(0.0D);
-		playTimeMarkerSelectEntryModel.setTimeMarker(0.0D);
+		startTimeMarkerSelectEntryModel.setTimeMarker(startTime);
+		playTimeMarkerSelectEntryModel.setTimeMarker(playTime);
 		endTimeMarkerSelectEntryModel.setTimeMarker(endTime);
-
+		
 		//==========================================================================================
 	}
 

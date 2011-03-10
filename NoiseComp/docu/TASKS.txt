@@ -52,8 +52,6 @@ WORK:
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
 #139:	BUG: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
-#152:	IMPROVEMENT: Add Play-Loop-Button depending on #151.
-		--> DONE: Extract PlayController.
 
 DONE:
 =====
@@ -303,3 +301,6 @@ Release V2.0.4
 		--> DONE: TimelinesTimeRule: View and D&D Play-Marker.
 		--> DONE: TimelinesTimeRule: Syncronize Play-Marker with Service.
 		--> DONE: TimelinesTimeRule: Syncronize Start- and End-Marker with Service.
+#152:	IMPROVEMENT: Add Play-Loop-Button depending on #151.
+		--> DONE: Extract PlayController.
+		--> DONNE Add Play-Lopp Button.

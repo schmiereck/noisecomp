@@ -266,6 +266,7 @@ implements GeneratorBufferInterface,
 			oldInputTimeline = this.inputTimelines.put(inputData, inputTimeline);
 			
 			//------------------------------------------------------------------------------------------
+			boolean generatorChanged;
 			float changedStartTimePos;
 			float changedEndTimePos;
 			
@@ -275,20 +276,35 @@ implements GeneratorBufferInterface,
 				{
 					changedStartTimePos = Math.min(oldInputTimeline.getGeneratorStartTimePos(), inputTimeline.getGeneratorStartTimePos());
 					changedEndTimePos = Math.max(oldInputTimeline.getGeneratorEndTimePos(), inputTimeline.getGeneratorEndTimePos());
+					generatorChanged = true;
 				}
 				else
 				{
 					changedStartTimePos = oldInputTimeline.getGeneratorStartTimePos();
 					changedEndTimePos = oldInputTimeline.getGeneratorEndTimePos();
+					generatorChanged = true;
 				}
 			}
 			else
 			{
-				changedStartTimePos = inputTimeline.getGeneratorStartTimePos();
-				changedEndTimePos = inputTimeline.getGeneratorEndTimePos();
+				if (inputTimeline != null)
+				{
+					changedStartTimePos = inputTimeline.getGeneratorStartTimePos();
+					changedEndTimePos = inputTimeline.getGeneratorEndTimePos();
+					generatorChanged = true;
+				}
+				else
+				{
+					changedStartTimePos = 0.0F;
+					changedEndTimePos = 0.0F;
+					generatorChanged = false;
+				}
 			}
 			
-			this.generatorChanged(changedStartTimePos, changedEndTimePos);
+			if (generatorChanged == true)
+			{
+				this.generatorChanged(changedStartTimePos, changedEndTimePos);
+			}
 		}
 //		else
 //		{
