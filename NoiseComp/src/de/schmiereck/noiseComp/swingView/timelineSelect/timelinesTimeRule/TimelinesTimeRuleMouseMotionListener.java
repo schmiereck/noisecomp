@@ -94,9 +94,10 @@ implements MouseMotionListener
 			double endTimeMarker = endTimeMarkerSelectEntryModel.getTimeMarker();
 			double endTime = timelineSelectEntriesModel.getEndTime();
 			
-			float tickSize = this.timelinesTimeRuleView.calcTickSize();
+//			float tickSize = this.timelinesTimeRuleView.calcTickSize();
+			float zoomX = this.timelinesTimeRuleModel.getZoomX();
 			
-			double timeMarker = point2D.getX() / tickSize;
+			double timeMarker = point2D.getX() / zoomX;
 			
 			if (timeMarker > endTime)
 			{

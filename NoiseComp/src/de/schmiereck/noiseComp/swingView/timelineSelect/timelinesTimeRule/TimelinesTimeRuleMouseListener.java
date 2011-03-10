@@ -8,10 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 
-import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
-import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleModel;
-import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleView;
-
 /**
  * <p>
  * 	Timelines-Time-Rule Mouse-Listener.

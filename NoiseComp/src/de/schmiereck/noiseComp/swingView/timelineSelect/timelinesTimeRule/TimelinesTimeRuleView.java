@@ -336,29 +336,30 @@ extends JComponent
 		{
 			g.setColor(COLOR_TIME_BORDER);
 			
-			g.draw3DRect((int)(0.0D * tickSize), MARKER_BOX_OFFSET_Y, 
-			             (int)(endTime * tickSize), MARKER_BOX_SIZE_Y, 
+			g.draw3DRect((int)(0.0D * zoomX), MARKER_BOX_OFFSET_Y, 
+			             (int)(endTime * zoomX), MARKER_BOX_SIZE_Y, 
 			             false);
 			
 			g.setColor(COLOR_TIME_BACKGROUND);
 			
-			g.fillRect((int)(0.0D * tickSize) + 1, MARKER_BOX_OFFSET_Y + 1, 
-			           (int)(endTime * tickSize) - 2, MARKER_BOX_SIZE_Y - 2);
+			g.fillRect((int)(0.0D * zoomX) + 1, MARKER_BOX_OFFSET_Y + 1, 
+			           (int)(endTime * zoomX) - 2, MARKER_BOX_SIZE_Y - 2);
 
 			g.setColor(COLOR_MARKER_TIME_BACKGROUND);
 			
-			int startX = (int)(startTimeMarker * tickSize) + 1;
-			int endX = (int)(endTimeMarker * tickSize) - 1 - startX;
+			int startX = (int)(startTimeMarker * zoomX) + 1;
+			int endX = (int)(endTimeMarker * zoomX) - 1 - startX;
 			
 			g.fillRect(startX, 4, 
 			           endX, MARKER_SIZE_Y - 8);
 		}
-		
-		// Left Marker:
+
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Start-Marker:
 		{
-			int ltx = (int)(startTimeMarker * tickSize);
+			int ltx = (int)(startTimeMarker * zoomX);
 			int lty = MARKER_OFFSET_Y;
-			int lbx = (int)(startTimeMarker * tickSize);
+			int lbx = ltx;
 			int lby = MARKER_OFFSET_Y + MARKER_SIZE_Y - 1;
 			int lhx = ltx + MARKER_SIZE_X;
 			int lhy = lty + ((MARKER_SIZE_Y - 2) / 2);
@@ -385,10 +386,12 @@ extends JComponent
 			g.drawLine(lbx, lby, 
 			           lhx, lhy);
 		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// End-Marker:
 		{
-			int ltx = (int)(endTimeMarker * tickSize);
+			int ltx = (int)(endTimeMarker * zoomX);
 			int lty = 1;
-			int lbx = (int)(endTimeMarker * tickSize);
+			int lbx = ltx;
 			int lby = MARKER_OFFSET_Y + MARKER_SIZE_Y - 1;
 			int lhx = ltx - MARKER_SIZE_X;
 			int lhy = lty + ((MARKER_SIZE_Y - 2) / 2);
@@ -415,8 +418,10 @@ extends JComponent
 			g.drawLine(lbx, lby, 
 			           lhx, lhy);
 		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Play-Marker:
 		{
-			int bx = (int)(playTimeMarker * tickSize);
+			int bx = (int)(playTimeMarker * zoomX);
 			int by = MARKER_PLAY_OFFSET_Y + MARKER_PLAY_SIZE_Y;
 			int ltx = bx - (MARKER_PLAY_SIZE_X / 2);
 			int lty = MARKER_PLAY_OFFSET_Y;
@@ -601,15 +606,16 @@ extends JComponent
 		}
 		
 		//------------------------------------------------------------------------------------------
-		float tickSize = this.calcTickSize();
+//		float tickSize = this.calcTickSize();
+		float zoomX = this.timelinesTimeRuleModel.getZoomX();
 		 
 		//------------------------------------------------------------------------------------------
 		double x = point2D.getX();
 		double y = point2D.getY();
 		
-		if (x >= ((timeMarker * tickSize) + markerOffsetX))
+		if (x >= ((timeMarker * zoomX) + markerOffsetX))
 		{
-			if (x <= ((timeMarker * tickSize) + markerOffsetX + markerSizeX))
+			if (x <= ((timeMarker * zoomX) + markerOffsetX + markerSizeX))
 			{
 				if (y >= (markerOffsetY))
 				{

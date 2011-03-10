@@ -218,24 +218,27 @@ implements RemoveTimelineGeneratorListenerInterface,
 		{
 			Timeline timeline = timelineSelectEntryModel.getTimeline();
 			
-			Generator generator = timeline.getGenerator();
-			
-			float startTimePos = generator.getStartTimePos();
-			float endTimePos = generator.getEndTimePos();
-			
-			if (startTimePos < startTime)
+			if (timeline != null)
 			{
-				startTime = startTimePos;
-			}
-			
-			if (endTimePos > endTime)
-			{
-				endTime = endTimePos;
-			}
-			
-			if (endTimePos > endTimelinesTime)
-			{
-				endTimelinesTime = endTimePos;
+				Generator generator = timeline.getGenerator();
+				
+				float startTimePos = generator.getStartTimePos();
+				float endTimePos = generator.getEndTimePos();
+				
+				if (startTimePos < startTime)
+				{
+					startTime = startTimePos;
+				}
+				
+				if (endTimePos > endTime)
+				{
+					endTime = endTimePos;
+				}
+				
+				if (endTimePos > endTimelinesTime)
+				{
+					endTimelinesTime = endTimePos;
+				}
 			}
 		}
 		
