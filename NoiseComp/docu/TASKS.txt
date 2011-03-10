@@ -51,7 +51,6 @@ WORK:
 		--> http://www.eclipse.org/mat/
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
-#139:	BUG: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
 
 DONE:
 =====
@@ -304,3 +303,4 @@ Release V2.0.4
 #152:	IMPROVEMENT: Add Play-Loop-Button depending on #151.
 		--> DONE: Extract PlayController.
 		--> DONNE Add Play-Lopp Button.
+#139:	BUG: DONE: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.

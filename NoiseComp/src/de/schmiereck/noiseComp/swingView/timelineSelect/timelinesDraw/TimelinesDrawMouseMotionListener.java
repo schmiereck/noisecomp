@@ -110,6 +110,13 @@ implements MouseMotionListener
 					pos = timePos;
 				}
 				
+				// Position is negativ?
+				if (pos < 0.0D)
+				{
+					// limit to 0.0D.
+					pos = 0.0D;
+				}
+				
 				this.timelinesDrawPanelModel.setHandlerSnaped(handlerSnaped);
 				this.timelinesDrawPanelModel.setNearestSnapToTimpePos(nearestSnapToTimpePos);
 				
@@ -138,6 +145,7 @@ implements MouseMotionListener
 						break;
 					}
 				}
+				
 				{
 //					        JViewport vport = scrollPane.getViewport();
 //					        Point viewPos = vport.getViewPosition();
@@ -154,6 +162,7 @@ implements MouseMotionListener
 					Rectangle rect = new Rectangle((int)(point2D.getX() * at.getScaleX() - 32), 
 					                               (int)(point2D.getY() - 32), 
 					                               64, 64);
+					
 					this.timelinesDrawPanelView.scrollRectToVisible(rect);
 			    }
 			}
@@ -174,6 +183,7 @@ implements MouseMotionListener
 					selectedTimelineModel.notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel, 
 					                                                               timelineSelectEntryModel);
 				}
+				
 				Rectangle rect = new Rectangle((int)(point2D.getX() * at.getScaleX() - 32), 
 				                               (int)(point2D.getY() - 32), 
 				                               64, 64);

@@ -73,7 +73,18 @@ implements MouseListener
 	public void mouseExited(MouseEvent e)
 	{
 		//==========================================================================================
-		this.timelinesDrawPanelModel.setHighlightedTimelineSelectEntryModel(null);
+		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
+			selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+
+		// TimelineHandler not moved?
+//		if (this.timelinesDrawPanelModel.getTimelineHandlerMoved() == false)
+		if (selectedTimelineSelectEntryModel == null)
+		{
+			// Reset highlighted timeline.
+			this.timelinesDrawPanelModel.setHighlightedTimelineSelectEntryModel(null);
+		}
 		
 		this.timelinesDrawPanelView.repaint();
 		
