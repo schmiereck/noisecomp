@@ -737,4 +737,38 @@ public class TimelinesDrawPanelModel
 	{
 		return this.timelineSelectEntriesModel;
 	}
+
+	/**
+	 * @param timelineEntryModel
+	 * 			is the Timeline-Entry Model.
+	 * @return
+	 * 			the Position of timeline.
+	 */
+	public int calcTimelinePos(TimelineSelectEntryModel timelineEntryModel)
+	{
+		//==========================================================================================
+		int timelinePos;
+		
+		//------------------------------------------------------------------------------------------
+		timelinePos = 0;
+		
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelineSelectEntriesModel.getTimelineSelectEntryModels(); 
+		
+		{
+			int timelineGeneratorPos = 0;
+			
+			for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
+			{
+				if (timelineEntryModel == timelineSelectEntryModel)
+				{
+					timelinePos = timelineGeneratorPos;
+					break;
+				}
+				
+				timelineGeneratorPos++;
+			}
+		}
+		//==========================================================================================
+		return timelinePos;
+	}
 }

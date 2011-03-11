@@ -13,6 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelineHandler.TimelineHandlerModel;
@@ -199,12 +200,33 @@ implements MouseMotionListener
 	public void mouseMoved(MouseEvent e)
 	{
 		//==========================================================================================
-		final AffineTransform at = this.timelinesDrawPanelView.getAt();
-		
 		Point point = e.getPoint();
 		Point2D point2D = this.timelinesDrawPanelView.mousePos(point);
 		
 		//------------------------------------------------------------------------------------------
+		this.updateTimelineHandlers(point, 
+		                            point2D);
+		
+		//------------------------------------------------------------------------------------------
+		this.updateInputHandler(point, 
+	                            point2D);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @param point
+	 * 			is the mouse position.
+	 * @param point2D
+	 * 			is the scaled mouse position.
+	 */
+	private void updateTimelineHandlers(final Point point,
+	                                    final Point2D point2D)
+	{
+		//==========================================================================================
+		final AffineTransform at = this.timelinesDrawPanelView.getAt();
+		
+		//==========================================================================================
 		boolean resetHighlightedTimelineHandler;
 		
 		TimelineSelectEntryModel timelineSelectEntryModel = 
@@ -281,6 +303,36 @@ implements MouseMotionListener
 				this.timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.NONE);
 				this.timelinesDrawPanelView.setCursor(this.timelinesDrawPanelView.getDefaultCursor());
 			}
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * @param point
+	 * 			is the mouse position.
+	 * @param point2D
+	 * 			is the mouse position.
+	 */
+	private void updateInputHandler(final Point point,
+                                    final Point2D point2D)
+	{
+		//==========================================================================================
+//		final AffineTransform at = this.timelinesDrawPanelView.getAt();
+		
+		final SelectedTimelineModel selectedTimelineModel = 
+			this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
+		//==========================================================================================
+		InputEntryModel inputEntryModel = 
+			this.timelinesDrawPanelView.searchInputEntry(selectedTimelineModel,
+			                                             point,
+			                                             point2D);
+
+		if (selectedTimelineModel.getHighlightedInputEntry() != inputEntryModel)
+		{
+			selectedTimelineModel.setHighlightedInputEntry(inputEntryModel);
+
+			this.timelinesDrawPanelView.repaint();
 		}
 		//==========================================================================================
 	}

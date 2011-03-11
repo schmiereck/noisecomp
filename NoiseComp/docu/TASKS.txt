@@ -40,7 +40,6 @@ TODO:
 #153:	IMPROVEMENT: Add Mute-Button per Timeline.
 #154:	IMPROVEMENT: Add New-File Menu-Entry.
 #156:	IMPROVEMENT: Update values of Edit-Comps without "Update"-Button.
-#157:	IMPROVEMENT: Timeline-Select: Connecting Inputs of diffenet Input-Types per Drag and Drop.
 #158:	
 #159:	
 
@@ -51,7 +50,10 @@ WORK:
 		--> http://www.eclipse.org/mat/
 		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
 		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
-
+#157:	IMPROVEMENT: Timeline-Select: Connecting Inputs of diffenet Input-Types per Drag and Drop.
+		--> DONE: Extract Input-Entries in extra Model to sync Input-Select-Comp and Timeline-Draw-Panel-Comp.
+		--> DONE: Highlight input.
+		
 DONE:
 =====
 Release V1.0

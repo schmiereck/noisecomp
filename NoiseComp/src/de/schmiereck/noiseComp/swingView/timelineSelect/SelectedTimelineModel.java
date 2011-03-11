@@ -3,13 +3,18 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule.TimelinesGeneratorsRuleModel;
+import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
  * <p>
@@ -43,6 +48,18 @@ public class SelectedTimelineModel
 	 */
 	private List<DoChangeTimelinesPositionListenerInterface> doChangeTimelinesPositionListeners = new Vector<DoChangeTimelinesPositionListenerInterface>();
 
+	//==============================================================================================
+	/**
+	 * Input-Entries Model.
+	 */
+	private final InputEntriesModel inputEntriesModel = new InputEntriesModel();
+	
+	//==============================================================================================
+	/**
+	 * Highlighted Input-Entry Model.
+	 */
+	private InputEntryModel highlightedInputEntry = null;
+	
 	//**********************************************************************************************
 	// Functions:
 	
@@ -64,6 +81,30 @@ public class SelectedTimelineModel
 		//==========================================================================================
 		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
 		
+		//------------------------------------------------------------------------------------------
+		if (this.selectedTimelineSelectEntryModel != null)
+		{
+			List<InputEntryModel> inputEntryModels = this.inputEntriesModel.getInputEntryModels();
+			
+			inputEntryModels.clear();
+			
+			Timeline timeline = this.selectedTimelineSelectEntryModel.getTimeline();
+			
+			Iterator<InputData> inputsIterator = timeline.getInputsIterator();
+			
+			while (inputsIterator.hasNext())
+			{
+				final InputData inputData = inputsIterator.next();
+				
+				InputEntryModel inputEntryModel = new InputEntryModel(inputData);
+				
+				inputEntryModels.add(inputEntryModel);
+			}
+		}
+		//------------------------------------------------------------------------------------------
+		this.setHighlightedInputEntry(null);
+		
+		//------------------------------------------------------------------------------------------
 		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
 		
 		//==========================================================================================
@@ -100,5 +141,32 @@ public class SelectedTimelineModel
 			                                                   newTimelineSelectEntryModel);
 		};
 		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputEntriesModel}.
+	 */
+	public InputEntriesModel getInputEntriesModel()
+	{
+		return this.inputEntriesModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #highlightedInputEntry}.
+	 */
+	public InputEntryModel getHighlightedInputEntry()
+	{
+		return this.highlightedInputEntry;
+	}
+
+	/**
+	 * @param highlightedInputEntry 
+	 * 			to set {@link #highlightedInputEntry}.
+	 */
+	public void setHighlightedInputEntry(InputEntryModel highlightedInputEntry)
+	{
+		this.highlightedInputEntry = highlightedInputEntry;
 	}
 }
