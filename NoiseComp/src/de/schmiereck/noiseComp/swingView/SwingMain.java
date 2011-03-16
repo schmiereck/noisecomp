@@ -78,6 +78,9 @@ public class SwingMain
 		soundSourceSchedulerLogic.startThread();
 	
 		//==========================================================================================
+		
+		Thread.setDefaultUncaughtExceptionHandler(new DefaultExceptionHandler());
+		
 		//Schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() 
@@ -99,11 +102,20 @@ public class SwingMain
 				}
 				catch (Exception ex)
 				{
-					ex.printStackTrace();
+					//ex.printStackTrace();
+					System.out.println("EX 1: " + ex);
 				}
 			}
 		});
 		//==========================================================================================
+		try
+		{
+			throw new RuntimeException("TEST1");
+		}
+		catch (Exception ex)
+		{
+			throw new RuntimeException("TEST2", ex);
+		}
 	}
 	
 	/**

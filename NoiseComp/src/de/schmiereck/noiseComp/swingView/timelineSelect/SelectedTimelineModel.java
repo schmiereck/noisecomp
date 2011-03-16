@@ -90,15 +90,21 @@ public class SelectedTimelineModel
 			
 			Timeline timeline = this.selectedTimelineSelectEntryModel.getTimeline();
 			
-			Iterator<InputData> inputsIterator = timeline.getInputsIterator();
-			
-			while (inputsIterator.hasNext())
+			if (timeline != null)
 			{
-				final InputData inputData = inputsIterator.next();
+				Iterator<InputData> inputsIterator = timeline.getInputsIterator();
 				
-				InputEntryModel inputEntryModel = new InputEntryModel(inputData);
-				
-				inputEntryModels.add(inputEntryModel);
+				if (inputsIterator != null)
+				{
+					while (inputsIterator.hasNext())
+					{
+						final InputData inputData = inputsIterator.next();
+						
+						InputEntryModel inputEntryModel = new InputEntryModel(inputData);
+						
+						inputEntryModels.add(inputEntryModel);
+					}
+				}
 			}
 		}
 		//------------------------------------------------------------------------------------------

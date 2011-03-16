@@ -62,7 +62,7 @@ implements Scrollable//, MouseMotionListener
 	/**
 	 * 
 	 */
-	private static final int	INPUT_MARKER_SIZE_X	= 5;
+	private static final int	INPUT_MARKER_SIZE_X	= 7;
 
 	/**
 	 * 

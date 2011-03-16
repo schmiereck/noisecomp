@@ -1,7 +1,7 @@
 /*
- * www.schmiereck.de (c) 2010
+ * www.schmiereck.de (c) 2011
  */
-package de.schmiereck.noiseComp.swingView.about;
+package de.schmiereck.noiseComp.swingView.error;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
@@ -26,20 +27,22 @@ import de.schmiereck.noiseComp.Version;
 
 /**
  * <p>
- * 	About-Dialog View.
+ * 	Error-Dialog View.
  * </p>
  * 
  * @author smk
- * @version <p>21.09.2010:	created, smk</p>
+ * @version <p>16.03.2011:	created, smk</p>
  */
-public class AboutDialogView
+public class ErrorDialogView
 extends JDialog
 {
 	//**********************************************************************************************
 	// Fields:
 	
-	 private JButton okButton;
+	 private final JButton okButton;
 
+	 private final JEditorPane jep;
+	 
 	//**********************************************************************************************
 	// Functions:
 
@@ -47,7 +50,7 @@ extends JDialog
 	 * Constructor.
 	 * 
 	 */
-	public AboutDialogView(Frame parent, boolean modal)
+	public ErrorDialogView(Frame parent, boolean modal)
 		throws HeadlessException
 	{
 		super(parent, modal);
@@ -57,9 +60,9 @@ extends JDialog
 	    this.setLayout(gridBagLayout);
 	    
 	    this.setVisible(false);
-	    this.setSize(420, 200);
+	    this.setSize(640, 100);
 	    this.setBackground(Color.WHITE);
-	    this.setTitle("About NoiseComp");
+	    this.setTitle("Error NoiseComp");
 	    this.setResizable(true);
 
 	    {
@@ -70,7 +73,7 @@ extends JDialog
 	    	
 	    	label.setFont(new Font("Arial", Font.BOLD, 18));
 	    	
-		    GridBagConstraints gbc = new GridBagConstraints( );
+		    GridBagConstraints gbc = new GridBagConstraints();
 		    
 		    gbc.gridx = 1;
 		    gbc.gridy = 1;
@@ -85,7 +88,7 @@ extends JDialog
 	    	JLabel label = new JLabel("Version: " + Version.version,
 	    	                          JLabel.LEFT);
 		    
-		    GridBagConstraints gbc = new GridBagConstraints( );
+		    GridBagConstraints gbc = new GridBagConstraints();
 		    
 		    gbc.gridx = 1;
 		    gbc.gridy = 2;
@@ -97,10 +100,10 @@ extends JDialog
 			this.add(label);
 	    }
 	    {
-	    	JLabel label = new JLabel("(c) Copyright by schmiereck " + Version.years,
+	    	JLabel label = new JLabel("Send stacktrace to thomas@schmiereck.de",
 	    	                          JLabel.LEFT);
 		    
-		    GridBagConstraints gbc = new GridBagConstraints( );
+		    GridBagConstraints gbc = new GridBagConstraints();
 		    
 		    gbc.gridx = 1;
 		    gbc.gridy = 3;
@@ -112,12 +115,14 @@ extends JDialog
 			this.add(label);
 	    }
 	    {
-		    GridBagConstraints gbc = new GridBagConstraints( );
+		    GridBagConstraints gbc = new GridBagConstraints();
 		    
 		    gbc.gridx = 1;
 		    gbc.gridy = 4;
-		    gbc.fill = GridBagConstraints.NONE;
-		    gbc.insets = new Insets(9, 0, 0, 0);
+		    gbc.fill = GridBagConstraints.HORIZONTAL | GridBagConstraints.VERTICAL;//GridBagConstraints.NONE;
+		    //gbc.insets = new Insets(9, 0, 0, 0);
+		    gbc.weightx = 1.0D;
+		    gbc.weighty = 1.0D;
 		    
 //	    	JLabel label = new JLabel("Visit http://www.schmiereck.de/jawiki/user/coders/NoiseComp",
 //	    	                          JLabel.LEFT);
@@ -128,18 +133,12 @@ extends JDialog
 
 	    	//http://www.coderanch.com/t/345547/GUI/java/Making-clickable-links-HTML-JLabel
 	    	
-	    	final JEditorPane jep = 
-	    		new JEditorPane("text/html", 
-	    		                "<div style=\"font-family:Verdana,Arial,Helvetica,sans-serif;font-size:11pt;\">" +
-	    		                "Visit " +
-	    		                "<a href=\"http://www.schmiereck.de/jawiki/user/coders/NoiseComp\">" +
-	    		                "http://www.schmiereck.de/jawiki/user/coders/NoiseComp" + 
-	    		                "</a>." +
-	    		                "</div>");
-	    	
-	    	jep.setEditable(false);  
-	    	jep.setOpaque(false);  
-	    	jep.addHyperlinkListener(new HyperlinkListener() 
+	    	this.jep = new JEditorPane();
+	    	this.jep.setContentType("text/html");
+	    	this.jep.setEditable(false);  
+	    	this.jep.setOpaque(false);  
+	    	//this.jep.setAutoscrolls(true);
+	    	this.jep.addHyperlinkListener(new HyperlinkListener() 
 	    	{  
 	    		/* (non-Javadoc)
 	    		 * @see javax.swing.event.HyperlinkListener#hyperlinkUpdate(javax.swing.event.HyperlinkEvent)
@@ -173,9 +172,12 @@ extends JDialog
 	    		}  
 	    	});  
 	    	
-	    	gridBagLayout.setConstraints(jep, gbc);
+		    JScrollPane scrollPane = new JScrollPane();
+		    scrollPane.setViewportView(this.jep);
+		    scrollPane.setPreferredSize(new Dimension(600, 200));
+	    	gridBagLayout.setConstraints(scrollPane, gbc);
 		    
-			this.add(jep);
+			this.add(scrollPane);
 	    }
 	    {
 			this.okButton = new JButton();
@@ -221,4 +223,19 @@ extends JDialog
 		return this.okButton;
 	}
 
+	public void setStacktrace(String stacktrace)
+	{
+		String htmlStr = stacktrace.replaceAll("\\n", "<br/>");
+		
+		this.jep.setText("<div style=\"font-family:Verdana,Arial,Helvetica,sans-serif;font-size:11pt;\">" +
+		                 "<div>" +
+		                 "Stacktrace:" +
+		                 "</div>" +
+		                 "<code>" +
+		                 htmlStr + 
+		                 "</code>" +
+		                 "</div>");
+		this.pack();
+	}
+	
 }

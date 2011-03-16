@@ -1,7 +1,7 @@
 /*
- * www.schmiereck.de (c) 2010
+ * www.schmiereck.de (c) 2011
  */
-package de.schmiereck.noiseComp.swingView.about;
+package de.schmiereck.noiseComp.swingView.error;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -9,29 +9,37 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.Action;
 
+import de.schmiereck.noiseComp.swingView.error.ErrorController;
+
 /**
  * <p>
- * 	About OK Action.
+ * 	Error OK Action.
  * </p>
  * 
  * @author smk
- * @version <p>21.09.2010:	created, smk</p>
+ * @version <p>16.03.2011:	created, smk</p>
  */
-public class OKAction
+public class ErrorOKAction
 implements Action
 {
-	/**
-	 * Ist der Controller des About-Dialogs. 
-	 */
-	private AboutController appController;
+	//**********************************************************************************************
+	// Fields:
 	
+	/**
+	 * Ist der Controller des Error-Dialogs. 
+	 */
+	private ErrorController appController;
+	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
 	 * @param appController 
-	 * 			ist der Controller des About-Dialogs. 
+	 * 			ist der Controller des Error-Dialogs. 
 	 */
-	public OKAction(AboutController appController)
+	public ErrorOKAction(ErrorController appController)
 	{
 		this.appController = appController;
 	}

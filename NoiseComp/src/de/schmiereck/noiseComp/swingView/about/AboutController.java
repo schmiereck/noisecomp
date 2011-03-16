@@ -15,11 +15,17 @@ import javax.swing.JButton;
  */
 public class AboutController
 {
+	//**********************************************************************************************
+	// Fields:
+	
 	/**
 	 * Is the View of the About-Dialog. 
 	 */
 	private AboutDialogView aboutDialogView;
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * Constructor.
 	 * 
@@ -33,9 +39,9 @@ public class AboutController
 		{
 			JButton okButton = this.aboutDialogView.getOkButton();
 			
-			OKAction okAction = new OKAction(this);
+			AboutOKAction aboutOkAction = new AboutOKAction(this);
 			
-			okButton.setAction(okAction);
+			okButton.setAction(aboutOkAction);
 		}
 	}
 

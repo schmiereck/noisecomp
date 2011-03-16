@@ -390,90 +390,93 @@ public class InputEditController
 		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
-		InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
-		GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
-		Object valueSelectedValue = this.inputEditView.getInputTypeValueTextField().getSelectedItem();
-		ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)this.inputEditView.getModulInputTypeComboBox().getSelectedItem();
-			
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
-		Timeline inputTimeline = inputGeneratorSelectItem.getTimeline();
-		MultiValue multiValue;
+		// Input is selceted?
+		if (selectModel.getSelectedRowNo() != null)
 		{
-			String valueStr;
-			
-			if (valueSelectedValue instanceof ValueSelectItem)
-			{
-				ValueSelectItem valueSelectItem = (ValueSelectItem)valueSelectedValue;
+			InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
+			GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
+			Object valueSelectedValue = this.inputEditView.getInputTypeValueTextField().getSelectedItem();
+			ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)this.inputEditView.getModulInputTypeComboBox().getSelectedItem();
 				
-				valueStr = valueSelectItem.getValue();
-			}
-			else
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
+			Timeline inputTimeline = inputGeneratorSelectItem.getTimeline();
+			MultiValue multiValue;
 			{
-				valueStr = valueSelectedValue.toString();
-			}
-			
-			multiValue = InputUtils.makeMultiValue(valueStr);
-		}
-		InputTypeData modulInputTypeData = modulInputTypeSelectItem.getInputTypeData();
-		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		// Input-Data:
-		
-		Integer selectedRowNo = selectModel.getSelectedRowNo();
-		
-		// Input selected?
-		if (selectedRowNo != null)
-		{
-			InputsTabelModel inputsTabelModel = selectModel.getInputsTabelModel();
-			
-			InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
-			
-			InputData inputData = inputSelectEntryModel.getInputData();
-			
-			// Existing Input selected?
-			if (inputData != null)
-			{
-				// Update selected Input:
+				String valueStr;
 				
-				timelineManagerLogic.updateInput(selectedTimeline,
-				                                 inputData,
-				                                 inputTimeline, 
-				                                 inputTypeData, 
-				                                 multiValue.floatValue, multiValue.stringValue,
-				                                 modulInputTypeData);
-//				inputData.setInputGenerator(inputGenerator);
-//				inputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
-//				inputData.setInputModulInputTypeData(modulInputTypeData);
-			}
-			else
-			{
-				// Insert new Input:
-				inputData = 
-					timelineManagerLogic.addInputGenerator(selectedTimeline,
-					                                       inputTimeline, 
-					                                       inputTypeData, 
-					                                       multiValue.floatValue, multiValue.stringValue,
-					                                       modulInputTypeData);
+				if (valueSelectedValue instanceof ValueSelectItem)
+				{
+					ValueSelectItem valueSelectItem = (ValueSelectItem)valueSelectedValue;
+					
+					valueStr = valueSelectItem.getValue();
+				}
+				else
+				{
+					valueStr = valueSelectedValue.toString();
+				}
 				
-				inputSelectEntryModel.setInputData(inputData);
+				multiValue = InputUtils.makeMultiValue(valueStr);
 			}
+			InputTypeData modulInputTypeData = modulInputTypeSelectItem.getInputTypeData();
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Input-Data:
+			
+			Integer selectedRowNo = selectModel.getSelectedRowNo();
+			
+			// Input selected?
+			if (selectedRowNo != null)
+			{
+				InputsTabelModel inputsTabelModel = selectModel.getInputsTabelModel();
+				
+				InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
+				
+				InputData inputData = inputSelectEntryModel.getInputData();
+				
+				// Existing Input selected?
+				if (inputData != null)
+				{
+					// Update selected Input:
+					
+					timelineManagerLogic.updateInput(selectedTimeline,
+					                                 inputData,
+					                                 inputTimeline, 
+					                                 inputTypeData, 
+					                                 multiValue.floatValue, multiValue.stringValue,
+					                                 modulInputTypeData);
+	//				inputData.setInputGenerator(inputGenerator);
+	//				inputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
+	//				inputData.setInputModulInputTypeData(modulInputTypeData);
+				}
+				else
+				{
+					// Insert new Input:
+					inputData = 
+						timelineManagerLogic.addInputGenerator(selectedTimeline,
+						                                       inputTimeline, 
+						                                       inputTypeData, 
+						                                       multiValue.floatValue, multiValue.stringValue,
+						                                       modulInputTypeData);
+					
+					inputSelectEntryModel.setInputData(inputData);
+				}
+			}
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// Update Input-Edit-Model:
+			
+			this.inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
+			this.inputEditModel.setInputTimeline(inputTimeline);
+			{
+				String valueStr = OutputUtils.makeMultiValueEditText(multiValue);
+				this.inputEditModel.setValue(valueStr);
+			}
+			this.inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
+			
+			//------------------------------------------------------------------------------------------
+			this.appModelChangedObserver.notifyAppModelChanged();
 		}
-		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		// Update Input-Edit-Model:
-		
-		this.inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
-		this.inputEditModel.setInputTimeline(inputTimeline);
-		{
-			String valueStr = OutputUtils.makeMultiValueEditText(multiValue);
-			this.inputEditModel.setValue(valueStr);
-		}
-		this.inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
-		
-		//------------------------------------------------------------------------------------------
-		this.appModelChangedObserver.notifyAppModelChanged();
-		
 		//==========================================================================================
 	}
 
