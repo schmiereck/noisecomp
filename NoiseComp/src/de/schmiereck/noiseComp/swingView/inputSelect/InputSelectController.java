@@ -14,6 +14,8 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
@@ -139,19 +141,68 @@ public class InputSelectController
 				{
 					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
 					
-					ListSelectionModel selectionModel = inputSelectView.getSelectionModel();
+//					ListSelectionModel selectionModel = inputSelectView.getSelectionModel();
+//					
+//					if (selectedRowNo != null)
+//					{
+//						selectionModel.setSelectionInterval(selectedRowNo, selectedRowNo);
+//					}
+//					else
+//					{
+//						selectionModel.clearSelection();
+//					}
 					
-					if (selectedRowNo != null)
-					{
-						selectionModel.setSelectionInterval(selectedRowNo, selectedRowNo);
-					}
-					else
-					{
-						selectionModel.clearSelection();
-					}
+					InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
+					
+					InputEntryModel selectedInputEntry = inputEntriesModel.searchInputEntry(selectedRowNo);
+					
+					selectedTimelineModel.setSelectedInputEntry(selectedInputEntry);
 				}
 		 	}
 		);
+		//------------------------------------------------------------------------------------------
+		{
+			selectedTimelineModel.getSelectedInputEntryChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+				{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						ListSelectionModel selectionModel = inputSelectView.getSelectionModel();
+						
+						InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
+						
+						if (selectedInputEntry != null)
+						{
+							InputData inputData = selectedInputEntry.getInputData();
+							
+							InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+							
+							for (int rowNo = 0; rowNo < inputsTabelModel.getRowCount(); rowNo++)
+							{
+								InputSelectEntryModel entryModel = inputsTabelModel.getRow(rowNo);
+								
+								InputData rowInputData = entryModel.getInputData();
+								
+								if (inputData == rowInputData)
+								{
+//									inputSelectModel.setSelectedRowNo(rowNo);
+									selectionModel.setSelectionInterval(rowNo, rowNo);
+									break;
+								}
+							}
+						}
+						else
+						{
+							selectionModel.clearSelection();
+						}
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
 		//==========================================================================================
 	}
 

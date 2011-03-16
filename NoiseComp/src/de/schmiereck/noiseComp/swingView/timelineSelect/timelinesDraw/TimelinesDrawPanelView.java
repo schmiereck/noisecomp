@@ -541,32 +541,57 @@ implements Scrollable//, MouseMotionListener
 					}
 					{
 						boolean highlighted;
+						boolean selected;
 						
 						if (selectedTimelineModel != null)
 						{
-							InputEntryModel highlightedInputEntry = selectedTimelineModel.getHighlightedInputEntry();
-							
-							if (highlightedInputEntry != null)
 							{
-								InputData highlightedInputData = highlightedInputEntry.getInputData();
+								InputEntryModel highlightedInputEntry = selectedTimelineModel.getHighlightedInputEntry();
 								
-								if (inputData == highlightedInputData)
+								if (highlightedInputEntry != null)
 								{
-									highlighted = true;
+									InputData highlightedInputData = highlightedInputEntry.getInputData();
+									
+									if (inputData == highlightedInputData)
+									{
+										highlighted = true;
+									}
+									else
+									{
+										highlighted = false;
+									}
 								}
 								else
 								{
 									highlighted = false;
 								}
 							}
-							else
 							{
-								highlighted = false;
+								InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
+								
+								if (selectedInputEntry != null)
+								{
+									InputData selectedInputData = selectedInputEntry.getInputData();
+									
+									if (inputData == selectedInputData)
+									{
+										selected = true;
+									}
+									else
+									{
+										selected = false;
+									}
+								}
+								else
+								{
+									selected = false;
+								}
 							}
 						}
 						else
 						{
 							highlighted = false;
+							selected = false;
 						}
 						
 						if (highlighted == true)
@@ -588,11 +613,23 @@ implements Scrollable//, MouseMotionListener
 						            imY, 
 						            INPUT_MARKER_SIZE_X, 
 						            INPUT_MARKER_SIZE_Y);
+						
+						boolean raised;
+						
+						if (selected == true)
+						{
+							raised = false;
+						}
+						else
+						{
+							raised = true;
+						}
+						
 						g2.draw3DRect(imX, 
 						              imY, 
 						              INPUT_MARKER_SIZE_X, 
 						              INPUT_MARKER_SIZE_Y, 
-						              true);
+						              raised);
 					}
 					inputNo++;
 				}

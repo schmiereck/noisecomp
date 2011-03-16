@@ -154,6 +154,22 @@ implements TimelineContentChangedListenerInterface,
 	    );
 		//------------------------------------------------------------------------------------------
 		{
+			selectedTimelineModel.getSelectedInputEntryChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+				{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						timelinesDrawPanelView.repaint();
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
 			// Add listener to components that can bring up popup menus.
 			MouseListener popupListener = new TimelinesDrawMouseAdapter(appController,
 			                                                             this,
@@ -163,7 +179,6 @@ implements TimelineContentChangedListenerInterface,
 			//menuBar.addMouseListener(popupListener);
 			this.timelinesDrawPanelView.addMouseListener(popupListener);
 		}
-
 	    //==========================================================================================
 	}
 

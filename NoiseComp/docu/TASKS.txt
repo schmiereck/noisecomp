@@ -52,7 +52,7 @@ WORK:
 #157:	IMPROVEMENT: Timeline-Select: Connecting Inputs of diffenet Input-Types per Drag and Drop.
 		--> DONE: Extract Input-Entries in extra Model to sync Input-Select-Comp and Timeline-Draw-Panel-Comp.
 		--> DONE: Highlight input.
-		--> Select input by click (and vis a vis Input-Select-Comp).
+		--> DONE: Select input by click (and vis a vis by Input-Select-Comp).
 
 DONE:
 =====

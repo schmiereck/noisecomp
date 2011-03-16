@@ -37,4 +37,32 @@ public class InputEntriesModel
 		return this.inputEntryModels;
 	}
 
+	/**
+	 * @param rowNo
+	 * 			is the row number.
+	 * @return
+	 * 			the entry.
+	 */
+	public InputEntryModel searchInputEntry(Integer rowNo)
+	{
+		//==========================================================================================
+		InputEntryModel retInputEntryModel;
+		
+		retInputEntryModel = null;
+		
+		for (int entryPos = 0; entryPos < this.inputEntryModels.size(); entryPos++)
+		{
+			InputEntryModel inputEntryModel = this.inputEntryModels.get(entryPos);
+			
+			if (entryPos == rowNo)
+			{
+				retInputEntryModel = inputEntryModel;
+				break;
+			}
+		}
+		
+		//==========================================================================================
+		return retInputEntryModel;
+	}
+
 }

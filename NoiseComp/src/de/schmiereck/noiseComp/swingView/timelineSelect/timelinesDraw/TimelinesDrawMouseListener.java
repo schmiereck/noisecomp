@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 
@@ -95,16 +96,31 @@ implements MouseListener
 	public void mousePressed(MouseEvent e)
 	{
 		//==========================================================================================
-		SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		final SelectedTimelineModel selectedTimelineModel = 
+			this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
+		//==========================================================================================
 		Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
 		
-		TimelineSelectEntryModel timelineSelectEntryModel = 
-			this.timelinesDrawPanelView.searchGenerator(point2D);
-		
-		selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
-//				selectedTimelineGeneratorModel = timelineGeneratorModel;
-//				isMousePressed = true;
+		//------------------------------------------------------------------------------------------
+		{
+			TimelineSelectEntryModel timelineSelectEntryModel = 
+				this.timelinesDrawPanelView.searchGenerator(point2D);
+			
+			if (selectedTimelineModel.getSelectedTimelineSelectEntryModel() != timelineSelectEntryModel)
+			{
+				selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
+			}
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			final InputEntryModel highlightedInputEntry = selectedTimelineModel.getHighlightedInputEntry();
+			
+			if (selectedTimelineModel.getSelectedInputEntry() != highlightedInputEntry)
+			{
+				selectedTimelineModel.setSelectedInputEntry(highlightedInputEntry);
+			}
+		}
 		//==========================================================================================
 	}
 

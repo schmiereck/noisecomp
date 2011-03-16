@@ -108,14 +108,14 @@ public class SwingMain
 			}
 		});
 		//==========================================================================================
-		try
-		{
-			throw new RuntimeException("TEST1");
-		}
-		catch (Exception ex)
-		{
-			throw new RuntimeException("TEST2", ex);
-		}
+//		try
+//		{
+//			throw new RuntimeException("TEST1");
+//		}
+//		catch (Exception ex)
+//		{
+//			throw new RuntimeException("TEST2", ex);
+//		}
 	}
 	
 	/**

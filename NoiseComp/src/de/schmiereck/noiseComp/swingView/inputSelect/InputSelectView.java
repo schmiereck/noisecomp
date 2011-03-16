@@ -77,6 +77,8 @@ extends JTable
 						}
 						
 						inputSelectModel.setSelectedRowNo(selectedRowNo);
+//						inputSelectModel.getS
+//						selectedTimelineModel.setSelectedInputEntry();
 		            }
 				}
 		 	}

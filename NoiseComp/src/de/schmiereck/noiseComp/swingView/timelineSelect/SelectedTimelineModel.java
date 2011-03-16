@@ -46,7 +46,7 @@ public class SelectedTimelineModel
 	/**
 	 * Do Timeline Selected Listeners.
 	 */
-	private List<DoChangeTimelinesPositionListenerInterface> doChangeTimelinesPositionListeners = new Vector<DoChangeTimelinesPositionListenerInterface>();
+	private final List<DoChangeTimelinesPositionListenerInterface> doChangeTimelinesPositionListeners = new Vector<DoChangeTimelinesPositionListenerInterface>();
 
 	//==============================================================================================
 	/**
@@ -59,6 +59,17 @@ public class SelectedTimelineModel
 	 * Highlighted Input-Entry Model.
 	 */
 	private InputEntryModel highlightedInputEntry = null;
+	
+	//==============================================================================================
+	/**
+	 * Selected Input-Entry Model.
+	 */
+	private InputEntryModel selectedInputEntry = null;
+	
+	/**
+	 * {@link #selectedInputEntry} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier selectedInputEntryChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -175,4 +186,43 @@ public class SelectedTimelineModel
 	{
 		this.highlightedInputEntry = highlightedInputEntry;
 	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedInputEntry}.
+	 */
+	public InputEntryModel getSelectedInputEntry()
+	{
+		return this.selectedInputEntry;
+	}
+
+	/**
+	 * @param selectedInputEntry 
+	 * 			to set {@link #selectedInputEntry}.
+	 */
+	public void setSelectedInputEntry(InputEntryModel selectedInputEntry)
+	{
+		this.selectedInputEntry = selectedInputEntry;
+		
+		this.selectedInputEntryChangedNotifier.notifyModelPropertyChangedListeners();
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedInputEntryChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getSelectedInputEntryChangedNotifier()
+	{
+		return this.selectedInputEntryChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #doChangeTimelinesPositionListeners}.
+	 */
+	public List<DoChangeTimelinesPositionListenerInterface> getDoChangeTimelinesPositionListeners()
+	{
+		return this.doChangeTimelinesPositionListeners;
+	}
+
 }

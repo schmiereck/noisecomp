@@ -103,7 +103,10 @@ implements UncaughtExceptionHandler
 		
 		//------------------------------------------------------------------------------------------
 		//e.printStackTrace();
-		this.previousHandler.uncaughtException(t, e);
+		if (this.previousHandler != null)
+		{
+			this.previousHandler.uncaughtException(t, e);
+		}
 	
 		//==========================================================================================
 	}
