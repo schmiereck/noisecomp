@@ -122,7 +122,10 @@ public class InputEntriesModel
 	                             InputData inputData)
 	{
 		//==========================================================================================
-		inputEntryModel.setInputData(inputData);
+		if (inputEntryModel != null)
+		{
+			inputEntryModel.setInputData(inputData);
+		}
 		
 		this.inputEntriesUpdateNotifier.notifyInputEntriesUpdateListeners(inputEntryModel);
 		

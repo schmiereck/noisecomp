@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -93,7 +94,9 @@ implements Scrollable//, MouseMotionListener
 	private static final Color CTimelineHighlightedBackground = new Color(0xFFE6C9);//128, 198, 192);
 	private static final Color CTimelineSignal = new Color(0x1A, 0x23, 0x74, 160);//0x42, 0x82, 0xA4, 160);//0, 0, 0, 160);
 	private static final Color CTimelineInputConnector = new Color(0xA67841);//255, 0, 0, 192);
-	private static final Color CTimelineInputConnectorHighlighted = new Color(0xE6A871);
+	private static final Color CTimelineInputHighlightedConnector = new Color(0xC69861);
+	private static final Color CTimelineInputConnectorBackground = new Color(0xA67841);
+	private static final Color CTimelineInputHighlightedConnectorBackground = new Color(0xE6A871);
 	private static final Color CTimelineBuffer = new Color(0x434DA5);//0, 200, 0, 127);
 
 	private static final Color CTimelineHandlerBorder = new Color(0xA1B4BE);//200, 200, 255);
@@ -103,6 +106,12 @@ implements Scrollable//, MouseMotionListener
 	
 	private static final Color CPlaybackTimeLine = new Color(0x561360);
 	private static final Color CPlaybackTimeLineGlow = new Color(0xBE, 0x6F, 0xC9, 128);
+	
+	//==============================================================================================
+	// Strokes:
+	
+	private static final BasicStroke BSTimelineInputConnector	= new BasicStroke();
+	private static final BasicStroke BSTimelineInputSelectedConnector	= new BasicStroke(3.0F);
 	
 	//==============================================================================================
 	private final float DRAW_EVERY_SAMPLE = 4.0F;//1.0F;//25.0F;
@@ -507,12 +516,15 @@ implements Scrollable//, MouseMotionListener
 					InputEntryModel inputEntryModel = inputEntryModelsIterator.next();
 	
 					InputData inputData = inputEntryModel.getInputData();
-						
+					
 					float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
 					
 					float inp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
 					float inp1Y = selectedPos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
 						
+					boolean highlighted = this.checkInputHighlighted(selectedTimelineModel, inputData);
+					boolean selected = this.checkInputSelected(selectedTimelineModel, inputData);
+
 					if (inputData != null)
 					{
 						Generator inputGenerator = inputData.getInputGenerator();
@@ -533,8 +545,23 @@ implements Scrollable//, MouseMotionListener
 								float inp2X = inputScreenPosX; //(int)(tracksData.getGeneratorsLabelSizeX() + inputScreenPosX);
 								float inp2Y = timelinePos * entryHeight + entryHeight / 2.0F; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + timelinePos * entryHeight + entryHeight / 2);
 								
-								g2.setPaint(CTimelineInputConnector);
+								if (highlighted == true)
+								{
+									g2.setPaint(CTimelineInputHighlightedConnector);
+								}
+								else
+								{
+									g2.setPaint(CTimelineInputConnector);
+								}
 								
+								if (selected == true)
+								{
+									g2.setStroke(BSTimelineInputSelectedConnector);
+								}
+								else
+								{
+									g2.setStroke(BSTimelineInputConnector);
+								}
 								{
 		//							g2.drawLine(inp1X, inp1Y, 
 		//							            inp1X, inp2Y);
@@ -553,67 +580,13 @@ implements Scrollable//, MouseMotionListener
 						}
 					}
 					{
-						boolean highlighted;
-						boolean selected;
-						
-						if (selectedTimelineModel != null)
-						{
-							{
-								InputEntryModel highlightedInputEntry = selectedTimelineModel.getHighlightedInputEntry();
-								
-								if (highlightedInputEntry != null)
-								{
-									InputData highlightedInputData = highlightedInputEntry.getInputData();
-									
-									if (inputData == highlightedInputData)
-									{
-										highlighted = true;
-									}
-									else
-									{
-										highlighted = false;
-									}
-								}
-								else
-								{
-									highlighted = false;
-								}
-							}
-							{
-								InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
-								
-								if (selectedInputEntry != null)
-								{
-									InputData selectedInputData = selectedInputEntry.getInputData();
-									
-									if (inputData == selectedInputData)
-									{
-										selected = true;
-									}
-									else
-									{
-										selected = false;
-									}
-								}
-								else
-								{
-									selected = false;
-								}
-							}
-						}
-						else
-						{
-							highlighted = false;
-							selected = false;
-						}
-						
 						if (highlighted == true)
 						{
-							g2.setPaint(CTimelineInputConnectorHighlighted);
+							g2.setPaint(CTimelineInputHighlightedConnectorBackground);
 						}
 						else
 						{
-							g2.setPaint(CTimelineInputConnector);
+							g2.setPaint(CTimelineInputConnectorBackground);
 						}
 						
 						Point2D inpPoint = new Point2D.Float(inp1X, inp1Y);
@@ -649,6 +622,90 @@ implements Scrollable//, MouseMotionListener
 			}
 		}
 		//==========================================================================================
+	}
+
+	/**
+	 * @param selectedTimelineModel
+	 * 			is the selected timeline.
+	 * @param inputData
+	 * 			is the input.
+	 * @return
+	 * 			<code>true</code> if the input is selected.
+	 */
+	private boolean checkInputSelected(final SelectedTimelineModel selectedTimelineModel, InputData inputData)
+	{
+		//==========================================================================================
+		boolean selected;
+		InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
+		
+		if (selectedTimelineModel != null)
+		{
+			if (selectedInputEntry != null)
+			{
+				InputData selectedInputData = selectedInputEntry.getInputData();
+				
+				if (inputData == selectedInputData)
+				{
+					selected = true;
+				}
+				else
+				{
+					selected = false;
+				}
+			}
+			else
+			{
+				selected = false;
+			}
+		}
+		else
+		{
+			selected = false;
+		}
+		//==========================================================================================
+		return selected;
+	}
+
+	/**
+	 * @param selectedTimelineModel
+	 * 			is the selected timeline.
+	 * @param inputData
+	 * 			is the input.
+	 * @return
+	 * 			<code>true</code> if the input is highlighted.
+	 */
+	private boolean checkInputHighlighted(final SelectedTimelineModel selectedTimelineModel, InputData inputData)
+	{
+		//==========================================================================================
+		boolean highlighted;
+		InputEntryModel highlightedInputEntry = selectedTimelineModel.getHighlightedInputEntry();
+		
+		if (selectedTimelineModel != null)
+		{
+			if (highlightedInputEntry != null)
+			{
+				InputData highlightedInputData = highlightedInputEntry.getInputData();
+				
+				if (inputData == highlightedInputData)
+				{
+					highlighted = true;
+				}
+				else
+				{
+					highlighted = false;
+				}
+			}
+			else
+			{
+				highlighted = false;
+			}
+		}
+		else
+		{
+			highlighted = false;
+		}
+		//==========================================================================================
+		return highlighted;
 	}
 
 	/**

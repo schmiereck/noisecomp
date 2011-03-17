@@ -1117,8 +1117,16 @@ implements RemoveTimelineGeneratorListenerInterface,
 					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
 					
 					InputEntryModel inputEntryModel = inputEntriesModel.searchInputEntry(selectedRowNo);
+					InputData inputData;
 					
-					InputData inputData = inputSelectEntryModel.getInputData();
+					if (inputSelectEntryModel != null)
+					{
+						inputData = inputSelectEntryModel.getInputData();
+					}
+					else
+					{
+						inputData = null;
+					}
 					
 					inputSelectController.doInputUpdated(inputEntryModel,
 					                                     inputData);
