@@ -11,7 +11,11 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesRemoveListenerInterface;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
@@ -160,6 +164,43 @@ implements TimelineContentChangedListenerInterface,
 				{
 					@Override
 					public void notifyModelPropertyChanged()
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						timelinesDrawPanelView.repaint();
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
+			
+			inputEntriesModel.getInputEntriesAddNotifier().addInputEntriesAddListeners
+			(
+			 	new InputEntriesAddListenerInterface()
+				{
+					@Override
+					public void notifyAddInputEntry(InputEntryModel inputEntryModel)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						timelinesDrawPanelView.repaint();
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
+			
+			inputEntriesModel.getInputEntriesRemoveNotifier().addAddToInputEntriesListeners
+			(
+			 	new InputEntriesRemoveListenerInterface()
+				{
+					@Override
+					public void notifyRemoveInputEntry(int inputNo,
+					                                   InputEntryModel inputEntryModel)
 					{
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						timelinesDrawPanelView.repaint();

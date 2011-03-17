@@ -18,11 +18,17 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  */
 public class RemoveInputSelectEntryNotifier
 {
+	//**********************************************************************************************
+	// Fields:
+
 	/**
 	 * RemoveInputSelectEntryListeners.
 	 */
 	private List<RemoveInputSelectEntryListenerInterface> removeInputSelectEntryListeners = new Vector<RemoveInputSelectEntryListenerInterface>();
 	
+	//**********************************************************************************************
+	// Functions:
+
 	/**
 	 * @param selectedTimeline
 	 * 			is the selectedTimeline.

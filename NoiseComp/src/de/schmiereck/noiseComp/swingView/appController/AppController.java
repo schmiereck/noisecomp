@@ -46,6 +46,8 @@ import de.schmiereck.noiseComp.swingView.about.AboutDialogView;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.createFolder.CreateFolderController;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
@@ -1103,9 +1105,23 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void notifyModelPropertyChanged()
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
+					
+					InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
+					
+					InputSelectEntryModel inputSelectEntryModel = inputSelectModel.getSelectedRow();
+
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Input-Select:
-						
-					inputSelectController.doInputUpdated();
+					
+					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+					
+					InputEntryModel inputEntryModel = inputEntriesModel.searchInputEntry(selectedRowNo);
+					
+					InputData inputData = inputSelectEntryModel.getInputData();
+					
+					inputSelectController.doInputUpdated(inputEntryModel,
+					                                     inputData);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}

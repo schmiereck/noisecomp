@@ -53,7 +53,11 @@ WORK:
 		--> DONE: Extract Input-Entries in extra Model to sync Input-Select-Comp and Timeline-Draw-Panel-Comp.
 		--> DONE: Highlight input.
 		--> DONE: Select input by click (and vis a vis by Input-Select-Comp).
-
+		--> Re-Connect existing Input per Drag and Drop.
+		--> Connect new Input of given Input-Types per Drag and Drop.
+			Group Input-Types visualy by using Input-Types of generator.
+		--> Reorder Inputs in Input-Type group per Drag and Drop.
+		
 DONE:
 =====
 Release V1.0

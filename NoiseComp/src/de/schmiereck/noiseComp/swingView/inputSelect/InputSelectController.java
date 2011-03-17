@@ -14,7 +14,10 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesRemoveListenerInterface;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesUpdateListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
@@ -46,6 +49,8 @@ public class InputSelectController
 	
 	private AppModelChangedObserver appModelChangedObserver;
 	
+	private final SelectedTimelineModel selectedTimelineModel;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -67,7 +72,7 @@ public class InputSelectController
 		this.appModelChangedObserver = appModelChangedObserver;
 		
 		//==========================================================================================
-		final SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		this.selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
 		
 		//------------------------------------------------------------------------------------------
 		{
@@ -89,6 +94,7 @@ public class InputSelectController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					Iterator<InputData> inputsIterator;
 					
 					TimelineSelectEntryModel timelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
@@ -126,6 +132,7 @@ public class InputSelectController
 							inputSelectModel.addInputData(inputSelectEntryModel);
 						}
 					}
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -139,6 +146,7 @@ public class InputSelectController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
 					
 //					ListSelectionModel selectionModel = inputSelectView.getSelectionModel();
@@ -157,6 +165,7 @@ public class InputSelectController
 					InputEntryModel selectedInputEntry = inputEntriesModel.searchInputEntry(selectedRowNo);
 					
 					selectedTimelineModel.setSelectedInputEntry(selectedInputEntry);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -203,6 +212,113 @@ public class InputSelectController
 				}
 			);
 		}
+		//------------------------------------------------------------------------------------------
+		{
+			InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
+			
+			inputEntriesModel.getInputEntriesAddNotifier().addInputEntriesAddListeners
+			(
+			 	new InputEntriesAddListenerInterface()
+				{
+					@Override
+					public void notifyAddInputEntry(InputEntryModel inputEntryModel)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+						
+						InputData inputData = inputEntryModel.getInputData();
+						
+						InputSelectEntryModel inputSelectEntryModel = new InputSelectEntryModel(inputData);
+						
+						int rowNo = inputsTabelModel.addInputData(inputSelectEntryModel);
+						
+						inputSelectModel.setSelectedRowNo(rowNo);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
+			
+			inputEntriesModel.getInputEntriesRemoveNotifier().addAddToInputEntriesListeners
+			(
+			 	new InputEntriesRemoveListenerInterface()
+				{
+					@Override
+					public void notifyRemoveInputEntry(int inputNo,
+					                                   InputEntryModel inputEntryModel)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
+
+						TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+						
+						Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+						
+						InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(inputNo);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//						// Update Generator-Input-Data:
+//						
+//						InputData inputData = inputSelectEntryModel.getInputData();
+//						
+//						if (inputData != null)
+//						{
+//							Generator ownerGenerator = inputData.getOwnerGenerator();
+//							
+//							ownerGenerator.removeInput(inputData);
+//						}
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Input-Select-Model:
+						
+						inputSelectModel.removeInputSelectEntry(selectedTimeline,
+						                                        inputSelectEntryModel,
+						                                        inputNo);
+
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						appModelChangedObserver.notifyAppModelChanged();
+
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		// Update Input-Select:
+		{
+			InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
+			
+			inputEntriesModel.getInputEntriesUpdateNotifier().addInputEntriesUpdateListeners
+			(
+			 	new InputEntriesUpdateListenerInterface()
+				{
+					@Override
+					public void notifyUpdateInputEntry(InputEntryModel inputEntryModel)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+						
+						if (selectedRowNo != null)
+						{
+							InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+							
+							InputSelectEntryModel selectedRow = inputSelectModel.getSelectedRow();
+							
+							selectedRow.updateInputData();
+							
+							inputsTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
+						}
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
 		//==========================================================================================
 	}
 
@@ -225,21 +341,21 @@ public class InputSelectController
 	}
 
 	/**
+	 * @param inputEntryModel
+	 * 			is the input entry.
+	 * @param inputData
+	 * 			is the inputData.
 	 */
-	public void doInputUpdated()
+	public void doInputUpdated(InputEntryModel inputEntryModel,
+	                           InputData inputData)
 	{
-		Integer selectedRowNo = this.inputSelectModel.getSelectedRowNo();
+		//==========================================================================================
+		InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
 		
-		if (selectedRowNo != null)
-		{
-			InputsTabelModel inputsTabelModel = this.inputSelectModel.getInputsTabelModel();
-			
-			InputSelectEntryModel selectedRow = this.inputSelectModel.getSelectedRow();
-			
-			selectedRow.updateInputData();
-			
-			inputsTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
-		}
+		inputEntriesModel.updateInputEntry(inputEntryModel, 
+		                                   inputData);
+		
+		//==========================================================================================
 	}
 	
 	/**
@@ -250,52 +366,33 @@ public class InputSelectController
 	 */
 	public void doRemoveSelectedEntry(Timeline selectedTimeline)
 	{
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		//==========================================================================================
 		Integer selectedRowNo = this.inputSelectModel.getSelectedRowNo();
 		
 		if (selectedRowNo != null)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			InputsTabelModel inputsTabelModel = this.inputSelectModel.getInputsTabelModel();
-		
-			InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
+			InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
 			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//			// Update Generator-Input-Data:
-//			
-//			InputData inputData = inputSelectEntryModel.getInputData();
-//			
-//			if (inputData != null)
-//			{
-//				Generator ownerGenerator = inputData.getOwnerGenerator();
-//				
-//				ownerGenerator.removeInput(inputData);
-//			}
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Update Input-Select-Model:
-			
-			this.inputSelectModel.removeInputSelectEntry(selectedTimeline,
-			                                             inputSelectEntryModel,
-			                                             selectedRowNo);
-
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			this.appModelChangedObserver.notifyAppModelChanged();
+			inputEntriesModel.removeInputEntry(selectedRowNo);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
+		//==========================================================================================
 	}
 
 	/**
 	 */
 	public void doCreateNewInput()
 	{
-		InputsTabelModel inputsTabelModel = this.inputSelectModel.getInputsTabelModel();
+		//==========================================================================================
+		InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
 		
-		InputSelectEntryModel inputSelectEntryModel = new InputSelectEntryModel(null);
+		InputEntryModel inputEntryModel = new InputEntryModel(null);
 		
-		int rowNo = inputsTabelModel.addInputData(inputSelectEntryModel);
+		inputEntriesModel.addInputEntry(inputEntryModel);
 		
-		this.inputSelectModel.setSelectedRowNo(rowNo);
+		//==========================================================================================
 	}
 
 }

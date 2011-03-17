@@ -20,9 +20,10 @@ public class InputEntryModel
 	// Fields:
 
 	/**
-	 * Input.
+	 * Input.<br/>
+	 * <code>null</code> if no input is created yet.
 	 */
-	private final InputData inputData;
+	private InputData inputData;
 
 	//**********************************************************************************************
 	// Functions:
@@ -45,6 +46,15 @@ public class InputEntryModel
 	public InputData getInputData()
 	{
 		return this.inputData;
+	}
+
+	/**
+	 * @param inputData 
+	 * 			to set {@link #inputData}.
+	 */
+	public void setInputData(InputData inputData)
+	{
+		this.inputData = inputData;
 	}
 	
 }
