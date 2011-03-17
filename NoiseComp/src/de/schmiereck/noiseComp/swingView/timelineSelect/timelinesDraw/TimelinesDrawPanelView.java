@@ -97,6 +97,7 @@ implements Scrollable//, MouseMotionListener
 	private static final Color CTimelineInputHighlightedConnector = new Color(0xC69861);
 	private static final Color CTimelineInputConnectorBackground = new Color(0xA67841);
 	private static final Color CTimelineInputHighlightedConnectorBackground = new Color(0xE6A871);
+	private static final Color CTimelineInputSelectedConnectorBackground = new Color(0x8FA8E1);
 	private static final Color CTimelineBuffer = new Color(0x434DA5);//0, 200, 0, 127);
 
 	private static final Color CTimelineHandlerBorder = new Color(0xA1B4BE);//200, 200, 255);
@@ -580,13 +581,20 @@ implements Scrollable//, MouseMotionListener
 						}
 					}
 					{
-						if (highlighted == true)
+						if (selected == true)
 						{
-							g2.setPaint(CTimelineInputHighlightedConnectorBackground);
+							g2.setPaint(CTimelineInputSelectedConnectorBackground);
 						}
 						else
 						{
-							g2.setPaint(CTimelineInputConnectorBackground);
+							if (highlighted == true)
+							{
+								g2.setPaint(CTimelineInputHighlightedConnectorBackground);
+							}
+							else
+							{
+								g2.setPaint(CTimelineInputConnectorBackground);
+							}
 						}
 						
 						Point2D inpPoint = new Point2D.Float(inp1X, inp1Y);
