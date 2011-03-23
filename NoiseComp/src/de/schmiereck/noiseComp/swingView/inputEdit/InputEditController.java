@@ -20,12 +20,15 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
+import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.MultiValue;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -66,14 +69,17 @@ public class InputEditController
 	 * 			is the InputSelectModel.
 	 * @param appModelChangedObserver 
 	 * 			is the AppModelChangedObserver.
+	 * @param selectedTimelineModel
+	 * 			is the Selected-Timeline Model.
 	 */
 	public InputEditController(final InputSelectModel inputSelectModel, 
-	                           final AppModelChangedObserver appModelChangedObserver)
+	                           final AppModelChangedObserver appModelChangedObserver,
+	                           final SelectedTimelineModel selectedTimelineModel)
 	{
 		//==========================================================================================
 		this.appModelChangedObserver = appModelChangedObserver;
 		
-		this.inputEditModel = new InputEditModel();
+		this.inputEditModel = new InputEditModel(selectedTimelineModel);
 		
 		this.inputEditView = new InputEditView(this.inputEditModel);
 		
@@ -107,6 +113,8 @@ public class InputEditController
 								inputTypeValueTextField.setSelectedItem(defaultValueStr);
 							}
 						}
+						
+						inputEditModel.setInputTypeData(inputTypeData);
 					}
 				}
 		 	}
@@ -147,6 +155,34 @@ public class InputEditController
 					}
 				}
 		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		selectedTimelineModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
+		(
+		 	new ModelPropertyChangedListener()
+			{
+				@Override
+				public void notifyModelPropertyChanged()
+				{
+					TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+					
+					List<InputTypeSelectItem> inputTypeSelectItems;
+					
+					if (selectedTimelineSelectEntryModel != null)
+					{
+						Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+						
+						inputTypeSelectItems = 
+							updateEditedInputType(selectedTimeline);
+					}
+					else
+					{
+						inputTypeSelectItems = null;
+					}
+					
+					inputEditModel.setInputTypeSelectItems(inputTypeSelectItems);
+				}
+			}
 		);
 		//==========================================================================================
 	}
@@ -192,8 +228,8 @@ public class InputEditController
 		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
-		List<InputTypeSelectItem> inputTypeSelectItems;
-		InputTypeData inputTypeData;
+		//List<InputTypeSelectItem> inputTypeSelectItems;
+		//InputTypeData inputTypeData;
 		List<GeneratorSelectItem> generatorSelectItems;
 		Timeline inputTimeline;
 		List<ValueSelectItem> valueSelectItems;
@@ -201,38 +237,25 @@ public class InputEditController
 		List<ModulInputTypeSelectItem> modulInputTypeSelectItems;
 		InputTypeData modulInputTypeData;
 		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Make InputType-SelectItems:
+		{
+			//inputTypeSelectItems = this.updateEditedInputType(selectedTimeline);
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		if (editInput == true)
 		{
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Make InputType-SelectItems:
-			{
-				inputTypeSelectItems = new Vector<InputTypeSelectItem>();
-				Generator selectedGenerator = selectedTimeline.getGenerator();
-				GeneratorTypeData generatorTypeData = selectedGenerator.getGeneratorTypeData();
-				Iterator<InputTypeData> inputTypeIterator = generatorTypeData.getInputTypesIterator();
-				if (inputTypeIterator != null)
-				{
-					InputTypeSelectItem noSelectItem = new InputTypeSelectItem(null);
-					inputTypeSelectItems.add(noSelectItem);
-					while (inputTypeIterator.hasNext())
-					{
-						InputTypeData inputTypeData2 = inputTypeIterator.next();
-						
-						inputTypeSelectItems.add(new InputTypeSelectItem(inputTypeData2));
-					}
-				}
-			}
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Input-Type:
-			
-			if (inputData != null)
-			{
-				inputTypeData = inputData.getInputTypeData();
-			}
-			else
-			{
-				inputTypeData = null;
-			}
+//			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//			// Input-Type:
+//			
+//			if (inputData != null)
+//			{
+//				inputTypeData = inputData.getInputTypeData();
+//			}
+//			else
+//			{
+//				inputTypeData = null;
+//			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Make Generator-SelectItems:
 			{
@@ -349,8 +372,8 @@ public class InputEditController
 		else
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			inputTypeSelectItems = null;
-			inputTypeData = null;
+			//inputTypeSelectItems = null;
+//			inputTypeData = null;
 			generatorSelectItems = null;
 			inputTimeline = null;
 			valueSelectItems = null;
@@ -361,8 +384,8 @@ public class InputEditController
 		}
 
 		//------------------------------------------------------------------------------------------
-		this.inputEditModel.setInputTypeSelectItems(inputTypeSelectItems);
-		this.inputEditModel.setInputTypeData(inputTypeData);
+		//this.inputEditModel.setInputTypeSelectItems(inputTypeSelectItems);
+//		this.inputEditModel.setInputTypeData(inputTypeData);
 		this.inputEditModel.setGeneratorSelectItems(generatorSelectItems);
 		this.inputEditModel.setInputTimeline(inputTimeline);
 		this.inputEditModel.setValueSelectItems(valueSelectItems);
@@ -371,6 +394,42 @@ public class InputEditController
 		this.inputEditModel.setModulInputTypeData(modulInputTypeData);
 		
 		//==========================================================================================
+	}
+
+	/**
+	 * Make InputType-SelectItems.
+	 * 
+	 * @param selectedTimeline
+	 * 			is the selected timeline.
+	 * @return
+	 * 		the InputTypeSelectItems.
+	 */
+	private List<InputTypeSelectItem> updateEditedInputType(Timeline selectedTimeline)
+	{
+		List<InputTypeSelectItem> inputTypeSelectItems;
+		if (selectedTimeline != null)
+		{
+			inputTypeSelectItems = new Vector<InputTypeSelectItem>();
+			Generator selectedGenerator = selectedTimeline.getGenerator();
+			GeneratorTypeData generatorTypeData = selectedGenerator.getGeneratorTypeData();
+			Iterator<InputTypeData> inputTypeIterator = generatorTypeData.getInputTypesIterator();
+			if (inputTypeIterator != null)
+			{
+				InputTypeSelectItem noSelectItem = new InputTypeSelectItem(null);
+				inputTypeSelectItems.add(noSelectItem);
+				while (inputTypeIterator.hasNext())
+				{
+					InputTypeData inputTypeData2 = inputTypeIterator.next();
+					
+					inputTypeSelectItems.add(new InputTypeSelectItem(inputTypeData2));
+				}
+			}
+		}
+		else
+		{
+			inputTypeSelectItems = null;
+		}
+		return inputTypeSelectItems;
 	}
 
 	/**

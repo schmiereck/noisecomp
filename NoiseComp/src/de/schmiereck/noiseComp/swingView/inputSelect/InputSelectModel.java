@@ -25,7 +25,10 @@ public class InputSelectModel
 	private final InputsTabelModel inputsTabelModel = new InputsTabelModel();
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	private RemoveInputSelectEntryNotifier removeInputSelectEntryNotifier = new RemoveInputSelectEntryNotifier();
+	private final RemoveInputSelectEntryNotifier removeInputSelectEntryNotifier = new RemoveInputSelectEntryNotifier();
+	
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	private final UpdateInputSelectEntryNotifier updateInputSelectEntryNotifier = new UpdateInputSelectEntryNotifier();
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
@@ -72,12 +75,16 @@ public class InputSelectModel
 	}
 
 	/**
+	 * @param entryPos
+	 * 			is the entry pos.
 	 * @param inputSelectEntryModel
 	 * 			is the Input-Select-Entry Model.
 	 */
-	public void addInputData(InputSelectEntryModel inputSelectEntryModel)
+	public void addInputData(int entryPos,
+	                         InputSelectEntryModel inputSelectEntryModel)
 	{
-		this.inputsTabelModel.addInputData(inputSelectEntryModel);
+		this.inputsTabelModel.addInputData(entryPos,
+		                                   inputSelectEntryModel);
 	}
 
 	/**
@@ -178,6 +185,15 @@ public class InputSelectModel
 		                                                                          this, 
 		                                                                          inputSelectEntryModel);
 		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #updateInputSelectEntryNotifier}.
+	 */
+	public UpdateInputSelectEntryNotifier getUpdateInputSelectEntryNotifier()
+	{
+		return this.updateInputSelectEntryNotifier;
 	}
 
 }

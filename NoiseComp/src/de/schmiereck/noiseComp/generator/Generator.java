@@ -384,6 +384,27 @@ implements GeneratorInterface,
 		//==========================================================================================
 	}
 
+	public void updateInput(InputData inputData)
+	{
+		//==========================================================================================
+		synchronized (this)
+		{
+			if (this.inputs != null)
+			{
+//				this.inputs.remove(inputData);
+				
+				if (inputData.getInputGenerator() != null)
+				{
+					// The Generator de-register as Listener from Input.
+//					inputData.getInputGenerator().getGeneratorChangeObserver().removeGeneratorChangeListener(this);
+				}
+				
+				this.generateChangedEvent();
+			}
+		}
+		//==========================================================================================
+	}
+
 	/**
 	 * @see #addInputGenerator(Generator, InputTypeData, Float)
 	public InputData addInputValue(float value, InputTypeData inputTypeData)
@@ -1088,5 +1109,14 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	public String toString()
 	{
 		return "{" + super.toString() + ": name: \"" + this.name + "\"}";
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputs}.
+	 */
+	public Vector<InputData> getInputs()
+	{
+		return this.inputs;
 	}
 }

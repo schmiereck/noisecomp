@@ -52,10 +52,12 @@ import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.createFolder.CreateFolderController;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
+import de.schmiereck.noiseComp.swingView.inputEdit.InputEditView;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.RemoveInputSelectEntryListenerInterface;
+import de.schmiereck.noiseComp.swingView.inputSelect.UpdateInputSelectEntryListenerInterface;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditController;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditModel;
 import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModuleInputTypeEditController;
@@ -102,7 +104,8 @@ import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
  */
 public class AppController 
 implements RemoveTimelineGeneratorListenerInterface, 
-		   RemoveInputSelectEntryListenerInterface
+		   RemoveInputSelectEntryListenerInterface,
+		   UpdateInputSelectEntryListenerInterface
 {
 	//**********************************************************************************************
 	// Constants:
@@ -445,7 +448,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		this.inputEditController = 
 			new InputEditController(this.inputSelectController.getInputSelectModel(),
-			                        this.appModelChangedObserver);
+			                        this.appModelChangedObserver,
+			                        this.selectedTimelineModel);
 		
 		this.appView.setInputEditView(this.inputEditController.getInputEditView());
 		
@@ -859,7 +863,25 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void actionPerformed(ActionEvent e)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					inputSelectController.doCreateNewInput();
+					InputEditModel inputEditModel = inputEditController.getInputEditModel();
+					InputEditView inputEditView = inputEditController.getInputEditView();
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					InputTypeData inputTypeData;
+					
+					inputTypeData = inputEditModel.getInputTypeData();
+					
+					if (inputTypeData != null)
+					{
+						inputSelectController.doCreateNewInput(inputTypeData);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(inputEditView,
+						                              "Please select a input type.", 
+						                              "No input type", 
+						                              JOptionPane.OK_OPTION);
+					}
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			 	}
@@ -1089,10 +1111,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		inputEditModel.getInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 		
-//		//------------------------------------------------------------------------------------------
-//		// Input-Edit-Model InputTypeData changed: Update TimelinesDrawPanel:
-//		
-//		inputEditModel.getInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+		//------------------------------------------------------------------------------------------
+		// Input-Edit-Model InputTypeData changed: Update TimelinesDrawPanel:
+		
+		inputEditModel.getInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model Value changed: Update Input-Select and TimelinesDrawPanel:
@@ -1116,7 +1138,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 					
 					Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
 					
-					InputEntryModel inputEntryModel = inputEntriesModel.searchInputEntry(selectedRowNo);
+					InputEntryModel inputEntryModel;
+					
+					if (selectedRowNo != null)
+					{
+						inputEntryModel = inputEntriesModel.searchInputEntry(selectedRowNo);
+					}
+					else
+					{
+						inputEntryModel = null;
+					}
+
 					InputData inputData;
 					
 					if (inputSelectEntryModel != null)
@@ -1146,7 +1178,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Input-Edit-Model ModulInputTypeData changed: Update TimelinesDrawPanel:
 		
-	 	inputEditModel.getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
+	 	//inputEditModel.getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener(modelPropertyChangedListener);
 
 //	    //------------------------------------------------------------------------------------------
 //		// Input-Edit-Model Value changed: Update Timeline-Select:
@@ -1279,6 +1311,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 	InputSelectModel inputSelectModel = this.inputSelectController.getInputSelectModel();
 	 	
 	 	inputSelectModel.getRemoveInputSelectEntryNotifier().addRemoveInputSelectEntryListeners
+	 	(
+	 	 	this
+	 	);
+	 	
+	 	inputSelectModel.getUpdateInputSelectEntryNotifier().addUpdateInputSelectEntryListeners
 	 	(
 	 	 	this
 	 	);
@@ -1775,6 +1812,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		AboutController aboutController = new AboutController(aboutDialogView);
 		
 		aboutController.doShow();
+		
 		//==========================================================================================
 	}
 
@@ -2290,6 +2328,32 @@ implements RemoveTimelineGeneratorListenerInterface,
 		if (inputData != null)
 		{
 			timelineManagerLogic.removeInput(selectedTimeline,
+			                                 inputData);
+		}
+		//==========================================================================================
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.swingView.inputSelect.UpdateInputSelectEntryListenerInterface#notifyUpdateInputSelectEntry(de.schmiereck.noiseComp.timeline.Timeline, de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel, de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel)
+	 */
+	@Override
+	public void notifyUpdateInputSelectEntry(Timeline selectedTimeline,
+	                                         InputSelectModel inputSelectModel, 
+	                                         InputSelectEntryModel inputSelectEntryModel)
+	{
+		//==========================================================================================
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		//------------------------------------------------------------------------------------------
+		// Update Generator-Input-Data:
+		
+		InputData inputData = inputSelectEntryModel.getInputData();
+		
+		if (inputData != null)
+		{
+			timelineManagerLogic.updateInput(selectedTimeline,
 			                                 inputData);
 		}
 		//==========================================================================================

@@ -28,14 +28,18 @@ public class InputEntriesAddNotifier
 	// Functions:
 
 	/**
+	 * @param entryPos
+	 * 			is the entry pos.
 	 * @param inputEntryModel
 	 * 			is the added InputEntryModel.
 	 */
-	public void notifyInputEntriesAddListeners(InputEntryModel inputEntryModel)
+	public void notifyInputEntriesAddListeners(int entryPos,
+	                                           InputEntryModel inputEntryModel)
 	{
 		for (InputEntriesAddListenerInterface inputEntriesAddListener : this.inputEntriesAddListeners)
 		{
-			inputEntriesAddListener.notifyAddInputEntry(inputEntryModel);
+			inputEntriesAddListener.notifyAddInputEntry(entryPos,
+			                                            inputEntryModel);
 		}
 		
 	}

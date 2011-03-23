@@ -795,6 +795,41 @@ implements GeneratorBufferInterface,
 	}
 
 	/**
+	 * @param inputData
+	 * 			is the InputData.
+	 */
+	public void updateInput(InputData inputData)
+	{
+		//==========================================================================================
+		// Update from Input-Timelines:
+		
+		Timeline removedTimeline = this.inputTimelines.remove(inputData);
+		
+		float changedStartTimePos;
+		float changedEndTimePos;
+		
+		if (removedTimeline != null)
+		{
+			changedStartTimePos = removedTimeline.timelineStartTimePos;
+			changedEndTimePos = removedTimeline.timelineEndTimePos;
+		}
+		else
+		{
+			changedStartTimePos = this.timelineStartTimePos;
+			changedEndTimePos = this.timelineEndTimePos;
+		}
+		
+		//------------------------------------------------------------------------------------------
+		//inputGenerator.removeOutput();
+		this.generator.updateInput(inputData);
+		
+		//------------------------------------------------------------------------------------------
+		this.generatorChanged(changedStartTimePos, changedEndTimePos);
+		
+		//==========================================================================================
+	}
+
+	/**
 	 * @param removedTimeline
 	 * 			is the removed Timeline.
 	 */

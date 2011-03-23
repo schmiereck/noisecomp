@@ -93,10 +93,10 @@ implements UncaughtExceptionHandler
 		//------------------------------------------------------------------------------------------
 		Frame activeFrame = this.findActiveFrame();
 		
-		JOptionPane.showMessageDialog(activeFrame,
-									  stacktrace, 
-									  "Exception Occurred", 
-									  JOptionPane.OK_OPTION);
+//		JOptionPane.showMessageDialog(activeFrame,
+//									  stacktrace, 
+//									  "Exception Occurred", 
+//									  JOptionPane.OK_OPTION);
 
 		this.errorController.showError(activeFrame,
 		                               stacktrace);

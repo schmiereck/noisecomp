@@ -81,16 +81,19 @@ public class TimelineSelectEntryModel
 	 * @param endTimePos
 	 * 			is the End time position in milli seconds.
 	 */
-	public TimelineSelectEntryModel(Timeline timeline,
-//	                                int timelinePos,
-	                                String generatorName,
-	                                Float startTimePos, Float endTimePos)
+	public TimelineSelectEntryModel(final Timeline timeline,
+//	                                final int timelinePos,
+	                                final String generatorName,
+	                                final Float startTimePos, final Float endTimePos)
 	{
+		//==========================================================================================
 		this.timeline = timeline;
 //		this.timelinePos = timelinePos;
 		this.name = generatorName;
 		this.startTimePos = startTimePos;
 		this.endTimePos = endTimePos;
+		
+		//==========================================================================================
 	}
 
 	/**

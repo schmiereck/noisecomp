@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.basicEditView.BasicEditView;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
@@ -73,19 +74,7 @@ extends BasicEditView
 		
 		//------------------------------------------------------------------------------------------
 		{
-			this.createNewButton = new JButton("Create new input");
-			
-			this.addField(0, this.createNewButton);
-		}
-		//------------------------------------------------------------------------------------------
-		{
-			this.removeButton = new JButton("Remove input");
-			
-			this.addField(1, this.removeButton);
-		}
-		//------------------------------------------------------------------------------------------
-		{
-			this.inputTypeComboBox = this.addComboBox(2, "Input-Type:");
+			this.inputTypeComboBox = this.addComboBox(0, "Input-Type:");
 			
 			inputEditModel.getInputTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
 			(
@@ -136,7 +125,13 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.inputGeneratorComboBox = this.addComboBox(3, "Generator:");
+			this.createNewButton = new JButton("Create new input");
+			
+			this.addField(1, this.createNewButton);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.inputGeneratorComboBox = this.addComboBox(2, "Generator:");
 			
 			inputEditModel.getGeneratorSelectItemsChangedNotifier().addModelPropertyChangedListener
 			(
@@ -188,7 +183,7 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.inputTypeValueTextField = this.addComboBox(4, "Value:");
+			this.inputTypeValueTextField = this.addComboBox(3, "Value:");
 			this.inputTypeValueTextField.setEditable(true);
 			
 			inputEditModel.getValueSelectItemsChangedNotifier().addModelPropertyChangedListener
@@ -225,7 +220,7 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.modulInputTypeComboBox = this.addComboBox(5, "Modul-Input-Type:");
+			this.modulInputTypeComboBox = this.addComboBox(4, "Modul-Input-Type:");
 			
 			inputEditModel.getModulInputTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
 			(
@@ -278,9 +273,15 @@ extends BasicEditView
 		{
 			this.updateButton = new JButton("Update");
 			
-			this.addField(6, this.updateButton);
+			this.addField(5, this.updateButton);
 
 			this.getRootPane().setDefaultButton(this.updateButton);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.removeButton = new JButton("Remove input");
+			
+			this.addField(6, this.removeButton);
 		}
 
 		//==========================================================================================

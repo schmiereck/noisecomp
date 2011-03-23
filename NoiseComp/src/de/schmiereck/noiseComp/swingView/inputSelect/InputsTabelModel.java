@@ -50,20 +50,23 @@ extends AbstractTableModel
 	}
 
 	/**
+	 * @param entryPos
+	 * 			is the entry pos.
 	 * @param inputSelectEntryModel
 	 * 			is the Input-Select-Entry Model.
 	 * @return
 	 * 			the row number.
 	 */
-	public int addInputData(InputSelectEntryModel inputSelectEntryModel)
+	public int addInputData(int entryPos,
+	                        InputSelectEntryModel inputSelectEntryModel)
 	{
-		this.inputs.add(inputSelectEntryModel);
+		this.inputs.add(entryPos, inputSelectEntryModel);
 		
-		int rowNo = this.inputs.size() - 1;
+//		int rowNo = this.inputs.size() - 1;
 		
-		this.fireTableRowsInserted(rowNo, rowNo);
+		this.fireTableRowsInserted(entryPos, entryPos);
 		
-		return rowNo;
+		return entryPos;
 	}
 	
 	@Override

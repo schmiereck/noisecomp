@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.swingView.CompareUtils;
+import de.schmiereck.noiseComp.generator.InputTypeData;
 
 /**
  * <p>
@@ -26,7 +26,7 @@ public class InputEntriesModel
 	/**
 	 * Input-Entry Models.
 	 */
-	private final List<InputEntryModel> inputEntryModels = new Vector<InputEntryModel>();
+//	private final List<InputEntryModel> inputEntryModels = new Vector<InputEntryModel>();
 
 	/**
 	 * Add entry to {@link #inputEntryModels} notifier.
@@ -43,17 +43,20 @@ public class InputEntriesModel
 	 */
 	private final InputEntriesUpdateNotifier inputEntriesUpdateNotifier = new InputEntriesUpdateNotifier();
 	
+	//==============================================================================================
+	private final List<InputEntryGroupModel> inputEntryGroups = new Vector<InputEntryGroupModel>();
+	
 	//**********************************************************************************************
 	// Functions:
 
-	/**
-	 * @return 
-	 * 			returns the {@link #inputEntryModels}.
-	 */
-	public List<InputEntryModel> getInputEntryModels()
-	{
-		return this.inputEntryModels;
-	}
+//	/**
+//	 * @return 
+//	 * 			returns the {@link #inputEntryModels}.
+//	 */
+//	public List<InputEntryModel> getInputEntryModels()
+//	{
+//		return this.inputEntryModels;
+//	}
 
 	/**
 	 * @param rowNo
@@ -61,24 +64,34 @@ public class InputEntriesModel
 	 * @return
 	 * 			the entry.
 	 */
-	public InputEntryModel searchInputEntry(Integer rowNo)
+	public InputEntryModel searchInputEntry(int rowNo)
 	{
 		//==========================================================================================
 		InputEntryModel retInputEntryModel;
 		
 		retInputEntryModel = null;
 		
-		for (int entryPos = 0; entryPos < this.inputEntryModels.size(); entryPos++)
+		int entryPos = 0;
+		
+		for (InputEntryGroupModel inputEntryGroupModel : this.inputEntryGroups)
 		{
-			InputEntryModel inputEntryModel = this.inputEntryModels.get(entryPos);
+			List<InputEntryModel> inputEntries = inputEntryGroupModel.getInputEntries();
 			
-			if (CompareUtils.compareWithNull((Integer)entryPos, rowNo) == true)
+			for (InputEntryModel inputEntryModel : inputEntries)
 			{
-				retInputEntryModel = inputEntryModel;
+				if (entryPos == rowNo)
+				{
+					retInputEntryModel = inputEntryModel;
+					break;
+				}
+				entryPos++;
+			}
+			
+			if (retInputEntryModel != null)
+			{
 				break;
 			}
 		}
-		
 		//==========================================================================================
 		return retInputEntryModel;
 	}
@@ -97,17 +110,27 @@ public class InputEntriesModel
 		
 		inputNo = null;
 		
-		for (int entryPos = 0; entryPos < this.inputEntryModels.size(); entryPos++)
+		int entryPos = 0;
+		
+		for (InputEntryGroupModel inputEntryGroupModel : this.inputEntryGroups)
 		{
-			InputEntryModel inputEntryModel = this.inputEntryModels.get(entryPos);
+			List<InputEntryModel> inputEntries = inputEntryGroupModel.getInputEntries();
 			
-			if (inputEntryModel == searchedInputEntryModel)
+			for (InputEntryModel inputEntryModel : inputEntries)
 			{
-				inputNo = entryPos;
+				if (inputEntryModel == searchedInputEntryModel)
+				{
+					inputNo = entryPos;
+					break;
+				}
+				entryPos++;
+			}
+			
+			if (inputNo != null)
+			{
 				break;
 			}
 		}
-		
 		//==========================================================================================
 		return inputNo;
 	}
@@ -133,32 +156,82 @@ public class InputEntriesModel
 	}
 
 	/**
-	 * @param inputEntryModel
-	 * 			is the input entry.
+	 * @param inputTypeData
+	 * 			is the inputType.
+	 * @param newInputEntryModel
+	 * 			is the new input entry.
+	 * @return
+	 * 			is the inserted pos.
 	 */
-	public void addInputEntry(InputEntryModel inputEntryModel)
+	public int addInputEntry(InputTypeData inputTypeData,
+	                         InputEntryModel newInputEntryModel)
 	{
 		//==========================================================================================
-		this.inputEntryModels.add(inputEntryModel);
+		int entryPos = 0;
 		
-		this.inputEntriesAddNotifier.notifyInputEntriesAddListeners(inputEntryModel);
+		for (InputEntryGroupModel inputEntryGroupModel : this.inputEntryGroups)
+		{
+			entryPos += inputEntryGroupModel.getInputEntries().size();
+			
+			if (inputEntryGroupModel.getInputTypeData() == inputTypeData)
+			{
+				List<InputEntryModel> inputEntries = inputEntryGroupModel.getInputEntries();
+				
+				inputEntries.add(newInputEntryModel);
+				break;
+			}
+		}
+		
+		this.inputEntriesAddNotifier.notifyInputEntriesAddListeners(entryPos,
+		                                                            newInputEntryModel);
 		
 		//==========================================================================================
+		return entryPos;
 	}
 
 	/**
 	 * @param inputNo
 	 * 			is the number of the input entry.
+	 * @return
+	 * 			the removed InputEntryModel.
 	 */
-	public void removeInputEntry(int inputNo)
+	public InputEntryModel removeInputEntry(int inputNo)
 	{
 		//==========================================================================================
-		InputEntryModel inputEntryModel = this.inputEntryModels.remove(inputNo);
+		InputEntryModel retInputEntryModel;
 		
+		retInputEntryModel = null;
+
+		//InputEntryModel inputEntryModel = this.inputEntryModels.remove(inputNo);
+		
+		int entryPos = 0;
+		
+		for (InputEntryGroupModel inputEntryGroupModel : this.inputEntryGroups)
+		{
+			List<InputEntryModel> inputEntries = inputEntryGroupModel.getInputEntries();
+			
+			for (InputEntryModel inputEntryModel : inputEntries)
+			{
+				if (entryPos == inputNo)
+				{
+					retInputEntryModel = inputEntryModel;
+					inputEntries.remove(inputEntryModel);
+					break;
+				}
+				entryPos++;
+			}
+			
+			if (retInputEntryModel != null)
+			{
+				break;
+			}
+		}
+		//------------------------------------------------------------------------------------------
 		this.inputEntriesRemoveNotifier.notifyInputEntriesRemoveListeners(inputNo,
-		                                                                  inputEntryModel);
+		                                                                  retInputEntryModel);
 		
 		//==========================================================================================
+		return retInputEntryModel;
 	}
 
 	/**
@@ -176,7 +249,17 @@ public class InputEntriesModel
 	 */
 	public int getSize()
 	{
-		return this.inputEntryModels.size();
+		//==========================================================================================
+		int size = 0;
+		
+		for (InputEntryGroupModel inputEntryGroupModel : this.inputEntryGroups)
+		{
+			List<InputEntryModel> inputEntries = inputEntryGroupModel.getInputEntries();
+			
+			size += inputEntries.size();
+		}			
+		//==========================================================================================
+		return size;
 	}
 
 	/**
@@ -195,6 +278,27 @@ public class InputEntriesModel
 	public InputEntriesUpdateNotifier getInputEntriesUpdateNotifier()
 	{
 		return this.inputEntriesUpdateNotifier;
+	}
+
+	/**
+	 * 
+	 */
+	public void clear()
+	{
+		//==========================================================================================
+		//this.inputEntryModels.clear();
+		this.inputEntryGroups.clear();
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputEntryGroups}.
+	 */
+	public List<InputEntryGroupModel> getInputEntryGroups()
+	{
+		return this.inputEntryGroups;
 	}
 	
 }

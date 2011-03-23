@@ -15,8 +15,11 @@ public interface InputEntriesAddListenerInterface
 {
 
 	/**
+	 * @param entryPos
+	 * 			is the entry pos.
 	 * @param inputEntryModel
 	 * 			is the added input entry.
 	 */
-	void notifyAddInputEntry(InputEntryModel inputEntryModel);
+	void notifyAddInputEntry(int entryPos,
+	                         InputEntryModel inputEntryModel);
 }

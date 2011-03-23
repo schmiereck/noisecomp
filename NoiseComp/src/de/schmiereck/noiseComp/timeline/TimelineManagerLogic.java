@@ -764,14 +764,23 @@ public class TimelineManagerLogic
 	public void removeInput(Timeline timeline, InputData inputData)
 	{
 		//==========================================================================================
-//		Generator inputGenerator = inputData.getInputGenerator();
-//		Generator ownerGenerator = inputData.getOwnerGenerator();
-//		
-//		//inputGenerator.removeOutput();
-//		ownerGenerator.removeInput(inputData);
-
-		//--------------------------------------------------------------------------------------
 		timeline.removeInput(inputData);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * Update the given Input from given Timeline.
+	 * 
+	 * @param timeline
+	 * 			is the Timeline.
+	 * @param inputData
+	 * 			is the InputData.
+	 */
+	public void updateInput(Timeline timeline, InputData inputData)
+	{
+		//==========================================================================================
+		timeline.updateInput(inputData);
 		
 		//==========================================================================================
 	}

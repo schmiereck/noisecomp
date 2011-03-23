@@ -7,9 +7,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
+import de.schmiereck.noiseComp.generator.InputTypeData;
+import de.schmiereck.noiseComp.generator.InputTypesData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryGroupModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
@@ -95,29 +100,63 @@ public class SelectedTimelineModel
 		//------------------------------------------------------------------------------------------
 		if (this.selectedTimelineSelectEntryModel != null)
 		{
-			List<InputEntryModel> inputEntryModels = this.inputEntriesModel.getInputEntryModels();
-			
-			inputEntryModels.clear();
-			
+			this.inputEntriesModel.clear();
+
 			Timeline timeline = this.selectedTimelineSelectEntryModel.getTimeline();
 			
 			if (timeline != null)
 			{
-				Iterator<InputData> inputsIterator = timeline.getInputsIterator();
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				Generator generator = timeline.getGenerator();
 				
-				if (inputsIterator != null)
+				GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
+				
+//				List<InputEntryModel> inputEntryModels = this.inputEntriesModel.getInputEntryModels();
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Add Input-Groups:
+				
+				InputTypesData inputTypesData = generatorTypeData.getInputTypesData();
+				
+				for (int inputTypePos = 0; inputTypePos < inputTypesData.getInputTypesSize(); inputTypePos++)
 				{
-					while (inputsIterator.hasNext())
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					InputTypeData inputTypeData = inputTypesData.getInputTypeDataByPos(inputTypePos);
+					
+					InputEntryGroupModel inputEntryGroupModel = new InputEntryGroupModel(inputTypeData);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					// Add Inputs:
+					
+					Iterator<InputData> inputsIterator = timeline.getInputsIterator();
+					
+					if (inputsIterator != null)
 					{
-						final InputData inputData = inputsIterator.next();
-						
-						InputEntryModel inputEntryModel = new InputEntryModel(inputData);
-						
-						inputEntryModels.add(inputEntryModel);
+						while (inputsIterator.hasNext())
+						{
+							final InputData inputData = inputsIterator.next();
+							
+							InputTypeData inputTypeData2 = inputData.getInputTypeData();
+							
+							if (inputTypeData == inputTypeData2)
+							{
+								InputEntryModel inputEntryModel = new InputEntryModel(inputData);
+								
+//								inputEntryModels.add(inputEntryModel);
+								
+								inputEntryGroupModel.getInputEntries().add(inputEntryModel);
+							}
+						}
 					}
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					this.inputEntriesModel.getInputEntryGroups().add(inputEntryGroupModel);
+					
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
+		
 		//------------------------------------------------------------------------------------------
 		this.setHighlightedInputEntry(null);
 		

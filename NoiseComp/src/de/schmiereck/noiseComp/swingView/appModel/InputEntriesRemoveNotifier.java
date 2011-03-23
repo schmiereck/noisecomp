@@ -48,7 +48,7 @@ public class InputEntriesRemoveNotifier
 	 * @param inputEntriesRemoveListener 
 	 * 			to add to {@link #inputEntriesRemoveListeners}.
 	 */
-	public void addAddToInputEntriesListeners(InputEntriesRemoveListenerInterface inputEntriesRemoveListener)
+	public void addInputEntriesRemoveListeners(InputEntriesRemoveListenerInterface inputEntriesRemoveListener)
 	{
 		this.inputEntriesRemoveListeners.add(inputEntriesRemoveListener);
 	}

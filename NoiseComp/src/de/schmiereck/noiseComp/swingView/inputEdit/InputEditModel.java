@@ -9,6 +9,7 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
@@ -99,9 +100,29 @@ public class InputEditModel
 	 */
 	private final ModelPropertyChangedNotifier modulInputTypeSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
 
+	//----------------------------------------------------------------------------------------------
+	/**
+	 * Selected-Timeline Model.
+	 */
+	final SelectedTimelineModel selectedTimelineModel;
+	
 	//**********************************************************************************************
 	// Functions:
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param selectedTimelineModel
+	 * 			is the Selected-Timeline Model.
+	 */
+	public InputEditModel(final SelectedTimelineModel selectedTimelineModel)
+	{
+		//==========================================================================================
+		this.selectedTimelineModel = selectedTimelineModel;
+		
+		//==========================================================================================
+	}
+	
 	/**
 	 * @return 
 	 * 			returns the {@link #value}.
@@ -117,6 +138,7 @@ public class InputEditModel
 	 */
 	public void setValue(String value)
 	{
+		//==========================================================================================
 		if (CompareUtils.compareWithNull(this.value, value) == false)
 		{
 			this.value = value;
@@ -124,6 +146,7 @@ public class InputEditModel
 			// Notify listeners.
 			this.valueChangedNotifier.notifyModelPropertyChangedListeners();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -150,10 +173,13 @@ public class InputEditModel
 	 */
 	public void setGeneratorSelectItems(List<GeneratorSelectItem> generatorSelectItems)
 	{
+		//==========================================================================================
 		this.generatorSelectItems = generatorSelectItems;
 		
 		// Notify Listeners.
 		this.generatorSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -180,6 +206,7 @@ public class InputEditModel
 	 */
 	public void setInputTimeline(Timeline inputTimeline)
 	{
+		//==========================================================================================
 		// Check is not possible, because the selection list changed, but the selected item
 		// is sometimes the same.
 		//if (this.inputTimeline != inputTimeline)
@@ -189,6 +216,7 @@ public class InputEditModel
 			// Notify Listeners.
 			this.inputTimelineChangedNotifier.notifyModelPropertyChangedListeners();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -215,6 +243,7 @@ public class InputEditModel
 	 */
 	public void setInputTypeSelectItems(List<InputTypeSelectItem> inputTypeSelectItems)
 	{
+		//==========================================================================================
 		if (this.inputTypeSelectItems != inputTypeSelectItems)
 		{
 			this.inputTypeSelectItems = inputTypeSelectItems;
@@ -222,6 +251,7 @@ public class InputEditModel
 			// Notify Listeners.
 			this.inputTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -248,6 +278,7 @@ public class InputEditModel
 	 */
 	public void setInputTypeData(InputTypeData inputTypeData)
 	{
+		//==========================================================================================
 		// Check is not possible, because the selection list changed, but the selected item
 		// is sometimes the same.
 		//if (this.inputTypeData != inputTypeData)
@@ -257,6 +288,7 @@ public class InputEditModel
 			// Notify Listeners.
 			this.inputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -283,10 +315,13 @@ public class InputEditModel
 	 */
 	public void setModulInputTypeSelectItems(List<ModulInputTypeSelectItem> modulInputTypeSelectItems)
 	{
+		//==========================================================================================
 		this.modulInputTypeSelectItems = modulInputTypeSelectItems;
 		
 		// Notify Listeners.
 		this.modulInputTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -313,6 +348,7 @@ public class InputEditModel
 	 */
 	public void setModulInputTypeData(InputTypeData modulInputTypeData)
 	{
+		//==========================================================================================
 		// Check is not possible, because the selection list changed, but the selected item
 		// is sometimes the same.
 		//if (this.modulInputTypeData != modulInputTypeData)
@@ -322,6 +358,7 @@ public class InputEditModel
 			// Notify Listeners.
 			this.modulInputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -348,9 +385,12 @@ public class InputEditModel
 	 */
 	public void setValueSelectItems(List<ValueSelectItem> valueSelectItems)
 	{
+		//==========================================================================================
 		this.valueSelectItems = valueSelectItems;
 		
 		this.valueSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -360,5 +400,14 @@ public class InputEditModel
 	public ModelPropertyChangedNotifier getValueSelectItemsChangedNotifier()
 	{
 		return this.valueSelectItemsChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #selectedTimelineModel}.
+	 */
+	public SelectedTimelineModel getSelectedTimelineModel()
+	{
+		return this.selectedTimelineModel;
 	}
 }
