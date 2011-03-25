@@ -17,6 +17,7 @@ import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryGroupModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.DoChangeTimelinesPositionListenerInterface;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.InputPosEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule.TimelinesGeneratorsRuleModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -65,6 +66,11 @@ public class SelectedTimelineModel
 	 */
 	private InputEntryModel highlightedInputEntry = null;
 	
+	/**
+	 * {@link #highlightedInputEntry} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier highlightedInputEntryChangedNotifier = new ModelPropertyChangedNotifier();
+	
 	//==============================================================================================
 	/**
 	 * Selected Input-Entry Model.
@@ -75,6 +81,25 @@ public class SelectedTimelineModel
 	 * {@link #selectedInputEntry} changed listeners.
 	 */
 	private final ModelPropertyChangedNotifier selectedInputEntryChangedNotifier = new ModelPropertyChangedNotifier();
+	
+	//==============================================================================================
+	/**
+	 * Positions of Input-Entries and Input-Groups.<br/>
+	 * <code>null</code> if no timeline is selected.
+	 */
+	private InputPosEntriesModel inputPosEntriesModel = null;
+	
+	//==============================================================================================
+	/**
+	 * Input-Entry Target Model.<br/>
+	 * <code>null</code> if no input target selected.
+	 */
+	private InputEntryTargetModel inputEntryTargetModel = null;
+	
+	/**
+	 * {@link #inputEntryTargetModel} changed listeners.
+	 */
+	private final ModelPropertyChangedNotifier inputEntryTargetModelChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -89,6 +114,8 @@ public class SelectedTimelineModel
 	}
 
 	/**
+	 * Called if selected timeline is changed.
+	 * 
 	 * @param selectedTimelineSelectEntryModel 
 	 * 			to set {@link #selectedTimelineSelectEntryModel}.
 	 */
@@ -98,6 +125,8 @@ public class SelectedTimelineModel
 		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
 		
 		//------------------------------------------------------------------------------------------
+		InputPosEntriesModel inputPosEntriesModel;
+		
 		if (this.selectedTimelineSelectEntryModel != null)
 		{
 			this.inputEntriesModel.clear();
@@ -155,15 +184,91 @@ public class SelectedTimelineModel
 				}
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			inputPosEntriesModel =
+				this.calcInputPosEntries(this);
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
+		else
+		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			inputPosEntriesModel = null;
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
+		
+		this.inputPosEntriesModel = inputPosEntriesModel;
 		
 		//------------------------------------------------------------------------------------------
 		this.setHighlightedInputEntry(null);
+		this.setSelectedInputEntry(null);
 		
 		//------------------------------------------------------------------------------------------
 		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
 		
 		//==========================================================================================
+	}
+
+	/**
+	 * @param selectedTimelineModel
+	 * 			is the Selected-Timeline Model. 
+	 * @return
+	 * 			the root input pos entries model.
+	 */
+	private InputPosEntriesModel calcInputPosEntries(final SelectedTimelineModel selectedTimelineModel)
+	{
+		//==========================================================================================
+		InputPosEntriesModel retInputPosEntriesModel = new InputPosEntriesModel(null,
+		                                                                        null,
+		                                                                        null);
+		
+		final InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
+		
+//		List<InputEntryModel> inputEntryModels = inputEntriesModel.getInputEntryModels();
+		final List<InputEntryGroupModel> inputEntryGroups = inputEntriesModel.getInputEntryGroups();
+		
+		{
+			for (InputEntryGroupModel inputEntryGroupModel : inputEntryGroups)
+			{
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				InputPosEntriesModel groupInputPosEntriesModel = new InputPosEntriesModel(retInputPosEntriesModel,
+				                                                                          inputEntryGroupModel,
+				                                                                          null);
+
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Add Input-Entries:
+				
+				List<InputEntryModel> inputEntries = inputEntryGroupModel.getInputEntries();
+				
+				for (InputEntryModel inputEntryModel : inputEntries)
+				{
+					InputPosEntriesModel inputPosEntry = new InputPosEntriesModel(groupInputPosEntriesModel,
+					                                                              inputEntryGroupModel,
+					                                                              inputEntryModel);
+					
+					groupInputPosEntriesModel.addInputPosEntry(inputPosEntry);
+				}
+
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Add Add-Input Entry to Group:
+				{
+					final InputEntryModel inputEntryModel = new InputEntryModel(null);
+
+					InputPosEntriesModel inputPosEntry = new InputPosEntriesModel(groupInputPosEntriesModel,
+					                                                              inputEntryGroupModel,
+					                                                              inputEntryModel);
+					
+					groupInputPosEntriesModel.addInputPosEntry(inputPosEntry);
+				}
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				retInputPosEntriesModel.addInputPosEntry(groupInputPosEntriesModel);
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			}
+		}
+		//==========================================================================================
+		return retInputPosEntriesModel;
 	}
 
 	/**
@@ -223,7 +328,12 @@ public class SelectedTimelineModel
 	 */
 	public void setHighlightedInputEntry(InputEntryModel highlightedInputEntry)
 	{
-		this.highlightedInputEntry = highlightedInputEntry;
+		if (this.highlightedInputEntry != highlightedInputEntry)
+		{
+			this.highlightedInputEntry = highlightedInputEntry;
+			
+			this.highlightedInputEntryChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
@@ -241,9 +351,12 @@ public class SelectedTimelineModel
 	 */
 	public void setSelectedInputEntry(InputEntryModel selectedInputEntry)
 	{
-		this.selectedInputEntry = selectedInputEntry;
-		
-		this.selectedInputEntryChangedNotifier.notifyModelPropertyChangedListeners();
+		if (this.selectedInputEntry != selectedInputEntry)
+		{
+			this.selectedInputEntry = selectedInputEntry;
+			
+			this.selectedInputEntryChangedNotifier.notifyModelPropertyChangedListeners();
+		}
 	}
 
 	/**
@@ -262,6 +375,56 @@ public class SelectedTimelineModel
 	public List<DoChangeTimelinesPositionListenerInterface> getDoChangeTimelinesPositionListeners()
 	{
 		return this.doChangeTimelinesPositionListeners;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputPosEntriesModel}.
+	 */
+	public InputPosEntriesModel getInputPosEntriesModel()
+	{
+		return this.inputPosEntriesModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputEntryTargetModel}.
+	 */
+	public InputEntryTargetModel getInputEntryTargetModel()
+	{
+		return this.inputEntryTargetModel;
+	}
+
+	/**
+	 * @param inputEntryTargetModel 
+	 * 			to set {@link #inputEntryTargetModel}.
+	 */
+	public void setInputEntryTargetModel(InputEntryTargetModel inputEntryTargetModel)
+	{
+		if (this.inputEntryTargetModel != inputEntryTargetModel)
+		{
+			this.inputEntryTargetModel = inputEntryTargetModel;
+			
+			this.inputEntryTargetModelChangedNotifier.notifyModelPropertyChangedListeners();
+		}
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputEntryTargetModelChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getInputEntryTargetModelChangedNotifier()
+	{
+		return this.inputEntryTargetModelChangedNotifier;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #highlightedInputEntryChangedNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getHighlightedInputEntryChangedNotifier()
+	{
+		return this.highlightedInputEntryChangedNotifier;
 	}
 
 }

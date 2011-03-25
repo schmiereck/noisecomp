@@ -2581,4 +2581,30 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		//==========================================================================================
 	}
+
+	/**
+	 * @param selectedTimelineSelectEntryModel
+	 * @param selectedInputEntry
+	 * @param inputTypeData
+	 * @param targetTimelineSelectEntryModel
+	 */
+	public void doUpdateTimelineInput(final TimelineSelectEntryModel selectedTimelineSelectEntryModel,
+	                                  final InputEntryModel selectedInputEntry, 
+	                                  final InputTypeData inputTypeData,
+	                                  final TimelineSelectEntryModel targetTimelineSelectEntryModel)
+	{
+		//==========================================================================================
+		// Replay the user action:
+		
+		// New Input?
+		//	Select Input-Type.
+		//	Select Input-Generator.
+		//	Submit.
+		
+		// Update Input?
+		//	Select Input-Generator.
+		//	Submit.
+		
+		//==========================================================================================
+	}
 }

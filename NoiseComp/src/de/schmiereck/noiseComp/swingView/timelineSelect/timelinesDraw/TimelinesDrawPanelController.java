@@ -11,8 +11,8 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
-import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesRemoveListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesUpdateListenerInterface;
@@ -160,6 +160,38 @@ implements TimelineContentChangedListenerInterface,
 		//------------------------------------------------------------------------------------------
 		{
 			selectedTimelineModel.getSelectedInputEntryChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+				{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						timelinesDrawPanelView.repaint();
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			selectedTimelineModel.getHighlightedInputEntryChangedNotifier().addModelPropertyChangedListener
+			(
+			 	new ModelPropertyChangedListener()
+				{
+					@Override
+					public void notifyModelPropertyChanged()
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						timelinesDrawPanelView.repaint();
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			selectedTimelineModel.getInputEntryTargetModelChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 				{
@@ -628,19 +660,19 @@ implements TimelineContentChangedListenerInterface,
 		return ret;
 	}
 
-	/**
-	 * Called if selected timeline is changed.
-	 * 
-	 * @param selectedTimelineSelectEntryModel
-	 * 			is the selected timeline entry.
-	 */
-	public void notifySelectedTimelineChanged(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
-	{
-		//==========================================================================================
-		SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
-		
-		selectedTimelineModel.setSelectedTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
-		
-		//==========================================================================================
-	}
+//	/**
+//	 * Called if selected timeline is changed.
+//	 * 
+//	 * @param selectedTimelineSelectEntryModel
+//	 * 			is the selected timeline entry.
+//	 */
+//	public void notifySelectedTimelineChanged(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
+//	{
+//		//==========================================================================================
+//		SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+//		
+//		selectedTimelineModel.setSelectedTimelineSelectEntryModel(selectedTimelineSelectEntryModel);
+//		
+//		//==========================================================================================
+//	}
 }

@@ -181,4 +181,94 @@ public class InputPosEntriesModel
 		return this.inputEntryGroupModel;
 	}
 
+	/**
+	 * @param selectedInputEntry
+	 * 			is the input entry.
+	 * @return
+	 * 			the pos of the given input entry in inputPosEntries.
+	 */
+	public int searchInputEntryPos(//final InputPosEntriesModel inputPosEntriesModel, 
+	                               final InputEntryModel selectedInputEntry)
+	{
+		//==========================================================================================
+//				boolean foundEntry = false;
+		int inputNo = 1;
+		
+		outerloop:
+		{
+			final List<InputPosEntriesModel> groupInputPosEntries = this.getInputPosEntries();
+			
+			for (InputPosEntriesModel groupInputPosEntriesModel : groupInputPosEntries)
+			{
+				final List<InputPosEntriesModel> inputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
+				
+				if (inputPosEntries.size() > 0)
+				{
+					for (InputPosEntriesModel inputPosEntryModel : inputPosEntries)
+					{
+						InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
+						
+						if (selectedInputEntry == inputEntryModel)
+						{
+//									foundEntry = true;
+							break outerloop;
+						}
+						inputNo++;
+					}
+				}
+				else
+				{
+					inputNo++;
+				}
+//						
+//						if (foundEntry == true)
+//						{
+//							break;
+//						}
+			}
+		}
+		//==========================================================================================
+		return inputNo;
+	}
+
+	/**
+	 * @param selectedInputEntry
+	 * 			is the input entry.
+	 * @return
+	 * 			the InputPosEntry of the given input entry in inputPosEntries.
+	 */
+	public InputPosEntriesModel searchInputPosEntry(final InputEntryModel selectedInputEntry)
+	{
+		//==========================================================================================
+		InputPosEntriesModel retInputPosEntryModel;
+		
+		retInputPosEntryModel = null;
+		
+		outerloop:
+		{
+			final List<InputPosEntriesModel> groupInputPosEntries = this.getInputPosEntries();
+			
+			for (InputPosEntriesModel groupInputPosEntriesModel : groupInputPosEntries)
+			{
+				final List<InputPosEntriesModel> inputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
+				
+				if (inputPosEntries.size() > 0)
+				{
+					for (InputPosEntriesModel inputPosEntryModel : inputPosEntries)
+					{
+						InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
+						
+						if (selectedInputEntry == inputEntryModel)
+						{
+							retInputPosEntryModel = inputPosEntryModel;
+							break outerloop;
+						}
+					}
+				}
+			}
+		}
+		//==========================================================================================
+		return retInputPosEntryModel;
+	}
+
 }

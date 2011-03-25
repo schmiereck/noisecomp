@@ -29,9 +29,8 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
-import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
-import de.schmiereck.noiseComp.swingView.appModel.InputEntryGroupModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.InputEntryTargetModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
@@ -108,9 +107,13 @@ implements Scrollable//, MouseMotionListener
 	
 	private static final Color CTimelineInputConnector = new Color(0xA67841);//255, 0, 0, 192);
 	private static final Color CTimelineInputHighlightedConnector = new Color(0xC69861);
+	private static final Color CTimelineInputReadyConnector = new Color(0xC6C891);
 	private static final Color CTimelineInputConnectorBackground = new Color(0xA67841);
 	private static final Color CTimelineInputHighlightedConnectorBackground = new Color(0xE6A871);
 	private static final Color CTimelineInputSelectedConnectorBackground = new Color(0xDFA881);
+	private static final Color CTimelineInputText = new Color(0xF6B881);
+	private static final Color CTimelineInputHighlightedText = new Color(0x566501);
+	private static final Color CTimelineInputSelectedText = new Color(0x566501);
 	
 	// Strokes:
 	
@@ -373,14 +376,14 @@ implements Scrollable//, MouseMotionListener
 		super.paintComponent(g);  // I was missing this code which caused "bleeding"
 	   
 		//==========================================================================================
-		SelectedTimelineModel selectedTimelineModel = 
+		final SelectedTimelineModel selectedTimelineModel = 
 			this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
-		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+		final TimelineSelectEntriesModel timelineSelectEntriesModel = 
 			this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
 		
 		//==========================================================================================
-		Graphics2D g2 = (Graphics2D)g;
+		final Graphics2D g2 = (Graphics2D)g;
 	   
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
@@ -488,6 +491,55 @@ implements Scrollable//, MouseMotionListener
 				} 
 			}
 		}
+		//------------------------------------------------------------------------------------------
+		// Input-Target:
+		
+		final InputEntryTargetModel inputEntryTargetModel = selectedTimelineModel.getInputEntryTargetModel();
+		
+		if (inputEntryTargetModel != null)
+		{
+			InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
+			
+			if (selectedInputEntry != null)
+			{
+				final InputPosEntriesModel inputPosEntriesModel = 
+					selectedTimelineModel.getInputPosEntriesModel();
+
+				final TimelineSelectEntryModel targetTimelineSelectEntryModel = 
+					inputEntryTargetModel.getTargetTimelineSelectEntryModel();
+				
+				float selectedScreenPosX = selectedTimelineEntryModel.getStartTimePos();
+				float selectedScreenInputOffset = 
+					this.calcSelectedScreenInputOffset(selectedTimelineModel,
+					                                   selectedTimelineEntryModel);
+				
+				int entryHeight = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+
+				int inputNo = inputPosEntriesModel.searchInputEntryPos(selectedInputEntry);
+				
+				float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
+				
+				float inp1X = selectedScreenPosX + inputOffsetScreenX;
+				float inp1Y = selectedPos * entryHeight;
+
+				Point2D point2D = inputEntryTargetModel.getTargetPoint2D();
+				
+				g2.setStroke(BSTimelineInputSelectedConnector);
+				
+				if (targetTimelineSelectEntryModel != null)
+				{
+					g2.setPaint(CTimelineInputReadyConnector);
+				}
+				else
+				{
+					g2.setPaint(CTimelineInputHighlightedConnector);
+				}
+				
+				Line2D line = new Line2D.Float(inp1X, inp1Y, 
+				                               (float)point2D.getX(), (float)point2D.getY());
+				g2.draw(this.at.createTransformedShape(line));
+			}
+		}
 		//==========================================================================================
 	}
 
@@ -533,12 +585,11 @@ implements Scrollable//, MouseMotionListener
 			
 			//--------------------------------------------------------------------------------------
 //			Iterator<InputData> inputsIterator = timeline.getInputsIterator();
-			final InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
 			
 			// Calculates the Positions of Inputs.
-			final InputPosEntriesModel retInputPosEntriesModel = this.calcInputPosEntries(inputEntriesModel);
+			final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
 			
-			final int retEntryCnt = retInputPosEntriesModel.getSumEntryCnt();
+			final int retEntryCnt = inputPosEntriesModel.getSumEntryCnt();
 			
 //			if (inputsIterator != null)
 //			if (inputEntriesModel.getSize() > 0)
@@ -546,15 +597,15 @@ implements Scrollable//, MouseMotionListener
 			{
 				//----------------------------------------------------------------------------------
 				float selectedScreenPosX = selectedTimelineEntryModel.getStartTimePos();
-				float selectedScreenInputOffset = (((selectedTimelineEntryModel.getEndTimePos() - 
-													 selectedTimelineEntryModel.getStartTimePos())) / 
-												   (retEntryCnt + 1));
+				float selectedScreenInputOffset = 
+					this.calcSelectedScreenInputOffset(selectedTimelineModel,
+					                                   selectedTimelineEntryModel);
 
 				//----------------------------------------------------------------------------------
 				// Inputs:
 				
 //				Iterator<InputEntryModel> inputEntryModelsIterator = inputEntryModels.iterator();
-				List<InputPosEntriesModel> groupInputPosEntries = retInputPosEntriesModel.getInputPosEntries();
+				final List<InputPosEntriesModel> groupInputPosEntries = inputPosEntriesModel.getInputPosEntries();
 				
 				int inputNo = 1;
 				
@@ -562,6 +613,8 @@ implements Scrollable//, MouseMotionListener
 //				while (inputEntryModelsIterator.hasNext())
 				for (InputPosEntriesModel groupInputPosEntriesModel : groupInputPosEntries)
 				{
+					final List<InputPosEntriesModel> inputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
+					
 					{
 						Rectangle2D groupRect = this.calcInputPosGroupRect(selectedPos, 
 						                                                   entryHeight, 
@@ -581,42 +634,65 @@ implements Scrollable//, MouseMotionListener
 					
 //					InputData inputData = inputsIterator.next();
 //					InputEntryModel inputEntryModel = inputEntryModelsIterator.next();
-					List<InputPosEntriesModel> inputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
 					
-					for (InputPosEntriesModel inputPosEntryModel : inputPosEntries)
+					if (inputPosEntries.size() > 0)
 					{
-//						InputData inputData = inputEntryModel.getInputData();
-						InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
-						InputData inputData = inputEntryModel.getInputData();
-						
-						float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
-						
-						float inp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
-						float inp1Y = selectedPos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
-							
-						boolean highlighted = this.checkInputHighlighted(selectedTimelineModel, inputData);
-						boolean selected = this.checkInputSelected(selectedTimelineModel, inputData);
-	
-						if (inputData != null)
+						for (InputPosEntriesModel inputPosEntryModel : inputPosEntries)
 						{
-							Generator inputGenerator = inputData.getInputGenerator();
+	//						InputData inputData = inputEntryModel.getInputData();
+							InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
 							
-							// Have Input-Generator?
-							if (inputGenerator != null)
+							InputData inputData;
+							
+							if (inputEntryModel != null)
 							{
-								this.paintTimelineInputConnectorLine(g2, 
-								                                     timelineSelectEntriesModel, 
-								                                     inputGenerator,
-								                                     highlighted, selected, 
-								                                     entryHeight, 
-								                                     inp1X, inp1Y);
+								inputData = inputEntryModel.getInputData();
 							}
-						}
-						{
+							else
+							{
+								inputData = null;
+							}
+							
+							float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
+							
+							float inp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
+							float inp1Y = selectedPos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
+								
+							boolean highlighted = this.checkInputHighlighted(selectedTimelineModel, inputEntryModel);
+							boolean selected = this.checkInputSelected(selectedTimelineModel, inputEntryModel);
+							boolean addInput;
+							
+							if (inputData != null)
+							{
+								Generator inputGenerator = inputData.getInputGenerator();
+								
+								// Have Input-Generator?
+								if (inputGenerator != null)
+								{
+									this.paintTimelineInputConnectorLine(g2, 
+									                                     timelineSelectEntriesModel, 
+									                                     inputGenerator,
+									                                     highlighted, selected, 
+									                                     entryHeight, 
+									                                     inp1X, inp1Y);
+								}
+								
+								addInput = false;
+							}
+							else
+							{
+								addInput = true;
+							}
+
 							this.paintTimelineInputConnectorHandler(g2, 
 							                                        highlighted, selected, 
+							                                        addInput,
 							                                        inp1X, inp1Y);
+							inputNo++;
 						}
+					}
+					else
+					{
 						inputNo++;
 					}
 				}
@@ -624,6 +700,28 @@ implements Scrollable//, MouseMotionListener
 			}
 		}
 		//==========================================================================================
+	}
+
+	/**
+	 * @param selectedTimelineModel
+	 * @param selectedTimelineEntryModel
+	 * @return
+	 * 			is the offset between the input pos entries.
+	 */
+	public float calcSelectedScreenInputOffset(final SelectedTimelineModel selectedTimelineModel,
+	                                           final TimelineSelectEntryModel selectedTimelineEntryModel)
+	{
+		//==========================================================================================
+		final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
+		
+		final int retEntryCnt = inputPosEntriesModel.getSumEntryCnt();
+		
+		float selectedScreenInputOffset = (((selectedTimelineEntryModel.getEndTimePos() - 
+											 selectedTimelineEntryModel.getStartTimePos())) / 
+										   (retEntryCnt + 1));
+		
+		//==========================================================================================
+		return selectedScreenInputOffset;
 	}
 
 	/**
@@ -732,13 +830,15 @@ implements Scrollable//, MouseMotionListener
 	 * 			<code>true</code> if the input is highlighted.
 	 * @param selected
 	 * 			<code>true</code> if the input is selected.
+	 * @param addInput
+	 * 			<code>true</code> if it is the the Add-Input Entry.
 	 * @param inp1X
 	 * 			is the input position X.
 	 * @param inp1Y
 	 * 			is the input position Y.
 	 */
 	private void paintTimelineInputConnectorHandler(Graphics2D g2, 
-	                                                boolean highlighted, boolean selected, 
+	                                                boolean highlighted, boolean selected, boolean addInput,
 	                                                float inp1X, float inp1Y)
 	{
 		//==========================================================================================
@@ -785,31 +885,57 @@ implements Scrollable//, MouseMotionListener
 		              INPUT_MARKER_SIZE_X, 
 		              INPUT_MARKER_SIZE_Y, 
 		              raised);
+		
+		if (addInput == true)
+		{
+			if (selected == true)
+			{
+				g2.setPaint(CTimelineInputSelectedText);
+			}
+			else
+			{
+				if (highlighted == true)
+				{
+					g2.setPaint(CTimelineInputHighlightedText);
+				}
+				else
+				{
+					g2.setPaint(CTimelineInputText);
+				}
+			}
+			
+			g2.drawString("+", 
+			              imX + 1, 
+			              imY + INPUT_MARKER_SIZE_Y);
+		}
+		
 		//==========================================================================================
 	}
 
 	/**
 	 * @param selectedTimelineModel
 	 * 			is the selected timeline.
-	 * @param inputData
-	 * 			is the input.
+	 * @param inputEntryModel
+	 * 			is the inputEntryModel.
 	 * @return
 	 * 			<code>true</code> if the input is selected.
 	 */
-	private boolean checkInputSelected(final SelectedTimelineModel selectedTimelineModel, InputData inputData)
+	private boolean checkInputSelected(final SelectedTimelineModel selectedTimelineModel, 
+	                                   final InputEntryModel inputEntryModel)
 	{
 		//==========================================================================================
 		boolean selected;
 		
-		InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
-		
 		if (selectedTimelineModel != null)
 		{
+			InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
+			
 			if (selectedInputEntry != null)
 			{
-				InputData selectedInputData = selectedInputEntry.getInputData();
-				
-				if (inputData == selectedInputData)
+//				InputData selectedInputData = selectedInputEntry.getInputData();
+//				
+//				if (inputData == selectedInputData)
+				if (inputEntryModel == selectedInputEntry)
 				{
 					selected = true;
 				}
@@ -834,24 +960,27 @@ implements Scrollable//, MouseMotionListener
 	/**
 	 * @param selectedTimelineModel
 	 * 			is the selected timeline.
-	 * @param inputData
-	 * 			is the input.
+	 * @param inputEntryModel
+	 * 			is the inputEntryModel.
 	 * @return
 	 * 			<code>true</code> if the input is highlighted.
 	 */
-	private boolean checkInputHighlighted(final SelectedTimelineModel selectedTimelineModel, InputData inputData)
+	private boolean checkInputHighlighted(final SelectedTimelineModel selectedTimelineModel, 
+	                                      final InputEntryModel inputEntryModel)
 	{
 		//==========================================================================================
 		boolean highlighted;
-		InputEntryModel highlightedInputEntry = selectedTimelineModel.getHighlightedInputEntry();
 		
 		if (selectedTimelineModel != null)
 		{
+			InputEntryModel highlightedInputEntry = selectedTimelineModel.getHighlightedInputEntry();
+
 			if (highlightedInputEntry != null)
 			{
-				InputData highlightedInputData = highlightedInputEntry.getInputData();
-				
-				if (inputData == highlightedInputData)
+//				InputData highlightedInputData = highlightedInputEntry.getInputData();
+//				
+//				if (inputData == highlightedInputData)
+				if (inputEntryModel == highlightedInputEntry)
 				{
 					highlighted = true;
 				}
@@ -1262,7 +1391,8 @@ implements Scrollable//, MouseMotionListener
 	 * @param point2D
 	 * 			is the point.
 	 * @return
-	 * 			is the Timeline at given point.
+	 * 			is the Timeline at given point.<br/>
+	 * 			<code>null</code> if no timeline is found.
 	 */
 	public TimelineSelectEntryModel searchTimeline(Point2D point2D)
 	{
@@ -1529,21 +1659,19 @@ implements Scrollable//, MouseMotionListener
 	 * @param point2D
 	 * 			is the mouse position.
 	 * @return
-	 * 			the Input-Entry Model at given position.<br/>
+	 * 			the Input-Pos-Entry Model at given position.<br/>
 	 * 			<code>null</code> if no input found.
 	 */
-	public InputEntryModel searchInputEntry(final SelectedTimelineModel selectedTimelineModel, 
-	                                        final Point point,
-	                                        final Point2D point2D)
+	public InputPosEntriesModel searchInputEntry(final SelectedTimelineModel selectedTimelineModel, 
+	                                             final Point point,
+	                                             final Point2D point2D)
 	{
 		//==========================================================================================
-		final InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
-		
 		final TimelineSelectEntryModel selectedTimelineEntryModel = 
 			selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 		
 		//==========================================================================================
-		InputEntryModel retInputEntryModel;
+		InputPosEntriesModel retInputPosEntryModel;
 
 		//------------------------------------------------------------------------------------------
 		if (selectedTimelineEntryModel != null)
@@ -1558,132 +1686,90 @@ implements Scrollable//, MouseMotionListener
 				int selectedTimelinePos = this.timelinesDrawPanelModel.calcTimelinePos(selectedTimelineEntryModel);
 				
 				// Calculates the Positions of Inputs.
-				final InputPosEntriesModel retInputPosEntriesModel = this.calcInputPosEntries(inputEntriesModel);
+				final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
 				
-				final int retEntryCnt = retInputPosEntriesModel.getSumEntryCnt();
+				final int retEntryCnt = inputPosEntriesModel.getSumEntryCnt();
 				
 				if (retEntryCnt > 0)
 				{
 					//----------------------------------------------------------------------------------
-					retInputEntryModel = null;
+					retInputPosEntryModel = null;
 					
 					//----------------------------------------------------------------------------------
 					float selectedScreenPosX = selectedTimelineEntryModel.getStartTimePos();
-					float selectedScreenInputOffset = (((selectedTimelineEntryModel.getEndTimePos() - 
-														 selectedTimelineEntryModel.getStartTimePos())) / 
-													   (retEntryCnt + 1));
+					float selectedScreenInputOffset = 
+						this.calcSelectedScreenInputOffset(selectedTimelineModel,
+						                                   selectedTimelineEntryModel);
 
 					//----------------------------------------------------------------------------------
 					// Inputs:
 					
 //					Iterator<InputEntryModel> inputEntryModelsIterator = inputEntryModels.iterator();
-					List<InputPosEntriesModel> groupInputPosEntries = retInputPosEntriesModel.getInputPosEntries();
+					List<InputPosEntriesModel> groupInputPosEntries = inputPosEntriesModel.getInputPosEntries();
 					
 					int inputNo = 1;
 					
-//					while (inputsIterator.hasNext())
-//					while (inputEntryModelsIterator.hasNext())
-					for (InputPosEntriesModel groupInputPosEntriesModel : groupInputPosEntries)
+					outerloop:
 					{
-//						InputData inputData = inputsIterator.next();
-//						InputEntryModel inputEntryModel = inputEntryModelsIterator.next();
-						List<InputPosEntriesModel> inputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
-						
-						for (InputPosEntriesModel inputPosEntryModel : inputPosEntries)
+	//					while (inputsIterator.hasNext())
+	//					while (inputEntryModelsIterator.hasNext())
+						for (InputPosEntriesModel groupInputPosEntriesModel : groupInputPosEntries)
 						{
-//							InputData inputData = inputEntryModel.getInputData();
-							InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
-//							InputData inputData = inputEntryModel.getInputData();
-						
-							float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
+	//						InputData inputData = inputsIterator.next();
+	//						InputEntryModel inputEntryModel = inputEntryModelsIterator.next();
+							List<InputPosEntriesModel> inputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
 							
-							float inp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
-							float inp1Y = selectedTimelinePos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
-							
-	//						Generator inputGenerator = inputData.getInputGenerator();
-							
+							for (InputPosEntriesModel inputPosEntryModel : inputPosEntries)
 							{
-								Point2D inpPoint = new Point2D.Float(inp1X, inp1Y);
-								Point2D tInpPoint = this.at.transform(inpPoint, null);
+	//							InputData inputData = inputEntryModel.getInputData();
+//								InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
+	//							InputData inputData = inputEntryModel.getInputData();
+							
+								float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
 								
-								int imX = (int)(tInpPoint.getX() - INPUT_MARKER_SIZE_X / 2);
-								int imY = (int)(tInpPoint.getY());
+								float inp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
+								float inp1Y = selectedTimelinePos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
 								
-								Rectangle2D rectangle = new Rectangle2D.Float(imX,
-								                                              imY,
-								                                              INPUT_MARKER_SIZE_X,
-								                                              INPUT_MARKER_SIZE_Y);
+		//						Generator inputGenerator = inputData.getInputGenerator();
 								
-								if (rectangle.contains(point) == true)
 								{
-									retInputEntryModel = inputEntryModel;
-									break;
+									Point2D inpPoint = new Point2D.Float(inp1X, inp1Y);
+									Point2D tInpPoint = this.at.transform(inpPoint, null);
+									
+									int imX = (int)(tInpPoint.getX() - INPUT_MARKER_SIZE_X / 2);
+									int imY = (int)(tInpPoint.getY());
+									
+									Rectangle2D rectangle = new Rectangle2D.Float(imX,
+									                                              imY,
+									                                              INPUT_MARKER_SIZE_X,
+									                                              INPUT_MARKER_SIZE_Y);
+									
+									if (rectangle.contains(point) == true)
+									{
+										retInputPosEntryModel = inputPosEntryModel;
+										break outerloop;
+									}
 								}
+								inputNo++;
 							}
-							inputNo++;
-						}
-						
-						if (retInputEntryModel != null)
-						{
-							break;
 						}
 					}
 				}
 				else
 				{
-					retInputEntryModel = null;
+					retInputPosEntryModel = null;
 				}
 			}
 			else
 			{
-				retInputEntryModel = null;
+				retInputPosEntryModel = null;
 			}
 		}
 		else
 		{
-			retInputEntryModel = null;
+			retInputPosEntryModel = null;
 		}
 		//==========================================================================================
-		return retInputEntryModel;
-	}
-
-	/**
-	 * @param inputEntriesModel
-	 * 			is the inputEntries Model.
-	 * @return
-	 * 			the root input pos entries model.
-	 */
-	private InputPosEntriesModel calcInputPosEntries(InputEntriesModel inputEntriesModel)
-	{
-		//==========================================================================================
-//		List<InputEntryModel> inputEntryModels = inputEntriesModel.getInputEntryModels();
-		final List<InputEntryGroupModel> inputEntryGroups = inputEntriesModel.getInputEntryGroups();
-		
-		InputPosEntriesModel retInputPosEntriesModel = new InputPosEntriesModel(null,
-		                                                                        null,
-		                                                                        null);
-		{
-			for (InputEntryGroupModel inputEntryGroupModel : inputEntryGroups)
-			{
-				InputPosEntriesModel groupInputPosEntriesModel = new InputPosEntriesModel(retInputPosEntriesModel,
-				                                                                          inputEntryGroupModel,
-				                                                                          null);
-
-				List<InputEntryModel> inputEntries = inputEntryGroupModel.getInputEntries();
-				
-				for (InputEntryModel inputEntryModel : inputEntries)
-				{
-					InputPosEntriesModel inputPosEntry = new InputPosEntriesModel(groupInputPosEntriesModel,
-					                                                              inputEntryGroupModel,
-					                                                              inputEntryModel);
-					
-					groupInputPosEntriesModel.addInputPosEntry(inputPosEntry);
-				}
-				
-				retInputPosEntriesModel.addInputPosEntry(groupInputPosEntriesModel);
-			}
-		}
-		//==========================================================================================
-		return retInputPosEntriesModel;
+		return retInputPosEntryModel;
 	}
 }

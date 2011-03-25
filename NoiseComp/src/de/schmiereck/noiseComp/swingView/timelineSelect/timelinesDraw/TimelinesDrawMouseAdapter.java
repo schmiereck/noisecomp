@@ -12,7 +12,11 @@ import java.awt.geom.Point2D;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryGroupModel;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.InputEntryTargetModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
@@ -33,9 +37,14 @@ extends MouseAdapter
 	// Fields:
 
 	/**
+	 * App Controller.
+	 */
+	private final AppController appController;
+	
+	/**
 	 * Timelines-Draw Panel-Model.
 	 */
-	final TimelinesDrawPanelModel timelinesDrawPanelModel;
+	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	/**
 	 * Timelines-Draw Panel-View.
@@ -54,6 +63,8 @@ extends MouseAdapter
 	/**
 	 * Constructor.
 	 * 
+	 * @param appController
+	 * 			is the App Controller.
 	 * @param timelinesDrawPanelController
 	 * 			is the Timelines-Draw Panel-Controller.
 	 * @param timelinesDrawPanelModel
@@ -62,11 +73,12 @@ extends MouseAdapter
 	 * 			is the Timelines-Draw Panel-View.
 	 */
 	public TimelinesDrawMouseAdapter(final AppController appController,
-	                                  final TimelinesDrawPanelController timelinesDrawPanelController,
-	                                  final TimelinesDrawPanelModel timelinesDrawPanelModel,
-	                                  final TimelinesDrawPanelView timelinesDrawPanelView)
+	                                 final TimelinesDrawPanelController timelinesDrawPanelController,
+	                                 final TimelinesDrawPanelModel timelinesDrawPanelModel,
+	                                 final TimelinesDrawPanelView timelinesDrawPanelView)
 	{
 		//==========================================================================================
+		this.appController = appController;
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		this.timelinesDrawPanelView = timelinesDrawPanelView;
 		
@@ -202,36 +214,69 @@ extends MouseAdapter
 		else
 		{
 			//--------------------------------------------------------------------------------------
-			if (this.timelinesDrawPanelModel.getTimelineHandlerMoved() == true)
+			final InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
+			
+			if (selectedInputEntry != null)
 			{
-				this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+				final InputEntryTargetModel inputEntryTargetModel = selectedTimelineModel.getInputEntryTargetModel();
 				
-				TimelineSelectEntryModel highlightedTimelineSelectEntryModel = 
-					this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
-				
-				if (highlightedTimelineSelectEntryModel != null)
+				if (inputEntryTargetModel != null)
 				{
-					HighlightedTimelineHandler timelineHandler = 
-						this.timelinesDrawPanelModel.getHighlightedTimelineHandler();
+					final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
+					final TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+					final TimelineSelectEntryModel targetTimelineSelectEntryModel = inputEntryTargetModel.getTargetTimelineSelectEntryModel();
 					
-					if (timelineHandler != HighlightedTimelineHandler.NONE)
+					final InputPosEntriesModel inputPosEntryModel = inputPosEntriesModel.searchInputPosEntry(selectedInputEntry);
+					
+					final InputEntryGroupModel inputEntryGroupModel = inputPosEntryModel.getInputEntryGroupModel();
+					
+					final InputTypeData inputTypeData = inputEntryGroupModel.getInputTypeData();
+					
+					this.appController.doUpdateTimelineInput(selectedTimelineSelectEntryModel,
+					                                         selectedInputEntry,
+					                                         inputTypeData,
+					                                         targetTimelineSelectEntryModel);
+					
+					inputEntryTargetModel.setTargetTimelineSelectEntryModel(null);
+				}
+				
+//				selectedTimelineModel.setHighlightedInputEntry(null);
+//				selectedTimelineModel.setSelectedInputEntry(null);
+				selectedTimelineModel.setInputEntryTargetModel(null);
+			}
+			else
+			{
+				if (this.timelinesDrawPanelModel.getTimelineHandlerMoved() == true)
+				{
+					this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+					
+					TimelineSelectEntryModel highlightedTimelineSelectEntryModel = 
+						this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
+					
+					if (highlightedTimelineSelectEntryModel != null)
 					{
-						switch (timelineHandler)
+						HighlightedTimelineHandler timelineHandler = 
+							this.timelinesDrawPanelModel.getHighlightedTimelineHandler();
+						
+						if (timelineHandler != HighlightedTimelineHandler.NONE)
 						{
-							case LEFT:
+							switch (timelineHandler)
 							{
-								this.timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
-								this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
-								this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
-								this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
-								break;
-							}
-							case RIGHT:
-							{
-								this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
-								this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
-								this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
-								break;
+								case LEFT:
+								{
+									this.timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+									this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+									this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+									this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
+									break;
+								}
+								case RIGHT:
+								{
+									this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+									this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+									this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
+									break;
+								}
 							}
 						}
 					}
