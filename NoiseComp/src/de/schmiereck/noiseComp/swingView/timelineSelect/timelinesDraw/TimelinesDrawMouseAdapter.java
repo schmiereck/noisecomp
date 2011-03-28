@@ -232,10 +232,13 @@ extends MouseAdapter
 					
 					final InputTypeData inputTypeData = inputEntryGroupModel.getInputTypeData();
 					
-					this.appController.doUpdateTimelineInput(selectedTimelineSelectEntryModel,
-					                                         selectedInputEntry,
-					                                         inputTypeData,
-					                                         targetTimelineSelectEntryModel);
+					if (selectedTimelineSelectEntryModel != null)
+					{
+						this.appController.doUpdateTimelineInput(selectedTimelineSelectEntryModel,
+						                                         selectedInputEntry,
+						                                         inputTypeData,
+						                                         targetTimelineSelectEntryModel);
+					}
 					
 					inputEntryTargetModel.setTargetTimelineSelectEntryModel(null);
 				}

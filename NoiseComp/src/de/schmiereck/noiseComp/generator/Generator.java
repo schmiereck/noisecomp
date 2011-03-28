@@ -285,7 +285,7 @@ implements GeneratorInterface,
 	 * @return 
 	 * 			the new created and added {@link InputData}-Object.
 	 */
-	public synchronized InputData addInputGenerator(Generator inputGenerator, 
+	public synchronized InputData addGeneratorInput(Generator inputGenerator, 
 	                                                InputTypeData inputTypeData, 
 	                                                Float inputValue, 
 	                                                String inputStringValue, 
@@ -325,7 +325,7 @@ implements GeneratorInterface,
 		//==========================================================================================
 		InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(inputType);
 		
-		InputData inputData = this.addInputGenerator(null, inputTypeData, Float.valueOf(value), null, null);
+		InputData inputData = this.addGeneratorInput(null, inputTypeData, Float.valueOf(value), null, null);
 		
 		//==========================================================================================
 		return inputData;
@@ -337,7 +337,7 @@ implements GeneratorInterface,
 	public InputData addInputValue(Float value, InputTypeData inputTypeData)
 	{
 		//==========================================================================================
-		InputData inputData = this.addInputGenerator(null, inputTypeData, value, null, null);
+		InputData inputData = this.addGeneratorInput(null, inputTypeData, value, null, null);
 		
 		//inputData.getInputGenerator();
 

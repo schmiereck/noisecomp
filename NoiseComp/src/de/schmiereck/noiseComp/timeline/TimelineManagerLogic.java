@@ -518,34 +518,38 @@ public class TimelineManagerLogic
 	}
 
 	/**
-	 * Add input to the given timeline and 
+	 * Add input to the given New-Timeline connected to the given Input-Timeline and 
 	 * the generator of this timeline.
 	 * 
 	 * @param newTimeline
-	 * 			is the timeline.
+	 * 			is the New-Timeline.
 	 * @param inputTimeline
-	 * 			is the Input-Timeline.
+	 * 			is the Input-Timeline.<br/>
+	 * 			<code>null</code> if not used.
 	 * @param inputTypeData
 	 * 			is the Input-Type Data.
 	 * @param inputValue
-	 * 			is the Input-Value.
+	 * 			is the Input-Value.<br/>
+	 * 			<code>null</code> if not used.
 	 * @param inputStringValue
-	 * 			is the Input-String-Value.
+	 * 			is the Input-String-Value.<br/>
+	 * 			<code>null</code> if not used.
 	 * @param inputModulInputTypeData
-	 * 			is the Input-Modul-Input-Type Data.
+	 * 			is the Input-Modul-Input-Type Data.<br/>
+	 * 			<code>null</code> if not used.
 	 * @return 
 	 * 			the new created and added {@link InputData}-Object.
 	 */
-	public InputData addInputGenerator(Timeline newTimeline, 
+	public InputData addGeneratorInput(Timeline newTimeline, 
 	                                   Timeline inputTimeline,
 	                                   InputTypeData inputTypeData, 
 	                                   Float floatValue, String stringValue,
-	                                   InputTypeData modulInputTypeData)
+	                                   InputTypeData inputModulInputTypeData)
 	{
 		//==========================================================================================
 		InputData inputData;
 		
-		final Generator generator = newTimeline.getGenerator();
+		final Generator newGenerator = newTimeline.getGenerator();
 		
 		final Generator inputGenerator;
 		
@@ -559,10 +563,10 @@ public class TimelineManagerLogic
 		}
 		
 		inputData = 
-			generator.addInputGenerator(inputGenerator, 
-			                            inputTypeData, 
-			                            floatValue, stringValue,
-			                            modulInputTypeData);
+			newGenerator.addGeneratorInput(inputGenerator, 
+			                               inputTypeData, 
+			                               floatValue, stringValue,
+			                               inputModulInputTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		this.addInputTimeline(newTimeline, inputData, inputGenerator);

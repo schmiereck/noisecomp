@@ -19,6 +19,8 @@ public class InputEntryModel
 	//**********************************************************************************************
 	// Fields:
 
+	private final InputEntryGroupModel inputEntryGroupModel;
+	
 	/**
 	 * Input.<br/>
 	 * <code>null</code> if no input is created yet.
@@ -34,9 +36,14 @@ public class InputEntryModel
 	 * @param inputData
 	 * 			is the Input.
 	 */
-	public InputEntryModel(InputData inputData)
+	public InputEntryModel(final InputEntryGroupModel inputEntryGroupModel,
+	                       final InputData inputData)
 	{
+		//==========================================================================================
+		this.inputEntryGroupModel = inputEntryGroupModel;
 		this.inputData = inputData;
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -55,6 +62,15 @@ public class InputEntryModel
 	public void setInputData(InputData inputData)
 	{
 		this.inputData = inputData;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputEntryGroupModel}.
+	 */
+	public InputEntryGroupModel getInputEntryGroupModel()
+	{
+		return this.inputEntryGroupModel;
 	}
 	
 }

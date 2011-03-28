@@ -664,7 +664,7 @@ public class LoadFileOperationLogic
 					
 					//generators.addInput(generator, inputGenerator, inputTypeData, inputValue, inputModulInputTypeData);
 //					InputData inputData = 
-						generator.addInputGenerator(inputGenerator, inputTypeData, 
+						generator.addGeneratorInput(inputGenerator, inputTypeData, 
 						                            inputValue, inputStringValue,
 						                            inputModulInputTypeData);
 				}

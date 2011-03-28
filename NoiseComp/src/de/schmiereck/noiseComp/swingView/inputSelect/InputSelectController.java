@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.inputSelect;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.ListSelectionModel;
@@ -15,18 +16,24 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.InputTypesData;
+import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesRemoveListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesUpdateListenerInterface;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryGroupModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.InputEntryTargetModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.InputPosEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
+import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
 
 /**
  * <p>
@@ -280,7 +287,7 @@ public class InputSelectController
 					                                   InputEntryModel inputEntryModel)
 					{
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
+//						InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
 
 						TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 						
@@ -387,23 +394,58 @@ public class InputSelectController
 	}
 	
 	/**
-	 * Do Remove Selected Entry.
+	 * Do Remove Selected Input-Entry.
 	 * 
-	 * @param selectedTimeline
-	 * 			is the selectedTimeline.
 	 */
-	public void doRemoveSelectedEntry(final Timeline selectedTimeline)
+	public void doRemoveSelectedInputEntry()
 	{
+		//==========================================================================================
+		final InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
+		final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
+		
 		//==========================================================================================
 		Integer selectedRowNo = this.inputSelectModel.getSelectedRowNo();
 		
 		if (selectedRowNo != null)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
+			final InputEntryModel removedInputEntry = 
+				inputEntriesModel.removeInputEntry(selectedRowNo);
 			
-			inputEntriesModel.removeInputEntry(selectedRowNo);
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			final InputEntryGroupModel removeInputEntryGroupModel = removedInputEntry.getInputEntryGroupModel();
 			
+			final List<InputPosEntriesModel> groupInputPosEntries = inputPosEntriesModel.getInputPosEntries();
+			
+			//------------------------------------------------------------------------------------------
+			outerloop:
+			{
+				for (InputPosEntriesModel groupInputPosEntriesModel : groupInputPosEntries)
+				{
+					//--------------------------------------------------------------------------------------
+					final InputEntryGroupModel inputEntryGroupModel = groupInputPosEntriesModel.getInputEntryGroupModel();
+					
+					if (inputEntryGroupModel == removeInputEntryGroupModel)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Search and remove Pos-Entry of group.
+						
+						final List<InputPosEntriesModel> group2InputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
+						
+						for (InputPosEntriesModel inputPos2EntriesModel : group2InputPosEntries)
+						{
+							final InputEntryModel input2EntryModel = inputPos2EntriesModel.getInputEntryModel();
+							
+							if (input2EntryModel == removedInputEntry)
+							{
+								groupInputPosEntriesModel.removeGroupInputPosEntry(inputPos2EntriesModel);
+								
+								break outerloop;
+							}
+						}
+					}
+				}
+			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			this.appModelChangedObserver.notifyAppModelChanged();
 		}
@@ -411,23 +453,109 @@ public class InputSelectController
 	}
 
 	/**
-	 * @param inputTypeData
+	 * @param newInputTypeData
 	 * 			is the inputType.
 	 */
-	public void doCreateNewInput(final InputTypeData inputTypeData)
+	public void doCreateNewInput(final InputTypeData newInputTypeData)
 	{
 		//==========================================================================================
-		InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
+		final InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
+		final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
 		
-		InputEntryModel inputEntryModel = new InputEntryModel(null);
+		//==========================================================================================
+		InputEntryModel retInputEntryModel = null;
 		
-		inputEntriesModel.addInputEntry(inputTypeData,
-		                                inputEntryModel);
+		InputEntryGroupModel newInputEntryGroupModel = inputEntriesModel.searchInputEntryGroup(newInputTypeData);
 		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//		InputEntryModel inputEntryModel = new InputEntryModel(inputEntryGroupModel,
+//		                                                      null);
+		
+		//------------------------------------------------------------------------------------------
+		outerloop:
+		{
+			final List<InputPosEntriesModel> groupInputPosEntries = inputPosEntriesModel.getInputPosEntries();
+			
+			for (InputPosEntriesModel groupInputPosEntriesModel : groupInputPosEntries)
+			{
+				final InputEntryGroupModel inputEntryGroupModel = groupInputPosEntriesModel.getInputEntryGroupModel();
+				
+				if (inputEntryGroupModel == newInputEntryGroupModel)
+				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					// Search and update Add-Pos-Entry of group.
+					
+					final List<InputPosEntriesModel> group2InputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
+					
+					for (InputPosEntriesModel inputPos2EntriesModel : group2InputPosEntries)
+					{
+						final InputEntryModel input2EntryModel = inputPos2EntriesModel.getInputEntryModel();
+						final InputData input2Data = input2EntryModel.getInputData();
+						
+	//					if (input2EntryModel == newInputEntryModel)
+						if (input2Data == null)
+						{
+	//						inputPos2EntriesModel.setInputEntryModel(newInputEntryModel);
+							
+							this.updateAddPosEntry(newInputTypeData,
+							                       input2EntryModel);
+							
+							retInputEntryModel = input2EntryModel;
+							
+							break outerloop;
+						}
+					}
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+			}
+		}
+		//------------------------------------------------------------------------------------------
+		inputEntriesModel.addInputEntry(newInputTypeData,
+		                                retInputEntryModel);
+		
+		//------------------------------------------------------------------------------------------
 		this.appModelChangedObserver.notifyAppModelChanged();
 		
 		//==========================================================================================
+	}
+
+	/**
+	 * @param newInputTypeData
+	 * @param input2EntryModel
+	 */
+	private void updateAddPosEntry(final InputTypeData newInputTypeData,
+	                               final InputEntryModel input2EntryModel)
+	{
+		//==========================================================================================
+		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		
+		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		
+		//==========================================================================================
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = this.selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+		Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+		
+		//==========================================================================================
+		InputEntryTargetModel inputEntryTargetModel = this.selectedTimelineModel.getInputEntryTargetModel();
+		
+		// Target defined (Not Update-Button)?
+		if (inputEntryTargetModel != null)
+		{
+			TimelineSelectEntryModel inputTargetTimelineSelectEntryModel = inputEntryTargetModel.getTargetTimelineSelectEntryModel();
+			Timeline inputTargetTimeline = inputTargetTimelineSelectEntryModel.getTimeline();
+			
+			Timeline newTimeline = selectedTimeline;
+			Timeline inputTimeline = inputTargetTimeline;
+			
+			InputData inputData = 
+				timelineManagerLogic.addGeneratorInput(newTimeline, 
+				                                       inputTimeline, 
+				                                       newInputTypeData, 
+				                                       null, 
+				                                       null, 
+				                                       null);
+		
+			input2EntryModel.setInputData(inputData);
+		}
 	}
 
 }

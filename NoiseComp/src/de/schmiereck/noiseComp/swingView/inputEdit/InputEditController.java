@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import de.schmiereck.noiseComp.frequences.ToneFrequences;
 import de.schmiereck.noiseComp.frequences.ToneFrequences.Tone;
@@ -24,6 +25,7 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.MultiValue;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
+import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
@@ -406,7 +408,9 @@ public class InputEditController
 	 */
 	private List<InputTypeSelectItem> updateEditedInputType(Timeline selectedTimeline)
 	{
+		//==========================================================================================
 		List<InputTypeSelectItem> inputTypeSelectItems;
+		
 		if (selectedTimeline != null)
 		{
 			inputTypeSelectItems = new Vector<InputTypeSelectItem>();
@@ -429,18 +433,19 @@ public class InputEditController
 		{
 			inputTypeSelectItems = null;
 		}
+		//==========================================================================================
 		return inputTypeSelectItems;
 	}
 
 	/**
 	 * Submit edited Input.
 	 * 
-	 * @param selectModel
-	 * 			is the Select Model.
+	 * @param inputSelectModel
+	 * 			is the input Select Model.
 	 * @param selectedTimeline
 	 * 			is the selected Timeline.
 	 */
-	public void doSubmit(final InputSelectModel selectModel,
+	public void doSubmit(final InputSelectModel inputSelectModel,
 	                     final Timeline selectedTimeline)
 	{
 		//==========================================================================================
@@ -450,14 +455,14 @@ public class InputEditController
 		
 		//==========================================================================================
 		// Input is selceted?
-		if (selectModel.getSelectedRowNo() != null)
+		if (inputSelectModel.getSelectedRowNo() != null)
 		{
 			InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
 			GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
 			Object valueSelectedValue = this.inputEditView.getInputTypeValueTextField().getSelectedItem();
 			ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)this.inputEditView.getModulInputTypeComboBox().getSelectedItem();
 				
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
 			Timeline inputTimeline = inputGeneratorSelectItem.getTimeline();
 			MultiValue multiValue;
@@ -479,15 +484,15 @@ public class InputEditController
 			}
 			InputTypeData modulInputTypeData = modulInputTypeSelectItem.getInputTypeData();
 			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Input-Data:
 			
-			Integer selectedRowNo = selectModel.getSelectedRowNo();
+			Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
 			
 			// Input selected?
 			if (selectedRowNo != null)
 			{
-				InputsTabelModel inputsTabelModel = selectModel.getInputsTabelModel();
+				InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
 				
 				InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
 				
@@ -512,7 +517,7 @@ public class InputEditController
 				{
 					// Insert new Input:
 					inputData = 
-						timelineManagerLogic.addInputGenerator(selectedTimeline,
+						timelineManagerLogic.addGeneratorInput(selectedTimeline,
 						                                       inputTimeline, 
 						                                       inputTypeData, 
 						                                       multiValue.floatValue, multiValue.stringValue,
@@ -522,7 +527,7 @@ public class InputEditController
 				}
 			}
 			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Input-Edit-Model:
 			
 			this.inputEditModel.setInputTypeData(inputTypeSelectItem.getInputTypeData());
@@ -533,8 +538,32 @@ public class InputEditController
 			}
 			this.inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
 			
-			//------------------------------------------------------------------------------------------
+			//--------------------------------------------------------------------------------------
 			this.appModelChangedObserver.notifyAppModelChanged();
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * Do create new input of selected input type.
+	 */
+	public void doCreateNewInput(final InputSelectController inputSelectController)
+	{
+		//==========================================================================================
+		InputTypeData inputTypeData;
+		
+		inputTypeData = this.inputEditModel.getInputTypeData();
+		
+		if (inputTypeData != null)
+		{
+			inputSelectController.doCreateNewInput(inputTypeData);
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(this.inputEditView,
+			                              "Please select a input type.", 
+			                              "No input type", 
+			                              JOptionPane.OK_OPTION);
 		}
 		//==========================================================================================
 	}

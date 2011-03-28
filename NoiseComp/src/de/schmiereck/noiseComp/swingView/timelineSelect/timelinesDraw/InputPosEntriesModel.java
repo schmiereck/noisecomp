@@ -23,9 +23,9 @@ public class InputPosEntriesModel
 	// Fields:
 	
 	/**
-	 * Group InputPosEntries Model.
+	 * Parent InputPosEntries Model.
 	 */
-	private final InputPosEntriesModel groupInputPosEntriesModel;
+	private final InputPosEntriesModel parentInputPosEntriesModel;
 	
 //	private int sumEntryCnt = 0;
 	
@@ -39,7 +39,7 @@ public class InputPosEntriesModel
 	/**
 	 * Input-Entry Model. 
 	 */	
-	private final InputEntryModel inputEntryModel;
+	private InputEntryModel inputEntryModel;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -59,7 +59,7 @@ public class InputPosEntriesModel
 	                            final InputEntryModel inputEntryModel)
 	{
 		//==========================================================================================
-		this.groupInputPosEntriesModel = groupInputPosEntriesModel;
+		this.parentInputPosEntriesModel = groupInputPosEntriesModel;
 		this.inputEntryGroupModel = inputEntryGroupModel;
 		this.inputEntryModel = inputEntryModel;
 
@@ -127,13 +127,13 @@ public class InputPosEntriesModel
 		//==========================================================================================
 		this.inputPosEntries.add(inputPosEntries);
 		
-		int inputEntriesCnt = inputPosEntries.getSumEntryCnt();
-
-		if (inputEntriesCnt == 0)
-		{
-			inputEntriesCnt = 1;
-		}
-
+//		int inputEntriesCnt = inputPosEntries.getSumEntryCnt();
+//
+//		if (inputEntriesCnt == 0)
+//		{
+//			inputEntriesCnt = 1;
+//		}
+//
 //		this.entryCnt += inputEntriesCnt;
 //		
 //		if (this.groupInputPosEntriesModel != null)
@@ -147,11 +147,11 @@ public class InputPosEntriesModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #groupInputPosEntriesModel}.
+	 * 			returns the {@link #parentInputPosEntriesModel}.
 	 */
 	public InputPosEntriesModel getGroupInputPosEntriesModel()
 	{
-		return this.groupInputPosEntriesModel;
+		return this.parentInputPosEntriesModel;
 	}
 
 //	/**
@@ -269,6 +269,112 @@ public class InputPosEntriesModel
 		}
 		//==========================================================================================
 		return retInputPosEntryModel;
+	}
+
+	/**
+	 * @param newInputEntryModel
+	 */
+	public void addInputPosEntryInGroup(InputEntryModel newInputEntryModel)
+	{
+		//==========================================================================================
+//		final InputData newInputData = newInputEntryModel.getInputData();
+		final InputEntryGroupModel newInputEntryGroupModel = newInputEntryModel.getInputEntryGroupModel();
+		
+//		final InputTypeData newInputTypeData = newInputData.getInputTypeData();
+		
+		final List<InputPosEntriesModel> groupInputPosEntries = this.getInputPosEntries();
+		
+		for (InputPosEntriesModel groupInputPosEntriesModel : groupInputPosEntries)
+		{
+			//--------------------------------------------------------------------------------------
+			InputEntryGroupModel inputEntryGroupModel = groupInputPosEntriesModel.getInputEntryGroupModel();
+			
+			if (inputEntryGroupModel == newInputEntryGroupModel)
+			{
+//				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//				// Search and update Add-Entry of group.
+//				
+//				List<InputPosEntriesModel> group2InputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
+//				
+//				for (InputPosEntriesModel inputPos2EntriesModel : group2InputPosEntries)
+//				{
+//					InputEntryModel input2EntryModel = inputPos2EntriesModel.getInputEntryModel();
+//					InputData input2Data = input2EntryModel.getInputData();
+//					
+////					if (input2EntryModel == newInputEntryModel)
+//					if (input2Data == null)
+//					{
+////						inputPos2EntriesModel.setInputEntryModel(newInputEntryModel);
+//						
+//						TimelineManagerLogic timelineManagerLogic;
+//						
+//						InputData inputData = 
+//							timelineManagerLogic.addInputGenerator(newTimeline, 
+//							                                       inputTimeline, 
+//							                                       inputTypeData, 
+//							                                       floatValue, 
+//							                                       stringValue, 
+//							                                       modulInputTypeData);
+//						
+//						input2EntryModel.setInputData(inputData);
+//						break;
+//					}
+//				}
+//				
+//				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Create new Add-Entry.
+				
+				InputEntryModel addInputEntryModel = new InputEntryModel(inputEntryGroupModel, 
+				                                                         null);
+				
+				final InputPosEntriesModel addInputPosEntriesModel = 
+					new InputPosEntriesModel(groupInputPosEntriesModel, 
+					                         inputEntryGroupModel, 
+					                         addInputEntryModel);
+				
+				groupInputPosEntriesModel.addInputPosEntry(addInputPosEntriesModel);
+				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				break;
+			}
+//			InputTypeData groupInputTypeData = inputEntryGroupModel.getInputTypeData();
+//			
+//			if (groupInputTypeData == newInputTypeData)
+//			{
+////				final List<InputPosEntriesModel> inputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
+//				
+//				final InputPosEntriesModel newInputPosEntriesModel = 
+//					new InputPosEntriesModel(groupInputPosEntriesModel, 
+//					                         inputEntryGroupModel, 
+//					                         newInputEntryModel);
+//				
+//				groupInputPosEntriesModel.addInputPosEntry(newInputPosEntriesModel);
+//				
+//				break;
+//			}
+			//--------------------------------------------------------------------------------------
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * @param inputEntryModel 
+	 * 			to set {@link #inputEntryModel}.
+	 */
+	public void setInputEntryModel(InputEntryModel inputEntryModel)
+	{
+		this.inputEntryModel = inputEntryModel;
+	}
+
+	/**
+	 * @param inputPos2EntriesModel
+	 */
+	public void removeGroupInputPosEntry(InputPosEntriesModel inputPos2EntriesModel)
+	{
+		//==========================================================================================
+		inputPosEntries.remove(inputPos2EntriesModel);
+		
+		//==========================================================================================
 	}
 
 }

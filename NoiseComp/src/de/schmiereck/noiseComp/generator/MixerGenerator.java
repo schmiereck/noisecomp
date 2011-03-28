@@ -56,7 +56,7 @@ extends Generator
 		}
 		this.volumeInputs.add(volumeInput);
 		*/
-		this.addInputGenerator(volumeInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_VOLUME), 
+		this.addGeneratorInput(volumeInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_VOLUME), 
 							   null, null, null);
 	}
 
@@ -68,7 +68,7 @@ extends Generator
 		}
 		this.signalInputs.add(signalInput);
 		*/
-		this.addInputGenerator(signalInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL), 
+		this.addGeneratorInput(signalInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL), 
 							   null, null, null);
 	}
 

@@ -46,13 +46,13 @@ import de.schmiereck.noiseComp.swingView.about.AboutDialogView;
 import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
 import de.schmiereck.noiseComp.swingView.createFolder.CreateFolderController;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditController;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel;
-import de.schmiereck.noiseComp.swingView.inputEdit.InputEditView;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
@@ -79,6 +79,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineEndTimePosChangedListenerInterface;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.TimelineStartTimePosChangedListenerInterface;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.InputPosEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelController;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule.TimelinesGeneratorsRuleController;
@@ -672,6 +673,30 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
+		// Timeline-Select:
+		//------------------------------------------------------------------------------------------
+		{
+			InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
+			
+			inputEntriesModel.getInputEntriesAddNotifier().addInputEntriesAddListeners
+			(
+			 	new InputEntriesAddListenerInterface()
+				{
+					@Override
+					public void notifyAddInputEntry(int entryPos,
+					                                InputEntryModel inputEntryModel)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
+						
+						inputPosEntriesModel.addInputPosEntryInGroup(inputEntryModel);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
 		// Timeline-Edit:
 		//------------------------------------------------------------------------------------------
 		// Timeline-Edit Remove-Timeline-Button: Update Modul-Data and Timeline-Select-Model:
@@ -822,9 +847,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					final InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
 					
-					Timeline selectedTimeline = timelinesDrawPanelController.getSelectedTimeline();
+					final Timeline selectedTimeline = timelinesDrawPanelController.getSelectedTimeline();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					inputEditController.doSubmit(inputSelectModel, selectedTimeline);
@@ -844,9 +870,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void actionPerformed(ActionEvent e)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					Timeline selectedTimeline = timelinesDrawPanelController.getSelectedTimeline();
+//					Timeline selectedTimeline = timelinesDrawPanelController.getSelectedTimeline();
 					
-					inputSelectController.doRemoveSelectedEntry(selectedTimeline);
+					inputSelectController.doRemoveSelectedInputEntry();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			 	}
@@ -863,25 +889,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void actionPerformed(ActionEvent e)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					InputEditModel inputEditModel = inputEditController.getInputEditModel();
-					InputEditView inputEditView = inputEditController.getInputEditView();
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					InputTypeData inputTypeData;
-					
-					inputTypeData = inputEditModel.getInputTypeData();
-					
-					if (inputTypeData != null)
-					{
-						inputSelectController.doCreateNewInput(inputTypeData);
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(inputEditView,
-						                              "Please select a input type.", 
-						                              "No input type", 
-						                              JOptionPane.OK_OPTION);
-					}
+					inputEditController.doCreateNewInput(inputSelectController);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			 	}
@@ -2452,7 +2460,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	                    String stringValue = inputData.getInputStringValue();
 	                    InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
 	                    
-						timelineManagerLogic.addInputGenerator(newTimeline,
+						timelineManagerLogic.addGeneratorInput(newTimeline,
 						                                       inputTimeline,
 						                                       inputTypeData, 
 						                                       floatValue, stringValue,
@@ -2476,7 +2484,7 @@ implements RemoveTimelineGeneratorListenerInterface,
                     String stringValue = outputInputData.getInputStringValue();
                     InputTypeData modulInputTypeData = outputInputData.getInputModulInputTypeData();
                     
-					timelineManagerLogic.addInputGenerator(outputTimeline, 
+					timelineManagerLogic.addGeneratorInput(outputTimeline, 
 					                                       newTimeline, 
 					                                       inputTypeData, 
 					                                       floatValue, 
@@ -2594,16 +2602,49 @@ implements RemoveTimelineGeneratorListenerInterface,
 	                                  final TimelineSelectEntryModel targetTimelineSelectEntryModel)
 	{
 		//==========================================================================================
+		final TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
+		final SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		
+		//==========================================================================================
+		final InputEditModel inputEditModel = this.inputEditController.getInputEditModel();
+		
+		//==========================================================================================
 		// Replay the user action:
 		
 		// New Input?
-		//	Select Input-Type.
+		if (selectedInputEntry.getInputData() == null)
+		{
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			// New Input:
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			//	Select Input-Type.
+			inputEditModel.setInputTypeData(inputTypeData);
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			//	Create new Input.
+			this.inputEditController.doCreateNewInput(this.inputSelectController);
+			
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		}
+
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Update Input:
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		//	Select Input-Generator.
-		//	Submit.
+		final Timeline targetTimeline = targetTimelineSelectEntryModel.getTimeline();
 		
-		// Update Input?
-		//	Select Input-Generator.
+		inputEditModel.setInputTimeline(targetTimeline);
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		//	Submit.
+		final InputSelectModel inputSelectModel = this.inputSelectController.getInputSelectModel();
+		final Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+		
+		this.inputEditController.doSubmit(inputSelectModel, selectedTimeline);
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		//	Select Input.
+		selectedTimelineModel.setSelectedInputEntry(selectedInputEntry);
 		
 		//==========================================================================================
 	}

@@ -169,7 +169,8 @@ public class SelectedTimelineModel
 							
 							if (inputTypeData == inputTypeData2)
 							{
-								InputEntryModel inputEntryModel = new InputEntryModel(inputData);
+								InputEntryModel inputEntryModel = new InputEntryModel(inputEntryGroupModel,
+								                                                      inputData);
 								
 //								inputEntryModels.add(inputEntryModel);
 								
@@ -252,7 +253,9 @@ public class SelectedTimelineModel
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// Add Add-Input Entry to Group:
 				{
-					final InputEntryModel inputEntryModel = new InputEntryModel(null);
+					// XXX Besser nicht, da esden im model nicht wirklich gibt, Sollte null sein.
+					final InputEntryModel inputEntryModel = new InputEntryModel(inputEntryGroupModel,
+					                                                            null);
 
 					InputPosEntriesModel inputPosEntry = new InputPosEntriesModel(groupInputPosEntriesModel,
 					                                                              inputEntryGroupModel,
@@ -351,7 +354,7 @@ public class SelectedTimelineModel
 	 */
 	public void setSelectedInputEntry(InputEntryModel selectedInputEntry)
 	{
-		if (this.selectedInputEntry != selectedInputEntry)
+//		if (this.selectedInputEntry != selectedInputEntry)
 		{
 			this.selectedInputEntry = selectedInputEntry;
 			

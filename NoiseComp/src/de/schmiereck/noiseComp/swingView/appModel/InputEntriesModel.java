@@ -298,7 +298,38 @@ public class InputEntriesModel
 	 */
 	public List<InputEntryGroupModel> getInputEntryGroups()
 	{
+		//==========================================================================================
 		return this.inputEntryGroups;
+	}
+
+	/**
+	 * @param inputTypeData
+	 * 			is the inputType.
+	 * @return
+	 * 			the InputEntryGroupModel.<br/>
+	 * 			<code>null</code> if given inputType not found.
+	 */
+	public InputEntryGroupModel searchInputEntryGroup(InputTypeData inputTypeData)
+	{
+		//==========================================================================================
+		InputEntryGroupModel retInputEntryGroupModel;
+		
+		retInputEntryGroupModel = null;
+		
+		List<InputEntryGroupModel> inputEntryGroups = this.getInputEntryGroups();
+		
+		for (InputEntryGroupModel inputEntryGroupModel : inputEntryGroups)
+		{
+			InputTypeData groupInputTypeData = inputEntryGroupModel.getInputTypeData();
+			
+			if (groupInputTypeData == inputTypeData)
+			{
+				retInputEntryGroupModel = inputEntryGroupModel;
+				break;
+			}
+		}
+		//==========================================================================================
+		return retInputEntryGroupModel;
 	}
 	
 }
