@@ -107,8 +107,9 @@ implements Scrollable//, MouseMotionListener
 	
 	private static final Color CTimelineInputConnector = new Color(0xA67841);//255, 0, 0, 192);
 	private static final Color CTimelineInputHighlightedConnector = new Color(0xC69861);
+	private static final Color CTimelineInputDisabledConnector = new Color(0xFF9751);
 	private static final Color CTimelineInputReadyConnector = new Color(0xC6C891);
-	private static final Color CTimelineInputConnectorBackground = new Color(0xA67841);
+	private static final Color CTimelineInputConnectorBackground = new Color(0xB67841);
 	private static final Color CTimelineInputHighlightedConnectorBackground = new Color(0xE6A871);
 	private static final Color CTimelineInputSelectedConnectorBackground = new Color(0xDFA881);
 	private static final Color CTimelineInputText = new Color(0xF6B881);
@@ -528,7 +529,14 @@ implements Scrollable//, MouseMotionListener
 				
 				if (targetTimelineSelectEntryModel != null)
 				{
-					g2.setPaint(CTimelineInputReadyConnector);
+					if (inputEntryTargetModel.getTargetEnabled() == true)
+					{
+						g2.setPaint(CTimelineInputReadyConnector);
+					}
+					else
+					{
+						g2.setPaint(CTimelineInputDisabledConnector);
+					}
 				}
 				else
 				{

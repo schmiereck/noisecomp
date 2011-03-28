@@ -72,6 +72,9 @@ implements MouseMotionListener
 		//==========================================================================================
 		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
+			selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+		
 		final AffineTransform at = this.timelinesDrawPanelView.getAt();
 		
 		final Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
@@ -82,9 +85,6 @@ implements MouseMotionListener
 		if (timelineHandler != HighlightedTimelineHandler.NONE)
 		{
 			//TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
-			TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
-				selectedTimelineModel.getSelectedTimelineSelectEntryModel();
-			
 			if (selectedTimelineSelectEntryModel != null)
 			{
 				double timePos = point2D.getX();
@@ -177,6 +177,7 @@ implements MouseMotionListener
 			
 			if (selectedInputEntry != null)
 			{
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				InputEntryTargetModel inputEntryTargetModel = selectedTimelineModel.getInputEntryTargetModel();
 				
 				if (inputEntryTargetModel == null)
@@ -192,6 +193,32 @@ implements MouseMotionListener
 				inputEntryTargetModel.setTargetPoint2D(point2D);
 				inputEntryTargetModel.setTargetTimelineSelectEntryModel(targetTimelineSelectEntryModel);
 				
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				// Check if is input is disabled.
+				{
+					Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+					
+					if (targetTimelineSelectEntryModel != null)
+					{
+						Timeline targetTimeline = targetTimelineSelectEntryModel.getTimeline();
+						
+						// Output generators of edited generator is a already input generator?
+						if ((selectedTimeline.checkIsOutputTimeline(targetTimeline) == true) ||
+							(selectedTimeline == targetTimeline))
+						{
+							inputEntryTargetModel.setTargetEnabled(false);
+						}
+						else
+						{
+							inputEntryTargetModel.setTargetEnabled(true);
+						}
+					}
+					else
+					{
+						inputEntryTargetModel.setTargetEnabled(false);
+					}
+				}
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				this.timelinesDrawPanelView.repaint();
 			}
 			else
@@ -201,9 +228,6 @@ implements MouseMotionListener
 				
 				if (timelineSelectEntryModel != null)
 				{
-					TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
-						selectedTimelineModel.getSelectedTimelineSelectEntryModel();
-					
 					if (timelineSelectEntryModel != selectedTimelineSelectEntryModel)
 					{
 						selectedTimelineModel.notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel, 

@@ -16,7 +16,6 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryGroupModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
-import de.schmiereck.noiseComp.swingView.inputEdit.GeneratorSelectItem;
 import de.schmiereck.noiseComp.swingView.timelineSelect.InputEntryTargetModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
@@ -234,8 +233,10 @@ extends MouseAdapter
 					final InputTypeData inputTypeData = inputEntryGroupModel.getInputTypeData();
 					
 //					GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
-					if ((selectedTimelineSelectEntryModel != null) &&
-						(selectedTimelineSelectEntryModel != targetTimelineSelectEntryModel))
+					if (inputEntryTargetModel.getTargetEnabled() == true)
+//						(selectedTimelineSelectEntryModel != null) &&
+//						(selectedTimelineSelectEntryModel != targetTimelineSelectEntryModel) &&
+//						(targetTimelineSelectEntryModel != null))
 					{
 						this.appController.doUpdateTimelineInput(selectedTimelineSelectEntryModel,
 						                                         selectedInputEntry,

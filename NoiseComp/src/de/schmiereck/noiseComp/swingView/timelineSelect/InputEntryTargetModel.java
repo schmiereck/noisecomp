@@ -30,6 +30,11 @@ public class InputEntryTargetModel
 	 */
 	private TimelineSelectEntryModel targetTimelineSelectEntryModel = null;
 	
+	/**
+	 * <code>true</code> if targetEnabled;
+	 */
+	private boolean targetEnabled = true;
+	
 	//**********************************************************************************************
 	// Functions:
 
@@ -67,6 +72,24 @@ public class InputEntryTargetModel
 	public void setTargetTimelineSelectEntryModel(TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		this.targetTimelineSelectEntryModel = timelineSelectEntryModel;
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #targetEnabled}.
+	 */
+	public boolean getTargetEnabled()
+	{
+		return this.targetEnabled;
+	}
+
+	/**
+	 * @param targetEnabled 
+	 * 			to set {@link #targetEnabled}.
+	 */
+	public void setTargetEnabled(boolean targetIsDisabled)
+	{
+		this.targetEnabled = targetIsDisabled;
 	}
 	
 }

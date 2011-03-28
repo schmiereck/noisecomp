@@ -1123,12 +1123,12 @@ implements GeneratorBufferInterface,
 	}
 
 	/**
-	 * Check if timeline is output generators of given timeline (or sub timelines).
+	 * Check if timeline is already output generators of given timeline (or sub timelines).
 	 * 
 	 * @param timeline
 	 * 			is the timeline.
 	 * @return
-	 * 			<code>true</code> if timeline is no output timeline.
+	 * 			<code>true</code> if timeline is already output timeline.
 	 */
 	public boolean checkIsOutputTimeline(Timeline timeline)
 	{
