@@ -302,6 +302,8 @@ Release V2.0.4
 		--> DONE: Extract PlayController.
 		--> DONNE Add Play-Lopp Button.
 #139:	BUG: DONE: Drag End-Position of Timleine bigger than module End-Position the End-Position of Timeline is not updated.
+Release V2.0.5
+--------------
 #158:	IMPROVEMENT: Catch all Exceptions in application and show stacktrace in Dialog.
 		--> DONE: Show setDefaultUncaughtExceptionHandler() Dialog of DefaultExceptionHandler.
 #157:	IMPROVEMENT: Timeline-Select: Connecting Inputs of diffenet Input-Types per Drag and Drop.
