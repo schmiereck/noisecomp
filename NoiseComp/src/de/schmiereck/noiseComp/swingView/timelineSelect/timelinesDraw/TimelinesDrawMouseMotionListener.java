@@ -13,6 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryGroupModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.InputEntryTargetModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
@@ -72,12 +73,14 @@ implements MouseMotionListener
 		//==========================================================================================
 		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
-		TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
+		//==========================================================================================
+		final TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
 			selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 		
 		final AffineTransform at = this.timelinesDrawPanelView.getAt();
 		
-		final Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
+		final Point point = e.getPoint();
+		final Point2D point2D = this.timelinesDrawPanelView.mousePos(point);
 		
 		final HighlightedTimelineHandler timelineHandler = this.timelinesDrawPanelModel.getHighlightedTimelineHandler();
 		
@@ -193,18 +196,19 @@ implements MouseMotionListener
 				inputEntryTargetModel.setTargetPoint2D(point2D);
 				inputEntryTargetModel.setTargetTimelineSelectEntryModel(targetTimelineSelectEntryModel);
 				
-				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				// Check if is input is disabled.
+				Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+				
+				if (targetTimelineSelectEntryModel != null)
 				{
-					Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
-					
-					if (targetTimelineSelectEntryModel != null)
+					Timeline targetTimeline = targetTimelineSelectEntryModel.getTimeline();
+
+					// Selected and target input timeline are not the same?
+					if (selectedTimeline != targetTimeline)
 					{
-						Timeline targetTimeline = targetTimelineSelectEntryModel.getTimeline();
-						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Check if is input is disabled.
 						// Output generators of edited generator is a already input generator?
-						if ((selectedTimeline.checkIsOutputTimeline(targetTimeline) == true) ||
-							(selectedTimeline == targetTimeline))
+						if ((selectedTimeline.checkIsOutputTimeline(targetTimeline) == true))
 						{
 							inputEntryTargetModel.setTargetEnabled(false);
 						}
@@ -212,10 +216,20 @@ implements MouseMotionListener
 						{
 							inputEntryTargetModel.setTargetEnabled(true);
 						}
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}
 					else
 					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Selected and target input timeline are the same:
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						inputEntryTargetModel.setTargetEnabled(false);
+						
+						this.changeInputPositions(selectedTimelineModel, 
+						                          point, point2D, 
+						                          selectedInputEntry);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}
 				}
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -242,6 +256,61 @@ implements MouseMotionListener
 				}
 			}
 			//--------------------------------------------------------------------------------------
+		}
+		//==========================================================================================
+	}
+
+	/**
+	 * Change Input positions of inputs of selected timeline in same group by drag and drop.
+	 * 
+	 * @param selectedTimelineModel
+	 * @param point
+	 * @param point2D
+	 * @param selectedInputEntry
+	 */
+	private void changeInputPositions(final SelectedTimelineModel selectedTimelineModel, 
+	                                  final Point point,
+	                                  final Point2D point2D, 
+	                                  final InputEntryModel selectedInputEntry)
+	{
+		//==========================================================================================
+		final InputPosEntriesModel targetInputPosEntryModel = 
+			this.timelinesDrawPanelView.searchInputEntry(selectedTimelineModel,
+			                                             point,
+			                                             point2D);
+
+		// Found Target Input?
+		if (targetInputPosEntryModel != null)
+		{
+			final InputEntryGroupModel selectedInputEntryGroupModel = selectedInputEntry.getInputEntryGroupModel();
+			final InputEntryGroupModel targetInputEntryGroupModel = targetInputPosEntryModel.getInputEntryGroupModel();
+			
+			// Same group?
+			if (selectedInputEntryGroupModel == targetInputEntryGroupModel)
+			{
+				final InputPosEntriesModel timelineInputPosEntriesModel = 
+					selectedTimelineModel.getInputPosEntriesModel();
+
+				final InputPosEntriesModel selectedInputPosEntryModel = 
+					timelineInputPosEntriesModel.searchInputPosEntry(selectedInputEntry);
+				
+				// Not the same input entry?
+				if (selectedInputPosEntryModel != targetInputPosEntryModel)
+				{
+					final InputEntryModel selectedInputEntryModel = selectedInputPosEntryModel.getInputEntryModel();
+					final InputEntryModel targetInputEntryModel = targetInputPosEntryModel.getInputEntryModel();
+					
+					if ((selectedInputEntryModel.getInputData() != null) &&
+						(targetInputEntryModel.getInputData() != null))
+					{
+						// Change input positions.
+						
+						selectedTimelineModel.changeInputPositions(selectedInputEntryGroupModel,
+						                                           selectedInputEntryModel,
+						                                           targetInputEntryModel);
+					}
+				}
+			}
 		}
 		//==========================================================================================
 	}

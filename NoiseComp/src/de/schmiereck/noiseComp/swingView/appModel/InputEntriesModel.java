@@ -22,29 +22,30 @@ public class InputEntriesModel
 	//**********************************************************************************************
 	// Fields:
 	
-	//----------------------------------------------------------------------------------------------
-	/**
-	 * Input-Entry Models.
-	 */
-//	private final List<InputEntryModel> inputEntryModels = new Vector<InputEntryModel>();
+	//==============================================================================================
+	private final List<InputEntryGroupModel> inputEntryGroups = new Vector<InputEntryGroupModel>();
 
+	//----------------------------------------------------------------------------------------------
+	
 	/**
-	 * Add entry to {@link #inputEntryModels} notifier.
+	 * Add entry to {@link #inputEntryGroups} notifier.
 	 */
 	private final InputEntriesAddNotifier inputEntriesAddNotifier = new InputEntriesAddNotifier();
 
 	/**
-	 * Remove entry from {@link #inputEntryModels} notifier.
+	 * Remove entry from {@link #inputEntryGroups} notifier.
 	 */
 	private final InputEntriesRemoveNotifier inputEntriesRemoveNotifier = new InputEntriesRemoveNotifier();
 
 	/**
-	 * Update entry to {@link #inputEntryModels} notifier.
+	 * Update entry to {@link #inputEntryGroups} notifier.
 	 */
 	private final InputEntriesUpdateNotifier inputEntriesUpdateNotifier = new InputEntriesUpdateNotifier();
 	
-	//==============================================================================================
-	private final List<InputEntryGroupModel> inputEntryGroups = new Vector<InputEntryGroupModel>();
+	/**
+	 * Change-Positions of {@link #inputEntryGroups} notifier.
+	 */
+	private final InputEntriesChangePositionsNotifier inputEntriesChangePositionsNotifier = new InputEntriesChangePositionsNotifier();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -330,6 +331,42 @@ public class InputEntriesModel
 		}
 		//==========================================================================================
 		return retInputEntryGroupModel;
+	}
+
+	/**
+	 * @param selectedInputEntryGroupModel
+	 * 			is the selected Input-Entry-Group.
+	 * @param selectedInputEntryModel
+	 * 			is the selected Input-Entry.
+	 * @param targetInputEntryModel
+	 * 			is the target Input-Entry.
+	 */
+	public void changeInputPositions(final InputEntryGroupModel selectedInputEntryGroupModel,
+	                                 final InputEntryModel selectedInputEntryModel, 
+	                                 final InputEntryModel targetInputEntryModel)
+	{
+		//==========================================================================================
+		List<InputEntryModel> inputEntries = selectedInputEntryGroupModel.getInputEntries();
+		
+		int selectedInputEntryPos = inputEntries.indexOf(selectedInputEntryModel);
+		int targetInputEntryPos = inputEntries.indexOf(targetInputEntryModel);
+		
+		inputEntries.set(selectedInputEntryPos, targetInputEntryModel);
+		inputEntries.set(targetInputEntryPos, selectedInputEntryModel);
+		
+		this.inputEntriesChangePositionsNotifier.notifyInputEntriesRemoveListeners(targetInputEntryModel,
+		                                                                           selectedInputEntryModel);
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @return 
+	 * 			returns the {@link #inputEntriesChangePositionsNotifier}.
+	 */
+	public InputEntriesChangePositionsNotifier getInputEntriesChangePositionsNotifier()
+	{
+		return this.inputEntriesChangePositionsNotifier;
 	}
 	
 }

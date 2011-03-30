@@ -13,6 +13,7 @@ import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesChangePositionsListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesRemoveListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesUpdateListenerInterface;
@@ -262,6 +263,42 @@ implements TimelineContentChangedListenerInterface,
 			);
 		}
 		//------------------------------------------------------------------------------------------
+		// ChangePositions Input-Select:
+		{
+			InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
+			
+			inputEntriesModel.getInputEntriesChangePositionsNotifier().addInputEntriesChangePositionsListeners
+			(
+			 	new InputEntriesChangePositionsListenerInterface()
+				{
+					@Override
+					public void notifyChangePositions(final InputEntryModel selectedInputEntryModel, 
+					                                  final InputEntryModel targetInputEntryModel)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel(); 
+						
+						InputPosEntriesModel selectedInputPosEntry = inputPosEntriesModel.searchInputPosEntry(selectedInputEntryModel);
+						InputPosEntriesModel targetInputPosEntry = inputPosEntriesModel.searchInputPosEntry(targetInputEntryModel);
+						
+						InputPosEntriesModel groupInputPosEntriesModel = selectedInputPosEntry.getGroupInputPosEntriesModel();
+						
+						List<InputPosEntriesModel> groupInputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
+						
+						int selectedInputPos = groupInputPosEntries.indexOf(selectedInputPosEntry);
+						int targetInputPos = groupInputPosEntries.indexOf(targetInputPosEntry);
+						
+						groupInputPosEntries.set(selectedInputPos, targetInputPosEntry);
+						groupInputPosEntries.set(targetInputPos, selectedInputPosEntry);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						timelinesDrawPanelView.repaint();
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
 		{
 			// Add listener to components that can bring up popup menus.
 			MouseListener popupListener = new TimelinesDrawMouseAdapter(appController,
@@ -337,7 +374,7 @@ implements TimelineContentChangedListenerInterface,
 		
 		//==========================================================================================
 		timelineSelectEntriesModel.addTimelineSelectEntryModel(timelinePos,
-		                                                         timelineSelectEntryModel);
+		                                                       timelineSelectEntryModel);
 		
 		ModelPropertyChangedListener modelChangedListener = this.timelinesDrawPanelModel.getTimelineGeneratorModelChangedListener();
 		

@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.Map.Entry;
 
+import de.schmiereck.dataTools.VectorHash;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorBufferInterface;
 import de.schmiereck.noiseComp.generator.InputData;
@@ -94,7 +95,7 @@ implements GeneratorBufferInterface,
 	 * 
 	 * Key is the {@link InputData} of the source input timeline generator.
 	 */
-	private Map<InputData, Timeline> inputTimelines = new HashMap<InputData, Timeline>();
+	private VectorHash<InputData, Timeline> inputTimelines = new VectorHash<InputData, Timeline>();
 	
 	/**
 	 * Output Timelines.
@@ -232,7 +233,7 @@ implements GeneratorBufferInterface,
 	 * @return 
 	 * 			returns the {@link #inputTimelines}.
 	 */
-	public Map<InputData, Timeline> getInputTimelines()
+	public VectorHash<InputData, Timeline> getInputTimelines()
 	{
 		return this.inputTimelines;
 	}
@@ -245,7 +246,7 @@ implements GeneratorBufferInterface,
 	 */
 	public void addInputTimeline(InputData inputData, Timeline inputTimeline)
 	{
-		this.inputTimelines.put(inputData, inputTimeline);
+		this.inputTimelines.add(inputData, inputTimeline);
 	}
 
 	/**
@@ -263,7 +264,7 @@ implements GeneratorBufferInterface,
 		
 //		if (inputTimeline != null)
 		{
-			oldInputTimeline = this.inputTimelines.put(inputData, inputTimeline);
+			oldInputTimeline = this.inputTimelines.add(inputData, inputTimeline);
 			
 			//------------------------------------------------------------------------------------------
 			boolean generatorChanged;
@@ -733,7 +734,9 @@ implements GeneratorBufferInterface,
 		{
 			if (inputData.getInputGenerator() == removedGenerator)
 			{
-				this.inputTimelines.remove(removedGenerator);
+				//this.inputTimelines.remove(removedGenerator);
+				
+				this.inputTimelines.remove(inputData);
 			}
 		}
 		//------------------------------------------------------------------------------------------

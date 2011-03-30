@@ -22,6 +22,7 @@ import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesChangePositionsListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesRemoveListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesUpdateListenerInterface;
@@ -264,8 +265,9 @@ public class InputSelectController
 						
 						InputSelectEntryModel inputSelectEntryModel = new InputSelectEntryModel(inputData);
 						
-						int rowNo = inputsTabelModel.addInputData(entryPos,
-						                                          inputSelectEntryModel);
+						//int rowNo = 
+							inputsTabelModel.addInputData(entryPos,
+							                              inputSelectEntryModel);
 						
 						inputSelectModel.setSelectedRowNo(entryPos);
 						
@@ -341,7 +343,7 @@ public class InputSelectController
 						
 						if (selectedRowNo != null)
 						{
-							InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+							final InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
 							
 							InputSelectEntryModel selectedRow = inputSelectModel.getSelectedRow();
 							
@@ -349,6 +351,49 @@ public class InputSelectController
 							
 							inputsTabelModel.fireTableRowsUpdated(selectedRowNo, selectedRowNo);
 						}
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		// ChangePositions Input-Select:
+		{
+			InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
+			
+			inputEntriesModel.getInputEntriesChangePositionsNotifier().addInputEntriesChangePositionsListeners
+			(
+			 	new InputEntriesChangePositionsListenerInterface()
+				{
+					@Override
+					public void notifyChangePositions(final InputEntryModel selectedInputEntryModel, 
+					                                  final InputEntryModel targetInputEntryModel)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						InputSelectEntryModel selEntryModel = inputSelectModel.getSelectedRow();
+						InputData selInputData = selEntryModel.getInputData();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						final InputData selectedInputData = selectedInputEntryModel.getInputData();
+						final InputData targetInputData = targetInputEntryModel.getInputData();
+						
+						final InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+						
+						inputsTabelModel.changePositions(selectedInputData,
+						                                 targetInputData);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						if (selInputData == selectedInputData)
+						{
+							Integer selectedRowNo;
+							
+							selectedRowNo = inputsTabelModel.searchInputSelectEntryPos(selectedInputData);
+							
+							inputSelectModel.setSelectedRowNo(selectedRowNo);
+						}
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						inputSelectView.repaint();
+						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}
 				}

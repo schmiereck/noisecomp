@@ -47,6 +47,7 @@ import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntriesChangePositionsListenerInterface;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
@@ -400,12 +401,14 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 					
 					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
 					
 					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
 					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -417,7 +420,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					timelinesGeneratorsRuleController.doChangeTimelinesPosition();
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -429,11 +434,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 					
 					float zoomX = timelinesDrawPanelModel.getZoomX();
 					
 					timelinesTimeRuleController.doChangeZoomX(zoomX);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -482,7 +489,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyEditModul(ModulGeneratorTypeData modulGeneratorTypeData)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					selectEditModule(modulGeneratorTypeData);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -499,9 +508,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel,
 				                                   TreePath selectionTreePath)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
 					
 					moduleEditController.doEditModuleChanged(modulGeneratorTypeData);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -516,11 +527,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel,
 				                                   TreePath selectionTreePath)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModuleInputTypeSelectController moduleInputTypeSelectController = moduleInputTypesController.getModuleInputTypeSelectController();
 					
 					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
 					
 					moduleInputTypeSelectController.doEditModuleChanged(modulGeneratorTypeData);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -536,7 +549,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					moduleInputTypesController.getModuleInputTypesView().setVisible(true);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -550,10 +565,12 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModulGeneratorTypeData editedModulGeneratorTypeData = 
 						modulesTreeController.getModulesTreeModel().getEditedModulGeneratorTypeData();
 					
 					modulesTreeController.updateEditedModulTreeEntry(editedModulGeneratorTypeData);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -569,6 +586,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModuleInputTypeSelectModel moduleInputTypeSelectModel = moduleInputTypeSelectController.getInputTypeSelectModel();
 					
 					ModuleInputTypeSelectEntryModel selectEntryModel = moduleInputTypeSelectModel.getSelectedRow();
@@ -585,6 +603,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					}
 					
 					moduleInputTypeEditController.updateEditedInputType(inputTypeData);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -690,6 +709,46 @@ implements RemoveTimelineGeneratorListenerInterface,
 						InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
 						
 						inputPosEntriesModel.addInputPosEntryInGroup(inputEntryModel);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+			);
+		}
+		//------------------------------------------------------------------------------------------
+		// ChangePositions Input-Select:
+		{
+			InputEntriesModel inputEntriesModel = selectedTimelineModel.getInputEntriesModel();
+			
+			inputEntriesModel.getInputEntriesChangePositionsNotifier().addInputEntriesChangePositionsListeners
+			(
+			 	new InputEntriesChangePositionsListenerInterface()
+				{
+					@Override
+					public void notifyChangePositions(final InputEntryModel selectedInputEntryModel, 
+					                                  final InputEntryModel targetInputEntryModel)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+						
+						TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						final TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+						
+						final SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						final TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+						
+						final Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+						
+						InputData selectedInputData = selectedInputEntryModel.getInputData();
+						InputData targetInputData = targetInputEntryModel.getInputData();
+						
+						timelineManagerLogic.changeInputPositions(selectedTimeline,
+						                                          selectedInputData,
+						                                          targetInputData);
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}
@@ -804,6 +863,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
 					
 					InputSelectEntryModel inputSelectEntryModel = inputSelectModel.getSelectedRow();
@@ -832,6 +892,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					                                      selectedTimeline,
 					                                      inputData,
 					                                      editInput);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -908,11 +969,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 					
 					float zoomX = modulEditModel.getZoomX();
 					
 					timelinesDrawPanelModel.setZoomX(zoomX);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -924,11 +987,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					JTextField ticksTextField = appView.getTicksTextField();
 					
 					Float ticksCount = modulEditModel.getTicksCount();
 					
 					ticksTextField.setText(OutputUtils.makeFloatEditText(ticksCount));
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -940,6 +1005,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					JRadioButton ticksSecondsButton = appView.getTicksSecondsButton();
 					JRadioButton ticksMilliecondsButton = appView.getTicksMilliecondsButton();
 					JRadioButton ticksBpmButton = appView.getTicksBpmButton();
@@ -974,6 +1040,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 							throw new RuntimeException("Unexpected TicksPer \"" + ticksPer + "\".");
 						}
 					}
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
 		);
@@ -983,6 +1050,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void notifyModelPropertyChanged()
 				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					TimelinesTimeRuleModel timelinesTimeRuleModel = timelinesTimeRuleController.getTimelinesTimeRuleModel();
 					
 					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
@@ -994,6 +1062,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					timelinesTimeRuleModel.notifyTicksChangedNotifier(ticksPer, ticksCount);
 					
 					timelinesDrawPanelModel.notifyTicksChangedNotifier(ticksPer, ticksCount);
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	};
 		 	modulEditModel.getTicksPerChangedNotifier().addModelPropertyChangedListener

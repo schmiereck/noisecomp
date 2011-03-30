@@ -250,19 +250,16 @@ public class InputPosEntriesModel
 			
 			for (InputPosEntriesModel groupInputPosEntriesModel : groupInputPosEntries)
 			{
-				final List<InputPosEntriesModel> inputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
+				final List<InputPosEntriesModel> group2InputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
 				
-				if (inputPosEntries.size() > 0)
+				for (InputPosEntriesModel inputPosEntryModel : group2InputPosEntries)
 				{
-					for (InputPosEntriesModel inputPosEntryModel : inputPosEntries)
+					InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
+					
+					if (selectedInputEntry == inputEntryModel)
 					{
-						InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
-						
-						if (selectedInputEntry == inputEntryModel)
-						{
-							retInputPosEntryModel = inputPosEntryModel;
-							break outerloop;
-						}
+						retInputPosEntryModel = inputPosEntryModel;
+						break outerloop;
 					}
 				}
 			}

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import de.schmiereck.dataTools.VectorHash;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
@@ -843,6 +844,38 @@ public class TimelineManagerLogic
 		this.mainGeneratorTimelines.clear();
 		
 		this.timelineContentChangedListeners.clear();
+		
+		//==========================================================================================
+	}
+
+	/**
+	 * @param selectedTimeline
+	 * 			is the Timeline.
+	 * @param selectedInputData
+	 * 			is the selected InputData.
+	 * @param targetInputData
+	 * 			is the target InputData.
+	 */
+	public void changeInputPositions(Timeline selectedTimeline, 
+	                                 InputData selectedInputData, 
+	                                 InputData targetInputData)
+	{
+		//==========================================================================================
+		VectorHash<InputData, Timeline> inputTimelines = selectedTimeline.getInputTimelines();
+		
+		inputTimelines.changePositions(selectedInputData, 
+		                               targetInputData);
+		
+		//------------------------------------------------------------------------------------------
+		Generator generator = selectedTimeline.getGenerator();
+		
+		Vector<InputData> inputs = generator.getInputs();
+		
+		int selectedInputPos = inputs.indexOf(selectedInputData);
+		int targetInputPos = inputs.indexOf(targetInputData);
+		
+		inputs.set(targetInputPos, selectedInputData);
+		inputs.set(selectedInputPos, targetInputData);
 		
 		//==========================================================================================
 	}

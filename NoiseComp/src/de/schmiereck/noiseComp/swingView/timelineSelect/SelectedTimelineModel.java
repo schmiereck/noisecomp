@@ -253,7 +253,6 @@ public class SelectedTimelineModel
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// Add Add-Input Entry to Group:
 				{
-					// XXX Besser nicht, da esden im model nicht wirklich gibt, Sollte null sein.
 					final InputEntryModel inputEntryModel = new InputEntryModel(inputEntryGroupModel,
 					                                                            null);
 
@@ -331,12 +330,14 @@ public class SelectedTimelineModel
 	 */
 	public void setHighlightedInputEntry(InputEntryModel highlightedInputEntry)
 	{
+		//==========================================================================================
 		if (this.highlightedInputEntry != highlightedInputEntry)
 		{
 			this.highlightedInputEntry = highlightedInputEntry;
 			
 			this.highlightedInputEntryChangedNotifier.notifyModelPropertyChangedListeners();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -354,12 +355,15 @@ public class SelectedTimelineModel
 	 */
 	public void setSelectedInputEntry(InputEntryModel selectedInputEntry)
 	{
+		//==========================================================================================
+		// Is also used to notify for reselet.
 //		if (this.selectedInputEntry != selectedInputEntry)
 		{
 			this.selectedInputEntry = selectedInputEntry;
 			
 			this.selectedInputEntryChangedNotifier.notifyModelPropertyChangedListeners();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -404,12 +408,14 @@ public class SelectedTimelineModel
 	 */
 	public void setInputEntryTargetModel(InputEntryTargetModel inputEntryTargetModel)
 	{
+		//==========================================================================================
 		if (this.inputEntryTargetModel != inputEntryTargetModel)
 		{
 			this.inputEntryTargetModel = inputEntryTargetModel;
 			
 			this.inputEntryTargetModelChangedNotifier.notifyModelPropertyChangedListeners();
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -428,6 +434,24 @@ public class SelectedTimelineModel
 	public ModelPropertyChangedNotifier getHighlightedInputEntryChangedNotifier()
 	{
 		return this.highlightedInputEntryChangedNotifier;
+	}
+
+	/**
+	 * @param selectedInputEntryModel
+	 * 			is the selected Input-Entry.
+	 * @param targetInputEntryModel
+	 * 			is the target Input-Entry.
+	 */
+	public void changeInputPositions(final InputEntryGroupModel selectedInputEntryGroupModel,
+	                                 final InputEntryModel selectedInputEntryModel, 
+	                                 final InputEntryModel targetInputEntryModel)
+	{
+		//==========================================================================================
+		this.inputEntriesModel.changeInputPositions(selectedInputEntryGroupModel,
+		                                            selectedInputEntryModel, 
+		       	                                 	targetInputEntryModel);
+		
+		//==========================================================================================
 	}
 
 }

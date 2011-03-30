@@ -42,9 +42,11 @@ public class InputSelectEntryModel
 	 */
 	public InputSelectEntryModel(InputData inputData)
 	{
+		//==========================================================================================
 		this.inputData = inputData;
 		
 		this.updateInputData();
+		//==========================================================================================
 	}
 
 	/**
@@ -55,6 +57,7 @@ public class InputSelectEntryModel
 	 */
 	private String makeInputLabel(InputData inputData)
 	{
+		//==========================================================================================
 		Generator inputGenerator = inputData.getInputGenerator();
 		
 		String label;
@@ -89,6 +92,7 @@ public class InputSelectEntryModel
 				}
 			}
 		}
+		//==========================================================================================
 		return label;
 	}
 
@@ -148,6 +152,7 @@ public class InputSelectEntryModel
 	
 	public void updateInputData()
 	{
+		//==========================================================================================
 		String inputTypeName;
 		String inputLabel;
 		
@@ -166,6 +171,7 @@ public class InputSelectEntryModel
 
 		this.inputTypeName = inputTypeName;
 		this.inputLabel = inputLabel;
+		//==========================================================================================
 	}
 
 }
