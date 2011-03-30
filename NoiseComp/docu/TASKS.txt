@@ -25,6 +25,11 @@ TODO:
 		--> First fix #54.
 #99:	BUG: If Zoom changed to + some of the things of #54 occur newly. 
 #101:	TASK: Change float to double.
+#103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
+		--> http://jb2works.com/memoryleak/index_de.html
+		--> http://www.eclipse.org/mat/
+		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
+		--> MAYBE FIXED: Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
 #105:	TASK: Update timelineSelectEntryModel if timelineEditModel updated using notier/listeners.
 		==> Reverted TimelineEditModelChangedObserver: Is not so easy: Selecting timeline updates timelineEditModel, this updates timelineSelectEntryModel fields bevor all fields are filled, that chrashes...
 #110:	IMPROVEMENT: Change unit of time-inputs fields if tick units are changed.
@@ -44,11 +49,6 @@ TODO:
 
 WORK:
 =====
-#103:	BUG: Memory-Leak by (re-)selecting a module (Example Main-Module of "drums 5.noiseComp.xml").
-		--> http://jb2works.com/memoryleak/index_de.html
-		--> http://www.eclipse.org/mat/
-		--> http://java.sun.com/developer/technicalArticles/J2SE/monitoring/
-		--> Every time module is reselected (AppController.selectEditModule) the Timeline Objects and related sound samples are duplicated. 
 		
 DONE:
 =====
