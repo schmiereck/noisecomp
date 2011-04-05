@@ -45,7 +45,25 @@ TODO:
 #153:	IMPROVEMENT: Add Mute-Button per Timeline.
 #154:	IMPROVEMENT: Add New-File Menu-Entry.
 #156:	IMPROVEMENT: Update values of Edit-Comps without "Update"-Button.
-#159:	
+#159:	BUG: After moving modele, and rename Module with Enter.	
+			java.lang.NullPointerException
+				at de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel.searchModulTreeNode(ModulesTreeModel.java:131)
+#160:	IMPROVEMENT: Double Module function.
+#161:	IMPROVEMENT: Mark edited Modul with bold text (instead of "*").
+#162:	IMPROVEMENT: Mark changed File in Module view with "*".
+#163:	IMPROVEMENT: Show name and description of input groups as Tooltip in Timeline-Select. 
+#164:	IMPROVEMENT: Highlight target input if drag and drop Timeline-Input.
+#165:	IMPROVEMENT: Highlight target timeline if drag and drop Timeline-Input.
+#166:	IMPROVEMENT: Edit and show description of file.
+#167:	IMPROVEMENT: Edit and show description of module.
+#168:	IMPROVEMENT: Edit and show description of timeline.
+#169:	IMPROVEMENT: Save and restore size and position of file dialogs.
+#170:	IMPROVEMENT: Export to Wave-File.
+#172:	IMPROVEMENT: Add pulseWidth to Sawtooth-Generator.
+#173:	IMPROVEMENT: Add pulseWidth to Triangle-Generator.
+#174:	
+#175:	
+#176:	
 
 WORK:
 =====
@@ -316,3 +334,6 @@ Release V2.0.5
 		--> DONE: Update Input-Pos if Input removed.
 		--> DONE: Disable not available Inputs.
 		--> DONE: Reorder Inputs in Input-Type group per Drag and Drop.
+Release V2.0.6
+--------------
+#171:	IMPROVEMENT: DONE: Add pulseWidth to Rectangle-Generator.

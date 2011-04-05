@@ -23,9 +23,10 @@ extends Generator
 	//**********************************************************************************************
 	// Constants:
 
-	public static final int	INPUT_TYPE_FREQ		= 1;
-	public static final int	INPUT_TYPE_AMPL		= 2;
-	public static final int	INPUT_TYPE_SHIFT	= 3;
+	public static final int	INPUT_TYPE_FREQ			= 1;
+	public static final int	INPUT_TYPE_AMPL			= 2;
+	public static final int	INPUT_TYPE_SHIFT		= 3;
+	public static final int	INPUT_TYPE_PULSE_WIDTH	= 4; // pulse width (0.0 to 1.0, 0,5 is Square)
 	
 	//**********************************************************************************************
 	// Fields:
@@ -82,17 +83,36 @@ extends Generator
 		                                      modulArguments);
 		
 		//----------------------------------------------------------------------
-		// Relativer Zeitpunkt im Generator.
+		// pulse width (0.0 to 1.0, 0,5 is Square)
+		float pulseWidth;
+
+		// Versatz des Sinus-Siganls um eine Schwingung.
+		pulseWidth = this.calcInputMonoValue(framePosition, 
+		                                     frameTime,
+		                                     this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_PULSE_WIDTH), 
+		                                     parentModulGenerator,
+		                                     generatorBuffer,
+		                                     modulArguments);
+		
+		// pulseWidth is not defined?
+		if (Float.isNaN(pulseWidth) == true)
+		{
+			// Use default value.
+			pulseWidth = 0.5F;
+		}
+		
+		//----------------------------------------------------------------------
+		// Relative timepos in Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
 		
-		// Länge einer Sinus-Periode in Frames.
+		// Length of a Period in Frames.
 		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency);
-		float	periodPosition = (float)(framePosition) / (float)periodLengthInFrames;
+		float periodPosition = (float)(framePosition) / (float)periodLengthInFrames;
 		//float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
 
 		float value;
 		
-		if (((periodPosition + signalShift) % 1.0F) > 0.5F)
+		if (((periodPosition + signalShift) % 1.0F) > pulseWidth) //0.5F)
 		{
 			value = signalAmplitude;
 		}
@@ -121,6 +141,10 @@ extends Generator
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the rectangle between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_PULSE_WIDTH, "pulseWidth", 0, 1, Float.valueOf(0.5F), "The pulse width of the rectangle between 0 and 1 (0.5 (Default) is rectangle).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

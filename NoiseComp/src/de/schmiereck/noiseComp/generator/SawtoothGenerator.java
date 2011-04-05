@@ -108,14 +108,14 @@ extends Generator
 			}
 		}
 		//----------------------------------------------------------------------
-		// Relativer Zeitpunkt im Generator.
+		// Relative timepos in Generator.
 		
-		// Länge einer Sinus-Periode in Frames.
+		// Pos in Periode.
 		float periodPosition;
 		
 		if (Float.isNaN(signalFrequency) == false)
 		{
-			// Länge einer Sinus-Periode in Frames.
+			// Length of a Period in Frames.
 			float periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
 			periodPosition = (float)(framePosition / periodLengthInFrames);
 		}

@@ -86,9 +86,9 @@ extends Generator
 		                                      modulArguments);
 		
 		//----------------------------------------------------------------------
-		// Relativer Zeitpunkt im Generator.
+		// Relative timepos in Generator.
 		
-		// Länge einer Sinus-Periode in Frames.
+		// Length of a Period in Frames.
 		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency) * 1.0F;
 		float periodPosition = (float)(framePosition / periodLengthInFrames) + signalShift;
 

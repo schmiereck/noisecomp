@@ -35,7 +35,8 @@ public class InputTypesData
 	 * @param inputType
 	 * 			is the {@link InputTypeData#getInputType()}.
 	 * @return
-	 * 			the input type of given type.
+	 * 			the input type of given type.<br/>
+	 * 			<code>null</code> if input type not found.
 	 */
 	public InputTypeData getInputTypeData(int inputType)
 	{

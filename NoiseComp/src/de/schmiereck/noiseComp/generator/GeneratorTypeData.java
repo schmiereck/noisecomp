@@ -137,7 +137,14 @@ public class GeneratorTypeData
 		//==========================================================================================
 		return generatorTypeClassName;
 	}
-	
+
+	/**
+	 * @param inputType
+	 * 			is the {@link InputTypeData#getInputType()}.
+	 * @return
+	 * 			the input type of given type.<br/>
+	 * 			<code>null</code> if input type not found.
+	 */
 	public InputTypeData getInputTypeData(int inputType)
 	{
 		return this.inputTypesData.getInputTypeData(inputType);

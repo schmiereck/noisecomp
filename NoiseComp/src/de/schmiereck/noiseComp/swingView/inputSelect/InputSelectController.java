@@ -129,32 +129,34 @@ public class InputSelectController
 						
 						Vector<InputData> inputs = generator.getInputs();
 						
-						InputTypesData inputTypesData = generatorTypeData.getInputTypesData();
-						
-						int entryPos = 0;
-						
-						Iterator<InputTypeData> inputTypesIterator = inputTypesData.getInputTypesIterator();
-						
-						while (inputTypesIterator.hasNext())
+						if (inputs != null)
 						{
-							InputTypeData inputTypeData = (InputTypeData)inputTypesIterator.next();
+							InputTypesData inputTypesData = generatorTypeData.getInputTypesData();
 							
-							for (InputData inputData : inputs)
+							int entryPos = 0;
+							
+							Iterator<InputTypeData> inputTypesIterator = inputTypesData.getInputTypesIterator();
+							
+							while (inputTypesIterator.hasNext())
 							{
-								InputTypeData inputTypeData2 = inputData.getInputTypeData();
+								InputTypeData inputTypeData = (InputTypeData)inputTypesIterator.next();
 								
-								if (inputTypeData == inputTypeData2)
+								for (InputData inputData : inputs)
 								{
-									InputSelectEntryModel inputSelectEntryModel = 
-										new InputSelectEntryModel(inputData);
+									InputTypeData inputTypeData2 = inputData.getInputTypeData();
 									
-									inputSelectModel.addInputData(entryPos,
-									                              inputSelectEntryModel);
-									
-									entryPos++;
+									if (inputTypeData == inputTypeData2)
+									{
+										InputSelectEntryModel inputSelectEntryModel = 
+											new InputSelectEntryModel(inputData);
+										
+										inputSelectModel.addInputData(entryPos,
+										                              inputSelectEntryModel);
+										
+										entryPos++;
+									}
 								}
 							}
-							
 						}
 					}
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
