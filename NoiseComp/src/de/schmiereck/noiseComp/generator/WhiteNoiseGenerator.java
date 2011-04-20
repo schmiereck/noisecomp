@@ -61,6 +61,7 @@ extends Generator
 		float mean = 0.0F;
 		float variance = 0.0F;
 		
+		//==========================================================================================
 		Object inputsSyncObject = this.getInputsSyncObject();
 		
 		if (inputsSyncObject != null)

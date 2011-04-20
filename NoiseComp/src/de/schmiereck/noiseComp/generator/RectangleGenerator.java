@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
+import java.util.Iterator;
+
 /**
  * <p>
  * 	Generates a rectangle-signal based on the values of the input types.
@@ -27,6 +29,7 @@ extends Generator
 	public static final int	INPUT_TYPE_AMPL			= 2;
 	public static final int	INPUT_TYPE_SHIFT		= 3;
 	public static final int	INPUT_TYPE_PULSE_WIDTH	= 4; // pulse width (0.0 to 1.0, 0,5 is Square)
+	public static final int	INPUT_TYPE_IIFREQ		= 5;
 	
 	//**********************************************************************************************
 	// Fields:
@@ -50,66 +53,176 @@ extends Generator
 	                                 GeneratorBufferInterface generatorBuffer,
 	                                 ModulArguments modulArguments)
 	{
-		//----------------------------------------------------------------------
-		float signalFrequency;
-
-		signalFrequency = this.calcInputMonoValue(framePosition, 
-		                                          frameTime,
-		                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), 
-		                                          parentModulGenerator,
-		                                          generatorBuffer,
-		                                          modulArguments);
-
-		//----------------------------------------------------------------------
-		float signalAmplitude;
-
-		// Amplitude des gerade generierten Sinus-Siganls.
-		signalAmplitude = this.calcInputMonoValue(framePosition, 
-		                                          frameTime,
-		                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
-		                                          parentModulGenerator,
-		                                          generatorBuffer,
-		                                          modulArguments);
-		
-		//----------------------------------------------------------------------
-		float signalShift;
-
+		//==========================================================================================
+		// Frequency of generated Signal oscillation.
+		float signalFrequency = Float.NaN;
+		// Integrated Input of Frequency of generated Signal oscillation.
+		float signalIIFreq = Float.NaN;
+		// Amplitude of generated Signal.
+		float signalAmplitude = 0.0F;
+		// Shift of generated Signal oscillation.
+		float signalShift = 0.0F;
+		// Pulse-Width of generated Signal oscillation (0.0 to 1.0, 0,5 is Square).
 		// Versatz des Sinus-Siganls um eine Schwingung.
-		signalShift = this.calcInputMonoValue(framePosition, 
-	                                          frameTime,
-		                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), 
-		                                      parentModulGenerator,
-		                                      generatorBuffer,
-		                                      modulArguments);
-		
-		//----------------------------------------------------------------------
-		// pulse width (0.0 to 1.0, 0,5 is Square)
-		float pulseWidth;
+		float pulseWidth = Float.NaN;
 
-		// Versatz des Sinus-Siganls um eine Schwingung.
-		pulseWidth = this.calcInputMonoValue(framePosition, 
-		                                     frameTime,
-		                                     this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_PULSE_WIDTH), 
-		                                     parentModulGenerator,
-		                                     generatorBuffer,
-		                                     modulArguments);
+		//==========================================================================================
+		Object inputsSyncObject = this.getInputsSyncObject();
 		
+		if (inputsSyncObject != null)
+		{	
+			synchronized (inputsSyncObject)
+			{
+				Iterator<InputData> inputsIterator = this.getInputsIterator();
+			
+				if (inputsIterator != null)
+				{
+					while (inputsIterator.hasNext())
+					{
+						InputData inputData = inputsIterator.next();
+						
+						switch (inputData.getInputTypeData().getInputType())
+						{
+							case INPUT_TYPE_FREQ:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									if (Float.isNaN(signalFrequency) == false)
+									{
+										signalFrequency += value;
+									}
+									else
+									{
+										signalFrequency = value;
+									}
+								}
+								break;
+							}
+							case INPUT_TYPE_IIFREQ:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									if (Float.isNaN(signalIIFreq) == false)
+									{
+										signalIIFreq += value;
+									}
+									else
+									{
+										signalIIFreq = value;
+									}
+								}
+								break;
+							}
+							case INPUT_TYPE_AMPL:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									signalAmplitude += value;
+								}
+								break;
+							}
+							case INPUT_TYPE_SHIFT:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									signalShift += value;
+								}
+								break;
+							}
+							case INPUT_TYPE_PULSE_WIDTH:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									if (Float.isNaN(pulseWidth) == false)
+									{
+										pulseWidth += value;
+									}
+									else
+									{
+										pulseWidth = value;
+									}
+								}
+								break;
+							}
+							default:
+							{
+								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
+							}
+						}
+					}
+				}
+			}
+		}
+		//------------------------------------------------------------------------------------------
+		// Relative timepos in Generator.
+		
+		// Pos in Periode.
+		float periodPosition;
+		
+		if (Float.isNaN(signalFrequency) == false)
+		{
+			// Length of a Period in Frames.
+			float periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
+			periodPosition = (float)(framePosition / periodLengthInFrames);
+		}
+		else
+		{
+			periodPosition = 0.0F;
+		}
+		
+		if (Float.isNaN(signalIIFreq) == false)
+		{
+			periodPosition += signalIIFreq;
+		}
+
 		// pulseWidth is not defined?
 		if (Float.isNaN(pulseWidth) == true)
 		{
 			// Use default value.
 			pulseWidth = 0.5F;
 		}
-		
-		//----------------------------------------------------------------------
-		// Relative timepos in Generator.
-		//float timePos = frameTime - (this.getStartTimePos());
-		
-		// Length of a Period in Frames.
-		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency);
-		float periodPosition = (float)(framePosition) / (float)periodLengthInFrames;
-		//float value = ((float)Math.sin(periodPosition * (2.0F * Math.PI) + (signalShift * Math.PI))) * signalAmplitude;
 
+		//------------------------------------------------------------------------------------------
 		float value;
 		
 		if (((periodPosition + signalShift) % 1.0F) > pulseWidth) //0.5F)
@@ -122,6 +235,7 @@ extends Generator
 		}
 		
 		soundSample.setStereoValues(value, value);
+		//==========================================================================================
 	}
 	
 	/* (non-Javadoc)
@@ -129,6 +243,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
+		//==========================================================================================
 		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", RectangleGenerator.class, "Rectangle", "Generates a rectangle signal with a specified frequency and amplidude.");
 		
 		{
@@ -148,6 +263,7 @@ extends Generator
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		
+		//==========================================================================================
 		return generatorTypeData;
 	}
 }

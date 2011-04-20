@@ -474,7 +474,7 @@ implements GeneratorInterface,
 					{
 						if (retInputData != null)
 						{
-							throw new PopupRuntimeException("found more than one input by type " + inputTypeData + " in generator " + this.getName());
+							throw new PopupRuntimeException("Found more than one input by type \"" + inputTypeData + "\" in generator \"" + this.getName() + "\".");
 						}
 						
 						retInputData = inputData;

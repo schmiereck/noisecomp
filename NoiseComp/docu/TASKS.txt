@@ -61,13 +61,17 @@ TODO:
 #170:	IMPROVEMENT: Export to Wave-File.
 #172:	IMPROVEMENT: Add pulseWidth to Sawtooth-Generator.
 #173:	IMPROVEMENT: Add pulseWidth to Triangle-Generator.
-#174:	
-#175:	
-#176:	
+#174:	IMPROVEMENT: Add pulseWidth to Sinus-Generator.
+#175:	IMPROVEMENT: Store input in XML-Files with names, not with numbers.
+#177:	IMPROVEMENT: Add signalShift Input for Generators.
+#179:	
 
 WORK:
 =====
-		
+#178:	IMPROVEMENT: Add pulseWidth Input for Generators.
+		--> SawtoothGenerator.
+		--> TriangelGenerator.
+
 DONE:
 =====
 Release V1.0
@@ -337,3 +341,9 @@ Release V2.0.5
 Release V2.0.6
 --------------
 #171:	IMPROVEMENT: DONE: Add pulseWidth to Rectangle-Generator.
+#176:	IMPROVEMENT: Allow multiple Inputs for Generators.
+		--> DONE: SawtoothGenerator: signalFrequency, signalIIFreq, signalAmplitude, signalShift
+		--> DONE: TriangelGenerator: signalFrequency, signalIIFreq, signalAmplitude, signalShift
+		--> DONE: RectangleGenerator: signalFrequency, signalAmplitude, signalShift
+#177:	IMPROVEMENT: Add signalIIFreq Input for Generators.
+		--> DONE: RectangleGenerator.

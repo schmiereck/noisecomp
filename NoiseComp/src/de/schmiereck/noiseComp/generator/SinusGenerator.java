@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
+import java.util.Iterator;
+
 /**
  * <p>
  * 	Generates a sinus-signal based on the values of the input types.
@@ -59,57 +61,117 @@ extends Generator
 	                                 ModulArguments modulArguments)
 	{
 		//==========================================================================================
-//		float dt = (1.0F / this.getSoundFrameRate());
-//		
-//		//==========================================================================================
-		// Sinus Frequenz of the Sinus-Signal.
-		float signalFrequency = 
-			this.calcInputMonoValue(framePosition, 
-                                    frameTime,
-			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ), 
-			                        parentModulGenerator,
-			                        generatorBuffer,
-		                            modulArguments);
+		// Frequency of generated Signal oscillation.
+		float signalFrequency = Float.NaN;
+		// Integrated Input of Frequency of generated Signal oscillation.
+		float signalIIFreq = Float.NaN;
+		// Amplitude of generated Signal.
+		float signalAmplitude = 0.0F;
+		// Shif of generated Signal oscillation.
+		float signalShift = 0.0F;
 
-		//------------------------------------------------------------------------------------------
-		// Amplitude of the Sinus-Signal.
-		float signalAmplitude = 
-			this.calcInputMonoValue(framePosition, 
-			                        frameTime,
-			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
-			                        parentModulGenerator,
-			                        generatorBuffer,
-		                            modulArguments);
+		//==========================================================================================
+		Object inputsSyncObject = this.getInputsSyncObject();
 		
-		//------------------------------------------------------------------------------------------
-		// Shift of the Sinus-Signal.
-		float signalShift = 
-			this.calcInputMonoValue(framePosition, 
-			                        frameTime,
-			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT), 
-			                        parentModulGenerator,
-			                        generatorBuffer,
-			                        modulArguments);
-		
-		//------------------------------------------------------------------------------------------
-		// Integrated Input of the Frequenz Signal.
-		float signalIIFreq;
-		{
-			InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_IIFREQ);
+		if (inputsSyncObject != null)
+		{	
+			synchronized (inputsSyncObject)
+			{
+				Iterator<InputData> inputsIterator = this.getInputsIterator();
 			
-			if (inputTypeData != null)
-			{
-				signalIIFreq = 
-					this.calcInputMonoValue(framePosition, 
-		                                    frameTime,
-		                                    inputTypeData, 
-					                        parentModulGenerator,
-					                        generatorBuffer,
-					                        modulArguments);
-			}
-			else
-			{
-				signalIIFreq = Float.NaN;
+				if (inputsIterator != null)
+				{
+					while (inputsIterator.hasNext())
+					{
+						InputData inputData = inputsIterator.next();
+						
+						switch (inputData.getInputTypeData().getInputType())
+						{
+							case INPUT_TYPE_FREQ:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									if (Float.isNaN(signalFrequency) == false)
+									{
+										signalFrequency += value;
+									}
+									else
+									{
+										signalFrequency = value;
+									}
+								}
+								break;
+							}
+							case INPUT_TYPE_IIFREQ:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									if (Float.isNaN(signalIIFreq) == false)
+									{
+										signalIIFreq += value;
+									}
+									else
+									{
+										signalIIFreq = value;
+									}
+								}
+								break;
+							}
+							case INPUT_TYPE_AMPL:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									signalAmplitude += value;
+								}
+								break;
+							}
+							case INPUT_TYPE_SHIFT:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									signalShift += value;
+								}
+								break;
+							}
+							default:
+							{
+								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
+							}
+						}
+					}
+				}
 			}
 		}
 		//------------------------------------------------------------------------------------------
