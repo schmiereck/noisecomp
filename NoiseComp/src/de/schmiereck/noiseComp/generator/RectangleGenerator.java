@@ -28,7 +28,7 @@ extends Generator
 	public static final int	INPUT_TYPE_FREQ			= 1;
 	public static final int	INPUT_TYPE_AMPL			= 2;
 	public static final int	INPUT_TYPE_SHIFT		= 3;
-	public static final int	INPUT_TYPE_PULSE_WIDTH	= 4; // pulse width (0.0 to 1.0, 0,5 is Square)
+	public static final int	INPUT_TYPE_PULSE_WIDTH	= 4; // pulse width (0.0 to 1.0, 0,5 is Square (Default))
 	public static final int	INPUT_TYPE_IIFREQ		= 5;
 	
 	//**********************************************************************************************
@@ -63,7 +63,7 @@ extends Generator
 		// Shift of generated Signal oscillation.
 		float signalShift = 0.0F;
 		// Pulse-Width of generated Signal oscillation (0.0 to 1.0, 0,5 is Square).
-		// Versatz des Sinus-Siganls um eine Schwingung.
+		// Width of Signal per half oscillation.
 		float pulseWidth = Float.NaN;
 
 		//==========================================================================================
@@ -235,6 +235,7 @@ extends Generator
 		}
 		
 		soundSample.setStereoValues(value, value);
+		
 		//==========================================================================================
 	}
 	
@@ -260,6 +261,10 @@ extends Generator
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_PULSE_WIDTH, "pulseWidth", 0, 1, Float.valueOf(0.5F), "The pulse width of the rectangle between 0 and 1 (0.5 (Default) is rectangle).");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_IIFREQ, "signalIIFreq", -1, -1, null, "Integrated Input of the frequenz signal (alternativ to signalFrequency).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

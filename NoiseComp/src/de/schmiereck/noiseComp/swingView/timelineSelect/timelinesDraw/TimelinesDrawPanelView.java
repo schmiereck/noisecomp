@@ -100,7 +100,7 @@ implements Scrollable//, MouseMotionListener
 	//----------------------------------------------------------------------------------------------
 	// Timeline-Buffer:
 	
-	private static final Color CTimelineBuffer = new Color(0x434DA5);//0, 200, 0, 127);
+	private static final Color CTimelineBuffer = new Color(0xDFD0A9);
 
 	//----------------------------------------------------------------------------------------------
 	// Input-Connector:
@@ -1182,8 +1182,9 @@ implements Scrollable//, MouseMotionListener
 						}
 						
 						posY = (generatorPosY + 
-								(value * maxUnitIncrementY * -0.5F) + 
-								(maxUnitIncrementY / 2.0F)); 
+								(value * maxUnitIncrementY * -0.45F) + 
+								(maxUnitIncrementY / 2.0F)) +
+								1.0F; 
 					}
 					else
 					{

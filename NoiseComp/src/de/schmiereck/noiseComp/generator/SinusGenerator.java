@@ -36,6 +36,7 @@ extends Generator
 	public static final int	INPUT_TYPE_AMPL		= 2;
 	public static final int	INPUT_TYPE_SHIFT	= 3;
 	public static final int	INPUT_TYPE_IIFREQ	= 4;
+	public static final int	INPUT_TYPE_PULSE_WIDTH	= 5; // pulse width (0.0 to 1.0 (0.5 is Default))
 	
 	//**********************************************************************************************
 	// Fields:
@@ -69,6 +70,9 @@ extends Generator
 		float signalAmplitude = 0.0F;
 		// Shif of generated Signal oscillation.
 		float signalShift = 0.0F;
+		// Pulse-Width of generated Signal oscillation (0.0 to 1.0).
+		// Width of Signal per half oscillation.
+		float pulseWidth = Float.NaN;
 
 		//==========================================================================================
 		Object inputsSyncObject = this.getInputsSyncObject();
@@ -165,6 +169,29 @@ extends Generator
 								}
 								break;
 							}
+							case INPUT_TYPE_PULSE_WIDTH:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									if (Float.isNaN(pulseWidth) == false)
+									{
+										pulseWidth += value;
+									}
+									else
+									{
+										pulseWidth = value;
+									}
+								}
+								break;
+							}
 							default:
 							{
 								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
@@ -195,7 +222,15 @@ extends Generator
 		{
 			periodPosition += signalIIFreq;
 		}
+
+		// pulseWidth is not defined?
+		if (Float.isNaN(pulseWidth) == true)
+		{
+			// Use default value.
+			pulseWidth = 0.5F;
+		}
 		
+		//------------------------------------------------------------------------------------------
 		float value;
 		
 		if (Float.isNaN(periodPosition) == false)

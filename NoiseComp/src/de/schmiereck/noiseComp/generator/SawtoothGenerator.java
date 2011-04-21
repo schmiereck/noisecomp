@@ -29,10 +29,11 @@ extends Generator
 	//**********************************************************************************************
 	// Constants:
 
-	public static final int	INPUT_TYPE_FREQ		= 1;
-	public static final int	INPUT_TYPE_AMPL		= 2;
-	public static final int	INPUT_TYPE_SHIFT	= 3;
-	public static final int	INPUT_TYPE_IIFREQ	= 4;
+	public static final int	INPUT_TYPE_FREQ			= 1;
+	public static final int	INPUT_TYPE_AMPL			= 2;
+	public static final int	INPUT_TYPE_SHIFT		= 3;
+	public static final int	INPUT_TYPE_IIFREQ		= 4;
+	public static final int	INPUT_TYPE_PULSE_WIDTH	= 5; // pulse width (0.0 to 1.0 (Default))
 	
 	//**********************************************************************************************
 	// Fields:
@@ -65,6 +66,9 @@ extends Generator
 		float signalAmplitude = 0.0F;
 		// Shif of generated Signal oscillation.
 		float signalShift = 0.0F;
+		// Pulse-Width of generated Signal oscillation (0.0 to 1.0).
+		// Width of Signal per oscillation.
+		float pulseWidth = Float.NaN;
 
 		//==========================================================================================
 		Object inputsSyncObject = this.getInputsSyncObject();
@@ -161,6 +165,29 @@ extends Generator
 								}
 								break;
 							}
+							case INPUT_TYPE_PULSE_WIDTH:
+							{
+								final float value =  
+									this.calcInputMonoValue(framePosition, 
+									                        frameTime,
+									                        inputData, 
+									                        parentModulGenerator,
+									                        generatorBuffer,
+									                        modulArguments);
+								
+								if (Float.isNaN(value) == false)
+								{
+									if (Float.isNaN(pulseWidth) == false)
+									{
+										pulseWidth += value;
+									}
+									else
+									{
+										pulseWidth = value;
+									}
+								}
+								break;
+							}
 							default:
 							{
 								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
@@ -192,16 +219,39 @@ extends Generator
 		{
 			periodPosition += signalIIFreq;
 		}
-		
+
+		// pulseWidth is not defined?
+		if (Float.isNaN(pulseWidth) == true)
+		{
+			// Use default value.
+			pulseWidth = 1.0F;
+		}
+
 		//------------------------------------------------------------------------------------------
 		float value;
 		
 		float posInPeriod = ((periodPosition + signalShift) % 1.0F);
 		
-		value = 1.0F - posInPeriod * 2.0F;
+		if (posInPeriod <= pulseWidth)
+		{
+			if (pulseWidth > 0.0F)
+			{
+				float d = posInPeriod / pulseWidth;
+				value = 1.0F - d * 2.0F;
+			}
+			else
+			{
+				value = 1.0F;
+			}
+		}
+		else
+		{
+			value = -1.0F;
+		}
 		
 		soundSample.setStereoValues(value * signalAmplitude, 
 		                            value * signalAmplitude);
+		
 		//==========================================================================================
 	}
 	
@@ -227,6 +277,10 @@ extends Generator
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_IIFREQ, "signalIIFreq", -1, -1, null, "Integrated Input of the frequenz signal (alternativ to signalFrequency).");
+			generatorTypeData.addInputTypeData(inputTypeData);
+		}
+		{
+			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_PULSE_WIDTH, "pulseWidth", 0, 1, Float.valueOf(0.5F), "The pulse width of the rectangle between 0 and 1 (Default).");
 			generatorTypeData.addInputTypeData(inputTypeData);
 		}
 		

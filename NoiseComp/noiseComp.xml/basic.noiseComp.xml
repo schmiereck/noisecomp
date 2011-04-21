@@ -233,6 +233,14 @@
 					<defaultValue><![CDATA[0.5]]></defaultValue>
 					<description><![CDATA[The pulse width of the rectangle between 0 and 1 (0.5 (Default) is rectangle).]]></description>
 				</inputType>
+				<inputType>
+					<name><![CDATA[signalIIFreq]]></name>
+					<type><![CDATA[5]]></type>
+					<countMin><![CDATA[-1]]></countMin>
+					<countMax><![CDATA[-1]]></countMax>
+					<defaultValue />
+					<description><![CDATA[Integrated Input of the frequenz signal (alternativ to signalFrequency).]]></description>
+				</inputType>
 			</inputTypes>
 		</generatorType>
 		<generatorType>
@@ -314,6 +322,14 @@
 					<countMax><![CDATA[-1]]></countMax>
 					<defaultValue />
 					<description><![CDATA[Integrated Input of the frequenz signal (alternativ to signalFrequency).]]></description>
+				</inputType>
+				<inputType>
+					<name><![CDATA[pulseWidth]]></name>
+					<type><![CDATA[5]]></type>
+					<countMin><![CDATA[1]]></countMin>
+					<countMax><![CDATA[0]]></countMax>
+					<defaultValue><![CDATA[0.5]]></defaultValue>
+					<description><![CDATA[The pulse width of the rectangle between 0 and 1 (0.5 (Default) is rectangle).]]></description>
 				</inputType>
 			</inputTypes>
 		</generatorType>

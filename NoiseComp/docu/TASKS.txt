@@ -64,13 +64,15 @@ TODO:
 #174:	IMPROVEMENT: Add pulseWidth to Sinus-Generator.
 #175:	IMPROVEMENT: Store input in XML-Files with names, not with numbers.
 #177:	IMPROVEMENT: Add signalShift Input for Generators.
-#179:	
+#180:	
 
 WORK:
 =====
 #178:	IMPROVEMENT: Add pulseWidth Input for Generators.
-		--> SawtoothGenerator.
+		--> DONE: RectangleGenerator.
+		--> DONE: SawtoothGenerator.
 		--> TriangelGenerator.
+		--> SinusGenerator.
 
 DONE:
 =====
@@ -347,3 +349,6 @@ Release V2.0.6
 		--> DONE: RectangleGenerator: signalFrequency, signalAmplitude, signalShift
 #177:	IMPROVEMENT: Add signalIIFreq Input for Generators.
 		--> DONE: RectangleGenerator.
+#179:	IMPROVEMENT: Draw Signal with lower amplitude to show rectangle signals.
+		--> DONE: TimelinesDrawPanelView.
+		
