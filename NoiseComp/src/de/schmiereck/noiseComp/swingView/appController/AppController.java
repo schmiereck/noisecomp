@@ -61,6 +61,7 @@ import de.schmiereck.noiseComp.swingView.inputSelect.RemoveInputSelectEntryListe
 import de.schmiereck.noiseComp.swingView.inputSelect.UpdateInputSelectEntryListenerInterface;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditController;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditModel;
+import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditView;
 import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModuleInputTypeEditController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectController;
 import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectEntryModel;
@@ -954,6 +955,58 @@ implements RemoveTimelineGeneratorListenerInterface,
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			 	}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// ModuleEdit:
+		//------------------------------------------------------------------------------------------
+		// Update-Button: Update Modul:
+		
+		this.moduleEditController.getModuleEditView().getUpdateButton().addActionListener
+		(
+		 	new ActionListener()
+		 	{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					final ModuleEditModel moduleEditModel = moduleEditController.getModuleEditModel();
+					final ModuleEditView moduleEditView = moduleEditController.getModuleEditView();
+					
+					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
+
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					
+					if (modulGeneratorTypeData != null)
+					{
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						SoundService soundService = SoundService.getInstance();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						String generatorTypeName = InputUtils.makeStringValue(moduleEditView.getModulNameTextField().getText());
+						Boolean modulIsMain = InputUtils.makeBooleanValue(moduleEditView.getModulIsMainCheckBox().isSelected());
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Modul:
+						
+						//ModulGeneratorTypeData lastMainModulGeneratorTypeData =
+							soundService.updateModulGeneratorTypeData(modulGeneratorTypeData,
+							                                          generatorTypeName,
+							                                          modulIsMain);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						// Update Edit-Model:
+						
+						moduleEditModel.setModulName(generatorTypeName);
+						moduleEditModel.setModulIsMain(modulIsMain);
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						appModelChangedObserver.notifyAppModelChanged();
+						
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
 		 	}
 		);
 		//------------------------------------------------------------------------------------------

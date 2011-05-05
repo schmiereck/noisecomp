@@ -64,9 +64,9 @@ extends BasicEditView
 	public ModuleEditView(final ModuleEditModel moduleEditModel)
 	{
 		//==========================================================================================
-		this.setLayout(new FlowLayout());
-		
 		this.moduleEditModel = moduleEditModel;
+		
+		this.setLayout(new FlowLayout());
 		
 		//------------------------------------------------------------------------------------------
 		{
@@ -114,7 +114,9 @@ extends BasicEditView
 			
 			this.addField(3, this.updateButton);
 
-			this.getRootPane().setDefaultButton(this.updateButton);
+//			this.getRootPane().setDefaultButton(this.updateButton);
+			this.setDefaultButton(this.updateButton);
+			this.updateButton.setDefaultCapable(true);
 		}
 		//==========================================================================================
 	}

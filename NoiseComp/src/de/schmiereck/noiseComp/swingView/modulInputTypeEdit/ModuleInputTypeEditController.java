@@ -135,7 +135,14 @@ public class ModuleInputTypeEditController
 				
 				ModuleInputTypeSelectEntryModel selectEntryModel = selectModel.getSelectedRow();
 				
-				selectEntryModel.setInputTypeData(inputTypeData);
+				if (selectEntryModel != null)
+				{
+					selectEntryModel.setInputTypeData(inputTypeData);
+				}
+				else
+				{
+					// TODO Show Message "No input type selected.".
+				}
 			}
 		}
 		

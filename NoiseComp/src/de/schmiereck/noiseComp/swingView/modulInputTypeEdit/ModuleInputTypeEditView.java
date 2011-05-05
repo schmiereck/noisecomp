@@ -150,7 +150,9 @@ extends BasicEditView
 			
 			this.addField(6, this.updateButton);
 
-			this.getRootPane().setDefaultButton(this.updateButton);
+//			this.getRootPane().setDefaultButton(this.updateButton);
+			this.setDefaultButton(this.updateButton);
+			this.updateButton.setDefaultCapable(true);
 		}
 		//==========================================================================================
 	}

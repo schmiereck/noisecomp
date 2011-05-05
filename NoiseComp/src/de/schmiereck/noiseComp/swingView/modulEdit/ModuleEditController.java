@@ -61,49 +61,6 @@ public class ModuleEditController
 		this.moduleEditView = new ModuleEditView(this.moduleEditModel);
 		
 		//------------------------------------------------------------------------------------------
-		// Update-Button: Update Modul:
-		
-		this.moduleEditView.getUpdateButton().addActionListener
-		(
-		 	new ActionListener()
-		 	{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
-					
-					if (modulGeneratorTypeData != null)
-					{
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						SoundService soundService = SoundService.getInstance();
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						String generatorTypeName = InputUtils.makeStringValue(moduleEditView.getModulNameTextField().getText());
-						Boolean modulIsMain = InputUtils.makeBooleanValue(moduleEditView.getModulIsMainCheckBox().isSelected());
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						// Update Modul:
-						
-						ModulGeneratorTypeData lastMainModulGeneratorTypeData =
-							soundService.updateModulGeneratorTypeData(modulGeneratorTypeData,
-							                                          generatorTypeName,
-							                                          modulIsMain);
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						// Update Edit-Model:
-						
-						moduleEditModel.setModulName(generatorTypeName);
-						moduleEditModel.setModulIsMain(modulIsMain);
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						appModelChangedObserver.notifyAppModelChanged();
-						
-						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					}
-				}
-		 	}
-		);
-		//------------------------------------------------------------------------------------------
 		this.moduleEditModel.getZoomXChangedNotifier().addModelPropertyChangedListener
 		(
 		 	new ModelPropertyChangedListener()

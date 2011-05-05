@@ -65,6 +65,9 @@ TODO:
 #175:	IMPROVEMENT: Store input in XML-Files with names, not with numbers.
 #177:	IMPROVEMENT: Add signalShift Input for Generators.
 #180:	
+#182:	
+#183:	
+#184:	
 
 WORK:
 =====
@@ -73,6 +76,8 @@ WORK:
 		--> DONE: SawtoothGenerator.
 		--> TriangelGenerator.
 		--> SinusGenerator.
+#181:	IMPROVEMENT: Allow Enter to store values with default button in ModuleEdit Dialog.
+		see: #146
 
 DONE:
 =====
