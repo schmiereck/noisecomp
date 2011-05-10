@@ -312,11 +312,6 @@ extends JFrame
 		this.modulSplitPane.setLeftComponent(this.modulesTreeScrollPane);
 		this.modulSplitPane.setRightComponent(this.modulEditSplitPane);
 
-		//------------------------------------------------------------------------------------------
-//		this.add(this.timelinePanel);
-		
-//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		//==========================================================================================
 	}
 

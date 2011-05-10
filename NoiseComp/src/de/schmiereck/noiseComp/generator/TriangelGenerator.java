@@ -63,9 +63,9 @@ extends Generator
 		// Integrated Input of Frequency of generated Signal oscillation.
 		float signalIIFreq = Float.NaN;
 		// Amplitude of generated Signal.
-		float signalAmplitude = 0.0F;
+		float signalAmplitude = Float.NaN;
 		// Shif of generated Signal oscillation.
-		float signalShift = 0.0F;
+		float signalShift = Float.NaN;
 		// Pulse-Width of generated Signal oscillation (0.0 to 1.0).
 		// Width of Signal per half oscillation.
 		float pulseWidth = Float.NaN;
@@ -145,7 +145,14 @@ extends Generator
 								
 								if (Float.isNaN(value) == false)
 								{
-									signalAmplitude += value;
+									if (Float.isNaN(signalAmplitude) == false)
+									{
+										signalAmplitude += value;
+									}
+									else
+									{
+										signalAmplitude = value;
+									}
 								}
 								break;
 							}
@@ -161,7 +168,14 @@ extends Generator
 								
 								if (Float.isNaN(value) == false)
 								{
-									signalShift += value;
+									if (Float.isNaN(signalShift) == false)
+									{
+										signalShift += value;
+									}
+									else
+									{
+										signalShift = value;
+									}
 								}
 								break;
 							}
@@ -219,6 +233,20 @@ extends Generator
 			periodPosition += signalIIFreq;
 		}
 
+		// signalAmplitude is not defined?
+		if (Float.isNaN(signalAmplitude) == true)
+		{
+			// Use default value.
+			signalAmplitude = 1.0F;
+		}
+
+		// signalShift is not defined?
+		if (Float.isNaN(signalShift) == true)
+		{
+			// Use default value.
+			signalShift = 0.0F;
+		}
+
 		// pulseWidth is not defined?
 		if (Float.isNaN(pulseWidth) == true)
 		{
@@ -263,6 +291,7 @@ extends Generator
 		
 		soundSample.setStereoValues(value * signalAmplitude, 
 		                            value * signalAmplitude);
+		
 		//==========================================================================================
 	}
 	

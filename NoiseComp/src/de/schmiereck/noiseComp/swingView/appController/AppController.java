@@ -324,13 +324,6 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.appView.setModulesTreeView(this.modulesTreeController.getModulesTreeView());
 		
 		//------------------------------------------------------------------------------------------
-		this.moduleEditController = new ModuleEditController(this,
-		                                                   this.modulesTreeController.getModulesTreeModel(),
-		                                                   this.appModelChangedObserver);
-		
-		this.appView.setModuleEditView(this.moduleEditController.getModuleEditView());
-		
-		//------------------------------------------------------------------------------------------
 		this.moduleInputTypesController = new ModuleInputTypesController(this,
 		                                                               this.appModelChangedObserver);
 		
@@ -445,6 +438,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 				}
 		 	}
 		);
+		
+		//------------------------------------------------------------------------------------------
+		this.moduleEditController = new ModuleEditController(this,
+		                                                   this.modulesTreeController.getModulesTreeModel(),
+		                                                   this.appModelChangedObserver);
+		
+		this.appView.setModuleEditView(this.moduleEditController.getModuleEditView());
 		
 		//------------------------------------------------------------------------------------------
 		this.inputSelectController = 
