@@ -13,6 +13,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.NoninvertibleTransformException;
@@ -23,12 +24,15 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
+import javax.swing.ToolTipManager;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
+import de.schmiereck.noiseComp.swingView.MultiValue;
+import de.schmiereck.noiseComp.swingView.appModel.InputEntryGroupModel;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.InputEntryTargetModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
@@ -37,6 +41,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelineHandler.TimelineHandlerModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleModel;
+import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
@@ -197,7 +202,7 @@ implements Scrollable//, MouseMotionListener
  	
 	//**********************************************************************************************
 	// Functions:
-
+	
 	/**
 	* Constructor.
 	* 
@@ -231,6 +236,8 @@ implements Scrollable//, MouseMotionListener
 //		this.addMouseMotionListener(this); //handle mouse drags
 		
 		this.defaultCursor = getCursor();
+		
+		ToolTipManager.sharedInstance().registerComponent(this);
 		
 		//------------------------------------------------------------------------------------------
 		this.addMouseListener
@@ -1780,5 +1787,69 @@ implements Scrollable//, MouseMotionListener
 		}
 		//==========================================================================================
 		return retInputPosEntryModel;
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#getToolTipText(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public String getToolTipText(MouseEvent event)
+	{
+		//==========================================================================================
+//		final AffineTransform at = this.timelinesDrawPanelView.getAt();
+		
+		final SelectedTimelineModel selectedTimelineModel = 
+			this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		
+		//==========================================================================================
+		String tooltipText;
+		
+		if (selectedTimelineModel != null)
+		{
+			final InputEntryModel highlightedInputEntry = selectedTimelineModel.getHighlightedInputEntry();
+			
+			if (highlightedInputEntry != null)
+			{
+				final InputEntryGroupModel inputEntryGroupModel = highlightedInputEntry.getInputEntryGroupModel();
+				
+				tooltipText = inputEntryGroupModel.getInputTypeData().getInputTypeName();;
+				
+				final InputData inputData = highlightedInputEntry.getInputData();
+				
+				if (inputData != null)
+				{
+					final Generator inputGenerator = inputData.getInputGenerator();
+					
+					if (inputGenerator != null)
+					{
+						tooltipText += ": " + inputGenerator.getName();
+					}
+					else
+					{
+						MultiValue multiValue = new MultiValue();
+
+						multiValue.floatValue = inputData.getInputValue();
+						multiValue.stringValue = inputData.getInputStringValue();
+						
+						tooltipText += ": " + OutputUtils.makeMultiValueEditText(multiValue);
+					}
+				}
+				else
+				{
+					tooltipText += ": [+]";
+				}
+			}
+			else
+			{
+				tooltipText = null;
+			}
+		}
+		else
+		{
+			tooltipText = null;
+		}
+		
+		//==========================================================================================
+		return tooltipText;
 	}
 }
