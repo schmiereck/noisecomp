@@ -3,17 +3,12 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
-import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
-import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
 
 /**
