@@ -677,12 +677,12 @@ implements TimelineContentChangedListenerInterface,
 			this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
 		
 		//==========================================================================================
-		int ret;
+		int retSelectEntryModelPos;
 		
 		List<TimelineSelectEntryModel> timelineSelectEntryModels = 
 			timelineSelectEntriesModel.getTimelineSelectEntryModels();
 		
-		ret = 0;
+		retSelectEntryModelPos = 0;
 		
 		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
 		{
@@ -690,11 +690,11 @@ implements TimelineContentChangedListenerInterface,
 			{
 				break;
 			}
-			ret++;
+			retSelectEntryModelPos++;
 		}
 		
 		//==========================================================================================
-		return ret;
+		return retSelectEntryModelPos;
 	}
 
 //	/**

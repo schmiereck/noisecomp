@@ -796,40 +796,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-//					TimelineSelectEntryModel timelineGeneratorModel = timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					ModulGeneratorTypeData editedModulGeneratorTypeData = getEditedModulGeneratorTypeData();
-					
-					TimelineSelectEntryModel timelineSelectEntryModel = 
-						selectedTimelineModel.getSelectedTimelineSelectEntryModel();
-
-					int selectEntryModelPos = timelinesDrawPanelController.calcTimelineSelectEntryModelPos(timelineSelectEntryModel);
-					
-//					Generator generator = 
-//						retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
-					
-					timelineEditController.doUpdateEditModel(editedModulGeneratorTypeData,
-					                                         //generator,
-					                                         timelineSelectEntryModel,
-					                                         selectEntryModelPos);
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
-					
-					// TimelinesTimeRule update.
-					timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
-					
-					// TimelinesGeneratorsRule update.
-					timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					appModelChangedObserver.notifyAppModelChanged();
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					doUpdateTimeline();
 				}
+
 		 	}
 		);
 		//------------------------------------------------------------------------------------------
@@ -2618,6 +2587,49 @@ implements RemoveTimelineGeneratorListenerInterface,
 			selectedTimelineModel.setSelectedTimelineSelectEntryModel(newTimelineSelectEntryModel);
 			
 		}
+		//==========================================================================================
+	}
+	
+	/**
+	 * Do Update Timeline.
+	 */
+	private void doUpdateTimeline()
+	{
+		//==========================================================================================
+		TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
+//		TimelineSelectEntryModel timelineGeneratorModel = this.timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		ModulGeneratorTypeData editedModulGeneratorTypeData = this.getEditedModulGeneratorTypeData();
+		
+		TimelineSelectEntryModel timelineSelectEntryModel = 
+			this.selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+
+		int selectEntryModelPos = 
+			this.timelinesDrawPanelController.calcTimelineSelectEntryModelPos(timelineSelectEntryModel);
+		
+//		Generator generator = 
+//			this.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
+		
+		this.timelineEditController.doUpdateEditModel(editedModulGeneratorTypeData,
+		                                              //generator,
+		                                              timelineSelectEntryModel,
+		                                              selectEntryModelPos);
+		
+		this.selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
+
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+		
+		// TimelinesTimeRule update.
+		this.timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+		
+		// TimelinesGeneratorsRule update.
+		this.timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		this.appModelChangedObserver.notifyAppModelChanged();
+		
 		//==========================================================================================
 	}
 	

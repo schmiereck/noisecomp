@@ -67,7 +67,6 @@ TODO:
 #181:	BUG: Allow Enter to store values with default button in ModuleEdit Dialog.
 		see: #146
 		--> Bug in Swing? Can't find a diffenerence to other Edit panes.
-#182:	BUG: Update Input (specialy "Input-Type") after creating new timeline.
 #183:	
 #184:	
 
@@ -78,7 +77,7 @@ WORK:
 		--> DONE: SawtoothGenerator.
 		--> TriangelGenerator.
 		--> SinusGenerator.
-
+		
 DONE:
 =====
 Release V1.0
@@ -357,4 +356,5 @@ Release V2.0.6
 #179:	IMPROVEMENT: Draw Signal with lower amplitude to show rectangle signals.
 		--> DONE: TimelinesDrawPanelView.
 #163:	IMPROVEMENT: Show name and description of input groups as Tooltip in Timeline-Select. 
-		
+#182:	BUG: Update Input (specialy "Input-Type") after creating new timeline.
+		--> DONE: Reselect Timeline after Update with the new Generator-Type updates the inputs.
