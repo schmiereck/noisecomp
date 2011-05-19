@@ -63,11 +63,14 @@ TODO:
 #174:	IMPROVEMENT: Add pulseWidth to Sinus-Generator.
 #175:	IMPROVEMENT: Store input in XML-Files with names, not with numbers.
 #177:	IMPROVEMENT: Add signalShift Input for Generators.
-#180:	BUG: Insert default value after "Create new Input".
 #181:	BUG: Allow Enter to store values with default button in ModuleEdit Dialog.
 		see: #146
 		--> Bug in Swing? Can't find a diffenerence to other Edit panes.
-#184:	
+#184:	IMPROVEMENT: Show Module-Input-Type name in Inputs list an Timelines-Input-Tooltip.
+#185:	
+#186:	
+#187:	
+#188:	
 
 WORK:
 =====
@@ -78,6 +81,9 @@ WORK:
 		--> SinusGenerator.
 #183:	IMPROVEMENT: Refactoring the AppController in AppModule-, AppTimeline- and AppInput-Controller.
 		--> DONE: AppModuleController
+		--> AppTimelineController
+		--> AppInputController
+#180:	BUG: Insert default value after "Create new Input".
 
 DONE:
 =====
