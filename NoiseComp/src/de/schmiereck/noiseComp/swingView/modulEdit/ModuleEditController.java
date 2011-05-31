@@ -3,17 +3,17 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
-import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
+import de.schmiereck.noiseComp.swingView.modulesTree.ModulesTreeModel;
 
 
 /**
  * <p>
- * 	Modul-Edit Controller.
+ * 	ModuleEdit Controller.
  * </p>
  * 
  * @author smk
@@ -25,12 +25,12 @@ public class ModuleEditController
 	// Fields:
 
 	/**
-	 * Modul-Edit View.
+	 * ModuleEdit View.
 	 */
 	private final ModuleEditView	moduleEditView;
 
 	/**
-	 * Modul-Edit Model.
+	 * ModuleEdit Model.
 	 */
 	private final ModuleEditModel moduleEditModel;
 
@@ -63,13 +63,13 @@ public class ModuleEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 					
-					if (modulGeneratorTypeData != null)
+					if (moduleGeneratorTypeData != null)
 					{
 						float zoomX = moduleEditModel.getZoomX();
 						
-						modulGeneratorTypeData.setViewZoomX(zoomX);
+						moduleGeneratorTypeData.setViewZoomX(zoomX);
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						appModelChangedObserver.notifyAppModelChanged();
@@ -87,13 +87,13 @@ public class ModuleEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 					
-					if (modulGeneratorTypeData != null)
+					if (moduleGeneratorTypeData != null)
 					{
 						TicksPer ticksPer = moduleEditModel.getTicksPer();
 						
-						modulGeneratorTypeData.setViewTicksPer(ticksPer);
+						moduleGeneratorTypeData.setViewTicksPer(ticksPer);
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						appModelChangedObserver.notifyAppModelChanged();
@@ -111,13 +111,13 @@ public class ModuleEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+					ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 					
-					if (modulGeneratorTypeData != null)
+					if (moduleGeneratorTypeData != null)
 					{
 						Float ticksCount = moduleEditModel.getTicksCount();
 						
-						modulGeneratorTypeData.setViewTicksCount(ticksCount);
+						moduleGeneratorTypeData.setViewTicksCount(ticksCount);
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						appModelChangedObserver.notifyAppModelChanged();
@@ -173,26 +173,26 @@ public class ModuleEditController
 	}
 
 	/**
-	 * @param modulGeneratorTypeData
-	 * 			is the Modul-Generator-Type Data.
+	 * @param moduleGeneratorTypeData
+	 * 			is the ModuleGenerator-Type Data.
 	 */
-	public void doEditModuleChanged(ModulGeneratorTypeData modulGeneratorTypeData)
+	public void doEditModuleChanged(ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		String generatorTypeName;
-		Boolean modulIsMain;
+		Boolean modulesMain;
 		Float viewZoomX;
 		TicksPer viewTicksPer;
 		Float viewTicksCount;
 		
-		if (modulGeneratorTypeData != null)
+		if (moduleGeneratorTypeData != null)
 		{
-			generatorTypeName = modulGeneratorTypeData.getGeneratorTypeName();
-			modulIsMain = modulGeneratorTypeData.getIsMainModulGeneratorType();
+			generatorTypeName = moduleGeneratorTypeData.getGeneratorTypeName();
+			modulesMain = moduleGeneratorTypeData.getIsMainModuleGeneratorType();
 			
-			viewZoomX = modulGeneratorTypeData.getViewZoomX();
-			viewTicksPer = modulGeneratorTypeData.getViewTicksPer();
-			viewTicksCount = modulGeneratorTypeData.getViewTicksCount();
+			viewZoomX = moduleGeneratorTypeData.getViewZoomX();
+			viewTicksPer = moduleGeneratorTypeData.getViewTicksPer();
+			viewTicksCount = moduleGeneratorTypeData.getViewTicksCount();
 
 			if (viewZoomX == null)
 			{
@@ -212,15 +212,15 @@ public class ModuleEditController
 		else
 		{
 			generatorTypeName = null;
-			modulIsMain = null;
+			modulesMain = null;
 			viewZoomX = new Float(1.0F);
 			viewTicksPer = TicksPer.Seconds;
 			viewTicksCount = new Float(1.0F);
 		}
 
 		//------------------------------------------------------------------------------------------
-		this.moduleEditModel.setModulName(generatorTypeName);
-		this.moduleEditModel.setModulIsMain(modulIsMain);
+		this.moduleEditModel.setModuleName(generatorTypeName);
+		this.moduleEditModel.setModuleIsMain(modulesMain);
 		
 		this.moduleEditModel.setZoomX(viewZoomX);
 		this.moduleEditModel.setTicksPer(viewTicksPer);

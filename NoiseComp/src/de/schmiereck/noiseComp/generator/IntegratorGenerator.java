@@ -43,14 +43,14 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
 	public void calculateSoundSample(long framePosition, 
 	                                 float frameTime, 
 	                                 SoundSample soundSample, 
-	                                 ModulGenerator parentModulGenerator, 
+	                                 ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModulArguments modulArguments)
+	                                 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 //		SoundSample signal1Sample = new SoundSample();
@@ -95,9 +95,9 @@ extends Generator
 									                    frame2Time,
 									                    inputData, 
 									                    signal2Sample, 
-									                    parentModulGenerator,
+									                    parentModuleGenerator,
 									                    generatorBuffer,
-									                    modulArguments);
+									                    moduleArguments);
 	
 									float leftValue = signal2Sample.getLeftValue();
 									
@@ -118,7 +118,7 @@ extends Generator
 //								                    frame1Time,
 //								                    inputData, 
 //								                    signal1Sample, 
-//								                    parentModulGenerator,
+//								                    parentModuleGenerator,
 //								                    generatorBuffer);
 //								{
 //									float leftValue = signal1Sample.getLeftValue();
@@ -161,12 +161,12 @@ extends Generator
 			//Von einer Funktion holen die den Buffer abfragt.
 			intgrSoundSample = 
 //				this.generateFrameSample(frame1Position,
-//				                         parentModulGenerator, 
+//				                         parentModuleGenerator, 
 //				                         generatorBuffer);
 				generatorBuffer.calcFrameSample(frame1Position, 
 				                                frame1Time, 
- 												parentModulGenerator,
- 					                            modulArguments);
+ 												parentModuleGenerator,
+ 					                            moduleArguments);
 		}
 //		else
 //		{
@@ -176,7 +176,7 @@ extends Generator
 //			this.calculateSoundSample(frame1Position,
 //			                          frame1Time,
 //			                          intgrSoundSample,
-//			                          parentModulGenerator, 
+//			                          parentModuleGenerator, 
 //			                          null);
 //		}
 		

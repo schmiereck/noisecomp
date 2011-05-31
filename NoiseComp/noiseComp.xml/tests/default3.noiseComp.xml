@@ -364,9 +364,9 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#Main-Modul]]></generatorClassName>
-			<name><![CDATA[Main-Modul]]></name>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#Main-Module]></generatorClassName>
+			<name><![CDATA[Main-Module]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<isMain><![CDATA[true]]></isMain>
 			<inputTypes />
@@ -535,13 +535,13 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#si]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#si]]></type>
 					<name><![CDATA[v2]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[2.5]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#si]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#si]]></type>
 					<name><![CDATA[v3]]></name>
 					<startTime><![CDATA[2.5]]></startTime>
 					<endTime><![CDATA[5.0]]></endTime>
@@ -581,8 +581,8 @@
 			</tracks>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#si]]></generatorClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#si]]></generatorClassName>
 			<name><![CDATA[si]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<inputTypes>
@@ -620,7 +620,7 @@
 							<type><![CDATA[1]]></type>
 							<value><![CDATA[1.0]]></value>
 							<stringValue><![CDATA[1.0]]></stringValue>
-							<inputModulInputType><![CDATA[1]]></inputModulInputType>
+							<inputModulenputType><![CDATA[1]]></inputModulenputType>
 						</input>
 					</inputs>
 				</generator>

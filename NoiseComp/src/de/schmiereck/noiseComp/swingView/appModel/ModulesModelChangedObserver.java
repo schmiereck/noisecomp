@@ -1,21 +1,22 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputs;
+package de.schmiereck.noiseComp.swingView.appModel;
 
 /**
  * <p>
- * 	Modul-Input-Types Model.
+ * 	Module-Model Changed Observer.
  * </p>
  * 
  * @author smk
- * @version <p>12.09.2010:	created, smk</p>
+ * @version <p>12.11.2010:	created, smk</p>
  */
-public class ModuleInputTypesModel
+public class ModulesModelChangedObserver
 {
 	//**********************************************************************************************
 	// Fields:
 
+	
 	//**********************************************************************************************
 	// Functions:
 

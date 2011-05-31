@@ -1,22 +1,22 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputTypeEdit;
+package de.schmiereck.noiseComp.swingView.moduleInputTypeEdit;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectController;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectEntryModel;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectModel;
-import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
-import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
+import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSelectController;
+import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSelectModel;
+import de.schmiereck.noiseComp.swingView.modulesTree.ModulesTreeController;
+import de.schmiereck.noiseComp.swingView.modulesTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
 
 /**
  * <p>
- * 	Modul-Input-Type Edit Controller.
+ * 	ModuleInput-Type Edit Controller.
  * </p>
  * 
  * @author smk
@@ -28,12 +28,12 @@ public class ModuleInputTypeEditController
 	// Fields:
 
 	/**
-	 * Modul-Input-Type Edit Model.
+	 * ModuleInput-Type Edit Model.
 	 */
 	private final ModuleInputTypeEditModel	moduleInputTypeEditModel;
 
 	/**
-	 * Modul-Input-Type Edit View.
+	 * ModuleInput-Type Edit View.
 	 */
 	private final ModuleInputTypeEditView	moduleInputTypeEditView;
 
@@ -76,12 +76,12 @@ public class ModuleInputTypeEditController
 	 * 			is the Select Model.
 	 * @param selectedInputTypeData
 	 * 			is the selected Input-Type Data.
-	 * @param editedModulGeneratorTypeData
-	 * 			is the edited Modul-Generator-Type Data.
+	 * @param editedModuleGeneratorTypeData
+	 * 			is the edited ModuleGenerator-Type Data.
 	 */
 	public void doUpdate(final ModuleInputTypeSelectModel selectModel, 
 	                     //final InputTypeData selectedInputTypeData,
-	                     ModulGeneratorTypeData editedModulGeneratorTypeData)
+	                     ModuleGeneratorTypeData editedModuleGeneratorTypeData)
 	{
 		//==========================================================================================
 		ModuleInputTypeEditModel inputEditModel = this.getModuleInputTypeEditModel();
@@ -131,7 +131,7 @@ public class ModuleInputTypeEditController
 
 				inputTypeData.setDefaultValue(inputTypeDefaultValue);
 				
-				editedModulGeneratorTypeData.addInputTypeData(inputTypeData);
+				editedModuleGeneratorTypeData.addInputTypeData(inputTypeData);
 				
 				ModuleInputTypeSelectEntryModel selectEntryModel = selectModel.getSelectedRow();
 				
@@ -196,23 +196,23 @@ public class ModuleInputTypeEditController
 	/**
 	 * @param appModelChangedObserver
 	 */
-	public void doUpdateModulInputType(final ModulesTreeController modulesTreeController,
-	                                   final ModuleInputTypeSelectController moduleInputTypeSelectController,
-	                                   final AppModelChangedObserver appModelChangedObserver)
+	public void doUpdateModuleInputType(final ModulesTreeController modulesTreeController,
+	                                    final ModuleInputTypeSelectController moduleInputTypeSelectController,
+	                                    final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
 		ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+		ModuleGeneratorTypeData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 		ModuleInputTypeSelectModel selectModel = moduleInputTypeSelectController.getInputTypeSelectModel();
 		
-//		InputTypeData inputTypeData = modulInputTypeSelectController.getSelectedModulInputType();
+//		InputTypeData inputTypeData = moduleInputTypeSelectController.getSelectedModuleInputType();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		this.doUpdate(selectModel, 
 		              //inputTypeData,
-		              editedModulGeneratorTypeData);
+		              editedModuleGeneratorTypeData);
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		appModelChangedObserver.notifyAppModelChanged();

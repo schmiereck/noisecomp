@@ -3,7 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;

@@ -120,7 +120,7 @@ public class GeneratorTypeData
 		
 		if (this.generatorClass != null)
 		{
-			if (this.generatorClass.equals(ModulGenerator.class) == true)
+			if (this.generatorClass.equals(ModuleGenerator.class) == true)
 			{
 				generatorTypeClassName = this.getGeneratorClass().getName() + "#" + this.getGeneratorTypeName();
 			}
@@ -190,7 +190,7 @@ public class GeneratorTypeData
 	 * 			the generator.
 	 */
 	public Generator createGeneratorInstance(String generatorName, 
-	                                         float frameRate)//, ModulGenerator parentModulGenerator)
+	                                         float frameRate)//, ModuleGenerator parentModuleGenerator)
 	{
 		//==========================================================================================
 		Generator generator = null;
@@ -203,7 +203,7 @@ public class GeneratorTypeData
 			params[0] = String.class;				// generatorName
 			params[1] = Float.class;				// frameRate
 			params[2] = GeneratorTypeData.class;	// generatorTypeData
-			//params[3] = ModulGenerator.class;		// parentModulGenerator
+			//params[3] = ModuleGenerator.class;		// parentModuleGenerator
 			
 			try
 			{
@@ -213,7 +213,7 @@ public class GeneratorTypeData
 				args[0] = generatorName;
 				args[1] = Float.valueOf(frameRate);
 				args[2] = this;
-				//args[3] = parentModulGenerator;
+				//args[3] = parentModuleGenerator;
 				
 				try
 				{

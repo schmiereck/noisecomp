@@ -37,7 +37,7 @@ extends BasicEditView
 	private final JComboBox inputTypeComboBox;
 //	private final JTextField inputTypeValueTextField;
 	private final JComboBox inputTypeValueTextField;
-	private final JComboBox modulInputTypeComboBox;
+	private final JComboBox moduleInputTypeComboBox;
 
 	/**
 	 * Create-New-Input Button.
@@ -196,7 +196,7 @@ extends BasicEditView
 						
 						if (inputEditModel.getValueSelectItems() != null)
 						{
-//							for (ModulInputTypeSelectItem modulInputTypeSelectItem : inputEditModel.getModulInputTypeSelectItems())
+//							for (ModuleInputTypeSelectItem moduleInputTypeSelectItem : inputEditModel.getModuleInputTypeSelectItems())
 							for (ValueSelectItem valueSelectItem : inputEditModel.getValueSelectItems())
 							{
 								inputTypeValueTextField.addItem(valueSelectItem);
@@ -219,51 +219,51 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.modulInputTypeComboBox = this.addComboBox(4, "Modul-Input-Type:");
+			this.moduleInputTypeComboBox = this.addComboBox(4, "ModuleInput-Type:");
 			
-			inputEditModel.getModulInputTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
+			inputEditModel.getModuleInputTypeSelectItemsChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						modulInputTypeComboBox.removeAllItems();
+						moduleInputTypeComboBox.removeAllItems();
 						
-						if (inputEditModel.getModulInputTypeSelectItems() != null)
+						if (inputEditModel.getModuleInputTypeSelectItems() != null)
 						{
-							for (ModulInputTypeSelectItem modulInputTypeSelectItem : inputEditModel.getModulInputTypeSelectItems())
+							for (ModuleInputTypeSelectItem moduleInputTypeSelectItem : inputEditModel.getModuleInputTypeSelectItems())
 							{
-								modulInputTypeComboBox.addItem(modulInputTypeSelectItem);
+								moduleInputTypeComboBox.addItem(moduleInputTypeSelectItem);
 							}
 						}
 					}
 			 	}
 			);
-			inputEditModel.getModulInputTypeDataChangedNotifier().addModelPropertyChangedListener
+			inputEditModel.getModuleInputTypeDataChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						ModulInputTypeSelectItem modulInputTypeSelectItem = null;
+						ModuleInputTypeSelectItem moduleInputTypeSelectItem = null;
 						
-						InputTypeData inputTypeData = inputEditModel.getModulInputTypeData();
+						InputTypeData inputTypeData = inputEditModel.getModuleInputTypeData();
 
-						List<ModulInputTypeSelectItem> modulInputTypeSelectItems = inputEditModel.getModulInputTypeSelectItems();
-						if (modulInputTypeSelectItems != null)
+						List<ModuleInputTypeSelectItem> moduleInputTypeSelectItems = inputEditModel.getModuleInputTypeSelectItems();
+						if (moduleInputTypeSelectItems != null)
 						{
-							for (ModulInputTypeSelectItem modulInputTypeSelectItem2 : modulInputTypeSelectItems)
+							for (ModuleInputTypeSelectItem moduleInputTypeSelectItem2 : moduleInputTypeSelectItems)
 							{
-								if (modulInputTypeSelectItem2.getInputTypeData() == inputTypeData)
+								if (moduleInputTypeSelectItem2.getInputTypeData() == inputTypeData)
 								{
-									modulInputTypeSelectItem = modulInputTypeSelectItem2;
+									moduleInputTypeSelectItem = moduleInputTypeSelectItem2;
 									break;
 								}
 							}
 						}
-						modulInputTypeComboBox.setSelectedItem(modulInputTypeSelectItem);
+						moduleInputTypeComboBox.setSelectedItem(moduleInputTypeSelectItem);
 					}
 			 	}
 			);
@@ -326,11 +326,11 @@ extends BasicEditView
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputTypeComboBox}.
+	 * 			returns the {@link #moduleInputTypeComboBox}.
 	 */
-	public JComboBox getModulInputTypeComboBox()
+	public JComboBox getModuleInputTypeComboBox()
 	{
-		return this.modulInputTypeComboBox;
+		return this.moduleInputTypeComboBox;
 	}
 
 	/**

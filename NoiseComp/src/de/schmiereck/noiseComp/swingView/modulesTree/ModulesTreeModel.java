@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulsTree;
+package de.schmiereck.noiseComp.swingView.modulesTree;
 
 import java.util.List;
 import java.util.Vector;
@@ -11,7 +11,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 
 /**
@@ -37,9 +37,9 @@ public class ModulesTreeModel
 	
 	//----------------------------------------------------------------------------------------------
 	/**
-	 * Edited Modul-Generator-Type Data.
+	 * Edited ModuleGenerator-Type Data.
 	 */
-	private ModulGeneratorTypeData editedModulGeneratorTypeData;
+	private ModuleGeneratorTypeData editedModuleGeneratorTypeData;
 	
 	private List<EditModuleChangedListener> editModuleChangedListeners = new Vector<EditModuleChangedListener>();
 
@@ -78,55 +78,55 @@ public class ModulesTreeModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #editedModulGeneratorTypeData}.
+	 * 			returns the {@link #editedModuleGeneratorTypeData}.
 	 */
-	public ModulGeneratorTypeData getEditedModulGeneratorTypeData()
+	public ModuleGeneratorTypeData getEditedModuleGeneratorTypeData()
 	{
-		return this.editedModulGeneratorTypeData;
+		return this.editedModuleGeneratorTypeData;
 	}
 
 	/**
-	 * @param editedModulGeneratorTypeData 
-	 * 			to set {@link #editedModulGeneratorTypeData}.
+	 * @param editedModuleGeneratorTypeData 
+	 * 			to set {@link #editedModuleGeneratorTypeData}.
 	 */
-	public void setEditedModulGeneratorTypeData(ModulGeneratorTypeData editedModulGeneratorTypeData)
+	public void setEditedModuleGeneratorTypeData(ModuleGeneratorTypeData editedModuleGeneratorTypeData)
 	{
 		//==========================================================================================
-//		ModulGeneratorTypeData editedModulGeneratorTypeData = this.getEditedModulGeneratorTypeData();
+//		ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.getEditedModuleGeneratorTypeData();
 		
-		TreePath selectionTreePath = this.searchModulTreeNode(editedModulGeneratorTypeData);
+		TreePath selectionTreePath = this.searchModulereeNode(editedModuleGeneratorTypeData);
 			
 		this.setSelectionPath(selectionTreePath);
 		
 		//------------------------------------------------------------------------------------------
-		this.editedModulGeneratorTypeData = editedModulGeneratorTypeData;
+		this.editedModuleGeneratorTypeData = editedModuleGeneratorTypeData;
 		
 		for (EditModuleChangedListener editModuleChangedListener : this.editModuleChangedListeners)
 		{
-			editModuleChangedListener.notifyEditModulChanged(this,
-			                                                 selectionTreePath);
+			editModuleChangedListener.notifyEditModuleChanged(this,
+			                                                  selectionTreePath);
 		}
 		//==========================================================================================
 	}
 
 	/**
-	 * @param modulGeneratorTypeData
-	 * 			is the Modul-Generator-Type.
+	 * @param moduleGeneratorTypeData
+	 * 			is the ModuleGenerator-Type.
 	 * @return
-	 * 			the tree path or <code>null</code> if the Modul-Generator-Type is not found.
+	 * 			the tree path or <code>null</code> if the ModuleGenerator-Type is not found.
 	 */
-	public TreePath searchModulTreeNode(ModulGeneratorTypeData modulGeneratorTypeData)
+	public TreePath searchModulereeNode(ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		TreePath treePath;
 		
-		if (modulGeneratorTypeData != null)
+		if (moduleGeneratorTypeData != null)
 		{
 //			DefaultTreeModel treeModel = (DefaultTreeModel)this.getModel();
 			
 			DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
 			
-			ModuleTreePath moduleTreePath = this.searchModulTreeNode(rootTreeNode, modulGeneratorTypeData);
+			ModuleTreePath moduleTreePath = this.searchModulereeNode(rootTreeNode, moduleGeneratorTypeData);
 			
 			treePath = moduleTreePath.createTreePath();
 		}
@@ -144,20 +144,20 @@ public class ModulesTreeModel
 	 * 
 	 * @param rootTreeNode
 	 * 			is the node.
-	 * @param modulGeneratorTypeData
+	 * @param moduleGeneratorTypeData
 	 * 			is the generator.
 	 * @return
 	 * 			the path or <code>null</code>.
 	 */
-	private ModuleTreePath searchModulTreeNode(DefaultMutableTreeNode rootTreeNode, 
-	                                          ModulGeneratorTypeData modulGeneratorTypeData)
+	private ModuleTreePath searchModulereeNode(DefaultMutableTreeNode rootTreeNode, 
+	                                          ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		ModuleTreePath retTreePath;
 		
 		Object userObject = rootTreeNode.getUserObject();
 		
-		if (modulGeneratorTypeData == userObject)
+		if (moduleGeneratorTypeData == userObject)
 		{
 			retTreePath = new ModuleTreePath(rootTreeNode);//rootTreePath.pathByAddingChild(userObject);
 		}
@@ -169,7 +169,7 @@ public class ModulesTreeModel
 			{
 				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)rootTreeNode.getChildAt(childPos);
 				
-				ModuleTreePath treePath = this.searchModulTreeNode(treeNode, modulGeneratorTypeData);
+				ModuleTreePath treePath = this.searchModulereeNode(treeNode, moduleGeneratorTypeData);
 				
 				if (treePath != null)
 				{
@@ -185,9 +185,9 @@ public class ModulesTreeModel
 
 	/**
 	 * @param folderTreeNode
-	 * 			is the Modul-Generator-Type.
+	 * 			is the ModuleGenerator-Type.
 	 * @return
-	 * 			the tree path or <code>null</code> if the Modul-Generator-Type is not found.
+	 * 			the tree path or <code>null</code> if the ModuleGenerator-Type is not found.
 	 */
 	public TreePath searchFolderTreeNode(DefaultMutableTreeNode folderTreeNode)
 	{
@@ -368,18 +368,18 @@ public class ModulesTreeModel
 	/**
 	 * @param parentFolderTreeNode
 	 * 			is the  parentFolderTreeNode.
-	 * @param modulGeneratorTypeData
-	 * 			is the new Modul-Generator-Type Data.
+	 * @param moduleGeneratorTypeData
+	 * 			is the new ModuleGenerator-Type Data.
 	 * @return
 	 * 			the Module Tree-Node.
 	 */
-	public DefaultMutableTreeNode insertModul(final DefaultMutableTreeNode parentFolderTreeNode, 
-	                                          final ModulGeneratorTypeData modulGeneratorTypeData)
+	public DefaultMutableTreeNode insertModule(final DefaultMutableTreeNode parentFolderTreeNode, 
+	                                           final ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 //		DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
 		
-		DefaultMutableTreeNode newModulTreeNode = new DefaultMutableTreeNode(modulGeneratorTypeData);
+		DefaultMutableTreeNode newModulereeNode = new DefaultMutableTreeNode(moduleGeneratorTypeData);
 	
 //		TreePath selectionPath = this.modulesTreeView.getSelectionPath();
 		
@@ -390,10 +390,10 @@ public class ModulesTreeModel
 
 		int parentChildCount = parentFolderTreeNode.getChildCount();
 		
-		this.treeModel.insertNodeInto(newModulTreeNode, parentFolderTreeNode, parentChildCount);
+		this.treeModel.insertNodeInto(newModulereeNode, parentFolderTreeNode, parentChildCount);
 
 		//==========================================================================================
-		return newModulTreeNode;
+		return newModulereeNode;
 	}
 
 	/**
@@ -425,18 +425,18 @@ public class ModulesTreeModel
 	/**
 	 * 
 	 */
-	public void removeModulNodes()
+	public void removeModuleodes()
 	{
 		this.modulesTreeNode.removeAllChildren();
 	}
 
 //	/**
-//	 * @param modulTreeNode
-//	 * 			is the modul TreeNode to add to {@link #modulesTreeNode}.
+//	 * @param modulereeNode
+//	 * 			is the module TreeNode to add to {@link #modulesTreeNode}.
 //	 */
-//	public void addModuleNode(DefaultMutableTreeNode modulTreeNode)
+//	public void addModuleNode(DefaultMutableTreeNode modulereeNode)
 //	{
-//		this.modulesTreeNode.add(modulTreeNode);
+//		this.modulesTreeNode.add(modulereeNode);
 //	}
 
 	/**

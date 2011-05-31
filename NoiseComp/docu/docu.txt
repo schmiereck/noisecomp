@@ -9,9 +9,9 @@ MainModel
 	OutputGenerator
 	
 Modules
-	Modul
+	Module
 
-Edited-Modul
+Edited-Module
 	TrackList
 		Tracks
 

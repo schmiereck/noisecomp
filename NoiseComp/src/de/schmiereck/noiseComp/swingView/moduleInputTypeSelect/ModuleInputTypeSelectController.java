@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputTypeSelect;
+package de.schmiereck.noiseComp.swingView.moduleInputTypeSelect;
 
 import java.util.Iterator;
 
@@ -10,13 +10,13 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 
 /**
  * <p>
- * 	Modul-Input-Type Select Controller.
+ * 	ModuleInput-Type Select Controller.
  * </p>
  * 
  * @author smk
@@ -28,12 +28,12 @@ public class ModuleInputTypeSelectController
 	// Fields:
 
 	/**
-	 * Modul-Input-Type Select Model.
+	 * ModuleInput-Type Select Model.
 	 */
 	private final ModuleInputTypeSelectModel inputTypeSelectModel;
 	
 	/**
-	 * Modul-Input-Type Select View.
+	 * ModuleInput-Type Select View.
 	 */
 	private final ModuleInputTypeSelectView inputTypeSelectView;
 	
@@ -79,7 +79,7 @@ public class ModuleInputTypeSelectController
 //					if (timelineGeneratorModel != null)
 //					{
 //						Generator generator = 
-//							appController.retrieveGeneratorOfEditedModul(timelineGeneratorModel.getName());
+//							appController.retrieveGeneratorOfEditedModuletimelineGeneratorModel.getName());
 //						
 //						if (generator != null)
 //						{
@@ -113,7 +113,7 @@ public class ModuleInputTypeSelectController
 //		 	}
 //		);
 		//------------------------------------------------------------------------------------------
-		// Modul-Input-Type Select Model Selected-Row changed -> update Modul-Input-Type Select View:
+		// ModuleInput-Type Select Model Selected-Row changed -> update ModuleInput-Type Select View:
 		
 		this.inputTypeSelectModel.getSelectedRowNoChangedNotifier().addModelPropertyChangedListener
 		(
@@ -160,17 +160,17 @@ public class ModuleInputTypeSelectController
 
 
 	/**
-	 * @param modulGeneratorTypeData
-	 * 			is the Modul-Generator-Type Data.
+	 * @param moduleGeneratorTypeData
+	 * 			is the ModuleGenerator-Type Data.
 	 */
-	public void doEditModuleChanged(ModulGeneratorTypeData modulGeneratorTypeData)
+	public void doEditModuleChanged(ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		this.inputTypeSelectModel.clearInputs();
 		
-		if (modulGeneratorTypeData != null)
+		if (moduleGeneratorTypeData != null)
 		{
-			Iterator<InputTypeData> inputTypesIterator = modulGeneratorTypeData.getInputTypesIterator();
+			Iterator<InputTypeData> inputTypesIterator = moduleGeneratorTypeData.getInputTypesIterator();
 	
 	//		this.inputTypeSelectModel.setSelectedRowNo(null);
 			
@@ -194,7 +194,7 @@ public class ModuleInputTypeSelectController
 	 * @return
 	 * 			the selected Input-Type Data.
 	 */
-	public InputTypeData getSelectedModulInputType()
+	public InputTypeData getSelectedModuleInputType()
 	{
 		//==========================================================================================
 		InputTypeData inputTypeData;
@@ -238,10 +238,10 @@ public class ModuleInputTypeSelectController
 	/**
 	 * Remove Selected Entry.
 	 * 
-	 * @param editedModulGeneratorTypeData
-	 * 			is the edited Modul-Generator-Type Data.
+	 * @param editedModuleGeneratorTypeData
+	 * 			is the edited ModuleGenerator-Type Data.
 	 */
-	public void doRemoveSelectedEntry(ModulGeneratorTypeData editedModulGeneratorTypeData)
+	public void doRemoveSelectedEntry(ModuleGeneratorTypeData editedModuleGeneratorTypeData)
 	{
 		//==========================================================================================
 		ModuleInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();
@@ -251,13 +251,13 @@ public class ModuleInputTypeSelectController
 			ModuleInputTypeTabelModel tabelModel = this.inputTypeSelectModel.getModuleInputTypeTabelModel();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Update Modul Input-Type Data:
+			// Update Module Input-Type Data:
 			
 			InputTypeData inputTypeData = selectEntryModel.getInputTypeData();
 			
 			if (inputTypeData != null)
 			{
-				editedModulGeneratorTypeData.removeInputTypeData(inputTypeData);
+				editedModuleGeneratorTypeData.removeInputTypeData(inputTypeData);
 			}
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

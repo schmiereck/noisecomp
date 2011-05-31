@@ -49,13 +49,13 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, 
 	                                 SoundSample soundSample, 
-	                                 ModulGenerator parentModulGenerator, 
+	                                 ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModulArguments modulArguments)
+	                                 ModuleArguments moduleArguments)
 	{
 		//----------------------------------------------------------------------
 		float signalFrequency;
@@ -64,9 +64,9 @@ extends Generator
 			signalFrequency = this.calcInputMonoValue(framePosition, 
 			                                          frameTime,
 			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ),
-			                                          parentModulGenerator,
+			                                          parentModuleGenerator,
 			                                          generatorBuffer,
-			                                          modulArguments);
+			                                          moduleArguments);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -81,9 +81,9 @@ extends Generator
 			signalAmplitude = this.calcInputMonoValue(framePosition, 
 			                                          frameTime,
 			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
-			                                          parentModulGenerator,
+			                                          parentModuleGenerator,
 			                                          generatorBuffer,
-			        	                              modulArguments);
+			        	                              moduleArguments);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -97,9 +97,9 @@ extends Generator
 			attackTime = this.calcInputMonoValue(framePosition, 
 			                                     frameTime,
 			                                     this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ATTACK_TIME), 
-			                                     parentModulGenerator,
+			                                     parentModuleGenerator,
 			                                     generatorBuffer,
-		        	                             modulArguments);
+		        	                             moduleArguments);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -112,9 +112,9 @@ extends Generator
 			sustainTime = this.calcInputMonoValue(framePosition, 
 		                                          frameTime,
 			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SUSTAIN_TIME), 
-			                                      parentModulGenerator,
+			                                      parentModuleGenerator,
 			                                      generatorBuffer,
-		        	                              modulArguments);
+		        	                              moduleArguments);
 //		}
 //		catch (NoInputSignalException ex)
 //		{
@@ -127,9 +127,9 @@ extends Generator
 			releaseTime = this.calcInputMonoValue(framePosition, 
 		                                          frameTime,
 			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_RELEASE_TIME), 
-			                                      parentModulGenerator,
+			                                      parentModuleGenerator,
 			                                      generatorBuffer,
-		        	                              modulArguments);
+		        	                              moduleArguments);
 		
 //		}
 //		catch (NoInputSignalException ex)

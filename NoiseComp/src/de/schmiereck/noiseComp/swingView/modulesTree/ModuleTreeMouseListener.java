@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulsTree;
+package de.schmiereck.noiseComp.swingView.modulesTree;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,11 +14,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 
 /**
  * <p>
- * 	Modul-Tree Mouse-Listener.
+ * 	ModuleTree Mouse-Listener.
  * </p>
  * 
  * see: http://download.oracle.com/javase/tutorial/uiswing/components/menu.html#popupapi
@@ -99,18 +99,18 @@ extends MouseAdapter
 						
 						String folderPath = modulesTreeModel.makeFolderPath(folderTreeNode);
 						
-						modulesTreeController.doInsertModul(folderPath);
+						modulesTreeController.doInsertModule(folderPath);
 						
 						//--------------------------------------------------------------------------
 					}
 			 	};
 			{
-				JMenuItem menuItem = new JMenuItem("Insert Modul");
+				JMenuItem menuItem = new JMenuItem("Insert Module");
 				menuItem.addActionListener(actionListener);
 				this.modulesCategoryPopupMenu.add(menuItem);
 			}
 			{
-				JMenuItem menuItem = new JMenuItem("Insert Modul");
+				JMenuItem menuItem = new JMenuItem("Insert Module");
 				menuItem.addActionListener(actionListener);
 				this.folderPopupMenu.add(menuItem);
 			}
@@ -233,10 +233,10 @@ extends MouseAdapter
 			this.folderPopupMenu.add(menuItem);
 		}
 		//==========================================================================================
-		// Modul Popup Menu:
+		// Module Popup Menu:
 		
 		{
-			JMenuItem menuItem = new JMenuItem("Edit Modul");
+			JMenuItem menuItem = new JMenuItem("Edit Module");
 			menuItem.addActionListener
 			(
 			 	new ActionListener()
@@ -245,7 +245,7 @@ extends MouseAdapter
 					public void actionPerformed(ActionEvent e)
 					{
 						//--------------------------------------------------------------------------
-						// Notify edit modul event to listeners.
+						// Notify edit module event to listeners.
 						//JMenuItem jMenuItem = (JMenuItem)e.getSource();
 						
 						TreePath selectionPath = modulesTreeView.getSelectionPath();
@@ -254,9 +254,9 @@ extends MouseAdapter
 						
 						Object userObject = treeNode.getUserObject();
 						
-						ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+						ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
 
-						modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
+						modulesTreeView.notifyEditModuleisteners(moduleGeneratorTypeData);
 						//--------------------------------------------------------------------------
 					}
 			 		
@@ -278,7 +278,7 @@ extends MouseAdapter
 					public void actionPerformed(ActionEvent e)
 					{
 						//--------------------------------------------------------------------------
-						// Notify edit modul event to listeners.
+						// Notify edit module event to listeners.
 						//JMenuItem jMenuItem = (JMenuItem)e.getSource();
 						
 						TreePath selectionPath = modulesTreeView.getSelectionPath();
@@ -326,9 +326,9 @@ extends MouseAdapter
 			{
 				Object userObject = treeNode.getUserObject();
 				
-				if (userObject instanceof ModulGeneratorTypeData)
+				if (userObject instanceof ModuleGeneratorTypeData)
 				{
-//					ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+//					ModuleGeneratorTypeData moduleeneratorTypeData = (ModuleGeneratorTypeData)userObject;
 
 					this.modulePopupMenu.show(e.getComponent(),
 					                          e.getX(), e.getY());
@@ -375,16 +375,16 @@ extends MouseAdapter
 					
 					Object userObject = treeNode.getUserObject();
 					
-					if (userObject instanceof ModulGeneratorTypeData)
+					if (userObject instanceof ModuleGeneratorTypeData)
 					{
 //						// Update the node edited bevor: 
 //						DefaultTreeModel treeModel = (DefaultTreeModel)modulesTreeView.getModel();
 //						treeModel.nodeChanged(oldTreeNode);
 						
-						ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+						ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
 					
-						// Notify edit modul event to listeners.
-						this.modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
+						// Notify edit module event to listeners.
+						this.modulesTreeView.notifyEditModuleisteners(moduleGeneratorTypeData);
 					}
 					else
 					{

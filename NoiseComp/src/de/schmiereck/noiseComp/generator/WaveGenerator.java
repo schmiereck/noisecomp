@@ -39,11 +39,11 @@ extends Generator
 	}
 	
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, 
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator, 
 									 GeneratorBufferInterface generatorBuffer,
-		                             ModulArguments modulArguments)
+		                             ModuleArguments moduleArguments)
 	{
 		long soundFramePosition = (long)(framePosition - (this.getStartTimePos() * this.getSoundFrameRate()));
 		
@@ -53,7 +53,7 @@ extends Generator
 			{
 				String fileName = this.calcInputStringValue(framePosition, 
 															this.getGeneratorTypeData().getInputTypeData(INPUT_FILE_NAME),
-															parentModulGenerator);
+															parentModuleGenerator);
 		
 				if (fileName != null)
 				{

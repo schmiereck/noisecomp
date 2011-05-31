@@ -48,11 +48,11 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, 
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModulArguments modulArguments)
+	                                 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		int echos;
@@ -69,9 +69,9 @@ extends Generator
 					this.calcInputMonoValue(framePosition, 
 					                        frameTime,
 					                        echosInputData, 
-					                        parentModulGenerator,
+					                        parentModuleGenerator,
 					                        generatorBuffer,
-				                            modulArguments);
+				                            moduleArguments);
 					
 				if (Float.isNaN(echosValue) == false)
 				{
@@ -97,9 +97,9 @@ extends Generator
 					this.calcInputMonoValue(framePosition, 
 					                        frameTime,
 					                        delayInputData, 
-					                        parentModulGenerator,
+					                        parentModuleGenerator,
 					                        generatorBuffer,
-				                            modulArguments);
+				                            moduleArguments);
 					
 				if (Float.isNaN(delayValue) == false)
 				{
@@ -125,9 +125,9 @@ extends Generator
 					this.calcInputMonoValue(framePosition, 
 					                        frameTime,
 					                        decayInputData, 
-					                        parentModulGenerator,
+					                        parentModuleGenerator,
 					                        generatorBuffer,
-				                            modulArguments);
+				                            moduleArguments);
 					
 				if (Float.isNaN(decayValue) == false)
 				{
@@ -167,9 +167,9 @@ extends Generator
 				                    delayFrameTime,
 				                    signalInputData, 
 				                    signalSample, 
-				                    parentModulGenerator,
+				                    parentModuleGenerator,
 				                    generatorBuffer,
-				                    modulArguments);
+				                    moduleArguments);
 				
 				float decayValue;
 				

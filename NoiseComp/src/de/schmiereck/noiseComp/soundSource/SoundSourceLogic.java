@@ -8,7 +8,7 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface;
 import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -79,18 +79,18 @@ implements GeneratorChangeListenerInterface,
 	}
 
 	/**
-	 * @param mainModulGeneratorTypeData
-	 * 			is the mainModulGeneratorTypeData.
+	 * @param mainModuleGeneratorTypeData
+	 * 			is the mainModuleGeneratorTypeData.
 	 * @return
 	 * 			the timelines.
 	 */
-	public synchronized List<Timeline> setMainModulGeneratorTypeData(ModulGeneratorTypeData mainModulGeneratorTypeData)
+	public synchronized List<Timeline> setMainModuleGeneratorTypeData(ModuleGeneratorTypeData mainModuleGeneratorTypeData)
 	{
 		//==========================================================================================
 		List<Timeline> timelines = new Vector<Timeline>();
 		
 		//------------------------------------------------------------------------------------------
-		this.timelineManagerLogic = new TimelineManagerLogic(mainModulGeneratorTypeData);
+		this.timelineManagerLogic = new TimelineManagerLogic(mainModuleGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		this.setOutputGenerator(null);
@@ -100,7 +100,7 @@ implements GeneratorChangeListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Walk rekursive through inputs because we need existing timelines to create input timelines:
 		
-		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
+		OutputGenerator outputGenerator = mainModuleGeneratorTypeData.getOutputGenerator();
 		
 		if (outputGenerator != null)
 		{
@@ -112,7 +112,7 @@ implements GeneratorChangeListenerInterface,
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Sort timelines:
 
-			Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
+			Iterator<Generator> generatorsIterator = mainModuleGeneratorTypeData.getGeneratorsIterator();
 			
 			while (generatorsIterator.hasNext())
 			{
@@ -132,7 +132,7 @@ implements GeneratorChangeListenerInterface,
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		
-//		Iterator<Generator> generatorsIterator = mainModulGeneratorTypeData.getGeneratorsIterator();
+//		Iterator<Generator> generatorsIterator = mainModuleGeneratorTypeData.getGeneratorsIterator();
 //		
 //		while (generatorsIterator.hasNext())
 //		{

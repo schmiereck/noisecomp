@@ -31,30 +31,30 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, 
 	                                 SoundSample signalSample, 
-	                                 ModulGenerator parentModulGenerator, 
+	                                 ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModulArguments modulArguments)
+	                                 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		float maxValue = 
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MAX_AMPL), 
-			                        parentModulGenerator,
+			                        parentModuleGenerator,
 			                        generatorBuffer,
-			                        modulArguments);
+			                        moduleArguments);
 		//------------------------------------------------------------------------------------------
 		float minValue = 
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MIN_AMPL), 
-			                        parentModulGenerator,
+			                        parentModuleGenerator,
 			                        generatorBuffer,
-			                        modulArguments);
+			                        moduleArguments);
 
 		//------------------------------------------------------------------------------------------
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
@@ -64,9 +64,9 @@ extends Generator
 	                            frameTime,
 			                    signalInputData, 
 			                    signalSample, 
-			                    parentModulGenerator, 
+			                    parentModuleGenerator, 
 			                    generatorBuffer,
-	                            modulArguments);
+	                            moduleArguments);
 		}
 		//------------------------------------------------------------------------------------------
 		float leftValue = signalSample.getLeftValue();

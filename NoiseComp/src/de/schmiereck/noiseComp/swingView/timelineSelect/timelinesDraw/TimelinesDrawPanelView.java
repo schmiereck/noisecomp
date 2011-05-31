@@ -28,7 +28,7 @@ import javax.swing.ToolTipManager;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.MultiValue;
@@ -1157,7 +1157,7 @@ implements Scrollable//, MouseMotionListener
 				}
 				else
 				{
-					soundSample = null;//timeline.generateFrameSample(sampleFrame, parentModulGenerator);
+					soundSample = null;//timeline.generateFrameSample(sampleFrame, parentModuleGenerator);
 					bufSoundSample = null;
 				}
 				

@@ -1,14 +1,14 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulsTree;
+package de.schmiereck.noiseComp.swingView.modulesTree;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 /**
  * <p>
- * 	Modul Tree-Path.
+ * 	Module Tree-Path.
  * </p>
  * 
  * @author smk

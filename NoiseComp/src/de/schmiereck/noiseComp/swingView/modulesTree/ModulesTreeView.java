@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulsTree;
+package de.schmiereck.noiseComp.swingView.modulesTree;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -17,7 +17,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 
 /**
@@ -92,20 +92,20 @@ implements EditModuleChangedListener
 					
 					String labelDecoration = "";
 					
-					if (userObject instanceof ModulGeneratorTypeData)
+					if (userObject instanceof ModuleGeneratorTypeData)
 					{
-						ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+						ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
 						
-						boolean isMainModul = modulGeneratorTypeData.getIsMainModulGeneratorType();
+						boolean isMainModule = moduleGeneratorTypeData.getIsMainModuleGeneratorType();
 						
-						if (isMainModul == true)
+						if (isMainModule == true)
 						{
 							labelDecoration += " (Main)";
 						}
 					}
 					
 					// Edited?
-					if (modulesTreeModel.getEditedModulGeneratorTypeData() == generatorTypeData)
+					if (modulesTreeModel.getEditedModuleGeneratorTypeData() == generatorTypeData)
 					{
 						labelDecoration += " *";
 					}	
@@ -173,15 +173,15 @@ implements EditModuleChangedListener
 	}
 
 	/**
-	 * @param modulGeneratorTypeData
+	 * @param moduleGeneratorTypeData
 	 * 			is the module to edit.
 	 */
-	public void notifyEditModulListeners(ModulGeneratorTypeData modulGeneratorTypeData)
+	public void notifyEditModuleisteners(ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		for (DoEditModuleListener doEditModuleListener : this.doEditModuleListeners)
 		{
-			doEditModuleListener.notifyEditModul(modulGeneratorTypeData);
+			doEditModuleListener.notifyEditModule(moduleGeneratorTypeData);
 		}
 		//==========================================================================================
 	}
@@ -205,17 +205,17 @@ implements EditModuleChangedListener
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener#notifyEditModulChanged(de.schmiereck.noiseComp.swingView.appModel.AppModel)
+	 * @see de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener#notifyEditModulehanged(de.schmiereck.noiseComp.swingView.appModel.AppModel)
 	 */
 	@Override
-	public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel,
-	                                   TreePath selectionTreePath)
+	public void notifyEditModuleChanged(ModulesTreeModel modulesTreeModel,
+	                                    TreePath selectionTreePath)
 	{
 		// XXX Move this to Model.
 		//==========================================================================================
-//		ModulGeneratorTypeData editedModulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+//		ModuleGeneratorTypeData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 //		
-//		TreePath treePath = this.searchModulTreeNode(editedModulGeneratorTypeData);
+//		TreePath treePath = this.searchModulereeNode(editedModuleGeneratorTypeData);
 		
 //		DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)treePath.getLastPathComponent();
 			

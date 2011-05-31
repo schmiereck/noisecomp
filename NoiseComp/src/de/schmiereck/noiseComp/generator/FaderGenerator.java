@@ -35,31 +35,31 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
 	public void calculateSoundSample(long framePosition, 
 	                                 float frameTime, 
 	                                 SoundSample soundSample, 
-	                                 ModulGenerator parentModulGenerator, 
+	                                 ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModulArguments modulArguments)
+	                                 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		float startFadeValue = 
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_START_VALUE), 
-			                        parentModulGenerator,
+			                        parentModuleGenerator,
 			                        generatorBuffer,
-			                        modulArguments);
+			                        moduleArguments);
 		
 		float endFadeValue = 
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_END_VALUE), 
-			                        parentModulGenerator,
+			                        parentModuleGenerator,
 			                        generatorBuffer,
-			                        modulArguments);
+			                        moduleArguments);
 		
 		//------------------------------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
@@ -102,9 +102,9 @@ extends Generator
 //	/* (non-Javadoc)
 //	 * @see de.schmiereck.noiseComp.generator.Generator#getGeneratorSampleDrawScale()
 //	 */
-//	public float getGeneratorSampleDrawScale(ModulGenerator parentModulGenerator, 
+//	public float getGeneratorSampleDrawScale(ModuleGenerator parentModuleGenerator, 
 //	                                         GeneratorBufferInterface generatorBuffer,
-//	                                         ModulArguments modulArguments)
+//	                                         ModuleArguments modulerguments)
 //	{
 //		//==========================================================================================
 //		// Works only, if the values are constant inputs:
@@ -113,15 +113,15 @@ extends Generator
 //        
 //		float startFadeValue = this.calcStartFadeValue(0, 
 //		                                               frameTime,
-//		                                               parentModulGenerator, 
+//		                                               parentModuleGenerator, 
 //		                                               generatorBuffer,
-//		                                               modulArguments);
+//		                                               modulerguments);
 //		
 //		float endFadeValue = this.calcEndFadeValue(0, 
 //	                                               frameTime,
-//		                                           parentModulGenerator, 
+//		                                           parentModuleGenerator, 
 //		                                           generatorBuffer,
-//		                                           modulArguments);
+//		                                           modulerguments);
 //		
 //		float max = Math.max(Math.abs(startFadeValue), Math.abs(endFadeValue));
 //		

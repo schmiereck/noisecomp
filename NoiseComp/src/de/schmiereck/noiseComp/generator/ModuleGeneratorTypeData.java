@@ -14,7 +14,7 @@ import de.schmiereck.noiseComp.PopupRuntimeException;
  * @author smk
  * @version <p>28.02.2004: created, smk</p>
  */
-public class ModulGeneratorTypeData
+public class ModuleGeneratorTypeData
 	extends GeneratorTypeData
 //	implements GeneratorChangeListenerInterface
 {
@@ -32,9 +32,9 @@ public class ModulGeneratorTypeData
 //	private Generators generators = new Generators();
 	
 	/**
-	 * true, if the ModulGeneratorType is the main modul.
+	 * true, if the ModuleGeneratorType is the main module
 	 */
-	private boolean isMainModulGeneratorType = false;
+	private boolean isMainModuleGeneratorType = false;
 
 	//private GeneratorChangeObserver generatorChangeObserver = null;
 	
@@ -76,7 +76,7 @@ public class ModulGeneratorTypeData
 	 * Constructor.
 	 * 
 	 */
-	public ModulGeneratorTypeData(String folderPath,
+	public ModuleGeneratorTypeData(String folderPath,
 	                              Class<? extends Generator> generatorClass, 
 								  String generatorTypeName, 
 								  String generatorTypeDescription)
@@ -100,18 +100,18 @@ public class ModulGeneratorTypeData
 	 */
 
 	/**
-	 * @return returns the {@link #isMainModulGeneratorType}.
+	 * @return returns the {@link #isMainModuleGeneratorType}.
 	 */
-	public boolean getIsMainModulGeneratorType()
+	public boolean getIsMainModuleGeneratorType()
 	{
-		return this.isMainModulGeneratorType;
+		return this.isMainModuleGeneratorType;
 	}
 	/**
-	 * @param isMainModulGeneratorType to set {@link #isMainModulGeneratorType}.
+	 * @param isMainModuleGeneratorType to set {@link #isMainModuleGeneratorType}.
 	 */
-	public void setIsMainModulGeneratorType(boolean isMainModulGeneratorType)
+	public void setIsMainModuleGeneratorType(boolean isMainModuleGeneratorType)
 	{
-		this.isMainModulGeneratorType = isMainModulGeneratorType;
+		this.isMainModuleGeneratorType = isMainModuleGeneratorType;
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class ModulGeneratorTypeData
 			{
 				Generator generator = generatorsIterator.next();
 				
-				generator.notifyModulGeneratorRemoved(removedGenerator);
+				generator.notifyModuleGeneratorRemoved(removedGenerator);
 			}
 			
 			// Output removed ?
@@ -319,7 +319,7 @@ public class ModulGeneratorTypeData
 		
 			this.notifyGeneratorsOfRemoving(removedeGenerator);
 
-			removedeGenerator.notifyModulGeneratorRemoveListeners(removedeGenerator);
+			removedeGenerator.notifyModuleGeneratorRemoveListeners(removedeGenerator);
 			
 			// De-Registriert sich bei dem Generator als Listener.
 			//generator.getGeneratorChangeObserver().removeGeneratorChangeListener(this);
@@ -399,8 +399,8 @@ public class ModulGeneratorTypeData
 	 * @see de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface#notifyGeneratorChanged(de.schmiereck.noiseComp.generator.Generator, float, float)
 	public void notifyGeneratorChanged(Generator generator, float startTimePos, float endTimePos)
 	{
-		// Meldet die �nderung an einem seiner Generatoren,
-		// an die beim Modul angemeldeten Listener-Objekten.
+		// Meldet die Änderung an einem seiner Generatoren,
+		// an die beim Module angemeldeten Listener-Objekten.
 		this.generateChangedEvent(startTimePos, endTimePos);
 	}
 	 */

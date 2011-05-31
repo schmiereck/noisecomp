@@ -683,10 +683,10 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#Main-Modul]]></generatorClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#Main-Module]></generatorClassName>
 			<folderPath><![CDATA[/File/Modules/]]></folderPath>
-			<name><![CDATA[Main-Modul]]></name>
+			<name><![CDATA[Main-Module]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<isMain><![CDATA[true]]></isMain>
 			<view>

@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
@@ -117,7 +117,7 @@ public class TimelineEditController
 						timeline = timelineSelectEntryModel.getTimeline();
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						{
-							ModulGeneratorTypeData editedModulGeneratorTypeData = appController.getEditedModulGeneratorTypeData();
+							ModuleGeneratorTypeData editedModuleGeneratorTypeData = appController.getEditedModuleGeneratorTypeData();
 							
 							generatorTypeSelectItems = new Vector<GeneratorTypeSelectItem>();
 							List<GeneratorTypeData> generatorTypes = appController.retrieveGeneratorTypesForSelect();
@@ -132,12 +132,12 @@ public class TimelineEditController
 									Class< ? extends Generator> generatorClass = itemGeneratorTypeData.getGeneratorClass();
 									
 									// Not a folder?
-									//if (itemGeneratorTypeData instanceof ModulGeneratorTypeData)
+									//if (itemGeneratorTypeData instanceof ModuleGeneratorTypeData)
 									//if (folderPath.startsWith(StartupService.MODULE_FOLDER_PATH))
 									if (generatorClass != null)
 									{
 										// Is not the edited Module as Generator-Type?
-										if (editedModulGeneratorTypeData != itemGeneratorTypeData)
+										if (editedModuleGeneratorTypeData != itemGeneratorTypeData)
 										{
 											generatorTypeSelectItems.add(new GeneratorTypeSelectItem(itemGeneratorTypeData));
 										}
@@ -149,7 +149,7 @@ public class TimelineEditController
 						generatorName = timelineSelectEntryModel.getName();
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						{
-							Generator generator = appController.retrieveGeneratorOfEditedModul(generatorName);
+							Generator generator = appController.retrieveGeneratorOfEditedModule(generatorName);
 							
 							if (generator != null)
 							{
@@ -242,7 +242,7 @@ public class TimelineEditController
 //					{
 //						String name = timelineSelectEntryModel.getName();
 //						
-//						Generator generator = appController.retrieveGeneratorOfEditedModul(name);
+//						Generator generator = appController.retrieveGeneratorOfEditedModulename);
 //						
 //						generator
 //					}
@@ -264,14 +264,14 @@ public class TimelineEditController
 	/**
 	 * Timeline-Edit Update-Button: Update Generator, Update Timeline-Edit Model and Timeline-Generator Model:
 	 * 
-	 * @param editedModulGeneratorTypeData
-	 * 			is the editedModulGeneratorTypeData.
+	 * @param editedModuleGeneratorTypeData
+	 * 			is the editedModuleGeneratorTypeData.
 	 * @param timelineSelectEntryModel
 	 * 			is the TimelineSelectEntryModel.
 	 * @param entryModelPos
 	 * 			is the position of the timeline in the list of timelines.
 	 */
-	public void doUpdateEditModel(final ModulGeneratorTypeData editedModulGeneratorTypeData,
+	public void doUpdateEditModel(final ModuleGeneratorTypeData editedModuleGeneratorTypeData,
 	                              //final Generator generator,
 	                              final TimelineSelectEntryModel timelineSelectEntryModel,
 	                              int entryModelPos)

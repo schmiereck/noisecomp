@@ -14,7 +14,7 @@ import java.awt.geom.Point2D;
 
 import javax.swing.JComponent;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel.MarkerType;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;

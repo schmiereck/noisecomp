@@ -20,8 +20,8 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.IntegratorGenerator;
 import de.schmiereck.noiseComp.generator.LowpassFilterGenerator;
 import de.schmiereck.noiseComp.generator.MixerGenerator;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGenerator;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.MultGenerator;
 import de.schmiereck.noiseComp.generator.MultiplierGenerator;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
@@ -166,7 +166,7 @@ public class StartupService
 	 * 
 	 */
 	public static 
-	ModulGeneratorTypeData createDemoGenerators(float frameRate)
+	ModuleGeneratorTypeData createDemoGenerators(float frameRate)
 	{
 		//==========================================================================================
 		SoundService soundService = SoundService.getInstance();
@@ -176,15 +176,15 @@ public class StartupService
 		
 		Float frameRateFloat = Float.valueOf(frameRate);
 		
-		//Generators generators = mainModulTypeData.getGenerators();
+		//Generators generators = mainModuleypeData.getGenerators();
 
-		final ModulGeneratorTypeData mainModulTypeData = ModulGenerator.createModulGeneratorTypeData(MODULE_FOLDER_PATH);
+		final ModuleGeneratorTypeData mainModuleypeData = ModuleGenerator.createModuleGeneratorTypeData(MODULE_FOLDER_PATH);
 
-		mainModulTypeData.setIsMainModulGeneratorType(true);
+		mainModuleypeData.setIsMainModuleGeneratorType(true);
 		
-		mainModulTypeData.setGeneratorTypeName("Main-Modul");
+		mainModuleypeData.setGeneratorTypeName("Main-Module");
 
-		soundService.addGeneratorType(mainModulTypeData);
+		soundService.addGeneratorType(mainModuleypeData);
 		
 		//---------------------------------
 		FaderGenerator faderInGenerator;
@@ -201,7 +201,7 @@ public class StartupService
 			//faderInGenerator.setStartFadeValue(0.0F);
 			//faderInGenerator.setEndFadeValue(1.0F);
 			
-			mainModulTypeData.addGenerator(faderInGenerator);
+			mainModuleypeData.addGenerator(faderInGenerator);
 		}
 		//---------------------------------
 		FaderGenerator faderOutGenerator;
@@ -217,7 +217,7 @@ public class StartupService
 			//faderOutGenerator.setStartFadeValue(1.0F);
 			//faderOutGenerator.setEndFadeValue(0.0F);
 			
-			mainModulTypeData.addGenerator(faderOutGenerator);
+			mainModuleypeData.addGenerator(faderOutGenerator);
 		}
 		//---------------------------------
 		SinusGenerator sinus0Generator;
@@ -230,7 +230,7 @@ public class StartupService
 			
 			sinus0Generator.setTimePos(0.0F, 5.0F);
 			
-			mainModulTypeData.addGenerator(sinus0Generator);
+			mainModuleypeData.addGenerator(sinus0Generator);
 		}
 		//---------------------------------
 		SinusGenerator sinus1Generator;
@@ -243,7 +243,7 @@ public class StartupService
 			
 			sinus1Generator.setTimePos(0.0F, 5.0F);
 			
-			mainModulTypeData.addGenerator(sinus1Generator);
+			mainModuleypeData.addGenerator(sinus1Generator);
 		}
 		//---------------------------------
 		SinusGenerator sinus2Generator;
@@ -256,7 +256,7 @@ public class StartupService
 			
 			sinus2Generator.setTimePos(0.0F, 5.0F);
 			
-			mainModulTypeData.addGenerator(sinus2Generator);
+			mainModuleypeData.addGenerator(sinus2Generator);
 		}
 		//---------------------------------
 		SinusGenerator sinus3Generator;
@@ -269,7 +269,7 @@ public class StartupService
 			
 			sinus3Generator.setTimePos(0.0F, 5.0F);
 			
-			mainModulTypeData.addGenerator(sinus3Generator);
+			mainModuleypeData.addGenerator(sinus3Generator);
 		}
 		//---------------------------------
 		MixerGenerator mixerGenerator;
@@ -289,7 +289,7 @@ public class StartupService
 			mixerGenerator.addSignalInput(sinus2Generator);
 			mixerGenerator.addSignalInput(sinus3Generator);
 			
-			mainModulTypeData.addGenerator(mixerGenerator);
+			mainModuleypeData.addGenerator(mixerGenerator);
 		}
 		//---------------------------------
 		//---------------------------------
@@ -303,9 +303,9 @@ public class StartupService
 			
 			outputGenerator.setSignalInput(mixerGenerator);
 			
-			mainModulTypeData.addGenerator(outputGenerator);
+			mainModuleypeData.addGenerator(outputGenerator);
 		}		
 		//==========================================================================================
-		return mainModulTypeData;
+		return mainModuleypeData;
 	}
 }

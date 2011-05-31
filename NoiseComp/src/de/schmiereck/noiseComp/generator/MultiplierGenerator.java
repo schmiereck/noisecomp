@@ -44,11 +44,11 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, 
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModulArguments modulArguments)
+	                                 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		float multiplierLeft = Float.NaN;
@@ -80,9 +80,9 @@ extends Generator
 //								float value = this.calcInputMonoValue(framePosition, 
 //								                                      frameTime,
 //								                                      inputData, 
-//								                                      parentModulGenerator,
+//								                                      parentModuleGenerator,
 //								                                      generatorBuffer,
-//							        	                              modulArguments);
+//							        	                              modulerguments);
 //								
 //								if (Float.isNaN(multiplier) == true)
 //								{
@@ -96,9 +96,9 @@ extends Generator
 								                    frameTime,
 								                    inputData, 
 								                    signalSample, 
-								                    parentModulGenerator,
+								                    parentModuleGenerator,
 								                    generatorBuffer,
-								                    modulArguments);
+								                    moduleArguments);
 
 								float leftValue = signalSample.getLeftValue();
 								
@@ -135,9 +135,9 @@ extends Generator
 								                    frameTime,
 								                    inputData, 
 								                    signalSample, 
-								                    parentModulGenerator,
+								                    parentModuleGenerator,
 								                    generatorBuffer,
-								                    modulArguments);
+								                    moduleArguments);
 
 								float leftValue = signalSample.getLeftValue();
 								

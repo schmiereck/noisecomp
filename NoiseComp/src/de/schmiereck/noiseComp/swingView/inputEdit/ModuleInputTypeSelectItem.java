@@ -7,13 +7,13 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 
 /**
  * <p>
- * 	Modul-Input-Type Select-Item for Combo-Box.
+ * 	ModuleInput-Type Select-Item for Combo-Box.
  * </p>
  * 
  * @author smk
  * @version <p>16.09.2010:	created, smk</p>
  */
-public class ModulInputTypeSelectItem
+public class ModuleInputTypeSelectItem
 {
 	//**********************************************************************************************
 	// Fields:
@@ -32,7 +32,7 @@ public class ModulInputTypeSelectItem
 	 * @param inputTypeData
 	 * 			is the Input-Type Data.
 	 */
-	public ModulInputTypeSelectItem(InputTypeData inputTypeData)
+	public ModuleInputTypeSelectItem(InputTypeData inputTypeData)
 	{
 		this.inputTypeData = inputTypeData;
 	}
@@ -56,7 +56,7 @@ public class ModulInputTypeSelectItem
 		
 		if (obj != null)
 		{
-			ret = this.inputTypeData == ((ModulInputTypeSelectItem)obj).inputTypeData;
+			ret = this.inputTypeData == ((ModuleInputTypeSelectItem)obj).inputTypeData;
 		}
 		else
 		{
@@ -80,7 +80,7 @@ public class ModulInputTypeSelectItem
 		}
 		else
 		{
-			ret = "--- No Modul-Input-Type ---";
+			ret = "--- No ModuleInput-Type ---";
 		}
 		
 		return ret;

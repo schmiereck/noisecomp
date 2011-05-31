@@ -11,9 +11,9 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.ModuleGenerator;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLPort;
 import de.schmiereck.xmlTools.XMLPortException;
@@ -34,7 +34,7 @@ public class SaveFileOperationLogic
 {
 
 	public static void saveFile(GeneratorTypesData generatorTypesData,
-								ModulGeneratorTypeData mainModulTypeData,
+								ModuleGeneratorTypeData mainModuleypeData,
 								String fileName) 
 	throws XMLPortException
 	{
@@ -53,7 +53,7 @@ public class SaveFileOperationLogic
 		//-----------------------------------------------------
 		// Generators:
 		/*
-		Generators mainGenerators = mainModulTypeData.getGenerators();
+		Generators mainGenerators = mainModuleypeData.getGenerators();
 		
 		SaveFileOperationLogic.appendGenerators(xmlDoc, noiseNode, mainGenerators);
 		*/
@@ -107,12 +107,12 @@ public class SaveFileOperationLogic
 //		Node generatorDescriptionNode = 
 			XMLData.appendTextNode(xmlDoc, generatorTypeNode, "description", generatorTypeData.getGeneratorTypeDescription());
 		
-		if (generatorTypeData instanceof ModulGeneratorTypeData)
+		if (generatorTypeData instanceof ModuleGeneratorTypeData)
 		{	
-			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+			ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (modulGeneratorTypeData.getIsMainModulGeneratorType() == true)
+			if (moduleGeneratorTypeData.getIsMainModuleGeneratorType() == true)
 			{
 //				Node isMainNode = 
 					XMLData.appendTextNode(xmlDoc, generatorTypeNode, "isMain", "true");
@@ -122,17 +122,17 @@ public class SaveFileOperationLogic
 			Node viewNode = XMLData.appendNode(xmlDoc, generatorTypeNode, "view");
 			
 			{
-				Float viewZoomX = modulGeneratorTypeData.getViewZoomX();
+				Float viewZoomX = moduleGeneratorTypeData.getViewZoomX();
 				
 				XMLData.appendFloatNode(xmlDoc, viewNode, "zoomX", viewZoomX);
 			}
 			{
-				Float viewTicksCount = modulGeneratorTypeData.getViewTicksCount();
+				Float viewTicksCount = moduleGeneratorTypeData.getViewTicksCount();
 				
 				XMLData.appendFloatNode(xmlDoc, viewNode, "ticksCount", viewTicksCount);
 			}
 			{
-				TicksPer viewTicksPer = modulGeneratorTypeData.getViewTicksPer();
+				TicksPer viewTicksPer = moduleGeneratorTypeData.getViewTicksPer();
 				String ticksPer;
 				
 				if (viewTicksPer != null)
@@ -170,27 +170,27 @@ public class SaveFileOperationLogic
 			}
 		}
 		
-		if (generatorTypeData instanceof ModulGeneratorTypeData)
+		if (generatorTypeData instanceof ModuleGeneratorTypeData)
 		{	
-			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+			ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
 			
-			//Generators modulGenerators = modulGeneratorTypeData.getGenerators();
+			//Generators moduleenerators = moduleeneratorTypeData.getGenerators();
 
-			SaveFileOperationLogic.appendGenerators(xmlDoc, generatorTypeNode, modulGeneratorTypeData); //, modulGenerators);
+			SaveFileOperationLogic.appendGenerators(xmlDoc, generatorTypeNode, moduleGeneratorTypeData); //, moduleenerators);
 
-			SaveFileOperationLogic.appendTracks(xmlDoc, generatorTypeNode, modulGeneratorTypeData);
+			SaveFileOperationLogic.appendTracks(xmlDoc, generatorTypeNode, moduleGeneratorTypeData);
 		}
 		//==========================================================================================
 	}
 
 	private static void appendGenerators(Document xmlDoc, 
 										 Node generatorTypeNode,
-										 ModulGeneratorTypeData modulGeneratorTypeData)
+										 ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		Node generatorsNode = XMLData.appendNode(xmlDoc, generatorTypeNode, "generators");
 		
-		Iterator<Generator> generatorsIterator = modulGeneratorTypeData.getGeneratorsIterator();
+		Iterator<Generator> generatorsIterator = moduleGeneratorTypeData.getGeneratorsIterator();
 		
 		while (generatorsIterator.hasNext())
 		{
@@ -202,17 +202,17 @@ public class SaveFileOperationLogic
 			String type;
 			
 			// Generator is a Module ?
-			if (generator instanceof ModulGenerator)
+			if (generator instanceof ModuleGenerator)
 			{
-				ModulGenerator modulGenerator = (ModulGenerator)generator;
+				ModuleGenerator moduleGenerator = (ModuleGenerator)generator;
 				
-				GeneratorTypeData generatorTypeData = modulGenerator.getGeneratorTypeData();
+				GeneratorTypeData generatorTypeData = moduleGenerator.getGeneratorTypeData();
 				
 				folderPath = generatorTypeData.getFolderPath();
 				
-				String modulTypeName = generatorTypeData.getGeneratorTypeName();
+				String moduleypeName = generatorTypeData.getGeneratorTypeName();
 
-				type = generator.getClass().getName() + "#" + modulTypeName;
+				type = generator.getClass().getName() + "#" + moduleypeName;
 			}
 			else
 			{
@@ -258,12 +258,12 @@ public class SaveFileOperationLogic
 //					Node inputStringValueNode = 
 						XMLData.appendTextNode(xmlDoc, inputNode, "stringValue", InputData.getInputStringValue());
 					
-					InputTypeData inputModulInputTypeData = InputData.getInputModulInputTypeData();
+					InputTypeData inputModuleInputTypeData = InputData.getInputModuleInputTypeData();
 					
-					if (inputModulInputTypeData != null)
+					if (inputModuleInputTypeData != null)
 					{
-//						Node inputModulInputNode = 
-							XMLData.appendIntegerNode(xmlDoc, inputNode, "inputModulInputType", inputModulInputTypeData.getInputType());
+//						Node inputModuleInputNode = 
+							XMLData.appendIntegerNode(xmlDoc, inputNode, "inputModuleInputType", inputModuleInputTypeData.getInputType());
 					}
 				}
 			}
@@ -274,15 +274,15 @@ public class SaveFileOperationLogic
 	/**
 	 * @param xmlDoc
 	 * @param generatorTypeNode
-	 * @param modulGeneratorTypeData
+	 * @param moduleGeneratorTypeData
 	 */
 	private static void appendTracks(Document xmlDoc, Node generatorTypeNode, 
-									 ModulGeneratorTypeData modulGeneratorTypeData)
+									 ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		Node tracksNode = XMLData.appendNode(xmlDoc, generatorTypeNode, "tracks");
 		
-		Iterator<Generator> tracksIterator = modulGeneratorTypeData.getTracksIterator();
+		Iterator<Generator> tracksIterator = moduleGeneratorTypeData.getTracksIterator();
 		
 		while (tracksIterator.hasNext())
 		{

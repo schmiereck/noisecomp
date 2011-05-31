@@ -13,7 +13,7 @@ package de.schmiereck.noiseComp.swingView.appModel;
  * @version <p>10.11.2010:	created, smk</p>
  */
 public class AppModelChangedObserver 
-//implements ModulInsertedListener
+//implements ModulensertedListener
 {
 	//**********************************************************************************************
 	// Fields:
@@ -35,10 +35,10 @@ public class AppModelChangedObserver
 	}
 
 //	/* (non-Javadoc)
-//	 * @see de.schmiereck.noiseComp.swingView.modulsTree.ModulInsertedListener#notifyModulInserted(de.schmiereck.noiseComp.generator.ModulGeneratorTypeData)
+//	 * @see de.schmiereck.noiseComp.swingView.moduleTree.ModulensertedListener#notifyModulenserted(de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData)
 //	 */
 //	@Override
-//	public void notifyModulInserted(ModulGeneratorTypeData modulGeneratorTypeData)
+//	public void notifyModulenserted(ModuleGeneratorTypeData moduleeneratorTypeData)
 //	{
 //		this.appModel.setIsModelChanged(true);
 //	}

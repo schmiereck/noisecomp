@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputTypeSelect;
+package de.schmiereck.noiseComp.swingView.moduleInputTypeSelect;
 
 import java.util.List;
 import java.util.Vector;
@@ -13,7 +13,7 @@ import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
  * <p>
- * 	Modul-Input-Type Tabel-Model.
+ * 	ModuleInput-Type Tabel-Model.
  * </p>
  * 
  * @author smk
@@ -54,7 +54,7 @@ extends AbstractTableModel
 
 	/**
 	 * @param moduleInputTypeSelectEntryModel
-	 * 			is the Modul-Input-Type Select-Entry Model
+	 * 			is the ModuleInput-Type Select-Entry Model
 	 * @return
 	 * 			the row number.
 	 */

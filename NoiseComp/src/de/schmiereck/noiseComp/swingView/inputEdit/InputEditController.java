@@ -19,7 +19,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.MultiValue;
@@ -210,8 +210,8 @@ public class InputEditController
 	/**
 	 * Update the Edited-Input in the Input-Edit-Model if a input is selected.
 	 * 
-	 * @param editedModulGeneratorTypeData 
-	 * 			is the edited Modul-Generator-Type Data.
+	 * @param editedModuleGeneratorTypeData 
+	 * 			is the edited ModuleGenerator-Type Data.
 	 * @param selectedTimeline 
 	 * 			is the Selected Timeline.
 	 * @param inputData
@@ -219,7 +219,7 @@ public class InputEditController
 	 * @param editInput
 	 * 			<code>true</code> if a input edited.
 	 */
-	public void updateEditedInput(ModulGeneratorTypeData editedModulGeneratorTypeData, 
+	public void updateEditedInput(ModuleGeneratorTypeData editedModuleGeneratorTypeData, 
 	                              Timeline selectedTimeline, 
 	                              InputData inputData,
 	                              boolean editInput)
@@ -236,8 +236,8 @@ public class InputEditController
 		Timeline inputTimeline;
 		List<ValueSelectItem> valueSelectItems;
 		String value;
-		List<ModulInputTypeSelectItem> modulInputTypeSelectItems;
-		InputTypeData modulInputTypeData;
+		List<ModuleInputTypeSelectItem> moduleInputTypeSelectItems;
+		InputTypeData moduleInputTypeData;
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// Make InputType-SelectItems:
@@ -262,7 +262,7 @@ public class InputEditController
 			// Make Generator-SelectItems:
 			{
 				generatorSelectItems = new Vector<GeneratorSelectItem>();
-//				Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
+//				Iterator<Generator> generatorsIterator = editedModuleGeneratorTypeData.getGeneratorsIterator();
 				Iterator<Timeline> timelinesIterator = timelineManagerLogic.getTimelinesIterator();
 				if (timelinesIterator != null)
 				{
@@ -342,32 +342,32 @@ public class InputEditController
 				value = null;
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Make ModulInputType-SelectItems:
+			// Make ModuleInputType-SelectItems:
 			{
-				modulInputTypeSelectItems = new Vector<ModulInputTypeSelectItem>();
-				Iterator<InputTypeData> modulInputTypeIterator = editedModulGeneratorTypeData.getInputTypesIterator();
-				if (modulInputTypeIterator != null)
+				moduleInputTypeSelectItems = new Vector<ModuleInputTypeSelectItem>();
+				Iterator<InputTypeData> moduleInputTypeIterator = editedModuleGeneratorTypeData.getInputTypesIterator();
+				if (moduleInputTypeIterator != null)
 				{
-					ModulInputTypeSelectItem noSelectItem = new ModulInputTypeSelectItem(null);
-					modulInputTypeSelectItems.add(noSelectItem);
-					while (modulInputTypeIterator.hasNext())
+					ModuleInputTypeSelectItem noSelectItem = new ModuleInputTypeSelectItem(null);
+					moduleInputTypeSelectItems.add(noSelectItem);
+					while (moduleInputTypeIterator.hasNext())
 					{
-						InputTypeData inputTypeData2 = modulInputTypeIterator.next();
+						InputTypeData inputTypeData2 = moduleInputTypeIterator.next();
 						
-						modulInputTypeSelectItems.add(new ModulInputTypeSelectItem(inputTypeData2));
+						moduleInputTypeSelectItems.add(new ModuleInputTypeSelectItem(inputTypeData2));
 					}
 				}
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Modul-Input-Type:
+			// ModuleInput-Type:
 			
 			if (inputData != null)
 			{
-				modulInputTypeData = inputData.getInputModulInputTypeData();
+				moduleInputTypeData = inputData.getInputModuleInputTypeData();
 			}
 			else
 			{
-				modulInputTypeData = null;
+				moduleInputTypeData = null;
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
@@ -380,8 +380,8 @@ public class InputEditController
 			inputTimeline = null;
 			valueSelectItems = null;
 			value = null;
-			modulInputTypeSelectItems = null;
-			modulInputTypeData = null;
+			moduleInputTypeSelectItems = null;
+			moduleInputTypeData = null;
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 
@@ -392,8 +392,8 @@ public class InputEditController
 		this.inputEditModel.setInputTimeline(inputTimeline);
 		this.inputEditModel.setValueSelectItems(valueSelectItems);
 		this.inputEditModel.setValue(value);
-		this.inputEditModel.setModulInputTypeSelectItems(modulInputTypeSelectItems);
-		this.inputEditModel.setModulInputTypeData(modulInputTypeData);
+		this.inputEditModel.setModuleInputTypeSelectItems(moduleInputTypeSelectItems);
+		this.inputEditModel.setModuleInputTypeData(moduleInputTypeData);
 		
 		//==========================================================================================
 	}
@@ -460,7 +460,7 @@ public class InputEditController
 			InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
 			GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
 			Object valueSelectedValue = this.inputEditView.getInputTypeValueTextField().getSelectedItem();
-			ModulInputTypeSelectItem modulInputTypeSelectItem = (ModulInputTypeSelectItem)this.inputEditView.getModulInputTypeComboBox().getSelectedItem();
+			ModuleInputTypeSelectItem moduleInputTypeSelectItem = (ModuleInputTypeSelectItem)this.inputEditView.getModuleInputTypeComboBox().getSelectedItem();
 				
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
@@ -482,7 +482,7 @@ public class InputEditController
 				
 				multiValue = InputUtils.makeMultiValue(valueStr);
 			}
-			InputTypeData modulInputTypeData = modulInputTypeSelectItem.getInputTypeData();
+			InputTypeData moduleInputTypeData = moduleInputTypeSelectItem.getInputTypeData();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Input-Data:
@@ -508,10 +508,10 @@ public class InputEditController
 					                                 inputTimeline, 
 					                                 inputTypeData, 
 					                                 multiValue.floatValue, multiValue.stringValue,
-					                                 modulInputTypeData);
+					                                 moduleInputTypeData);
 	//				inputData.setInputGenerator(inputGenerator);
 	//				inputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
-	//				inputData.setInputModulInputTypeData(modulInputTypeData);
+	//				inputData.setInputModuleInputTypeData(moduleInputTypeData);
 				}
 				else
 				{
@@ -521,7 +521,7 @@ public class InputEditController
 						                                       inputTimeline, 
 						                                       inputTypeData, 
 						                                       multiValue.floatValue, multiValue.stringValue,
-						                                       modulInputTypeData);
+						                                       moduleInputTypeData);
 					
 					inputSelectEntryModel.setInputData(inputData);
 				}
@@ -536,7 +536,7 @@ public class InputEditController
 				String valueStr = OutputUtils.makeMultiValueEditText(multiValue);
 				this.inputEditModel.setValue(valueStr);
 			}
-			this.inputEditModel.setModulInputTypeData(modulInputTypeSelectItem.getInputTypeData());
+			this.inputEditModel.setModuleInputTypeData(moduleInputTypeSelectItem.getInputTypeData());
 			
 			//--------------------------------------------------------------------------------------
 			this.appModelChangedObserver.notifyAppModelChanged();

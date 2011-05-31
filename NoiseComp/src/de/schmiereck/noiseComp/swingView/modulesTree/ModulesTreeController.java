@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulsTree;
+package de.schmiereck.noiseComp.swingView.modulesTree;
 
 import java.awt.event.MouseListener;
 import java.util.Iterator;
@@ -14,8 +14,8 @@ import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGenerator;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
@@ -118,7 +118,7 @@ public class ModulesTreeController
 	{
 		//==========================================================================================
 		this.modulesTreeModel.removeGeneratorNodes();
-		this.modulesTreeModel.removeModulNodes();
+		this.modulesTreeModel.removeModuleodes();
 
 		//------------------------------------------------------------------------------------------
 		Iterator<GeneratorTypeData> generatorTypesIterator = generatorTypes.iterator();
@@ -182,18 +182,18 @@ public class ModulesTreeController
 			if (generatorClass != null)
 			{
 				// Uses generator.toString() to view Label, so write a function for this.
-				DefaultMutableTreeNode modulTreeNode = new DefaultMutableTreeNode(generatorTypeData);
+				DefaultMutableTreeNode modulereeNode = new DefaultMutableTreeNode(generatorTypeData);
 				
-				if (generatorTypeData instanceof ModulGeneratorTypeData)
+				if (generatorTypeData instanceof ModuleGeneratorTypeData)
 				{			
 //					String folderPath2 = generatorTypeData.getFolderPath();
 					
 					this.modulesTreeModel.addModuleNode(insertTreeNode,
-					                                    modulTreeNode);
+					                                    modulereeNode);
 				}
 				else
 				{
-					this.modulesTreeModel.addGeneratoreNode(modulTreeNode);
+					this.modulesTreeModel.addGeneratoreNode(modulereeNode);
 				}
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -215,9 +215,9 @@ public class ModulesTreeController
 	}
 
 	/**
-	 * Update Edited Modul-Tree-Entry.
+	 * Update Edited ModuleTree-Entry.
 	 */
-	public void updateEditedModulTreeEntry(ModulGeneratorTypeData editedModulGeneratorTypeData)
+	public void updateEditedModulereeEntry(ModuleGeneratorTypeData editedModuleGeneratorTypeData)
 	{
 		//==========================================================================================
 		DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
@@ -225,9 +225,9 @@ public class ModulesTreeController
 		//==========================================================================================
 		DefaultMutableTreeNode treeNode;
 		
-//		ModulGeneratorTypeData editedModulGeneratorTypeData = this.appModel.getEditedModulGeneratorTypeData();
+//		ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.appModel.getEditedModuleGeneratorTypeData();
 		
-		TreePath treePath = this.modulesTreeModel.searchModulTreeNode(editedModulGeneratorTypeData);
+		TreePath treePath = this.modulesTreeModel.searchModulereeNode(editedModuleGeneratorTypeData);
 		
 		if (treePath != null)
 		{
@@ -296,32 +296,32 @@ public class ModulesTreeController
 	 * @param folderPath
 	 * 			is the Folder-Path in Format <code>"/folder1/folder2/"</code>.
 	 */
-	public void doInsertModul(String folderPath)
+	public void doInsertModule(String folderPath)
 	{
 		//==========================================================================================
 		SoundService soundService = SoundService.getInstance();
 		
 		//==========================================================================================
-		final ModulGeneratorTypeData modulGeneratorTypeData = 
-			ModulGenerator.createModulGeneratorTypeData(folderPath);
+		final ModuleGeneratorTypeData moduleGeneratorTypeData = 
+			ModuleGenerator.createModuleGeneratorTypeData(folderPath);
 	
-		//modulGeneratorTypeData.setIsMainModulGeneratorType(true);
+		//moduleeneratorTypeData.setIsMainModuleGeneratorType(true);
 		
-		modulGeneratorTypeData.setGeneratorTypeName("Module (new)");
+		moduleGeneratorTypeData.setGeneratorTypeName("Module (new)");
 	
-		soundService.addGeneratorType(modulGeneratorTypeData);
+		soundService.addGeneratorType(moduleGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		DefaultMutableTreeNode folderTreeNode = this.modulesTreeModel.searchModuleTreeNode(folderPath);
 		
-		DefaultMutableTreeNode modulTreeNode = 
-			this.modulesTreeModel.insertModul(folderTreeNode,
-			                                  modulGeneratorTypeData);
+		DefaultMutableTreeNode modulereeNode = 
+			this.modulesTreeModel.insertModule(folderTreeNode,
+			                                   moduleGeneratorTypeData);
 		
-		this.modulesTreeView.setSelectionPath(modulTreeNode);
+		this.modulesTreeView.setSelectionPath(modulereeNode);
 		
 		//------------------------------------------------------------------------------------------
-		this.modulesTreeView.notifyEditModulListeners(modulGeneratorTypeData);
+		this.modulesTreeView.notifyEditModuleisteners(moduleGeneratorTypeData);
 
 		//==========================================================================================
 	}
@@ -385,7 +385,7 @@ public class ModulesTreeController
 		Object userObject = treeNode.getUserObject();
 		
 		// Delete Module?
-		if (userObject instanceof ModulGeneratorTypeData)
+		if (userObject instanceof ModuleGeneratorTypeData)
 		{
 			this.doDeleteModule(treeNode);
 		}
@@ -493,12 +493,12 @@ public class ModulesTreeController
 	 * 			is the cut module Tree-Node.
 	 * @param pasteFolderTreeNode
 	 * 			is the paste folder Tree-Node.
-	 * @param modulGeneratorTypeData
+	 * @param moduleGeneratorTypeData
 	 * 			is the Module.
 	 */
 	public void doPasteModule(DefaultMutableTreeNode cutModuleTreeNode, 
 	                          DefaultMutableTreeNode pasteFolderTreeNode,
-	                          ModulGeneratorTypeData modulGeneratorTypeData)
+	                          ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		SoundService soundService = SoundService.getInstance();
@@ -513,7 +513,7 @@ public class ModulesTreeController
 		
 		soundService.moveModule(cutFolderPath,
 		                        pasteFolderPath,
-		                        modulGeneratorTypeData);
+		                        moduleGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		// Update View:
@@ -538,13 +538,13 @@ public class ModulesTreeController
 		Object userObject = cutTreeNode.getUserObject();
 		
 		// Paste Module?
-		if (userObject instanceof ModulGeneratorTypeData)
+		if (userObject instanceof ModuleGeneratorTypeData)
 		{
-			ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+			ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
 			
 			this.doPasteModule(cutTreeNode,
 			                   pasteFolderTreeNode,
-			                   modulGeneratorTypeData);
+			                   moduleGeneratorTypeData);
 		}
 		else
 		{
@@ -571,10 +571,10 @@ public class ModulesTreeController
 		//==========================================================================================
 		Object userObject = moduleTreeNode.getUserObject();
 		
-		ModulGeneratorTypeData modulGeneratorTypeData = (ModulGeneratorTypeData)userObject;
+		ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
 		
 		// Module is used by other modules?
-		if (soundService.checkModuleIsUsed(modulGeneratorTypeData) == true)
+		if (soundService.checkModuleIsUsed(moduleGeneratorTypeData) == true)
 		{
 			//--------------------------------------------------------------------------------------
 			// Alert Module is used by other modules.
@@ -588,7 +588,7 @@ public class ModulesTreeController
 		else
 		{
 			// Module is Main-Module?
-			if (modulGeneratorTypeData.getIsMainModulGeneratorType() == true)
+			if (moduleGeneratorTypeData.getIsMainModuleGeneratorType() == true)
 			{
 				//----------------------------------------------------------------------------------
 				// Alert Module is main module.
@@ -607,7 +607,7 @@ public class ModulesTreeController
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// Service:
 				
-				soundService.removeGeneratorType(modulGeneratorTypeData);
+				soundService.removeGeneratorType(moduleGeneratorTypeData);
 				
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// View:
@@ -660,7 +660,7 @@ public class ModulesTreeController
 		else
 		{
 			// Module in Folder is Main-Module?
-			if (soundService.checkModuleInFolderIsMainModul(folderPath) == true)
+			if (soundService.checkModuleInFolderIsMainModule(folderPath) == true)
 			{
 				//----------------------------------------------------------------------------------
 				// Alert Module is main module.

@@ -225,15 +225,15 @@
  222:             1            800  javax.swing.JCheckBox
  223:            11            792  java.util.WeakHashMap
  224:             9            792  [Lsun.awt.SunHints$Value;
- 225:             1            784  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectView
+ 225:             1            784  de.schmiereck.noiseComp.swingView.modulenputTypeSelect.ModulenputTypeSelectView
  226:            14            784  javax.swing.plaf.basic.BasicTextUI$TextActionWrapper
  227:             1            784  de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView
- 228:             1            776  de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView$1
+ 228:             1            776  de.schmiereck.noiseComp.swingView.moduleTree.ModulesTreeView$1
  229:            24            768  de.schmiereck.dataTools.VectorHash
- 230:             1            760  de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView
+ 230:             1            760  de.schmiereck.noiseComp.swingView.moduleTree.ModulesTreeView
  231:            19            760  sun.java2d.loops.CompositeType
  232:            31            744  javax.swing.Timer$DoPostEvent
- 233:             1            736  de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesView
+ 233:             1            736  de.schmiereck.noiseComp.swingView.modulenputs.ModulenputTypesView
  234:            23            736  java.io.FileDescriptor
  235:             1            728  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesScrollPanelView
  236:            10            720  sun.misc.URLClassPath$JarLoader
@@ -245,7 +245,7 @@
  242:            14            672  javax.swing.plaf.basic.BasicTextUI$BasicHighlighter
  243:            14            672  javax.swing.plaf.basic.BasicTextUI$RootView
  244:             1            664  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView
- 245:             1            664  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView
+ 245:             1            664  de.schmiereck.noiseComp.swingView.modulenputTypeEdit.ModulenputTypeEditView
  246:             1            664  javax.swing.DefaultListCellRenderer
  247:             1            656  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView
  248:             3            648  [Lsun.font.EAttribute;
@@ -551,7 +551,7 @@
  548:             3             96  java.nio.DirectByteBuffer$Deallocator
  549:             2             96  javax.swing.text.JTextComponent$DefaultKeymap
  550:             3             96  com.sun.java.swing.plaf.windows.WindowsMenuUI$WindowsMouseInputHandler
- 551:             1             96  de.schmiereck.noiseComp.generator.ModulGeneratorTypeData
+ 551:             1             96  de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData
  552:             3             96  javax.swing.plaf.basic.BasicMenuUI$Handler
  553:             2             96  java.io.OutputStreamWriter
  554:             3             96  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel$HighlightedTimelineHandler
@@ -566,7 +566,7 @@
  563:             3             96  java.awt.EventFilter$FilterAction
  564:             4             96  javax.sound.sampled.AudioFormat$Encoding
  565:             3             96  javax.swing.JMenu$WinListener
- 566:             1             96  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditModel
+ 566:             1             96  de.schmiereck.noiseComp.swingView.modulenputTypeEdit.ModulenputTypeEditModel
  567:             4             96  javax.sound.sampled.LineEvent$Type
  568:             2             96  javax.swing.text.StyleContext$NamedStyle
  569:             2             96  java.io.ExpiringCache
@@ -580,7 +580,7 @@
  577:             1             96  java.awt.EventQueue
  578:             1             96  javax.swing.tree.VariableHeightLayoutCache
  579:             2             96  java.security.BasicPermissionCollection
- 580:             3             96  de.schmiereck.noiseComp.generator.ModulGeneratorTypeData$TicksPer
+ 580:             3             96  de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData$TicksPer
  581:             3             96  javax.swing.JMenu$MenuChangeListener
  582:             3             96  sun.nio.cs.Surrogate$Parser
  583:             3             96  [[B
@@ -693,7 +693,7 @@
  690:             1             64  java.awt.datatransfer.SystemFlavorMap
  691:             1             64  [[[Lsun.awt.FontDescriptor;
  692:             1             64  [[[S
- 693:             1             64  de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel
+ 693:             1             64  de.schmiereck.noiseComp.swingView.moduleTree.ModulesTreeModel
  694:             2             64  java.awt.MediaTracker
  695:             1             64  [Lsun.font.FontDesignMetrics;
  696:             1             64  javax.swing.text.StyleContext
@@ -736,11 +736,11 @@
  733:             2             48  [Ljava.util.logging.Handler;
  734:             1             48  sun.awt.windows.WGlobalCursorManager
  735:             1             48  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditController
- 736:             1             48  de.schmiereck.noiseComp.swingView.modulsTree.ModulTreeMouseListener
+ 736:             1             48  de.schmiereck.noiseComp.swingView.moduleTree.ModulereeMouseListener
  737:             1             48  java.lang.NullPointerException
  738:             1             48  java.util.concurrent.atomic.AtomicReferenceFieldUpdater$AtomicReferenceFieldUpdaterImpl
- 739:             1             48  [Lde.schmiereck.noiseComp.generator.ModulGeneratorTypeData$TicksPer;
- 740:             1             48  de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesController
+ 739:             1             48  [Lde.schmiereck.noiseComp.generator.ModuleGeneratorTypeData$TicksPer;
+ 740:             1             48  de.schmiereck.noiseComp.swingView.modulenputs.ModulenputTypesController
  741:             1             48  java.awt.BasicStroke
  742:             1             48  sun.java2d.d3d.D3DRenderer
  743:             1             48  [Lcom.sun.media.sound.SimpleInputDevice;
@@ -786,8 +786,8 @@
  783:             1             48  [Ljava.awt.EventFilter$FilterAction;
  784:             2             48  javax.swing.text.Position$Bias
  785:             1             48  [Lsun.java2d.pipe.hw.ExtendedBufferCapabilities$VSyncType;
- 786:             1             40  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectModel
- 787:             1             40  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController
+ 786:             1             40  de.schmiereck.noiseComp.swingView.modulenputTypeSelect.ModulenputTypeSelectModel
+ 787:             1             40  de.schmiereck.noiseComp.swingView.modulenputTypeSelect.ModulenputTypeSelectController
  788:             1             40  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController$4
  789:             1             40  [Ljavax.sound.sampled.Line$Info;
  790:             1             40  sun.awt.shell.Win32ShellFolderManager2
@@ -827,7 +827,7 @@
  824:             1             40  com.sun.media.sound.HeadspaceMixer$MixerReverbControl
  825:             1             40  de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel
  826:             1             40  sun.awt.windows.WingDings
- 827:             1             40  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeTabelModel
+ 827:             1             40  de.schmiereck.noiseComp.swingView.modulenputTypeSelect.ModulenputTypeTabelModel
  828:             1             40  javax.swing.MenuSelectionManager
  829:             1             40  java.lang.reflect.ReflectPermission
  830:             1             40  javax.swing.text.DefaultEditorKit$ReadOnlyAction
@@ -854,9 +854,9 @@
  851:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$3
  852:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$8
  853:             1             32  javax.swing.plaf.basic.BasicToggleButtonUI
- 854:             1             32  de.schmiereck.noiseComp.swingView.modulsTree.ModulTreeMouseListener$1
+ 854:             1             32  de.schmiereck.noiseComp.swingView.moduleTree.ModulereeMouseListener$1
  855:             1             32  java.awt.VKCollection
- 856:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView$1
+ 856:             1             32  de.schmiereck.noiseComp.swingView.modulenputTypeEdit.ModulenputTypeEditView$1
  857:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$7
  858:             1             32  com.sun.java.swing.plaf.windows.XPStyle$XPImageBorder
  859:             1             32  sun.reflect.UnsafeObjectFieldAccessorImpl
@@ -871,7 +871,7 @@
  868:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$24
  869:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$1
  870:             1             32  de.schmiereck.noiseComp.swingView.appModel.AppModel
- 871:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView$2
+ 871:             1             32  de.schmiereck.noiseComp.swingView.modulenputTypeEdit.ModulenputTypeEditView$2
  872:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$8
  873:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelController
  874:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$22
@@ -884,7 +884,7 @@
  881:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$37
  882:             1             32  de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView$1
  883:             1             32  java.security.Policy$UnsupportedEmptyCollection
- 884:             1             32  de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController
+ 884:             1             32  de.schmiereck.noiseComp.swingView.moduleTree.ModulesTreeController
  885:             1             32  javax.swing.plaf.basic.BasicBorders$SplitPaneBorder
  886:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$2
  887:             2             32  javax.swing.plaf.basic.BasicLabelUI
@@ -894,15 +894,15 @@
  891:             1             32  sun.awt.SunHints$LCDContrastKey
  892:             1             32  java.util.concurrent.locks.ReentrantReadWriteLock$Sync$HoldCounter
  893:             1             32  javax.swing.KeyboardManager
- 894:             1             32  de.schmiereck.noiseComp.swingView.modulsTree.ModulTreeMouseListener$2
+ 894:             1             32  de.schmiereck.noiseComp.swingView.moduleTree.ModulereeMouseListener$2
  895:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$3
  896:             1             32  sun.misc.PerformanceLogger$TimeData
  897:             1             32  javax.swing.plaf.basic.BasicBorders$SplitPaneDividerBorder
  898:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$21
  899:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$6
  900:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$5
- 901:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditController
- 902:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView$4
+ 901:             1             32  de.schmiereck.noiseComp.swingView.modulenputTypeEdit.ModulenputTypeEditController
+ 902:             1             32  de.schmiereck.noiseComp.swingView.modulenputTypeEdit.ModulenputTypeEditView$4
  903:             1             32  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView$3
  904:             1             32  javax.swing.SystemEventQueueUtilities$ComponentWorkRequest
  905:             1             32  sun.reflect.UnsafeBooleanFieldAccessorImpl
@@ -917,13 +917,13 @@
  914:             1             32  de.schmiereck.noiseComp.swingView.inputEdit.InputEditView$2
  915:             1             32  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditView$1
  916:             1             32  java.util.Collections$EmptyMap
- 917:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModulInputTypeEditView$3
+ 917:             1             32  de.schmiereck.noiseComp.swingView.modulenputTypeEdit.ModulenputTypeEditView$3
  918:             1             32  javax.swing.border.LineBorder
  919:             1             32  de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView$2
  920:             1             32  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelView$1
  921:             1             32  [Ljava.awt.GraphicsDevice;
  922:             1             32  sun.dc.pr.PathStroker
- 923:             1             32  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectView$1
+ 923:             1             32  de.schmiereck.noiseComp.swingView.modulenputTypeSelect.ModulenputTypeSelectView$1
  924:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$38
  925:             1             32  javax.swing.text.StyleContext$FontKey
  926:             1             32  java.awt.KeyboardFocusManager$HeavyweightFocusRequest
@@ -932,7 +932,7 @@
  929:             1             32  javax.swing.TimerQueue
  930:             1             32  javax.swing.plaf.basic.BasicButtonUI
  931:             1             32  de.schmiereck.noiseComp.swingView.modulEdit.ModulEditController
- 932:             1             32  de.schmiereck.noiseComp.swingView.modulsTree.ModulTreeMouseListener$3
+ 932:             1             32  de.schmiereck.noiseComp.swingView.moduleTree.ModulereeMouseListener$3
  933:             1             32  de.schmiereck.noiseComp.swingView.appController.AppController$27
  934:             1             32  java.io.FileInputStream
  935:             1             32  java.security.AllPermissionCollection
@@ -962,7 +962,7 @@
  959:             1             24  de.schmiereck.noiseComp.swingView.appController.AppController$17
  960:             1             24  java.nio.charset.CoderResult$2
  961:             1             24  sun.awt.image.PixelConverter$Argb
- 962:             1             24  de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModulInputTypeSelectController$1
+ 962:             1             24  de.schmiereck.noiseComp.swingView.modulenputTypeSelect.ModulenputTypeSelectController$1
  963:             1             24  sun.awt.image.PixelConverter$Rgba
  964:             1             24  de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorNotifier
  965:             1             24  sun.java2d.d3d.D3DScreenUpdateManager$1$1
@@ -1158,7 +1158,7 @@
 1155:             1             16  javax.swing.text.SimpleAttributeSet$EmptyAttributeSet
 1156:             1             16  sun.java2d.SunGraphicsEnvironment$TTFilter
 1157:             1             16  java.util.Hashtable$EmptyEnumerator
-1158:             1             16  de.schmiereck.noiseComp.swingView.modulInputs.ModulInputTypesModel
+1158:             1             16  de.schmiereck.noiseComp.swingView.modulenputs.ModulenputTypesModel
 1159:             1             16  com.sun.java.swing.plaf.windows.WindowsIconFactory$RadioButtonMenuItemIcon
 1160:             1             16  com.sun.media.sound.DirectAudioDeviceProvider
 1161:             1             16  java.util.Collections$ReverseComparator

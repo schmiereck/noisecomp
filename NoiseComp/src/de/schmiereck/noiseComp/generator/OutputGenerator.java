@@ -40,14 +40,14 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
 	public void calculateSoundSample(long framePosition, 
 	                                 float frameTime, 
 	                                 SoundSample soundSample, 
-	                                 ModulGenerator parentModulGenerator, 
+	                                 ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModulArguments modulArguments)
+	                                 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
@@ -58,9 +58,9 @@ extends Generator
 			                    frameTime,
 			                    signalInputData, 
 			                    soundSample, 
-			                    parentModulGenerator,
+			                    parentModuleGenerator,
 			                    generatorBuffer,
-			                    modulArguments);
+			                    moduleArguments);
 		}
 		
 		//==========================================================================================

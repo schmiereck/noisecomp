@@ -35,7 +35,7 @@ public class GeneratorTypeNodesData
 	 */
 	public void addTempGeneratorTypeData(GeneratorTypeNodeData tempGeneratorTypeData)
 	{
-		this.generatorTypeNodes.put(tempGeneratorTypeData.getModulGeneratorTypeData().getGeneratorTypeClassName(),
+		this.generatorTypeNodes.put(tempGeneratorTypeData.getModuleGeneratorTypeData().getGeneratorTypeClassName(),
 									tempGeneratorTypeData);
 	}
 

@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputTypeSelect;
+package de.schmiereck.noiseComp.swingView.moduleInputTypeSelect;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -10,7 +10,7 @@ import javax.swing.event.ListSelectionListener;
 
 /**
  * <p>
- * 	Modul-Input-Type Select View.
+ * 	ModuleInput-Type Select View.
  * </p>
  * 
  * @author smk
@@ -32,7 +32,7 @@ extends JTable
 	 * Constructor.
 	 * 
 	 * @param moduleInputTypeSelectModel
-	 * 			is the Modul-Input-Type Select Model.
+	 * 			is the ModuleInput-Type Select Model.
 	 */
 	public ModuleInputTypeSelectView(final ModuleInputTypeSelectModel moduleInputTypeSelectModel)
 	{

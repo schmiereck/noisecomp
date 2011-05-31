@@ -3,15 +3,15 @@
  */
 package de.schmiereck.noiseComp.swingView.appController;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditController;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditModel;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditView;
-import de.schmiereck.noiseComp.swingView.modulInputs.ModuleInputTypesController;
-import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeController;
-import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
+import de.schmiereck.noiseComp.swingView.moduleInputs.ModuleInputTypesController;
+import de.schmiereck.noiseComp.swingView.modulesTree.ModulesTreeController;
+import de.schmiereck.noiseComp.swingView.modulesTree.ModulesTreeModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 
 /**
@@ -57,30 +57,30 @@ public class AppModuleController
 		ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		ModulGeneratorTypeData modulGeneratorTypeData = modulesTreeModel.getEditedModulGeneratorTypeData();
+		ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 		
-		if (modulGeneratorTypeData != null)
+		if (moduleGeneratorTypeData != null)
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			SoundService soundService = SoundService.getInstance();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			String generatorTypeName = InputUtils.makeStringValue(moduleEditView.getModulNameTextField().getText());
-			Boolean modulIsMain = InputUtils.makeBooleanValue(moduleEditView.getModulIsMainCheckBox().isSelected());
+			String generatorTypeName = InputUtils.makeStringValue(moduleEditView.getModuleameTextField().getText());
+			Boolean modulesMain = InputUtils.makeBooleanValue(moduleEditView.getModulesMainCheckBox().isSelected());
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Update Modul:
+			// Update Module
 			
-			//ModulGeneratorTypeData lastMainModulGeneratorTypeData =
-				soundService.updateModulGeneratorTypeData(modulGeneratorTypeData,
+			//ModuleGeneratorTypeData lastMainModuleGeneratorTypeData =
+				soundService.updateModuleGeneratorTypeData(moduleGeneratorTypeData,
 				                                          generatorTypeName,
-				                                          modulIsMain);
+				                                          modulesMain);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Edit-Model:
 			
-			moduleEditModel.setModulName(generatorTypeName);
-			moduleEditModel.setModulIsMain(modulIsMain);
+			moduleEditModel.setModuleName(generatorTypeName);
+			moduleEditModel.setModuleIsMain(modulesMain);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			appModelChangedObserver.notifyAppModelChanged();

@@ -2,7 +2,7 @@ package de.schmiereck.noiseComp.console;
 
 import javax.sound.sampled.SourceDataLine;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.OutputGenerator;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
@@ -43,14 +43,14 @@ public class ConsoleMain
 		//==========================================================================================
 		StartupService.createBaseGeneratorTypes();
 		
-//		// new ModulGeneratorTypeData(null, null, null);
-//		ModulGeneratorTypeData mainModulGeneratorTypeData = ModulGenerator.createModulGeneratorTypeData();
+//		// new ModuleGeneratorTypeData(null, null, null);
+//		ModuleGeneratorTypeData mainModuleGeneratorTypeData = ModuleGenerator.createModuleGeneratorTypeData();
 //
-//		mainModulGeneratorTypeData.setIsMainModulGeneratorType(true);
+//		mainModuleGeneratorTypeData.setIsMainModuleGeneratorType(true);
 //		
-//		mainModulGeneratorTypeData.setGeneratorTypeName("Console-Main-Modul");
+//		mainModuleGeneratorTypeData.setGeneratorTypeName("Console-Main-Module");
 //
-//		soundService.addGeneratorType(mainModulGeneratorTypeData);
+//		soundService.addGeneratorType(mainModuleGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		// Setup Sound:
@@ -63,10 +63,10 @@ public class ConsoleMain
 		SoundData soundData = new SoundData(line, soundSourceLogic);
 		
 		//------------------------------------------------------------------------------------------
-		ModulGeneratorTypeData mainModulGeneratorTypeData = 
+		ModuleGeneratorTypeData mainModuleGeneratorTypeData = 
 			StartupService.createDemoGenerators(soundData.getFrameRate());
 
-		soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);;
+		soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);;
 
 		//------------------------------------------------------------------------------------------
 	
@@ -105,7 +105,7 @@ public class ConsoleMain
 		//------------------------------------------------------------------------------------------
 		SoundBufferManager soundBufferManager = soundData.getSoundBufferManager();
 		
-		OutputGenerator outputGenerator = mainModulGeneratorTypeData.getOutputGenerator();
+		OutputGenerator outputGenerator = mainModuleGeneratorTypeData.getOutputGenerator();
 
 		float endTimePos = outputGenerator.getEndTimePos();
 		

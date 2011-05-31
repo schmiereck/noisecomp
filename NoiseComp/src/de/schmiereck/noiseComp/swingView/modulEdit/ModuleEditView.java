@@ -15,7 +15,7 @@ import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
  * <p>
- * 	Modul-Edit View.
+ * 	ModuleEdit View.
  * </p>
  * 
  * @author smk
@@ -28,19 +28,19 @@ extends BasicEditView
 	// Fields:
 	
 	/**
-	 * Modul-Edit Model.
+	 * ModuleEdit Model.
 	 */
 	private final ModuleEditModel moduleEditModel;
 
 	/**
-	 * Modul-Name Text-Field
+	 * ModuleName Text-Field
 	 */
-	private final JTextField modulNameTextField;
+	private final JTextField moduleameTextField;
 	
 	/**
-	 * modul-Is-Main Check-Box.
+	 * moduleIs-Main Check-Box.
 	 */
-	private final JCheckBox modulIsMainCheckBox;
+	private final JCheckBox modulesMainCheckBox;
 	
 	/**
 	 * Update Button.
@@ -59,7 +59,7 @@ extends BasicEditView
 	 * Constructor.
 	 * 
 	 * @param moduleEditModel
-	 * 			is the Modul-Edit Model.
+	 * 			is the ModuleEdit Model.
 	 */
 	public ModuleEditView(final ModuleEditModel moduleEditModel)
 	{
@@ -70,34 +70,34 @@ extends BasicEditView
 		
 		//------------------------------------------------------------------------------------------
 		{
-			this.modulNameTextField = this.addTextField(0, "Modul-Name:");
+			this.moduleameTextField = this.addTextField(0, "ModuleName:");
 			
-			this.moduleEditModel.getModulNameChangedNotifier().addModelPropertyChangedListener
+			this.moduleEditModel.getModuleNameChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						modulNameTextField.setText(OutputUtils.makeStringText(moduleEditModel.getModulName()));
+						moduleameTextField.setText(OutputUtils.makeStringText(moduleEditModel.getModuleName()));
 					}
 			 	}
 			);
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.modulIsMainCheckBox = this.addCheckBox(1, "Is Main:");
+			this.modulesMainCheckBox = this.addCheckBox(1, "Is Main:");
 			
-			this.moduleEditModel.getModulIsMainChangedNotifier().addModelPropertyChangedListener
+			this.moduleEditModel.getModuleIsMainChangedNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 			 	{
 					@Override
 					public void notifyModelPropertyChanged()
 					{
-						boolean modulIsMain = OutputUtils.makeBoolean(moduleEditModel.getModulIsMain());
+						boolean modulesMain = OutputUtils.makeBoolean(moduleEditModel.getModuleIsMain());
 						
-						modulIsMainCheckBox.setSelected(modulIsMain);
+						modulesMainCheckBox.setSelected(modulesMain);
 					}
 			 	}
 			);
@@ -141,20 +141,20 @@ extends BasicEditView
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulNameTextField}.
+	 * 			returns the {@link #moduleameTextField}.
 	 */
-	public JTextField getModulNameTextField()
+	public JTextField getModuleameTextField()
 	{
-		return this.modulNameTextField;
+		return this.moduleameTextField;
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulIsMainCheckBox}.
+	 * 			returns the {@link #modulesMainCheckBox}.
 	 */
-	public JCheckBox getModulIsMainCheckBox()
+	public JCheckBox getModulesMainCheckBox()
 	{
-		return this.modulIsMainCheckBox;
+		return this.modulesMainCheckBox;
 	}
 	
 }

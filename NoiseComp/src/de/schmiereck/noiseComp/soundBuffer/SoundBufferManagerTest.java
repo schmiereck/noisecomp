@@ -39,7 +39,7 @@ public class SoundBufferManagerTest
 //		outputGenerator.setEndTimePos(3.0F);
 //		
 //		//soundSourceLogic.setOutputGenerator(outputGenerator);
-//		soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
+//		soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);
 //		
 //		this.soundBufferManager = soundData.getSoundBufferManager();
 //	}

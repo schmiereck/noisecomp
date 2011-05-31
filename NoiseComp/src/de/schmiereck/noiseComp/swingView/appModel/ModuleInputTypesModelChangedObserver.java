@@ -5,13 +5,13 @@ package de.schmiereck.noiseComp.swingView.appModel;
 
 /**
  * <p>
- * 	Moduls-Model Changed Observer.
+ * 	ModuleInput-Types Model Changed Observer.
  * </p>
  * 
  * @author smk
  * @version <p>12.11.2010:	created, smk</p>
  */
-public class ModulsModelChangedObserver
+public class ModuleInputTypesModelChangedObserver
 {
 	//**********************************************************************************************
 	// Fields:

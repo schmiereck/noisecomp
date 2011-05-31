@@ -114,7 +114,7 @@ public class InputSelectController
 					if (timelineSelectEntryModel != null)
 					{
 						generator = 
-							appController.retrieveGeneratorOfEditedModul(timelineSelectEntryModel.getName());
+							appController.retrieveGeneratorOfEditedModule(timelineSelectEntryModel.getName());
 					}
 					else
 					{

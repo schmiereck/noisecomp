@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputs;
+package de.schmiereck.noiseComp.swingView.moduleInputs;
 
 import java.awt.Dimension;
 
@@ -12,12 +12,12 @@ import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 
 import de.schmiereck.noiseComp.swingView.appView.AppView;
-import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModuleInputTypeEditView;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectView;
+import de.schmiereck.noiseComp.swingView.moduleInputTypeEdit.ModuleInputTypeEditView;
+import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSelectView;
 
 /**
  * <p>
- * 	Modul-Inputs View.
+ * 	ModuleInputs View.
  * </p>
  * 
  * @author smk
@@ -48,7 +48,7 @@ extends JDialog
 		//==========================================================================================
 		this.setVisible(false);
 		
-		this.setTitle("Modul-Inputs");
+		this.setTitle("ModuleInputs");
 //		this.setModal(false);
 		
 		this.setSize(400, 300);
@@ -68,7 +68,7 @@ extends JDialog
 
 	/**
 	 * @param moduleInputTypeSelectView
-	 * 			set the Modul-Input-Type Select View.
+	 * 			set the ModuleInput-Type Select View.
 	 */
 	public void setModuleInputTypeSelectView(ModuleInputTypeSelectView moduleInputTypeSelectView)
 	{
@@ -86,7 +86,7 @@ extends JDialog
 
 	/**
 	 * @param inputTypeSelectView
-	 * 			set the Modul-Input-Type Edit View.
+	 * 			set the ModuleInput-Type Edit View.
 	 */
 	public void setModuleInputTypeEditView(ModuleInputTypeEditView moduleInputTypeEditView)
 	{

@@ -1,14 +1,14 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputTypeSelect;
+package de.schmiereck.noiseComp.swingView.moduleInputTypeSelect;
 
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 /**
  * <p>
- * 	Modul-Input-Type Select Model.
+ * 	ModuleInput-Type Select Model.
  * </p>
  * 
  * @author smk
@@ -57,7 +57,7 @@ public class ModuleInputTypeSelectModel
 
 	/**
 	 * @param moduleInputTypeSelectEntryModel
-	 * 			is the Modul-Input-Type Select-Entry Model.
+	 * 			is the ModuleInput-Type Select-Entry Model.
 	 */
 	public void addInputData(ModuleInputTypeSelectEntryModel moduleInputTypeSelectEntryModel)
 	{
@@ -108,7 +108,7 @@ public class ModuleInputTypeSelectModel
 
 	/**
 	 * @return
-	 * 			the selected Modul-Input-Type Select-Entry Model.
+	 * 			the selected ModuleInput-Type Select-Entry Model.
 	 */
 	public ModuleInputTypeSelectEntryModel getSelectedRow()
 	{

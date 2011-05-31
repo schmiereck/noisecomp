@@ -1,14 +1,14 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputTypeEdit;
+package de.schmiereck.noiseComp.swingView.moduleInputTypeEdit;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 /**
  * <p>
- * 	Modul-Input-Type Edit Model.
+ * 	ModuleInput-Type Edit Model.
  * </p>
  * 
  * @author smk

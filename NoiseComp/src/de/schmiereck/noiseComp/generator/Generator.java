@@ -24,7 +24,7 @@ import de.schmiereck.noiseComp.PopupRuntimeException;
 public abstract class Generator 
 implements GeneratorInterface,
 		   GeneratorChangeListenerInterface,
-		   ModulGeneratorRemoveListenerInterface
+		   ModuleGeneratorRemoveListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
@@ -64,9 +64,9 @@ implements GeneratorInterface,
 	private GeneratorChangeObserver generatorChangeObserver = null;
 	
 	/**
-	 * Modul-Generator Remove Listeners.
+	 * Module-Generator Remove Listeners.
 	 */
-	private final List<ModulGeneratorRemoveListenerInterface> modulGeneratorRemoveListeners = new Vector<ModulGeneratorRemoveListenerInterface>();
+	private final List<ModuleGeneratorRemoveListenerInterface> moduleeneratorRemoveListeners = new Vector<ModuleGeneratorRemoveListenerInterface>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -89,7 +89,7 @@ implements GeneratorInterface,
 		this.name = name;
 		this.soundFrameRate = soundFrameRate.floatValue();
 		this.generatorTypeData = generatorTypeData;
-		//this.parentModulGenerator = parentModulGenerator;
+		//this.parentModuleGenerator = parentModuleGenerator;
 		//==========================================================================================
 	}
 
@@ -189,11 +189,11 @@ implements GeneratorInterface,
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.GeneratorInterface#generateFrameSample(long, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorInterface#generateFrameSample(long, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
-	public SoundSample generateFrameSample(long framePosition, ModulGenerator parentModulGenerator, 
+	public SoundSample generateFrameSample(long framePosition, ModuleGenerator parentModuleGenerator, 
 	                                       GeneratorBufferInterface generatorBuffer, 
-	                                       ModulArguments modulArguments)
+	                                       ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		SoundSample soundSample;
@@ -206,9 +206,9 @@ implements GeneratorInterface,
 			//--------------------------------------------------------------------------------------
 			soundSample = new SoundSample();
 
-			this.calculateSoundSample(framePosition, frameTime, soundSample, parentModulGenerator, 
+			this.calculateSoundSample(framePosition, frameTime, soundSample, parentModuleGenerator, 
 			                          generatorBuffer,
-    	                              modulArguments);
+    	                              moduleArguments);
 
 			//--------------------------------------------------------------------------------------
 		}
@@ -256,8 +256,8 @@ implements GeneratorInterface,
 	 * 			is the absolute time of the frame in milli seconds.
 	 * @param sample
 	 * 			is the sound sample.
-	 * @param modulArguments
-	 * 			are the Arguments of calling Modul.
+	 * @param moduleArguments
+	 * 			are the Arguments of calling Module
 	 * @param generatorBuffer
 	 * 			is the generator buffer.<br/>
 	 * 			<code>null</code> if there is no buffer available.
@@ -265,9 +265,9 @@ implements GeneratorInterface,
 	public abstract void calculateSoundSample(long framePosition, 
 	                                          float frameTime, 
 	                                          SoundSample sample, 
-	                                          ModulGenerator parentModulGenerator, 
+	                                          ModuleGenerator parentModuleGenerator, 
 	                                          GeneratorBufferInterface generatorBuffer,
-	        	                              ModulArguments modulArguments);
+	        	                              ModuleArguments moduleArguments);
 	
 	/**
 	 * @see #inputs
@@ -280,8 +280,8 @@ implements GeneratorInterface,
 	 * 			is the Input-Value.
 	 * @param inputStringValue
 	 * 			is the Input-String-Value.
-	 * @param inputModulInputTypeData
-	 * 			is the Input-Modul-Input-Type Data.
+	 * @param inputModuleInputTypeData
+	 * 			is the Input-Module-Input-Type Data.
 	 * @return 
 	 * 			the new created and added {@link InputData}-Object.
 	 */
@@ -289,13 +289,13 @@ implements GeneratorInterface,
 	                                                InputTypeData inputTypeData, 
 	                                                Float inputValue, 
 	                                                String inputStringValue, 
-	                                                InputTypeData inputModulInputTypeData)
+	                                                InputTypeData inputModuleInputTypeData)
 	{
 		//==========================================================================================
 		InputData inputData = new InputData(this,
 											inputGenerator, 
 											inputTypeData, 
-											inputModulInputTypeData);
+											inputModuleInputTypeData);
 		
 		inputData.setInputValue(inputValue, inputStringValue);
 		
@@ -551,9 +551,9 @@ implements GeneratorInterface,
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.ModulGeneratorRemoveListenerInterface#notifyModulGeneratorRemoved(de.schmiereck.noiseComp.generator.Generator)
+	 * @see de.schmiereck.noiseComp.generator.ModuleGeneratorRemoveListenerInterface#notifyModuleGeneratorRemoved(de.schmiereck.noiseComp.generator.Generator)
 	 */
-	public synchronized void notifyModulGeneratorRemoved(Generator removedGenerator)
+	public synchronized void notifyModuleGeneratorRemoved(Generator removedGenerator)
 	{
 		//==========================================================================================
 		if (removedGenerator != null)
@@ -596,9 +596,9 @@ implements GeneratorInterface,
 	 * 			a scale factor for drawing the samples.
 	 * 			Should be a factor that normalize all samples of the generator between -1.0 and +1.0.
 	 */
-	public float getGeneratorSampleDrawScale(ModulGenerator parentModulGenerator, 
+	public float getGeneratorSampleDrawScale(ModuleGenerator parentModuleGenerator, 
 	                                         GeneratorBufferInterface generatorBuffer,
-	                                         ModulArguments modulArguments)
+	                                         ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		return 1.0F;
@@ -627,16 +627,16 @@ implements GeneratorInterface,
 	 * @param generatorBuffer
 	 * 			is the generator buffer.<br/>
 	 * 			<code>null</code> if there is no buffer available.
-	 * @param modulArguments
-	 * 			are the Arguments of calling Modul.
+	 * @param moduleArguments
+	 * 			are the Arguments of calling Module
 	 */
 	protected void calcInputValue(long framePosition, 
 	                              float frameTime,
 	                              InputData inputData, 
 	                              SoundSample signal, 
-	                              ModulGenerator parentModulGenerator,
+	                              ModuleGenerator parentModuleGenerator,
 	                              GeneratorBufferInterface generatorBuffer,
-	                              ModulArguments modulArguments)
+	                              ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		GeneratorBufferInterface inputGeneratorBuffer;
@@ -658,8 +658,8 @@ implements GeneratorInterface,
 			
 			this.calcInputFrameSample(framePosition, frameTime, 
 			                          signal, 
-			                          parentModulGenerator, 
-			                          modulArguments,
+			                          parentModuleGenerator, 
+			                          moduleArguments,
 			                          inputGeneratorBuffer);
 		}
 		else
@@ -672,9 +672,9 @@ implements GeneratorInterface,
 			if (inputGenerator != null)
 			{
 				SoundSample frameSample = inputGenerator.generateFrameSample(framePosition, 
-				                                                             parentModulGenerator, 
+				                                                             parentModuleGenerator, 
 				                                                             generatorBuffer,
-				                           	                              	 modulArguments);
+				                           	                              	 moduleArguments);
 				
 				signal.setSignals(frameSample);
 			}
@@ -695,14 +695,14 @@ implements GeneratorInterface,
 					//------------------------------------------------------------------------------
 					// Found no input value:
 	
-					InputTypeData modulInputTypeData = inputData.getInputModulInputTypeData();
+					InputTypeData moduleInputTypeData = inputData.getInputModuleInputTypeData();
 	
-					// Found a modul input type ?
-					if (modulInputTypeData != null)
+					// Found a module input type ?
+					if (moduleInputTypeData != null)
 					{
-						this.calcModulInputValue(framePosition, frameTime, signal, 
-						                         parentModulGenerator,
-						                         modulArguments, modulInputTypeData);
+						this.calcModuleInputValue(framePosition, frameTime, signal, 
+						                         parentModuleGenerator,
+						                         moduleArguments, moduleInputTypeData);
 					}
 					else
 					{
@@ -726,22 +726,22 @@ implements GeneratorInterface,
 	 * 			is the absolute time of the frame in milli seconds.
 	 * @param signal
 	 * 			is the sound sample.
-	 * @param modulArguments
-	 * 			are the Arguments of calling Modul.
+	 * @param moduleArguments
+	 * 			are the Arguments of calling Module
 	 * @param inputGeneratorBuffer
 	 * 			is the generator buffer of the input.<br/>
 	 * 			<code>null</code> if there is no buffer available.
 	 */
 	private void calcInputFrameSample(long framePosition, float frameTime, SoundSample signal,
-	                                  ModulGenerator parentModulGenerator, ModulArguments modulArguments,
+	                                  ModuleGenerator parentModuleGenerator, ModuleArguments moduleArguments,
 	                                  GeneratorBufferInterface inputGeneratorBuffer)
 	{
 		//==========================================================================================
 		SoundSample inputSoundSample = 
 			inputGeneratorBuffer.calcFrameSample(framePosition, 
 			                                     frameTime,
-			                                     parentModulGenerator,
-			                                     modulArguments);
+			                                     parentModuleGenerator,
+			                                     moduleArguments);
 		
 		if (inputSoundSample != null)
 		{
@@ -763,28 +763,28 @@ implements GeneratorInterface,
 	 * 			is the absolute time of the frame in milli seconds.
 	 * @param signal
 	 * 			is the sound sample.
-	 * @param modulArguments
-	 * 			are the Arguments of calling Modul.
+	 * @param moduleArguments
+	 * 			are the Arguments of calling Module
 	 */
-	private void calcModulInputValue(long framePosition, float frameTime, SoundSample signal,
-	                                 ModulGenerator parentModulGenerator, ModulArguments modulArguments,
-	                                 InputTypeData modulInputTypeData)
+	private void calcModuleInputValue(long framePosition, float frameTime, SoundSample signal,
+	                                 ModuleGenerator parentModuleGenerator, ModuleArguments moduleArguments,
+	                                 InputTypeData moduleInputTypeData)
 	{
 		//==========================================================================================
-		boolean foundModulInput;
+		boolean foundModuleInput;
 		
-		if (modulArguments != null)
+		if (moduleArguments != null)
 		{
-			GeneratorBufferInterface callingModulGeneratorBuffer = modulArguments.getCallingModulGeneratorBuffer();
+			GeneratorBufferInterface callingModuleGeneratorBuffer = moduleArguments.getCallingModuleGeneratorBuffer();
 			
-			Generator callingGenerator = callingModulGeneratorBuffer.getGenerator();
+			Generator callingGenerator = callingModuleGeneratorBuffer.getGenerator();
 			
-			ModulArguments prevModulArguments = modulArguments.getPrevModulArguments();
+			ModuleArguments prevModuleArguments = moduleArguments.getPrevModuleArguments();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			// Check if the calling Module have a input for this modulInputType.
+			// Check if the calling Module have a input for this moduleInputType.
 			
-			foundModulInput = false;
+			foundModuleInput = false;
 			
 			Iterator<InputData> callingInputsIterator = callingGenerator.getInputsIterator();
 			
@@ -792,16 +792,16 @@ implements GeneratorInterface,
 			{
 				while (callingInputsIterator.hasNext())
 				{
-					InputData modulInputData = callingInputsIterator.next();
+					InputData moduleInputData = callingInputsIterator.next();
 					
-					if (modulInputData.getInputTypeData().getInputType() == modulInputTypeData.getInputType())
+					if (moduleInputData.getInputTypeData().getInputType() == moduleInputTypeData.getInputType())
 					{
 						float callStartTimePos = callingGenerator.getStartTimePos();
 						
 						float callFrameTime = callStartTimePos + frameTime;
 						long callFramePosition = (long)(callFrameTime * callingGenerator.soundFrameRate);
 						
-//						Generator inputGenerator = modulInputData.getInputGenerator();
+//						Generator inputGenerator = moduleInputData.getInputGenerator();
 //						
 //						float inputStartTimePos = inputGenerator.getStartTimePos();
 //						
@@ -809,28 +809,28 @@ implements GeneratorInterface,
 //						long inputFramePosition = (long)(inputFrameTime * inputGenerator.soundFrameRate);
 						
 						callingGenerator.calcInputValue(callFramePosition, callFrameTime, //inputFramePosition, inputFrameTime, //framePosition, frameTime, 
-						                                modulInputData, 
+						                                moduleInputData, 
 						                                signal, 
-						                                parentModulGenerator, 
-						                                callingModulGeneratorBuffer, 
-						                                prevModulArguments);
+						                                parentModuleGenerator, 
+						                                callingModuleGeneratorBuffer, 
+						                                prevModuleArguments);
 						
-						foundModulInput = true;
+						foundModuleInput = true;
 					}
 				}
 			}
 		}
 		else
 		{
-			foundModulInput = false;
+			foundModuleInput = false;
 		}
 		
 		//------------------------------------------------------------------------------------------
 		// If not?
-		if (foundModulInput == false)
+		if (foundModuleInput == false)
 		{
 			// use the default value.
-			signal.setMonoValue(modulInputTypeData.getDefaultValue());
+			signal.setMonoValue(moduleInputTypeData.getDefaultValue());
 		}
 		//==========================================================================================
 	}
@@ -847,8 +847,8 @@ implements GeneratorInterface,
 	 * @param generatorBuffer
 	 * 			is the generator buffer.<br/>
 	 * 			<code>null</code> if there is no buffer available.
-	 * @param modulArguments
-	 * 			are the Arguments of calling Modul.
+	 * @param moduleArguments
+	 * 			are the Arguments of calling Module
 	 * @return
 	 * 			the default value.<br/>
 	 * 			{@link Float#NaN} if no default input defined.
@@ -856,9 +856,9 @@ implements GeneratorInterface,
 	protected float calcInputMonoValue(long framePosition, 
 	                                   float frameTime,
 	                                   InputTypeData inputTypeData, 
-	                                   ModulGenerator parentModulGenerator,
+	                                   ModuleGenerator parentModuleGenerator,
 	                                   GeneratorBufferInterface generatorBuffer,
-	                                   ModulArguments modulArguments)
+	                                   ModuleArguments moduleArguments)
 //	throws NoInputSignalException
 	{
 		//==========================================================================================
@@ -871,9 +871,9 @@ implements GeneratorInterface,
 			value = this.calcInputMonoValue(framePosition, 
 			                                frameTime,
 			                                inputData, 
-			                                parentModulGenerator,
+			                                parentModuleGenerator,
 			                                generatorBuffer,
-			                                modulArguments);
+			                                moduleArguments);
 		}
 		else
 		{
@@ -890,8 +890,8 @@ implements GeneratorInterface,
 	 * 			is the frame position.
 	 * @param inputData
 	 * 			is the input data.
-	 * @param parentModulGenerator
-	 * 			is the parent modul generator.
+	 * @param parentModuleGenerator
+	 * 			is the parent module generator.
 	 * @param generatorBuffer
 	 * 			is the generator buffer.<br/>
 	 * 			<code>null</code> if there is no buffer available.
@@ -902,9 +902,9 @@ implements GeneratorInterface,
 	protected float calcInputMonoValue(long framePosition, 
 	                                   float frameTime,
 	                                   InputData inputData, 
-									   ModulGenerator parentModulGenerator,
+									   ModuleGenerator parentModuleGenerator,
 									   GeneratorBufferInterface generatorBuffer,
-									   ModulArguments modulArguments)
+									   ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		float value;
@@ -916,9 +916,9 @@ implements GeneratorInterface,
 		                    frameTime, 
 		                    inputData, 
 		                    signal, 
-		                    parentModulGenerator, 
+		                    parentModuleGenerator, 
 		                    generatorBuffer, 
-		                    modulArguments);
+		                    moduleArguments);
 		
 		value = signal.getMonoValue();
 		
@@ -935,7 +935,7 @@ implements GeneratorInterface,
 	 * 			the String-Value of the given input.
 	 */
 	protected String calcInputStringValue(long framePosition, InputTypeData inputTypeData,
-										  ModulGenerator parentModulGenerator)
+										  ModuleGenerator parentModuleGenerator)
 	{
 		//==========================================================================================
 		String value;
@@ -951,7 +951,7 @@ implements GeneratorInterface,
 			{	
 				// Use his input:
 				
-				//value = inputSoundGenerator.calcInputStringValue(framePosition, parentModulGenerator);
+				//value = inputSoundGenerator.calcInputStringValue(framePosition, parentModuleGenerator);
 				value = null;
 			}
 			else
@@ -1082,23 +1082,23 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	}
 
 	/**
-	 * @param modulGeneratorRemoveListener 
-	 * 			to add to {@link #modulGeneratorRemoveListeners}.
+	 * @param moduleeneratorRemoveListener 
+	 * 			to add to {@link #moduleeneratorRemoveListeners}.
 	 */
-	public void addModulGeneratorRemoveListener(ModulGeneratorRemoveListenerInterface modulGeneratorRemoveListener)
+	public void addModuleGeneratorRemoveListener(ModuleGeneratorRemoveListenerInterface moduleeneratorRemoveListener)
 	{
-		this.modulGeneratorRemoveListeners.add(modulGeneratorRemoveListener);
+		this.moduleeneratorRemoveListeners.add(moduleeneratorRemoveListener);
 	}
 
 	/**
 	 * @param removedGenerator 
-	 * 			to notify the {@link #modulGeneratorRemoveListeners}.
+	 * 			to notify the {@link #moduleeneratorRemoveListeners}.
 	 */
-	public void notifyModulGeneratorRemoveListeners(Generator removedGenerator)
+	public void notifyModuleGeneratorRemoveListeners(Generator removedGenerator)
 	{
-		for (ModulGeneratorRemoveListenerInterface modulGeneratorRemoveListener : this.modulGeneratorRemoveListeners)
+		for (ModuleGeneratorRemoveListenerInterface moduleeneratorRemoveListener : this.moduleeneratorRemoveListeners)
 		{
-			modulGeneratorRemoveListener.notifyModulGeneratorRemoved(removedGenerator);
+			moduleeneratorRemoveListener.notifyModuleGeneratorRemoved(removedGenerator);
 		}
 	}
 

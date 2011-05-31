@@ -3,13 +3,13 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 
 /**
  * <p>
- * 	Modul-Edit Model.
+ * 	ModuleEdit Model.
  * </p>
  * 
  * @author smk
@@ -27,26 +27,26 @@ public class ModuleEditModel
 
 	//----------------------------------------------------------------------------------------------
 	/**
-	 * Modul Name.
+	 * Module Name.
 	 */
-	private String modulName = null;
+	private String moduleName = null;
 
 	/**
-	 * {@link #modulName} changed listeners.
+	 * {@link #moduleName} changed listeners.
 	 */
-	private final ModelPropertyChangedNotifier modulNameChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier moduleNameChangedNotifier = new ModelPropertyChangedNotifier();
 
 	//----------------------------------------------------------------------------------------------
 	
 	/**
-	 * Modul Is-Main.
+	 * Module Is-Main.
 	 */
-	private Boolean modulIsMain = null;
+	private Boolean moduleIsMain = null;
 
 	/**
-	 * {@link #modulIsMain} changed listeners.
+	 * {@link #moduleIsMain} changed listeners.
 	 */
-	private final ModelPropertyChangedNotifier modulIsMainChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier moduleIsMainChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//----------------------------------------------------------------------------------------------
 	/**
@@ -87,25 +87,25 @@ public class ModuleEditModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulName}.
+	 * 			returns the {@link #moduleName}.
 	 */
-	public String getModulName()
+	public String getModuleName()
 	{
-		return this.modulName;
+		return this.moduleName;
 	}
 
 	/**
-	 * @param modulName 
-	 * 			to set {@link #modulName}.
+	 * @param moduleName 
+	 * 			to set {@link #moduleName}.
 	 */
-	public void setModulName(String modulName)
+	public void setModuleName(String moduleame)
 	{
-		if (CompareUtils.compareWithNull(this.modulName, modulName) == false)
+		if (CompareUtils.compareWithNull(this.moduleName, moduleame) == false)
 		{
-			this.modulName = modulName;
+			this.moduleName = moduleame;
 			
 			// Notify listeners.
-			this.modulNameChangedNotifier.notifyModelPropertyChangedListeners();
+			this.moduleNameChangedNotifier.notifyModelPropertyChangedListeners();
 			
 			this.moduleEditModelChangedNotifier.notifyModelPropertyChangedListeners();
 		}
@@ -113,11 +113,11 @@ public class ModuleEditModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulNameChangedNotifier}.
+	 * 			returns the {@link #moduleNameChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getModulNameChangedNotifier()
+	public ModelPropertyChangedNotifier getModuleNameChangedNotifier()
 	{
-		return this.modulNameChangedNotifier;
+		return this.moduleNameChangedNotifier;
 	}
 
 	/**
@@ -131,34 +131,34 @@ public class ModuleEditModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulIsMain}.
+	 * 			returns the {@link #moduleIsMain}.
 	 */
-	public Boolean getModulIsMain()
+	public Boolean getModuleIsMain()
 	{
-		return this.modulIsMain;
+		return this.moduleIsMain;
 	}
 
 	/**
-	 * @param modulIsMain 
-	 * 			to set {@link #modulIsMain}.
+	 * @param moduleIsMain 
+	 * 			to set {@link #moduleIsMain}.
 	 */
-	public void setModulIsMain(Boolean modulIsMain)
+	public void setModuleIsMain(Boolean modulesMain)
 	{
-		this.modulIsMain = modulIsMain;
+		this.moduleIsMain = modulesMain;
 		
 		// Notify listeners.
-		this.modulIsMainChangedNotifier.notifyModelPropertyChangedListeners();
+		this.moduleIsMainChangedNotifier.notifyModelPropertyChangedListeners();
 		
 		this.moduleEditModelChangedNotifier.notifyModelPropertyChangedListeners();
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulIsMainChangedNotifier}.
+	 * 			returns the {@link #moduleIsMainChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getModulIsMainChangedNotifier()
+	public ModelPropertyChangedNotifier getModuleIsMainChangedNotifier()
 	{
-		return this.modulIsMainChangedNotifier;
+		return this.moduleIsMainChangedNotifier;
 	}
 
 	/**

@@ -5,13 +5,13 @@ package de.schmiereck.noiseComp.swingView.appModel;
 
 import javax.swing.tree.TreePath;
 
-import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeModel;
+import de.schmiereck.noiseComp.swingView.modulesTree.ModulesTreeModel;
 
 
 
 /**
  * <p>
- * 	{@link AppModel#getEditedModulGeneratorTypeData()} Changed Listener.
+ * 	{@link AppModel#getEditedModuleGeneratorTypeData()} Changed Listener.
  * </p>
  * 
  * @author smk
@@ -21,13 +21,13 @@ public interface EditModuleChangedListener
 {
 
 	/**
-	 * Edit Modul performed.
+	 * Edit Module performed.
 	 * 
 	 * @param modulesTreeModel
 	 * 			is the Modules Tree Model.
 	 * @param selectionTreePath
 	 * 			is the selection Tree-Path.
 	 */
-	public void notifyEditModulChanged(ModulesTreeModel modulesTreeModel,
-	                                   TreePath selectionTreePath);
+	public void notifyEditModuleChanged(ModulesTreeModel modulesTreeModel,
+	                                    TreePath selectionTreePath);
 }

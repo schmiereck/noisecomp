@@ -311,7 +311,7 @@ public class InputPosEntriesModel
 //							                                       inputTypeData, 
 //							                                       floatValue, 
 //							                                       stringValue, 
-//							                                       modulInputTypeData);
+//							                                       moduleInputTypeData);
 //						
 //						input2EntryModel.setInputData(inputData);
 //						break;

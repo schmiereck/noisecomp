@@ -407,11 +407,11 @@ implements TimelineContentChangedListenerInterface,
 //			
 //			String selectedTimelineGeneratorName = selectedTimelineSelectEntryModel.getName();
 //			
-//			ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
+//			ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.modulesTreeModel.getEditedModuleGeneratorTypeData();
 //			
 //			retSelectedTimeline = null;
 //			
-//			Iterator<Generator> generatorsIterator = editedModulGeneratorTypeData.getGeneratorsIterator();
+//			Iterator<Generator> generatorsIterator = editedModuleGeneratorTypeData.getGeneratorsIterator();
 //			
 //			while (generatorsIterator.hasNext())
 //			{
@@ -458,11 +458,11 @@ implements TimelineContentChangedListenerInterface,
 		int firstTimelinePos = timelineSelectEntriesModel.getTimelineSelectEntryPos(firstTimelineSelectEntryModel);
 		int secondTimelinePos = timelineSelectEntriesModel.getTimelineSelectEntryPos(secondTimelineSelectEntryModel);
 		//------------------------------------------------------------------------------------------
-		// Update edited Modul Data:
+		// Update edited Module Data:
 		
 //		TimelineSelectEntryModel selectedTimelineSelectEntryModel = this.timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 		
-//		ModulGeneratorTypeData editedModulGeneratorTypeData = this.modulesTreeModel.getEditedModulGeneratorTypeData();
+//		ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.modulesTreeModel.getEditedModuleGeneratorTypeData();
 		
 //		Generator firstGenerator = selectedTimelineGeneratorModel.getGenerator();
 //		Generator secondGenerator = newTimelineGeneratorModel.getGenerator();
@@ -470,7 +470,7 @@ implements TimelineContentChangedListenerInterface,
 		timelineManagerLogic.switchTracksByPos(firstTimelinePos,
                                                secondTimelinePos);
 		
-//		editedModulGeneratorTypeData.switchTracksByPos(firstTimelinePos,
+//		editedModuleGeneratorTypeData.switchTracksByPos(firstTimelinePos,
 //		                                               secondTimelinePos);
 		
 		//------------------------------------------------------------------------------------------

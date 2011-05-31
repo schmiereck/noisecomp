@@ -1,13 +1,13 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputTypeSelect;
+package de.schmiereck.noiseComp.swingView.moduleInputTypeSelect;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
 
 /**
  * <p>
- * 	Modul-Input-Type Select-Entry Model.
+ * 	ModuleInput-Type Select-Entry Model.
  * </p>
  * 
  * @author smk

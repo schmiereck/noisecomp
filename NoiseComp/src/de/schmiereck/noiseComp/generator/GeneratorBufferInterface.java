@@ -21,29 +21,29 @@ public interface GeneratorBufferInterface
 //	 * 			is the frame position.
 //	 * @param inputData
 //	 * 			is the input data.
-//	 * @param parentModulGenerator
-//	 * 			is the parent modul generator.
+//	 * @param parentModuleGenerator
+//	 * 			is the parent module generator.
 //	 * @return
 //	 * 			the bufInputSoundSample.<br/>
 //	 * 			<code>null</code> if there is no input generator available (constant value, etc.).
 //	 */
-//	SoundSample calcFrameSample(long framePosition, InputData inputData, ModulGenerator parentModulGenerator);
+//	SoundSample calcFrameSample(long framePosition, InputData inputData, ModuleGenerator parentModuleGenerator);
 	
 	/**
 	 * @param framePosition
 	 * 			is the frame position.
 	 * @param frameTime
 	 * 			is the absolute time of the frame in milli seconds.
-	 * @param parentModulGenerator
-	 * 			is the parent modul generator.
+	 * @param parentModuleGenerator
+	 * 			is the parent module generator.
 	 * @return
 	 * 			the bufSoundSample.<br/>
 	 * 			<code>null</code> if time is out of generator time.
 	 */
 	SoundSample calcFrameSample(long framePosition, 
 	                            float frameTime,
-	                            ModulGenerator parentModulGenerator,
-	                            ModulArguments modulArguments);
+	                            ModuleGenerator parentModuleGenerator,
+	                            ModuleArguments moduleArguments);
 
 	/**
 	 * @param inputData

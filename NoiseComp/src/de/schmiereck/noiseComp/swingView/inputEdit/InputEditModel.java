@@ -83,22 +83,22 @@ public class InputEditModel
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	/**
-	 * Modul-Input Generator.
+	 * ModuleInput Generator.
 	 */
-	private InputTypeData modulInputTypeData = null;
+	private InputTypeData moduleInputTypeData = null;
 
 	/**
-	 * {@link #modulInputTypeData} changed listeners.
+	 * {@link #moduleInputTypeData} changed listeners.
 	 */
-	private final ModelPropertyChangedNotifier modulInputTypeDataChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier moduleInputTypeDataChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	private List<ModulInputTypeSelectItem> modulInputTypeSelectItems = new Vector<ModulInputTypeSelectItem>();
+	private List<ModuleInputTypeSelectItem> moduleInputTypeSelectItems = new Vector<ModuleInputTypeSelectItem>();
 
 	/**
-	 * {@link #modulInputTypeSelectItems} changed listeners.
+	 * {@link #moduleInputTypeSelectItems} changed listeners.
 	 */
-	private final ModelPropertyChangedNotifier modulInputTypeSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
+	private final ModelPropertyChangedNotifier moduleInputTypeSelectItemsChangedNotifier = new ModelPropertyChangedNotifier();
 
 	//----------------------------------------------------------------------------------------------
 	/**
@@ -302,72 +302,72 @@ public class InputEditModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputTypeSelectItems}.
+	 * 			returns the {@link #moduleInputTypeSelectItems}.
 	 */
-	public List<ModulInputTypeSelectItem> getModulInputTypeSelectItems()
+	public List<ModuleInputTypeSelectItem> getModuleInputTypeSelectItems()
 	{
-		return this.modulInputTypeSelectItems;
+		return this.moduleInputTypeSelectItems;
 	}
 
 	/**
-	 * @param modulInputTypeSelectItems 
-	 * 			to set {@link #modulInputTypeSelectItems}.
+	 * @param moduleInputTypeSelectItems 
+	 * 			to set {@link #moduleInputTypeSelectItems}.
 	 */
-	public void setModulInputTypeSelectItems(List<ModulInputTypeSelectItem> modulInputTypeSelectItems)
+	public void setModuleInputTypeSelectItems(List<ModuleInputTypeSelectItem> moduleInputTypeSelectItems)
 	{
 		//==========================================================================================
-		this.modulInputTypeSelectItems = modulInputTypeSelectItems;
+		this.moduleInputTypeSelectItems = moduleInputTypeSelectItems;
 		
 		// Notify Listeners.
-		this.modulInputTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
+		this.moduleInputTypeSelectItemsChangedNotifier.notifyModelPropertyChangedListeners();
 		
 		//==========================================================================================
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputTypeSelectItemsChangedNotifier}.
+	 * 			returns the {@link #moduleInputTypeSelectItemsChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getModulInputTypeSelectItemsChangedNotifier()
+	public ModelPropertyChangedNotifier getModuleInputTypeSelectItemsChangedNotifier()
 	{
-		return this.modulInputTypeSelectItemsChangedNotifier;
+		return this.moduleInputTypeSelectItemsChangedNotifier;
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputTypeData}.
+	 * 			returns the {@link #moduleInputTypeData}.
 	 */
-	public InputTypeData getModulInputTypeData()
+	public InputTypeData getModuleInputTypeData()
 	{
-		return this.modulInputTypeData;
+		return this.moduleInputTypeData;
 	}
 
 	/**
-	 * @param modulInputTypeData 
-	 * 			to set {@link #modulInputTypeData}.
+	 * @param moduleInputTypeData 
+	 * 			to set {@link #moduleInputTypeData}.
 	 */
-	public void setModulInputTypeData(InputTypeData modulInputTypeData)
+	public void setModuleInputTypeData(InputTypeData moduleInputTypeData)
 	{
 		//==========================================================================================
 		// Check is not possible, because the selection list changed, but the selected item
 		// is sometimes the same.
-		//if (this.modulInputTypeData != modulInputTypeData)
+		//if (this.moduleInputTypeData != moduleInputTypeData)
 		{
-			this.modulInputTypeData = modulInputTypeData;
+			this.moduleInputTypeData = moduleInputTypeData;
 			
 			// Notify Listeners.
-			this.modulInputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
+			this.moduleInputTypeDataChangedNotifier.notifyModelPropertyChangedListeners();
 		}
 		//==========================================================================================
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulInputTypeDataChangedNotifier}.
+	 * 			returns the {@link #moduleInputTypeDataChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getModulInputTypeDataChangedNotifier()
+	public ModelPropertyChangedNotifier getModuleInputTypeDataChangedNotifier()
 	{
-		return this.modulInputTypeDataChangedNotifier;
+		return this.moduleInputTypeDataChangedNotifier;
 	}
 
 	/**

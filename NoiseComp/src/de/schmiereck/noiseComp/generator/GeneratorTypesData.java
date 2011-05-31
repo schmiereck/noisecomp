@@ -28,7 +28,7 @@ public class GeneratorTypesData
 	/**
 	 * List of the available {@link GeneratorTypeData}-Objects with the Class-Name-String 
 	 * {@link GeneratorTypeData#generatorTypeClassName} as keys.<br/>
-	 * If the GeneratorType is a generic type like {@link ModulGenerator},
+	 * If the GeneratorType is a generic type like {@link ModuleGenerator},
 	 * the name of the generic type is appendet after a &quot;#&quot; on the class name.<br/>
 	 * If the generator type is in a folder the key starts with a <code>"/"</code>,
 	 * in older versions there is no slash if generator is in the root.

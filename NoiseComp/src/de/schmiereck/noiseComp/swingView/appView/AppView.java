@@ -32,7 +32,7 @@ import de.schmiereck.noiseComp.swingView.appModel.AppModel;
 import de.schmiereck.noiseComp.swingView.inputEdit.InputEditView;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectView;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditView;
-import de.schmiereck.noiseComp.swingView.modulsTree.ModulesTreeView;
+import de.schmiereck.noiseComp.swingView.modulesTree.ModulesTreeView;
 import de.schmiereck.noiseComp.swingView.timelineEdit.TimelineEditView;
 
 /**
@@ -130,12 +130,12 @@ extends JFrame
 	private final JSplitPane inputSplitPane;
 	
 	/**
-	 * Modul-Timeline Split-Pane.
+	 * ModuleTimeline Split-Pane.
 	 */
-	private final JSplitPane modulSplitPane;
+	private final JSplitPane moduleplitPane;
 	
 	/**
-	 * Modul-Edit Split-Pane.
+	 * ModuleEdit Split-Pane.
 	 */
 	private final JSplitPane modulEditSplitPane;
 	
@@ -172,7 +172,7 @@ extends JFrame
 	 * 
 	 * <pre>
 	 * .-AppView-----------------------------------------------------------------------------.
-	 * | .-modulSplitPane------------------------------------------------------------------. |
+	 * | .-moduleplitPane------------------------------------------------------------------. |
 	 * | | .-modulesTreeScrollPane-. .-modulEditSplitPane--------------------------------. | |
 	 * | | |.-modulesTreeView---------.| | .-modulEditPane---------------------------------. | | | 
 	 * | | ||                     || | |                                               | | | |
@@ -259,7 +259,7 @@ extends JFrame
 			toolBarPanel.add(scaleToolBar, BorderLayout.PAGE_START);
 		}
 		//------------------------------------------------------------------------------------------
-		// Modul Select Panel:
+		// Module Select Panel:
 		
 		this.modulesTreeScrollPane = new JScrollPane();
 		
@@ -291,7 +291,7 @@ extends JFrame
 		this.timelineSplitPane.setResizeWeight(1.0D);
 		
 		//------------------------------------------------------------------------------------------
-		// Modul-Edit Split-Pane:
+		// ModuleEdit Split-Pane:
 		
 		this.modulEditSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		this.modulEditSplitPane.setOneTouchExpandable(true);
@@ -300,17 +300,17 @@ extends JFrame
 		this.modulEditSplitPane.setBottomComponent(this.timelineSplitPane);
 		
 		//------------------------------------------------------------------------------------------
-		// Modul Split-Pane:
+		// Module Split-Pane:
 		
-		this.modulSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		this.moduleplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		
-		this.modulSplitPane.setOneTouchExpandable(true);
-		this.modulSplitPane.setDividerLocation(150);
+		this.moduleplitPane.setOneTouchExpandable(true);
+		this.moduleplitPane.setDividerLocation(150);
 		
-		this.add(this.modulSplitPane);
+		this.add(this.moduleplitPane);
 
-		this.modulSplitPane.setLeftComponent(this.modulesTreeScrollPane);
-		this.modulSplitPane.setRightComponent(this.modulEditSplitPane);
+		this.moduleplitPane.setLeftComponent(this.modulesTreeScrollPane);
+		this.moduleplitPane.setRightComponent(this.modulEditSplitPane);
 
 		//==========================================================================================
 	}
@@ -364,7 +364,7 @@ extends JFrame
 //		
 //		JButton button = this.makeNavigationButton("playIcon", 
 //		                          //"PLAY_CMD",
-//		                          "Play edited modul.",
+//		                          "Play edited module",
 //		                          "Play");
 //	
 //		toolBar.add(button);
@@ -409,7 +409,7 @@ extends JFrame
 			this.playButton = 
 				this.makeNavigationButton("playIcon", 
 				                          //"PLAY_CMD",
-				                          "Play edited modul.",
+				                          "Play edited module",
 				                          "Play");
 			
 		    toolBar.add(this.playButton);
@@ -420,7 +420,7 @@ extends JFrame
 			this.pauseButton = 
 				this.makeNavigationButton("pauseIcon", 
 				                          //"PAUSE_CMD",
-				                          "Pause edited modul.",
+				                          "Pause edited module",
 				                          "Pause");
 			
 		    toolBar.add(this.pauseButton);
@@ -431,7 +431,7 @@ extends JFrame
 			this.stopButton = 
 				this.makeNavigationButton("stopIcon", 
 				                          //"STOP_CMD",
-				                          "Stop edited modul.",
+				                          "Stop edited module",
 				                          "Stop");
 			
 		    toolBar.add(this.stopButton);

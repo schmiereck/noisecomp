@@ -5,13 +5,13 @@ package de.schmiereck.noiseComp.generator;
 
 /**
  * <p>
- * 	Modul-Generator Remove Listener Interface.
+ * 	Module-Generator Remove Listener Interface.
  * </p>
  * 
  * @author smk
  * @version <p>12.10.2010:	created, smk</p>
  */
-public interface ModulGeneratorRemoveListenerInterface
+public interface ModuleGeneratorRemoveListenerInterface
 {
 
 	/**
@@ -21,5 +21,5 @@ public interface ModulGeneratorRemoveListenerInterface
 	 * @param removedGenerator
 	 * 			is the generator.
 	 */
-	void notifyModulGeneratorRemoved(Generator removedGenerator);
+	void notifyModuleGeneratorRemoved(Generator removedGenerator);
 }

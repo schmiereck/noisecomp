@@ -56,7 +56,7 @@ public class RenameFolderController
 		                                            this.renameFolderModel);
 		
 		//------------------------------------------------------------------------------------------
-		// Modul-Input-Type Edit Update-Button: Update Modul-Input-Type Data and Modul-Input-Type Edit-Model:
+		// ModuleInput-Type Edit Update-Button: Update ModuleInput-Type Data and ModuleInput-Type Edit-Model:
 		// TODO Move to controller.
 		this.renameFolderView.getUpdateButton().addActionListener
 		(

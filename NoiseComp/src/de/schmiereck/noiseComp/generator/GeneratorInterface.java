@@ -18,20 +18,20 @@ public interface GeneratorInterface
 	 * 
 	 * @param framePosition
 	 * 			ist the position of the sample frame.
-	 * @param parentModulGenerator
-	 * 			is the TODO parentModulGenerator.
+	 * @param parentModuleGenerator
+	 * 			is the TODO parentModuleGenerator.
 	 * @param generatorBuffer
 	 * 			is the generator buffer.<br/>
 	 * 			<code>null</code> if there is no buffer available.
-	 * @param modulArguments
-	 * 			are the Arguments of calling Modul.
+	 * @param moduleArguments
+	 * 			are the Arguments of calling Module
 	 * @return
 	 * 			the sound sample.
 	 */
 	SoundSample generateFrameSample(long framePosition, 
-	                                ModulGenerator parentModulGenerator, 
+	                                ModuleGenerator parentModuleGenerator, 
 	                                GeneratorBufferInterface generatorBuffer,
-	                                ModulArguments modulArguments);
+	                                ModuleArguments moduleArguments);
 
 	/**
 	 * @return

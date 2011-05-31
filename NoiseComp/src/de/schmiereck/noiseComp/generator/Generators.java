@@ -114,14 +114,14 @@ public class Generators
 	/**
 	 * Add a new Input to the generator 'generator'.
 	public InputData addInput(Generator generator, Generator inputGenerator, 
-			InputTypeData inputTypeData, Float inputValue, InputTypeData inputModulInputTypeData)
+			InputTypeData inputTypeData, Float inputValue, InputTypeData inputModuleInputTypeData)
 	{
 		InputData inputData;
 		
 		//Generator inputGenerator = this.searchGenerator(inputGeneratorName);
 		
 		inputData = generator.addInputGenerator(inputGenerator, inputTypeData, 
-				inputValue, inputModulInputTypeData);
+				inputValue, inputModuleInputTypeData);
 		
 		return inputData;
 	}

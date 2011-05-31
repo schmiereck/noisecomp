@@ -16,9 +16,9 @@ import de.schmiereck.dataTools.VectorHash;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorBufferInterface;
 import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.ModulArguments;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
-import de.schmiereck.noiseComp.generator.ModulGeneratorRemoveListenerInterface;
+import de.schmiereck.noiseComp.generator.ModuleArguments;
+import de.schmiereck.noiseComp.generator.ModuleGenerator;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorRemoveListenerInterface;
 import de.schmiereck.noiseComp.generator.SoundSample;
 
 /**
@@ -37,16 +37,16 @@ import de.schmiereck.noiseComp.generator.SoundSample;
  */
 public class Timeline
 implements GeneratorBufferInterface, 
-		   ModulGeneratorRemoveListenerInterface
+		   ModuleGeneratorRemoveListenerInterface
 {
 	//**********************************************************************************************
 	// Fields:
 	
 	/**
-	 * Modul Timeline.<br/>
+	 * Module Timeline.<br/>
 	 * <code>null</code> if there is no 'parent' module.
 	 */
-	final private Timeline modulTimeline;
+	final private Timeline moduleTimeline;
 	
 	/**
 	 * Generator.
@@ -105,7 +105,7 @@ implements GeneratorBufferInterface,
 	private Map<InputData, Timeline> outputTimelines = new HashMap<InputData, Timeline>();
 	
 	/**
-	 * Sub-Modul Generator Timelines.
+	 * Sub-Module Generator Timelines.
 	 */
 	private Map<Generator, Timeline> subGeneratorTimelines = new HashMap<Generator, Timeline>();
 	
@@ -120,11 +120,11 @@ implements GeneratorBufferInterface,
 	/**
 	 * Constructor.
 	 * 
-	 * @param modulTimeline
+	 * @param moduleTimeline
 	 */
-	public Timeline(Timeline modulTimeline)
+	public Timeline(Timeline moduleimeline)
 	{
-		this.modulTimeline = modulTimeline;
+		this.moduleTimeline = moduleimeline;
 	}
 
 	/**
@@ -166,7 +166,7 @@ implements GeneratorBufferInterface,
 //		);
 		
 		//------------------------------------------------------------------------------------------
-		this.generator.addModulGeneratorRemoveListener(this);
+		this.generator.addModuleGeneratorRemoveListener(this);
 		
 		//==========================================================================================
 	}
@@ -381,7 +381,7 @@ implements GeneratorBufferInterface,
 	 * Liefert <code>null</code>, wenn der Generator für den Zeitpunkt keinen Wert 
 	 * generieren kann (Frame-Position nicht zwischen Start und Ende).
 	 * 
-	 * @see Generator#generateFrameSample(long, ModulGenerator, GeneratorBufferInterface)
+	 * @see Generator#generateFrameSample(long, ModuleGenerator, GeneratorBufferInterface)
 	 * 
 	 * @param framePosition
 	 * 			ist the position of the sample frame.
@@ -390,8 +390,8 @@ implements GeneratorBufferInterface,
 	 */
 	public synchronized 
 	SoundSample generateFrameSample(long framePosition, 
-	                                ModulGenerator parentModulGenerator,
-	                                ModulArguments modulArguments)
+	                                ModuleGenerator parentModuleGenerator,
+	                                ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		SoundSample retSoundSample;
@@ -405,9 +405,9 @@ implements GeneratorBufferInterface,
 			if (retSoundSample == null)
 			{
 				retSoundSample = this.generator.generateFrameSample(framePosition,
-				                                                    parentModulGenerator, 
+				                                                    parentModuleGenerator, 
 				                                                    this,
-				                                                    modulArguments);
+				                                                    moduleArguments);
 				
 				this.bufSoundSamples[bufFramePos] = retSoundSample;
 			}
@@ -531,13 +531,13 @@ implements GeneratorBufferInterface,
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#calcFrameSample(long, float, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#calcFrameSample(long, float, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
 	@Override
 	public SoundSample calcFrameSample(long framePosition, 
 	                                   float frameTime,
-	                                   ModulGenerator parentModulGenerator,
-	                                   ModulArguments modulArguments)
+	                                   ModuleGenerator parentModuleGenerator,
+	                                   ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		SoundSample bufInputSoundSample;
@@ -548,15 +548,15 @@ implements GeneratorBufferInterface,
 			
 			if (bufInputSoundSample == null)
 			{
-				//SoundSample bufInputSoundSample = this.generator.generateFrameSample(framePosition, parentModulGenerator, generatorBuffer);
+				//SoundSample bufInputSoundSample = this.generator.generateFrameSample(framePosition, parentModuleGenerator, generatorBuffer);
 				bufInputSoundSample = new SoundSample();
 				
 				this.generator.calculateSoundSample(framePosition, 
 				                                    frameTime, 
 				                                    bufInputSoundSample, 
-				                                    parentModulGenerator, 
+				                                    parentModuleGenerator, 
 				                                    this,
-				                                    modulArguments);
+				                                    moduleArguments);
 				
 				this.setBufSoundSample(framePosition,
 				                       bufInputSoundSample);
@@ -631,11 +631,11 @@ implements GeneratorBufferInterface,
 			this.clearBuffer(changedStartBufPos, changedEndBufSize);
 		}
 		//------------------------------------------------------------------------------------------
-//		// Notify Modul:
+//		// Notify Module
 //		
 //		if (this.generator != null)
 //		{
-//			if (this.generator instanceof ModulGenerator)
+//			if (this.generator instanceof ModuleGenerator)
 //			{
 //				// No chance to notify module timeline
 //			}
@@ -709,7 +709,7 @@ implements GeneratorBufferInterface,
 			{
 				Generator inputGenerator = inputData.getInputGenerator();
 				
-				if (inputGenerator instanceof ModulGenerator)
+				if (inputGenerator instanceof ModuleGenerator)
 				{
 					inputTimeline = this.subGeneratorTimelines.get(inputGenerator);
 				}
@@ -724,10 +724,10 @@ implements GeneratorBufferInterface,
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.ModulGeneratorRemoveListenerInterface#notifyModulGeneratorRemoved(de.schmiereck.noiseComp.generator.Generator)
+	 * @see de.schmiereck.noiseComp.generator.ModuleGeneratorRemoveListenerInterface#notifyModuleGeneratorRemoved(de.schmiereck.noiseComp.generator.Generator)
 	 */
 	@Override
-	public void notifyModulGeneratorRemoved(Generator removedGenerator)
+	public void notifyModuleGeneratorRemoved(Generator removedGenerator)
 	{
 		//==========================================================================================
 		for (InputData inputData : this.inputTimelines.keySet())
@@ -1118,11 +1118,11 @@ implements GeneratorBufferInterface,
 
 	/**
 	 * @return 
-	 * 			returns the {@link #modulTimeline}.
+	 * 			returns the {@link #moduleTimeline}.
 	 */
-	public Timeline getModulTimeline()
+	public Timeline getModuleTimeline()
 	{
-		return this.modulTimeline;
+		return this.moduleTimeline;
 	}
 
 	/**

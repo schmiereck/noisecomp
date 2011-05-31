@@ -683,8 +683,8 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGenerator#Synth3]]></generatorClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData]]></generatorTypeClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#Synth3]]></generatorClassName>
 			<folderPath><![CDATA[/File/Modules/synths/synth3/]]></folderPath>
 			<name><![CDATA[Synth3]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
@@ -792,7 +792,7 @@
 							<type><![CDATA[1]]></type>
 							<value />
 							<stringValue />
-							<inputModulInputType><![CDATA[1]]></inputModulInputType>
+							<inputModulenputType><![CDATA[1]]></inputModulenputType>
 						</input>
 					</inputs>
 				</generator>
@@ -807,7 +807,7 @@
 							<type><![CDATA[1]]></type>
 							<value />
 							<stringValue />
-							<inputModulInputType><![CDATA[1]]></inputModulInputType>
+							<inputModulenputType><![CDATA[1]]></inputModulenputType>
 						</input>
 						<input>
 							<type><![CDATA[1]]></type>
@@ -951,7 +951,7 @@
 			</tracks>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData]]></generatorTypeClassName>
 			<generatorClassName />
 			<folderPath><![CDATA[/File/Modules/synths/]]></folderPath>
 			<name />
@@ -966,7 +966,7 @@
 			<tracks />
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModulGeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData]]></generatorTypeClassName>
 			<generatorClassName />
 			<folderPath><![CDATA[/File/Modules/synths/synth3/]]></folderPath>
 			<name />

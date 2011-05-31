@@ -7,7 +7,7 @@ App
 
 	ModulesTree
 		ModulEdit
-			ModulInputTypes
+			ModulenputTypes
 		
 			InputSelect
 				InputEdit

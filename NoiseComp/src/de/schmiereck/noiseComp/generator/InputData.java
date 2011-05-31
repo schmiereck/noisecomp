@@ -15,16 +15,16 @@ public class InputData
 	private Generator ownerGenerator;
 	
 	/**
-	 * The generator generates the input value (see {@link #inputModulInputTypeData} ???).<br/>
+	 * The generator generates the input value (see {@link #inputModuleInputTypeData} ???).<br/>
 	 * <code>null</code> if {@link #inputValue} is used.
 	 */
 	private Generator 	inputGenerator;
 	
 	/**
-	 * The type of the input of the modul used to get the input value  
-	 * (the modul generator is {@link #inputGenerator}) ???
+	 * The type of the input of the module used to get the input value  
+	 * (the module generator is {@link #inputGenerator}) ???
 	 */
-	private InputTypeData			inputModulInputTypeData;
+	private InputTypeData			inputModuleInputTypeData;
 	
 	/**
 	 * Constant Value of the input.<br/>
@@ -45,10 +45,10 @@ public class InputData
 	private InputTypeData 		inputTypeData;
 	
 	/**
-	 * Data of the Input of a modul input.<br/>
-	 * Type of the input, the values of inputs of the modul of this type added together.
+	 * Data of the Input of a module input.<br/>
+	 * Type of the input, the values of inputs of the module of this type added together.
 	 */
-	//private String				inputModulInput;
+	//private String				inputModuleInput;
 	
 	/**
 	 * Constructor.
@@ -57,15 +57,15 @@ public class InputData
 	public InputData(Generator ownerGenerator,
 					 Generator inputGenerator, 
 					 InputTypeData inputTypeData, 
-					 //String inputModulInput)
-					 InputTypeData inputModulInputTypeData)
+					 //String inputModuleInput)
+					 InputTypeData inputModuleInputTypeData)
 	{
 		super();
 		this.ownerGenerator = ownerGenerator;
 		this.inputGenerator = inputGenerator;
 		this.inputTypeData = inputTypeData;
-		//this.inputModulInput = inputModulInput;
-		this.inputModulInputTypeData = inputModulInputTypeData;
+		//this.inputModuleInput = inputModuleInput;
+		this.inputModuleInputTypeData = inputModuleInputTypeData;
 	}
 	/**
 	 * @return 
@@ -174,35 +174,35 @@ System.out.println("InputData.setInputValue: " + inputValue + ", " + inputString
 	}
 	
 	/**
-	 * @return the attribute {@link #inputModulInput}.
-	public String getInputModulInput()
+	 * @return the attribute {@link #inputModuleInput}.
+	public String getInputModuleInput()
 	{
-		return this.inputModulInput;
+		return this.inputModuleInput;
 	}
 	 */
 	/**
-	 * @param inputModulInput is the new value for attribute {@link #inputModulInput} to set.
-	public void setInputModulInput(String inputModulInput)
+	 * @param inputModuleInput is the new value for attribute {@link #inputModuleInput} to set.
+	public void setInputModuleInput(String inputModuleInput)
 	{
-		this.inputModulInput = inputModulInput;
+		this.inputModuleInput = inputModuleInput;
 	}
 	 */
 	
 	/**
-	 * @return the attribute {@link #inputModulInputTypeData}.
+	 * @return the attribute {@link #inputModuleInputTypeData}.
 	 */
-	public InputTypeData getInputModulInputTypeData()
+	public InputTypeData getInputModuleInputTypeData()
 	{
-		return this.inputModulInputTypeData;
+		return this.inputModuleInputTypeData;
 	}
 	/**
-	 * @param inputModulInputTypeData is the new value for attribute {@link #inputModulInputTypeData} to set.
+	 * @param inputModuleInputTypeData is the new value for attribute {@link #inputModuleInputTypeData} to set.
 	 */
-	public void setInputModulInputTypeData(InputTypeData inputModulInputTypeData)
+	public void setInputModuleInputTypeData(InputTypeData inputModuleInputTypeData)
 	{
-		if (this.inputModulInputTypeData != inputModulInputTypeData)
+		if (this.inputModuleInputTypeData != inputModuleInputTypeData)
 		{
-			this.inputModulInputTypeData = inputModulInputTypeData;
+			this.inputModuleInputTypeData = inputModuleInputTypeData;
 		
 			this.ownerGenerator.generateChangedEvent();
 		}
@@ -212,12 +212,12 @@ System.out.println("InputData.setInputValue: " + inputValue + ", " + inputString
 	public void setInput(Generator inputGenerator, 
 						 InputTypeData inputTypeData, 
 						 Float inputGeneratorValue, 
-						 InputTypeData inputModulInputTypeData)
+						 InputTypeData inputModuleInputTypeData)
 	{
 		this.inputGenerator = inputGenerator;
 		this.inputTypeData = inputTypeData;
 		this.setInputValue(inputGeneratorValue);
-		this.inputModulInputTypeData = inputModulInputTypeData;
+		this.inputModuleInputTypeData = inputModuleInputTypeData;
 		
 		this.ownerGenerator.generateChangedEvent();
 	}

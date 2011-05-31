@@ -16,12 +16,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * 	see: http://de.wikipedia.org/wiki/Beobachter_%28Entwurfsmuster%29
  * 
  * 	AppModelChangedObserver
- * 		ModulsModelChangedObserver
- * 			- editedModul
+ * 		ModuleModelChangedObserver
+ * 			- editedModule
  * 			TimelinesModelChangedObserver
  * 				- editedTimeline
- * 			ModulInputTypesModelChangedObserver
- * 				- editedModulInputType
+ * 			ModuleInputTypesModelChangedObserver
+ * 				- editedModuleInputType
  * 			InputsModelChangedObserver
  * 				- editedInput
  * </p>

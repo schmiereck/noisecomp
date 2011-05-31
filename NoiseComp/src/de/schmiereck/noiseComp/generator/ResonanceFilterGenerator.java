@@ -57,11 +57,11 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample signalSample, ModulGenerator parentModulGenerator, 
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample signalSample, ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModulArguments modulArguments)
+	                                 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
@@ -72,36 +72,36 @@ extends Generator
 	                            frameTime,
 			                    signalInputData, 
 			                    signalSample, 
-			                    parentModulGenerator, 
+			                    parentModuleGenerator, 
 			                    generatorBuffer,
-	                            modulArguments);
+	                            moduleArguments);
 		}
 		//------------------------------------------------------------------------------------------
 		float cutoff = 
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_CUTOFF), 
-			                        parentModulGenerator,
+			                        parentModuleGenerator,
 			                        generatorBuffer,
-			                        modulArguments);
+			                        moduleArguments);
 
 		//------------------------------------------------------------------------------------------
 		float resonance = 
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_RESONANCE), 
-			                        parentModulGenerator,
+			                        parentModuleGenerator,
 			                        generatorBuffer,
-			                        modulArguments);
+			                        moduleArguments);
 
 		//------------------------------------------------------------------------------------------
 		float amp = 
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_AMP), 
-			                        parentModulGenerator,
+			                        parentModuleGenerator,
 			                        generatorBuffer,
-			                        modulArguments);
+			                        moduleArguments);
 
 		//------------------------------------------------------------------------------------------
 //		float soundFrameRate = this.getSoundFrameRate();

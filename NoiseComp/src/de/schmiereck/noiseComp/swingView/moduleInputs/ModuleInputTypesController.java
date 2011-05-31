@@ -1,16 +1,16 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputs;
+package de.schmiereck.noiseComp.swingView.moduleInputs;
 
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
-import de.schmiereck.noiseComp.swingView.modulInputTypeEdit.ModuleInputTypeEditController;
-import de.schmiereck.noiseComp.swingView.modulInputTypeSelect.ModuleInputTypeSelectController;
+import de.schmiereck.noiseComp.swingView.moduleInputTypeEdit.ModuleInputTypeEditController;
+import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSelectController;
 
 /**
  * <p>
- * 	Modul-Input-Types Controller.
+ * 	ModuleInput-Types Controller.
  * </p>
  * 
  * @author smk
@@ -22,12 +22,12 @@ public class ModuleInputTypesController
 	// Fields:
 
 	/**
-	 * Modul-Inputs Model.
+	 * ModuleInputs Model.
 	 */
 	private final ModuleInputTypesModel moduleInputTypesModel;
 
 	/**
-	 * Modul-Input-Types View.
+	 * ModuleInput-Types View.
 	 */
 	private final ModuleInputTypesView moduleInputTypesView;
 	

@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.swingView.modulInputTypeEdit;
+package de.schmiereck.noiseComp.swingView.moduleInputTypeEdit;
 
 import java.awt.GridBagLayout;
 
@@ -15,7 +15,7 @@ import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
 /**
  * <p>
- * 	Modul-Input-Type Edit View.
+ * 	ModuleInput-Type Edit View.
  * </p>
  * 
  * @author smk
@@ -57,7 +57,7 @@ extends BasicEditView
 	 * Constructor.
 	 * 
 	 * @param moduleInputTypeEditModel
-	 * 			is the Modul-Input-Type Edit Model.
+	 * 			is the ModuleInput-Type Edit Model.
 	 */
 	public ModuleInputTypeEditView(final ModuleInputTypeEditModel moduleInputTypeEditModel)
 	{

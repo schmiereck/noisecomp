@@ -6,7 +6,7 @@ package de.schmiereck.noiseComp.swingView;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.UIManager;
 
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
@@ -63,10 +63,10 @@ public class SwingMain
 		soundData = new SoundData(line, soundSourceLogic);
 		
 		//------------------------------------------------------------------------------------------
-		final ModulGeneratorTypeData mainModulGeneratorTypeData = 
+		final ModuleGeneratorTypeData mainModuleGeneratorTypeData = 
 			StartupService.createDemoGenerators(soundData.getFrameRate());
 
-//		soundSourceLogic.setMainModulGeneratorTypeData(mainModulGeneratorTypeData);
+//		soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 	
@@ -96,7 +96,7 @@ public class SwingMain
 					
 					AppController appController = new AppController();
 					
-					appController.selectEditModule(mainModulGeneratorTypeData);
+					appController.selectEditModule(mainModuleGeneratorTypeData);
 					
 					appController.initStartupModel();
 				}

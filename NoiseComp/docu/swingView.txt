@@ -1,7 +1,7 @@
 
 
 AppView
-	modulSplitPane
+	moduleplitPane
 		modulesTreeScrollPane
 		timelineSplitPane
 			TimelinesScrollPanelView

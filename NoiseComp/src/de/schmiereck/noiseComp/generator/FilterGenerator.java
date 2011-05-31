@@ -42,11 +42,11 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModulGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModulGenerator parentModulGenerator, 
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModulArguments modulArguments)
+	                                 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		SoundSample signalSample = new SoundSample();
@@ -61,9 +61,9 @@ extends Generator
                                 frameTime,
 			                    signalInputData, 
 			                    signalSample, 
-			                    parentModulGenerator,
+			                    parentModuleGenerator,
 			                    generatorBuffer,
-			                    modulArguments);
+			                    moduleArguments);
 		}
 		
 		//------------------------------------------------------------------------------------------
@@ -75,9 +75,9 @@ extends Generator
                                 frameTime,
                                 filterInputData, 
 			                    filterSample, 
-			                    parentModulGenerator,
+			                    parentModuleGenerator,
 			                    generatorBuffer,
-			                    modulArguments);
+			                    moduleArguments);
 		}
 		
 		//------------------------------------------------------------------------------------------
@@ -114,15 +114,15 @@ extends Generator
 			SoundSample sample = 
 				generatorBuffer.calcFrameSample(delayFramePosition, 
 				                                delayFrameTime, 
-				                                parentModulGenerator, 
-				                                modulArguments);
+				                                parentModuleGenerator, 
+				                                moduleArguments);
 			
 //				this.calculateSoundSample(framePosition - delayFrames, 
 //				                          frameTime - delayTime, 
 //				                          sample, 
-//				                          parentModulGenerator, 
+//				                          parentModuleGenerator, 
 //				                          generatorBuffer, 
-//				                          modulArguments);
+//				                          modulerguments);
 			if (sample != null)
 			{
 				// y[n] = a * y[n-1] + b * x[n]

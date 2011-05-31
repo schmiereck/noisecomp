@@ -1,7 +1,7 @@
 package de.schmiereck.noiseComp.soundSource;
 
-import de.schmiereck.noiseComp.generator.ModulArguments;
-import de.schmiereck.noiseComp.generator.ModulGenerator;
+import de.schmiereck.noiseComp.generator.ModuleArguments;
+import de.schmiereck.noiseComp.generator.ModuleGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
@@ -146,10 +146,10 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 		{
 			int frames = (int)(partTime * outputTimeline.getSoundFrameRate());
 	
-			// TODO null as modul is not the best...?
-			ModulGenerator parentModulGenerator = null;
+			// TODO null as module is not the best...?
+			ModuleGenerator parentModuleGenerator = null;
 			
-	        ModulArguments modulArguments = null;
+	        ModuleArguments moduleArguments = null;
 			
 			int framePos;
 			
@@ -163,8 +163,8 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 				frames--;
 				
 				SoundSample soundSample = outputTimeline.generateFrameSample(framePos, 
-				                                                             parentModulGenerator,
-				                                                             modulArguments);
+				                                                             parentModuleGenerator,
+				                                                             moduleArguments);
 			
 				this.bufferSoundSamples[framePos] = soundSample;
 			}

@@ -10,7 +10,7 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
-import de.schmiereck.noiseComp.generator.ModulGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.soundData.PlaybackPosChangedListenerInterface;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
@@ -289,17 +289,17 @@ public class SoundService
 	 * 			is the cut Folder-Path in format <code>"/folder1/folder2/"</code>.
 	 * @param pasteFolderPath
 	 * 			is the paste Module-Path in format <code>"/folder1/folder2/"</code>.
-	 * @param modulGeneratorTypeData
+	 * @param moduleGeneratorTypeData
 	 * 			is the Module-Generator.
 	 */
 	public void moveModule(String cutFolderPath, 
 	                       String pasteFolderPath,
-	                       ModulGeneratorTypeData modulGeneratorTypeData)
+	                       ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		boolean moduleMoved = false;
 		
-		String moduleName = modulGeneratorTypeData.getGeneratorTypeName();
+		String moduleName = moduleGeneratorTypeData.getGeneratorTypeName();
 		
 		//------------------------------------------------------------------------------------------
 		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
@@ -325,7 +325,7 @@ public class SoundService
 		
 		if (moduleMoved == false)
 		{
-			throw new RuntimeException("Moved module \"" + cutFolderPath + modulGeneratorTypeData.getGeneratorTypeName() + "\" not found.");
+			throw new RuntimeException("Moved module \"" + cutFolderPath + moduleGeneratorTypeData.getGeneratorTypeName() + "\" not found.");
 		}
 		
 		//==========================================================================================
@@ -334,12 +334,12 @@ public class SoundService
 	/**
 	 * Check Module is used by other modules.
 	 * 
-	 * @param modulGeneratorTypeData
+	 * @param moduleGeneratorTypeData
 	 * 			is the Module-Generator.
 	 * @return
 	 * 			<code>true</code> if module is in use.
 	 */
-	public boolean checkModuleIsUsed(ModulGeneratorTypeData modulGeneratorTypeData)
+	public boolean checkModuleIsUsed(ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		boolean moduleIsUsed;
@@ -354,9 +354,9 @@ public class SoundService
 			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			if (generatorTypeData instanceof ModuleGeneratorTypeData)
 			{
-				ModulGeneratorTypeData checkedGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				ModuleGeneratorTypeData checkedGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
 				
 				Iterator<Generator> tracksIterator = checkedGeneratorTypeData.getTracksIterator();
 				
@@ -366,7 +366,7 @@ public class SoundService
 					
 					GeneratorTypeData trackGeneratorTypeData = trackGenerator.getGeneratorTypeData();
 					
-					if (modulGeneratorTypeData == trackGeneratorTypeData)
+					if (moduleGeneratorTypeData == trackGeneratorTypeData)
 					{
 						moduleIsUsed = true;
 					}
@@ -400,9 +400,9 @@ public class SoundService
 			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			if (generatorTypeData instanceof ModuleGeneratorTypeData)
 			{
-				ModulGeneratorTypeData checkedGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				ModuleGeneratorTypeData checkedGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
 				
 				Iterator<Generator> tracksIterator = checkedGeneratorTypeData.getTracksIterator();
 				
@@ -433,12 +433,12 @@ public class SoundService
 	 * @return
 	 * 			<code>true</code> if a module in folder or sub folder is the main module.
 	 */
-	public boolean checkModuleInFolderIsMainModul(String folderPath)
+	public boolean checkModuleInFolderIsMainModule(String folderPath)
 	{
 		//==========================================================================================
-		boolean moduleIsMainModul;
+		boolean moduleIsMainModule;
 		
-		moduleIsMainModul = false;
+		moduleIsMainModule = false;
 		
 		//------------------------------------------------------------------------------------------
 		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
@@ -448,17 +448,17 @@ public class SoundService
 			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			if (generatorTypeData instanceof ModuleGeneratorTypeData)
 			{
-				ModulGeneratorTypeData checkedGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				ModuleGeneratorTypeData checkedGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
 				
 				String gtFolderPath = checkedGeneratorTypeData.getFolderPath();
 				
 				if (gtFolderPath.startsWith(folderPath))
 				{
-					if (checkedGeneratorTypeData.getIsMainModulGeneratorType() == true)
+					if (checkedGeneratorTypeData.getIsMainModuleGeneratorType() == true)
 					{
-						moduleIsMainModul = true;
+						moduleIsMainModule = true;
 						break;
 					}
 				}
@@ -467,7 +467,7 @@ public class SoundService
 		}
 		
 		//==========================================================================================
-		return moduleIsMainModul;
+		return moduleIsMainModule;
 	}
 
 	/**
@@ -484,9 +484,9 @@ public class SoundService
 			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (generatorTypeData instanceof ModulGeneratorTypeData)
+			if (generatorTypeData instanceof ModuleGeneratorTypeData)
 			{
-				ModulGeneratorTypeData checkedGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+				ModuleGeneratorTypeData checkedGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
 
 				String gtFolderPath = checkedGeneratorTypeData.getFolderPath();
 				
@@ -524,9 +524,9 @@ public class SoundService
 			GeneratorTypeData gtData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//			if (gtData instanceof ModulGeneratorTypeData)
+//			if (gtData instanceof ModuleGeneratorTypeData)
 			{
-//				ModulGeneratorTypeData checkedGeneratorTypeData = (ModulGeneratorTypeData)gtData;
+//				ModuleGeneratorTypeData checkedGeneratorTypeData = (ModuleGeneratorTypeData)gtData;
 
 				String gtFolderPath = gtData.getFolderPath();
 				String gtName = gtData.getGeneratorTypeName();
@@ -546,35 +546,35 @@ public class SoundService
 	}
 
 	/**
-	 * @param modulGeneratorTypeData
-	 * 			is the Modul-Generator-Type-Data.
+	 * @param moduleGeneratorTypeData
+	 * 			is the ModuleGenerator-Type-Data.
 	 * @param generatorTypeName
 	 * 			is the generator name.
-	 * @param modulIsMain
+	 * @param modulesMain
 	 * 			<code>true</code> if the module generator is main.
 	 * @return
-	 * 			the last Main Modul-Generator.</br>
-	 * 			<code>null</code> if the given Modul-Generator was main or 
+	 * 			the last Main ModuleGenerator.</br>
+	 * 			<code>null</code> if the given ModuleGenerator was main or 
 	 * 			the generator is set to not main.
 	 */
-	public ModulGeneratorTypeData 
-	updateModulGeneratorTypeData(ModulGeneratorTypeData modulGeneratorTypeData, 
+	public ModuleGeneratorTypeData 
+	updateModuleGeneratorTypeData(ModuleGeneratorTypeData moduleGeneratorTypeData, 
 	                             String generatorTypeName,
-	                             Boolean modulIsMain)
+	                             Boolean modulesMain)
 	{
 		//==========================================================================================
-		ModulGeneratorTypeData lastMainModulGeneratorTypeData;
+		ModuleGeneratorTypeData lastMainModuleGeneratorTypeData;
 		
 		//------------------------------------------------------------------------------------------
 		// Set main module?
-		if (modulIsMain == true)
+		if (modulesMain == true)
 		{
-			if (modulGeneratorTypeData.getIsMainModulGeneratorType() == false)
+			if (moduleGeneratorTypeData.getIsMainModuleGeneratorType() == false)
 			{
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				lastMainModulGeneratorTypeData = null;
+				lastMainModuleGeneratorTypeData = null;
 				
-				// Search last Main Modul-Generator:
+				// Search last Main ModuleGenerator:
 				
 				Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 				
@@ -582,29 +582,29 @@ public class SoundService
 				{
 					GeneratorTypeData generatorTypeData = (GeneratorTypeData)generatorTypesIterator.next();
 					
-					if (generatorTypeData instanceof ModulGeneratorTypeData)
+					if (generatorTypeData instanceof ModuleGeneratorTypeData)
 					{
-						ModulGeneratorTypeData checkedModulGeneratorTypeData = (ModulGeneratorTypeData)generatorTypeData;
+						ModuleGeneratorTypeData checkedModuleGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
 						
-						if (checkedModulGeneratorTypeData.getIsMainModulGeneratorType() == true)
+						if (checkedModuleGeneratorTypeData.getIsMainModuleGeneratorType() == true)
 						{
-							checkedModulGeneratorTypeData.setIsMainModulGeneratorType(false);
+							checkedModuleGeneratorTypeData.setIsMainModuleGeneratorType(false);
 							
-							lastMainModulGeneratorTypeData = checkedModulGeneratorTypeData;
+							lastMainModuleGeneratorTypeData = checkedModuleGeneratorTypeData;
 							break;
 						}
 					}
 				}
 				
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				modulGeneratorTypeData.setIsMainModulGeneratorType(modulIsMain);
+				moduleGeneratorTypeData.setIsMainModuleGeneratorType(modulesMain);
 
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			}
 			else
 			{
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				lastMainModulGeneratorTypeData = null;
+				lastMainModuleGeneratorTypeData = null;
 				
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			}
@@ -612,18 +612,18 @@ public class SoundService
 		else
 		{
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			modulGeneratorTypeData.setIsMainModulGeneratorType(modulIsMain);
+			moduleGeneratorTypeData.setIsMainModuleGeneratorType(modulesMain);
 
-			lastMainModulGeneratorTypeData = null;
+			lastMainModuleGeneratorTypeData = null;
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 
 		//------------------------------------------------------------------------------------------
-		modulGeneratorTypeData.setGeneratorTypeName(generatorTypeName);
+		moduleGeneratorTypeData.setGeneratorTypeName(generatorTypeName);
 		
 		//==========================================================================================
-		return lastMainModulGeneratorTypeData;
+		return lastMainModuleGeneratorTypeData;
 	}
 
 	/**
