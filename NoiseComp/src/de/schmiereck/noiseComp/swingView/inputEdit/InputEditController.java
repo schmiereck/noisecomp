@@ -93,27 +93,16 @@ public class InputEditController
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					JComboBox cb = (JComboBox)e.getSource();
-					InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)cb.getSelectedItem();
+					final JComboBox inputTypeSelectField = (JComboBox)e.getSource();
+					final InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)inputTypeSelectField.getSelectedItem();
 					
 					if (inputTypeSelectItem != null)
 					{
-						InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
+						final InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
 						
 						if (inputTypeData != null)
 						{
-							JComboBox inputTypeValueTextField = inputEditView.getInputTypeValueTextField();
-//							
-//							String valueStr = InputUtils.makeStringValue(inputTypeValueTextField.getText());
-//							
-//							if (valueStr == null)
-							{
-								Float defaultValue = inputTypeData.getDefaultValue();
-								
-								String defaultValueStr = OutputUtils.makeFloatEditText(defaultValue);
-								
-								inputTypeValueTextField.setSelectedItem(defaultValueStr);
-							}
+							updateInputTypeDefaultValueField(inputTypeData);
 						}
 						
 						inputEditModel.setInputTypeData(inputTypeData);
@@ -482,10 +471,9 @@ public class InputEditController
 				
 				multiValue = InputUtils.makeMultiValue(valueStr);
 			}
-			InputTypeData moduleInputTypeData = moduleInputTypeSelectItem.getInputTypeData();
-			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Input-Data:
+			InputTypeData moduleInputTypeData = moduleInputTypeSelectItem.getInputTypeData();
 			
 			Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
 			
@@ -557,6 +545,8 @@ public class InputEditController
 		if (inputTypeData != null)
 		{
 			inputSelectController.doCreateNewInput(inputTypeData);
+
+			this.updateInputTypeDefaultValueField(inputTypeData);
 		}
 		else
 		{
@@ -568,4 +558,25 @@ public class InputEditController
 		//==========================================================================================
 	}
 
+	/**
+	 * @param inputTypeData
+	 */
+	private void updateInputTypeDefaultValueField(final InputTypeData inputTypeData)
+	{
+		//==========================================================================================
+		final JComboBox inputTypeValueTextField = this.inputEditView.getInputTypeValueTextField();
+		
+		//==========================================================================================
+		//String valueStr = InputUtils.makeStringValue(inputTypeValueTextField.getText());
+		//
+		//if (valueStr == null)
+		{
+			Float defaultValue = inputTypeData.getDefaultValue();
+			
+			String defaultValueStr = OutputUtils.makeFloatEditText(defaultValue);
+			
+			inputTypeValueTextField.setSelectedItem(defaultValueStr);
+		}
+		//==========================================================================================
+	}
 }

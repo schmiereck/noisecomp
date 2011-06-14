@@ -572,6 +572,9 @@ public class TimelineManagerLogic
 		//------------------------------------------------------------------------------------------
 		this.addInputTimeline(newTimeline, inputData, inputGenerator);
 		
+		//------------------------------------------------------------------------------------------
+		newTimeline.generatorChanged();
+		
 		//==========================================================================================
 		return inputData;
 	}
@@ -650,7 +653,7 @@ public class TimelineManagerLogic
 			this.updateModuleTimelines(updatedTimeline);
 		}
 		//------------------------------------------------------------------------------------------
-		boolean generatorChanged = false;
+		boolean generatorChanged;
 		
 		if ((CompareUtils.compareWithNull(inputData.getInputValue(), floatValue) == false) ||
 			(CompareUtils.compareWithNull(inputData.getInputStringValue(), stringValue) == false))
@@ -658,6 +661,10 @@ public class TimelineManagerLogic
 			inputData.setInputValue(floatValue, stringValue);
 			
 			generatorChanged = true;
+		}
+		else
+		{
+			generatorChanged = false;
 		}
 		
 		if (inputData.getInputModuleInputTypeData() != moduleInputTypeData)

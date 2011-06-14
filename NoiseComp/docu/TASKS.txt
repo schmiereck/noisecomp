@@ -70,8 +70,8 @@ TODO:
 #185:	BUG: ResonanceFilter can't used at the same time in same generator in sub-modules.
 		--> Do not store values in generator, use timeline, or 
 			create new Generator instance for every timeline.
-#187:	
-#188:	
+#187:	IMPROVEMENT: Add tooth-direction to SawtoothGenerator.
+#189:	
 
 WORK:
 =====
@@ -84,7 +84,7 @@ WORK:
 		--> DONE: AppModuleController
 		--> AppTimelineController
 		--> AppInputController
-#180:	BUG: Insert default value after "Create new Input".
+#188:	BUG: Update Input-Select after updating a new Input.
 
 DONE:
 =====
@@ -367,4 +367,5 @@ Release V2.0.6
 #182:	BUG: Update Input (specialy "Input-Type") after creating new timeline.
 		--> DONE: Reselect Timeline after Update with the new Generator-Type updates the inputs.
 #186:	IMPROVEMENT: DONE: Rename "Modul" to "Module".
+#180:	DONE: BUG: Insert default value after "Create new Input".
 		
