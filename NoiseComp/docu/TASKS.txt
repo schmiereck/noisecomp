@@ -84,7 +84,6 @@ WORK:
 		--> DONE: AppModuleController
 		--> AppTimelineController
 		--> AppInputController
-#188:	BUG: Update Input-Select after updating a new Input.
 
 DONE:
 =====
@@ -367,5 +366,6 @@ Release V2.0.6
 #182:	BUG: Update Input (specialy "Input-Type") after creating new timeline.
 		--> DONE: Reselect Timeline after Update with the new Generator-Type updates the inputs.
 #186:	IMPROVEMENT: DONE: Rename "Modul" to "Module".
-#180:	DONE: BUG: Insert default value after "Create new Input".
+#180:	BUG: DONE: Insert default value after "Create new Input".
+#188:	BUG: DONE: Update Input-Select after updating a new Input.
 		

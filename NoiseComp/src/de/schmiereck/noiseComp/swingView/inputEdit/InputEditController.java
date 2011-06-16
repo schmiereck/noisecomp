@@ -141,7 +141,7 @@ public class InputEditController
 //						if (valueStr == null)
 						{
 //							inputTypeValueTextField.setSelectedItem(valueStr);
-							inputEditModel.setValue(valueStr);
+							//inputEditModel.setValue(valueStr);
 						}
 					}
 				}
