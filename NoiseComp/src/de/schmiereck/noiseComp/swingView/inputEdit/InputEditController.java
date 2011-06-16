@@ -110,43 +110,43 @@ public class InputEditController
 				}
 		 	}
 		);
-		//------------------------------------------------------------------------------------------
-		this.inputEditView.getInputTypeValueTextField().addActionListener
-		(
-		 	new ActionListener()
-		 	{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-//					JComboBox cb = (JComboBox)e.getSource();
-					JComboBox inputTypeValueTextField = inputEditView.getInputTypeValueTextField();
-					
-					if (inputTypeValueTextField != null)
-					{
-						String valueStr;
-						
-						Object selectedItem = inputTypeValueTextField.getSelectedItem();
-						
-						if (selectedItem instanceof ValueSelectItem)
-						{
-							ValueSelectItem valueSelectItem = (ValueSelectItem)selectedItem;
-							
-							valueStr = valueSelectItem.getValue();
-						}
-						else
-						{
-							valueStr = InputUtils.makeStringValue((String)selectedItem);
-						}
-						
-//						if (valueStr == null)
-						{
-//							inputTypeValueTextField.setSelectedItem(valueStr);
-							//inputEditModel.setValue(valueStr);
-						}
-					}
-				}
-		 	}
-		);
+//		//------------------------------------------------------------------------------------------
+//		this.inputEditView.getInputTypeValueTextField().addActionListener
+//		(
+//		 	new ActionListener()
+//		 	{
+//				@Override
+//				public void actionPerformed(ActionEvent e)
+//				{
+////					JComboBox cb = (JComboBox)e.getSource();
+//					JComboBox inputTypeValueTextField = inputEditView.getInputTypeValueTextField();
+//					
+//					if (inputTypeValueTextField != null)
+//					{
+//						String valueStr;
+//						
+//						Object selectedItem = inputTypeValueTextField.getSelectedItem();
+//						
+//						if (selectedItem instanceof ValueSelectItem)
+//						{
+//							ValueSelectItem valueSelectItem = (ValueSelectItem)selectedItem;
+//							
+//							valueStr = valueSelectItem.getValue();
+//						}
+//						else
+//						{
+//							valueStr = InputUtils.makeStringValue((String)selectedItem);
+//						}
+//						
+////						if (valueStr == null)
+//						{
+////							inputTypeValueTextField.setSelectedItem(valueStr);
+//							//inputEditModel.setValue(valueStr);
+//						}
+//					}
+//				}
+//		 	}
+//		);
 		//------------------------------------------------------------------------------------------
 		selectedTimelineModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
