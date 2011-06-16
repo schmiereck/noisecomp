@@ -67,9 +67,6 @@ TODO:
 		see: #146
 		--> Bug in Swing? Can't find a diffenerence to other Edit panes.
 #184:	IMPROVEMENT: Show Module-Input-Type name in Inputs list an Timelines-Input-Tooltip.
-#185:	BUG: ResonanceFilter can't used at the same time in same generator in sub-modules.
-		--> Do not store values in generator, use timeline, or 
-			create new Generator instance for every timeline.
 #187:	IMPROVEMENT: Add tooth-direction to SawtoothGenerator.
 #189:	
 
@@ -84,6 +81,9 @@ WORK:
 		--> DONE: AppModuleController
 		--> AppTimelineController
 		--> AppInputController
+#185:	BUG: ResonanceFilter can't used at the same time in same generator in sub-modules.
+		--> Do not store values in generator, use timeline, or 
+			create new Generator instance for every timeline.
 
 DONE:
 =====
