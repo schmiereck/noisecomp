@@ -84,10 +84,6 @@ WORK:
 		--> DONE: AppModuleController
 		--> AppTimelineController
 		--> AppInputController
-#185:	BUG: Some Generators can't used at the same time in same generator in sub-modules.
-		--> Do not store values in generator, use timeline.
-		--> DONE: ResonanceFilterGenerator
-		--> DONE: LowpassFilterGenerator
 
 DONE:
 =====
@@ -372,4 +368,12 @@ Release V2.0.6
 #186:	IMPROVEMENT: DONE: Rename "Modul" to "Module".
 #180:	BUG: DONE: Insert default value after "Create new Input".
 #188:	BUG: DONE: Update Input-Select after updating a new Input.
+#185:	BUG: Some Generators can't used at the same time in same generator in sub-modules.
+		--> Do not store values in generator, use timeline.
+		--> DONE: ResonanceFilterGenerator
+		--> DONE: LowpassFilterGenerator
+		--> DONE: PinkNoise2Generator
+		--> DONE: PinkNoiseGenerator
+		--> DONE: WaveGenerator
+		--> DONE: WhiteNoiseGenerator
 		

@@ -26,13 +26,6 @@ extends Generator
 	public static final int	INPUT_TYPE_VARIANCE	= 2;
 	
 	//**********************************************************************************************
-	// Fields:
-
-	private final long generatorSeed = new Random().nextLong();
-	
-	private final Random rnd = new Random(0);
-	
-	//**********************************************************************************************
 	// Functions:
 
 	/**
@@ -57,6 +50,9 @@ extends Generator
 	                                 GeneratorBufferInterface generatorBuffer,
 	                                 ModuleArguments moduleArguments)
 	{
+		//==========================================================================================
+		final WhiteNoiseGeneratorData data = (WhiteNoiseGeneratorData)generatorBuffer.getGeneratorData();
+		
 		//==========================================================================================
 		float mean = 0.0F;
 		float variance = 0.0F;
@@ -123,7 +119,7 @@ extends Generator
 		//------------------------------------------------------------------------------------------
 		// see http://www.dspguru.com/dsp/howtos/how-to-generate-white-gaussian-noise
 		
-		this.rnd.setSeed(this.generatorSeed + framePosition);
+		data.rnd.setSeed(data.generatorSeed + framePosition);
 		
 		double v1;
 		double v2;
@@ -131,10 +127,10 @@ extends Generator
 		
 		do
 		{
-			double u1 = this.uniformRnd(framePosition); 	// U1=[0,1] 
-			double u2 = this.uniformRnd(framePosition); 	// U2=[0,1] 
-			v1 = 2.0F * u1 - 1.0F;        					// V1=[-1,1]
-			v2 = 2.0F * u2 - 1.0F;        					// V2=[-1,1]
+			double u1 = this.uniformRnd(data, framePosition); 	// U1=[0,1] 
+			double u2 = this.uniformRnd(data, framePosition); 	// U2=[0,1] 
+			v1 = 2.0F * u1 - 1.0F;        						// V1=[-1,1]
+			v2 = 2.0F * u2 - 1.0F;        						// V2=[-1,1]
 			
 			s = v1 * v1 + v2 * v2;
 		}
@@ -156,12 +152,22 @@ extends Generator
 	 * @return
 	 * 			a random variable in the range [0, 1]. 
 	 */
-	private double uniformRnd(long framePosition)
+	private double uniformRnd(final WhiteNoiseGeneratorData data,
+	                          long framePosition)
 	{
-		return this.rnd.nextGaussian();
+		return data.rnd.nextGaussian();
 //		return (float)Math.random();
 //		return this.rnd.nextFloat();
 //		return this.rnd.nextDouble();
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorData()
+	 */
+	@Override
+	public Object createGeneratorData()
+	{
+		return new WhiteNoiseGeneratorData(new Random().nextLong(), new Random(0));
 	}
 
 	public static GeneratorTypeData createGeneratorTypeData()

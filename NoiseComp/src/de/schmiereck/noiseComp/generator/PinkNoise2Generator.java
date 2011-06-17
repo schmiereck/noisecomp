@@ -26,18 +26,6 @@ extends Generator
 	public static final int	INPUT_TYPE_POLES	= 4;
 	
 	//**********************************************************************************************
-	// Fields:
-
-	private final long generatorSeed = new Random().nextLong();
-	
-	private final Random rnd = new Random(0);
-	
-	/**
-	 * Pink noise source.
-	 */
-	private PinkNoise pinkNoise = null;
-	
-	//**********************************************************************************************
 	// Functions:
 
 	/**
@@ -62,6 +50,9 @@ extends Generator
 	                                 GeneratorBufferInterface generatorBuffer,
 	                                 ModuleArguments moduleArguments)
 	{
+		//==========================================================================================
+		final PinkNoise2GeneratorData data = (PinkNoise2GeneratorData)generatorBuffer.getGeneratorData();
+		
 		//==========================================================================================
 		float mean = 0.0F;
 		float variance = 0.0F;
@@ -159,29 +150,29 @@ extends Generator
 		}
 		
 		//------------------------------------------------------------------------------------------
-		this.rnd.setSeed(this.generatorSeed + framePosition);
+		data.rnd.setSeed(data.generatorSeed + framePosition);
 		
-		if (this.pinkNoise == null)
+		if (data.pinkNoise == null)
 		{
-			this.pinkNoise = new PinkNoise(alpha, poles, this.rnd);
+			data.pinkNoise = new PinkNoise(alpha, poles, data.rnd);
 		}
 		else
 		{
 			// Alpha changed?
-			if (this.pinkNoise.getAlpha() != alpha)
+			if (data.pinkNoise.getAlpha() != alpha)
 			{
-				this.pinkNoise.setAlpha(alpha);
+				data.pinkNoise.setAlpha(alpha);
 			}
 			
 			// Poles changed?
-			if (this.pinkNoise.getPoles() != poles)
+			if (data.pinkNoise.getPoles() != poles)
 			{
-				this.pinkNoise.setPoles(poles);
+				data.pinkNoise.setPoles(poles);
 			}
 		}
 		
-		float left  = (float)this.pinkNoise.nextValue();
-		float right = (float)this.pinkNoise.nextValue();
+		float left  = (float)data.pinkNoise.nextValue();
+		float right = (float)data.pinkNoise.nextValue();
 		
 		//------------------------------------------------------------------------------------------
 		float signalLeft = (float)(mean + Math.sqrt(variance) * left);
@@ -190,6 +181,15 @@ extends Generator
 		soundSample.setStereoValues(signalLeft, signalRight);
 		
 		//==========================================================================================
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorData()
+	 */
+	@Override
+	public Object createGeneratorData()
+	{
+		return new PinkNoise2GeneratorData(new Random().nextLong(), new Random(0), null);
 	}
 	
 	public static GeneratorTypeData createGeneratorTypeData()

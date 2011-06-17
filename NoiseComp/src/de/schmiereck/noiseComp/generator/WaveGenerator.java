@@ -3,10 +3,13 @@ package de.schmiereck.noiseComp.generator;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
 import com.sun.media.sound.WaveFileReader;
+
 import de.schmiereck.noiseComp.WaveResourceLoader;
 
 /*
@@ -23,12 +26,14 @@ import de.schmiereck.noiseComp.WaveResourceLoader;
 public class WaveGenerator
 extends Generator
 {
+	//**********************************************************************************************
+	// Constants:
+
 	public static final int	INPUT_FILE_NAME		= 1;
 	
-	private SoundSample[] soundSamples = null;
+	//**********************************************************************************************
+	// Functions:
 
-	private float	wafeFrameRate = 1.0F;  
-	
 	/**
 	 * Constructor.
 	 * 
@@ -45,11 +50,15 @@ extends Generator
 									 GeneratorBufferInterface generatorBuffer,
 		                             ModuleArguments moduleArguments)
 	{
+		//==========================================================================================
+		final WaveGeneratorData data = (WaveGeneratorData)generatorBuffer.getGeneratorData();
+		
+		//==========================================================================================
 		long soundFramePosition = (long)(framePosition - (this.getStartTimePos() * this.getSoundFrameRate()));
 		
 		synchronized (this)
 		{
-			if (this.soundSamples == null)
+			if (data.soundSamples == null)
 			{
 				String fileName = this.calcInputStringValue(framePosition, 
 															this.getGeneratorTypeData().getInputTypeData(INPUT_FILE_NAME),
@@ -79,7 +88,7 @@ extends Generator
 						
 						System.out.println("audioFormat: " + audioFormat.toString());
 						
-						this.wafeFrameRate  = audioFormat.getFrameRate();
+						data.wafeFrameRate  = audioFormat.getFrameRate();
 
 						//  wfl     sfl
 						// ----- = -----
@@ -89,12 +98,12 @@ extends Generator
 						// sfl = -----------
 						//           wfr
 						
-						long soundLength = (long)((waveFrameLength * this.getSoundFrameRate()) / this.wafeFrameRate);
+						long soundLength = (long)((waveFrameLength * this.getSoundFrameRate()) / data.wafeFrameRate);
 						
 						//------------------------------------------------------
 						int waveFramePos = 0;
 						
-						this.soundSamples = new SoundSample[(int)soundLength];
+						data.soundSamples = new SoundSample[(int)soundLength];
 						
 						int frameSize = audioFormat.getChannels() * audioFormat.getFrameSize();
 						
@@ -184,7 +193,7 @@ extends Generator
 								// sfp = -----------
 								//           wfr
 								
-								long aktSoundFramePosition = (long)((waveFramePos * this.getSoundFrameRate()) / this.wafeFrameRate);
+								long aktSoundFramePosition = (long)((waveFramePos * this.getSoundFrameRate()) / data.wafeFrameRate);
 								
 								SoundSample aktSoundSample = new SoundSample(leftSample, rightSample);
 								
@@ -192,7 +201,7 @@ extends Generator
 								
 								if (betweenSamples == 0)
 								{
-									this.soundSamples[(int)(aktSoundFramePosition)] = aktSoundSample;
+									data.soundSamples[(int)(aktSoundFramePosition)] = aktSoundSample;
 								}
 								else
 								{
@@ -205,7 +214,7 @@ extends Generator
 										
 										float soundDivPos = (1.0F * soundPos) / betweenSamples;
 										
-										this.soundSamples[(int)(lastSoundFramePosition + soundPos)] =
+										data.soundSamples[(int)(lastSoundFramePosition + soundPos)] =
 										//	aktSoundSample;
 											SoundSample.createInterpolate(lastSoundSample,
 																		  aktSoundSample,
@@ -225,34 +234,34 @@ extends Generator
 						// ...
 						ex.printStackTrace(System.err);
 						
-						this.soundSamples = new SoundSample[0];
+						data.soundSamples = new SoundSample[0];
 					}
 					catch (UnsupportedAudioFileException ex)
 					{
 						// ...
 						ex.printStackTrace(System.err);
 						
-						this.soundSamples = new SoundSample[0];
+						data.soundSamples = new SoundSample[0];
 					}
 					catch (URISyntaxException ex)
 					{
 						// ...
 						ex.printStackTrace(System.err);
 						
-						this.soundSamples = new SoundSample[0];
+						data.soundSamples = new SoundSample[0];
 					}
 					catch (Exception ex)
 					{
 						// ...
 						ex.printStackTrace(System.err);
 						
-						this.soundSamples = new SoundSample[0];
+						data.soundSamples = new SoundSample[0];
 					}
 				}
 			}
 		}
 
-		if (this.soundSamples != null)
+		if (data.soundSamples != null)
 		{
 			//  wfp     sp
 			// ----- = ----
@@ -268,9 +277,9 @@ extends Generator
 
 			//------------------------------------------------------------------
 			// play single times:
-			if (waveFramePos < this.soundSamples.length)
+			if (waveFramePos < data.soundSamples.length)
 			{
-				soundSample.setValues(this.soundSamples[(int)waveFramePos]);
+				soundSample.setValues(data.soundSamples[(int)waveFramePos]);
 			}
 			//------------------------------------------------------------------
 			// play repeat times:
@@ -284,6 +293,15 @@ extends Generator
 		{
 			//soundSample.setMonoValue(0.0F);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorData()
+	 */
+	@Override
+	public Object createGeneratorData()
+	{
+		return new WaveGeneratorData(null, 1.0F);
 	}
 	
 	/* (non-Javadoc)

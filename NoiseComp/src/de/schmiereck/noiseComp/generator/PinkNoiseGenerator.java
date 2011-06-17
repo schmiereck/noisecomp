@@ -26,13 +26,6 @@ extends Generator
 	public static final int	INPUT_TYPE_VARIANCE	= 2;
 	
 	//**********************************************************************************************
-	// Fields:
-
-	private final long generatorSeed = new Random().nextLong();
-	
-	private final Random rnd = new Random(0);
-	
-	//**********************************************************************************************
 	// Functions:
 
 	/**
@@ -57,6 +50,9 @@ extends Generator
 	                                 GeneratorBufferInterface generatorBuffer,
 	                                 ModuleArguments moduleArguments)
 	{
+		//==========================================================================================
+		final PinkNoiseGeneratorData data = (PinkNoiseGeneratorData)generatorBuffer.getGeneratorData();
+		
 		//==========================================================================================
 		float mean = 0.0F;
 		float variance = 0.0F;
@@ -120,10 +116,10 @@ extends Generator
 		}
 		
 		//------------------------------------------------------------------------------------------
-		this.rnd.setSeed(this.generatorSeed + framePosition);
+		data.rnd.setSeed(data.generatorSeed + framePosition);
 		
-		float left  = (float)this.makePinkNoise(framePosition);
-		float right = (float)this.makePinkNoise(framePosition);
+		float left  = (float)this.makePinkNoise(data, framePosition);
+		float right = (float)this.makePinkNoise(data, framePosition);
 		
 		//------------------------------------------------------------------------------------------
 		float signalLeft = (float)(mean + Math.sqrt(variance) * left);
@@ -145,32 +141,31 @@ extends Generator
 	    { 0.250D, 0.101508D }
 	};
 
-	private final double pinkBuf[] = new double[pinkCoefs.length];
-	
-	private double makePinkNoise(final long framePosition)
+	private double makePinkNoise(final PinkNoiseGeneratorData data,
+		                         final long framePosition)
 	{
 		//==========================================================================================
 		double ret;
 		
 		//------------------------------------------------------------------------------------------
-		final double white = this.signedRnd(framePosition);
+		final double white = this.signedRnd(data, framePosition);
 		
-		for (int i = 0; i < pinkBuf.length; i++)
+		for (int i = 0; i < data.pinkBuf.length; i++)
 	    {
 			double[] pinkCoef = pinkCoefs[i];
-			pinkBuf[i] = pinkCoef[0] * pinkBuf[i] + pinkCoef[1] * white;
+			data.pinkBuf[i] = pinkCoef[0] * data.pinkBuf[i] + pinkCoef[1] * white;
 	    }   
 
 		//------------------------------------------------------------------------------------------
 		// Sum:
 		ret = 0.0D;
 		
-		for (int i = 0; i < pinkBuf.length; i++)
+		for (int i = 0; i < data.pinkBuf.length; i++)
 	    {
-			ret += pinkBuf[i];
+			ret += data.pinkBuf[i];
 	    }
 
-		ret = ret / pinkBuf.length;
+		ret = ret / data.pinkBuf.length;
 		
 		//==========================================================================================
 	    return ret;
@@ -180,11 +175,21 @@ extends Generator
 	 * @return
 	 * 			a random variable in the range [-1, 1]. 
 	 */
-	private double signedRnd(long framePosition)
+	private double signedRnd(final PinkNoiseGeneratorData data,
+	                         long framePosition)
 	{
-		return this.rnd.nextGaussian() - 0.5D;
+		return data.rnd.nextGaussian() - 0.5D;
 //		return (float)Math.random();
 //		return (this.rnd.nextDouble() - 0.5D) * 2.0D;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorData()
+	 */
+	@Override
+	public Object createGeneratorData()
+	{
+		return new PinkNoiseGeneratorData(new Random().nextLong(), new Random(0), new double[pinkCoefs.length]);
 	}
 
 	public static GeneratorTypeData createGeneratorTypeData()
