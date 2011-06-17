@@ -67,4 +67,13 @@ public interface GeneratorBufferInterface
 	 * 			the generator.
 	 */
 	Generator getGenerator();
+	
+	/**
+	 * @see Generator#createGeneratorData()
+	 * 
+	 * @return
+	 * 			the generator data.
+	 */
+	Object getGeneratorData();
+	
 }

@@ -27,21 +27,6 @@ extends Generator
     //**********************************************************************************************
 	// Fields:
 
-	/**
-	 * Last input value.
-	 */
-	private double lp_input = 0.0D;
-	
-	private double lp_cutoff	= 10.0D;
-	private double lp_resonance	= 1.0D;
-	private double lp_amp		= 0.1D;
-
-	private double lp_low = 0.0D;
-	private double lp_band = 0.0D;
-	private double lp_high = 0.0D;
-	private double lp_d1 = 0.0D;
-	private double lp_d2 = 0.0D;
-	
 	//**********************************************************************************************
 	// Functions:
 
@@ -65,6 +50,9 @@ extends Generator
 	                                 GeneratorBufferInterface generatorBuffer,
 	                                 ModuleArguments moduleArguments)
 	{
+		//==========================================================================================
+		final ResonanceFilterGeneratorData data = (ResonanceFilterGeneratorData)generatorBuffer.getGeneratorData();
+		
 		//==========================================================================================
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
@@ -108,15 +96,15 @@ extends Generator
 		//------------------------------------------------------------------------------------------
 //		float soundFrameRate = this.getSoundFrameRate();
 		
-		this.lp_cutoff = cutoff;
-		this.lp_resonance = resonance;
-		this.lp_amp = amp;
+		data.lp_cutoff = cutoff;
+		data.lp_resonance = resonance;
+		data.lp_amp = amp;
 		
 		float value = signalSample.getMonoValue();
 		
 		if (Float.isNaN(value) == false)
 		{
-			value = (float)this.tb303LPResoFilter(value);
+			value = (float)this.tb303LPResoFilter(data, value);
 		}
 		else
 		{
@@ -140,22 +128,32 @@ extends Generator
 		//==========================================================================================
 	}
 
-	double tb303LPResoFilter(double input) 
+	double tb303LPResoFilter(final ResonanceFilterGeneratorData data,
+	                         double input) 
 	{
-		this.lp_input = input;
+		data.lp_input = input;
 		
-		this.lp_low = this.lp_d2 + 
-					  this.lp_cutoff * this.lp_amp * this.lp_d1;
-		this.lp_high = this.lp_input - 
-					   this.lp_low - 
-					   this.lp_resonance * this.lp_d1;
-		this.lp_band = this.lp_cutoff * this.lp_amp * this.lp_high + 
-					   this.lp_d1;
+		data.lp_low = data.lp_d2 + 
+					  data.lp_cutoff * data.lp_amp * data.lp_d1;
+		data.lp_high = data.lp_input - 
+					   data.lp_low - 
+					   data.lp_resonance * data.lp_d1;
+		data.lp_band = data.lp_cutoff * data.lp_amp * data.lp_high + 
+					   data.lp_d1;
 		
-		this.lp_d1 = this.lp_band;
-		this.lp_d2 = this.lp_low;
+		data.lp_d1 = data.lp_band;
+		data.lp_d2 = data.lp_low;
 		
-		return this.lp_low;
+		return data.lp_low;
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorData()
+	 */
+	@Override
+	public Object createGeneratorData()
+	{
+		return new ResonanceFilterGeneratorData(0.0D, 10.0D, 1.0D, 0.1D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
 	}
 	
 	/* (non-Javadoc)

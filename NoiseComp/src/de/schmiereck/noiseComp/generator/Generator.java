@@ -1119,4 +1119,16 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	{
 		return this.inputs;
 	}
+	
+	/**
+	 * Creates generator data stored in eached timeline of this generator.
+	 * Override to use a generator specific data object.
+	 * 
+	 * @return
+	 * 			the generator data.
+	 */
+	public Object createGeneratorData()
+	{
+		return new Object();
+	}
 }

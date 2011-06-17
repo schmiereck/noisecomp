@@ -25,12 +25,6 @@ extends Generator
     private final static double sqrt2 = 1.4142135623730950488;
 
     //**********************************************************************************************
-	// Fields:
-
-	private double xv[] = new double[3];
-	private double yv[] = new double[3];
-    
-	//**********************************************************************************************
 	// Functions:
 
 	/**
@@ -51,6 +45,9 @@ extends Generator
 	                                 GeneratorBufferInterface generatorBuffer,
 	                                 ModuleArguments moduleArguments)
 	{
+		//==========================================================================================
+		final LowpassFilterGeneratorData data = (LowpassFilterGeneratorData)generatorBuffer.getGeneratorData();
+		
 		//==========================================================================================
 		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
@@ -79,13 +76,13 @@ extends Generator
 		double ax[] = new double[3];
 		double by[] = new double[3];
 
-		this.calcLPCoefficientsButterworth2Pole((int)soundFrameRate, cutoff, ax, by);
+		this.calcLPCoefficientsButterworth2Pole(data, (int)soundFrameRate, cutoff, ax, by);
 
 		float value = signalSample.getMonoValue();
 		
 		if (Float.isNaN(value) == false)
 		{
-			value = (float)this.filter(ax, by, value);
+			value = (float)this.filter(data, ax, by, value);
 		}
 		else
 		{
@@ -109,7 +106,8 @@ extends Generator
 		//==========================================================================================
 	}
 
-	void calcLPCoefficientsButterworth2Pole(final int samplerate, 
+	void calcLPCoefficientsButterworth2Pole(final LowpassFilterGeneratorData data,
+	                                        final int samplerate, 
 	                                        final double cutoff, 
 	                                        final double ax[], 
 	                                        final double by[])
@@ -132,41 +130,52 @@ extends Generator
 		//==========================================================================================
 	}
 
-	void filter(final double samples[], int count)
+	void filter(final LowpassFilterGeneratorData data,
+                final double samples[], int count)
 	{
 		//==========================================================================================
 		double ax[] = new double[3];
 		double by[] = new double[3];
 
-		this.calcLPCoefficientsButterworth2Pole(44100, 5000, ax, by);
+		this.calcLPCoefficientsButterworth2Pole(data, 44100, 5000, ax, by);
 
 		for (int i = 0; i < count; i++)
 		{
-			double sample = this.filter(ax, by, samples[i]);
+			double sample = this.filter(data, ax, by, samples[i]);
 			
 			samples[i] = sample;
 		}
 		//==========================================================================================
 	}
 	
-	private double filter(double ax[], double by[],
+	private double filter(final LowpassFilterGeneratorData data,
+	                      double ax[], double by[],
 	                      final double sample)
 	{
 		//==========================================================================================
-		xv[2] = xv[1]; 
-		xv[1] = xv[0];
-		xv[0] = sample;
+		data.xv[2] = data.xv[1]; 
+		data.xv[1] = data.xv[0];
+		data.xv[0] = sample;
 		
-		yv[2] = yv[1]; 
-		yv[1] = yv[0];
-		yv[0] = (ax[0] * xv[0] + 
-				 ax[1] * xv[1] + 
-				 ax[2] * xv[2] - 
-    		     by[1] * yv[0] - 
-    		     by[2] * yv[1]);
+		data.yv[2] = data.yv[1]; 
+		data.yv[1] = data.yv[0];
+		data.yv[0] = (ax[0] * data.xv[0] + 
+				 ax[1] * data.xv[1] + 
+				 ax[2] * data.xv[2] - 
+    		     by[1] * data.yv[0] - 
+    		     by[2] * data.yv[1]);
 		
 		//==========================================================================================
-		return yv[0];
+		return data.yv[0];
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorData()
+	 */
+	@Override
+	public Object createGeneratorData()
+	{
+		return new LowpassFilterGeneratorData(new double[3], new double[3]);
 	}
 	
 	/* (non-Javadoc)

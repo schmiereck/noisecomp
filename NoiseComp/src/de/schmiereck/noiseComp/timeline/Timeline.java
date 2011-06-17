@@ -113,6 +113,11 @@ implements GeneratorBufferInterface,
 	 * Timeline Changed Listerners.
 	 */
 	private List<TimelineChangedListernerInterface> timelineChangedListerners = new Vector<TimelineChangedListernerInterface>();
+
+	/**
+	 * Generator Data.
+	 */
+	private Object generatorData = null;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -124,7 +129,10 @@ implements GeneratorBufferInterface,
 	 */
 	public Timeline(Timeline moduleimeline)
 	{
+		//==========================================================================================
 		this.moduleTimeline = moduleimeline;
+		
+		//==========================================================================================
 	}
 
 	/**
@@ -145,6 +153,8 @@ implements GeneratorBufferInterface,
 		//==========================================================================================
 		this.generator = generator;
 		
+		this.generatorData = this.generator.createGeneratorData();
+			
 		//------------------------------------------------------------------------------------------
 		float startTimePos = this.generator.getStartTimePos();
 		float endTimePos = this.generator.getEndTimePos();
@@ -1184,6 +1194,16 @@ implements GeneratorBufferInterface,
 		this.subGeneratorTimelines.clear();
 		
 		this.timelineChangedListerners.clear();
+	}
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#getGeneratorData()
+	 */
+	@Override
+	public //synchronized
+	Object getGeneratorData()
+	{
+		return this.generatorData;
 	}
 	
 }
