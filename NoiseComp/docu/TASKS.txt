@@ -5,7 +5,6 @@ TODO:
 =====
 #2:		IMPROVEMENT: Mail: Florian und ich empfehlen eine BSD-style license. Mit GNU-Lizenzen hatten wir schon jede Menge Ärger.
 #5:		TASK: Implements obligate input fields (with default values).
-#6:		TASK: Disable unreachable functions (buttons).
 #9:		TASK: Do not allow more than one OutputGenerator for a Module (and other single input inputs).
 #20:	IMPROVEMENT: Insert, Edit and Remove for Generators by class name.
 #25:	IMPROVEMENT: Only notify property change listeners if property value is realy changed.
@@ -58,9 +57,9 @@ TODO:
 #168:	IMPROVEMENT: Edit and show description of timeline.
 #169:	IMPROVEMENT: Save and restore size and position of file dialogs.
 #170:	IMPROVEMENT: Export to Wave-File.
-#172:	IMPROVEMENT: Add pulseWidth to Sawtooth-Generator.
-#173:	IMPROVEMENT: Add pulseWidth to Triangle-Generator.
-#174:	IMPROVEMENT: Add pulseWidth to Sinus-Generator.
+#172:	IMPROVEMENT: 
+#173:	
+#174:	
 #175:	IMPROVEMENT: Store input in XML-Files with names, not with numbers.
 #177:	IMPROVEMENT: Add signalShift Input for Generators.
 #181:	BUG: Allow Enter to store values with default button in ModuleEdit Dialog.
@@ -84,6 +83,9 @@ WORK:
 		--> DONE: AppModuleController
 		--> AppTimelineController
 		--> AppInputController
+#6:		TASK: Disable unreachable functions (buttons).
+		--> Change Button and Menu Commands to Action/Handler pattern.
+		--> Input-Edit.
 
 DONE:
 =====

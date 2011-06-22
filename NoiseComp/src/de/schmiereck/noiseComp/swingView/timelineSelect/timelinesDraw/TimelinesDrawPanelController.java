@@ -395,34 +395,13 @@ implements TimelineContentChangedListenerInterface,
 		//==========================================================================================
 		Timeline retSelectedTimeline;
 		
-		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
 		TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 
 		if (selectedTimelineSelectEntryModel != null)
 		{
 			retSelectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
-			
-//			Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
-//			
-//			String selectedTimelineGeneratorName = selectedTimelineSelectEntryModel.getName();
-//			
-//			ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.modulesTreeModel.getEditedModuleGeneratorTypeData();
-//			
-//			retSelectedTimeline = null;
-//			
-//			Iterator<Generator> generatorsIterator = editedModuleGeneratorTypeData.getGeneratorsIterator();
-//			
-//			while (generatorsIterator.hasNext())
-//			{
-//				Generator generator = generatorsIterator.next();
-//				
-//				if (generator.getName().equals(selectedTimelineGeneratorName))
-//				{
-//					retSelectedTimeline = generator;
-//					break;
-//				}
-//			}
 		}
 		else
 		{

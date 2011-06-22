@@ -463,7 +463,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		//------------------------------------------------------------------------------------------
 		this.inputEditController = 
-			new InputEditController(this.inputSelectController.getInputSelectModel(),
+			new InputEditController(this.timelinesDrawPanelController,
+			                        this.inputSelectController.getInputSelectModel(),
 			                        this.appModelChangedObserver,
 			                        this.selectedTimelineModel);
 		
@@ -882,30 +883,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Input-Edit:
 		//------------------------------------------------------------------------------------------
-		// Input-Edit Update-Button: Update Input-Data and Input-Edit-Model:
-		
-		this.inputEditController.getInputEditView().getUpdateButton().addActionListener
-		(
-		 	new ActionListener()
-		 	{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					final InputSelectModel inputSelectModel = inputSelectController.getInputSelectModel();
-					
-					final Timeline selectedTimeline = timelinesDrawPanelController.getSelectedTimeline();
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					inputEditController.doSubmit(inputSelectModel, selectedTimeline);
-					
-					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				}
-		 	}
-		);
-		//------------------------------------------------------------------------------------------
-		// Input-Edit Remove-Input-Button: Update Input-Select-Model and Generator-Input-Data:
-		
+		// Input-Edit Remove-Input-Button: Update Input-Select-Model and Generator-Input-Data:		
 		this.inputEditController.getInputEditView().getRemoveButton().addActionListener
 		(
 		 	new ActionListener()

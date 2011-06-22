@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -31,6 +32,8 @@ import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputsTabelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelController;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.utils.InputUtils;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -74,7 +77,8 @@ public class InputEditController
 	 * @param selectedTimelineModel
 	 * 			is the Selected-Timeline Model.
 	 */
-	public InputEditController(final InputSelectModel inputSelectModel, 
+	public InputEditController(final TimelinesDrawPanelController timelinesDrawPanelController,
+	                           final InputSelectModel inputSelectModel, 
 	                           final AppModelChangedObserver appModelChangedObserver,
 	                           final SelectedTimelineModel selectedTimelineModel)
 	{
@@ -175,6 +179,18 @@ public class InputEditController
 				}
 			}
 		);
+		//------------------------------------------------------------------------------------------
+		{
+			JButton updateButton = this.inputEditView.getUpdateButton();
+		
+			TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+			
+			InputEditUpdateAction inputEditUpdateAction = new InputEditUpdateAction(this,
+			                                                                        inputSelectModel,
+			                                                                        timelinesDrawPanelModel);
+			
+			updateButton.setAction(inputEditUpdateAction);
+		}
 		//==========================================================================================
 	}
 

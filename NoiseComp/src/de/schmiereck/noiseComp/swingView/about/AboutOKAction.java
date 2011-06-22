@@ -24,7 +24,7 @@ implements Action
 	// Fields:
 	
 	/**
-	 * Ist der Controller des About-Dialogs. 
+	 * Controller of About-Dialog. 
 	 */
 	private AboutController appController;
 	
@@ -35,7 +35,7 @@ implements Action
 	 * Constructor.
 	 * 
 	 * @param appController 
-	 * 			ist der Controller des About-Dialogs. 
+	 * 			is the Controller of About-Dialogs. 
 	 */
 	public AboutOKAction(AboutController appController)
 	{
@@ -49,6 +49,9 @@ implements Action
 	{
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#getValue(java.lang.String)
+	 */
 	public Object getValue(String key)
 	{
 		Object value;
@@ -86,23 +89,38 @@ implements Action
 		return value;
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#isEnabled()
+	 */
 	public boolean isEnabled()
 	{
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#putValue(java.lang.String, java.lang.Object)
+	 */
 	public void putValue(String key, Object value)
 	{
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#removePropertyChangeListener(java.beans.PropertyChangeListener)
+	 */
 	public void removePropertyChangeListener(PropertyChangeListener listener)
 	{
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.Action#setEnabled(boolean)
+	 */
 	public void setEnabled(boolean b)
 	{
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		this.appController.doClose();
