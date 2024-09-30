@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="noiseComp" />
+        <module name="noiseCompRoot" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="NoiseComp" target="22" />
+      <module name="noiseCompGui" target="22" />
+      <module name="NoiseCompGUI" target="22" />
+      <module name="untitled1" target="22" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
