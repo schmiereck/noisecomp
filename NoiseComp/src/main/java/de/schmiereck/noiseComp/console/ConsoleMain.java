@@ -2,8 +2,8 @@ package de.schmiereck.noiseComp.console;
 
 import javax.sound.sampled.SourceDataLine;
 
-import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.OutputGenerator;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.noiseComp.soundData.SoundData;
