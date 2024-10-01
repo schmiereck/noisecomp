@@ -1,7 +1,10 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.generator;
+package de.schmiereck.noiseComp.generator.signal;
+
+import de.schmiereck.noiseComp.generator.*;
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -44,11 +47,11 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator, 
-	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModuleArguments moduleArguments)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator,
+                                     GeneratorBufferInterface generatorBuffer,
+                                     ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		final PinkNoise2GeneratorData data = (PinkNoise2GeneratorData)generatorBuffer.getGeneratorData();
