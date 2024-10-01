@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.generator;
 
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**

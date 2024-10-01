@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import de.schmiereck.noiseComp.PopupRuntimeException;
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 
 /**
@@ -189,7 +190,7 @@ implements GeneratorInterface,
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.GeneratorInterface#generateFrameSample(long, de.schmiereck.noiseComp.generator.ModuleGenerator)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorInterface#generateFrameSample(long, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
 	public SoundSample generateFrameSample(long framePosition, ModuleGenerator parentModuleGenerator, 
 	                                       GeneratorBufferInterface generatorBuffer, 
@@ -767,8 +768,8 @@ implements GeneratorInterface,
 	 * 			are the Arguments of calling Module
 	 */
 	private void calcModuleInputValue(long framePosition, float frameTime, SoundSample signal,
-	                                 ModuleGenerator parentModuleGenerator, ModuleArguments moduleArguments,
-	                                 InputTypeData moduleInputTypeData)
+									  ModuleGenerator parentModuleGenerator, ModuleArguments moduleArguments,
+									  InputTypeData moduleInputTypeData)
 	{
 		//==========================================================================================
 		boolean foundModuleInput;
