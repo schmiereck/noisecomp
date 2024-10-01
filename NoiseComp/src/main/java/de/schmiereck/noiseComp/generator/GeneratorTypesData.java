@@ -3,6 +3,7 @@ package de.schmiereck.noiseComp.generator;
 import java.util.Iterator;
 
 import de.schmiereck.dataTools.VectorHash;
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 /**
  * <p>
