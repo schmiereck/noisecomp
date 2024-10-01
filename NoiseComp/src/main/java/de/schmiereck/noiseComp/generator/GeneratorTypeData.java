@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;

@@ -1,6 +1,8 @@
 package de.schmiereck.noiseComp.generator;
 
 
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
+
 /**
  * Interface das jeder Generator implementiert.
  *
@@ -29,7 +31,7 @@ public interface GeneratorInterface
 	 * 			the sound sample.
 	 */
 	SoundSample generateFrameSample(long framePosition, 
-	                                ModuleGenerator parentModuleGenerator, 
+	                                ModuleGenerator parentModuleGenerator,
 	                                GeneratorBufferInterface generatorBuffer,
 	                                ModuleArguments moduleArguments);
 
