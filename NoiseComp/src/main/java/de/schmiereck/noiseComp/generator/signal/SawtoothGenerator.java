@@ -1,9 +1,14 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.generator;
+package de.schmiereck.noiseComp.generator.signal;
+
+import de.schmiereck.noiseComp.generator.*;
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 import java.util.Iterator;
+
+import static de.schmiereck.noiseComp.generator.GenratorUtils.calcPeriodFadeValue;
 
 /**
  * <p>
@@ -51,11 +56,11 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator, 
-	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModuleArguments moduleArguments)
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator,
+									 GeneratorBufferInterface generatorBuffer,
+									 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		// Frequency of generated Signal oscillation.
@@ -214,18 +219,20 @@ extends Generator
 		
 		//------------------------------------------------------------------------------------------
 		// Relative timepos in Generator.
-		
+
+		final float periodLengthInFrames;
 		// Pos in Periode.
 		float periodPosition;
 		
 		if (Float.isNaN(signalFrequency) == false)
 		{
 			// Length of a Period in Frames.
-			float periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
+			periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
 			periodPosition = (float)(framePosition / periodLengthInFrames);
 		}
 		else
 		{
+			periodLengthInFrames = 1.0F;
 			periodPosition = 0.0F;
 		}
 		
@@ -256,6 +263,9 @@ extends Generator
 		}
 
 		//------------------------------------------------------------------------------------------
+		final float fadeValue = calcPeriodFadeValue(this.getStartTimePos(), this.getEndTimePos(),
+				this.getSoundFrameRate(), frameTime, periodLengthInFrames);
+
 		float value;
 		
 		float posInPeriod = ((periodPosition + signalShift) % 1.0F);
@@ -277,8 +287,8 @@ extends Generator
 			value = -1.0F;
 		}
 		
-		soundSample.setStereoValues(value * signalAmplitude, 
-		                            value * signalAmplitude);
+		soundSample.setStereoValues(value * signalAmplitude * fadeValue,
+		                            value * signalAmplitude * fadeValue);
 		
 		//==========================================================================================
 	}
