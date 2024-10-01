@@ -377,7 +377,7 @@
  374:             9            288  javax.swing.plaf.BorderUIResource$CompoundBorderUIResource
  375:             9            288  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$LazyWindowsIcon
  376:            12            288  javax.swing.JViewport$ViewListener
- 377:             4            288  de.schmiereck.noiseComp.generator.SinusGenerator
+ 377:             4            288  de.schmiereck.noiseComp.generator.signal.SinusGenerator
  378:             9            288  sun.awt.SunHints$Key
  379:             9            288  sun.misc.MetaIndex
  380:             1            288  com.sun.java.swing.plaf.windows.WindowsTreeUI
@@ -479,7 +479,7 @@
  476:             6            144  javax.swing.plaf.basic.BasicSplitPaneDivider$DividerLayout
  477:             1            144  de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel
  478:             1            144  sun.font.AttributeValues
- 479:             2            144  de.schmiereck.noiseComp.generator.FaderGenerator
+ 479:             2            144  de.schmiereck.noiseComp.generator.shape.FaderGenerator
  480:             3            144  javax.swing.text.DefaultEditorKit$BeginParagraphAction
  481:             2            144  java.lang.ThreadGroup
  482:             1            144  de.schmiereck.noiseComp.soundBuffer.SoundBufferManager
@@ -559,7 +559,7 @@
  556:             4             96  javax.sound.sampled.LineEvent$Type
  557:             2             96  javax.swing.text.DefaultEditorKit$EndAction
  558:             3             96  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel$HighlightedTimelineHandler
- 559:             1             96  de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData
+ 559:             1             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData
  560:             2             96  sun.util.LocaleServiceProviderPool
  561:             2             96  javax.swing.text.DefaultEditorKit$PageAction
  562:             2             96  javax.swing.text.DefaultEditorKit$BeginAction
@@ -583,7 +583,7 @@
  580:             3             96  com.sun.awt.AWTUtilities$Translucency
  581:             1             96  javax.swing.tree.VariableHeightLayoutCache
  582:             3             96  javax.swing.JMenu$MenuChangeListener
- 583:             3             96  de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData$TicksPer
+ 583:             3             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData$TicksPer
  584:             1             96  com.sun.media.sound.MixerSourceLine$MixerSourceLineGainControl
  585:             3             96  [[B
  586:             1             88  com.sun.media.sound.MixerSourceLine$MixerSourceLineSampleRateControl
@@ -636,7 +636,7 @@
  633:             1             72  sun.java2d.loops.SetFillRectANY
  634:             1             72  sun.java2d.d3d.D3DSurfaceToSurfaceTransform
  635:             1             72  sun.java2d.loops.SetDrawPathANY
- 636:             1             72  de.schmiereck.noiseComp.generator.OutputGenerator
+ 636:             1             72  de.schmiereck.noiseComp.generator.signal.OutputGenerator
  637:             3             72  com.sun.java.swing.plaf.windows.WindowsMenuUI$1
  638:             1             72  sun.text.resources.FormatData_de
  639:             1             72  sun.java2d.d3d.D3DRTTSurfaceToSurfaceTransform
@@ -658,7 +658,7 @@
  655:             1             72  [Lsun.swing.SwingUtilities2$LSBCacheEntry;
  656:             1             72  sun.java2d.d3d.D3DTextureToSurfaceTransform
  657:             1             72  sun.awt.resources.awt
- 658:             1             72  de.schmiereck.noiseComp.generator.MixerGenerator
+ 658:             1             72  de.schmiereck.noiseComp.generator.mixer.MixerGenerator
  659:             1             72  sun.text.resources.FormatData_de_DE
  660:             1             72  sun.awt.resources.awt_de
  661:             3             72  java.text.AttributedCharacterIterator$Attribute

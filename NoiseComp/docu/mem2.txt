@@ -379,7 +379,7 @@
  376:            12            288  java.awt.AlphaComposite
  377:             9            288  <compiledICHolderKlass>
  378:             9            288  com.sun.java.swing.plaf.windows.WindowsLookAndFeel$LazyWindowsIcon
- 379:             4            288  de.schmiereck.noiseComp.generator.SinusGenerator
+ 379:             4            288  de.schmiereck.noiseComp.generator.signal.SinusGenerator
  380:             1            288  com.sun.java.swing.plaf.windows.WindowsTreeUI
  381:             5            280  com.sun.java.swing.plaf.windows.TMSchema$TypeEnum
  382:             5            280  [[S
@@ -493,7 +493,7 @@
  490:             1            144  com.sun.media.sound.MixerSourceLine
  491:             3            144  javax.swing.plaf.basic.BasicBorders$RadioButtonBorder
  492:             2            144  javax.swing.plaf.basic.BasicTableUI
- 493:             2            144  de.schmiereck.noiseComp.generator.FaderGenerator
+ 493:             2            144  de.schmiereck.noiseComp.generator.shape.FaderGenerator
  494:             6            144  sun.java2d.pipe.DuctusShapeRenderer
  495:             1            144  de.schmiereck.noiseComp.swingView.inputEdit.InputEditModel
  496:             1            136  sun.java2d.d3d.D3DSurfaceData$D3DWindowSurfaceData
@@ -551,7 +551,7 @@
  548:             3             96  java.nio.DirectByteBuffer$Deallocator
  549:             2             96  javax.swing.text.JTextComponent$DefaultKeymap
  550:             3             96  com.sun.java.swing.plaf.windows.WindowsMenuUI$WindowsMouseInputHandler
- 551:             1             96  de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData
+ 551:             1             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData
  552:             3             96  javax.swing.plaf.basic.BasicMenuUI$Handler
  553:             2             96  java.io.OutputStreamWriter
  554:             3             96  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel$HighlightedTimelineHandler
@@ -580,7 +580,7 @@
  577:             1             96  java.awt.EventQueue
  578:             1             96  javax.swing.tree.VariableHeightLayoutCache
  579:             2             96  java.security.BasicPermissionCollection
- 580:             3             96  de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData$TicksPer
+ 580:             3             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData$TicksPer
  581:             3             96  javax.swing.JMenu$MenuChangeListener
  582:             3             96  sun.nio.cs.Surrogate$Parser
  583:             3             96  [[B
@@ -640,8 +640,8 @@
  637:             1             72  sun.java2d.d3d.D3DSurfaceToGDIWindowSurfaceScale
  638:             1             72  sun.text.resources.FormatData_de_DE
  639:             1             72  sun.java2d.d3d.D3DSurfaceToSurfaceScale
- 640:             1             72  de.schmiereck.noiseComp.generator.OutputGenerator
- 641:             1             72  de.schmiereck.noiseComp.generator.MixerGenerator
+ 640:             1             72  de.schmiereck.noiseComp.generator.signal.OutputGenerator
+ 641:             1             72  de.schmiereck.noiseComp.generator.mixer.MixerGenerator
  642:             1             72  sun.util.resources.CurrencyNames
  643:             1             72  sun.java2d.loops.SetFillPathANY
  644:             3             72  java.text.AttributedCharacterIterator$Attribute
