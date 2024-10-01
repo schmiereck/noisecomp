@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2011
  */
-package de.schmiereck.noiseComp.generator;
+package de.schmiereck.noiseComp.generator.signal;
 
 import java.util.Random;
 

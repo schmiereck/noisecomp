@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.generator;
+package de.schmiereck.noiseComp.generator.signal;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +12,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 //import com.sun.media.sound.WaveFileReader;
 
 import de.schmiereck.noiseComp.WaveResourceLoader;
+import de.schmiereck.noiseComp.generator.*;
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 /*
  * Created on 28.03.2005, Copyright (c) schmiereck, 2005
@@ -45,11 +47,11 @@ extends Generator
 	}
 	
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator, 
+	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator,
 									 GeneratorBufferInterface generatorBuffer,
-		                             ModuleArguments moduleArguments)
+									 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		final WaveGeneratorData data = (WaveGeneratorData)generatorBuffer.getGeneratorData();
