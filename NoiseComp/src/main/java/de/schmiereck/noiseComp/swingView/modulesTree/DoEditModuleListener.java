@@ -3,7 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.modulesTree;
 
-import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 
 
 /**
