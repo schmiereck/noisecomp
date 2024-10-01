@@ -8,16 +8,15 @@ import java.util.Vector;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.traversal.NodeIterator;
 
 import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.ModuleGenerator;
-import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.xmlTools.XMLData;
 import de.schmiereck.xmlTools.XMLPort;
@@ -391,7 +390,7 @@ public class LoadFileOperationLogic
 	{
 		String folderPath;
 		//if (generatorTypeClassName == null)	"de.schmiereck.noiseComp.generator.GeneratorTypeData"
-		//if (generatorClassName == null)		"de.schmiereck.noiseComp.generator.MixerGenerator"
+		//if (generatorClassName == null)		"de.schmiereck.noiseComp.generator.mixer.MixerGenerator"
 		//if (generatorTypeName == null)		"Mixer"
 		if ("de.schmiereck.noiseComp.generator.GeneratorTypeData".equals(generatorTypeClassName))
 		{
@@ -399,8 +398,8 @@ public class LoadFileOperationLogic
 		}
 		else
 		{
-			//if (generatorTypeClassName == null)	"de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData"
-			//if (generatorClassName == null)		"de.schmiereck.noiseComp.generator.ModuleGenerator#drum-set 1"
+			//if (generatorTypeClassName == null)	"de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData"
+			//if (generatorClassName == null)		"de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-set 1"
 			//if (generatorTypeName == null)		"drum-set 1"
 			folderPath = StartupService.MODULE_FOLDER_PATH;
 		}
@@ -515,8 +514,8 @@ public class LoadFileOperationLogic
 			{
 //				folderPath = makeMissingFolderPath(generatorType);
 				
-				//"de.schmiereck.noiseComp.generator.ModuleGenerator#drum-set 1"
-				if (generatorType.startsWith("de.schmiereck.noiseComp.generator.ModuleGenerator#"))
+				//"de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-set 1"
+				if (generatorType.startsWith("de.schmiereck.noiseComp.generator.module.ModuleGenerator#"))
 				{
 					folderPath = StartupService.MODULE_FOLDER_PATH;
 				}
