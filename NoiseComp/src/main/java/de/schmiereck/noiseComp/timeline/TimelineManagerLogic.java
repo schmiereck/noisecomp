@@ -15,12 +15,11 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.ModuleGenerator;
-import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.OutputGenerator;
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
-import de.schmiereck.noiseComp.swingView.SwingMain;
 
 /**
  * <p>

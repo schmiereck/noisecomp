@@ -17,7 +17,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorBufferInterface;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.ModuleArguments;
-import de.schmiereck.noiseComp.generator.ModuleGenerator;
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 import de.schmiereck.noiseComp.generator.ModuleGeneratorRemoveListenerInterface;
 import de.schmiereck.noiseComp.generator.SoundSample;
 
@@ -540,7 +540,7 @@ implements GeneratorBufferInterface,
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#calcFrameSample(long, float, de.schmiereck.noiseComp.generator.ModuleGenerator)
+	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#calcFrameSample(long, float, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
 	@Override
 	public SoundSample calcFrameSample(long framePosition, 
