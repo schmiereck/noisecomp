@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.generator;
+package de.schmiereck.noiseComp.generator.signal;
 /*
  * PinkNoise.java  -  a pink noise generator
  *
