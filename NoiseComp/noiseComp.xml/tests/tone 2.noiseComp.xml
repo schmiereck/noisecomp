@@ -4,7 +4,7 @@
 	<generatorTypes>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.shape.FaderGenerator]]></generatorClassName>
 			<name><![CDATA[Fader]]></name>
 			<description><![CDATA[Fades linear from a start to a end value.]]></description>
 			<inputTypes>
@@ -30,7 +30,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.mixer.MixerGenerator]]></generatorClassName>
 			<name><![CDATA[Mixer]]></name>
 			<description><![CDATA[Mixes multiple signal input lines and scale them with a
 				volume.]]></description>
@@ -59,7 +59,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.MultiplierGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.mixer.MultiplierGenerator]]></generatorClassName>
 			<name><![CDATA[Multiplier]]></name>
 			<description><![CDATA[Multiply multiple signal input lines and multiply them
 				with a multiplier.]]></description>
@@ -88,7 +88,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.OutputGenerator]]></generatorClassName>
 			<name><![CDATA[Output]]></name>
 			<description><![CDATA[The input signal is audible at the audio hardware.]]></description>
 			<inputTypes>
@@ -105,7 +105,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.SinusGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.SinusGenerator]]></generatorClassName>
 			<name><![CDATA[Sinus]]></name>
 			<description><![CDATA[Generates a sinus signal with a specified frequency and
 				amplidude.]]></description>
@@ -146,7 +146,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.RectangleGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.RectangleGenerator]]></generatorClassName>
 			<name><![CDATA[Rectangle]]></name>
 			<description><![CDATA[Generates a rectangle signal with a specified frequency
 				and amplidude.]]></description>
@@ -182,7 +182,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.CutGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.filter.CutGenerator]]></generatorClassName>
 			<name><![CDATA[Cut]]></name>
 			<description><![CDATA[Cut the input singnal to the given minimum and maximum
 				values.]]></description>
@@ -215,7 +215,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.WaveGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.WaveGenerator]]></generatorClassName>
 			<name><![CDATA[Wave File]]></name>
 			<description><![CDATA[Plays a Wave file from file system.]]></description>
 			<inputTypes>
@@ -231,7 +231,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ASRPulseGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.shape.ASRPulseGenerator]]></generatorClassName>
 			<name><![CDATA[ASRPulse]]></name>
 			<description><![CDATA[Generates a pulse signal with a specified frequency and
 				amplidude and puls shape.]]></description>
@@ -284,7 +284,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.WhiteNoiseGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.WhiteNoiseGenerator]]></generatorClassName>
 			<name><![CDATA[White Gaussian Noise]]></name>
 			<description><![CDATA[Generate White Gaussian Noise with variance and mean.]]></description>
 			<inputTypes>
@@ -308,7 +308,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.PinkNoiseGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.PinkNoiseGenerator]]></generatorClassName>
 			<name><![CDATA[Pink Noise]]></name>
 			<description><![CDATA[Generate White Gaussian Noise with variance and mean.]]></description>
 			<inputTypes>
@@ -332,7 +332,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.PinkNoise2Generator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.PinkNoise2Generator]]></generatorClassName>
 			<name><![CDATA[Pink Noise 2]]></name>
 			<description><![CDATA[Generate White Gaussian Noise with variance and mean.]]></description>
 			<inputTypes>
@@ -363,7 +363,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#tone]]></generatorClassName>
 			<name><![CDATA[tone]]></name>
 			<description><![CDATA[Generic Module]]></description>
@@ -379,7 +379,7 @@
 			</inputTypes>
 			<generators>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.signal.OutputGenerator]]></type>
 					<name><![CDATA[out]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[2.0]]></endTime>
@@ -393,7 +393,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.mixer.MixerGenerator]]></type>
 					<name><![CDATA[mixer1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[2.0]]></endTime>
@@ -425,7 +425,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.shape.FaderGenerator]]></type>
 					<name><![CDATA[fadeIn]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[0.5]]></endTime>
@@ -443,7 +443,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.FaderGenerator]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.shape.FaderGenerator]]></type>
 					<name><![CDATA[fadeOut]]></name>
 					<startTime><![CDATA[0.5]]></startTime>
 					<endTime><![CDATA[2.0]]></endTime>
@@ -461,7 +461,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.SinusGenerator]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.signal.SinusGenerator]]></type>
 					<name><![CDATA[tone1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[2.0]]></endTime>
@@ -485,7 +485,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.SinusGenerator]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.signal.SinusGenerator]]></type>
 					<name><![CDATA[tone2]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[2.0]]></endTime>
@@ -509,7 +509,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.mixer.MixerGenerator]]></type>
 					<name><![CDATA[multFreq]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[2.0]]></endTime>
@@ -553,7 +553,7 @@
 			</tracks>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#ConsoleMain-Module]></generatorClassName>
 			<name><![CDATA[ConsoleMain-Module]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
@@ -561,7 +561,7 @@
 			<inputTypes />
 			<generators>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.OutputGenerator]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.signal.OutputGenerator]]></type>
 					<name><![CDATA[out]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[16.0]]></endTime>
@@ -575,7 +575,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.MixerGenerator]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.mixer.MixerGenerator]]></type>
 					<name><![CDATA[mix1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[16.0]]></endTime>
