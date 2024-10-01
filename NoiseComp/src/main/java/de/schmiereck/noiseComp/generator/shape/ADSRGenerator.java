@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.generator;
+package de.schmiereck.noiseComp.generator.shape;
 /*
  * Created on 09.04.2005, Copyright (c) schmiereck, 2005
  */

@@ -35,7 +35,7 @@ public class AppModelChangedObserver
 	}
 
 //	/* (non-Javadoc)
-//	 * @see de.schmiereck.noiseComp.swingView.moduleTree.ModulensertedListener#notifyModulenserted(de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData)
+//	 * @see de.schmiereck.noiseComp.swingView.moduleTree.ModulensertedListener#notifyModulenserted(de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData)
 //	 */
 //	@Override
 //	public void notifyModulenserted(ModuleGeneratorTypeData moduleeneratorTypeData)
