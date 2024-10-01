@@ -1,7 +1,10 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.generator;
+package de.schmiereck.noiseComp.generator.filter;
+
+import de.schmiereck.noiseComp.generator.*;
+import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 /**
  * <p>
@@ -42,11 +45,11 @@ extends Generator
 	}
 
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
 	public void calculateSoundSample(long framePosition, float frameTime, 
-	                                 SoundSample signalSample, 
-	                                 ModuleGenerator parentModuleGenerator, 
+	                                 SoundSample signalSample,
+	                                 ModuleGenerator parentModuleGenerator,
 	                                 GeneratorBufferInterface generatorBuffer,
 	                                 ModuleArguments moduleArguments)
 	{
