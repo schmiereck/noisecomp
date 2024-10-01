@@ -1,9 +1,12 @@
-package de.schmiereck.noiseComp.generator;
+package de.schmiereck.noiseComp.generator.module;
 
 import java.util.Iterator;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.PopupRuntimeException;
+import de.schmiereck.noiseComp.generator.Generator;
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 
 
 /**
@@ -24,7 +27,7 @@ public class ModuleGeneratorTypeData
 	/**
 	 * The Output-Object of the Sound-Generators.
 	 */
-	private OutputGenerator	outputGenerator = null;
+	private OutputGenerator outputGenerator = null;
 
 //	/**
 //	 * List of {@link Generator}-Objects, used to generate the output.

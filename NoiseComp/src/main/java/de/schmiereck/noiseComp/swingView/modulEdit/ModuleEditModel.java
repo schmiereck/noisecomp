@@ -3,7 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
-import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 

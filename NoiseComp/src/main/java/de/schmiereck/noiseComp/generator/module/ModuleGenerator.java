@@ -1,5 +1,7 @@
-package de.schmiereck.noiseComp.generator;
+package de.schmiereck.noiseComp.generator.module;
 
+import de.schmiereck.noiseComp.generator.*;
+import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 /**
@@ -10,7 +12,7 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @version <p>28.02.2004: created, smk</p>
  */
 public class ModuleGenerator
-extends Generator 
+extends Generator
 //implements GeneratorChangeListenerInterface
 {
 	//**********************************************************************************************
@@ -42,11 +44,11 @@ extends Generator
 	}
 	
 	/* (non-Javadoc)
-	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.ModuleGenerator)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
 	public void calculateSoundSample(long framePosition, 
 	                                 float frameTime, 
-	                                 SoundSample sample, 
+	                                 SoundSample sample,
 	                                 ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
 	                                 ModuleArguments moduleArguments)
