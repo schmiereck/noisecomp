@@ -6,7 +6,7 @@ package de.schmiereck.noiseComp.swingView;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.UIManager;
 
-import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundData.SoundData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;

@@ -10,12 +10,8 @@ import java.util.Vector;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
-import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
-import de.schmiereck.noiseComp.soundData.PlaybackPosChangedListenerInterface;
-import de.schmiereck.noiseComp.soundData.SoundData;
-import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
-import de.schmiereck.noiseComp.swingView.SwingMain;
 
 /**
  * <p>
