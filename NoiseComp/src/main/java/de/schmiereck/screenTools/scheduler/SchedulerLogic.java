@@ -19,7 +19,7 @@ public abstract class SchedulerLogic
 	private long runCounter	= 0L;
 	
 	/**
-	 * Gew�nschte Framerate:<br/>
+	 * Gewünschte Framerate:<br/>
 	 * Anzahl der Frames pro Sekunde die dargestellt werden sollen.
 	 */
 	private int targetFramesPerSecond;

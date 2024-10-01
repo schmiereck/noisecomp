@@ -89,13 +89,16 @@ extends PipelineSchedulerLogic
 			System.out.println("PLAY: " + 
 			                   soundBufferManager.getActualTime() + 
 			                   " (" + actualWaitPerFramesMillis + ")");
-			
+
+			System.out.println("notifyPlaybackPosChangedListeners: BEGIN");
 			this.notifyPlaybackPosChangedListeners();
-			
+			System.out.println("notifyPlaybackPosChangedListeners: END");
+
 			//soundBufferManager.pollGenerate();
 			
 			byte abData[] = this.soundData.getLineBufferData();
-			
+			System.out.println("abData:" + abData.length);
+
 			try
 			{
 				//int numBytesToRead = line.available();
@@ -108,7 +111,7 @@ extends PipelineSchedulerLogic
 					line.write(abData, 0, nRead);
 				
 				//System.out.println("actualWaitPerFramesMillis: " + actualWaitPerFramesMillis + ", nWritten:" + nWritten + ", nRead: " + nRead);
-				//System.out.println("nRead:" + nRead);
+				System.out.println("nRead:" + nRead);
 			}
 			catch (IOException ex)
 			{

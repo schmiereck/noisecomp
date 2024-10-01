@@ -97,9 +97,13 @@ public class PlaySoundService {
         //==========================================================================================
         if (this.soundSchedulerLogic != null)
         {
+            System.out.println("soundSchedulerLogic.stopPlayback: BEGIN");
             this.soundSchedulerLogic.stopPlayback();
+            System.out.println("soundSchedulerLogic.stopPlayback: END");
 
+            System.out.println("soundSchedulerLogic.stopThread: BEGIN");
             this.soundSchedulerLogic.stopThread();
+            System.out.println("soundSchedulerLogic.stopThread: END");
 
             this.soundSchedulerLogic = null;
 
