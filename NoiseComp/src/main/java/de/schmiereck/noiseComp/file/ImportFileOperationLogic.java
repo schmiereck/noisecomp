@@ -4,7 +4,7 @@
 package de.schmiereck.noiseComp.file;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
-import de.schmiereck.noiseComp.generator.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.xmlTools.XMLPortException;
 
 /**
