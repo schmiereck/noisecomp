@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e6805498-9e83-4364-8650-340ea25b46df" name="Changes" comment="CVS to Git.&#10;Eclipse to IntelliJ.">
+    <list default="true" id="e6805498-9e83-4364-8650-340ea25b46df" name="Changes" comment="Refactorings.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,18 +28,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "schmiereck"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;schmiereck&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/schmiereck/noisecomp.git",
-    "accountId": "83ba8e7d-2748-4348-b09b-5850a8b3e2e7"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/schmiereck/noisecomp.git&quot;,
+    &quot;accountId&quot;: &quot;83ba8e7d-2748-4348-b09b-5850a8b3e2e7&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -51,38 +51,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.AccessibleScrollDemo.executor": "Run",
-    "Application.ConsoleMain.executor": "Run",
-    "Application.MainLogic.executor": "Run",
-    "Application.SwingMain.executor": "Run",
-    "Application.ViewportExampleMain.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.AllTests.executor": "Run",
-    "JUnit.SoundBufferManagerTest.executor": "Run",
-    "JUnit.ToneFrequencesTest.executor": "Run",
-    "JUnit.de.schmiereck.noiseComp.soundBuffer in noiseComp.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/scmj178/IdeaProjects/noisecomp/NoiseComp/lib/jmdi.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2954023",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.AccessibleScrollDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ConsoleMain.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainLogic.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SwingMain.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ViewportExampleMain.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.AllTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PipelineSchedulerLogicTest.testPipelineSchedulerLogic.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SoundBufferManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ToneFrequencesTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.de.schmiereck.noiseComp.soundBuffer in noiseComp.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/scmj178/IdeaProjects/noisecomp/NoiseComp/lib/jmdi.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2954023&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\scmj178\IdeaProjects\noisecomp\NoiseComp\lib" />
@@ -97,19 +98,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.SwingMain">
-    <configuration name="AccessibleScrollDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="demo1.AccessibleScrollDemo" />
-      <module name="noiseComp" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="demo1.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ConsoleMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.schmiereck.noiseComp.console.ConsoleMain" />
       <module name="noiseComp" />
@@ -164,6 +152,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PipelineSchedulerLogicTest.testPipelineSchedulerLogic" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="noiseComp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.schmiereck.screenTools.scheduler.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="de.schmiereck.screenTools.scheduler" />
+      <option name="MAIN_CLASS_NAME" value="de.schmiereck.screenTools.scheduler.PipelineSchedulerLogicTest" />
+      <option name="METHOD_NAME" value="testPipelineSchedulerLogic" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="noisecomp" />
       <method v="2">
@@ -180,10 +184,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.SwingMain" />
+        <item itemvalue="Application.ConsoleMain" />
+        <item itemvalue="JUnit.PipelineSchedulerLogicTest.testPipelineSchedulerLogic" />
         <item itemvalue="JUnit.AllTests" />
         <item itemvalue="Application.ViewportExampleMain" />
-        <item itemvalue="Application.AccessibleScrollDemo" />
-        <item itemvalue="Application.ConsoleMain" />
       </list>
     </recent_temporary>
   </component>
@@ -209,7 +213,9 @@
       <workItem from="1727689268951" duration="191000" />
       <workItem from="1727689466281" duration="1381000" />
       <workItem from="1727690861460" duration="6466000" />
-      <workItem from="1727701272884" duration="8095000" />
+      <workItem from="1727701272884" duration="10546000" />
+      <workItem from="1727782187759" duration="7957000" />
+      <workItem from="1727794354022" duration="5826000" />
     </task>
     <task id="LOCAL-00001" summary="CVS to Git.&#10;Eclipse to IntelliJ.">
       <option name="closed" value="true" />
@@ -259,7 +265,327 @@
       <option name="project" value="LOCAL" />
       <updated>1727710457500</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="CVS to Git.&#10;Eclipse to IntelliJ.">
+      <option name="closed" value="true" />
+      <created>1727711940960</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1727711940960</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fix &quot;is playing&quot; Bug.">
+      <option name="closed" value="true" />
+      <created>1727790208014</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727790208014</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801073614</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801073614</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801244958</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801244958</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801250184</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801250184</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801255098</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801255098</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801267522</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801267522</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801275168</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801275168</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801280656</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801280656</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801285821</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801285821</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801294193</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801294193</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801300614</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801300614</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801305625</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801305625</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801311835</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801311835</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801325999</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801325999</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801333879</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801333879</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801340951</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801340951</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801348078</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801348078</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801359090</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801359090</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801365217</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801365217</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801374648</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801374648</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801380729</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801380729</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801387948</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801387948</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801397060</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801397060</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801405186</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801405186</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801415744</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801415744</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801423336</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801423336</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801431256</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801431256</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801468842</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801468842</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801479747</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801479747</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801523172</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801523172</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801528600</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801528600</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801578209</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801578209</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801597306</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801597306</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801606479</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801606479</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801617941</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801617941</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801626391</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801626391</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801636181</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801636181</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801646398</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801646398</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727801663122</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1727801663122</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,30 +634,27 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="CVS to Git.&#10;Eclipse to IntelliJ." />
-    <option name="LAST_COMMIT_MESSAGE" value="CVS to Git.&#10;Eclipse to IntelliJ." />
+    <MESSAGE value="Fix &quot;is playing&quot; Bug." />
+    <MESSAGE value="Refactorings." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactorings." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/PipelineSchedulerLogic.java</url>
-          <line>183</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/SchedulerLogic.java</url>
-          <line>41</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/SchedulerLogic.java</url>
-          <line>131</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/AppController.java</url>
           <line>1871</line>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/OutLogic.java</url>
+          <line>12</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/OutLogic.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
