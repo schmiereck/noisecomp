@@ -4,9 +4,10 @@ import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
+import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
-import de.schmiereck.noiseComp.soundData.SoundData;
+import de.schmiereck.noiseComp.soundData.SoundDataLogic;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
@@ -35,13 +36,12 @@ public class ConsoleMain
 	//**********************************************************************************************
 	// Functions:
 
-	public static void main(String[] args)
-	{
+	public static void main(final String[] args) {
 		//==========================================================================================
-//		SoundService soundService = SoundService.getInstance();
+		final SoundService soundService = new SoundService();
 		
 		//==========================================================================================
-		StartupService.createBaseGeneratorTypes();
+		StartupService.createBaseGeneratorTypes(soundService);
 		
 //		// new ModuleGeneratorTypeData(null, null, null);
 //		ModuleGeneratorTypeData mainModuleGeneratorTypeData = ModuleGenerator.createModuleGeneratorTypeData();
@@ -54,17 +54,17 @@ public class ConsoleMain
 		
 		//------------------------------------------------------------------------------------------
 		// Setup Sound:
-		
-		SourceDataLine line = StartupService.createLine();
-		
-		//------------------------------------------------------------------------------------------
-		SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
-		
-		SoundData soundData = new SoundData(line, soundSourceLogic);
+
+		final SourceDataLine line = StartupService.createLine();
 		
 		//------------------------------------------------------------------------------------------
-		ModuleGeneratorTypeData mainModuleGeneratorTypeData = 
-			StartupService.createDemoGenerators(soundData.getFrameRate());
+		final SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
+
+		final SoundDataLogic soundDataLogic = new SoundDataLogic(line, soundSourceLogic);
+		
+		//------------------------------------------------------------------------------------------
+		final ModuleGeneratorTypeData mainModuleGeneratorTypeData =
+			StartupService.createDemoGenerators(soundService, soundDataLogic.getFrameRate());
 
 		soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);;
 
@@ -78,49 +78,26 @@ public class ConsoleMain
 		soundSourceSchedulerLogic.startThread();
 		
 		//------------------------------------------------------------------------------------------
-		
-//		String waitStr = "";
-//		for (int i = 0; i < 10000; i++)
-//		{
-//			waitStr += "WAIT ";
-//		}
-//		waitStr = null;
-		
-//		try
-//		{
-//			ConsoleMain.class.wait(1000);
-//		}
-//		catch (InterruptedException ex)
-//		{
-//			throw new RuntimeException(ex);
-//
-//		}
-		//------------------------------------------------------------------------------------------
-		soundSchedulerLogic = new SoundSchedulerLogic(25, soundData);
+		soundSchedulerLogic = new SoundSchedulerLogic(25, soundDataLogic);
 		
 		soundSchedulerLogic.startThread();
 
 		soundSchedulerLogic.startPlayback();
 		
 		//------------------------------------------------------------------------------------------
-		SoundBufferManager soundBufferManager = soundData.getSoundBufferManager();
-		
-		OutputGenerator outputGenerator = mainModuleGeneratorTypeData.getOutputGenerator();
+		final SoundBufferManager soundBufferManager = soundDataLogic.getSoundBufferManager();
+
+		final OutputGenerator outputGenerator = mainModuleGeneratorTypeData.getOutputGenerator();
 
 		float endTimePos = outputGenerator.getEndTimePos();
 		
-		do
-		{
-			try
-			{
+		do {
+			try {
 				Thread.sleep(100);
-			}
-			catch (InterruptedException e)
-			{
+			} catch (InterruptedException e) {
 				e.printStackTrace(System.err);
 			}
-		}
-		while (soundBufferManager.getActualTime() <= endTimePos);
+		} while (soundBufferManager.getActualTime() <= endTimePos);
 
 		//------------------------------------------------------------------------------------------
 		//System.exit(0);

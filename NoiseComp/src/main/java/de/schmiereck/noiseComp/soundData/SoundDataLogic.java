@@ -7,7 +7,7 @@ import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
- * Verwaltet ein Output eines {@link Generator}-Objekt.
+ * Verwaltet ein Output eines {@link de.schmiereck.noiseComp.generator.Generator}-Objekt.
  * Stellt Funktionen zur Echtzeit Wiedergabe des Signals des Output-Generators zur Verfügung.
  * Verwaltet die für die Ausgabe nötigen Puffer-Objekte.
  *
@@ -16,8 +16,7 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
  * @author smk
  * @version 25.01.2004
  */
-public class SoundData
-{
+public class SoundDataLogic {
 	private static final int BUFFER_SIZE = 32000; //16000; 
 
 	//nur noch die setOutput() aufrufen, wenn sich dieser ändert.
@@ -38,11 +37,8 @@ public class SoundData
 	 * Constructor.
 	 * 
 	 */
-	public SoundData(SourceDataLine line,
-					 SoundSourceLogic soundSourceLogic)
-	{
-		super();
-		
+	public SoundDataLogic(final SourceDataLine line,
+						  final SoundSourceLogic soundSourceLogic) {
 		this.line = line;
 		
 		this.frameRate = this.line.getFormat().getFrameRate();
@@ -53,7 +49,7 @@ public class SoundData
 
 		this.soundBufferManager = new SoundBufferManager(this.line.getFormat(), 
 														 AudioSystem.NOT_SPECIFIED, 
-														 SoundData.BUFFER_SIZE, 
+														 SoundDataLogic.BUFFER_SIZE,
 														 soundSourceLogic);
 	}
 	
@@ -79,8 +75,7 @@ public class SoundData
 	/**
 	 * @return the attribute {@link #soundSourceLogic}.
 	 */
-	public SoundSourceLogic getSoundSourceLogic()
-	{
+	public SoundSourceLogic getSoundSourceLogic() {
 		return this.soundSourceLogic;
 	}
 	/**
@@ -115,57 +110,43 @@ public class SoundData
 	/**
 	 * @return the attribute {@link #line}.
 	 */
-	public SourceDataLine getLine()
-	{
+	public SourceDataLine getLine() {
 		return this.line;
 	}
 
 	/**
 	 * Start Playback of {@link #line}
 	 */
-	public void startPlayback()
-	{
-		SourceDataLine line = this.line;
-		
-		line.start();
+	public void startPlayback() {
+		this.line.start();
 	}
 
 	/**
 	 * Pause Playback of {@link #line}
 	 */
-	public void pausePlayback()
-	{
-		SourceDataLine line = this.line;
+	public void pausePlayback() {
+		this.line.flush();
 
-		line.flush();
-		
-		line.stop();
+		this.line.stop();
 	}
 
 	/**
 	 * Resume Playback of {@link #line}
 	 */
-	public void resumePlayback()
-	{
-		SourceDataLine line = this.getLine();
-		
-		line.start();
+	public void resumePlayback() {
+		this.line.start();
 	}
 	
 	/**
 	 * Stop Playback of {@link #line}
 	 */
-	public void stopPlayback()
-	{
-		SoundBufferManager soundBufferManager = this.getSoundBufferManager();
+	public void stopPlayback() {
+		final SoundBufferManager soundBufferManager = this.getSoundBufferManager();
 		
-		synchronized (soundBufferManager)
-		{
-			SourceDataLine line = this.getLine();
-			
-			line.flush();
-			
-			line.stop();
+		synchronized (soundBufferManager) {
+			this.line.flush();
+
+			this.line.stop();
 			
 			soundBufferManager.stopGenerate();
 		}
@@ -173,8 +154,7 @@ public class SoundData
 	/**
 	 * @return the attribute {@link #frameRate}.
 	 */
-	public float getFrameRate()
-	{
+	public float getFrameRate() {
 		return this.frameRate;
 	}
 }

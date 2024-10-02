@@ -26,7 +26,7 @@ extends PipelineSchedulerLogic
 	/**
 	 * Sound data to play.
 	 */
-	private final SoundData soundData;
+	private final SoundDataLogic soundDataLogic;
 	
 	private boolean playbackPaused = false;
 
@@ -42,17 +42,17 @@ extends PipelineSchedulerLogic
 	/**
 	 * Constructor.
 	 * 
-	 * @param soundData
+	 * @param soundDataLogic
 	 * 			is the Sound data to play.
 	 * @param targetFramesPerSecond
 	 * 			are the Count of frames per second.
 	 */
-	public SoundSchedulerLogic(int targetFramesPerSecond, SoundData soundData) {
+	public SoundSchedulerLogic(int targetFramesPerSecond, SoundDataLogic soundDataLogic) {
 		//==========================================================================================
 		super(targetFramesPerSecond);
 		
 		//==========================================================================================
-		this.soundData = soundData;
+		this.soundDataLogic = soundDataLogic;
 		
 		//==========================================================================================
 	}
@@ -64,7 +64,7 @@ extends PipelineSchedulerLogic
 		//==========================================================================================
 		if (this.playbackPaused == false)
 		{	
-			SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
+			SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
 
 			soundBufferManager.pollGenerate();
 		}
@@ -79,9 +79,9 @@ extends PipelineSchedulerLogic
 		if (this.playbackPaused == false)
 		{	
 //			System.out.println("OUT: " + actualWaitPerFramesMillis);
-			SourceDataLine line = this.soundData.getLine();
+			SourceDataLine line = this.soundDataLogic.getLine();
 			
-			SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
+			SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
 			
 			System.out.println("PLAY: %f (%d)".formatted(soundBufferManager.getActualTime(), actualWaitPerFramesMillis));
 
@@ -89,7 +89,7 @@ extends PipelineSchedulerLogic
 
 			//soundBufferManager.pollGenerate();
 			
-			byte abData[] = this.soundData.getLineBufferData();
+			byte abData[] = this.soundDataLogic.getLineBufferData();
 
 			try {
 				//int numBytesToRead = line.available();
@@ -114,7 +114,7 @@ extends PipelineSchedulerLogic
 	 * 
 	 */
 	public void startPlayback() {
-		this.soundData.startPlayback();
+		this.soundDataLogic.startPlayback();
 	}
 	
 	/**
@@ -122,7 +122,7 @@ extends PipelineSchedulerLogic
 	 */
 	public void pausePlayback() {
 		//==========================================================================================
-		this.soundData.pausePlayback();
+		this.soundDataLogic.pausePlayback();
 		
 		this.playbackPaused = true;
 		//==========================================================================================
@@ -135,7 +135,7 @@ extends PipelineSchedulerLogic
 		//==========================================================================================
 		this.playbackPaused = false;
 		
-		this.soundData.resumePlayback();
+		this.soundDataLogic.resumePlayback();
 		//==========================================================================================
 	}
 	
@@ -143,7 +143,7 @@ extends PipelineSchedulerLogic
 	 * 
 	 */
 	public void stopPlayback() {
-		this.soundData.stopPlayback();
+		this.soundDataLogic.stopPlayback();
 	}
 
 	/**
@@ -159,7 +159,7 @@ extends PipelineSchedulerLogic
 	 */
 	private void notifyPlaybackPosChangedListeners() {
 		//==========================================================================================
-		SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
+		SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
 		
 		//==========================================================================================
 		for (PlaybackPosChangedListenerInterface playbackPosChangedListener : this.playbackPosChangedListeners)
@@ -175,7 +175,7 @@ extends PipelineSchedulerLogic
 	 */
 	public void submitPlaybackPos(float playbackPos) {
 		//==========================================================================================
-		SoundBufferManager soundBufferManager = this.soundData.getSoundBufferManager();
+		SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
 		
 		//==========================================================================================
 		soundBufferManager.setActualTime(playbackPos);

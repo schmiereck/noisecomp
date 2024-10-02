@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.soundData.SoundDataLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
@@ -42,7 +43,11 @@ public class TimelineEditController
 	 * App Controller.
 	 */
 	private final AppController appController;
-	
+
+	private final SoundSourceLogic soundSourceLogic;
+
+	private final SoundDataLogic soundDataLogic;
+
 	/**
 	 * Timeline-Edit View.
 	 */
@@ -73,12 +78,16 @@ public class TimelineEditController
 	 * @param appModelChangedObserver 
 	 */
 	public TimelineEditController(final AppController appController,
-	                              final TimelinesDrawPanelModel timelinesDrawPanelModel, 
+								  final SoundSourceLogic soundSourceLogic,
+								  final SoundDataLogic soundDataLogic,
+	                              final TimelinesDrawPanelModel timelinesDrawPanelModel,
 	                              final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
 		this.appController = appController;
-		
+		this.soundSourceLogic = soundSourceLogic;
+		this.soundDataLogic = soundDataLogic;
+
 		this.timelineEditModel = new TimelineEditModel();
 		this.timelineEditView = new TimelineEditView(this.timelineEditModel);
 
@@ -277,9 +286,9 @@ public class TimelineEditController
 	                              int entryModelPos)
 	{
 		//==========================================================================================
-		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
-		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
 //		TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
@@ -315,8 +324,9 @@ public class TimelineEditController
 				
 				if (timeline == null)
 				{
-					Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
-					
+					//Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
+					final float soundFrameRate = this.soundDataLogic.getFrameRate();
+
 					timeline = timelineManagerLogic.createTimeline(generatorTypeData,
 					                                               soundFrameRate,
 					                                               generatorName,

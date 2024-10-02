@@ -6,19 +6,28 @@
   <component name="ChangeListManager">
     <list default="true" id="e6805498-9e83-4364-8650-340ea25b46df" name="Changes" comment="Refactorings.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/AddGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/AddGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MixerGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MixerGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MultGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MultGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MultiplierGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MultiplierGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/OutputGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/OutputGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/PinkNoise2Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/PinkNoise2Generator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/PinkNoiseGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/PinkNoiseGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/RectangleGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/RectangleGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/SawtoothGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/SawtoothGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/TriangelGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/TriangelGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/WaveGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/WaveGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/WhiteNoiseGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/WhiteNoiseGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/docu/mem1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/docu/mem1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/docu/mem2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/docu/mem2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/console/ConsoleMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/console/ConsoleMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/service/PlaySoundService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/service/PlaySoundService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/service/SoundService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/service/SoundService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/service/StartupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/service/StartupService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundData/SoundData.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundData/SoundDataLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundData/SoundSchedulerLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundData/SoundSchedulerLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundSource/SoundSourceLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundSource/SoundSourceLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/SwingMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/SwingMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/AppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/AppModuleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/AppModuleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/PlayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/PlayController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/inputEdit/InputEditController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/inputEdit/InputEditController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/inputSelect/InputSelectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/inputSelect/InputSelectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/modulesTree/ModulesTreeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/modulesTree/ModulesTreeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineEdit/TimelineEditController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineEdit/TimelineEditController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineSelect/timelinesDraw/TimelinesDrawPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineSelect/timelinesDraw/TimelinesDrawPanelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineSelect/timelinesTimeRule/TimelinesTimeRuleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineSelect/timelinesTimeRule/TimelinesTimeRuleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineSelect/timelinesTimeRule/TimelinesTimeRuleMouseMotionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineSelect/timelinesTimeRule/TimelinesTimeRuleMouseMotionListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineSelect/timelinesTimeRule/TimelinesTimeRuleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/timelineSelect/timelinesTimeRule/TimelinesTimeRuleView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/graphic/MultiBufferFullScreenGraphic.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/graphic/MultiBufferFullScreenGraphic.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +120,7 @@
       <recent name="C:\Users\scmj178\IdeaProjects\noisecomp\NoiseCompGUI" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SwingMain">
+  <component name="RunManager" selected="Application.ConsoleMain">
     <configuration name="ConsoleMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.schmiereck.noiseComp.console.ConsoleMain" />
       <module name="noiseComp" />
@@ -197,8 +206,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SwingMain" />
         <item itemvalue="Application.ConsoleMain" />
+        <item itemvalue="Application.SwingMain" />
         <item itemvalue="JUnit.PipelineSchedulerLogicTest.testPipelineSchedulerLogic" />
         <item itemvalue="JUnit.AllTests" />
         <item itemvalue="Application.ViewportExampleMain" />
@@ -232,15 +241,8 @@
       <workItem from="1727794354022" duration="7058000" />
       <workItem from="1727852022424" duration="3753000" />
       <workItem from="1727858381879" duration="1303000" />
-      <workItem from="1727861220797" duration="4985000" />
-    </task>
-    <task id="LOCAL-00002" summary="CVS to Git.&#10;Eclipse to IntelliJ.">
-      <option name="closed" value="true" />
-      <created>1727704021213</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1727704021213</updated>
+      <workItem from="1727861220797" duration="6248000" />
+      <workItem from="1727876976709" duration="6515000" />
     </task>
     <task id="LOCAL-00003" summary="CVS to Git.&#10;Eclipse to IntelliJ.">
       <option name="closed" value="true" />
@@ -626,7 +628,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727873052556</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727873847274</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1727873847274</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -686,7 +696,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/AppController.java</url>
-          <line>1871</line>
+          <line>1883</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -695,14 +705,9 @@
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/modulesTree/ModulesTreeController.java</url>
-          <line>180</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/modulesTree/ModulesTreeController.java</url>
-          <line>156</line>
-          <option name="timeStamp" value="8" />
+          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/AppController.java</url>
+          <line>1974</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

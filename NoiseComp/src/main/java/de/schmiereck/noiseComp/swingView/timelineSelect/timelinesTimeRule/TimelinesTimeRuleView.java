@@ -15,6 +15,7 @@ import java.awt.geom.Point2D;
 import javax.swing.JComponent;
 
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel.MarkerType;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
@@ -135,7 +136,8 @@ extends JComponent
 	 * @param playTimeMarkerMovedCommand
 	 * 			is the Play-Time-Marker Moved Command.
 	 */
-	public TimelinesTimeRuleView(final TimelinesTimeRuleModel timelinesTimeRuleModel,
+	public TimelinesTimeRuleView(final SoundService soundService,
+								 final TimelinesTimeRuleModel timelinesTimeRuleModel,
 	                             final PlayTimeMarkerMovedCommand playTimeMarkerMovedCommand)
 	{
 		//==========================================================================================
@@ -149,7 +151,8 @@ extends JComponent
 		);
 		this.addMouseMotionListener
 		(
-		 	new TimelinesTimeRuleMouseMotionListener(timelinesTimeRuleModel,
+		 	new TimelinesTimeRuleMouseMotionListener(soundService,
+												     timelinesTimeRuleModel,
 		 	                                         this,
 		 	                                         playTimeMarkerMovedCommand)
 		);

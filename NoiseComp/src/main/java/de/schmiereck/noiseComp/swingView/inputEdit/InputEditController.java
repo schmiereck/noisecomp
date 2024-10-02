@@ -52,6 +52,8 @@ public class InputEditController
 	//**********************************************************************************************
 	// Fields:
 
+	private final SoundSourceLogic soundSourceLogic;
+
 	/**
 	 * Input-Edit Model.
 	 */
@@ -78,11 +80,13 @@ public class InputEditController
 	 * 			is the Selected-Timeline Model.
 	 */
 	public InputEditController(final TimelinesDrawPanelController timelinesDrawPanelController,
+							   final SoundSourceLogic soundSourceLogic,
 	                           final InputSelectModel inputSelectModel, 
 	                           final AppModelChangedObserver appModelChangedObserver,
 	                           final SelectedTimelineModel selectedTimelineModel)
 	{
 		//==========================================================================================
+		this.soundSourceLogic = soundSourceLogic;
 		this.appModelChangedObserver = appModelChangedObserver;
 		
 		this.inputEditModel = new InputEditModel(selectedTimelineModel);
@@ -230,9 +234,9 @@ public class InputEditController
 	                              boolean editInput)
 	{
 		//==========================================================================================
-		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
-		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
 		//List<InputTypeSelectItem> inputTypeSelectItems;
@@ -454,9 +458,9 @@ public class InputEditController
 	                     final Timeline selectedTimeline)
 	{
 		//==========================================================================================
-		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
-		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
 		// Input is selceted?

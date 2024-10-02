@@ -48,7 +48,9 @@ public class ModulesTreeController
 	 * App Controller.
 	 */
 	private final AppController appController;
-	
+
+	private final SoundService soundService;
+
 	//**********************************************************************************************
 	// Functions:
 
@@ -58,11 +60,12 @@ public class ModulesTreeController
 	 * @param appController
 	 * 			is the App Controller.
 	 */
-	public ModulesTreeController(final AppController appController)
+	public ModulesTreeController(final AppController appController, final SoundService soundService)
 	{
 		//==========================================================================================
 		this.appController = appController;
-		
+		this.soundService = soundService;
+
 		DefaultTreeModel treeModel = this.createTreeModel();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -317,17 +320,14 @@ public class ModulesTreeController
 	public void doInsertModule(String folderPath)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
-		final ModuleGeneratorTypeData moduleGeneratorTypeData = 
+		final ModuleGeneratorTypeData moduleGeneratorTypeData =
 			ModuleGenerator.createModuleGeneratorTypeData(folderPath);
 	
 		//moduleeneratorTypeData.setIsMainModuleGeneratorType(true);
 		
 		moduleGeneratorTypeData.setGeneratorTypeName("Module (new)");
 	
-		soundService.addGeneratorType(moduleGeneratorTypeData);
+		this.soundService.addGeneratorType(moduleGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		DefaultMutableTreeNode folderTreeNode = this.modulesTreeModel.searchModuleTreeNode(folderPath);
@@ -444,12 +444,9 @@ public class ModulesTreeController
 	                           String folderName)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
 		String folderPath = this.modulesTreeModel.makeFolderPath(editedFolderTreeNode);
-		
-		soundService.addFolder(folderPath,
+
+		this.soundService.addFolder(folderPath,
 		                       folderName);
 
 		//------------------------------------------------------------------------------------------
@@ -485,15 +482,12 @@ public class ModulesTreeController
 	                          DefaultMutableTreeNode pasteFolderTreeNode)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
 		// Update Service:
 		
 		String cutFolderPath = this.modulesTreeModel.makeFolderPath(cutFolderTreeNode);
 		String pasteFolderPath = this.modulesTreeModel.makeFolderPath(pasteFolderTreeNode);
-		
-		soundService.moveFolder(cutFolderPath,
+
+		this.soundService.moveFolder(cutFolderPath,
 		                        pasteFolderPath);
 		
 		//------------------------------------------------------------------------------------------
@@ -519,17 +513,14 @@ public class ModulesTreeController
 	                          ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
 		// Update Service:
 		
 		DefaultMutableTreeNode cutFolderTreeNode = (DefaultMutableTreeNode)cutModuleTreeNode.getParent();
 		
 		String cutFolderPath = this.modulesTreeModel.makeFolderPath(cutFolderTreeNode);
 		String pasteFolderPath = this.modulesTreeModel.makeFolderPath(pasteFolderTreeNode);
-		
-		soundService.moveModule(cutFolderPath,
+
+		this.soundService.moveModule(cutFolderPath,
 		                        pasteFolderPath,
 		                        moduleGeneratorTypeData);
 		
@@ -584,15 +575,12 @@ public class ModulesTreeController
 	private void doDeleteModule(DefaultMutableTreeNode moduleTreeNode)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
 		Object userObject = moduleTreeNode.getUserObject();
 		
 		ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
 		
 		// Module is used by other modules?
-		if (soundService.checkModuleIsUsed(moduleGeneratorTypeData) == true)
+		if (this.soundService.checkModuleIsUsed(moduleGeneratorTypeData) == true)
 		{
 			//--------------------------------------------------------------------------------------
 			// Alert Module is used by other modules.
@@ -625,7 +613,7 @@ public class ModulesTreeController
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// Service:
 				
-				soundService.removeGeneratorType(moduleGeneratorTypeData);
+				this.soundService.removeGeneratorType(moduleGeneratorTypeData);
 				
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// View:
@@ -653,9 +641,6 @@ public class ModulesTreeController
 	private void doDeleteFolder(DefaultMutableTreeNode folderTreeNode)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
 //		for (int childPos = 0; childPos < folderTreeNode.getChildCount(); childPos++)
 //		{
 //			DefaultMutableTreeNode childTreeNode = (DefaultMutableTreeNode)folderTreeNode.getChildAt(childPos);
@@ -664,7 +649,7 @@ public class ModulesTreeController
 		String folderPath = this.modulesTreeModel.makeFolderPath(folderTreeNode);
 		
 		// Folder is used by other modules?
-		if (soundService.checkModuleInFolderIsUsed(folderPath) == true)
+		if (this.soundService.checkModuleInFolderIsUsed(folderPath) == true)
 		{
 			//--------------------------------------------------------------------------------------
 			// Alert Module is used by other modules.
@@ -678,7 +663,7 @@ public class ModulesTreeController
 		else
 		{
 			// Module in Folder is Main-Module?
-			if (soundService.checkModuleInFolderIsMainModule(folderPath) == true)
+			if (this.soundService.checkModuleInFolderIsMainModule(folderPath) == true)
 			{
 				//----------------------------------------------------------------------------------
 				// Alert Module is main module.
@@ -696,8 +681,8 @@ public class ModulesTreeController
 				
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// Service:
-				
-				soundService.removeFolder(folderPath);
+
+				this.soundService.removeFolder(folderPath);
 				
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// View:

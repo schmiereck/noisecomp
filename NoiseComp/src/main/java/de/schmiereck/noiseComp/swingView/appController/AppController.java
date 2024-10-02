@@ -10,11 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.prefs.Preferences;
 
 import javax.swing.JCheckBox;
@@ -38,7 +35,9 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.service.SoundService;
+import de.schmiereck.noiseComp.soundData.SoundDataLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
+import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.about.AboutController;
@@ -124,7 +123,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 	
 	//**********************************************************************************************
 	// Fields:
-	
+
+	private final SoundSourceLogic soundSourceLogic;
+
+	private final SoundDataLogic soundDataLogic;
+
+	private final SoundService soundService;
+
 	/**
 	 * App View
 	 */
@@ -230,6 +235,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 */
 	private final InputEditController inputEditController;
 
+	private SoundSourceSchedulerLogic soundSourceSchedulerLogic;
+
 	//**********************************************************************************************
 	// Functions:
 
@@ -237,11 +244,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * Constructor.
 	 * 
 	 */
-	public AppController()
-	{
+	public AppController(final SoundSourceLogic soundSourceLogic, final SoundDataLogic soundDataLogic,
+						 final SoundService soundService) {
 		//==========================================================================================
-		final SoundService soundService = SoundService.getInstance();
-		
+		this.soundSourceLogic = soundSourceLogic;
+		this.soundDataLogic = soundDataLogic;
+		this.soundService = soundService;
+
 		//==========================================================================================
 		this.appModel = new AppModel();
 		
@@ -326,7 +335,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			this.appView.getHelpAboutMenuItem().setAction(action);
 		}
 		//------------------------------------------------------------------------------------------
-		this.modulesTreeController = new ModulesTreeController(this);
+		this.modulesTreeController = new ModulesTreeController(this, this.soundService);
 		
 		this.appView.setModulesTreeView(this.modulesTreeController.getModulesTreeView());
 		
@@ -376,6 +385,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		this.timelinesDrawPanelController = 
 			new TimelinesDrawPanelController(this,
+											 this.soundSourceLogic,
 			                                 //modulesTreeController.getModulesTreeModel(),
 			                                 this.appModelChangedObserver,
 			                                 this.timelineSelectEntriesModel,
@@ -456,6 +466,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		this.inputSelectController = 
 			new InputSelectController(this,
+									  this.soundSourceLogic,
 			                          this.timelinesDrawPanelController.getTimelinesDrawPanelModel(),
 			                          this.appModelChangedObserver);
 		
@@ -464,6 +475,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		this.inputEditController = 
 			new InputEditController(this.timelinesDrawPanelController,
+									this.soundSourceLogic,
 			                        this.inputSelectController.getInputSelectModel(),
 			                        this.appModelChangedObserver,
 			                        this.selectedTimelineModel);
@@ -473,13 +485,16 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		this.timelineEditController = 
 			new TimelineEditController(this,
+									   this.soundSourceLogic,
+									   this.soundDataLogic,
 			                           this.timelinesDrawPanelController.getTimelinesDrawPanelModel(),
 			                           this.appModelChangedObserver);
 		
 		this.appView.setTimelineEditView(this.timelineEditController.getTimelineEditView());
 		
 		//------------------------------------------------------------------------------------------
-		this.playController = new PlayController(this.timelinesTimeRuleController);
+		this.playController = new PlayController(this.timelinesTimeRuleController,
+				this.soundSourceLogic, this.soundDataLogic, this.soundService);
 		
 		//==========================================================================================
 		// Exit:
@@ -744,7 +759,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					                                  final InputEntryModel targetInputEntryModel)
 					{
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-						SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+						//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 						
 						TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
 						
@@ -931,7 +946,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					appModuleController.doUpdateEditModule(moduleEditController,
-					                                       modulesTreeController);
+					                                       modulesTreeController,
+														   soundService);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
@@ -1289,7 +1305,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void notifyTimelineStartTimePosChangedListener(Timeline timeline, Float startTimePos)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+					//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 					
 					TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
 					
@@ -1317,7 +1333,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void notifyTimelineEndTimePosChangedListener(Timeline timeline, Float endTimePos)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+					//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 					
 					TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
 					
@@ -1403,9 +1419,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 //					RenameFolderModel renameFolderModel = renameFolderController.getRenameFolderModel();
 					
 					String folderPath = modulesTreeModel.makeFolderPath(editedFolderTreeNode);
-					
-					soundService.renameFolder(folderPath,
-					                          folderName);
+
+					soundService.renameFolder(folderPath, folderName);
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update View-Model:
@@ -1573,7 +1588,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	    //------------------------------------------------------------------------------------------
 		// Init Generator-Types:
 	    //------------------------------------------------------------------------------------------
-		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+		List<GeneratorTypeData> generatorTypes = this.soundService.retrieveGeneratorTypes();
 		
 		this.modulesTreeController.addGeneratorTypes(generatorTypes);
 		
@@ -1582,7 +1597,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		modulEditModel.setZoomX(this.timelinesDrawPanelController.getTimelinesDrawPanelModel().getZoomX());
 		
 	    //------------------------------------------------------------------------------------------
-		modulEditModel.setTicksCount(new Float(1.0F));
+		modulEditModel.setTicksCount(1.0F);
 		
 	    //------------------------------------------------------------------------------------------
 		modulEditModel.setTicksPer(TicksPer.Seconds);
@@ -1607,9 +1622,6 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public void selectEditModule(ModuleGeneratorTypeData mainModuleGeneratorTypeData)
 	{
 		//==========================================================================================
-		final SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-		
-		//==========================================================================================
 		final TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
 		
 		final SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
@@ -1629,7 +1641,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			{
 				// XXX Because of a memory leake clear timelines explicitely.
 				
-				TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+				TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 				
 				if (timelineManagerLogic != null)
 				{
@@ -1710,9 +1722,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public List<GeneratorTypeData> retrieveGeneratorTypesForSelect()
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+		final List<GeneratorTypeData> generatorTypes = this.soundService.retrieveGeneratorTypes();
 
 		//==========================================================================================
 		return generatorTypes;
@@ -1736,49 +1746,51 @@ implements RemoveTimelineGeneratorListenerInterface,
 	/**
 	 * Exit Applikation.
 	 */
-	public void doExit()
-	{
+	public void doExit() {
 		//==========================================================================================
-		boolean exitApp;
+		final boolean exitApp;
+
+		final boolean isModelChanged = this.appModel.getIsModelChanged();
 		
-		boolean isModelChanged = this.appModel.getIsModelChanged();
-		
-		if (isModelChanged == true)
-		{
-			int option = JOptionPane.showConfirmDialog(this.appView, "File has been modified.\nSave Changes?");
+		if (isModelChanged) {
+			final int option = JOptionPane.showConfirmDialog(this.appView, "File has been modified.\nSave Changes?");
 	
-			if (option == JOptionPane.YES_OPTION)
-			{
+			if (option == JOptionPane.YES_OPTION) {
 				boolean fileSaved = this.doFileSave();
 				
-				if (fileSaved == true)
-				{
+				if (fileSaved) {
 					exitApp = true;
-				}
-				else
-				{
+				} else {
 					exitApp = false;
 				}
+			} else {
+				if (option == JOptionPane.CANCEL_OPTION) {
+					exitApp = false;
+				} else {
+					exitApp = true;
+				}
 			}
-			else
-			{
-				exitApp = true;
-			}
-		}
-		else
-		{
+		} else {
 			exitApp = true;
 		}
 		
 		//------------------------------------------------------------------------------------------
-		if (exitApp == true)
-		{
-			this.storeAppViewSize();
-			
-			System.exit(0);
+		if (exitApp) {
+			this.exitApplication();
 		}
-		
 		//==========================================================================================
+	}
+
+	private void exitApplication() {
+		this.playController.doStopSound();
+		if (Objects.nonNull(this.soundSourceSchedulerLogic)) {
+			//soundSchedulerLogic.stopPlayback();
+			//soundSchedulerLogic.stopThread();
+			this.soundSourceSchedulerLogic.stopThread();
+		}
+		this.storeAppViewSize();
+		this.appView.dispose();
+		//System.exit(0);
 	}
 
 	/**
@@ -1936,8 +1948,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * 			<code>true</code> if file is saved.<br/>
 	 *	 		<code>false</code> if operation canceled or errors occourse.
 	 */
-	public boolean doFileSave()
-	{
+	public boolean doFileSave() {
 		//==========================================================================================
 		boolean ret;
 		
@@ -1961,21 +1972,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 
 		int state = chooser.showDialog(this.appView, "Save");
 
-		if (state == JFileChooser.APPROVE_OPTION)
-		{ 
+		if (state == JFileChooser.APPROVE_OPTION) {
 			//File dir = chooser.getCurrentDirectory();
 			File file = chooser.getSelectedFile();
 
-			try
-			{
+			try {
 				this.doSave(file);
 				
 				this.setLoadFile(file);
 
 				ret = true;
-			}
-			catch (SaveFileException ex)
-			{
+			} catch (SaveFileException ex) {
 				ex.printStackTrace(System.err);
 
 				JOptionPane.showMessageDialog(this.appView,
@@ -1986,9 +1993,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 
 				ret = false;
 			}
-		}
-		else
-		{
+		} else {
 			ret = false;
 		}
 		//------------------------------------------------------------------------------------------
@@ -2084,10 +2089,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 	throws LoadFileException
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
-		float frameRate = SwingMain.getSoundData().getFrameRate();
+		//float frameRate = SwingMain.getSoundData().getFrameRate();
+		float frameRate = this.soundDataLogic.getFrameRate();
 		String absolutePath = file.getAbsolutePath();
 
 		ModuleGeneratorTypeData mainModuleGeneratorTypeData;
@@ -2104,21 +2107,21 @@ implements RemoveTimelineGeneratorListenerInterface,
 		}
 		
 		//------------------------------------------------------------------------------------------
-		soundService.removeAllGeneratorTypes();
+		this.soundService.removeAllGeneratorTypes();
 		
 		Iterator<GeneratorTypeData> generatorTypesIterator = generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext())
 		{
 			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
-			
-			soundService.addGeneratorType(generatorTypeData);
+
+			this.soundService.addGeneratorType(generatorTypeData);
 		}
 		
 		//------------------------------------------------------------------------------------------
 		this.selectEditModule(null);
 		
-		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+		List<GeneratorTypeData> generatorTypes = this.soundService.retrieveGeneratorTypes();
 		
 		this.modulesTreeController.addGeneratorTypes(generatorTypes);
 		
@@ -2141,13 +2144,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public void doSave(File file) throws SaveFileException
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
 		GeneratorTypesData generatorTypesData = new GeneratorTypesData();
 		ModuleGeneratorTypeData mainModuleGeneratorTypeData = null;
 		
-		Iterator<GeneratorTypeData> generatorTypesIterator = soundService.retrieveGeneratorTypesIterator();
+		Iterator<GeneratorTypeData> generatorTypesIterator = this.soundService.retrieveGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext())
 		{
@@ -2198,10 +2198,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 	throws LoadFileException
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
-		
-		//==========================================================================================
-		float frameRate = SwingMain.getSoundData().getFrameRate();
+		//float frameRate = SwingMain.getSoundData().getFrameRate();
+		float frameRate = this.soundDataLogic.getFrameRate();
 		String absolutePath = file.getAbsolutePath();
 
 		ModuleGeneratorTypeData mainModuleGeneratorTypeData;
@@ -2231,10 +2229,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 		{
 			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
 
-			// Not a existing generator type?
-			if (soundService.checkGeneratorTypeIsExisting(generatorTypeData) == false)
+			// Not an existing generator type?
+			if (this.soundService.checkGeneratorTypeIsExisting(generatorTypeData) == false)
 			{
-				soundService.addGeneratorType(generatorTypeData);
+				this.soundService.addGeneratorType(generatorTypeData);
 				 
 				addedGeneratorTypesData.addGeneratorTypeData(generatorTypeData);
 			}
@@ -2245,7 +2243,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 //		this.selectEditModule(null);
 //		
-//		List<GeneratorTypeData> generatorTypes = soundService.retrieveGeneratorTypes();
+//		List<GeneratorTypeData> generatorTypes = this.soundService.retrieveGeneratorTypes();
 //		
 //		this.modulesTreeController.addGeneratorTypes(generatorTypes);
 //		
@@ -2348,9 +2346,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	                                          TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		//==========================================================================================
-		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-		
-		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//------------------------------------------------------------------------------------------
 		// Update ModuleData:
@@ -2374,9 +2370,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	                                         InputSelectEntryModel inputSelectEntryModel)
 	{
 		//==========================================================================================
-		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-		
-		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//------------------------------------------------------------------------------------------
 		// Update Generator-Input-Data:
@@ -2400,9 +2394,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	                                         InputSelectEntryModel inputSelectEntryModel)
 	{
 		//==========================================================================================
-		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-		
-		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//------------------------------------------------------------------------------------------
 		// Update Generator-Input-Data:
@@ -2431,9 +2423,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public void doDoubleTimeline()
 	{
 		//==========================================================================================
-		final SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-		
-		final TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		final TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
 		final ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.getEditedModuleGeneratorTypeData();
@@ -2672,7 +2662,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	}
 
 	/**
-	 * @param playbackPos
+	 * @param playTimePos
 	 * 			is the playbackPos in seconds.
 	 */
 	public void doSubmitPlaybackPos(float playTimePos)
@@ -2740,5 +2730,21 @@ implements RemoveTimelineGeneratorListenerInterface,
 		selectedTimelineModel.setSelectedInputEntry(selectedInputEntry);
 		
 		//==========================================================================================
+	}
+
+	public void startSoundSourceScheduler() {
+		//==========================================================================================
+		this.soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(32);
+
+		// Start scheduled polling with the new SoundSource.
+		this.soundSourceSchedulerLogic.setSoundSourceLogic(this.soundSourceLogic);
+
+		this.soundSourceSchedulerLogic.startThread();
+
+		//==========================================================================================
+	}
+
+	public SoundService getSoundService() {
+		return this.soundService;
 	}
 }

@@ -7,10 +7,10 @@ import javax.sound.sampled.SourceDataLine;
 import javax.swing.UIManager;
 
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
-import de.schmiereck.noiseComp.soundData.SoundData;
+import de.schmiereck.noiseComp.soundData.SoundDataLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
-import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 
 /**
@@ -34,12 +34,6 @@ public class SwingMain
 	//**********************************************************************************************
 	// Fields:
 	
-	private static SoundSourceLogic soundSourceLogic;
-	
-	private static SoundData soundData;
-	
-	private static SoundSourceSchedulerLogic soundSourceSchedulerLogic;
-
 	//**********************************************************************************************
 	// Functions:
 
@@ -47,84 +41,63 @@ public class SwingMain
 	 * @param args
 	 * 			are the command line arguments.
  	 */
-	public static void main(String[] args)
-	{
+	public static void main(final String[] args) {
 		//==========================================================================================
-		StartupService.createBaseGeneratorTypes();
+		final SoundService soundService = new SoundService();
+
+		StartupService.createBaseGeneratorTypes(soundService);
 		
 		//------------------------------------------------------------------------------------------
 		// Setup Sound:
 		
-		SourceDataLine line = StartupService.createLine();
+		final SourceDataLine line = StartupService.createLine();
 		
 		//------------------------------------------------------------------------------------------
-		soundSourceLogic = new SoundSourceLogic();
+		final SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
 		
-		soundData = new SoundData(line, soundSourceLogic);
-		
+		final SoundDataLogic soundDataLogic = new SoundDataLogic(line, soundSourceLogic);
+
 		//------------------------------------------------------------------------------------------
 		final ModuleGeneratorTypeData mainModuleGeneratorTypeData = 
-			StartupService.createDemoGenerators(soundData.getFrameRate());
+			StartupService.createDemoGenerators(soundService, soundDataLogic.getFrameRate());
 
 //		soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);
-		
-		//------------------------------------------------------------------------------------------
-	
-		soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(32);
-		
-		// Start scheduled polling with the new SoundSource.
-		soundSourceSchedulerLogic.setSoundSourceLogic(soundSourceLogic);
 
-		soundSourceSchedulerLogic.startThread();
-	
 		//==========================================================================================
-		
 		Thread.setDefaultUncaughtExceptionHandler(new DefaultExceptionHandler());
 		
 		//Schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() 
-		{
+		javax.swing.SwingUtilities.invokeLater(new Runnable()  {
 			/* (non-Javadoc)
 			 * @see java.lang.Runnable#run()
 			 */
-			public void run()
-			{
-				try
-				{
+			public void run() {
+				try {
 					createAndShowGUI();
 					
-					AppController appController = new AppController();
+					final AppController appController = new AppController(soundSourceLogic, soundDataLogic, soundService);
 					
 					appController.selectEditModule(mainModuleGeneratorTypeData);
 					
 					appController.initStartupModel();
-				}
-				catch (Exception ex)
-				{
+
+					appController.startSoundSourceScheduler();
+
+				} catch (final Exception ex) {
 					//ex.printStackTrace();
 					System.out.println("EX 1: " + ex);
 				}
 			}
 		});
 		//==========================================================================================
-//		try
-//		{
-//			throw new RuntimeException("TEST1");
-//		}
-//		catch (Exception ex)
-//		{
-//			throw new RuntimeException("TEST2", ex);
-//		}
 	}
 	
 	/**
 	 * @throws Exception
 	 * 			if there is an Error in View. 
  	 */
-	private static void createAndShowGUI() 
-	throws Exception
-	{
+	private static void createAndShowGUI() throws Exception {
 		//==========================================================================================
 		//UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 		//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -132,19 +105,5 @@ public class SwingMain
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		
 		//==========================================================================================
-	}
-
-	public static SoundData getSoundData()
-	{
-		return soundData;
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #soundSourceLogic}.
-	 */
-	public static SoundSourceLogic getSoundSourceLogic()
-	{
-		return soundSourceLogic;
 	}
 }

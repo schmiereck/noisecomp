@@ -32,7 +32,9 @@ implements MouseMotionListener
 	 * Play-Time-Marker Moved Command.
 	 */
 	private final PlayTimeMarkerMovedCommand playTimeMarkerMovedCommand;
-	
+
+	private final SoundService soundService;
+
 	/**
 	 * Timelines-Time-Rule Model. 
 	 */
@@ -56,11 +58,13 @@ implements MouseMotionListener
 	 * @param playTimeMarkerMovedCommand
 	 * 			is the Play-Time-Marker Moved Command.
 	 */
-	public TimelinesTimeRuleMouseMotionListener(final TimelinesTimeRuleModel timelinesTimeRuleModel, 
+	public TimelinesTimeRuleMouseMotionListener(final SoundService soundService,
+												final TimelinesTimeRuleModel timelinesTimeRuleModel,
 	                                            final TimelinesTimeRuleView timelinesTimeRuleView,
 	                                            final PlayTimeMarkerMovedCommand playTimeMarkerMovedCommand)
 	{
 		//==========================================================================================
+		this.soundService = soundService;
 		this.timelinesTimeRuleModel = timelinesTimeRuleModel;
 		this.timelinesTimeRuleView = timelinesTimeRuleView;
 		this.playTimeMarkerMovedCommand = playTimeMarkerMovedCommand;
@@ -72,7 +76,7 @@ implements MouseMotionListener
 	public void mouseDragged(MouseEvent e)
 	{
 		//==========================================================================================
-		SoundService soundService = SoundService.getInstance();
+		//SoundService soundService = SoundService.getInstance();
 		
 		//==========================================================================================
 		Point point = e.getPoint();
@@ -130,7 +134,7 @@ implements MouseMotionListener
 					
 					selectedTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
 					
-					soundService.submitStartTime(timeMarker);
+					this.soundService.submitStartTime(timeMarker);
 					break;
 				}
 				case POS:
@@ -166,7 +170,7 @@ implements MouseMotionListener
 					
 					selectedTimeMarkerSelectEntryModel.setTimeMarker(timeMarker);
 					
-					soundService.submitEndTime(timeMarker);
+					this.soundService.submitEndTime(timeMarker);
 					break;
 				}
 				default:

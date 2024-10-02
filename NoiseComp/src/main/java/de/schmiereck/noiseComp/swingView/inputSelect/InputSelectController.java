@@ -49,6 +49,8 @@ public class InputSelectController
 	//**********************************************************************************************
 	// Fields:
 
+	private final SoundSourceLogic soundSourceLogic;
+
 	/**
 	 * Input-Select Model.
 	 */
@@ -75,10 +77,12 @@ public class InputSelectController
 	 * 			is the Timeline Draw-Panel Model.
 	 */
 	public InputSelectController(final AppController appController,
+								 final SoundSourceLogic soundSourceLogic,
 	                             final TimelinesDrawPanelModel timelinesDrawPanelModel,
 	                             final AppModelChangedObserver appModelChangedObserver)
 	{
 		//==========================================================================================
+		this.soundSourceLogic = soundSourceLogic;
 		this.inputSelectModel = new InputSelectModel();
 		this.inputSelectView = new InputSelectView(this.inputSelectModel);
 		this.appModelChangedObserver = appModelChangedObserver;
@@ -565,17 +569,13 @@ public class InputSelectController
 		//==========================================================================================
 	}
 
-	/**
-	 * @param newInputTypeData
-	 * @param input2EntryModel
-	 */
 	private void updateAddPosEntry(final InputTypeData newInputTypeData,
 	                               final InputEntryModel input2EntryModel)
 	{
 		//==========================================================================================
-		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
-		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
 		TimelineSelectEntryModel selectedTimelineSelectEntryModel = this.selectedTimelineModel.getSelectedTimelineSelectEntryModel();

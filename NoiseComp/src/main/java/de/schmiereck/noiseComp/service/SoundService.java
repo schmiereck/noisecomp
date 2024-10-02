@@ -26,8 +26,6 @@ public class SoundService
 	//**********************************************************************************************
 	// Fields:
 
-	private static SoundService soundService = new SoundService();
-	
 	private GeneratorTypesData generatorTypesData  = new GeneratorTypesData();
 
 	/**
@@ -47,22 +45,12 @@ public class SoundService
 	
 	//**********************************************************************************************
 	// Functions:
-	
-	/**
-	 * @return
-	 * 			the singleton instance.
-	 */
-	public static SoundService getInstance()
-	{
-		return soundService;
-	}
 
 	/**
 	 * @return
 	 * 			the list of {@link #generatorTypesData}.
 	 */
-	public List<GeneratorTypeData> retrieveGeneratorTypes()
-	{
+	public List<GeneratorTypeData> retrieveGeneratorTypes() {
 		//==========================================================================================
 		List<GeneratorTypeData> generatorTypes = new Vector<GeneratorTypeData>();
 		

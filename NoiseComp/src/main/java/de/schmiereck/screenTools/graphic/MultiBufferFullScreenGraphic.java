@@ -37,7 +37,7 @@ import de.schmiereck.screenTools.input.InputMouseDevice;
 
 /**
  * <p>
- * 	Stellt Funktionen zum zeichnen in einem Full-Screen zur Verfügung.
+ * 	Stellt Funktionen zum zeichnen in einem Full-Screen zur VerfÃ¼gung.
  * </p>
  * <p>
  * 	Einfache 2D-Zeichenfunktionen zum Zeichnen von scallierter 2D-Grafik.<br/>
@@ -276,7 +276,7 @@ implements ScreenGraficInterface
 	 * @param fieldWidth	
 	 * 			ist die Breite des Spielfeldes, dass gezeichnet werden soll.
 	 * @param fieldHeight	
-	 * 			ist die Höhe des Spielfeldes, dass gezeichnet werden soll.
+	 * 			ist die Hï¿½he des Spielfeldes, dass gezeichnet werden soll.
 	 * @param centerDirX	
 	 * 			-1:	X-Mittelpunkt sitzt links.<br/>	
 	 * 			0:	X-Mittelpunkt sitzt in der Mitte.<br/>
@@ -317,7 +317,7 @@ implements ScreenGraficInterface
 	}
 
 	/**
-	 * Vom Fullscreen wieder zurückschalten.
+	 * Vom Fullscreen wieder zurï¿½ckschalten.
 	 *
 	 * @see #switchModeToFullScreen(GameControllerData, boolean)
 	 */
@@ -330,7 +330,7 @@ implements ScreenGraficInterface
 	}
 
 	/**
-	 * Wähle den für das Device am besten geeigneten Screen-Mode aus.
+	 * Wï¿½hle den fï¿½r das Device am besten geeigneten Screen-Mode aus.
 	 * 
 	 * @see #getBestDisplayMode(GraphicsDevice)
 	 * 
@@ -347,7 +347,7 @@ implements ScreenGraficInterface
 	}
 
 	/**
-	 * Ucht aus der Liste der für das Devive vorhandenen Modis den besten aus.
+	 * Ucht aus der Liste der fï¿½r das Devive vorhandenen Modis den besten aus.
 	 * 
 	 * @param device
 	 * @return
@@ -657,11 +657,11 @@ implements ScreenGraficInterface
 	}
 
 	/**
-	 * Überschreiben, um die aktuelle Grafik in den Puffer zu zeichnen.
+	 * ï¿½berschreiben, um die aktuelle Grafik in den Puffer zu zeichnen.
 	 * 
 	 * @param g ist das Grafik-Device auf das Gezeichnet wird. 
 	 * @param controllerData sind die Daten die gezeichnet werden sollen.
-	 * @param bounds sind die Abmessungen der Zeichenfläche auf die gezeichnet werden kann.
+	 * @param bounds sind die Abmessungen der Zeichenflï¿½che auf die gezeichnet werden kann.
 	 * @param actualWaitPerFramesMillis  sind die Millisekunden, die seit dem letzten Zeichnen vergangen sind.
 	 */
 	public abstract void drawGraphic(Graphics g, ControllerData controllerData, Rectangle bounds, long actualWaitPerFramesMillis);
@@ -681,7 +681,7 @@ implements ScreenGraficInterface
 	}
 
 	/**
-	 * Anzeigen eines Popup-Fensters mit einer Fehlernachricht für den Benutzer.
+	 * Anzeigen eines Popup-Fensters mit einer Fehlernachricht fï¿½r den Benutzer.
 	 * 
 	 * @param message
 	public void showErrorMessage(String message)

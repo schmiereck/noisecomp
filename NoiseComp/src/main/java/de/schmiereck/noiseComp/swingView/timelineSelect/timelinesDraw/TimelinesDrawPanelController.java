@@ -47,7 +47,9 @@ implements TimelineContentChangedListenerInterface,
 	// Fields:
 	
 //	private final ModulesTreeModel modulesTreeModel;
-	
+
+	private final SoundSourceLogic soundSourceLogic;
+
 	private final TimelinesDrawPanelModel timelinesDrawPanelModel;
 	
 	private final TimelinesDrawPanelView timelinesDrawPanelView;
@@ -58,16 +60,13 @@ implements TimelineContentChangedListenerInterface,
 	/**
 	 * Constructor.
 	 * 
-	 * @param modulesTreeModel 
-	 * 			is the Modules-Tree Model.
-	 * @param inputEditModel 
-	 * 			is the Input-Edit Model.
 	 * @param selectedTimelineModel
 	 * 			is the Selected-Timeline Model.
 	 * @param timelinesTimeRuleModel
 	 * 			is the Timelines-Time-Rule Model.
 	 */
 	public TimelinesDrawPanelController(final AppController appController,
+										final SoundSourceLogic soundSourceLogic,
 	                                    //final ModulesTreeModel modulesTreeModel,
 	                                    //InputEditModel inputEditModel)
 	                                    final AppModelChangedObserver appModelChangedObserver,
@@ -76,8 +75,9 @@ implements TimelineContentChangedListenerInterface,
 	                                    final TimelinesTimeRuleModel timelinesTimeRuleModel)
 	{
 		//==========================================================================================
-//		this.modulesTreeModel = modulesTreeModel;
-		
+		this.soundSourceLogic = soundSourceLogic;
+		//this.modulesTreeModel = modulesTreeModel;
+
 		this.timelinesDrawPanelModel = new TimelinesDrawPanelModel(appModelChangedObserver,
 		                                                           timelineSelectEntriesModel,
 		                                                           selectedTimelineModel);
@@ -423,9 +423,9 @@ implements TimelineContentChangedListenerInterface,
 	                                      TimelineSelectEntryModel secondTimelineSelectEntryModel)
 	{
 		//==========================================================================================
-		SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
-		TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
 		TimelineSelectEntriesModel timelineSelectEntriesModel = 

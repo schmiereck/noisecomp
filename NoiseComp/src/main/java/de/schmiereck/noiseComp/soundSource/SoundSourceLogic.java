@@ -11,6 +11,7 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
+import de.schmiereck.noiseComp.soundData.SoundDataLogic;
 import de.schmiereck.noiseComp.timeline.Timeline;
 import de.schmiereck.noiseComp.timeline.TimelineChangedListernerInterface;
 import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
@@ -19,7 +20,7 @@ import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
  * <p>
  * 	Manages a connection between the (Output) {@link Generator} of
  * 	the current selected Generators and the 
- * 	{@link de.schmiereck.noiseComp.soundData.SoundData}-Output.
+ * 	{@link SoundDataLogic}-Output.
  * </p>
  * <p>
  * 	Buffers the output.<br/>

@@ -708,7 +708,7 @@
  705:             1             56  javax.swing.LayoutFocusTraversalPolicy
  706:             1             56  sun.nio.cs.StandardCharsets$Cache
  707:             1             56  [Ljava.lang.ThreadGroup;
- 708:             1             56  de.schmiereck.noiseComp.soundData.SoundData
+ 708:             1             56  de.schmiereck.noiseComp.soundData.SoundDataLogicdData
  709:             1             56  sun.java2d.d3d.D3DScreenUpdateManager
  710:             1             56  java.awt.color.ICC_ProfileRGB
  711:             1             56  javax.swing.text.DefaultEditorKit$SelectLineAction

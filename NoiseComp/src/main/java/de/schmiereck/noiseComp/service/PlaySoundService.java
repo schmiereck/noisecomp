@@ -1,7 +1,7 @@
 package de.schmiereck.noiseComp.service;
 
 import de.schmiereck.noiseComp.soundData.PlaybackPosChangedListenerInterface;
-import de.schmiereck.noiseComp.soundData.SoundData;
+import de.schmiereck.noiseComp.soundData.SoundDataLogic;
 import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.swingView.SwingMain;
 
@@ -9,10 +9,16 @@ public class PlaySoundService {
     //**********************************************************************************************
     // Fields:
 
+    private final SoundDataLogic soundDataLogic;
+
     private SoundSchedulerLogic soundSchedulerLogic = null;
 
     //**********************************************************************************************
     // Functions:
+
+    public PlaySoundService(final SoundDataLogic soundDataLogic) {
+        this.soundDataLogic = soundDataLogic;
+    }
 
     /**
      * @return
@@ -64,9 +70,9 @@ public class PlaySoundService {
                                            PlaybackPosChangedListenerInterface playbackPosChangedListener)
     {
         //==========================================================================================
-        SoundData soundData = SwingMain.getSoundData();
+        //SoundDataLogic soundDataLogic = SwingMain.getSoundData();
 
-        this.soundSchedulerLogic = new SoundSchedulerLogic(25, soundData);
+        this.soundSchedulerLogic = new SoundSchedulerLogic(25, this.soundDataLogic);
 
         this.soundSchedulerLogic.submitPlaybackPos((float)startTime);
 
@@ -95,8 +101,7 @@ public class PlaySoundService {
     public synchronized void stopPlayback()
     {
         //==========================================================================================
-        if (this.soundSchedulerLogic != null)
-        {
+        if (this.soundSchedulerLogic != null) {
             System.out.println("soundSchedulerLogic.stopPlayback: BEGIN");
             this.soundSchedulerLogic.stopPlayback();
             System.out.println("soundSchedulerLogic.stopPlayback: END");

@@ -48,33 +48,33 @@ public class AppModuleController
 	 * Do Update Edit Module.
 	 */
 	public void doUpdateEditModule(final ModuleEditController moduleEditController,
-	                               final ModulesTreeController modulesTreeController)
+	                               final ModulesTreeController modulesTreeController,
+								   final SoundService soundService)
 	{
 		//==========================================================================================
 		final ModuleEditModel moduleEditModel = moduleEditController.getModuleEditModel();
 		final ModuleEditView moduleEditView = moduleEditController.getModuleEditView();
-		
-		ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
+
+		final ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+		final ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 		
-		if (moduleGeneratorTypeData != null)
-		{
+		if (moduleGeneratorTypeData != null) {
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			SoundService soundService = SoundService.getInstance();
+			//SoundService soundService = SoundService.getInstance();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			String generatorTypeName = InputUtils.makeStringValue(moduleEditView.getModuleameTextField().getText());
-			Boolean modulesMain = InputUtils.makeBooleanValue(moduleEditView.getModulesMainCheckBox().isSelected());
+			final String generatorTypeName = InputUtils.makeStringValue(moduleEditView.getModuleameTextField().getText());
+			final Boolean modulesMain = InputUtils.makeBooleanValue(moduleEditView.getModulesMainCheckBox().isSelected());
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Module
 			
 			//ModuleGeneratorTypeData lastMainModuleGeneratorTypeData =
-				soundService.updateModuleGeneratorTypeData(moduleGeneratorTypeData,
-				                                          generatorTypeName,
-				                                          modulesMain);
+			soundService.updateModuleGeneratorTypeData(moduleGeneratorTypeData,
+			                                           generatorTypeName,
+			                                           modulesMain);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Update Edit-Model:

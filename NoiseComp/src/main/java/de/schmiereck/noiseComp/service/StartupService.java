@@ -70,10 +70,10 @@ public class StartupService
     /**
      * Create build in generator types.
      */
-    public static void createBaseGeneratorTypes()
+    public static void createBaseGeneratorTypes(final SoundService soundService)
     {
         //==========================================================================================
-        SoundService soundService = SoundService.getInstance();
+        //SoundService soundService = SoundService.getInstance();
 
         //==========================================================================================
         soundService.removeAllGeneratorTypes();
@@ -113,18 +113,18 @@ public class StartupService
 
         // Gewünschtes Audioformat definieren:
 
-        float sampleRate 		= 44100;		// the number of samples per second
-        int sampleSizeInBits 	= 16;			// the number of bits in each sample
-        int channels 			= 2;			// the number of channels (1 for mono, 2 for stereo, and so on)
-        int frameSize 			= 4;			// the number of bytes in each frame
-        float frameRate 		= sampleRate;	// the number of frames per second
-        boolean bigEndian 		= true; 		// indicates whether the data for a single sample is stored in big-endian byte order
+        final float sampleRate 		= 44100;		// the number of samples per second
+        final int sampleSizeInBits 	= 16;			// the number of bits in each sample
+        final int channels 			= 2;			// the number of channels (1 for mono, 2 for stereo, and so on)
+        final int frameSize 			= 4;			// the number of bytes in each frame
+        final float frameRate 		= sampleRate;	// the number of frames per second
+        final boolean bigEndian 		= true; 		// indicates whether the data for a single sample is stored in big-endian byte order
         // (false means little-endian)
         // Because Java inherently creates big-endian data,
         // you must do a lot of extra work to create little-endian audio data in Java.
-        // Therefore, I elected to create all of the synthetic sounds in this lesson in big-endian order.
+        // Therefore, I elected to create all the synthetic sounds in this lesson in big-endian order.
 
-        AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,	// encoding the audio encoding technique
+        final AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED,	// encoding the audio encoding technique
                 sampleRate,
                 sampleSizeInBits,
                 channels,
@@ -132,11 +132,11 @@ public class StartupService
                 frameRate,
                 bigEndian);
 
-        DataLine.Info	info = new DataLine.Info(SourceDataLine.class, audioFormat);
+        final DataLine.Info	info = new DataLine.Info(SourceDataLine.class, audioFormat);
 
         // Ausgabekanal mit den gewünschten Eigenschaften holen und öffnen:
 
-        SourceDataLine line;
+        final SourceDataLine line;
 
         try
         {
@@ -170,10 +170,10 @@ public class StartupService
      *
      */
     public static
-    ModuleGeneratorTypeData createDemoGenerators(float frameRate)
+    ModuleGeneratorTypeData createDemoGenerators(final SoundService soundService, final float frameRate)
     {
         //==========================================================================================
-        SoundService soundService = SoundService.getInstance();
+        //SoundService soundService = SoundService.getInstance();
 
         //==========================================================================================
         // Sound-Generatoren für das Sound-Format des Ausgabekanals erzeugen:

@@ -61,7 +61,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 		final PlayTimeMarkerMovedCommand timeMarkerMovedCommand = 
 			new PlayTimeMarkerMovedCommand(appController);
 		
-		this.timelinesTimeRuleView = new TimelinesTimeRuleView(this.timelinesTimeRuleModel,
+		this.timelinesTimeRuleView = new TimelinesTimeRuleView(appController.getSoundService(),
+															   this.timelinesTimeRuleModel,
 		                                                       timeMarkerMovedCommand);
 		
 		//------------------------------------------------------------------------------------------
