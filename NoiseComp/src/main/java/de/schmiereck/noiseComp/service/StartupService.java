@@ -55,6 +55,9 @@ public class StartupService
      */
     public static final String GENERATOR_FOLDER_PATH = "/";
     public static final String SIGNAL_GENERATOR_FOLDER_PATH = GENERATOR_FOLDER_PATH + "signal/";
+    public static final String MIXER_GENERATOR_FOLDER_PATH = GENERATOR_FOLDER_PATH + "mixer/";
+    public static final String FILTER_GENERATOR_FOLDER_PATH = GENERATOR_FOLDER_PATH + "filter/";
+    public static final String SHAPE_GENERATOR_FOLDER_PATH = GENERATOR_FOLDER_PATH + "shape/";
 
     /**
      * Module Folder-Path.
@@ -190,7 +193,7 @@ public class StartupService
         //---------------------------------
         FaderGenerator faderInGenerator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(GENERATOR_FOLDER_PATH,
+            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH,
                     FaderGenerator.class.getName());
             // or generatorTypeData.createGeneratorInstance("faderIn", Float.valueOf(frameRate))
             faderInGenerator = new FaderGenerator("faderIn", frameRateFloat, generatorTypeData);
@@ -207,7 +210,7 @@ public class StartupService
         //---------------------------------
         FaderGenerator faderOutGenerator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(GENERATOR_FOLDER_PATH,
+            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH,
                     FaderGenerator.class.getName());
             faderOutGenerator = new FaderGenerator("faderOut", frameRateFloat, generatorTypeData);
 
@@ -275,7 +278,7 @@ public class StartupService
         //---------------------------------
         MixerGenerator mixerGenerator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(GENERATOR_FOLDER_PATH,
+            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(MIXER_GENERATOR_FOLDER_PATH,
                     MixerGenerator.class.getName());
             mixerGenerator = new MixerGenerator("mixer", frameRateFloat, generatorTypeData);
             mixerGenerator.addInputValue(0.5F, MixerGenerator.INPUT_TYPE_VOLUME);
@@ -296,7 +299,7 @@ public class StartupService
         //---------------------------------
         OutputGenerator outputGenerator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(GENERATOR_FOLDER_PATH,
+            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     OutputGenerator.class.getName());
             outputGenerator = new OutputGenerator("output", frameRateFloat, generatorTypeData);
 

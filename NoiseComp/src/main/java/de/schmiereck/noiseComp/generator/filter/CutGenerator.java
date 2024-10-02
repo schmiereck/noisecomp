@@ -3,6 +3,8 @@ package de.schmiereck.noiseComp.generator.filter;
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
+import static de.schmiereck.noiseComp.service.StartupService.FILTER_GENERATOR_FOLDER_PATH;
+
 /**
  * Cut the singal to the given value.
  *
@@ -118,7 +120,7 @@ extends Generator
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", CutGenerator.class, "Cut", "Cut the input singnal to the given minimum and maximum values.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(FILTER_GENERATOR_FOLDER_PATH, CutGenerator.class, "Cut", "Cut the input singnal to the given minimum and maximum values.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MAX_AMPL, "signalMaximum", 1, 1, Float.valueOf(1.0F), "Mamximum of the signal value.");

@@ -5,6 +5,8 @@ import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 import java.util.Iterator;
 
+import static de.schmiereck.noiseComp.service.StartupService.MIXER_GENERATOR_FOLDER_PATH;
+
 /**
  * Mixer Generator.
  *
@@ -184,7 +186,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", MixerGenerator.class, "Mixer", "Mixes multiple signal input lines and scale them with a volume.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MIXER_GENERATOR_FOLDER_PATH, MixerGenerator.class, "Mixer", "Mixes multiple signal input lines and scale them with a volume.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VOLUME, "volume", -1, -1, "The volume of the output singal between 0 and 1 (average is calculated if more then one volume is connected).");

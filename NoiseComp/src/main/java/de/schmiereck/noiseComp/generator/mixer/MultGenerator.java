@@ -8,6 +8,8 @@ import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 import java.util.Iterator;
 
+import static de.schmiereck.noiseComp.service.StartupService.MIXER_GENERATOR_FOLDER_PATH;
+
 /**
  * <p>
  * 	Mult Generator.
@@ -130,7 +132,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", MultGenerator.class, "mult", "Multiplicate signals Generator.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MIXER_GENERATOR_FOLDER_PATH, MultGenerator.class, "mult", "Multiplicate signals Generator.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "Is a signal.");

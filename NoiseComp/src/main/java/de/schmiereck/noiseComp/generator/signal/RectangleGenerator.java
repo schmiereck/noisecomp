@@ -6,6 +6,7 @@ import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 import java.util.Iterator;
 
 import static de.schmiereck.noiseComp.generator.GenratorUtils.calcPeriodFadeValue;
+import static de.schmiereck.noiseComp.service.StartupService.SIGNAL_GENERATOR_FOLDER_PATH;
 
 /**
  * <p>
@@ -281,7 +282,7 @@ extends Generator
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", RectangleGenerator.class, "Rectangle", "Generates a rectangle signal with a specified frequency and amplidude.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH, RectangleGenerator.class, "Rectangle", "Generates a rectangle signal with a specified frequency and amplidude.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the signal in oscillations per second.");

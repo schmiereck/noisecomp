@@ -9,6 +9,8 @@ import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 import java.util.Iterator;
 import java.util.Random;
 
+import static de.schmiereck.noiseComp.service.StartupService.SIGNAL_GENERATOR_FOLDER_PATH;
+
 /**
  * <p>
  * 	PinkNoiseGenerator
@@ -197,7 +199,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", PinkNoiseGenerator.class, "Pink Noise", "Generate White Gaussian Noise with variance and mean.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH, PinkNoiseGenerator.class, "Pink Noise", "Generate White Gaussian Noise with variance and mean.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VARIANCE, "variance", -1, -1, "The variance.");

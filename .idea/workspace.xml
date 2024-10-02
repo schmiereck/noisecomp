@@ -5,159 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e6805498-9e83-4364-8650-340ea25b46df" name="Changes" comment="Refactorings.">
-      <change afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a10.noiseComp.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/shape/ASRPulseGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/PinkNoiseGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/TriangelGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/2024-10-01 - a.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/2024-10-01 - a.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a04.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a04.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a05.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a05.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a06.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a06.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a07.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a07.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a08.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a08.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a09.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/Moza_a09.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/basic.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/basic.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 102 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 102 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 106 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 106 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 111 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 111 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 111 demo 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 111 demo 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 115 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 115 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 115 demo 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 115 demo 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 126 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 126 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 127 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 127 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 127 demo 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 127 demo 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 131 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 131 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 131 demo 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 131 demo 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 61 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 61 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 61 demo 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 61 demo 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 82 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 82 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 87 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 87 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 87 demo 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/bug-demos/bug 87 demo 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/Bell2_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/Bell2_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/Bell2_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/Bell2_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/Bell2_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/Bell2_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/Bell2_a04.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/Bell2_a04.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum1_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum1_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum1_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum1_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum1_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum1_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum1_a04.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum1_a04.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum2_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum2_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum2_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum2_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum2_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum2_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum2_a04.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum2_a04.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum3_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum3_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum3_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/base-drum3_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a04.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a04.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a05.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/bell1_a05.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/click1/click1_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/click1/click1_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/click1/click1_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/click1/click1_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/click2/click2_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/click2/click2_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 3.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 3.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 4.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 4.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 5.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 5.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 6.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 6.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 7.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 7.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 8.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 8.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 9.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/drums 9.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/hihat2_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/hihat2_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/hit1_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/hit1_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/hit2_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/hit2_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick 3.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick 3.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick 4.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick 4.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a04.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a04.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a05.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a05.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a06.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/kick5_a06.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/rim-shot1/rim-shot1_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/rim-shot1/rim-shot1_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/rim-shot1/rim-shot1_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/rim-shot1/rim-shot1_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/rim-shot1/rim-shot1_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/rim-shot1/rim-shot1_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare1_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare1_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare1_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare1_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare1_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare1_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare1_a04.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare1_a04.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare2_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare2_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare3_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/snare3_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/wood1/Wood1_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/drums/wood1/Wood1_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/first-line_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/first-line_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/first-line_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/first-line_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/Exponent 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/Exponent 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/filter 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/filter 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 3.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 3.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 4.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 4.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 5.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 5.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 6.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 6.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 7.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 117 demo 7.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 185 demo 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 185 demo 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 185 demo 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 185 demo 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 185 demo 3.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/imp 185 demo 3.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/rectangle 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/rectangle 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/rectangle pulseWidth1_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/rectangle pulseWidth1_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 3.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 3.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 4.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 4.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 5.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth 5.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth pulseWidth1_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sawtooth pulseWidth1_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sinus 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/sinus 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/triangel 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/triangel 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/triangle pulseWidth1_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/impl-demos/triangle pulseWidth1_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/noise-line_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/noise-line_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/base1_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/base1_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/base2_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/base2_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/baseSynth1_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/baseSynth1_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/baseSynth1_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/baseSynth1_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/baseSynth1_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/baseSynth1_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/baseSynth1_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/baseSynth1_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/hooter1_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/hooter1_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth1_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth1_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth1_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth1_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth1_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth1_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth2_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth2_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth2_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth2_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a01.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a01.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a02.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a02.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a03.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a03.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a04.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a04.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a05.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth3_a05.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth4_a00.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/synths/synth4_a00.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/Cutoff1 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/Cutoff1 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/PowGenerator 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/PowGenerator 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/Resonance1 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/Resonance1 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/a1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/a1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/a2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/a2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/a3.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/a3.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/beep.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/beep.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/cut noise 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/cut noise 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/default1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/default1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/default2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/default2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/default3.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/default3.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/default4.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/default4.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/filter 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/filter 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/pinkNoise1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/pinkNoise1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/tone 1.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/tone 1.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/tone 2.noiseComp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/noiseComp.xml/tests/tone 2.noiseComp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/file/GeneratorTypeNodesData.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/file/GeneratorTypeNodesData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/file/LoadFileOperationLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/file/LoadFileOperationLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/GeneratorTypesData.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/GeneratorTypesData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/SinusGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/SinusGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/AddGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/AddGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MixerGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MixerGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MultGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MultGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MultiplierGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/mixer/MultiplierGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/OutputGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/OutputGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/PinkNoise2Generator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/PinkNoise2Generator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/PinkNoiseGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/PinkNoiseGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/RectangleGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/RectangleGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/SawtoothGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/SawtoothGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/TriangelGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/TriangelGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/WaveGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/WaveGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/WhiteNoiseGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/generator/signal/WhiteNoiseGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/service/StartupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/service/StartupService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/modulesTree/ModulesTreeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/modulesTree/ModulesTreeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/modulesTree/ModulesTreeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/modulesTree/ModulesTreeModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -371,15 +232,7 @@
       <workItem from="1727794354022" duration="7058000" />
       <workItem from="1727852022424" duration="3753000" />
       <workItem from="1727858381879" duration="1303000" />
-      <workItem from="1727861220797" duration="4585000" />
-    </task>
-    <task id="LOCAL-00001" summary="CVS to Git.&#10;Eclipse to IntelliJ.">
-      <option name="closed" value="true" />
-      <created>1727703532507</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1727703532507</updated>
+      <workItem from="1727861220797" duration="4985000" />
     </task>
     <task id="LOCAL-00002" summary="CVS to Git.&#10;Eclipse to IntelliJ.">
       <option name="closed" value="true" />
@@ -765,7 +618,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727855863886</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727873052556</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1727873052556</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -813,6 +674,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="CVS to Git.&#10;Eclipse to IntelliJ." />
     <MESSAGE value="Fix &quot;is playing&quot; Bug." />
     <MESSAGE value="Refactorings." />

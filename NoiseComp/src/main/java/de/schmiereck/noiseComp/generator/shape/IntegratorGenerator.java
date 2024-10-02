@@ -8,6 +8,8 @@ import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 import java.util.Iterator;
 
+import static de.schmiereck.noiseComp.service.StartupService.SHAPE_GENERATOR_FOLDER_PATH;
+
 /**
  * <p>
  * 	Integrator Generator.
@@ -207,7 +209,7 @@ extends Generator
 
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", IntegratorGenerator.class, "Integrator", "Integrates multiple signal input lines.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH, IntegratorGenerator.class, "Integrator", "Integrates multiple signal input lines.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", -1, -1, "The input signal.");

@@ -8,6 +8,8 @@ import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 import java.util.Iterator;
 
+import static de.schmiereck.noiseComp.service.StartupService.MIXER_GENERATOR_FOLDER_PATH;
+
 /**
  * <p>
  * 	Multiplier Generator.
@@ -176,7 +178,7 @@ extends Generator
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", MultiplierGenerator.class, "Multiplier", "Multiply multiple signal input lines and multiply them with a multiplier.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MIXER_GENERATOR_FOLDER_PATH, MultiplierGenerator.class, "Multiplier", "Multiply multiple signal input lines and multiply them with a multiplier.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MULTIPLIER, "multiplier", -1, -1, "The volume of the output singal between 0 and 1 (average is calculated if more then one volume is connected).");

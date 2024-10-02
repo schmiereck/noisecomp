@@ -4,6 +4,8 @@ package de.schmiereck.noiseComp.generator.shape;
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
+import static de.schmiereck.noiseComp.service.StartupService.SHAPE_GENERATOR_FOLDER_PATH;
+
 /**
  * Fader Generator.
  *
@@ -88,7 +90,7 @@ extends Generator
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", FaderGenerator.class, "Fader", "Fades linear from a start to a end value.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH, FaderGenerator.class, "Fader", "Fades linear from a start to a end value.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_START_VALUE, "startFadeValue", 1, 1, "Start value between -1 and 1 of the fading over generator length (other value ranges can used).");

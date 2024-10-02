@@ -8,6 +8,8 @@ import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 import java.util.Iterator;
 
+import static de.schmiereck.noiseComp.service.StartupService.SHAPE_GENERATOR_FOLDER_PATH;
+
 /**
  * <p>
  * 	Pow Generator.
@@ -147,7 +149,7 @@ extends Generator
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", PowGenerator.class, "pow", "Calculates the value of the base (sum) raised to the power of the exponent (sum).");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH, PowGenerator.class, "pow", "Calculates the value of the base (sum) raised to the power of the exponent (sum).");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_BASE, "base", -1, -1, "The base singal.");

@@ -15,6 +15,8 @@ import de.schmiereck.noiseComp.WaveResourceLoader;
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
+import static de.schmiereck.noiseComp.service.StartupService.SIGNAL_GENERATOR_FOLDER_PATH;
+
 /*
  * Created on 28.03.2005, Copyright (c) schmiereck, 2005
  */
@@ -313,7 +315,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", WaveGenerator.class, 
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH, WaveGenerator.class,
 																	"Wave File", "Plays a Wave file from file system.");
 		
 		{

@@ -3,6 +3,8 @@ package de.schmiereck.noiseComp.generator.signal;
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
+import static de.schmiereck.noiseComp.service.StartupService.SIGNAL_GENERATOR_FOLDER_PATH;
+
 /**
  * The output of this generator is send to the audio hardware if a instance 
  * of this generator is used as &quote;root&quote;.<br/>
@@ -32,10 +34,6 @@ extends Generator
 		super(name, frameRate, generatorTypeData);
 	}
 
-	/**
-	 * @param string
-	 * @param soundGenerator
-	 */
 	public void setSignalInput(Generator inputSoundGenerator)
 	{
 		this.addGeneratorInput(inputSoundGenerator, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL), 
@@ -74,7 +72,7 @@ extends Generator
 	 */
 	public static GeneratorTypeData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData("/", OutputGenerator.class, "Output", "The input signal is audible at the audio hardware.");
+		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH, OutputGenerator.class, "Output", "The input signal is audible at the audio hardware.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "Is a signal between -1 and 1 send to output speakers.");
