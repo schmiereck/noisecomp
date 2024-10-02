@@ -20,147 +20,86 @@ package de.schmiereck.screenTools.scheduler;
 public abstract class PipelineSchedulerLogic
 {
 	Thread calcThread = null;
-
-	/**
-	 * Counts of calling {@link #notifyRunSchedulCalc(long)}.
-	 */
-	private long runCounterCalc	= 0L;
+	final CalcLogic calcLogic;
 
 	Thread outThread = null;
-	
-	boolean isRunning = false;
-	
+	final OutLogic outLogic;
+
 	/**
-	 * Counts of calling {@link #notifyRunSchedulOut(long)}.
-	 */
-	private long runCounterOut	= 0L;
-	
-	/**
-	 * Milliseconds actually calculated for the out outThread to wait beween
+	 * Milliseconds actually calculated for the out out-Thread to wait between
 	 * the calls of {@link #notifyRunSchedulOut(long)}.<br/>
-	 * Is also used from the calc outThread!
+	 * Is also used from the calc-Thread!
 	 */
     long actualWaitPerFramesMillis	= 0;
-	
-	/**
-	 * Constructor.
-	 * 
-	 * @param targetFramesPerSecond
-	 */
-	public PipelineSchedulerLogic(int targetFramesPerSecond) 
-	{
-		this.targetFramesPerSecond = targetFramesPerSecond;
-	}
-	
+
 	/**
 	 * Gewünschte Framerate:<br/>
 	 * Anzahl der Frames pro Sekunde die dargestellt werden sollen.
 	 */
-    int targetFramesPerSecond;
+	int targetFramesPerSecond;
+
+	/**
+	 * Constructor.
+	 */
+	public PipelineSchedulerLogic(final int targetFramesPerSecond)  {
+		this.outLogic = new OutLogic(this);
+		this.calcLogic = new CalcLogic(this);
+		this.targetFramesPerSecond = targetFramesPerSecond;
+	}
 
 	/* (non-Javadoc)
 	 * @see de.schmiereck.screenTools.scheduler.SchedulerLogic#startThread()
 	 */
-	public void startThread()
-	{
-		if (this.calcThread != null)
-		{
+	public void startThread() {
+		if (this.calcThread != null) {
 			throw new RuntimeException("calc thread already startet");
 		}
-		if (this.outThread != null)
-		{
+		if (this.outThread != null) {
 			throw new RuntimeException("out thread already startet");
 		}
 
 		//final CalcLogic calcLogic = new CalcLogic(this);
 
-		this.runCounterCalc = 0;
 		//this.calcThread = new Thread(calcLogic::runCalc);
 		this.calcThread = new Thread(this::run);
 
 		this.calcThread.start();
 
-		System.out.println("YYY: startOutThread.");
 		this.startOutThread();
 	}
 
 	private void run() {
-		final CalcLogic calcLogic = new CalcLogic(this);
+		this.calcLogic.runCalc();
 
-		calcLogic.runCalc();
-
+		this.outLogic.stopRunning();
 		this.outThread = null;
 	}
 
-	private void startOutThread()
-	{
-		final OutLogic outLogic = new OutLogic(this);
-
-		this.runCounterOut = 0;
-		this.outThread = new Thread(outLogic::runOut);
+	private void startOutThread() {
+		this.outThread = new Thread(this.outLogic::runOut);
 
 		this.outThread.start();
 	}
 	
-	public void stopThread()
-	{
-		if (this.outThread == null)
-		{
+	public void stopThread() {
+		if (this.outThread == null) {
 			throw new RuntimeException("out thread not startet");
 		}
 
+		this.outLogic.stopRunning();
 		this.outThread = null;
 		
-		if (this.calcThread == null)
-		{
+		if (this.calcThread == null) {
 			throw new RuntimeException("calc thread not startet");
 		}
 
+		this.calcLogic.stopRunning();
 		this.calcThread = null;
-
-		//while (this.isRunning == true)
-		//{
-		//	try
-		//	{
-		//		System.out.println("isRunning....");
-		//		Thread.sleep(10);
-		//	}
-		//	catch (InterruptedException e)
-		//	{
-		//		e.printStackTrace(System.err);
-		//	}
-		//}
 	}
 
 	public abstract void notifyRunSchedulOut(long actualWaitPerFramesMillis);
 
 	public abstract void notifyRunSchedulCalc(long actualWaitPerFramesMillis);
-
-	/**
-	 * @return the attribute {@link #runCounterCalc}.
-	 */
-	public long getRunCounterCalc()
-	{
-		return this.runCounterCalc;
-	}
-
-	public void incRunCounterOut()
-	{
-		this.runCounterOut++;
-	}
-
-	public void incRunCounterCalc()
-	{
-		this.runCounterCalc++;
-	}
-
-	/**
-	 * @return the attribute {@link #runCounterOut}.
-	 */
-	public long getRunCounterOut()
-	{
-		return this.runCounterOut;
-	}
 
 	public long getActualWaitPerFramesMillis() {
 		return this.actualWaitPerFramesMillis;
@@ -170,7 +109,11 @@ public abstract class PipelineSchedulerLogic
 		return this.targetFramesPerSecond;
 	}
 
-	public boolean isRunning() {
-		return this.isRunning;
+	public CalcLogic getCalcLogic() {
+		return this.calcLogic;
+	}
+
+	public OutLogic getOutLogic() {
+		return this.outLogic;
 	}
 }

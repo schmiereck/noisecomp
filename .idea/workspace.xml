@@ -6,6 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="e6805498-9e83-4364-8650-340ea25b46df" name="Changes" comment="Refactorings.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundData/SoundSchedulerLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundData/SoundSchedulerLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundSource/SoundSourceSchedulerLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/soundSource/SoundSourceSchedulerLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/PlayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/PlayController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/CalcLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/CalcLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/OutLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/OutLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/PipelineSchedulerLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/PipelineSchedulerLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/PipelineSchedulerLogicTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/PipelineSchedulerLogicTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +34,7 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -215,7 +223,8 @@
       <workItem from="1727690861460" duration="6466000" />
       <workItem from="1727701272884" duration="10546000" />
       <workItem from="1727782187759" duration="7957000" />
-      <workItem from="1727794354022" duration="5826000" />
+      <workItem from="1727794354022" duration="7058000" />
+      <workItem from="1727852022424" duration="2305000" />
     </task>
     <task id="LOCAL-00001" summary="CVS to Git.&#10;Eclipse to IntelliJ.">
       <option name="closed" value="true" />
@@ -585,7 +594,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727801663122</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Refactorings.">
+      <option name="closed" value="true" />
+      <created>1727802295797</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1727802295797</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -645,16 +662,6 @@
           <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/noiseComp/swingView/appController/AppController.java</url>
           <line>1871</line>
           <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/OutLogic.java</url>
-          <line>12</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/NoiseComp/src/main/java/de/schmiereck/screenTools/scheduler/OutLogic.java</url>
-          <line>72</line>
-          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,20 +1,28 @@
 package de.schmiereck.screenTools.scheduler;
 
-import java.util.Objects;
-
 public class CalcLogic {
     private final PipelineSchedulerLogic pipelineSchedulerLogic;
+
+    /**
+     * Counts of calling {@link PipelineSchedulerLogic#notifyRunSchedulCalc(long)}.
+     */
+    private long runCounterCalc	= 0L;
+
+    private boolean logicIsRunning = false;
 
     public CalcLogic(final PipelineSchedulerLogic pipelineSchedulerLogic) {
         this.pipelineSchedulerLogic = pipelineSchedulerLogic;
     }
 
     public void runCalc() {
+        this.runCounterCalc = 0;
+        this.logicIsRunning = true;
+
         long tm = System.currentTimeMillis();
 
         //while (Thread.currentThread() == this.pipelineSchedulerLogic.calcThread)
-        while (Objects.nonNull(this.pipelineSchedulerLogic.calcThread))
-        {
+        //while (Objects.nonNull(this.pipelineSchedulerLogic.calcThread))
+        while (this.logicIsRunning) {
             long waitPerFramesMillis = this.pipelineSchedulerLogic.actualWaitPerFramesMillis / 2;
 
             tm += waitPerFramesMillis;
@@ -22,11 +30,9 @@ public class CalcLogic {
             long sleepMillis = tm - System.currentTimeMillis();
 
             long d1 = System.currentTimeMillis();
-            this.pipelineSchedulerLogic.incRunCounterCalc();
+            this.incRunCounterCalc();
             this.pipelineSchedulerLogic.notifyRunSchedulCalc(sleepMillis);
             long d2 = System.currentTimeMillis();
-
-            System.out.println("XXX: " + waitPerFramesMillis + " / " + sleepMillis + " : " + (d2 - d1));
 
             //tm = ctm;
 
@@ -48,5 +54,21 @@ public class CalcLogic {
                 ex.printStackTrace(System.err);
             }
         }
+    }
+
+    /**
+     * @return the attribute {@link #runCounterCalc}.
+     */
+    public long getRunCounterCalc()
+    {
+        return this.runCounterCalc;
+    }
+
+    public void incRunCounterCalc() {
+        this.runCounterCalc++;
+    }
+
+    public void stopRunning() {
+        this.logicIsRunning = false;
     }
 }

@@ -48,9 +48,8 @@ public class SoundSourceSchedulerLogic
 				
 				if (emptyBufferSize > 0)
 				{
-					System.out.println("CALC: " + this.soundSourceLogic.getEmptyBufferStart() + 
-					                   " (" + actualWaitPerFramesMillis + ")");
-	
+					System.out.println("CALC: %d (%d)".formatted(this.soundSourceLogic.getEmptyBufferStart(), actualWaitPerFramesMillis));
+
 					this.soundSourceLogic.pollCalcFillBuffer(actualWaitPerFramesMillis);
 				}
 			}

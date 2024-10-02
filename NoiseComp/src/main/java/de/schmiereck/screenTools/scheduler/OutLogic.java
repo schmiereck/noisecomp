@@ -1,16 +1,22 @@
 package de.schmiereck.screenTools.scheduler;
 
-import java.util.Objects;
-
 public class OutLogic {
     private final PipelineSchedulerLogic pipelineSchedulerLogic;
+
+    /**
+     * Counts of calling {@link PipelineSchedulerLogic#notifyRunSchedulOut(long)}.
+     */
+    private long runCounterOut	= 0L;
+
+    private boolean logicIsRunning = false;
 
     public OutLogic(final PipelineSchedulerLogic pipelineSchedulerLogic) {
         this.pipelineSchedulerLogic = pipelineSchedulerLogic;
     }
 
     public void runOut() {
-        this.pipelineSchedulerLogic.isRunning = true;
+        this.runCounterOut = 0;
+        this.logicIsRunning = true;
 
         // Enthält die 'Systemzeit' des Programms.
         // Der Scheduler versucht die 'wirkliche' Zeit mit dieser
@@ -18,7 +24,7 @@ public class OutLogic {
         long tm = System.currentTimeMillis();
 
         // Millisekunden, die zwischen zwei Frames gewartet werden soll,
-        // um die gewümschte Framerate hinzubekommen.
+        // um die gewünschte Framerate hinzubekommen.
         long targetWaitPerFramesMillis = 1000 / this.pipelineSchedulerLogic.getTargetFramesPerSecond();
 
         // Millisekunden die momentan zwischen zwei Frames gewartet wird.
@@ -26,8 +32,8 @@ public class OutLogic {
 
         //while (null != this.outThread)
         //while (Thread.currentThread() == this.pipelineSchedulerLogic.outThread)
-        while (Objects.nonNull(this.pipelineSchedulerLogic.outThread))
-        {
+        //while (Objects.nonNull(this.pipelineSchedulerLogic.outThread))
+        while (this.logicIsRunning) {
             try
             {
                 tm += this.pipelineSchedulerLogic.actualWaitPerFramesMillis;
@@ -56,20 +62,31 @@ public class OutLogic {
                     }
                 }
                 long sleepMs = Math.max(0, sleepMillis);
-                System.out.println("Out: " + this.pipelineSchedulerLogic.getRunCounterOut() + ", sleepMs: " + sleepMs);
 
                 Thread.sleep(sleepMs);
 
-                this.pipelineSchedulerLogic.incRunCounterOut();
+                this.incRunCounterOut();
                 this.pipelineSchedulerLogic.notifyRunSchedulOut(this.pipelineSchedulerLogic.getActualWaitPerFramesMillis());
-                System.out.println("Out2: ");
             }
             catch (InterruptedException ex)
             {
                 ex.printStackTrace(System.err);
             }
         }
+    }
 
-        this.pipelineSchedulerLogic.isRunning = false;
+    public void incRunCounterOut() {
+        this.runCounterOut++;
+    }
+
+    /**
+     * @return the attribute {@link #runCounterOut}.
+     */
+    public long getRunCounterOut() {
+        return this.runCounterOut;
+    }
+
+    public void stopRunning() {
+        this.logicIsRunning = false;
     }
 }

@@ -26,7 +26,6 @@ public class PlayController
 	//**********************************************************************************************
 	// Fields:
 	
-//	private SoundSchedulerLogic soundSchedulerLogic = null;
 	private PlaySoundService playSoundService;
 
 	private final TimelinesTimeRuleController timelinesTimeRuleController;
@@ -52,7 +51,6 @@ public class PlayController
 			@Override
 			public void notifyPlaybackPosChanged(float actualTime)
 			{
-				System.out.println("notifyPlaybackPosChanged: BEGIN");
 				TimelinesTimeRuleModel timelinesTimeRuleModel = timelinesTimeRuleController.getTimelinesTimeRuleModel();
 				
 				TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
@@ -63,37 +61,26 @@ public class PlayController
 				
 				SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 
-				System.out.println("doPlaybackTimeChanged: BEGIN");
 				doPlaybackTimeChanged(actualTime);
-				System.out.println("doPlaybackTimeChanged: END");
 
 				Timeline outputTimeline = soundSourceLogic.getOutputTimeline();
 
-				System.out.println("notifyPlaybackPosChanged: RUN 1");
 				float generatorEndTimePos = outputTimeline.getGeneratorEndTimePos();
 
-				System.out.println("notifyPlaybackPosChanged: RUN 2");
 				if ((actualTime > generatorEndTimePos) || (actualTime > endTime))
 				{
 					SoundService soundService = SoundService.getInstance();
 
-					System.out.println("notifyPlaybackPosChanged: RUN 3");
 					if (soundService.retrieveLooped() == true)
 					{
-						System.out.println("submitPlaybackPos: BEGIN");
 						//soundService.submitPlaybackPos(startTime);
 						playSoundService.submitPlaybackPos(startTime);
-						System.out.println("submitPlaybackPos: END");
 					}
 					else
 					{
-						System.out.println("notifyPlaybackPosChanged: RUN 4");
-						System.out.println("doStopSound: BEGIN");
 						doStopSound();
-						System.out.println("doStopSound: END");
 					}
 				}
-				System.out.println("notifyPlaybackPosChanged: END");
 			}
 		};
 		//==========================================================================================

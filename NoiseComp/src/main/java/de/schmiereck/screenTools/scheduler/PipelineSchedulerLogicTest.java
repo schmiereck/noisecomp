@@ -20,7 +20,7 @@ public class PipelineSchedulerLogicTest
 			 */
 			public void notifyRunSchedulOut(long actualWaitPerFramesMillis)
 			{
-				System.out.println(this.getRunCounterOut() + " -> OUT: " + actualWaitPerFramesMillis);
+				System.out.println(this.getOutLogic().getRunCounterOut() + " -> OUT: " + actualWaitPerFramesMillis);
 				
 				//try { Thread.sleep(200); } catch (InterruptedException ex) { ex.printStackTrace(); }
 			}
@@ -30,7 +30,7 @@ public class PipelineSchedulerLogicTest
 			 */
 			public void notifyRunSchedulCalc(long actualWaitPerFramesMillis)
 			{
-				System.out.println(this.getRunCounterCalc() + " -> CALC: " + actualWaitPerFramesMillis);
+				System.out.println(this.getCalcLogic().getRunCounterCalc() + " -> CALC: " + actualWaitPerFramesMillis);
 			}
 		};
 		
@@ -51,6 +51,6 @@ public class PipelineSchedulerLogicTest
 		System.out.println("END");
 		
 		assertTrue("In 3000ms the notify should fired min 29 times (with 10 a times per second target).", 
-					pipelineSchedulerLogic.getRunCounterOut() >= 29);
+					pipelineSchedulerLogic.getOutLogic().getRunCounterOut() >= 29);
 	}
 }
