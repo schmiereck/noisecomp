@@ -365,14 +365,14 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#Main-Module]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#Main-Module]></generatorClassName>
 			<name><![CDATA[Main-Module]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<isMain><![CDATA[true]]></isMain>
 			<inputTypes />
 			<generators>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#st]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#st]]></type>
 					<name><![CDATA[s]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[3.0]]></endTime>
@@ -425,7 +425,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#st]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#st]]></generatorClassName>
 			<name><![CDATA[st]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<inputTypes />

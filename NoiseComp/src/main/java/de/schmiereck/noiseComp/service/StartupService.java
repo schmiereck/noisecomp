@@ -54,6 +54,7 @@ public class StartupService
      * Generator Folder-Path.
      */
     public static final String GENERATOR_FOLDER_PATH = "/";
+    public static final String SIGNAL_GENERATOR_FOLDER_PATH = GENERATOR_FOLDER_PATH + "signal/";
 
     /**
      * Module Folder-Path.
@@ -222,7 +223,7 @@ public class StartupService
         //---------------------------------
         SinusGenerator sinus0Generator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(GENERATOR_FOLDER_PATH,
+            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     SinusGenerator.class.getName());
             sinus0Generator = new SinusGenerator("sinus0", frameRateFloat, generatorTypeData);
             sinus0Generator.addInputValue(110F, SinusGenerator.INPUT_TYPE_FREQ);
@@ -235,7 +236,7 @@ public class StartupService
         //---------------------------------
         SinusGenerator sinus1Generator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(GENERATOR_FOLDER_PATH,
+            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     SinusGenerator.class.getName());
             sinus1Generator = new SinusGenerator("sinus1", frameRateFloat, generatorTypeData);
             sinus1Generator.addInputValue(220F, SinusGenerator.INPUT_TYPE_FREQ);
@@ -248,7 +249,7 @@ public class StartupService
         //---------------------------------
         SinusGenerator sinus2Generator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(GENERATOR_FOLDER_PATH,
+            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     SinusGenerator.class.getName());
             sinus2Generator = new SinusGenerator("sinus2", frameRateFloat, generatorTypeData);
             sinus2Generator.addInputValue(240F, SinusGenerator.INPUT_TYPE_FREQ);
@@ -261,7 +262,7 @@ public class StartupService
         //---------------------------------
         SinusGenerator sinus3Generator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(GENERATOR_FOLDER_PATH,
+            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     SinusGenerator.class.getName());
             sinus3Generator = new SinusGenerator("sinus3", frameRateFloat, generatorTypeData);
             sinus3Generator.addInputValue(248F, SinusGenerator.INPUT_TYPE_FREQ);

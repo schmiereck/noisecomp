@@ -579,7 +579,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#drum-set 1]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-set 1]]></generatorClassName>
 			<name><![CDATA[drum-set 1]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -683,7 +683,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#base drum]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#base drum]]></type>
 					<name><![CDATA[b1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[1.0]]></endTime>
@@ -696,7 +696,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#base drum]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#base drum]]></type>
 					<name><![CDATA[b2]]></name>
 					<startTime><![CDATA[0.5]]></startTime>
 					<endTime><![CDATA[1.5]]></endTime>
@@ -709,7 +709,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#base drum]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#base drum]]></type>
 					<name><![CDATA[b3]]></name>
 					<startTime><![CDATA[1.0]]></startTime>
 					<endTime><![CDATA[2.0]]></endTime>
@@ -722,7 +722,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#base drum]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#base drum]]></type>
 					<name><![CDATA[b4]]></name>
 					<startTime><![CDATA[1.5]]></startTime>
 					<endTime><![CDATA[2.5]]></endTime>
@@ -735,13 +735,13 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#hihat]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#hihat]]></type>
 					<name><![CDATA[hh1]]></name>
 					<startTime><![CDATA[0.25]]></startTime>
 					<endTime><![CDATA[0.5]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#hihat]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#hihat]]></type>
 					<name><![CDATA[hh2]]></name>
 					<startTime><![CDATA[0.7]]></startTime>
 					<endTime><![CDATA[0.95]]></endTime>
@@ -754,7 +754,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#hihat]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#hihat]]></type>
 					<name><![CDATA[hh3]]></name>
 					<startTime><![CDATA[1.25]]></startTime>
 					<endTime><![CDATA[1.5]]></endTime>
@@ -767,7 +767,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#hihat]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#hihat]]></type>
 					<name><![CDATA[hh4]]></name>
 					<startTime><![CDATA[1.75]]></startTime>
 					<endTime><![CDATA[2.0]]></endTime>
@@ -780,19 +780,19 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#hihat]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#hihat]]></type>
 					<name><![CDATA[hh5]]></name>
 					<startTime><![CDATA[1.5]]></startTime>
 					<endTime><![CDATA[1.75]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#clap]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#clap]]></type>
 					<name><![CDATA[clap1]]></name>
 					<startTime><![CDATA[0.5]]></startTime>
 					<endTime><![CDATA[0.8]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#clap]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#clap]]></type>
 					<name><![CDATA[clap3]]></name>
 					<startTime><![CDATA[1.4]]></startTime>
 					<endTime><![CDATA[1.8]]></endTime>
@@ -842,7 +842,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#h1]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#h1]]></generatorClassName>
 			<name><![CDATA[h1]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -1048,7 +1048,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#h2]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#h2]]></generatorClassName>
 			<name><![CDATA[h2]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -1173,7 +1173,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#s1]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#s1]]></generatorClassName>
 			<name><![CDATA[s1]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -1294,7 +1294,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#h1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#h1]]></type>
 					<name><![CDATA[s1-h1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[1.0]]></endTime>
@@ -1326,7 +1326,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#base drum]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#base drum]]></generatorClassName>
 			<name><![CDATA[base drum]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -1422,7 +1422,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#s1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#s1]]></type>
 					<name><![CDATA[bd-s1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[1.0]]></endTime>
@@ -1456,7 +1456,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#s2]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#s2]]></generatorClassName>
 			<name><![CDATA[s2]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -1533,7 +1533,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#h1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#h1]]></type>
 					<name><![CDATA[h1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[1.0]]></endTime>
@@ -1559,7 +1559,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#hihat]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#hihat]]></generatorClassName>
 			<name><![CDATA[hihat]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -1758,7 +1758,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#drum-line 1]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-line 1]]></generatorClassName>
 			<name><![CDATA[drum-line 1]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -1815,25 +1815,25 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#drum-set 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-set 1]]></type>
 					<name><![CDATA[mm1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[3.0]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#drum-set 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-set 1]]></type>
 					<name><![CDATA[mm2]]></name>
 					<startTime><![CDATA[2.0]]></startTime>
 					<endTime><![CDATA[5.0]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#drum-set 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-set 1]]></type>
 					<name><![CDATA[mm3]]></name>
 					<startTime><![CDATA[4.0]]></startTime>
 					<endTime><![CDATA[7.0]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#drum-set 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-set 1]]></type>
 					<name><![CDATA[mm4]]></name>
 					<startTime><![CDATA[6.0]]></startTime>
 					<endTime><![CDATA[9.0]]></endTime>
@@ -1862,7 +1862,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#synth 1]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#synth 1]]></generatorClassName>
 			<name><![CDATA[synth 1]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -2172,7 +2172,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#synth-line 1]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#synth-line 1]]></generatorClassName>
 			<name><![CDATA[synth-line 1]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<isMain><![CDATA[true]]></isMain>
@@ -2296,7 +2296,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#synth 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#synth 1]]></type>
 					<name><![CDATA[synth1-2]]></name>
 					<startTime><![CDATA[2.0]]></startTime>
 					<endTime><![CDATA[2.3]]></endTime>
@@ -2309,7 +2309,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#synth 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#synth 1]]></type>
 					<name><![CDATA[synth1-1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[0.5]]></endTime>
@@ -2322,7 +2322,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></type>
 					<name><![CDATA[ss1]]></name>
 					<startTime><![CDATA[1.4]]></startTime>
 					<endTime><![CDATA[1.6]]></endTime>
@@ -2335,7 +2335,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#synth 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#synth 1]]></type>
 					<name><![CDATA[synth1-3]]></name>
 					<startTime><![CDATA[4.0]]></startTime>
 					<endTime><![CDATA[5.0]]></endTime>
@@ -2348,7 +2348,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#synth 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#synth 1]]></type>
 					<name><![CDATA[synth1-4]]></name>
 					<startTime><![CDATA[4.25]]></startTime>
 					<endTime><![CDATA[5.1]]></endTime>
@@ -2361,7 +2361,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#synth 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#synth 1]]></type>
 					<name><![CDATA[synth1-5]]></name>
 					<startTime><![CDATA[6.0]]></startTime>
 					<endTime><![CDATA[6.25]]></endTime>
@@ -2374,7 +2374,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#synth 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#synth 1]]></type>
 					<name><![CDATA[synth1-6]]></name>
 					<startTime><![CDATA[6.25]]></startTime>
 					<endTime><![CDATA[7.1]]></endTime>
@@ -2387,13 +2387,13 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></type>
 					<name><![CDATA[ss1]]></name>
 					<startTime><![CDATA[0.4]]></startTime>
 					<endTime><![CDATA[0.8]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></type>
 					<name><![CDATA[ss2]]></name>
 					<startTime><![CDATA[2.4]]></startTime>
 					<endTime><![CDATA[3.0]]></endTime>
@@ -2406,13 +2406,13 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></type>
 					<name><![CDATA[ss3]]></name>
 					<startTime><![CDATA[3.6]]></startTime>
 					<endTime><![CDATA[3.8]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></type>
 					<name><![CDATA[ss4]]></name>
 					<startTime><![CDATA[4.6]]></startTime>
 					<endTime><![CDATA[4.8]]></endTime>
@@ -2425,13 +2425,13 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></type>
 					<name><![CDATA[ss5]]></name>
 					<startTime><![CDATA[5.4]]></startTime>
 					<endTime><![CDATA[6.2]]></endTime>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></type>
 					<name><![CDATA[ss6]]></name>
 					<startTime><![CDATA[7.2]]></startTime>
 					<endTime><![CDATA[7.4]]></endTime>
@@ -2444,7 +2444,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#drum-line 1]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-line 1]]></type>
 					<name><![CDATA[dum-line-1-1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[9.0]]></endTime>
@@ -2475,7 +2475,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></type>
 					<name><![CDATA[l3ss1]]></name>
 					<startTime><![CDATA[0.0]]></startTime>
 					<endTime><![CDATA[1.8]]></endTime>
@@ -2488,7 +2488,7 @@
 					</inputs>
 				</generator>
 				<generator>
-					<type><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></type>
+					<type><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></type>
 					<name><![CDATA[l3ss1 (new)]]></name>
 					<startTime><![CDATA[2.3]]></startTime>
 					<endTime><![CDATA[4.6]]></endTime>
@@ -2563,7 +2563,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#clap]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#clap]]></generatorClassName>
 			<name><![CDATA[clap]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>
@@ -3011,7 +3011,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.ModuleGenerator#sawsyth]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#sawsyth]]></generatorClassName>
 			<name><![CDATA[sawsyth]]></name>
 			<description><![CDATA[Manages a Group of other generators.]]></description>
 			<view>

@@ -245,25 +245,20 @@ public class LoadFileOperationLogic
 		{
 			//--------------------------------------------------------------------------------------
 			Class<? extends Generator> generatorClass;
-			try
-			{
+			try {
 				int namePartPos = generatorClassName.indexOf("#");
 	
 				// Class name with appended name of a generic module type ?
-				if (namePartPos != -1)
-				{
+				if (namePartPos != -1) {
 	//				generatorModuleypeName = generatorClassName.substring(namePartPos + 1);
 					generatorClassName = generatorClassName.substring(0, namePartPos);
-				}
-				else
-				{
+				} else {
 	//				generatorModuleypeName = null;
 				}
 				generatorClass = (Class< ? extends Generator>)Class.forName(generatorClassName);
 			}
-			catch (ClassNotFoundException ex)
-			{
-				throw new RuntimeException("Class \"" + folderPath + "\" + \"" + generatorTypeClassName + "\" not found.", ex);
+			catch (ClassNotFoundException ex) {
+				throw new RuntimeException("Class \"" + folderPath + "\" + \"" + generatorClassName + "\" not found.", ex);
 			}
 			
 			generatorTypeData = LoadFileOperationLogic.createGeneratorTypeData(folderPath,

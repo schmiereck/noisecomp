@@ -443,9 +443,19 @@ public class ModulesTreeModel
 	 * @param generatorTreeNode
 	 * 			is the generator TreeNode to add to {@link #generatorsTreeNode}..
 	 */
-	public void addGeneratoreNode(DefaultMutableTreeNode generatorTreeNode)
-	{
+	public void addGeneratoreNode(final DefaultMutableTreeNode generatorTreeNode) {
 		this.generatorsTreeNode.add(generatorTreeNode);
+	}
+
+	/**
+	 * @param folderTreeNode
+	 * 			is the selected folder Tree-Node.
+	 * @param generatorTreeNode
+	 * 			is the generator TreeNode to add to {@link #generatorsTreeNode}..
+	 */
+	public void addGeneratoreNode(DefaultMutableTreeNode folderTreeNode, final DefaultMutableTreeNode generatorTreeNode) {
+		this.treeModel.insertNodeInto(generatorTreeNode, folderTreeNode, 0);
+		//this.generatorsTreeNode.add(generatorTreeNode);
 	}
 
 	/**
@@ -473,6 +483,19 @@ public class ModulesTreeModel
 	 * 			is the new folder Tree-Node.
 	 */
 	public void addModuleNode(DefaultMutableTreeNode folderTreeNode, 
+	                          DefaultMutableTreeNode newFolderTreeNode)
+	{
+		this.treeModel.insertNodeInto(newFolderTreeNode, folderTreeNode, 0);
+		//folderTreeNode.add(newFolderTreeNode);
+	}
+
+	/**
+	 * @param folderTreeNode
+	 * 			is the selected folder Tree-Node.
+	 * @param newFolderTreeNode
+	 * 			is the new folder Tree-Node.
+	 */
+	public void addFolderNode(DefaultMutableTreeNode folderTreeNode,
 	                          DefaultMutableTreeNode newFolderTreeNode)
 	{
 		this.treeModel.insertNodeInto(newFolderTreeNode, folderTreeNode, 0);

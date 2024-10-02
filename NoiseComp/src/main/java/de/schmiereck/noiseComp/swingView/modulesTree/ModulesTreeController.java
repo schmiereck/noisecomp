@@ -6,6 +6,7 @@ package de.schmiereck.noiseComp.swingView.modulesTree;
 import java.awt.event.MouseListener;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -138,62 +139,79 @@ public class ModulesTreeController
 		DefaultTreeModel treeModel = this.modulesTreeModel.getTreeModel();
 		
 		//------------------------------------------------------------------------------------------
-		while (generatorTypesIterator.hasNext())
-		{
-			GeneratorTypeData generatorTypeData = (GeneratorTypeData)generatorTypesIterator.next();
+		while (generatorTypesIterator.hasNext()) {
+			final GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			String folderPath = generatorTypeData.getFolderPath();
-			
-			DefaultMutableTreeNode insertTreeNode = this.modulesTreeModel.getModulesTreeNode();
+			final String folderPath = generatorTypeData.getFolderPath();
+
+			DefaultMutableTreeNode lastInsertTreeNode;
 			
 			// Folder-Path?
-			if (folderPath != null)
-			{
-				String folderNames[] = folderPath.split("\\/");
-				
-				for (int folderPos = 3; folderPos < folderNames.length; folderPos++)
-				{
-					String folderName = folderNames[folderPos];
-					
-					DefaultMutableTreeNode folderTreeNode = this.modulesTreeModel.searchFolderTreeNode(insertTreeNode, folderName);
-					
-					// Not found?
-					if (folderTreeNode == null)
-					{
-						DefaultMutableTreeNode newFolderTreeNode = new DefaultMutableTreeNode(folderName);
-						
-						this.modulesTreeModel.addModuleNode(insertTreeNode, 
-						                                    newFolderTreeNode);
-						
-						insertTreeNode = newFolderTreeNode;
+			if (Objects.nonNull(folderPath)) {
+				final String folderNames[] = folderPath.split("\\/");
+
+				// Module?
+				if ((folderNames.length >= 3) &&
+						"".equals(folderNames[0]) && "File".equals(folderNames[1]) && ("Modules".equals(folderNames[2]))) {
+					lastInsertTreeNode = this.modulesTreeModel.getModulesTreeNode();
+
+					for (int folderPos = 3; folderPos < folderNames.length; folderPos++) {
+						final String folderName = folderNames[folderPos];
+
+						final DefaultMutableTreeNode folderTreeNode = this.modulesTreeModel.searchFolderTreeNode(lastInsertTreeNode, folderName);
+
+						// Not found?
+						if (folderTreeNode == null) {
+							final DefaultMutableTreeNode newFolderTreeNode = new DefaultMutableTreeNode(folderName);
+
+							this.modulesTreeModel.addFolderNode(lastInsertTreeNode,
+																newFolderTreeNode);
+
+							lastInsertTreeNode = newFolderTreeNode;
+						} else {
+							lastInsertTreeNode = folderTreeNode;
+						}
 					}
-					else
-					{
-						insertTreeNode = folderTreeNode;
+				} else {
+					// Generator.
+					lastInsertTreeNode = this.modulesTreeModel.getGeneratorsTreeNode();
+
+					if ((folderNames.length >= 2) && "".equals(folderNames[0])) {
+						for (int folderPos = 1; folderPos < folderNames.length; folderPos++) {
+							final String folderName = folderNames[folderPos];
+
+							final DefaultMutableTreeNode folderTreeNode = this.modulesTreeModel.searchFolderTreeNode(lastInsertTreeNode, folderName);
+
+							// Not found?
+							if (folderTreeNode == null) {
+								final DefaultMutableTreeNode newFolderTreeNode = new DefaultMutableTreeNode(folderName);
+
+								this.modulesTreeModel.addFolderNode(lastInsertTreeNode,
+										newFolderTreeNode);
+
+								lastInsertTreeNode = newFolderTreeNode;
+							} else {
+								lastInsertTreeNode = folderTreeNode;
+							}
+						}
 					}
 				}
+			} else {
+				throw new RuntimeException("Folder-Path of \"%s\" is null.".formatted(generatorTypeData.getGeneratorTypeName()));
 			}
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			Class< ? extends Generator> generatorClass = generatorTypeData.getGeneratorClass();
+			final Class< ? extends Generator> generatorClass = generatorTypeData.getGeneratorClass();
 			
-			// Module?
-			if (generatorClass != null)
-			{
-				// Uses generator.toString() to view Label, so write a function for this.
-				DefaultMutableTreeNode modulereeNode = new DefaultMutableTreeNode(generatorTypeData);
-				
-				if (generatorTypeData instanceof ModuleGeneratorTypeData)
-				{			
-//					String folderPath2 = generatorTypeData.getFolderPath();
-					
-					this.modulesTreeModel.addModuleNode(insertTreeNode,
-					                                    modulereeNode);
-				}
-				else
-				{
-					this.modulesTreeModel.addGeneratoreNode(modulereeNode);
+			if (Objects.nonNull(generatorClass)) {
+				DefaultMutableTreeNode moduleTreeNode = new DefaultMutableTreeNode(generatorTypeData);
+
+				// Module?
+				if (generatorTypeData instanceof ModuleGeneratorTypeData) {
+					this.modulesTreeModel.addModuleNode(lastInsertTreeNode, moduleTreeNode);
+				} else {
+					this.modulesTreeModel.addGeneratoreNode(lastInsertTreeNode, moduleTreeNode);
 				}
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -629,7 +647,7 @@ public class ModulesTreeController
 	 * Delete folder.<br/>
 	 * Alert if one Module in folder is used by other modules or it is the Main-Module.
 	 * 
-	 * @param moduleTreeNode
+	 * @param folderTreeNode
 	 * 			is the folder Tree-Node.
 	 */
 	private void doDeleteFolder(DefaultMutableTreeNode folderTreeNode)

@@ -28,7 +28,7 @@ public class GeneratorTypesData
 	
 	/**
 	 * List of the available {@link GeneratorTypeData}-Objects with the Class-Name-String 
-	 * {@link GeneratorTypeData#generatorTypeClassName} as keys.<br/>
+	 * {@link GeneratorTypeData#getGeneratorTypeClassName()} as keys.<br/>
 	 * If the GeneratorType is a generic type like {@link ModuleGenerator},
 	 * the name of the generic type is appendet after a &quot;#&quot; on the class name.<br/>
 	 * If the generator type is in a folder the key starts with a <code>"/"</code>,
@@ -115,23 +115,18 @@ public class GeneratorTypesData
 	 * @param generatorTypeClassName
 	 * 			is the generator type name.
 	 */
-	public GeneratorTypeData searchGeneratorTypeData(String folderPath,
-	                                                 String generatorTypeClassName)
-	{
+	public GeneratorTypeData searchGeneratorTypeData(final String folderPath,
+													 final String generatorTypeClassName) {
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData;
+		final GeneratorTypeData generatorTypeData;
 		
-		if (generatorTypeClassName != null)
-		{	
-			String key = this.makeKeyName(folderPath, generatorTypeClassName);
+		if (generatorTypeClassName != null) {
+			final String key = this.makeKeyName(folderPath, generatorTypeClassName);
 			
 			generatorTypeData = this.generatorTypes.get(key);
-		}
-		else
-		{	
+		} else {
 			generatorTypeData = null;
 		}
-
 		//==========================================================================================
 		return generatorTypeData;
 	}
