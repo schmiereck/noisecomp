@@ -9,6 +9,8 @@ import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 
+import java.util.Objects;
+
 /**
  * <p>
  * 	Input Select-Entry Model.
@@ -40,8 +42,7 @@ public class InputSelectEntryModel
 	 * @param inputData
 	 * 			is the Input Data.
 	 */
-	public InputSelectEntryModel(InputData inputData)
-	{
+	public InputSelectEntryModel(final InputData inputData) {
 		//==========================================================================================
 		this.inputData = inputData;
 		
@@ -55,43 +56,52 @@ public class InputSelectEntryModel
 	 * @return
 	 * 			the label.
 	 */
-	private String makeInputLabel(InputData inputData)
-	{
+	private String makeInputLabel(final InputData inputData) {
 		//==========================================================================================
-		Generator inputGenerator = inputData.getInputGenerator();
-		
-		String label;
-		
-		if (inputData.getInputValue() != null)
-		{
-//			label = String.valueOf(inputData.getInputValue());
-			label = OutputUtils.makeFloatEditText(inputData.getInputValue());
-		}
-		else
-		{
-			if (inputData.getInputStringValue() != null)
-			{
-				label = String.valueOf(inputData.getInputStringValue());
-			}
-			else
-			{
-				if (inputGenerator != null)
-				{	
-					label = inputGenerator.getName();
+		final Generator inputGenerator = inputData.getInputGenerator();
 
-					GeneratorTypeData inputGeneratorTypeData = inputGenerator.getGeneratorTypeData();
-					
-					if (inputGeneratorTypeData != null)
-					{
-						label += " [" + inputGeneratorTypeData.getGeneratorTypeName() + "]";
-					}
-				}
-				else
-				{
-					label = "--";
-				}
+		final String valueLabel;
+
+		if (inputData.getInputValue() != null) {
+			valueLabel = OutputUtils.makeFloatEditText(inputData.getInputValue());
+		} else {
+			if (inputData.getInputStringValue() != null) {
+				valueLabel = String.valueOf(inputData.getInputStringValue());
+			} else {
+				valueLabel = null;
 			}
 		}
+
+		final String generatorLabel;
+
+		if (inputGenerator != null) {
+			final GeneratorTypeData inputGeneratorTypeData = inputGenerator.getGeneratorTypeData();
+
+			if (inputGeneratorTypeData != null) {
+				generatorLabel = inputGenerator.getName() + " [" + inputGeneratorTypeData.getGeneratorTypeName() + "]";
+			} else {
+				generatorLabel = inputGenerator.getName();
+			}
+		} else {
+			generatorLabel = null;
+		}
+
+		final String label;
+
+		if (Objects.nonNull(valueLabel)) {
+			if (Objects.nonNull(generatorLabel)) {
+				label = generatorLabel + " (" + valueLabel + ")";
+			} else {
+				label = valueLabel;
+			}
+		} else {
+			if (Objects.nonNull(generatorLabel)) {
+				label = generatorLabel;
+			} else {
+				label = "--";
+			}
+		}
+
 		//==========================================================================================
 		return label;
 	}

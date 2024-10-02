@@ -16,8 +16,7 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @author smk
  * @version <p>15.09.2010:	created, smk</p>
  */
-public class InputSelectModel
-{
+public class InputSelectModel {
 	//**********************************************************************************************
 	// Fields:
 
@@ -48,8 +47,7 @@ public class InputSelectModel
 	 * Constructor.
 	 * 
 	 */
-	public InputSelectModel()
-	{
+	public InputSelectModel() {
 		//==========================================================================================
 //		this.inputsTabelModel.addTableModelListener
 //		(
@@ -69,8 +67,7 @@ public class InputSelectModel
 	/**
 	 * Clear Inputs.
 	 */
-	public void clearInputs()
-	{
+	public void clearInputs() {
 		this.inputsTabelModel.clearInputs();
 	}
 
@@ -81,8 +78,7 @@ public class InputSelectModel
 	 * 			is the Input-Select-Entry Model.
 	 */
 	public void addInputData(int entryPos,
-	                         InputSelectEntryModel inputSelectEntryModel)
-	{
+	                         InputSelectEntryModel inputSelectEntryModel) {
 		this.inputsTabelModel.addInputData(entryPos,
 		                                   inputSelectEntryModel);
 	}
@@ -91,8 +87,7 @@ public class InputSelectModel
 	 * @return 
 	 * 			returns the {@link #inputsTabelModel}.
 	 */
-	public InputsTabelModel getInputsTabelModel()
-	{
+	public InputsTabelModel getInputsTabelModel() {
 		return this.inputsTabelModel;
 	}
 
@@ -100,8 +95,7 @@ public class InputSelectModel
 	 * @return 
 	 * 			returns the {@link #selectedRowNo}.
 	 */
-	public Integer getSelectedRowNo()
-	{
+	public Integer getSelectedRowNo() {
 		return this.selectedRowNo;
 	}
 
@@ -109,11 +103,9 @@ public class InputSelectModel
 	 * @param selectedRowNo 
 	 * 			to set {@link #selectedRowNo}.
 	 */
-	public void setSelectedRowNo(Integer selectedRowNo)
-	{
+	public void setSelectedRowNo(Integer selectedRowNo) {
 		//==========================================================================================
-		if (CompareUtils.compareWithNull(this.selectedRowNo, selectedRowNo) == false)
-		{
+		if (!CompareUtils.compareWithNull(this.selectedRowNo, selectedRowNo)) {
 			this.selectedRowNo = selectedRowNo;
 			
 			// Notify listeners.
@@ -126,8 +118,7 @@ public class InputSelectModel
 	 * @return 
 	 * 			returns the {@link #selectedRowNoChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getSelectedRowNoChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getSelectedRowNoChangedNotifier() {
 		return this.selectedRowNoChangedNotifier;
 	}
 
@@ -135,24 +126,19 @@ public class InputSelectModel
 	 * @return
 	 * 			the selected Input Select-Entry Model.
 	 */
-	public InputSelectEntryModel getSelectedRow()
-	{
+	public InputSelectEntryModel getSelectedRow() {
 		//==========================================================================================
 		InputSelectEntryModel selectEntryModel;
 		
 		Integer selectedRowNo = this.getSelectedRowNo();
 		
-		if (selectedRowNo != null)
-		{
+		if (selectedRowNo != null) {
 			InputsTabelModel tabelModel = this.getInputsTabelModel();
 			
 			selectEntryModel = tabelModel.getRow(selectedRowNo);
-		}
-		else
-		{
+		} else {
 			selectEntryModel = null;
 		}
-		
 		//==========================================================================================
 		return selectEntryModel;
 	}
@@ -161,8 +147,7 @@ public class InputSelectModel
 	 * @return 
 	 * 			returns the {@link #removeInputSelectEntryNotifier}.
 	 */
-	public RemoveInputSelectEntryNotifier getRemoveInputSelectEntryNotifier()
-	{
+	public RemoveInputSelectEntryNotifier getRemoveInputSelectEntryNotifier() {
 		return this.removeInputSelectEntryNotifier;
 	}
 
@@ -176,8 +161,7 @@ public class InputSelectModel
 	 */
 	public void removeInputSelectEntry(Timeline selectedTimeline,
 	                                   InputSelectEntryModel inputSelectEntryModel,
-	                                   int rowNo)
-	{
+	                                   int rowNo) {
 		//==========================================================================================
 		this.inputsTabelModel.removeInput(rowNo);
 		
@@ -191,8 +175,7 @@ public class InputSelectModel
 	 * @return 
 	 * 			returns the {@link #updateInputSelectEntryNotifier}.
 	 */
-	public UpdateInputSelectEntryNotifier getUpdateInputSelectEntryNotifier()
-	{
+	public UpdateInputSelectEntryNotifier getUpdateInputSelectEntryNotifier() {
 		return this.updateInputSelectEntryNotifier;
 	}
 

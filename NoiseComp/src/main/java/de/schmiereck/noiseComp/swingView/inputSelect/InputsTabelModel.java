@@ -24,9 +24,9 @@ extends AbstractTableModel
 	//**********************************************************************************************
 	// Fields:
 
-	private String columnNames[] = new String[]{"Name", "Value"};
+	private String columnNames[] = new String[]{ "Name", "Value" };
 	
-	private List<InputSelectEntryModel> inputs = new Vector<InputSelectEntryModel>();
+	private List<InputSelectEntryModel> inputs = new Vector<>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -37,8 +37,7 @@ extends AbstractTableModel
 		return 2; 
 	}
 	
-	public void clearInputs() 
-	{ 
+	public void clearInputs() {
 		//==========================================================================================
 		this.inputs.clear();
 		
@@ -46,8 +45,7 @@ extends AbstractTableModel
 		//==========================================================================================
 	}
 	
-	public void removeInput(int rowNo) 
-	{ 
+	public void removeInput(final int rowNo) {
 		//==========================================================================================
 		this.inputs.remove(rowNo);
 		
@@ -63,9 +61,8 @@ extends AbstractTableModel
 	 * @return
 	 * 			the row number.
 	 */
-	public int addInputData(int entryPos,
-	                        InputSelectEntryModel inputSelectEntryModel)
-	{
+	public int addInputData(final int entryPos,
+							final InputSelectEntryModel inputSelectEntryModel) {
 		//==========================================================================================
 		this.inputs.add(entryPos, inputSelectEntryModel);
 		
@@ -78,45 +75,37 @@ extends AbstractTableModel
 	}
 	
 	@Override
-	public int getRowCount() 
-	{ 
+	public int getRowCount()  {
 		return this.inputs.size();
 	}
 	
-	public InputSelectEntryModel getRow(int rowNo) 
-	{ 
+	public InputSelectEntryModel getRow(final int rowNo) {
 		return this.inputs.get(rowNo);
 	}
 	
 	@Override
-	public String getColumnName(int column)
-	{
+	public String getColumnName(final int column) {
 		return this.columnNames[column];
 	}
 	
 	@Override
-	public Object getValueAt(int row, int col) 
-	{
+	public Object getValueAt(final int row, final int col)  {
 		//==========================================================================================
-		String value;
+		final String value;
+
+		final InputSelectEntryModel inputSelectEntryModel = this.inputs.get(row);
 		
-		InputSelectEntryModel inputSelectEntryModel = this.inputs.get(row);
-		
-		switch (col)
-		{
-			case 0:		// Type name.
-			{
+		switch (col) {
+			case 0:	 {
 				value = inputSelectEntryModel.getInputTypeName();
 				break;
 			}
-			case 1:		// Label.
-			{
+			case 1:	 {
 				value = inputSelectEntryModel.getInputLabel();
 //				value = this.makeInputLabel(inputData);
 				break;
 			}
-			default:
-			{
+			default: {
 				throw new RuntimeException("Unknown column \"" + col + "\".");
 			}
 		}
@@ -131,24 +120,18 @@ extends AbstractTableModel
 	 * 			the searched InputSelectEntry.<br/>
 	 * 			<code>null</code> if no entry found.
 	 */
-	public InputSelectEntryModel searchInputSelectEntry(InputData searchedInputData)
-	{
+	public InputSelectEntryModel searchInputSelectEntry(final InputData searchedInputData) {
 		//==========================================================================================
-		InputSelectEntryModel retInputSelectEntryModel;
+		InputSelectEntryModel retInputSelectEntryModel = null;
 		
-		retInputSelectEntryModel = null;
-		
-		for (InputSelectEntryModel inputSelectEntryModel : this.inputs)
-		{
-			InputData inputData = inputSelectEntryModel.getInputData();
+		for (final InputSelectEntryModel inputSelectEntryModel : this.inputs) {
+			final InputData inputData = inputSelectEntryModel.getInputData();
 			
-			if (searchedInputData == inputData)
-			{
+			if (searchedInputData == inputData) {
 				retInputSelectEntryModel = inputSelectEntryModel;
 				break;
 			}
 		}
-		
 		//==========================================================================================
 		return retInputSelectEntryModel;
 	}
@@ -159,15 +142,14 @@ extends AbstractTableModel
 	 * @param targetInputData
 	 * 			is the target InputData.
 	 */
-	public void changePositions(InputData selectedInputData, 
-	                            InputData targetInputData)
-	{
+	public void changePositions(final InputData selectedInputData,
+								final InputData targetInputData) {
 		//==========================================================================================
-		InputSelectEntryModel selectedInputSelectEntryModel = this.searchInputSelectEntry(selectedInputData);
-		InputSelectEntryModel targetInputSelectEntryModel = this.searchInputSelectEntry(targetInputData);
-		
-		int selectedInputPos = this.inputs.indexOf(selectedInputSelectEntryModel);
-		int targetInputPos = this.inputs.indexOf(targetInputSelectEntryModel);
+		final InputSelectEntryModel selectedInputSelectEntryModel = this.searchInputSelectEntry(selectedInputData);
+		final InputSelectEntryModel targetInputSelectEntryModel = this.searchInputSelectEntry(targetInputData);
+
+		final int selectedInputPos = this.inputs.indexOf(selectedInputSelectEntryModel);
+		final int targetInputPos = this.inputs.indexOf(targetInputSelectEntryModel);
 		
 		this.inputs.set(selectedInputPos, targetInputSelectEntryModel);
 		this.inputs.set(targetInputPos, selectedInputSelectEntryModel);
@@ -178,30 +160,20 @@ extends AbstractTableModel
 		//==========================================================================================
 	}
 
-	/**
-	 * @param searchedInputData
-	 * @return
-	 */
-	public Integer searchInputSelectEntryPos(InputData searchedInputData)
-	{
+	public Integer searchInputSelectEntryPos(final InputData searchedInputData) {
 		//==========================================================================================
-		Integer retInputSelectEntryPos;
-		
-		retInputSelectEntryPos = null;
-		
-		for (int entryPos = 0; entryPos < this.inputs.size(); entryPos++)
-		{
-			InputSelectEntryModel inputSelectEntryModel = this.inputs.get(entryPos);
+		Integer retInputSelectEntryPos = null;
+
+		for (int entryPos = 0; entryPos < this.inputs.size(); entryPos++) {
+			final InputSelectEntryModel inputSelectEntryModel = this.inputs.get(entryPos);
+
+			final InputData inputData = inputSelectEntryModel.getInputData();
 			
-			InputData inputData = inputSelectEntryModel.getInputData();
-			
-			if (searchedInputData == inputData)
-			{
+			if (searchedInputData == inputData) {
 				retInputSelectEntryPos = entryPos;
 				break;
 			}
 		}
-		
 		//==========================================================================================
 		return retInputSelectEntryPos;
 	}

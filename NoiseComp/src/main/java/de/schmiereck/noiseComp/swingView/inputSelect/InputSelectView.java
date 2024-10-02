@@ -17,8 +17,7 @@ import javax.swing.event.ListSelectionListener;
  * @version <p>15.09.2010:	created, smk</p>
  */
 public class InputSelectView
-extends JTable
-{
+extends JTable {
 	//**********************************************************************************************
 	// Fields:
 
@@ -34,8 +33,7 @@ extends JTable
 	 * @param inputSelectModel
 	 * 			is the Input-Select Model.
 	 */
-	public InputSelectView(final InputSelectModel inputSelectModel)
-	{
+	public InputSelectView(final InputSelectModel inputSelectModel) {
 		//==========================================================================================
 		super(inputSelectModel.getInputsTabelModel());
 		
@@ -45,34 +43,24 @@ extends JTable
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		//------------------------------------------------------------------------------------------
-		ListSelectionModel selectionModel = this.getSelectionModel();
+		final ListSelectionModel selectionModel = this.getSelectionModel();
 		
-		selectionModel.addListSelectionListener
-		(
-		 	new ListSelectionListener()
-		 	{
+		selectionModel.addListSelectionListener(
+		 	new ListSelectionListener() {
 				@Override
-				public void valueChanged(ListSelectionEvent e)
-				{
-					if (e.getValueIsAdjusting() == false) 
-					{
-						Integer selectedRowNo;
+				public void valueChanged(final ListSelectionEvent e) {
+					if (e.getValueIsAdjusting())  {
+						final Integer selectedRowNo;
 						
-						if (getRowCount() > 0)
-						{
+						if (getRowCount() > 0) {
 							int[] selectedRows = getSelectedRows();
 							
-							if (selectedRows.length > 0)
-							{
+							if (selectedRows.length > 0) {
 								selectedRowNo = selectedRows[0];
-							}
-							else
-							{
+							} else {
 								selectedRowNo = null;
 							}
-						}
-						else
-						{
+						} else {
 							selectedRowNo = null;
 						}
 						

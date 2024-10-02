@@ -341,16 +341,11 @@ extends JFrame
 		this.modulEditSplitPane.setTopComponent(moduleEditView);
 	}
 
-	/**
-	 * @param inputSelectView 
-	 * 			to set {@link #inputSelectView}.
-	 */
-	public void setInputSelectView(InputSelectView inputSelectView)
-	{
-		JScrollPane scrollpane = new JScrollPane(inputSelectView);
+	public void setInputSelectView(final InputSelectView inputSelectView) {
+		final JScrollPane scrollpane = new JScrollPane(inputSelectView);
 
-		int vScrollBarWidth = scrollpane.getVerticalScrollBar().getPreferredSize().width;
-		Dimension dimTable = inputSelectView.getPreferredSize();
+		final int vScrollBarWidth = scrollpane.getVerticalScrollBar().getPreferredSize().width;
+		final Dimension dimTable = inputSelectView.getPreferredSize();
 		dimTable.setSize(dimTable.getWidth() + vScrollBarWidth, 
 		                 dimTable.getHeight());
 
