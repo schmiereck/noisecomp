@@ -475,9 +475,6 @@ implements GeneratorChangeListenerInterface,
 		return ret;
 	}
 
-	/**
-	 * @return
-	 */
 	public long getEmptyBufferSize()
 	{
 		long emptyBufferSize;
