@@ -7,10 +7,11 @@ import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
-import de.schmiereck.noiseComp.soundData.SoundDataLogic;
-import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
+import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
+import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
+import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerData;
 
 
 /*
@@ -78,7 +79,8 @@ public class ConsoleMain
 		soundSourceSchedulerLogic.startThread();
 		
 		//------------------------------------------------------------------------------------------
-		soundSchedulerLogic = new SoundSchedulerLogic(25, soundDataLogic);
+		final SoundSchedulerData soundSchedulerData = new SoundSchedulerData(25);
+		soundSchedulerLogic = new SoundSchedulerLogic(soundSchedulerData, soundDataLogic);
 		
 		soundSchedulerLogic.startThread();
 

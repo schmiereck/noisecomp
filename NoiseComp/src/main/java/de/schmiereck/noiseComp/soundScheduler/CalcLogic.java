@@ -1,16 +1,20 @@
-package de.schmiereck.screenTools.scheduler;
+package de.schmiereck.noiseComp.soundScheduler;
 
 public class CalcLogic {
-    private final PipelineSchedulerLogic pipelineSchedulerLogic;
+
+    private final SoundSchedulerData soundSchedulerData;
+
+    private final SoundSchedulerLogic pipelineSchedulerLogic;
 
     /**
-     * Counts of calling {@link PipelineSchedulerLogic#notifyRunSchedulCalc(long)}.
+     * Counts of calling {@link SoundSchedulerLogic#notifyRunSchedulCalc(long)}.
      */
     private long runCounterCalc	= 0L;
 
     private boolean logicIsRunning = false;
 
-    public CalcLogic(final PipelineSchedulerLogic pipelineSchedulerLogic) {
+    public CalcLogic(final SoundSchedulerData soundSchedulerData, final SoundSchedulerLogic pipelineSchedulerLogic) {
+        this.soundSchedulerData = soundSchedulerData;
         this.pipelineSchedulerLogic = pipelineSchedulerLogic;
     }
 
@@ -23,7 +27,7 @@ public class CalcLogic {
         //while (Thread.currentThread() == this.pipelineSchedulerLogic.calcThread)
         //while (Objects.nonNull(this.pipelineSchedulerLogic.calcThread))
         while (this.logicIsRunning) {
-            long waitPerFramesMillis = this.pipelineSchedulerLogic.actualWaitPerFramesMillis / 2;
+            long waitPerFramesMillis = this.soundSchedulerData.getActualWaitPerFramesMillis() / 2;
 
             tm += waitPerFramesMillis;
 

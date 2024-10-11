@@ -709,7 +709,7 @@
  706:             1             56  sun.nio.cs.StandardCharsets$Cache
  707:             1             56  javax.swing.LayoutFocusTraversalPolicy
  708:             1             56  sun.java2d.d3d.D3DScreenUpdateManager
- 709:             1             56  de.schmiereck.noiseComp.soundData.SoundDataLogicdData
+ 709:             1             56  de.schmiereck.noiseComp.soundScheduler.SoundDataLogicdData
  710:             1             56  sun.java2d.pipe.RenderBuffer
  711:             1             56  sun.nio.cs.StandardCharsets$Classes
  712:             1             56  java.awt.Toolkit$DesktopPropertyChangeSupport

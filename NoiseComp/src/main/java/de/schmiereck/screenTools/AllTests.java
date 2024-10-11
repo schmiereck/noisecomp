@@ -1,6 +1,5 @@
 package de.schmiereck.screenTools;
 
-import de.schmiereck.screenTools.scheduler.PipelineSchedulerLogicTest;
 import de.schmiereck.screenTools.scheduler.SchedulerLogicTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -17,7 +16,6 @@ public class AllTests
 	{
 		TestSuite suite = new TestSuite("Test for de.schmiereck.screenTools");
 		//$JUnit-BEGIN$
-		suite.addTestSuite(PipelineSchedulerLogicTest.class);
 		suite.addTestSuite(SchedulerLogicTest.class);
 		//$JUnit-END$
 		return suite;

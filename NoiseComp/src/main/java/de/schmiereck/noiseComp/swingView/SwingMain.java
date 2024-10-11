@@ -9,7 +9,7 @@ import javax.swing.UIManager;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
-import de.schmiereck.noiseComp.soundData.SoundDataLogic;
+import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 

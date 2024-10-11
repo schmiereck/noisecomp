@@ -24,9 +24,6 @@ public abstract class SchedulerLogic
 	 */
 	private int targetFramesPerSecond;
 	
-	/**
-	 * @param targetFramesPerSecond
-	 */
 	public SchedulerLogic(int targetFramesPerSecond)
 	{
 		this.targetFramesPerSecond = targetFramesPerSecond;

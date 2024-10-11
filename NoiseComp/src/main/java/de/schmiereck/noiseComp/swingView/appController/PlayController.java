@@ -5,8 +5,8 @@ package de.schmiereck.noiseComp.swingView.appController;
 
 import de.schmiereck.noiseComp.service.PlaySoundService;
 import de.schmiereck.noiseComp.service.SoundService;
-import de.schmiereck.noiseComp.soundData.PlaybackPosChangedListenerInterface;
-import de.schmiereck.noiseComp.soundData.SoundDataLogic;
+import de.schmiereck.noiseComp.soundScheduler.PlaybackPosChangedListenerInterface;
+import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleController;

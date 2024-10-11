@@ -1,9 +1,9 @@
 package de.schmiereck.noiseComp.service;
 
-import de.schmiereck.noiseComp.soundData.PlaybackPosChangedListenerInterface;
-import de.schmiereck.noiseComp.soundData.SoundDataLogic;
-import de.schmiereck.noiseComp.soundData.SoundSchedulerLogic;
-import de.schmiereck.noiseComp.swingView.SwingMain;
+import de.schmiereck.noiseComp.soundScheduler.PlaybackPosChangedListenerInterface;
+import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
+import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerLogic;
+import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerData;
 
 public class PlaySoundService {
     //**********************************************************************************************
@@ -64,7 +64,8 @@ public class PlaySoundService {
         //==========================================================================================
         //SoundDataLogic soundDataLogic = SwingMain.getSoundData();
 
-        this.soundSchedulerLogic = new SoundSchedulerLogic(25, this.soundDataLogic);
+        final SoundSchedulerData soundSchedulerData = new SoundSchedulerData(25);
+        this.soundSchedulerLogic = new SoundSchedulerLogic(soundSchedulerData, this.soundDataLogic);
 
         this.soundSchedulerLogic.submitPlaybackPos((float)startTime);
 

@@ -1,7 +1,7 @@
 /*
  * www.schmiereck.de (c) 2010
  */
-package de.schmiereck.noiseComp.soundData;
+package de.schmiereck.noiseComp.soundScheduler;
 
 /**
  * <p>

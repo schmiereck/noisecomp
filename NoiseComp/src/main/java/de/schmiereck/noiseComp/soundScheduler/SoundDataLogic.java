@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.soundData;
+package de.schmiereck.noiseComp.soundScheduler;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
