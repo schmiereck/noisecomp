@@ -10,12 +10,13 @@ public class SoundSchedulerData {
 
     /**
      * Milliseconds actually calculated for the out out-Thread to wait between
-     * the calls of {@link OutLogic#notifyRunSchedulOut()}.<br/>
+     * the calls of {@link SoundOutLogic#notifyRunSchedulOut()}.<br/>
      * Is also used from the calc-Thread!
      */
     private long actualWaitPerFramesMillis	= 0;
 
     private boolean playbackPaused = false;
+    private boolean playSound = false;
 
     /**
      * Constructor.
@@ -45,5 +46,13 @@ public class SoundSchedulerData {
 
     public int getTargetFramesPerSecond() {
         return this.targetFramesPerSecond;
+    }
+
+    public boolean getPlaySound() {
+        return this.playSound;
+    }
+
+    public void setPlaySound(final boolean playSound) {
+        this.playSound = playSound;
     }
 }

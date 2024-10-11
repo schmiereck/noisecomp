@@ -1,13 +1,11 @@
 package de.schmiereck.noiseComp.soundScheduler;
 
-import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
-
 /**
  * <p>
  * Pipeline-Scheduler der angegebenen Sound
- * bei jedem Aufruf abspielt ({@link OutLogic#notifyRunSchedulOut()}).<br/>
+ * bei jedem Aufruf abspielt ({@link SoundOutLogic#notifyRunSchedulOut()}).<br/>
  * Sorgt dafür, das der Sound-Buffer durch den zweiten Thread 
- * immer gefüllt ist ({@link #notifyRunSchedulCalc(long)}).
+ * immer gefüllt ist ({@link SoundCalcLogic#notifyRunSchedulCalc()}).
  * </p>
  * <p>
  * 	Starts two Threads to manage a pipeline.<br/>
@@ -29,13 +27,10 @@ public class SoundSchedulerLogic
 {
 	//**********************************************************************************************
 	// Fields:
-	Thread calcThread = null;
-	final CalcLogic calcLogic;
+	private final SoundOutSchedulerLogic soundOutSchedulerLogic;
+	private final SoundCalcSchedulerLogic soundCalcSchedulerLogic;
 
-	Thread outThread = null;
-	final OutLogic outLogic;
-
-	final SoundSchedulerData soundSchedulerData;
+	private final SoundSchedulerData soundSchedulerData;
 
 	/**
 	 * Sound data to play.
@@ -53,8 +48,8 @@ public class SoundSchedulerLogic
 	 */
 	public SoundSchedulerLogic(final SoundSchedulerData soundSchedulerData, final SoundDataLogic soundDataLogic) {
 		//==========================================================================================
-		this.outLogic = new OutLogic(soundSchedulerData, soundDataLogic);
-		this.calcLogic = new CalcLogic(soundSchedulerData, this);
+		this.soundOutSchedulerLogic = new SoundOutSchedulerLogic(soundSchedulerData, soundDataLogic);
+		this.soundCalcSchedulerLogic = new SoundCalcSchedulerLogic(soundSchedulerData, soundDataLogic);
 
 		this.soundSchedulerData = soundSchedulerData;
 		this.soundDataLogic = soundDataLogic;
@@ -62,74 +57,21 @@ public class SoundSchedulerLogic
 		//==========================================================================================
 	}
 	public void startThread() {
-		if (this.calcThread != null) {
-			throw new RuntimeException("calc thread already startet");
-		}
-		if (this.outThread != null) {
-			throw new RuntimeException("out thread already startet");
-		}
+		this.soundCalcSchedulerLogic.startCalcThread(this::run);
 
-		//final CalcLogic calcLogic = new CalcLogic(this);
-
-		//this.calcThread = new Thread(calcLogic::runCalc);
-		this.calcThread = new Thread(this::run);
-
-		this.calcThread.start();
-
-		this.startOutThread();
+		this.soundOutSchedulerLogic.startOutThread();
 	}
 
 	private void run() {
-		this.calcLogic.runCalc();
+		this.soundCalcSchedulerLogic.runCalc();
 
-		this.outLogic.stopRunning();
-		this.outThread = null;
-	}
-
-	private void startOutThread() {
-		this.outThread = new Thread(this.outLogic::runOut);
-
-		this.outThread.start();
+		this.soundOutSchedulerLogic.stopOutThread();
 	}
 
 	public void stopThread() {
-		if (this.outThread == null) {
-			throw new RuntimeException("out thread not startet");
-		}
+		this.soundOutSchedulerLogic.stopOutThread();
 
-		this.outLogic.stopRunning();
-		this.outThread = null;
-
-		if (this.calcThread == null) {
-			throw new RuntimeException("calc thread not startet");
-		}
-
-		this.calcLogic.stopRunning();
-		this.calcThread = null;
-	}
-
-	//public abstract void notifyRunSchedulOut();
-
-	public CalcLogic getCalcLogic() {
-		return this.calcLogic;
-	}
-
-	public OutLogic getOutLogic() {
-		return this.outLogic;
-	}
-
-	/* (non-Javadoc)
-	 * @see de.schmiereck.screenTools.scheduler.PipelineSchedulerLogic#notifyRunSchedulCalc(long)
-	 */
-	public void notifyRunSchedulCalc(long actualWaitPerFramesMillis) {
-		//==========================================================================================
-		if (this.soundSchedulerData.getPlaybackPaused() == false)
-		{	
-			SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
-
-			soundBufferManager.pollGenerate();
-		}
-		//==========================================================================================
+		this.soundCalcSchedulerLogic.stopCalcThread();
 	}
 
 	public void startPlayback() {
@@ -156,23 +98,25 @@ public class SoundSchedulerLogic
 
 	/**
 	 * @param playbackPosChangedListener 
-	 * 			to add to the {@link OutLogic#addPlaybackPosChangedListener(PlaybackPosChangedListenerInterface)}.
+	 * 			to add to the {@link SoundOutLogic#addPlaybackPosChangedListener(PlaybackPosChangedListenerInterface)}.
 	 */
-	public void addPlaybackPosChangedListener(PlaybackPosChangedListenerInterface playbackPosChangedListener) {
-		this.getOutLogic().addPlaybackPosChangedListener(playbackPosChangedListener);
+	public void addPlaybackPosChangedListener(final PlaybackPosChangedListenerInterface playbackPosChangedListener) {
+		this.soundOutSchedulerLogic.addPlaybackPosChangedListener(playbackPosChangedListener);
 	}
 
 	/**
-	 * @param playbackPos
-	 * 			is the playbackPos in seconds.
+	 * @return
+	 * 			<code>true</code> if sound played (resumed or playing).
 	 */
-	public void submitPlaybackPos(float playbackPos) {
-		//==========================================================================================
-		SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
-		
-		//==========================================================================================
-		soundBufferManager.setActualTime(playbackPos);
-		
-		//==========================================================================================
+	public synchronized boolean retrievePlaySound() {
+		return this.soundSchedulerData.getPlaySound();
+	}
+
+	/**
+	 * @return
+	 * 			<code>true</code> if sound played (resumed or playing).
+	 */
+	public synchronized void submitPlaySound(final boolean playSound) {
+		this.soundSchedulerData.setPlaySound(playSound);
 	}
 }

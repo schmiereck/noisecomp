@@ -1,5 +1,6 @@
 package de.schmiereck.noiseComp.service;
 
+import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.noiseComp.soundScheduler.PlaybackPosChangedListenerInterface;
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
 import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerLogic;
@@ -11,46 +12,25 @@ public class PlaySoundService {
 
     private final SoundDataLogic soundDataLogic;
 
-    private SoundSchedulerLogic soundSchedulerLogic = null;
+    private final SoundSchedulerLogic soundSchedulerLogic;
 
     //**********************************************************************************************
     // Functions:
 
     public PlaySoundService(final SoundDataLogic soundDataLogic) {
         this.soundDataLogic = soundDataLogic;
-    }
 
-    /**
-     * @return
-     * 			returns the {@link #soundSchedulerLogic}.
-     */
-    public synchronized SoundSchedulerLogic getSoundSchedulerLogic() {
-        return this.soundSchedulerLogic;
-    }
-
-    /**
-     * @param soundSchedulerLogic
-     * 			to set {@link #soundSchedulerLogic}.
-     */
-    public synchronized void setSoundSchedulerLogic(final SoundSchedulerLogic soundSchedulerLogic) {
-        this.soundSchedulerLogic = soundSchedulerLogic;
+        final SoundSchedulerData soundSchedulerData = new SoundSchedulerData(25);
+        this.soundSchedulerLogic = new SoundSchedulerLogic(soundSchedulerData, this.soundDataLogic);
     }
 
     /**
      * @return
      * 			<code>true</code> if sound played (resumed or playing).
      */
-    public synchronized boolean getPlaySound() {
+    public synchronized boolean retrievePlaySound() {
         //==========================================================================================
-        final boolean playSound;
-
-        if (this.soundSchedulerLogic != null) {
-            playSound = true;
-        } else {
-            playSound = false;
-        }
-        //==========================================================================================
-        return playSound;
+        return this.soundSchedulerLogic.retrievePlaySound();
     }
 
     /**
@@ -64,16 +44,15 @@ public class PlaySoundService {
         //==========================================================================================
         //SoundDataLogic soundDataLogic = SwingMain.getSoundData();
 
-        final SoundSchedulerData soundSchedulerData = new SoundSchedulerData(25);
-        this.soundSchedulerLogic = new SoundSchedulerLogic(soundSchedulerData, this.soundDataLogic);
-
-        this.soundSchedulerLogic.submitPlaybackPos((float)startTime);
+        this.submitPlaybackPos((float)startTime);
 
         this.soundSchedulerLogic.addPlaybackPosChangedListener(playbackPosChangedListener);
 
         this.soundSchedulerLogic.startThread();
 
         this.soundSchedulerLogic.startPlayback();
+
+        this.soundSchedulerLogic.submitPlaySound(true);
 
         //==========================================================================================
     }
@@ -86,7 +65,7 @@ public class PlaySoundService {
 
     public synchronized void stopPlayback() {
         //==========================================================================================
-        if (this.soundSchedulerLogic != null) {
+        if (this.soundSchedulerLogic.retrievePlaySound()) {
             System.out.println("soundSchedulerLogic.stopPlayback: BEGIN");
             this.soundSchedulerLogic.stopPlayback();
             System.out.println("soundSchedulerLogic.stopPlayback: END");
@@ -95,7 +74,7 @@ public class PlaySoundService {
             this.soundSchedulerLogic.stopThread();
             System.out.println("soundSchedulerLogic.stopThread: END");
 
-            this.soundSchedulerLogic = null;
+            this.soundSchedulerLogic.submitPlaySound(false);
 
             //--------------------------------------------------------------------------------------
             // Set to start marker.
@@ -113,7 +92,7 @@ public class PlaySoundService {
 
     public synchronized void pauseSound() {
         //==========================================================================================
-        if (this.soundSchedulerLogic != null) {
+        if (this.soundSchedulerLogic.retrievePlaySound()) {
             this.soundSchedulerLogic.pausePlayback();
         }
         //==========================================================================================
@@ -125,9 +104,10 @@ public class PlaySoundService {
      */
     public synchronized void submitPlaybackPos(final double playbackPos) {
         //==========================================================================================
-        if (this.soundSchedulerLogic != null) {
-            this.soundSchedulerLogic.submitPlaybackPos((float)playbackPos);
-        }
+        final SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
+
+        soundBufferManager.setActualTime((float)playbackPos);
+
         //==========================================================================================
     }
 }

@@ -102,7 +102,7 @@ public class PlayController
 		TimelinesTimeRuleModel timelinesTimeRuleModel = this.timelinesTimeRuleController.getTimelinesTimeRuleModel();
 		
 		//==========================================================================================
-		if (playSoundService.getPlaySound() == true) {
+		if (this.playSoundService.retrievePlaySound() == true) {
 			//--------------------------------------------------------------------------------------
 			this.playSoundService.resumePlayback();
 			

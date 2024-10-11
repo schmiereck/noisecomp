@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
-public class OutLogic {
+public class SoundOutLogic {
     private final SoundSchedulerData soundSchedulerData;
 
     private final SoundDataLogic soundDataLogic;
@@ -19,13 +19,13 @@ public class OutLogic {
     private final List<PlaybackPosChangedListenerInterface> playbackPosChangedListeners = new Vector<>();
 
     /**
-     * Counts of calling {@link OutLogic#notifyRunSchedulOut()}.
+     * Counts of calling {@link SoundOutLogic#notifyRunSchedulOut()}.
      */
     private long runCounterOut	= 0L;
 
     private boolean logicIsRunning = false;
 
-    public OutLogic(final SoundSchedulerData soundSchedulerData, final SoundDataLogic soundDataLogic) {
+    public SoundOutLogic(final SoundSchedulerData soundSchedulerData, final SoundDataLogic soundDataLogic) {
         this.soundSchedulerData = soundSchedulerData;
         this.soundDataLogic = soundDataLogic;
     }

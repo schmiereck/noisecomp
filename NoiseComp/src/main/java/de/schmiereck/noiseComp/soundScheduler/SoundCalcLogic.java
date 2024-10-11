@@ -1,21 +1,23 @@
 package de.schmiereck.noiseComp.soundScheduler;
 
-public class CalcLogic {
+import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
+
+public class SoundCalcLogic {
 
     private final SoundSchedulerData soundSchedulerData;
 
-    private final SoundSchedulerLogic pipelineSchedulerLogic;
+    private final SoundDataLogic soundDataLogic;
 
     /**
-     * Counts of calling {@link SoundSchedulerLogic#notifyRunSchedulCalc(long)}.
+     * Counts of calling {@link SoundCalcLogic#notifyRunSchedulCalc()}.
      */
     private long runCounterCalc	= 0L;
 
     private boolean logicIsRunning = false;
 
-    public CalcLogic(final SoundSchedulerData soundSchedulerData, final SoundSchedulerLogic pipelineSchedulerLogic) {
+    public SoundCalcLogic(final SoundSchedulerData soundSchedulerData, final SoundDataLogic soundDataLogic) {
         this.soundSchedulerData = soundSchedulerData;
-        this.pipelineSchedulerLogic = pipelineSchedulerLogic;
+        this.soundDataLogic = soundDataLogic;
     }
 
     public void runCalc() {
@@ -35,7 +37,7 @@ public class CalcLogic {
 
             long d1 = System.currentTimeMillis();
             this.incRunCounterCalc();
-            this.pipelineSchedulerLogic.notifyRunSchedulCalc(sleepMillis);
+            this.notifyRunSchedulCalc();
             long d2 = System.currentTimeMillis();
 
             //tm = ctm;
@@ -58,6 +60,17 @@ public class CalcLogic {
                 ex.printStackTrace(System.err);
             }
         }
+    }
+
+    public void notifyRunSchedulCalc() {
+        //==========================================================================================
+        if (this.soundSchedulerData.getPlaybackPaused() == false)
+        {
+            SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
+
+            soundBufferManager.pollGenerate();
+        }
+        //==========================================================================================
     }
 
     /**
