@@ -68,7 +68,7 @@ public class AppModel
 	}
 
 	/**
-	 * @param loadFile 
+	 * @param fileActionFile
 	 * 			to set {@link #loadFile}.
 	 */
 	public void setLoadFile(File fileActionFile)

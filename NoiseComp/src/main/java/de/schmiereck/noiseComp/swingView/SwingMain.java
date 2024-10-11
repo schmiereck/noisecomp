@@ -5,6 +5,7 @@ package de.schmiereck.noiseComp.swingView;
 
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
@@ -12,6 +13,9 @@ import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
+
+import java.awt.*;
+import java.util.Enumeration;
 
 /**
  * <p>
@@ -103,7 +107,25 @@ public class SwingMain
 		//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		//UIManager.setLookAndFeel("com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		
+
+		// Set the default font size
+		setUIFont(new FontUIResource(new Font("SansSerif", Font.PLAIN, 12)));
+
 		//==========================================================================================
+	}
+	public static void setUIFont(FontUIResource f) {
+		Enumeration<Object> keys = UIManager.getDefaults().keys();
+		while (keys.hasMoreElements()) {
+			Object key = keys.nextElement();
+			Object value = UIManager.get(key);
+			if (value instanceof FontUIResource) {
+				// Setup font size based on screen size
+				//UIManager.put("Label.font", new Font("Dialog", Font.BOLD, 8)); //Change the 8 to what ever you want
+				//UIManager.put("Button.font", new Font("Dialog", Font.BOLD, 8));
+				//UIManager.put("RadioButton.font", new Font("Dialog", Font.BOLD, 8));
+				//...
+				UIManager.put(key, f);
+			}
+		}
 	}
 }

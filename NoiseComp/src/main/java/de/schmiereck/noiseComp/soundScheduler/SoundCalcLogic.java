@@ -66,7 +66,7 @@ public class SoundCalcLogic {
         //==========================================================================================
         if (this.soundSchedulerData.getPlaybackPaused() == false)
         {
-            SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
+            final SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
 
             soundBufferManager.pollGenerate();
         }

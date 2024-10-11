@@ -174,7 +174,7 @@ extends JFrame
 	 * .-AppView-----------------------------------------------------------------------------.
 	 * | .-moduleplitPane------------------------------------------------------------------. |
 	 * | | .-modulesTreeScrollPane-. .-modulEditSplitPane--------------------------------. | |
-	 * | | |.-modulesTreeView---------.| | .-modulEditPane---------------------------------. | | | 
+	 * | | |.-modulesTreeView-----.| | .-modulEditPane---------------------------------. | | |
 	 * | | ||                     || | |                                               | | | |
 	 * | | ||                     || | `-----------------------------------------------´ | | |
 	 * | | ||                     || | ,-timelineSplitPane-----------------------------. | | |
@@ -195,9 +195,7 @@ extends JFrame
 	 * @throws HeadlessException
 	 * 			if an Error occurse.
 	 */
-	public AppView(final AppModel appModel)
-		throws HeadlessException
-	{
+	public AppView(final AppModel appModel) throws HeadlessException {
 		//==========================================================================================
 		this.appModel = appModel;
 //		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
@@ -315,8 +313,7 @@ extends JFrame
 		//==========================================================================================
 	}
 
-	public void setTimelineComponent(Component timelineComponent)
-	{
+	public void setTimelineComponent(Component timelineComponent) {
 		this.timelineSplitPane.setLeftComponent(timelineComponent);
 
 //		this.timelineSplitPane.setDividerLocation(timelineComponent.getPreferredSize().width);
@@ -325,19 +322,17 @@ extends JFrame
 
 	/**
 	 * @param timelineEditView 
-	 * 			to set {@link #timelineEditView}.
+	 * 			to set Top-Component of {@link #timelineEditSplitPane}.
 	 */
-	public void setTimelineEditView(TimelineEditView timelineEditView)
-	{
+	public void setTimelineEditView(TimelineEditView timelineEditView) {
 		this.timelineEditSplitPane.setTopComponent(timelineEditView);
 	}
 
 	/**
 	 * @param moduleEditView 
-	 * 			to set {@link #modulEditView}.
+	 * 			to set Top-Component of {@link #modulEditSplitPane}.
 	 */
-	public void setModuleEditView(ModuleEditView moduleEditView)
-	{
+	public void setModuleEditView(ModuleEditView moduleEditView) {
 		this.modulEditSplitPane.setTopComponent(moduleEditView);
 	}
 
@@ -376,18 +371,13 @@ extends JFrame
 
 	/**
 	 * @param inputEditView 
-	 * 			to set {@link #inputEditView}.
+	 * 			to set Bottom-Component of {@link #inputSplitPane}.
 	 */
-	public void setInputEditView(InputEditView inputEditView)
-	{
+	public void setInputEditView(InputEditView inputEditView) {
 		this.inputSplitPane.setBottomComponent(inputEditView);
 	}
 	
-	/**
-	 * @param modulesTreeView
-	 */
-	public void setModulesTreeView(ModulesTreeView modulesTreeView)
-	{
+	public void setModulesTreeView(ModulesTreeView modulesTreeView) {
 //		this.modulesTreeScrollPane = new JScrollPane(this.modulesTreeView);
 		this.modulesTreeScrollPane.setViewportView(modulesTreeView);
 	}
@@ -396,8 +386,7 @@ extends JFrame
 	 * @param toolBar
 	 * 			is the play Tool-bar.
 	 */
-	private final void buildPlayToolBar(JToolBar toolBar)
-	{
+	private final void buildPlayToolBar(JToolBar toolBar) {
 		//==========================================================================================
 		// Play-Button:
 		{
@@ -448,8 +437,7 @@ extends JFrame
 	 * @param toolBar
 	 * 			is the zoom Tool-bar.
 	 */
-	private final void buildZoomToolBar(JToolBar toolBar)
-	{
+	private final void buildZoomToolBar(JToolBar toolBar) {
 		//==========================================================================================
 		{
 			JLabel label = new JLabel("Zoom ");
@@ -483,8 +471,7 @@ extends JFrame
 	 * @param toolBar
 	 * 			is the scale Tool-bar.
 	 */
-	private final void buildScaleToolBar(JToolBar toolBar)
-	{
+	private final void buildScaleToolBar(JToolBar toolBar) {
 		//==========================================================================================
 		{
 			JLabel label = new JLabel("Ticks ");
@@ -540,8 +527,7 @@ extends JFrame
 	private JButton makeNavigationButton(String imageName,
 	                                     //String actionCommand,
 	                                     String toolTipText,
-	                                     String altText) 
-	{
+	                                     String altText) {
 		//==========================================================================================
 	    // Look for the image.
 	    String imgLocation = "images/" + imageName + ".gif";
