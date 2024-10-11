@@ -16,17 +16,17 @@ public class SoundBuffer
 	/**
 	 * Buffered Data.
 	 */
-	private byte[]			bufferData;
+	private final byte[]			bufferData;
 	
 	/**
 	 * Beschreibung des zu generierenden Formates.
 	 */
-	private AudioFormat audioFormat;
+	private final AudioFormat audioFormat;
 	
 	/**
 	 * Maximale-Länge des Puffers.
 	 */
-	private int maxBufferSize = 16000; //32000;
+	private final int maxBufferSize;// = 16000; //32000;
 	
 	/**
 	 * Startposition der verbliebenen Bytes im Buffer.
@@ -48,31 +48,23 @@ public class SoundBuffer
 	 * Faktor mit dem ein float zwischen 0.0 und 1.0 multiploziert
 	 * werden muss, um einen Integer-Wert eines Samples zu erhalten.
 	 */
-	private float intAmplitude;
+	private final float intAmplitude;
 	
 	/**
 	 * Referenz auf den Soundgenerator der die einzelnen Samples
 	 * für jeden Frame erzeugt.
 	 */
 	//private GeneratorInterface soundGenerator;
-	private SoundSourceLogic soundSourceLogic;
+	private final SoundSourceLogic soundSourceLogic;
 	
 	/**
 	 * Constructor.
-	 * 
-	 * 
 	 */
-	public SoundBuffer(int bufferSize, 
-					   AudioFormat audioFormat, 
-					   SoundSourceLogic soundSourceLogic)
-					   //GeneratorInterface soundGenerator)
-	{
-		super();
-		
+	public SoundBuffer(final int bufferSize,
+					   final AudioFormat audioFormat,
+					   final SoundSourceLogic soundSourceLogic) {
 		this.maxBufferSize = bufferSize;
-		
 		this.audioFormat = audioFormat;
-		
 		this.soundSourceLogic = soundSourceLogic;
 		
 		this.bufferData = new byte[this.maxBufferSize];
@@ -89,24 +81,21 @@ public class SoundBuffer
 	 * @return 
 	 * 			die Anzahl der in den Buffer generierten Frames.
 	 */
-	public int generate(long startFrame)
-	{
+	public int generate(final long startFrame) {
 		//System.out.println("startFrame:" + startFrame);
 		
-		if (this.bufferIsEmpty == false)
-		{
+		if (this.bufferIsEmpty == false) {
 			throw new RuntimeException("buffer is not empty");
 		}
-		
-		int frameSize = this.audioFormat.getFrameSize();
+
+		final int frameSize = this.audioFormat.getFrameSize();
 		
 		// Anzahl Frames die in den Buffer passen.
-		int frameCount = this.maxBufferSize / frameSize;
+		final int frameCount = this.maxBufferSize / frameSize;
 		
 		int byteBufferPos = 0;
 		
-		for (int nFrame = 0; nFrame < frameCount; nFrame++)
-		{
+		for (int nFrame = 0; nFrame < frameCount; nFrame++) {
 			long frame = nFrame + startFrame;
 			
 			this.generateFrame(frame, frameSize, this.bufferData, byteBufferPos);
@@ -116,8 +105,7 @@ public class SoundBuffer
 		
 		this.generatedBytesInBuffer = byteBufferPos;
 		
-		if (this.generatedBytesInBuffer > 0)
-		{	
+		if (this.generatedBytesInBuffer > 0) {
 			this.bufferIsEmpty = false;
 		}
 		
@@ -127,7 +115,7 @@ public class SoundBuffer
 	/**
 	 * Generates a stereo output for the given frame.
 	 * Uses the generatted output value for the frame position 
-	 * of the {@link #soundGenerator}-Object of the SoundBuffer.
+	 * of the {@link #soundSourceLogic}-Object of the SoundBuffer.
 	 * 
 	 * @param frame			is the absolute frame position in the song-sound (depends on sampleRate).
 	 * @param frameSize		(don't remember ???)
@@ -135,23 +123,17 @@ public class SoundBuffer
 	 * 						His internal structure depends on the audio format of the buffer.  
 	 * @param bufferPos		Is the byte position, the next calculated frame should writen in the buffer.
 	 */
-	private void generateFrame(long frame, int frameSize, byte bufferData[], int bufferPos)
-	{
-		if (this.soundSourceLogic != null)
-		{	
-			int leftSampleValue;
-			int	rightSampleValue;
+	private void generateFrame(final long frame, final int frameSize, final byte bufferData[], final int bufferPos) {
+		if (this.soundSourceLogic != null) {
+			final int leftSampleValue;
+			final int rightSampleValue;
+
+			final SoundSample soundSample = this.soundSourceLogic.generateFrameSample(frame);
 			
-			//SoundSample soundSample = this.soundGenerator.generateFrameSample(frame, null);
-			SoundSample soundSample = this.soundSourceLogic.generateFrameSample(frame);
-			
-			if (soundSample != null)
-			{	
+			if (soundSample != null) {
 				leftSampleValue = Math.round(soundSample.getLeftValue() * this.intAmplitude);
 				rightSampleValue = Math.round(soundSample.getRightValue() * this.intAmplitude);
-			}
-			else
-			{	
+			} else {
 				leftSampleValue = 0;
 				rightSampleValue = 0;
 			}
@@ -184,43 +166,35 @@ public class SoundBuffer
 	
 	/**
 	 * <p>
-	 * 	Liefert die Anzahl der noch im Buffer zum abspielen �brigen Bytes.
+	 * 	Liefert die Anzahl der noch im Buffer zum abspielen übrigen Bytes.
 	 * 	Wenn 0 geliefert wird, ist der Buffer leer.
 	 * </p>
 	 * <p>
-	 * 	Nur g�ltig, wenn {@link #bufferIsEmpty} false ist.
+	 * 	Nur gültig, wenn {@link #bufferIsEmpty} false ist.
 	 * </p>
 	 * 
 	 * @return the attribute {@link #generatedBytesInBuffer}.
 	 */
-	public int getGeneratedBytesInBuffer()
-	{
+	public int getGeneratedBytesInBuffer() {
 		return this.generatedBytesInBuffer - this.generatedBytesStartBufferPos;
 	}
 
 	/**
-	 * Copiert soviele wie m�glich Bytes aus dem Buffer in abData (ab die Position offset).
+	 * Kopiert so viele wie mögliche Bytes aus dem Buffer in abData (ab die Position offset).
 	 * Es wird versucht maximal length bytes zu kopieren, wenn weniger vorhanden sind, 
-	 * werden nur die vorhandnen kopiert.
-	 * Es wird die Anzahl der bytes zur�ckgeliefert, die kopiert werden konnte.
-	 * 
-	 * @param abData
-	 * @param offset
-	 * @param length
-	 * @return
+	 * werden nur die vorhandenen kopiert.
+	 * Es wird die Anzahl der bytes zurückgeliefert, die kopiert werden konnte.
 	 */
-	public int copyBytes(byte[] abData, int offset, int length)
-	{
-		int len = this.getGeneratedBytesInBuffer();
-		
-		int bytesCanCopied = Math.min(len, length);
+	public int copyBytes(final byte[] abData, final int offset, final int length) {
+		final int len = this.getGeneratedBytesInBuffer();
+
+		final int bytesCanCopied = Math.min(len, length);
 		
 		System.arraycopy(this.bufferData, 0, abData, offset, bytesCanCopied);
 		
 		this.generatedBytesStartBufferPos += len;
 		
-		if (this.generatedBytesStartBufferPos == this.generatedBytesInBuffer)
-		{
+		if (this.generatedBytesStartBufferPos == this.generatedBytesInBuffer) {
 			this.setBufferToEmpty();
 		}
 		
@@ -229,16 +203,11 @@ public class SoundBuffer
 	/**
 	 * @return the attribute {@link #bufferIsEmpty}.
 	 */
-	public boolean getIsBufferIsEmpty()
-	{
+	public boolean getIsBufferIsEmpty() {
 		return this.bufferIsEmpty;
 	}
 
-	/**
-	 * 
-	 */
-	public void setBufferToEmpty()
-	{
+	public void setBufferToEmpty() {
 		this.generatedBytesStartBufferPos = 0;
 		this.generatedBytesInBuffer = 0;
 		this.bufferIsEmpty = true;

@@ -1,10 +1,8 @@
 package de.schmiereck.noiseComp.soundBuffer;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
 
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
@@ -17,7 +15,7 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
  * </p>
  * <p>
  * 	{@link #pollGenerate()}:<br/>
- * 	Verwaltet die SoundBuffer füllt diese bei Bedarf mit neu vom {@link #soundGenerator} generierten Werten.
+ * 	Verwaltet die SoundBuffer füllt diese bei Bedarf mit neu vom {@link #soundSourceLogic} generierten Werten.
  * </p>
  * <p>
  * 	{@link #read(byte[], int, int)}:<br/>
@@ -28,7 +26,7 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
  * @version 21.01.2004
  */
 public class SoundBufferManager 
-extends AudioInputStream
+//extends AudioInputStream
 {
 //	private static int bitsPerMonoSample = 16;
 //	private static int bytesPerMonoSample = 2;
@@ -36,7 +34,10 @@ extends AudioInputStream
 	
 	//**********************************************************************************************
 	// Fields:
-	
+
+	private final AudioFormat audioFormat;
+	//private final AudioInputStream audioInputStream;
+
 	/**
 	 * Wenn != <code>null</code>, wird dieser Buffer gerade abgespielt.
 	 */
@@ -55,47 +56,56 @@ extends AudioInputStream
 	 * angespielt werden müssen.
 	 */
 	private SoundBuffer generatingGeneratorBuffer = null;
-	
+
+	/**
+	 * The actual play time in frames.
+	 */
 	private long actualFrame = 0;
 	
-	private float frameRate;
+	private final float frameRate;
 	
-	private int bufferSize;
+	private final int bufferSize;
 	
 	/**
-	 * Referenc to the actual used Generator that generates the output signal.
+	 * Reference to the actual used Generator that generates the output signal.
 	 */
-	//private GeneratorInterface soundGenerator;
-	private SoundSourceLogic soundSourceLogic;
+	private final SoundSourceLogic soundSourceLogic;
 	
 	/**
 	 * A try to prevent for: see: isPollingExceptionPoint
 	 */
 	private boolean isPolling = false;
-	
+
 	//**********************************************************************************************
 	// Functions:
 	
 	/**
 	 * Constructor.
-	 * 
 	 */
-	public SoundBufferManager(AudioFormat audioFormat, 
-							  long length, 
-							  int bufferSize, 
-							  SoundSourceLogic soundSourceLogic)
-	{
+	public SoundBufferManager(final AudioFormat audioFormat,
+							  final int bufferSize,
+							  final SoundSourceLogic soundSourceLogic) {
 		//==========================================================================================
-		super(new ByteArrayInputStream(new byte[0]), 
-			  new AudioFormat(audioFormat.getEncoding(),
-							  audioFormat.getSampleRate(),
-							  audioFormat.getSampleSizeInBits(), //bitsPerMonoSample,
-							  audioFormat.getChannels(), //bytesPerMonoSample,
-							  audioFormat.getFrameSize(), //bytesPerStereoSample,
-							  audioFormat.getFrameRate(),
-							  audioFormat.isBigEndian()), 
-							  length);
-		
+		//super(new ByteArrayInputStream(new byte[0]),
+		//	  new AudioFormat(audioFormat.getEncoding(),
+		//					  audioFormat.getSampleRate(),
+		//					  audioFormat.getSampleSizeInBits(), //bitsPerMonoSample,
+		//					  audioFormat.getChannels(), //bytesPerMonoSample,
+		//					  audioFormat.getFrameSize(), //bytesPerStereoSample,
+		//					  audioFormat.getFrameRate(),
+		//					  audioFormat.isBigEndian()),
+		//					  length);
+		this.audioFormat = audioFormat;
+		//this.audioInputStream = new AudioInputStream(new ByteArrayInputStream(new byte[0]),
+		//		new AudioFormat(audioFormat.getEncoding(),
+		//				audioFormat.getSampleRate(),
+		//				audioFormat.getSampleSizeInBits(), //bitsPerMonoSample,
+		//				audioFormat.getChannels(), //bytesPerMonoSample,
+		//				audioFormat.getFrameSize(), //bytesPerStereoSample,
+		//				audioFormat.getFrameRate(),
+		//				audioFormat.isBigEndian()),
+		//		length);
+
 		//==========================================================================================
 		this.frameRate = audioFormat.getFrameRate();
 		
@@ -110,31 +120,23 @@ extends AudioInputStream
 	/* (non-Javadoc)
 	 * @see java.io.InputStream#read(byte[], int, int)
 	 */
-	public int read(byte[] abData, int nOffset, int nLength)
-		throws IOException
-	{
+	public int read(byte[] abData, int nOffset, int nLength) throws IOException {
 		//==========================================================================================
-		if (nLength % getFormat().getFrameSize() != 0)
-		{
+		if (nLength % this.audioFormat.getFrameSize() != 0) {
 			throw new IOException("length must be an integer multiple of frame size");
 		}
 
 		int copyiedBytes;
 		
-		synchronized (this)
-		{
-			if (this.isPolling == true)
-			{	
-				if (this.playingGeneratorBuffer.getIsBufferIsEmpty())
-				{
-					if (this.waitingGeneratorBuffer == null)
-					{
+		synchronized (this) {
+			if (this.isPolling == true) {
+				if (this.playingGeneratorBuffer.getIsBufferIsEmpty()) {
+					if (this.waitingGeneratorBuffer == null) {
 						// isPollingExceptionPoint
 						//throw new IOException("waiting buffer is empty (maybe you should increase the Scheduler updates ?)");
 					}
 					
-					if (this.waitingGeneratorBuffer != null)
-					{
+					if (this.waitingGeneratorBuffer != null) {
 						// Der alte Playbuffer ist leer, muss neu generiert werden.
 						this.generatingGeneratorBuffer = this.playingGeneratorBuffer;
 						
@@ -146,13 +148,10 @@ extends AudioInputStream
 					}
 				}
 				copyiedBytes = this.playingGeneratorBuffer.copyBytes(abData, nOffset, nLength);
-			}
-			else
-			{
+			} else {
 				copyiedBytes = 0;
 			}
 		}
-		
 		//==========================================================================================
 		return copyiedBytes;
 	}
@@ -161,22 +160,14 @@ extends AudioInputStream
 	 * Generiert den nächsten Abschnitt in den leeren Warte-Buffer
 	 * (wenn nötig, da leere Buffer warten).
 	 */
-	public void pollGenerate()
-	{
+	public void pollGenerate() {
 		//==========================================================================================
-		synchronized (this)
-		{
-			// Kein gefüllter Buffer wartet mehr, das er abgespielt wird ?
-			if (this.waitingGeneratorBuffer == null)
-			{
-				//SoundBuffer generatingSoundBuffer = (SoundBuffer)this.generatingGeneratorBuffer.firstElement();
-
-				if (this.generatingGeneratorBuffer == null)
-				{
-					//this.waitingGeneratorBuffer = new GeneratorBuffer(this.bufferSize, this.getFormat());
-					this.generatingGeneratorBuffer = new SoundBuffer(this.bufferSize, 
-																	 this.getFormat(), 
-																	 this.soundSourceLogic);
+		synchronized (this) {
+			// No waiting buffer available?
+			if (this.waitingGeneratorBuffer == null) {
+				if (this.generatingGeneratorBuffer == null) {
+					this.generatingGeneratorBuffer = new SoundBuffer(this.bufferSize,
+							this.audioFormat, this.soundSourceLogic);
 				}
 				
 				// Dann generieren wir einen.
@@ -185,24 +176,19 @@ extends AudioInputStream
 				this.actualFrame += generatedFrames;
 			}
 			
-			// Ist momentan gar kein Play Buffer eingetragen ?
-			if (this.playingGeneratorBuffer == null)
-			{
-				// Dann tragen wir den neu generierten gleich zum abspielen ein.
+			// Is the playing buffer not available?
+			if (this.playingGeneratorBuffer == null) {
+				// Then we put the newly generated one to play.
 				this.playingGeneratorBuffer = this.generatingGeneratorBuffer;
 				this.generatingGeneratorBuffer = null;
-			}
-			else
-			{	
-				// Es wartet kein Buffer darauf, abgespielt zu werden ?
-				if (this.waitingGeneratorBuffer == null)
-				{	
-					// Dann stellen wir den neu generierten in die leere Warteschleife.
+			} else {
+				// There is no buffer waiting to be played?
+				if (this.waitingGeneratorBuffer == null) {
+					// Then we put the newly generated one in the empty waiting loop.
 					this.waitingGeneratorBuffer = this.generatingGeneratorBuffer;
 					this.generatingGeneratorBuffer = null;
 				}
 			}
-			
 			this.isPolling = true;
 		}
 		//==========================================================================================
@@ -224,15 +210,12 @@ extends AudioInputStream
 		//==========================================================================================
 		int len = 0;
 		
-		if (this.playingGeneratorBuffer != null)
-		{
+		if (this.playingGeneratorBuffer != null) {
 			len += this.playingGeneratorBuffer.getGeneratedBytesInBuffer();
 		}
-		if (this.waitingGeneratorBuffer != null)
-		{
+		if (this.waitingGeneratorBuffer != null) {
 			len += this.waitingGeneratorBuffer.getGeneratedBytesInBuffer();
 		}
-		
 		//==========================================================================================
 		return len;
 	}
@@ -244,9 +227,7 @@ extends AudioInputStream
 	 * 
 	 * @see java.io.InputStream#read()
 	 */
-	public int read()
-		throws IOException
-	{
+	public int read() throws IOException {
 		throw new IOException("cannot use this method currently");
 	}
 
@@ -254,8 +235,7 @@ extends AudioInputStream
 	 * @return
 	 * 			the actual play time in seconds.
 	 */
-	public float getActualTime()
-	{
+	public float getActualTime() {
 		return this.actualFrame / this.frameRate;
 	}
 	
@@ -263,22 +243,18 @@ extends AudioInputStream
 	 * @param actualTime
 	 * 			the actual play time in seconds.
 	 */
-	public void setActualTime(float actualTime)
-	{
+	public void setActualTime(float actualTime) {
 		this.actualFrame = (long)(actualTime * this.frameRate);
 	}
 	
-	public void stopGenerate()
-	{
+	public void stopGenerate() {
 		//==========================================================================================
-		synchronized (this)
-		{
+		synchronized (this) {
 			this.isPolling = false;
 			
 			this.actualFrame = 0;
 		
-			if (this.playingGeneratorBuffer != null)
-			{	
+			if (this.playingGeneratorBuffer != null) {
 				this.playingGeneratorBuffer.setBufferToEmpty();
 			}
 			
@@ -288,25 +264,25 @@ extends AudioInputStream
 		}
 		//==========================================================================================
 	}
+
 	/**
 	 * @return the attribute {@link #generatingGeneratorBuffer}.
 	 */
-	public SoundBuffer getGeneratingGeneratorBuffer()
-	{
+	public SoundBuffer getGeneratingGeneratorBuffer() {
 		return this.generatingGeneratorBuffer;
 	}
+
 	/**
 	 * @return the attribute {@link #playingGeneratorBuffer}.
 	 */
-	public SoundBuffer getPlayingGeneratorBuffer()
-	{
+	public SoundBuffer getPlayingGeneratorBuffer() {
 		return this.playingGeneratorBuffer;
 	}
+
 	/**
 	 * @return the attribute {@link #waitingGeneratorBuffer}.
 	 */
-	public SoundBuffer getWaitingGeneratorBuffer()
-	{
+	public SoundBuffer getWaitingGeneratorBuffer() {
 		return this.waitingGeneratorBuffer;
 	}
 
@@ -314,8 +290,7 @@ extends AudioInputStream
 	 * @return 
 	 * 			returns the {@link #actualFrame}.
 	 */
-	public long getActualFrame()
-	{
+	public long getActualFrame() {
 		return this.actualFrame;
 	}
 }

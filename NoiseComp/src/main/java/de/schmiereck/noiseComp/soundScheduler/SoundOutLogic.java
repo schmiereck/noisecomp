@@ -25,9 +25,13 @@ public class SoundOutLogic {
 
     private boolean logicIsRunning = false;
 
+    private byte lineBufferData[];
+
     public SoundOutLogic(final SoundSchedulerData soundSchedulerData, final SoundDataLogic soundDataLogic) {
         this.soundSchedulerData = soundSchedulerData;
         this.soundDataLogic = soundDataLogic;
+
+        this.lineBufferData = new byte[SoundDataLogic.BUFFER_SIZE];
     }
 
     public void runOut() {
@@ -114,17 +118,21 @@ public class SoundOutLogic {
 
             //soundBufferManager.pollGenerate();
 
-            byte abData[] = this.soundDataLogic.getLineBufferData();
-
             try {
                 //int numBytesToRead = line.available();
                 //if (numBytesToRead == -1) break;
                 //int nRead = soundBufferManager.read(abData, 0, numBytesToRead);
 
-                int nRead = soundBufferManager.read(abData);
-
+                //int nRead = soundBufferManager.read(abData);
                 //int	nWritten =
-                line.write(abData, 0, nRead);
+                //line.write(abData, 0, nRead);
+
+                int availableBytes = line.available();
+                //if (availableBytes > 0) {
+                if (availableBytes >= this.lineBufferData.length) {
+                    int nRead = soundBufferManager.read(this.lineBufferData, 0, this.lineBufferData.length);
+                    line.write(this.lineBufferData, 0, nRead);
+                }
 
                 //System.out.println("actualWaitPerFramesMillis: " + actualWaitPerFramesMillis + ", nWritten:" + nWritten + ", nRead: " + nRead);
             }

@@ -67,7 +67,7 @@ public class ConsoleMain
 		final ModuleGeneratorTypeData mainModuleGeneratorTypeData =
 			StartupService.createDemoGenerators(soundService, soundDataLogic.getFrameRate());
 
-		soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);;
+		soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);
 
 		//------------------------------------------------------------------------------------------
 	
