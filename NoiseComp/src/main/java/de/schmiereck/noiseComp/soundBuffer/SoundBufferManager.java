@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.sound.sampled.AudioFormat;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
@@ -160,7 +161,7 @@ public class SoundBufferManager
 	 * Generiert den nächsten Abschnitt in den leeren Warte-Buffer
 	 * (wenn nötig, da leere Buffer warten).
 	 */
-	public void pollGenerate() {
+	public void pollGenerate(final SoundSourceData soundSourceData) {
 		//==========================================================================================
 		synchronized (this) {
 			// No waiting buffer available?
@@ -171,7 +172,7 @@ public class SoundBufferManager
 				}
 				
 				// Dann generieren wir einen.
-				int generatedFrames = this.generatingGeneratorBuffer.generate(this.actualFrame); 
+				int generatedFrames = this.generatingGeneratorBuffer.generate(soundSourceData, this.actualFrame);
 				
 				this.actualFrame += generatedFrames;
 			}

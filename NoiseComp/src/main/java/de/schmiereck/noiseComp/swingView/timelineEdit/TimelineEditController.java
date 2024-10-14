@@ -13,6 +13,7 @@ import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
@@ -279,10 +280,11 @@ public class TimelineEditController
 	 * @param entryModelPos
 	 * 			is the position of the timeline in the list of timelines.
 	 */
-	public void doUpdateEditModel(final ModuleGeneratorTypeData editedModuleGeneratorTypeData,
-	                              //final Generator generator,
-	                              final TimelineSelectEntryModel timelineSelectEntryModel,
-	                              int entryModelPos)
+	public void doUpdateEditModel(final SoundSourceData soundSourceData,
+								  final ModuleGeneratorTypeData editedModuleGeneratorTypeData,
+								  //final Generator generator,
+								  final TimelineSelectEntryModel timelineSelectEntryModel,
+								  int entryModelPos)
 	{
 		//==========================================================================================
 		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
@@ -326,7 +328,8 @@ public class TimelineEditController
 					//Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
 					final float soundFrameRate = this.soundDataLogic.getFrameRate();
 
-					timeline = timelineManagerLogic.createTimeline(generatorTypeData,
+					timeline = timelineManagerLogic.createTimeline(soundSourceData,
+							generatorTypeData,
 					                                               soundFrameRate,
 					                                               generatorName,
 					                                               entryModelPos); 

@@ -7,6 +7,7 @@ import de.schmiereck.noiseComp.service.PlaySoundService;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.soundScheduler.PlaybackPosChangedListenerInterface;
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimeMarkerSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleController;
@@ -43,6 +44,7 @@ public class PlayController
 	 * Constructor
 	 */
 	public PlayController(final TimelinesTimeRuleController timelinesTimeRuleController,
+						  final SoundSourceData soundSourceData,
 						  final SoundSourceLogic soundSourceLogic,
 						  final SoundDataLogic soundDataLogic,
 						  final SoundService soundService) {
@@ -57,8 +59,7 @@ public class PlayController
 		this.playbackPosChangedListener = new PlaybackPosChangedListenerInterface()
 		{
 			@Override
-			public void notifyPlaybackPosChanged(float actualTime)
-			{
+			public void notifyPlaybackPosChanged(float actualTime) {
 				TimelinesTimeRuleModel timelinesTimeRuleModel = timelinesTimeRuleController.getTimelinesTimeRuleModel();
 				
 				TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
@@ -71,7 +72,7 @@ public class PlayController
 
 				doPlaybackTimeChanged(actualTime);
 
-				Timeline outputTimeline = soundSourceLogic.getOutputTimeline();
+				Timeline outputTimeline = soundSourceData.getOutputTimeline();
 
 				float generatorEndTimePos = outputTimeline.getGeneratorEndTimePos();
 
@@ -94,7 +95,7 @@ public class PlayController
 		//==========================================================================================
 	}
 
-	public synchronized void doPlaySound()
+	public synchronized void doPlaySound(final SoundSourceData soundSourceData)
 	{
 		//==========================================================================================
 		//SoundService soundService = SoundService.getInstance();
@@ -114,8 +115,9 @@ public class PlayController
 			double playTime = playTimeMarkerSelectEntryModel.getTimeMarker();
 			
 			//--------------------------------------------------------------------------------------
-			this.playSoundService.startPlayback(playTime,
-			                           this.playbackPosChangedListener);
+			this.playSoundService.startPlayback(soundSourceData,
+					playTime,
+			        this.playbackPosChangedListener);
 			
 			//--------------------------------------------------------------------------------------
 		}

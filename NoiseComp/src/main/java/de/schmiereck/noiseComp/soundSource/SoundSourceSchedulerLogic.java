@@ -12,25 +12,21 @@ import de.schmiereck.screenTools.scheduler.SchedulerLogic;
 public class SoundSourceSchedulerLogic
 	extends SchedulerLogic
 {
-	SoundSourceLogic soundSourceLogic	= null;
+	final SoundSourceData soundSourceData;
+	final SoundSourceLogic soundSourceLogic;
 	
 	/**
 	 * Constructor.
 	 * 
-	 * @param targetFramesPerSecond
 	 */
-	public SoundSourceSchedulerLogic(int targetFramesPerSecond)
+	public SoundSourceSchedulerLogic(final SoundSourceData soundSourceData,
+									 final SoundSourceLogic soundSourceLogic,
+									 int targetFramesPerSecond)
 	{
 		super(targetFramesPerSecond);
-	}
-
-	/**
-	 * @param soundSourceLogic is the new value for attribute {@link #soundSourceLogic} to set.
-	 */
-	public void setSoundSourceLogic(SoundSourceLogic soundSourceLogic)
-	{
 		synchronized (this)
 		{
+			this.soundSourceData = soundSourceData;
 			this.soundSourceLogic = soundSourceLogic;
 		}
 	}
@@ -38,19 +34,15 @@ public class SoundSourceSchedulerLogic
 	/* (non-Javadoc)
 	 * @see de.schmiereck.screenTools.scheduler.SchedulerLogic#notifyRunSchedul(long)
 	 */
-	public void notifyRunSchedul(long actualWaitPerFramesMillis)
-	{
-		synchronized (this)
-		{
-			if (this.soundSourceLogic != null)
-			{
+	public void notifyRunSchedul(long actualWaitPerFramesMillis) {
+		synchronized (this) {
+			if (this.soundSourceLogic != null) {
 				long emptyBufferSize = this.soundSourceLogic.getEmptyBufferSize();
 				
-				if (emptyBufferSize > 0)
-				{
+				if (emptyBufferSize > 0) {
 					System.out.println("CALC: %d (%d)".formatted(this.soundSourceLogic.getEmptyBufferStart(), actualWaitPerFramesMillis));
 
-					this.soundSourceLogic.pollCalcFillBuffer(actualWaitPerFramesMillis);
+					this.soundSourceLogic.pollCalcFillBuffer(soundSourceData, actualWaitPerFramesMillis);
 				}
 			}
 		}

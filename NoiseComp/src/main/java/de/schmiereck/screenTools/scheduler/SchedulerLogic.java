@@ -1,5 +1,7 @@
 package de.schmiereck.screenTools.scheduler;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
+
 /**
  * TODO docu
  *
@@ -68,8 +70,7 @@ public abstract class SchedulerLogic
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
-	public void run()
-	{
+	public void run() {
 		this.isRunning = true;
 		
 		// Enthält die 'Systemzeit' des Programms.
@@ -84,29 +85,22 @@ public abstract class SchedulerLogic
 		// Millisekunden die momentan zwischen zwei Frames gewartet wird.
 		long actualWaitPerFramesMillis = targetWaitPerFramesMillis;
 		
-		while (Thread.currentThread() == this.thread)
-		//while (null != this.thread)
-		{
-			try
-			{
+		while (Thread.currentThread() == this.thread)  {
+			try {
 				tm += actualWaitPerFramesMillis;
 				long sleepMillis = tm - System.currentTimeMillis();
 				
-				// Hat das Zeichnen des Frames l�nger gedauert 
+				// Hat das Zeichnen des Frames länger gedauert
 				// als die momentane Framerate erlaubt ? 
-				if (sleepMillis < 0)
-				{	
+				if (sleepMillis < 0) {
 					// Setze die Wartezeit zwischen den Frames hoch (Framerate runtersetzen).
 					actualWaitPerFramesMillis += 1;//((-sleepMillis) / 2);
-				}
-				else
-				{
-					// Hat das Zeichnen des Frames k�rzer gedauert,
-					// als die momentane Framerate Zeit zur Verf�gung stellt ?
-					if (sleepMillis >= 0)
-					{	
-						// Ist es das Ziel, weniger Zeit f�r einen Frame zu ben�tigen
-						// als momentan zur verf�gung gestellt wird ?
+				} else {
+					// Hat das Zeichnen des Frames kürzer gedauert,
+					// als die momentane Framerate Zeit zur Verfügung stellt?
+					if (sleepMillis >= 0) {
+						// Ist es das Ziel, weniger Zeit für einen Frame zu benötigen
+						// als momentan zur verfügung gestellt wird?
 						if (targetWaitPerFramesMillis < actualWaitPerFramesMillis)
 						{
 							// Setze die Wartezeit zwischen den Frames runter (Framerate hochsetzen).
@@ -120,12 +114,10 @@ public abstract class SchedulerLogic
 				this.runCounter++;
 				this.notifyRunSchedul(actualWaitPerFramesMillis);
 			}
-			catch (InterruptedException ex)
-			{
+			catch (InterruptedException ex) {
 				ex.printStackTrace(System.err);
 			}
 		}
-
 		this.isRunning = false;
 	}
 

@@ -3,6 +3,7 @@ package de.schmiereck.noiseComp.soundBuffer;
 import javax.sound.sampled.AudioFormat;
 
 import de.schmiereck.noiseComp.generator.SoundSample;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 
 /**
@@ -81,7 +82,7 @@ public class SoundBuffer
 	 * @return 
 	 * 			die Anzahl der in den Buffer generierten Frames.
 	 */
-	public int generate(final long startFrame) {
+	public int generate(final SoundSourceData soundSourceData, final long startFrame) {
 		//System.out.println("startFrame:" + startFrame);
 		
 		if (this.bufferIsEmpty == false) {
@@ -98,7 +99,7 @@ public class SoundBuffer
 		for (int nFrame = 0; nFrame < frameCount; nFrame++) {
 			long frame = nFrame + startFrame;
 			
-			this.generateFrame(frame, frameSize, this.bufferData, byteBufferPos);
+			this.generateFrame(soundSourceData, frame, frameSize, this.bufferData, byteBufferPos);
 			
 			byteBufferPos += frameSize;
 		}
@@ -123,12 +124,12 @@ public class SoundBuffer
 	 * 						His internal structure depends on the audio format of the buffer.  
 	 * @param bufferPos		Is the byte position, the next calculated frame should writen in the buffer.
 	 */
-	private void generateFrame(final long frame, final int frameSize, final byte bufferData[], final int bufferPos) {
+	private void generateFrame(final SoundSourceData soundSourceData, final long frame, final int frameSize, final byte bufferData[], final int bufferPos) {
 		if (this.soundSourceLogic != null) {
 			final int leftSampleValue;
 			final int rightSampleValue;
 
-			final SoundSample soundSample = this.soundSourceLogic.generateFrameSample(frame);
+			final SoundSample soundSample = this.soundSourceLogic.generateFrameSample(soundSourceData, frame);
 			
 			if (soundSample != null) {
 				leftSampleValue = Math.round(soundSample.getLeftValue() * this.intAmplitude);

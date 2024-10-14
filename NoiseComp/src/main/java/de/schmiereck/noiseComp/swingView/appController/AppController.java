@@ -36,6 +36,7 @@ import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData.TicksPer;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
@@ -123,6 +124,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	//**********************************************************************************************
 	// Fields:
 
+	private final SoundSourceData soundSourceData;
 	private final SoundSourceLogic soundSourceLogic;
 
 	private final SoundDataLogic soundDataLogic;
@@ -246,6 +248,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public AppController(final SoundSourceLogic soundSourceLogic, final SoundDataLogic soundDataLogic,
 						 final SoundService soundService) {
 		//==========================================================================================
+		this.soundSourceData = new SoundSourceData();
 		this.soundSourceLogic = soundSourceLogic;
 		this.soundDataLogic = soundDataLogic;
 		this.soundService = soundService;
@@ -493,7 +496,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		//------------------------------------------------------------------------------------------
 		this.playController = new PlayController(this.timelinesTimeRuleController,
-				this.soundSourceLogic, this.soundDataLogic, this.soundService);
+				this.soundSourceData, this.soundSourceLogic, this.soundDataLogic, this.soundService);
 		
 		//==========================================================================================
 		// Exit:
@@ -1445,17 +1448,15 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	new ActionListener()
 		 	{
 				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					playController.doPlaySound();
+				public void actionPerformed(ActionEvent e) {
+					playController.doPlaySound(soundSourceData);
 				}
 		 	}
 		);
 	    //------------------------------------------------------------------------------------------
 		this.appView.getPauseButton().addActionListener
 		(
-		 	new ActionListener()
-		 	{
+		 	new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
@@ -1466,8 +1467,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	    //------------------------------------------------------------------------------------------
 		this.appView.getStopButton().addActionListener
 		(
-		 	new ActionListener()
-		 	{
+		 	new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
@@ -1638,7 +1638,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Generates a new TimelineManagerLogic.
 			{
-				// XXX Because of a memory leake clear timelines explicitely.
+				// XXX Because of a memory leake clear timelineList explicitely.
 				
 				TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 				
@@ -1647,9 +1647,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 					timelineManagerLogic.clearTimelines();
 				}
 			}
-			List<Timeline> timelines = soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);
-			
-			TimelineManagerLogic timelineManagerLogic = soundSourceLogic.getTimelineManagerLogic();
+
+			this.soundSourceLogic.setMainModuleGeneratorTypeData(this.soundSourceData, mainModuleGeneratorTypeData);
+			final List<Timeline> timelineList = this.soundSourceData.getTimelineList();
+
+			TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Add new Listeners:
@@ -1662,7 +1664,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			int timelinePos = 0;
 			
-			for (Timeline timeline : timelines)
+			for (Timeline timeline : timelineList)
 			{
 				Generator generator = timeline.getGenerator();
 				
@@ -2468,7 +2470,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			int newEntryModelPos = 
 				this.timelinesDrawPanelController.calcTimelineSelectEntryModelPos(newTimelineSelectEntryModel);
 			
-			this.timelineEditController.doUpdateEditModel(editedModuleGeneratorTypeData, 
+			this.timelineEditController.doUpdateEditModel(this.soundSourceData, editedModuleGeneratorTypeData,
 			                                              newTimelineSelectEntryModel,
 			                                              newEntryModelPos);
 			
@@ -2559,7 +2561,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 //		Generator generator = 
 //			this.retrieveGeneratorOfEditedModuletimelineGeneratorModel.getName());
 		
-		this.timelineEditController.doUpdateEditModel(editedModuleGeneratorTypeData,
+		this.timelineEditController.doUpdateEditModel(this.soundSourceData, editedModuleGeneratorTypeData,
 		                                              //generator,
 		                                              timelineSelectEntryModel,
 		                                              selectEntryModelPos);
@@ -2733,11 +2735,9 @@ implements RemoveTimelineGeneratorListenerInterface,
 
 	public void startSoundSourceScheduler() {
 		//==========================================================================================
-		this.soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(32);
+		this.soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(this.soundSourceData, this.soundSourceLogic, 32);
 
 		// Start scheduled polling with the new SoundSource.
-		this.soundSourceSchedulerLogic.setSoundSourceLogic(this.soundSourceLogic);
-
 		this.soundSourceSchedulerLogic.startThread();
 
 		//==========================================================================================

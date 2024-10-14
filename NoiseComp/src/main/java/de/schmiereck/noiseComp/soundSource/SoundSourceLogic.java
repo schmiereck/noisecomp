@@ -1,9 +1,6 @@
 package de.schmiereck.noiseComp.soundSource;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface;
@@ -51,11 +48,6 @@ implements GeneratorChangeListenerInterface,
 	private Generator outputGenerator = null;
 
 	/**
-	 * Output Timeline.
-	 */
-	private Timeline outputTimeline = null;
-
-	/**
 	 * Timeline-Manager Logic.
 	 */
 	private TimelineManagerLogic timelineManagerLogic = null;
@@ -72,8 +64,7 @@ implements GeneratorChangeListenerInterface,
 	 * Constructor.
 	 *
 	 */
-	public SoundSourceLogic() // OutputGenerator outputGenerator
-	{
+	public SoundSourceLogic() { // OutputGenerator outputGenerator
 		//this.outputGenerator = outputGenerator;
 
 		this.soundSamplesBufferData = new SoundSamplesBufferData();
@@ -85,50 +76,47 @@ implements GeneratorChangeListenerInterface,
 	 * @return
 	 * 			the timelines.
 	 */
-	public synchronized List<Timeline> setMainModuleGeneratorTypeData(ModuleGeneratorTypeData mainModuleGeneratorTypeData)
+	public synchronized void setMainModuleGeneratorTypeData(final SoundSourceData soundSourceData, final ModuleGeneratorTypeData mainModuleGeneratorTypeData)
 	{
 		//==========================================================================================
-		List<Timeline> timelines = new Vector<Timeline>();
-		
 		//------------------------------------------------------------------------------------------
 		this.timelineManagerLogic = new TimelineManagerLogic(this, mainModuleGeneratorTypeData);
 		
 		//------------------------------------------------------------------------------------------
 		this.setOutputGenerator(null);
-	
-		this.outputTimeline = null;
+
+		soundSourceData.setOutputTimeline(null);
 		
 		//------------------------------------------------------------------------------------------
 		// Walk rekursive through inputs because we need existing timelines to create input timelines:
+
+		final OutputGenerator outputGenerator = mainModuleGeneratorTypeData.getOutputGenerator();
 		
-		OutputGenerator outputGenerator = mainModuleGeneratorTypeData.getOutputGenerator();
-		
-		if (outputGenerator != null)
-		{
+		if (outputGenerator != null) {
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			List<Timeline> inputTimelines = new Vector<Timeline>();
+			final List<Timeline> inputTimelines = new Vector<>();
 			
-			this.createTimeline(inputTimelines, outputGenerator);
+			this.createTimeline(soundSourceData, inputTimelines, outputGenerator);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Sort timelines:
 
-			Iterator<Generator> generatorsIterator = mainModuleGeneratorTypeData.getGeneratorsIterator();
+			final Iterator<Generator> generatorsIterator = mainModuleGeneratorTypeData.getGeneratorsIterator();
 			
-			while (generatorsIterator.hasNext())
-			{
-				Generator generator = generatorsIterator.next();
+			while (generatorsIterator.hasNext()) {
+				final Generator generator = generatorsIterator.next();
+
+				final Timeline timeline;
+				final Timeline inputTimeline = this.searchInputTimeline(inputTimelines, generator);
 				
-				Timeline inputTimeline = this.searchInputTimeline(inputTimelines, generator);
-				
-				// Not connected generator?
-				if (inputTimeline == null)
-				{
-					// Create this timeline.
-					inputTimeline = this.timelineManagerLogic.createTimeline(generator);
+				if (Objects.nonNull(inputTimeline)) {
+					timeline = inputTimeline;
+				} else {
+					// Not connected generator.
+					timeline = this.timelineManagerLogic.createTimeline(soundSourceData, generator);
 				}
-				
-				timelines.add(inputTimeline);
+
+				soundSourceData.addTimeline(timeline);
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
@@ -146,84 +134,68 @@ implements GeneratorChangeListenerInterface,
 //		}
 		
 		//------------------------------------------------------------------------------------------
-		this.printDebug1(this.outputTimeline, 0);
-		this.printDebug2(this.outputTimeline, 0);
-		this.printDebug3(this.outputTimeline, 0, false);
+		this.printDebug1(soundSourceData.getOutputTimeline(), 0);
+		this.printDebug2(soundSourceData.getOutputTimeline(), 0);
+		this.printDebug3(soundSourceData.getOutputTimeline(), 0, false);
 		
 		//==========================================================================================
-		return timelines;
 	}
 
-	private void printDebug1(Timeline parentTimeline, int level)
-	{
-		for (int pos = 0; pos < level * 2; pos++)
-		{
+	private void printDebug1(Timeline parentTimeline, int level) {
+		for (int pos = 0; pos < level * 2; pos++) {
 			System.out.print(' ');
 		}
 		System.out.println("DBG 1: " + parentTimeline);
 		
-		if (parentTimeline != null)
-		{
+		if (parentTimeline != null) {
 			Iterator<InputData> inputsIterator = parentTimeline.getInputsIterator();
 			
-			if (inputsIterator != null)
-			{
-				while (inputsIterator.hasNext())
-				{
+			if (inputsIterator != null) {
+				while (inputsIterator.hasNext()) {
 					InputData inputData = inputsIterator.next();
 	
 					Timeline inputTimeline = (Timeline)parentTimeline.getInputGeneratorBuffer(inputData);
 					
-					if (inputTimeline != null)
-					{
+					if (inputTimeline != null) {
 						this.printDebug1(inputTimeline, level + 1);
 					}
 				}
 			}
 		}
 	}
-	private void printDebug2(Timeline parentTimeline, int level)
-	{
-		for (int pos = 0; pos < level * 2; pos++)
-		{
+
+	private void printDebug2(Timeline parentTimeline, int level) {
+		for (int pos = 0; pos < level * 2; pos++) {
 			System.out.print(' ');
 		}
 		System.out.println("DBG 2: " + parentTimeline);
 		
-		if (parentTimeline != null)
-		{
+		if (parentTimeline != null) {
 			Collection<Timeline> timelines = parentTimeline.getInputTimelines().values();
 			
-			for (Timeline timeline : timelines)
-			{
+			for (Timeline timeline : timelines) {
 				this.printDebug2(timeline, level + 1);
 			}
 		}
 	}
 
 
-	private void printDebug3(Timeline parentTimeline, int level, boolean isSub)
-	{
-		for (int pos = 0; pos < level * 2; pos++)
-		{
+	private void printDebug3(Timeline parentTimeline, int level, boolean isSub) {
+		for (int pos = 0; pos < level * 2; pos++) {
 			System.out.print(' ');
 		}
-		if (isSub == true)
-		{
+		if (isSub == true) {
 			System.out.print("SUB ");
 		}
 		System.out.println("DBG 3: " + parentTimeline);
 		
-		if (parentTimeline != null)
-		{
+		if (parentTimeline != null) {
 			Collection<Timeline> timelines = parentTimeline.getInputTimelines().values();
 			
-			for (Timeline timeline : timelines)
-			{
+			for (Timeline timeline : timelines) {
 				this.printDebug3(timeline, level + 1, false);
 				
-				for (Timeline subTimeline : timeline.getSubGeneratorTimelines())
-				{
+				for (Timeline subTimeline : timeline.getSubGeneratorTimelines()) {
 					this.printDebug3(subTimeline, level + 2, true);
 				}
 			}
@@ -264,28 +236,25 @@ implements GeneratorChangeListenerInterface,
 	 * @param generator
 	 * 			is the generator.
 	 */
-	private void createTimeline(List<Timeline> timelines, Generator generator)
+	private void createTimeline(final SoundSourceData soundSourceData, List<Timeline> timelines, Generator generator)
 	{
 		//==========================================================================================
 		Iterator<InputData> inputsIterator = generator.getInputsIterator();
 		
-		if (inputsIterator != null)
-		{
-			while (inputsIterator.hasNext())
-			{
+		if (inputsIterator != null) {
+			while (inputsIterator.hasNext()) {
 				InputData inputData = inputsIterator.next();
 				
 				Generator inputGenerator = inputData.getInputGenerator();
 				
-				if (inputGenerator != null)
-				{
-					this.createTimeline(timelines, inputGenerator);
+				if (inputGenerator != null) {
+					this.createTimeline(soundSourceData, timelines, inputGenerator);
 				}
 			}
 		}
 		
 		//------------------------------------------------------------------------------------------
-		Timeline timeline = this.timelineManagerLogic.createTimeline(generator);
+		Timeline timeline = this.timelineManagerLogic.createTimeline(soundSourceData, generator);
 	
 		timelines.add(timeline);
 		
@@ -340,21 +309,12 @@ implements GeneratorChangeListenerInterface,
 	}
 
 	/**
-	 * @return 
-	 * 			returns the {@link #outputTimeline}.
-	 */
-	public Timeline getOutputTimeline()
-	{
-		return this.outputTimeline;
-	}
-
-	/**
 	 * @param frame
 	 * 			ist the sound sample frame.
 	 * @return
 	 * 			the sound sample.
 	 */
-	public SoundSample generateFrameSample(long frame)
+	public SoundSample generateFrameSample(final SoundSourceData soundSourceData, final long frame)
 	{
 		SoundSample soundSample;
 		
@@ -362,7 +322,7 @@ implements GeneratorChangeListenerInterface,
 		{
 			if (this.outputGenerator != null)
 			{
-				soundSample = this.soundSamplesBufferData.generateSoundSample(frame, this.outputTimeline);
+				soundSample = this.soundSamplesBufferData.generateSoundSample(frame, soundSourceData.getOutputTimeline());
 			}
 			else
 			{
@@ -404,7 +364,7 @@ implements GeneratorChangeListenerInterface,
 	 * @param actualWaitPerFramesMillis
 	 * 			are the Milliseconds to calculate.
 	 */
-	public void pollCalcFillBuffer(long actualWaitPerFramesMillis)
+	public void pollCalcFillBuffer(final SoundSourceData soundSourceData, final long actualWaitPerFramesMillis)
 	{
 		synchronized (this)
 		{
@@ -419,8 +379,8 @@ implements GeneratorChangeListenerInterface,
 				float timeBufferIsFilled = timeSchedulerIsWaiting * 2.0F;
 				
 				boolean bufferCompletelyFilled =
-					this.soundSamplesBufferData.calcWaitingSamplesPart(timeBufferIsFilled, 
-																	   this.outputTimeline);
+					this.soundSamplesBufferData.calcWaitingSamplesPart(timeBufferIsFilled,
+							soundSourceData.getOutputTimeline());
 				
 				if (bufferCompletelyFilled == true)
 				{
@@ -530,28 +490,21 @@ implements GeneratorChangeListenerInterface,
 		return this.timelineManagerLogic;
 	}
 
-	/**
-	 * @param outputTimeline 
-	 * 			to set {@link #outputTimeline}.
-	 */
-	public void setOutputTimeline(Timeline outputTimeline)
-	{
+	public void setOutputTimeline(final SoundSourceData soundSourceData, Timeline outputTimeline) {
 		//==========================================================================================
 		// Remove last timeline change observer.
 		
-		if (this.outputTimeline != null)
-		{
-			this.outputTimeline.removeTimelineChangedListerner(this);
+		if (Objects.nonNull(soundSourceData.getOutputTimeline())) {
+			soundSourceData.getOutputTimeline().removeTimelineChangedListerner(this);
 		}
 		
 		//------------------------------------------------------------------------------------------
-		this.outputTimeline = outputTimeline;
+		soundSourceData.setOutputTimeline(outputTimeline);
 		
 		//------------------------------------------------------------------------------------------
 		// Register new timeline change observer.
-		if (this.outputTimeline != null)
-		{
-			this.outputTimeline.addTimelineChangedListerner(this);
+		if (Objects.nonNull(soundSourceData.getOutputTimeline())) {
+			soundSourceData.getOutputTimeline().addTimelineChangedListerner(this);
 		}
 		
 		//==========================================================================================
@@ -561,8 +514,7 @@ implements GeneratorChangeListenerInterface,
 	 * @see de.schmiereck.noiseComp.timeline.TimelineChangedListernerInterface#notifyTimelineChanged(de.schmiereck.noiseComp.timeline.Timeline, float, float)
 	 */
 	@Override
-	public void notifyTimelineChanged(Timeline timeline, float changedStartTimePos, float changedEndTimePos)
-	{
+	public void notifyTimelineChanged(Timeline timeline, float changedStartTimePos, float changedEndTimePos) {
 		//==========================================================================================
 		Generator generator = timeline.getGenerator();
 		

@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.soundScheduler;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
+
 /**
  * <p>
  * Pipeline-Scheduler der angegebenen Sound
@@ -56,14 +58,16 @@ public class SoundSchedulerLogic
 
 		//==========================================================================================
 	}
-	public void startThread() {
-		this.soundCalcSchedulerLogic.startCalcThread(this::run);
+	public void startThread(final SoundSourceData soundSourceData) {
+		this.soundCalcSchedulerLogic.startCalcThread(() -> {
+			run(soundSourceData);
+		});
 
 		this.soundOutSchedulerLogic.startOutThread();
 	}
 
-	private void run() {
-		this.soundCalcSchedulerLogic.runCalc();
+	private void run(final SoundSourceData soundSourceData) {
+		this.soundCalcSchedulerLogic.runCalc(soundSourceData);
 
 		this.soundOutSchedulerLogic.stopOutThread();
 	}

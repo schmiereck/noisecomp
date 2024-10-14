@@ -5,6 +5,7 @@ import de.schmiereck.noiseComp.soundScheduler.PlaybackPosChangedListenerInterfac
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
 import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerLogic;
 import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerData;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
 public class PlaySoundService {
     //**********************************************************************************************
@@ -39,7 +40,8 @@ public class PlaySoundService {
      * @param playbackPosChangedListener
      * 			is the playbackPosChangedListener.
      */
-    public synchronized void startPlayback(final double startTime,
+    public synchronized void startPlayback(final SoundSourceData soundSourceData,
+                                           final double startTime,
                                            final PlaybackPosChangedListenerInterface playbackPosChangedListener) {
         //==========================================================================================
         //SoundDataLogic soundDataLogic = SwingMain.getSoundData();
@@ -48,7 +50,7 @@ public class PlaySoundService {
 
         this.soundSchedulerLogic.addPlaybackPosChangedListener(playbackPosChangedListener);
 
-        this.soundSchedulerLogic.startThread();
+        this.soundSchedulerLogic.startThread(soundSourceData);
 
         this.soundSchedulerLogic.startPlayback();
 

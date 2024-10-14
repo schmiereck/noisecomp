@@ -18,6 +18,7 @@ import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 
@@ -80,8 +81,7 @@ public class TimelineManagerLogic
 	 * @return
 	 * 			the timeline.
 	 */
-	public Timeline createTimeline(Generator generator)
-	{
+	public Timeline createTimeline(final SoundSourceData soundSourceData, final Generator generator) {
 		//==========================================================================================
 		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
@@ -101,8 +101,8 @@ public class TimelineManagerLogic
 			
 			// Update mainModuleGeneratorTypeData.
 			this.mainModuleGeneratorTypeData.setOutputGenerator(outputGenerator);
-			
-			soundSourceLogic.setOutputTimeline(timeline);
+
+			soundSourceData.setOutputTimeline(timeline);
 			
 			// Update SoundSourceLogic.
 			soundSourceLogic.setOutputGenerator(generator);
@@ -478,7 +478,7 @@ public class TimelineManagerLogic
 	 * @return
 	 * 			the generator.
 	 */
-	public Timeline createTimeline(GeneratorTypeData generatorTypeData,
+	public Timeline createTimeline(final SoundSourceData soundSourceData, GeneratorTypeData generatorTypeData,
 	                               Float soundFrameRate,
 	                               String generatorName,
                                    int generatorPos)
@@ -491,7 +491,7 @@ public class TimelineManagerLogic
 		                                             generator);
 
 		Timeline timeline = 
-			this.createTimeline(generator);
+			this.createTimeline(soundSourceData, generator);
 
 		//==========================================================================================
 		return timeline;

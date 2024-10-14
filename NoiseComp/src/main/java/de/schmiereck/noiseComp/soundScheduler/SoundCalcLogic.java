@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.soundScheduler;
 
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
 public class SoundCalcLogic {
 
@@ -20,7 +21,7 @@ public class SoundCalcLogic {
         this.soundDataLogic = soundDataLogic;
     }
 
-    public void runCalc() {
+    public void runCalc(final SoundSourceData soundSourceData) {
         this.runCounterCalc = 0;
         this.logicIsRunning = true;
 
@@ -37,7 +38,7 @@ public class SoundCalcLogic {
 
             long d1 = System.currentTimeMillis();
             this.incRunCounterCalc();
-            this.notifyRunSchedulCalc();
+            this.notifyRunSchedulCalc(soundSourceData);
             long d2 = System.currentTimeMillis();
 
             //tm = ctm;
@@ -62,13 +63,13 @@ public class SoundCalcLogic {
         }
     }
 
-    public void notifyRunSchedulCalc() {
+    public void notifyRunSchedulCalc(final SoundSourceData soundSourceData) {
         //==========================================================================================
         if (this.soundSchedulerData.getPlaybackPaused() == false)
         {
             final SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
 
-            soundBufferManager.pollGenerate();
+            soundBufferManager.pollGenerate(soundSourceData);
         }
         //==========================================================================================
     }

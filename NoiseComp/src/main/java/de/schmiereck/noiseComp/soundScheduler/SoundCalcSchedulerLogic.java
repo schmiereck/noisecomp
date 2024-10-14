@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.soundScheduler;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
+
 public class SoundCalcSchedulerLogic {
 
     private Thread calcThread = null;
@@ -18,8 +20,8 @@ public class SoundCalcSchedulerLogic {
         this.calcThread.start();
     }
 
-    public void runCalc() {
-        this.soundCalcLogic.runCalc();
+    public void runCalc(final SoundSourceData soundSourceData) {
+        this.soundCalcLogic.runCalc(soundSourceData);
     }
 
     public void stopCalcThread() {

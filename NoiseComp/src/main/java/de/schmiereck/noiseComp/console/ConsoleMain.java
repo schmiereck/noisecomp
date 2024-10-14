@@ -9,9 +9,13 @@ import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundBuffer.SoundBufferManager;
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
 import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerLogic;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
 import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerData;
+import de.schmiereck.noiseComp.timeline.Timeline;
+
+import java.util.List;
 
 
 /*
@@ -67,22 +71,22 @@ public class ConsoleMain
 		final ModuleGeneratorTypeData mainModuleGeneratorTypeData =
 			StartupService.createDemoGenerators(soundService, soundDataLogic.getFrameRate());
 
-		soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);
+		final SoundSourceData soundSourceData = new SoundSourceData();
+
+		soundSourceLogic.setMainModuleGeneratorTypeData(soundSourceData, mainModuleGeneratorTypeData);
 
 		//------------------------------------------------------------------------------------------
 	
-		soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(32);
-		
-		// Start scheduled polling with the new SoundSource.
-		soundSourceSchedulerLogic.setSoundSourceLogic(soundSourceLogic);
+		soundSourceSchedulerLogic = new SoundSourceSchedulerLogic(soundSourceData, soundSourceLogic, 32);
 
+		// Start scheduled polling with the new SoundSource.
 		soundSourceSchedulerLogic.startThread();
 		
 		//------------------------------------------------------------------------------------------
 		final SoundSchedulerData soundSchedulerData = new SoundSchedulerData(25);
 		soundSchedulerLogic = new SoundSchedulerLogic(soundSchedulerData, soundDataLogic);
 		
-		soundSchedulerLogic.startThread();
+		soundSchedulerLogic.startThread(soundSourceData);
 
 		soundSchedulerLogic.startPlayback();
 		
