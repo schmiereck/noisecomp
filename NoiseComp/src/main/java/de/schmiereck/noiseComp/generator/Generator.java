@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
 
 /**
@@ -125,7 +126,7 @@ implements GeneratorInterface,
 	 * @param endTimePos
 	 * 			is the endTimePos.
 	 */
-	public void setTimePos(float startTimePos, float endTimePos)
+	public void setTimePos(final SoundSourceData soundSourceData, float startTimePos, float endTimePos)
 	{
 		//==========================================================================================
 		float changedStartTimePos 	= Math.min(this.startTimePos, startTimePos);
@@ -134,7 +135,7 @@ implements GeneratorInterface,
 		this.startTimePos = startTimePos;
 		this.endTimePos = endTimePos;
 		
-		this.generateChangedEvent(this,
+		this.generateChangedEvent(soundSourceData, this,
 		                          changedStartTimePos,
 								  changedEndTimePos);
 		//==========================================================================================
@@ -143,7 +144,7 @@ implements GeneratorInterface,
 	/**
 	 * @set #startTimePos
 	 */
-	public synchronized void setStartTimePos(float startTimePos)
+	public synchronized void setStartTimePos(final SoundSourceData soundSourceData, float startTimePos)
 	{
 		//==========================================================================================
 		float changedStartTimePos 	= Math.min(this.startTimePos, startTimePos);
@@ -151,7 +152,7 @@ implements GeneratorInterface,
 		
 		this.startTimePos = startTimePos;
 		
-		this.generateChangedEvent(this,
+		this.generateChangedEvent(soundSourceData, this,
 		                          changedStartTimePos,
 								  changedEndTimePos);
 		//==========================================================================================
@@ -160,7 +161,7 @@ implements GeneratorInterface,
 	/**
 	 * @set #startTimePos
 	 */
-	public synchronized void setEndTimePos(float endTimePos)
+	public synchronized void setEndTimePos(final SoundSourceData soundSourceData, float endTimePos)
 	{
 		//==========================================================================================
 		float changedStartTimePos 	= this.startTimePos;
@@ -168,7 +169,7 @@ implements GeneratorInterface,
 		
 		this.endTimePos = endTimePos;
 		
-		this.generateChangedEvent(this,
+		this.generateChangedEvent(soundSourceData, this,
 		                          changedStartTimePos,
 								  changedEndTimePos);
 		//==========================================================================================
@@ -286,23 +287,22 @@ implements GeneratorInterface,
 	 * @return 
 	 * 			the new created and added {@link InputData}-Object.
 	 */
-	public synchronized InputData addGeneratorInput(Generator inputGenerator, 
+	public synchronized InputData addGeneratorInput(final SoundSourceData soundSourceData,
+													Generator inputGenerator,
 	                                                InputTypeData inputTypeData, 
 	                                                Float inputValue, 
 	                                                String inputStringValue, 
-	                                                InputTypeData inputModuleInputTypeData)
-	{
+	                                                InputTypeData inputModuleInputTypeData) {
 		//==========================================================================================
 		InputData inputData = new InputData(this,
 											inputGenerator, 
 											inputTypeData, 
 											inputModuleInputTypeData);
 		
-		inputData.setInputValue(inputValue, inputStringValue);
+		inputData.setInputValue(soundSourceData, inputValue, inputStringValue);
 		
-		if (this.inputs == null)
-		{	
-			this.inputs = new Vector<InputData>();
+		if (this.inputs == null) {
+			this.inputs = new Vector<>();
 		}
 		
 		this.inputs.add(inputData);
@@ -313,7 +313,7 @@ implements GeneratorInterface,
 			inputData.getInputGenerator().getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 		}
 		
-		this.generateChangedEvent(this,
+		this.generateChangedEvent(soundSourceData, this,
 		                          this.getStartTimePos(),
 								  this.getEndTimePos());
 		
@@ -321,12 +321,12 @@ implements GeneratorInterface,
 		return inputData;
 	}
 	
-	public InputData addInputValue(float value, int inputType)
+	public InputData addInputValue(final SoundSourceData soundSourceData, float value, int inputType)
 	{
 		//==========================================================================================
 		InputTypeData inputTypeData = this.getGeneratorTypeData().getInputTypeData(inputType);
 		
-		InputData inputData = this.addGeneratorInput(null, inputTypeData, Float.valueOf(value), null, null);
+		InputData inputData = this.addGeneratorInput(soundSourceData, null, inputTypeData, Float.valueOf(value), null, null);
 		
 		//==========================================================================================
 		return inputData;
@@ -335,10 +335,10 @@ implements GeneratorInterface,
 	/**
 	 * @see #addInputGenerator(Generator, InputTypeData, Float)
 	 */
-	public InputData addInputValue(Float value, InputTypeData inputTypeData)
+	public InputData addInputValue(final SoundSourceData soundSourceData, Float value, InputTypeData inputTypeData)
 	{
 		//==========================================================================================
-		InputData inputData = this.addGeneratorInput(null, inputTypeData, value, null, null);
+		InputData inputData = this.addGeneratorInput(soundSourceData, null, inputTypeData, value, null, null);
 		
 		//inputData.getInputGenerator();
 
@@ -351,12 +351,9 @@ implements GeneratorInterface,
 		//==========================================================================================
 		InputData ret;
 		
-		if (this.inputs != null)
-		{
+		if (this.inputs != null) {
 			ret = (InputData)this.inputs.get(pos);
-		}
-		else
-		{
+		} else {
 			ret = null;
 		}
 
@@ -364,7 +361,7 @@ implements GeneratorInterface,
 		return ret;
 	}
 
-	public void removeInput(InputData inputData)
+	public void removeInput(final SoundSourceData soundSourceData, final InputData inputData)
 	{
 		//==========================================================================================
 		synchronized (this)
@@ -379,13 +376,13 @@ implements GeneratorInterface,
 					inputData.getInputGenerator().getGeneratorChangeObserver().removeGeneratorChangeListener(this);
 				}
 				
-				this.generateChangedEvent();
+				this.generateChangedEvent(soundSourceData);
 			}
 		}
 		//==========================================================================================
 	}
 
-	public void updateInput(InputData inputData)
+	public void updateInput(final SoundSourceData soundSourceData, InputData inputData)
 	{
 		//==========================================================================================
 		synchronized (this)
@@ -400,7 +397,7 @@ implements GeneratorInterface,
 //					inputData.getInputGenerator().getGeneratorChangeObserver().removeGeneratorChangeListener(this);
 				}
 				
-				this.generateChangedEvent();
+				this.generateChangedEvent(soundSourceData);
 			}
 		}
 		//==========================================================================================
@@ -554,7 +551,7 @@ implements GeneratorInterface,
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.ModuleGeneratorRemoveListenerInterface#notifyModuleGeneratorRemoved(de.schmiereck.noiseComp.generator.Generator)
 	 */
-	public synchronized void notifyModuleGeneratorRemoved(Generator removedGenerator)
+	public synchronized void notifyModuleGeneratorRemoved(final SoundSourceData soundSourceData, final Generator removedGenerator)
 	{
 		//==========================================================================================
 		if (removedGenerator != null)
@@ -576,7 +573,7 @@ implements GeneratorInterface,
 							inputGeneratorsIterator.remove();
 						}
 						
-						this.generateChangedEvent(removedGenerator,
+						this.generateChangedEvent(soundSourceData, removedGenerator,
 						                          generator.getStartTimePos(),
 												  generator.getEndTimePos());
 						break;
@@ -1032,14 +1029,14 @@ implements GeneratorInterface,
 	/**
 	 * Send a change Event to {@link #generatorChangeObserver}.
 	 */
-	public synchronized void generateChangedEvent(Generator generator,
+	public synchronized void generateChangedEvent(final SoundSourceData soundSourceData, Generator generator,
 	                                              float changedStartTimePos, 
 	                                              float changedEndTimePos)
 	{
 System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: " + changedStartTimePos + ", " + changedEndTimePos);
 		if (this.generatorChangeObserver != null)
 		{
-			this.generatorChangeObserver.changedEvent(generator, 
+			this.generatorChangeObserver.changedEvent(soundSourceData, generator,
 													  changedStartTimePos, changedEndTimePos);
 		}
 	}
@@ -1047,9 +1044,9 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	/**
 	 * {@link #generateChangedEvent(float, float)} for {@link #startTimePos} and {@link #endTimePos}.
 	 */
-	public void generateChangedEvent()
+	public void generateChangedEvent(final SoundSourceData soundSourceData)
 	{
-		this.generateChangedEvent(this,
+		this.generateChangedEvent(soundSourceData, this,
 		                          this.getStartTimePos(),
 								  this.getEndTimePos());
 	}
@@ -1057,7 +1054,7 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface#notifyGeneratorChanged(de.schmiereck.noiseComp.generator.Generator, float, float)
 	 */
-	public void notifyGeneratorChanged(Generator generator, float changedStartTimePos, float changedEndTimePos)
+	public void notifyGeneratorChanged(SoundSourceData soundSourceData, Generator generator, float changedStartTimePos, float changedEndTimePos)
 	{
 		//==========================================================================================
 		// Einer der überwachten Inputs hat sich geändert:
@@ -1069,7 +1066,7 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 		
 		try
 		{
-			this.getGeneratorChangeObserver().changedEvent(generator, 
+			this.getGeneratorChangeObserver().changedEvent(soundSourceData, generator,
 //		    	                                		   this.getStartTimePos() + startTimePos, 
 //		        	                            		   this.getStartTimePos() + endTimePos);
 			                                               changedStartTimePos, 
@@ -1095,11 +1092,11 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	 * @param removedGenerator 
 	 * 			to notify the {@link #moduleeneratorRemoveListeners}.
 	 */
-	public void notifyModuleGeneratorRemoveListeners(Generator removedGenerator)
+	public void notifyModuleGeneratorRemoveListeners(final SoundSourceData soundSourceData, final Generator removedGenerator)
 	{
 		for (ModuleGeneratorRemoveListenerInterface moduleeneratorRemoveListener : this.moduleeneratorRemoveListeners)
 		{
-			moduleeneratorRemoveListener.notifyModuleGeneratorRemoved(removedGenerator);
+			moduleeneratorRemoveListener.notifyModuleGeneratorRemoved(soundSourceData, removedGenerator);
 		}
 	}
 

@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
-import java.util.Iterator;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
+
 import java.util.Vector;
 
 /*
@@ -49,21 +50,15 @@ public class GeneratorChangeObserver
 		}
 	}
 	
-	public synchronized void changedEvent(Generator generator, 
-	                                      float changedStartTimePos, float changedEndTimePos)
+	public synchronized void changedEvent(final SoundSourceData soundSourceData, final Generator generator,
+										  final float changedStartTimePos, final float changedEndTimePos)
 	{
-		if (this.generatorChangeListeners != null)
-		{
-			Iterator<GeneratorChangeListenerInterface> generatorChangeListenersIterator = 
-				this.generatorChangeListeners.iterator();
-			
-			while (generatorChangeListenersIterator.hasNext())
-			{
-				GeneratorChangeListenerInterface generatorChangeListener = generatorChangeListenersIterator.next();
-				
-				generatorChangeListener.notifyGeneratorChanged(generator, 
-				                                               changedStartTimePos, changedEndTimePos);
-			}
+		if (this.generatorChangeListeners != null) {
+
+            for (final GeneratorChangeListenerInterface generatorChangeListener : this.generatorChangeListeners) {
+                generatorChangeListener.notifyGeneratorChanged(soundSourceData, generator,
+                        changedStartTimePos, changedEndTimePos);
+            }
 		}
 	}
 }

@@ -66,12 +66,12 @@ public class ConsoleMain
 		final SoundSourceLogic soundSourceLogic = new SoundSourceLogic();
 
 		final SoundDataLogic soundDataLogic = new SoundDataLogic(line, soundSourceLogic);
-		
-		//------------------------------------------------------------------------------------------
-		final ModuleGeneratorTypeData mainModuleGeneratorTypeData =
-			StartupService.createDemoGenerators(soundService, soundDataLogic.getFrameRate());
 
+		//------------------------------------------------------------------------------------------
 		final SoundSourceData soundSourceData = new SoundSourceData();
+
+		final ModuleGeneratorTypeData mainModuleGeneratorTypeData =
+			StartupService.createDemoGenerators(soundSourceData, soundService, soundDataLogic.getFrameRate());
 
 		soundSourceLogic.setMainModuleGeneratorTypeData(soundSourceData, mainModuleGeneratorTypeData);
 

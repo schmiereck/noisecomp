@@ -2,6 +2,9 @@ package de.schmiereck.noiseComp.generator;
 /*
  * Created on 27.03.2005, Copyright (c) schmiereck, 2005
  */
+
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
+
 /**
  * <p>
  * 	Interface that Objects has to implements, wants to notify from
@@ -17,14 +20,12 @@ public interface GeneratorChangeListenerInterface
 
 	/**
 	 * Called if the given generator changed.
-	 * 
-	 * @param generator
-	 * 			is the changed generator.
-	 * @param changedStartTimePos
-	 * 			is the start time pos the data in generator changed.
-	 * @param changedEndTimePos
-	 * 			is the end time pos the data in generator changed.
+	 *
+	 * @param soundSourceData
+	 * @param generator           is the changed generator.
+	 * @param changedStartTimePos is the start time pos the data in generator changed.
+	 * @param changedEndTimePos   is the end time pos the data in generator changed.
 	 */
-	void notifyGeneratorChanged(Generator generator, 
-	                            float changedStartTimePos, float changedEndTimePos);
+	void notifyGeneratorChanged(SoundSourceData soundSourceData, Generator generator,
+								float changedStartTimePos, float changedEndTimePos);
 }
