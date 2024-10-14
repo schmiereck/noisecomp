@@ -5,6 +5,7 @@ package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule
 
 import java.awt.Dimension;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
@@ -117,8 +118,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * @see de.schmiereck.noiseComp.swingView.timelineSelect.RemoveTimelineGeneratorListenerInterface#notifyRemoveTimelineGenerator(de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel, de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel)
 	 */
 	@Override
-	public void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
-	                                          TimelineSelectEntryModel timelineSelectEntryModel)
+	public void notifyRemoveTimelineGenerator(SoundSourceData soundSourceData, TimelinesDrawPanelModel timelinesDrawPanelModel,
+                                              TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		//==========================================================================================
 		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();

@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.timeline;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
+
 /**
  * <p>
  * 	Timeline Changed Listerner Interface.
@@ -19,13 +21,11 @@ public interface TimelineChangedListernerInterface
 
 	/**
 	 * Timeline changed.
-	 * 
-	 * @param timeline
-	 * 			is the timeline. 
-	 * @param changedStartTimePos
-	 * 			is the start time pos the data in generator changed.
-	 * @param changedEndTimePos
-	 * 			is the end time pos the data in generator changed.
+	 *
+	 * @param soundSourceData
+	 * @param timeline            is the timeline.
+	 * @param changedStartTimePos is the start time pos the data in generator changed.
+	 * @param changedEndTimePos   is the end time pos the data in generator changed.
 	 */
-	void notifyTimelineChanged(Timeline timeline, float changedStartTimePos, float changedEndTimePos);
+	void notifyTimelineChanged(SoundSourceData soundSourceData, Timeline timeline, float changedStartTimePos, float changedEndTimePos);
 }

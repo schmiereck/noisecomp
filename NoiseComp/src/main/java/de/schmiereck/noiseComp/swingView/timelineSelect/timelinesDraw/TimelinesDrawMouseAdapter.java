@@ -154,8 +154,8 @@ extends MouseAdapter
 						TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
 							selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 						
-						timelineSelectEntriesModel.removeTimelineSelectEntryModel(timelinesDrawPanelModel,
-						                                                          selectedTimelineSelectEntryModel);
+						timelineSelectEntriesModel.removeTimelineSelectEntryModel(appController.getSoundSourceData(),
+								timelinesDrawPanelModel, selectedTimelineSelectEntryModel);
 						
 						//--------------------------------------------------------------------------
 					}

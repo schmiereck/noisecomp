@@ -339,7 +339,7 @@ public class TimelineEditController
 					timelineManagerLogic.updateName(timeline, generatorName);
 				}
 	
-				timelineManagerLogic.updateTimePos(timeline, 
+				timelineManagerLogic.updateTimePos(soundSourceData, timeline,
 				                                   generatorStartTimePos, 
 				                                   generatorEndTimePos);
 				

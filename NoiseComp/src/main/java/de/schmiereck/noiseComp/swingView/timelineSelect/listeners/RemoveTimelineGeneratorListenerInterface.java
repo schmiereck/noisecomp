@@ -3,6 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineSelect.listeners;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 
@@ -17,11 +18,9 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesD
 public interface RemoveTimelineGeneratorListenerInterface
 {
 	/**
-	 * @param timelinesDrawPanelModel
-	 * 			is the removed timelinesDrawPanelModel.
-	 * @param timelineSelectEntryModel
-	 * 			is the removed TimelineSelectEntryModel.
+	 * @param timelinesDrawPanelModel  is the removed timelinesDrawPanelModel.
+	 * @param timelineSelectEntryModel is the removed TimelineSelectEntryModel.
 	 */
-	void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
-	                                   TimelineSelectEntryModel timelineSelectEntryModel);
+	void notifyRemoveTimelineGenerator(SoundSourceData soundSourceData, TimelinesDrawPanelModel timelinesDrawPanelModel,
+									   TimelineSelectEntryModel timelineSelectEntryModel);
 }

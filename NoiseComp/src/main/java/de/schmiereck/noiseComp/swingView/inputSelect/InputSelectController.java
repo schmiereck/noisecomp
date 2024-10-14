@@ -16,6 +16,7 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.InputTypesData;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.SwingMain;
@@ -507,7 +508,7 @@ public class InputSelectController
 	 * @param newInputTypeData
 	 * 			is the inputType.
 	 */
-	public void doCreateNewInput(final InputTypeData newInputTypeData)
+	public void doCreateNewInput(final SoundSourceData soundSourceData, final InputTypeData newInputTypeData)
 	{
 		//==========================================================================================
 		final InputEntriesModel inputEntriesModel = this.selectedTimelineModel.getInputEntriesModel();
@@ -547,7 +548,7 @@ public class InputSelectController
 						{
 	//						inputPos2EntriesModel.setInputEntryModel(newInputEntryModel);
 							
-							this.updateAddPosEntry(newInputTypeData,
+							this.updateAddPosEntry(soundSourceData, newInputTypeData,
 							                       input2EntryModel);
 							
 							retInputEntryModel = input2EntryModel;
@@ -569,8 +570,9 @@ public class InputSelectController
 		//==========================================================================================
 	}
 
-	private void updateAddPosEntry(final InputTypeData newInputTypeData,
-	                               final InputEntryModel input2EntryModel)
+	private void updateAddPosEntry(final SoundSourceData soundSourceData,
+								   final InputTypeData newInputTypeData,
+								   final InputEntryModel input2EntryModel)
 	{
 		//==========================================================================================
 		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
@@ -594,7 +596,7 @@ public class InputSelectController
 			Timeline inputTimeline = inputTargetTimeline;
 			
 			InputData inputData = 
-				timelineManagerLogic.addGeneratorInput(newTimeline, 
+				timelineManagerLogic.addGeneratorInput(soundSourceData, newTimeline,
 				                                       inputTimeline, 
 				                                       newInputTypeData, 
 				                                       null, 

@@ -3,6 +3,8 @@
  */
 package de.schmiereck.noiseComp.generator;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
+
 /**
  * <p>
  * 	Module-Generator Remove Listener Interface.
@@ -15,11 +17,11 @@ public interface ModuleGeneratorRemoveListenerInterface
 {
 
 	/**
-	 * Notify the Listener 
+	 * Notify the Listener
 	 * that the given generator is removed.
-	 * 
-	 * @param removedGenerator
-	 * 			is the generator.
+	 *
+	 * @param soundSourceData
+	 * @param removedGenerator is the generator.
 	 */
-	void notifyModuleGeneratorRemoved(Generator removedGenerator);
+	void notifyModuleGeneratorRemoved(SoundSourceData soundSourceData, Generator removedGenerator);
 }

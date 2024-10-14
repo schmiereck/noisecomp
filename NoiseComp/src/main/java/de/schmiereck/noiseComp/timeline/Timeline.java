@@ -20,6 +20,7 @@ import de.schmiereck.noiseComp.generator.ModuleArguments;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 import de.schmiereck.noiseComp.generator.ModuleGeneratorRemoveListenerInterface;
 import de.schmiereck.noiseComp.generator.SoundSample;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
 /**
  * <p>
@@ -221,7 +222,7 @@ implements GeneratorBufferInterface,
 	 * @param endTimePos
 	 * 			is the endTimePos.
 	 */
-	public void setTimePos(float startTimePos, float endTimePos)
+	public void setTimePos(final SoundSourceData soundSourceData, final float startTimePos, final float endTimePos)
 	{
 		//==========================================================================================
 		float changedStartTimePos 	= Math.min(this.timelineStartTimePos, startTimePos);
@@ -230,10 +231,10 @@ implements GeneratorBufferInterface,
 		//------------------------------------------------------------------------------------------
 		this.changeTimePos(startTimePos, endTimePos);
 		
-		this.generator.setTimePos(startTimePos, endTimePos);
+		this.generator.setTimePos(soundSourceData, startTimePos, endTimePos);
 		
 		//------------------------------------------------------------------------------------------
-		this.generatorChanged(changedStartTimePos, changedEndTimePos);
+		this.generatorChanged(soundSourceData, changedStartTimePos, changedEndTimePos);
 		
 		//==========================================================================================
 	}
@@ -266,7 +267,7 @@ implements GeneratorBufferInterface,
 	 * @return
 	 * 			the old Timeline.
 	 */
-	public Timeline updateInput(InputData inputData, Timeline inputTimeline)
+	public Timeline updateInput(final SoundSourceData soundSourceData, InputData inputData, Timeline inputTimeline)
 	{
 		//==========================================================================================
 		Timeline oldInputTimeline;
@@ -313,7 +314,7 @@ implements GeneratorBufferInterface,
 			
 			if (generatorChanged == true)
 			{
-				this.generatorChanged(changedStartTimePos, changedEndTimePos);
+				this.generatorChanged(soundSourceData, changedStartTimePos, changedEndTimePos);
 			}
 		}
 //		else
@@ -358,7 +359,7 @@ implements GeneratorBufferInterface,
 	 * @param outputTimeline
 	 * 			to add to {@link #outputTimelines} as value.
 	 */
-	public void addOutputTimeline(InputData inputData, Timeline outputTimeline)
+	public void addOutputTimeline(final SoundSourceData soundSourceData, InputData inputData, Timeline outputTimeline)
 	{
 		//==========================================================================================
 		Timeline oldOutputTimeline = this.outputTimelines.put(inputData, outputTimeline);
@@ -378,7 +379,7 @@ implements GeneratorBufferInterface,
 			changedEndTimePos = outputTimeline.getGeneratorEndTimePos();
 		}
 		
-		this.generatorChanged(changedStartTimePos, changedEndTimePos);
+		this.generatorChanged(soundSourceData, changedStartTimePos, changedEndTimePos);
 
 		//==========================================================================================
 	}
@@ -587,8 +588,7 @@ implements GeneratorBufferInterface,
 	 * @param changedEndTimePos
 	 * 			is the end time pos the data in generator changed.
 	 */
-	protected void generatorChanged(float changedStartTimePos, float changedEndTimePos)
-	{
+	protected void generatorChanged(final SoundSourceData soundSourceData, float changedStartTimePos, float changedEndTimePos) {
 		//==========================================================================================
 //		float generatorStartTimePos = this.generator.getStartTimePos();
 //		float generatorEndTimePos = this.generator.getEndTimePos();
@@ -606,24 +606,18 @@ implements GeneratorBufferInterface,
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			float startTimePos;
 			
-			if (changedStartTimePos < this.timelineStartTimePos)
-			{
+			if (changedStartTimePos < this.timelineStartTimePos) {
 				startTimePos = this.timelineStartTimePos;
-			}
-			else
-			{
+			} else {
 				startTimePos = changedStartTimePos;
 			}
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			float endTimePos;
 
-			if (changedEndTimePos > this.timelineEndTimePos)
-			{
+			if (changedEndTimePos > this.timelineEndTimePos) {
 				endTimePos = this.timelineEndTimePos;
-			}
-			else
-			{
+			} else {
 				endTimePos = changedEndTimePos;
 			}
 			
@@ -652,15 +646,14 @@ implements GeneratorBufferInterface,
 		
 		// Notify Output-Timelines:
 		
-		for (Timeline outputTimeline : this.outputTimelines.values())
-		{
-			outputTimeline.generatorChanged(changedStartTimePos, changedEndTimePos);
+		for (Timeline outputTimeline : this.outputTimelines.values()) {
+			outputTimeline.generatorChanged(soundSourceData, changedStartTimePos, changedEndTimePos);
 		}
 		
 		//------------------------------------------------------------------------------------------
 		// Notify Changed-Listeners:
 		
-		this.notifyTimelineChangedListerners(changedStartTimePos, changedEndTimePos);
+		this.notifyTimelineChangedListerners(soundSourceData, changedStartTimePos, changedEndTimePos);
 		
 		//==========================================================================================
 	}
@@ -670,9 +663,9 @@ implements GeneratorBufferInterface,
 	 * 
 	 * #see {@link #generatorChanged(float, float)} for generator time.
 	 */
-	public void generatorChanged()
+	public void generatorChanged(final SoundSourceData soundSourceData)
 	{
-		this.generatorChanged(this.timelineStartTimePos, this.timelineEndTimePos);
+		this.generatorChanged(soundSourceData, this.timelineStartTimePos, this.timelineEndTimePos);
 	}
 
 	/**
@@ -736,23 +729,19 @@ implements GeneratorBufferInterface,
 	 * @see de.schmiereck.noiseComp.generator.ModuleGeneratorRemoveListenerInterface#notifyModuleGeneratorRemoved(de.schmiereck.noiseComp.generator.Generator)
 	 */
 	@Override
-	public void notifyModuleGeneratorRemoved(Generator removedGenerator)
+	public void notifyModuleGeneratorRemoved(final SoundSourceData soundSourceData, final Generator removedGenerator)
 	{
 		//==========================================================================================
-		for (InputData inputData : this.inputTimelines.keySet())
-		{
-			if (inputData.getInputGenerator() == removedGenerator)
-			{
+		for (final InputData inputData : this.inputTimelines.keySet()) {
+			if (inputData.getInputGenerator() == removedGenerator) {
 				//this.inputTimelines.remove(removedGenerator);
 				
 				this.inputTimelines.remove(inputData);
 			}
 		}
 		//------------------------------------------------------------------------------------------
-		for (InputData inputData : this.outputTimelines.keySet())
-		{
-			if (inputData.getInputGenerator() == removedGenerator)
-			{
+		for (final InputData inputData : this.outputTimelines.keySet()) {
+			if (inputData.getInputGenerator() == removedGenerator) {
 				this.outputTimelines.remove(removedGenerator);
 			}
 		}
@@ -763,7 +752,7 @@ implements GeneratorBufferInterface,
 	 * @param inputData
 	 * 			is the InputData.
 	 */
-	public void removeInput(InputData inputData)
+	public void removeInput(final SoundSourceData soundSourceData, final InputData inputData)
 	{
 		//==========================================================================================
 //		Generator inputGenerator = inputData.getInputGenerator();
@@ -798,10 +787,10 @@ implements GeneratorBufferInterface,
 		
 		//------------------------------------------------------------------------------------------
 		//inputGenerator.removeOutput();
-		this.generator.removeInput(inputData);
+		this.generator.removeInput(soundSourceData, inputData);
 		
 		//------------------------------------------------------------------------------------------
-		this.generatorChanged(changedStartTimePos, changedEndTimePos);
+		this.generatorChanged(soundSourceData, changedStartTimePos, changedEndTimePos);
 		
 		//==========================================================================================
 	}
@@ -810,8 +799,7 @@ implements GeneratorBufferInterface,
 	 * @param inputData
 	 * 			is the InputData.
 	 */
-	public void updateInput(InputData inputData)
-	{
+	public void updateInput(final SoundSourceData soundSourceData, final InputData inputData) {
 		//==========================================================================================
 		// Update from Input-Timelines:
 		
@@ -833,10 +821,10 @@ implements GeneratorBufferInterface,
 		
 		//------------------------------------------------------------------------------------------
 		//inputGenerator.removeOutput();
-		this.generator.updateInput(inputData);
+		this.generator.updateInput(soundSourceData, inputData);
 		
 		//------------------------------------------------------------------------------------------
-		this.generatorChanged(changedStartTimePos, changedEndTimePos);
+		this.generatorChanged(soundSourceData, changedStartTimePos, changedEndTimePos);
 		
 		//==========================================================================================
 	}
@@ -845,7 +833,7 @@ implements GeneratorBufferInterface,
 	 * @param removedTimeline
 	 * 			is the removed Timeline.
 	 */
-	public void removeInputTimeline(Timeline removedTimeline)
+	public void removeInputTimeline(final SoundSourceData soundSourceData, final Timeline removedTimeline)
 	{
 		//==========================================================================================
 		float changedStartTimePos = removedTimeline.timelineStartTimePos;
@@ -865,11 +853,11 @@ implements GeneratorBufferInterface,
 				{
 					InputData inputData = entry.getKey();
 					
-					this.generator.removeInput(inputData);
+					this.generator.removeInput(soundSourceData, inputData);
 					
 					entrySetIterator.remove();
 					
-					this.generatorChanged(changedStartTimePos, changedEndTimePos);
+					this.generatorChanged(soundSourceData, changedStartTimePos, changedEndTimePos);
 				}
 			}
 		}
@@ -896,8 +884,7 @@ implements GeneratorBufferInterface,
 	 * @param inputData
 	 * 			is the inputData to remove from {@link #outputTimelines}.
 	 */
-	public void removeOutputTimeline(InputData inputData)
-	{
+	public void removeOutputTimeline(final SoundSourceData soundSourceData, final InputData inputData) {
 		//==========================================================================================
 		Timeline removedTimeline = this.outputTimelines.remove(inputData);
 		
@@ -905,7 +892,7 @@ implements GeneratorBufferInterface,
 		float changedStartTimePos = removedTimeline.getGeneratorStartTimePos();
 		float changedEndTimePos = removedTimeline.getGeneratorEndTimePos();
 		
-		this.generatorChanged(changedStartTimePos, changedEndTimePos);
+		this.generatorChanged(soundSourceData, changedStartTimePos, changedEndTimePos);
 
 		//==========================================================================================
 	}
@@ -1105,12 +1092,12 @@ implements GeneratorBufferInterface,
 	 * @param changedEndTimePos
 	 * 			is the end time pos the data in generator changed.
 	 */
-	public void notifyTimelineChangedListerners(float changedStartTimePos, float changedEndTimePos)
+	public void notifyTimelineChangedListerners(final SoundSourceData soundSourceData, float changedStartTimePos, float changedEndTimePos)
 	{
 		//==========================================================================================
 		for (TimelineChangedListernerInterface timelineChangedListerner : this.timelineChangedListerners)
 		{
-			timelineChangedListerner.notifyTimelineChanged(this,
+			timelineChangedListerner.notifyTimelineChanged(soundSourceData, this,
 			                                               changedStartTimePos, changedEndTimePos);
 		}
 		//==========================================================================================
@@ -1119,9 +1106,9 @@ implements GeneratorBufferInterface,
 	/**
 	 * Notify the {@link #timelineChangedListerners}.
 	 */
-	public void notifyTimelineChangedListerners()
+	public void notifyTimelineChangedListerners(final SoundSourceData soundSourceData)
 	{
-		this.notifyTimelineChangedListerners(this.timelineStartTimePos,
+		this.notifyTimelineChangedListerners(soundSourceData, this.timelineStartTimePos,
 		                                     this.timelineEndTimePos);
 	}
 

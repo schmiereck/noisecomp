@@ -7,6 +7,7 @@ import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
 
 /**
@@ -140,7 +141,7 @@ public class ModuleGeneratorTypeData
 	 * @param removedGenerator
 	 * 			is the generator.
 	 */
-	private void notifyGeneratorsOfRemoving(Generator removedGenerator)
+	private void notifyGeneratorsOfRemoving(final SoundSourceData soundSourceData, Generator removedGenerator)
 	{
 		//==========================================================================================
 		if (removedGenerator != null)
@@ -151,7 +152,7 @@ public class ModuleGeneratorTypeData
 			{
 				Generator generator = generatorsIterator.next();
 				
-				generator.notifyModuleGeneratorRemoved(removedGenerator);
+				generator.notifyModuleGeneratorRemoved(soundSourceData, removedGenerator);
 			}
 			
 			// Output removed ?
@@ -163,11 +164,7 @@ public class ModuleGeneratorTypeData
 		//==========================================================================================
 	}
 
-	/**
-	 * 
-	 */
-	public void clear()
-	{
+	public void clear(final SoundSourceData soundSourceData) {
 		//==========================================================================================
 		synchronized (this)
 		{
@@ -177,7 +174,7 @@ public class ModuleGeneratorTypeData
 			{
 				Generator generator = generatorsIterator.next();
 				
-				this.removeGenerator(generator);
+				this.removeGenerator(soundSourceData, generator);
 			}
 
 			this.setOutputGenerator(null);
@@ -267,14 +264,12 @@ public class ModuleGeneratorTypeData
 //		//==========================================================================================
 //	}
 	
-	public void removeGenerator(int trackPos)
-	{
+	public void removeGenerator(final SoundSourceData soundSourceData, int trackPos) {
 		//==========================================================================================
-		synchronized (this)
-		{
+		synchronized (this) {
 			Generator removedGenerator = (Generator)this.generators.get(trackPos);
 			
-			this.removeGenerator(removedGenerator);
+			this.removeGenerator(soundSourceData, removedGenerator);
 
 			// De-Registriert sich bei dem Generator als Listener.
 			//removedGenerator.getGeneratorChangeObserver().removeGeneratorChangeListener(this);
@@ -308,21 +303,20 @@ public class ModuleGeneratorTypeData
 		return retGenerator;//(TrackData)this.tracksHash.get(generator);
 	}
 
-	public void removeGenerator(Generator removedeGenerator)
+	public void removeGenerator(final SoundSourceData soundSourceData, final Generator removedeGenerator)
 	{
 		//==========================================================================================
-		synchronized (this)
-		{
+		synchronized (this){
 			this.generators.remove(removedeGenerator);
-			
-			Generator generator = this.searchTrackData(removedeGenerator);
+
+			final Generator generator = this.searchTrackData(removedeGenerator);
 			
 //			this.tracksData.removeSelectedTrack(trackData);
 			this.generators.remove(generator);
 		
-			this.notifyGeneratorsOfRemoving(removedeGenerator);
+			this.notifyGeneratorsOfRemoving(soundSourceData, removedeGenerator);
 
-			removedeGenerator.notifyModuleGeneratorRemoveListeners(removedeGenerator);
+			removedeGenerator.notifyModuleGeneratorRemoveListeners(soundSourceData, removedeGenerator);
 			
 			// De-Registriert sich bei dem Generator als Listener.
 			//generator.getGeneratorChangeObserver().removeGeneratorChangeListener(this);

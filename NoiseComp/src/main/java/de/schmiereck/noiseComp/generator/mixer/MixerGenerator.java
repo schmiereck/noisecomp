@@ -2,6 +2,7 @@ package de.schmiereck.noiseComp.generator.mixer;
 
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
 import java.util.Iterator;
 
@@ -53,7 +54,7 @@ extends Generator
 		super(name, frameRate, generatorTypeData);
 	}
 
-	public void addVolumeInput(Generator volumeInput)
+	public void addVolumeInput(final SoundSourceData soundSourceData, Generator volumeInput)
 	{/*
 		if (this.volumeInputs == null)
 		{	
@@ -61,11 +62,11 @@ extends Generator
 		}
 		this.volumeInputs.add(volumeInput);
 		*/
-		this.addGeneratorInput(volumeInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_VOLUME), 
+		this.addGeneratorInput(soundSourceData, volumeInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_VOLUME),
 							   null, null, null);
 	}
 
-	public void addSignalInput(Generator signalInput)
+	public void addSignalInput(final SoundSourceData soundSourceData, Generator signalInput)
 	{/*
 		if (this.signalInputs == null)
 		{	
@@ -73,7 +74,7 @@ extends Generator
 		}
 		this.signalInputs.add(signalInput);
 		*/
-		this.addGeneratorInput(signalInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL), 
+		this.addGeneratorInput(soundSourceData, signalInput, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL),
 							   null, null, null);
 	}
 

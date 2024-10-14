@@ -2,6 +2,7 @@ package de.schmiereck.noiseComp.generator.signal;
 
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
 import static de.schmiereck.noiseComp.service.StartupService.SIGNAL_GENERATOR_FOLDER_PATH;
 
@@ -34,9 +35,9 @@ extends Generator
 		super(name, frameRate, generatorTypeData);
 	}
 
-	public void setSignalInput(Generator inputSoundGenerator)
+	public void setSignalInput(final SoundSourceData soundSourceData, Generator inputSoundGenerator)
 	{
-		this.addGeneratorInput(inputSoundGenerator, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL), 
+		this.addGeneratorInput(soundSourceData, inputSoundGenerator, this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL),
 							   null, null, null);
 	}
 

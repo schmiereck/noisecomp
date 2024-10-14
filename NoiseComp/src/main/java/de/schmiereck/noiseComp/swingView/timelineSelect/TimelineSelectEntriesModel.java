@@ -6,6 +6,7 @@ package de.schmiereck.noiseComp.swingView.timelineSelect;
 import java.util.List;
 import java.util.Vector;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.timelineSelect.listeners.RemoveTimelineGeneratorNotifier;
@@ -150,15 +151,16 @@ public class TimelineSelectEntriesModel
 	 * @param timelineSelectEntryModel
 	 * 			is the Generator.
 	 */
-	public void removeTimelineSelectEntryModel(final TimelinesDrawPanelModel timelinesDrawPanelModel,
-	                                           final TimelineSelectEntryModel timelineSelectEntryModel)
+	public void removeTimelineSelectEntryModel(final SoundSourceData soundSourceData,
+											   final TimelinesDrawPanelModel timelinesDrawPanelModel,
+											   final TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		//==========================================================================================
 		this.timelineSelectEntryModels.remove(timelineSelectEntryModel);
 		
 		// Notify listeners.
-		this.removeTimelineGeneratorNotifier.notifyRemoveTimelineGeneratorListeners(timelinesDrawPanelModel,
-		                                                                            timelineSelectEntryModel);
+		this.removeTimelineGeneratorNotifier.notifyRemoveTimelineGeneratorListeners(soundSourceData,
+				timelinesDrawPanelModel, timelineSelectEntryModel);
 		
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
 		

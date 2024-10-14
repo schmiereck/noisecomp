@@ -308,8 +308,7 @@ extends MouseAdapter
 		int row = this.modulesTreeView.getRowForLocation(e.getX(), e.getY());
 
 		// Row selected?
-		if (row != -1)
-		{
+		if (row != -1) {
 			//--------------------------------------------------------------------------------------
 //			TreePath oldSelectionPath = modulesTreeView.getSelectionPath();
 //			DefaultMutableTreeNode oldTreeNode = (DefaultMutableTreeNode)oldSelectionPath.getLastPathComponent();
@@ -326,57 +325,43 @@ extends MouseAdapter
 			{
 				Object userObject = treeNode.getUserObject();
 				
-				if (userObject instanceof ModuleGeneratorTypeData)
-				{
+				if (userObject instanceof ModuleGeneratorTypeData) {
 //					ModuleGeneratorTypeData moduleeneratorTypeData = (ModuleGeneratorTypeData)userObject;
 
 					this.modulePopupMenu.show(e.getComponent(),
 					                          e.getX(), e.getY());
-				}
-				else
-				{
-					if (userObject instanceof GeneratorTypeData)
-					{
+				} else {
+					if (userObject instanceof GeneratorTypeData) {
 //						GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 	
 						this.generatorPopupMenu.show(e.getComponent(),
 						                             e.getX(), e.getY());
-					}
-					else
-					{
+					} else {
 						ModulesTreeModel modulesTreeModel = this.modulesTreeView.getModulesTreeModel();
 						DefaultMutableTreeNode modulesTreeNode = modulesTreeModel.getModulesTreeNode();
 						
 						// "Modules" Tree-Node?
-						if (modulesTreeNode == treeNode)
-						{
+						if (modulesTreeNode == treeNode) {
 							this.modulesCategoryPopupMenu.show(e.getComponent(),
 							                                   e.getX(), e.getY());
-						}
-						else
-						{
+						} else {
 							// Folder Tree-Node?
-							if (this.checkIsFolderTreeNode(modulesTreeNode, treeNode) == true)
-							{
+							if (this.checkIsFolderTreeNode(modulesTreeNode, treeNode) == true) {
 								this.folderPopupMenu.show(e.getComponent(),
 								                                 e.getX(), e.getY());
 							}
 						}
 					}
 				}
-			}
-			else
-			{
+			} else {
 				//----------------------------------------------------------------------------------
 				// Doubleclick?
-				if (e.getClickCount() == 2)
-				{
+				if (e.getClickCount() == 2) {
 					this.modulesTreeView.setSelectionRow(row);
 					
 					Object userObject = treeNode.getUserObject();
 					
-					if (userObject instanceof ModuleGeneratorTypeData)
-					{
+					if (userObject instanceof ModuleGeneratorTypeData) {
 //						// Update the node edited bevor: 
 //						DefaultTreeModel treeModel = (DefaultTreeModel)modulesTreeView.getModel();
 //						treeModel.nodeChanged(oldTreeNode);
@@ -385,11 +370,8 @@ extends MouseAdapter
 					
 						// Notify edit module event to listeners.
 						this.modulesTreeView.notifyEditModuleisteners(moduleGeneratorTypeData);
-					}
-					else
-					{
-						if (userObject instanceof GeneratorTypeData)
-						{
+					} else {
+						if (userObject instanceof GeneratorTypeData) {
 							//GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 						}
 					}

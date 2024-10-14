@@ -238,24 +238,20 @@ public class ModulesTreeController
 	/**
 	 * Update Edited ModuleTree-Entry.
 	 */
-	public void updateEditedModulereeEntry(ModuleGeneratorTypeData editedModuleGeneratorTypeData)
-	{
+	public void updateEditedModuleTreeEntry(final ModuleGeneratorTypeData editedModuleGeneratorTypeData) {
 		//==========================================================================================
-		DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
+		final DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
 
 		//==========================================================================================
-		DefaultMutableTreeNode treeNode;
+		final DefaultMutableTreeNode treeNode;
 		
 //		ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.appModel.getEditedModuleGeneratorTypeData();
+
+		final TreePath treePath = this.modulesTreeModel.searchModuleTreeNode(editedModuleGeneratorTypeData);
 		
-		TreePath treePath = this.modulesTreeModel.searchModulereeNode(editedModuleGeneratorTypeData);
-		
-		if (treePath != null)
-		{
+		if (treePath != null) {
 			treeNode = (DefaultMutableTreeNode)treePath.getLastPathComponent();
-		}
-		else
-		{
+		} else {
 			treeNode = null;
 		}
 		

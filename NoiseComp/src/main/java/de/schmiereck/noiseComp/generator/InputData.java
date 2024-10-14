@@ -1,5 +1,7 @@
 package de.schmiereck.noiseComp.generator;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
+
 /**
  * Verwaltet einen {@link Generator} der als Input benutzt wird und den
  * Typ des Eingangs.
@@ -79,13 +81,13 @@ public class InputData
 	 * @param inputGenerator 
 	 * 			is the new value for attribute {@link #inputGenerator} to set.
 	 */
-	public void setInputGenerator(Generator inputGenerator)
+	public void setInputGenerator(final SoundSourceData soundSourceData, Generator inputGenerator)
 	{
 		if (this.inputGenerator != inputGenerator)
 		{
 			this.inputGenerator = inputGenerator;
 			
-			this.ownerGenerator.generateChangedEvent();
+			this.ownerGenerator.generateChangedEvent(soundSourceData);
 		}
 	}
 	/**
@@ -130,7 +132,7 @@ public class InputData
 	 * @see #inputValue
 	 * @see #inputStringValue
 	 */
-	public void setInputValue(Float inputValue, String inputStringValue)
+	public void setInputValue(final SoundSourceData soundSourceData, Float inputValue, String inputStringValue)
 	{
 		if ((InputData.compareEqualValues(this.inputValue, inputValue) == false) ||
 			(InputData.compareEqualValues(this.inputStringValue, inputStringValue) == false))
@@ -139,7 +141,7 @@ public class InputData
 			this.inputStringValue = inputStringValue;
 System.out.println("InputData.setInputValue: " + inputValue + ", " + inputStringValue);
 
-			this.ownerGenerator.generateChangedEvent();
+			this.ownerGenerator.generateChangedEvent(soundSourceData);
 		}
 	}
 	
@@ -198,13 +200,13 @@ System.out.println("InputData.setInputValue: " + inputValue + ", " + inputString
 	/**
 	 * @param inputModuleInputTypeData is the new value for attribute {@link #inputModuleInputTypeData} to set.
 	 */
-	public void setInputModuleInputTypeData(InputTypeData inputModuleInputTypeData)
+	public void setInputModuleInputTypeData(final SoundSourceData soundSourceData, InputTypeData inputModuleInputTypeData)
 	{
 		if (this.inputModuleInputTypeData != inputModuleInputTypeData)
 		{
 			this.inputModuleInputTypeData = inputModuleInputTypeData;
 		
-			this.ownerGenerator.generateChangedEvent();
+			this.ownerGenerator.generateChangedEvent(soundSourceData);
 		}
 	}
 

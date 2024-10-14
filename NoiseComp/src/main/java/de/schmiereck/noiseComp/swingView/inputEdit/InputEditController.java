@@ -21,6 +21,7 @@ import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.MultiValue;
@@ -80,6 +81,7 @@ public class InputEditController
 	 * 			is the Selected-Timeline Model.
 	 */
 	public InputEditController(final TimelinesDrawPanelController timelinesDrawPanelController,
+							   final SoundSourceData soundSourceData,
 							   final SoundSourceLogic soundSourceLogic,
 	                           final InputSelectModel inputSelectModel, 
 	                           final AppModelChangedObserver appModelChangedObserver,
@@ -189,9 +191,8 @@ public class InputEditController
 		
 			TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
 			
-			InputEditUpdateAction inputEditUpdateAction = new InputEditUpdateAction(this,
-			                                                                        inputSelectModel,
-			                                                                        timelinesDrawPanelModel);
+			InputEditUpdateAction inputEditUpdateAction = new InputEditUpdateAction(soundSourceData,
+					this, inputSelectModel, timelinesDrawPanelModel);
 			
 			updateButton.setAction(inputEditUpdateAction);
 		}
@@ -454,8 +455,8 @@ public class InputEditController
 	 * @param selectedTimeline
 	 * 			is the selected Timeline.
 	 */
-	public void doSubmit(final InputSelectModel inputSelectModel,
-	                     final Timeline selectedTimeline)
+	public void doSubmit(final SoundSourceData soundSourceData, final InputSelectModel inputSelectModel,
+						 final Timeline selectedTimeline)
 	{
 		//==========================================================================================
 		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
@@ -511,7 +512,8 @@ public class InputEditController
 				{
 					// Update selected Input:
 					
-					timelineManagerLogic.updateInput(selectedTimeline,
+					timelineManagerLogic.updateInput(soundSourceData,
+							                         selectedTimeline,
 					                                 inputData,
 					                                 inputTimeline, 
 					                                 inputTypeData, 
@@ -525,7 +527,7 @@ public class InputEditController
 				{
 					// Insert new Input:
 					inputData = 
-						timelineManagerLogic.addGeneratorInput(selectedTimeline,
+						timelineManagerLogic.addGeneratorInput(soundSourceData, selectedTimeline,
 						                                       inputTimeline, 
 						                                       inputTypeData, 
 						                                       multiValue.floatValue, multiValue.stringValue,
@@ -555,8 +557,8 @@ public class InputEditController
 	/**
 	 * Do create new input of selected input type.
 	 */
-	public void doCreateNewInput(final InputSelectController inputSelectController)
-	{
+	public void doCreateNewInput(final SoundSourceData soundSourceData,
+								 final InputSelectController inputSelectController) {
 		//==========================================================================================
 		InputTypeData inputTypeData;
 		
@@ -564,7 +566,7 @@ public class InputEditController
 		
 		if (inputTypeData != null)
 		{
-			inputSelectController.doCreateNewInput(inputTypeData);
+			inputSelectController.doCreateNewInput(soundSourceData, inputTypeData);
 
 			this.updateInputTypeDefaultValueField(inputTypeData);
 		}

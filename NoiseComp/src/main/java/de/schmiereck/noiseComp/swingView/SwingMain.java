@@ -7,6 +7,7 @@ import javax.sound.sampled.SourceDataLine;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
+import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
@@ -16,6 +17,7 @@ import de.schmiereck.noiseComp.swingView.appController.AppController;
 
 import java.awt.*;
 import java.util.Enumeration;
+import java.util.List;
 
 /**
  * <p>
@@ -61,15 +63,9 @@ public class SwingMain
 		
 		final SoundDataLogic soundDataLogic = new SoundDataLogic(line, soundSourceLogic);
 
-		//------------------------------------------------------------------------------------------
-		final ModuleGeneratorTypeData mainModuleGeneratorTypeData = 
-			StartupService.createDemoGenerators(soundService, soundDataLogic.getFrameRate());
-
-//		soundSourceLogic.setMainModuleGeneratorTypeData(mainModuleGeneratorTypeData);
-
 		//==========================================================================================
 		Thread.setDefaultUncaughtExceptionHandler(new DefaultExceptionHandler());
-		
+
 		//Schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable()  {
@@ -81,16 +77,22 @@ public class SwingMain
 					createAndShowGUI();
 					
 					final AppController appController = new AppController(soundSourceLogic, soundDataLogic, soundService);
-					
-					appController.selectEditModule(mainModuleGeneratorTypeData);
-					
+
+					// see: LoadFileOperationLogic#loadNoiseCompFile
+
+					final ModuleGeneratorTypeData mainModuleGeneratorTypeData =
+							StartupService.createDemoGenerators(appController.getSoundSourceData(),
+									soundService, soundDataLogic.getFrameRate());
+
+					appController.changeEditModule(mainModuleGeneratorTypeData);
+
 					appController.initStartupModel();
 
 					appController.startSoundSourceScheduler();
 
 				} catch (final Exception ex) {
-					//ex.printStackTrace();
 					System.out.println("EX 1: " + ex);
+					ex.printStackTrace();
 				}
 			}
 		});

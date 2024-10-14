@@ -7,9 +7,9 @@ import java.awt.Dimension;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
-import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
@@ -128,8 +128,8 @@ implements TimelineContentChangedListenerInterface,
 	     	new RemoveTimelineGeneratorListenerInterface()
 	     	{
 				@Override
-				public void notifyRemoveTimelineGenerator(TimelinesDrawPanelModel timelinesDrawPanelModel,
-				                                          TimelineSelectEntryModel timelineSelectEntryModel)
+				public void notifyRemoveTimelineGenerator(SoundSourceData soundSourceData, TimelinesDrawPanelModel timelinesDrawPanelModel,
+                                                          TimelineSelectEntryModel timelineSelectEntryModel)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();

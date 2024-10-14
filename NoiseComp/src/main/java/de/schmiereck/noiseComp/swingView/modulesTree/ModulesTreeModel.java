@@ -94,7 +94,7 @@ public class ModulesTreeModel
 		//==========================================================================================
 //		ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.getEditedModuleGeneratorTypeData();
 		
-		TreePath selectionTreePath = this.searchModulereeNode(editedModuleGeneratorTypeData);
+		TreePath selectionTreePath = this.searchModuleTreeNode(editedModuleGeneratorTypeData);
 			
 		this.setSelectionPath(selectionTreePath);
 		
@@ -115,26 +115,21 @@ public class ModulesTreeModel
 	 * @return
 	 * 			the tree path or <code>null</code> if the ModuleGenerator-Type is not found.
 	 */
-	public TreePath searchModulereeNode(ModuleGeneratorTypeData moduleGeneratorTypeData)
-	{
+	public TreePath searchModuleTreeNode(final ModuleGeneratorTypeData moduleGeneratorTypeData) {
 		//==========================================================================================
-		TreePath treePath;
+		final TreePath treePath;
 		
-		if (moduleGeneratorTypeData != null)
-		{
+		if (moduleGeneratorTypeData != null) {
 //			DefaultTreeModel treeModel = (DefaultTreeModel)this.getModel();
-			
-			DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
-			
-			ModuleTreePath moduleTreePath = this.searchModulereeNode(rootTreeNode, moduleGeneratorTypeData);
+
+			final DefaultMutableTreeNode rootTreeNode = (DefaultMutableTreeNode)this.treeModel.getRoot();
+
+			final ModuleTreePath moduleTreePath = this.searchModuleTreeNode(rootTreeNode, moduleGeneratorTypeData);
 			
 			treePath = moduleTreePath.createTreePath();
-		}
-		else
-		{
+		} else {
 			treePath = null;
 		}
-		
 		//==========================================================================================
 		return treePath;
 	}
@@ -149,36 +144,29 @@ public class ModulesTreeModel
 	 * @return
 	 * 			the path or <code>null</code>.
 	 */
-	private ModuleTreePath searchModulereeNode(DefaultMutableTreeNode rootTreeNode, 
-	                                          ModuleGeneratorTypeData moduleGeneratorTypeData)
-	{
+	private ModuleTreePath searchModuleTreeNode(DefaultMutableTreeNode rootTreeNode,
+												ModuleGeneratorTypeData moduleGeneratorTypeData) {
 		//==========================================================================================
 		ModuleTreePath retTreePath;
 		
 		Object userObject = rootTreeNode.getUserObject();
 		
-		if (moduleGeneratorTypeData == userObject)
-		{
+		if (moduleGeneratorTypeData == userObject) {
 			retTreePath = new ModuleTreePath(rootTreeNode);//rootTreePath.pathByAddingChild(userObject);
-		}
-		else
-		{
+		} else {
 			retTreePath = null;
 			
-			for (int childPos = 0; childPos < rootTreeNode.getChildCount(); childPos++)
-			{
+			for (int childPos = 0; childPos < rootTreeNode.getChildCount(); childPos++) {
 				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)rootTreeNode.getChildAt(childPos);
 				
-				ModuleTreePath treePath = this.searchModulereeNode(treeNode, moduleGeneratorTypeData);
+				ModuleTreePath treePath = this.searchModuleTreeNode(treeNode, moduleGeneratorTypeData);
 				
-				if (treePath != null)
-				{
+				if (treePath != null) {
 					retTreePath = new ModuleTreePath(rootTreeNode, treePath);
 					break;
 				}
 			}
 		}
-		
 		//==========================================================================================
 		return retTreePath;
 	}

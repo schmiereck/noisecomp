@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.Action;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
@@ -28,7 +29,9 @@ implements Action
 {
 	//**********************************************************************************************
 	// Fields:
-	
+
+	private final SoundSourceData soundSourceData;
+
 	/**
 	 * Controller of InputEdit-Dialogs. 
 	 */
@@ -47,11 +50,13 @@ implements Action
 	 * @param inputEditController 
 	 * 			is the Controller of InputEdit-Dialogs. 
 	 */
-	public InputEditUpdateAction(final InputEditController inputEditController,
-	                             final InputSelectModel inputSelectModel, 
-	                             final TimelinesDrawPanelModel timelinesDrawPanelModel)
+	public InputEditUpdateAction(final SoundSourceData soundSourceData,
+								 final InputEditController inputEditController,
+								 final InputSelectModel inputSelectModel,
+								 final TimelinesDrawPanelModel timelinesDrawPanelModel)
 	{
 		//==========================================================================================
+		this.soundSourceData = soundSourceData;
 		this.inputEditController = inputEditController;
 		this.inputSelectModel = inputSelectModel;
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
@@ -140,26 +145,22 @@ implements Action
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
-	public void actionPerformed(ActionEvent e)
-	{
+	public void actionPerformed(final ActionEvent e) {
 		//==========================================================================================
-		Timeline selectedTimeline;
+		final Timeline selectedTimeline;
 		
 		SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
 		TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 
-		if (selectedTimelineSelectEntryModel != null)
-		{
+		if (selectedTimelineSelectEntryModel != null) {
 			selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
-		}
-		else
-		{
+		} else {
 			selectedTimeline = null;
 		}
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		this.inputEditController.doSubmit(inputSelectModel, selectedTimeline);
+		this.inputEditController.doSubmit(this.soundSourceData, inputSelectModel, selectedTimeline);
 		
 		//==========================================================================================
 	}

@@ -6,6 +6,7 @@ package de.schmiereck.noiseComp.swingView.timelineSelect.listeners;
 import java.util.List;
 import java.util.Vector;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 
@@ -36,12 +37,13 @@ public class RemoveTimelineGeneratorNotifier
 	 * @param timelineSelectEntryModel
 	 * 			is the removed TimelineSelectEntryModel.
 	 */
-	public void notifyRemoveTimelineGeneratorListeners(TimelinesDrawPanelModel timelinesDrawPanelModel,
-	                                                   TimelineSelectEntryModel timelineSelectEntryModel)
+	public void notifyRemoveTimelineGeneratorListeners(final SoundSourceData soundSourceData,
+													   TimelinesDrawPanelModel timelinesDrawPanelModel,
+													   TimelineSelectEntryModel timelineSelectEntryModel)
 	{
 		for (RemoveTimelineGeneratorListenerInterface removeTimelineGeneratorListener : this.removeTimelineGeneratorListeners)
 		{
-			removeTimelineGeneratorListener.notifyRemoveTimelineGenerator(timelinesDrawPanelModel,
+			removeTimelineGeneratorListener.notifyRemoveTimelineGenerator(soundSourceData, timelinesDrawPanelModel,
 			                                                              timelineSelectEntryModel);
 		}
 		

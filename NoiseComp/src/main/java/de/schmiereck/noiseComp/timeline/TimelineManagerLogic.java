@@ -76,8 +76,6 @@ public class TimelineManagerLogic
 	 * 
 	 * @param generator
 	 * 			is the generator
-	 * @param isSubModuleGenerator
-	 * 			<code>true</code> if the generator is a input of a sub module.
 	 * @return
 	 * 			the timeline.
 	 */
@@ -95,27 +93,23 @@ public class TimelineManagerLogic
 		
 		//------------------------------------------------------------------------------------------
 //		if (OutputGenerator.class.getName().equals(generator.getGeneratorTypeData().getGeneratorTypeClassName())
-		if (generator instanceof OutputGenerator)
-		{
-			OutputGenerator outputGenerator = (OutputGenerator)generator;
-			
-			// Update mainModuleGeneratorTypeData.
+		if (generator instanceof OutputGenerator outputGenerator) {
+            // Update mainModuleGeneratorTypeData.
 			this.mainModuleGeneratorTypeData.setOutputGenerator(outputGenerator);
 
 			soundSourceData.setOutputTimeline(timeline);
 			
 			// Update SoundSourceLogic.
-			soundSourceLogic.setOutputGenerator(generator);
+			soundSourceLogic.setOutputGenerator(soundSourceData, generator);
 		}
 		//------------------------------------------------------------------------------------------
-		this.createTimelineInputs(generator, timeline);
+		this.createTimelineInputs(soundSourceData, generator, timeline);
 		
 		//------------------------------------------------------------------------------------------
 		// Notify Module
 		{
-			this.updateModuleTimelines(timeline);
+			this.updateModuleTimelines(soundSourceData, timeline);
 		}
-		
 		//==========================================================================================
 		return timeline;
 	}
@@ -126,7 +120,7 @@ public class TimelineManagerLogic
 	 * @param timeline
 	 * 			is the timeline.
 	 */
-	private void createTimelineInputs(Generator generator, 
+	private void createTimelineInputs(final SoundSourceData soundSourceData, Generator generator,
 	                                  Timeline timeline)
 	{
 		//==========================================================================================
@@ -143,7 +137,7 @@ public class TimelineManagerLogic
 				if (inputGenerator != null)
 				{
 					//Timeline inputTimeline = 
-						this.addInputTimeline(timeline, inputData, inputGenerator);
+						this.addInputTimeline(soundSourceData, timeline, inputData, inputGenerator);
 				}
 			}
 		}
@@ -157,7 +151,7 @@ public class TimelineManagerLogic
 			
 			OutputGenerator outputGenerator = moduleGeneratorTypeData.getOutputGenerator();
 			
-			this.createSubTimeline(timeline, outputGenerator);
+			this.createSubTimeline(soundSourceData, timeline, outputGenerator);
 			//this.createSubTimelineInputs(inputGenerator, timeline);
 		}
 		//==========================================================================================
@@ -171,7 +165,7 @@ public class TimelineManagerLogic
 	 * @return
 	 * 			the Timeline.
 	 */
-	private Timeline createSubTimeline(Timeline moduleimeline, Generator generator)
+	private Timeline createSubTimeline(final SoundSourceData soundSourceData, Timeline moduleimeline, Generator generator)
 	{
 		//==========================================================================================
 		// Search or create Sub-Module Timeline for given ModuleTimeline:
@@ -179,7 +173,7 @@ public class TimelineManagerLogic
 		Timeline subTimeline = this.makeSubTimeline(moduleimeline, generator);
 		
 		//------------------------------------------------------------------------------------------
-		this.createSubTimelineInputs(moduleimeline, generator);
+		this.createSubTimelineInputs(soundSourceData, moduleimeline, generator);
 		
 		//==========================================================================================
 		return subTimeline;
@@ -191,7 +185,7 @@ public class TimelineManagerLogic
 	 * @param generator
 	 * 			is the generator
 	 */
-	private void createSubTimelineInputs(Timeline moduleimeline,
+	private void createSubTimelineInputs(final SoundSourceData soundSourceData, Timeline moduleimeline,
 	                                     Generator generator)
 	{
 		//==========================================================================================
@@ -208,7 +202,7 @@ public class TimelineManagerLogic
 				if (inputGenerator != null)
 				{
 					//------------------------------------------------------------------------------
-					Timeline inputTimeline = this.createSubTimeline(moduleimeline, inputGenerator);
+					Timeline inputTimeline = this.createSubTimeline(soundSourceData, moduleimeline, inputGenerator);
 					
 					// ModuleGenerator?
 					if ((inputGenerator instanceof ModuleGenerator))
@@ -219,10 +213,10 @@ public class TimelineManagerLogic
 						
 						OutputGenerator outputGenerator = moduleGeneratorTypeData.getOutputGenerator();
 						
-						this.createSubTimeline(inputTimeline, outputGenerator);
+						this.createSubTimeline(soundSourceData, inputTimeline, outputGenerator);
 					}
 					//------------------------------------------------------------------------------
-					this.addInputSubTimeline(moduleimeline, inputTimeline, inputData, generator);
+					this.addInputSubTimeline(soundSourceData, moduleimeline, inputTimeline, inputData, generator);
 					
 					//------------------------------------------------------------------------------
 				}
@@ -245,7 +239,7 @@ public class TimelineManagerLogic
 	 * @return
 	 * 			the inputTimeline.
 	 */
-	private Timeline addInputTimeline(Timeline timeline, InputData inputData, Generator inputGenerator)
+	private Timeline addInputTimeline(final SoundSourceData soundSourceData, Timeline timeline, InputData inputData, Generator inputGenerator)
 	{
 		Timeline inputTimeline = this.mainGeneratorTimelines.get(inputGenerator);
 		
@@ -253,7 +247,7 @@ public class TimelineManagerLogic
 		{
 			timeline.addInputTimeline(inputData, inputTimeline);
 			
-			inputTimeline.addOutputTimeline(inputData, timeline);
+			inputTimeline.addOutputTimeline(soundSourceData, inputData, timeline);
 		}
 		
 		return inputTimeline;
@@ -273,7 +267,7 @@ public class TimelineManagerLogic
 	 * @param inputGenerator
 	 * 			is the input generator.
 	 */
-	private void addInputSubTimeline(Timeline moduleimeline, Timeline timeline, InputData inputData, Generator inputGenerator)
+	private void addInputSubTimeline(final SoundSourceData soundSourceData, Timeline moduleimeline, Timeline timeline, InputData inputData, Generator inputGenerator)
 	{
 		Timeline inputTimeline = moduleimeline.getSubGeneratorTimeline(inputGenerator);
 		
@@ -285,7 +279,7 @@ public class TimelineManagerLogic
 
 			inputTimeline.addInputTimeline(inputData, timeline);
 			
-			timeline.addOutputTimeline(inputData, inputTimeline);
+			timeline.addOutputTimeline(soundSourceData, inputData, inputTimeline);
 		}
 	}
 
@@ -392,12 +386,12 @@ public class TimelineManagerLogic
 	 * @param generatorStartTimePos
 	 * 			is the generator StartTimePos.
 	 */
-	public void updateStartTimePos(Timeline updatedTimeline, float generatorStartTimePos)
+	public void updateStartTimePos(final SoundSourceData soundSourceData, Timeline updatedTimeline, float generatorStartTimePos)
 	{
 		//==========================================================================================
 		float endTimePos = updatedTimeline.getGeneratorEndTimePos();
 		
-		this.updateTimePos(updatedTimeline, generatorStartTimePos, endTimePos);
+		this.updateTimePos(soundSourceData, updatedTimeline, generatorStartTimePos, endTimePos);
 
 		//==========================================================================================
 	}
@@ -405,15 +399,15 @@ public class TimelineManagerLogic
 	/**
 	 * @param updatedTimeline
 	 * 			is the timeline.
-	 * @param generatorStartTimePos
+	 * @param generatorEndTimePos
 	 * 			is the generator EndTimePos.
 	 */
-	public void updateEndTimePos(Timeline updatedTimeline, float generatorEndTimePos)
+	public void updateEndTimePos(final SoundSourceData soundSourceData, Timeline updatedTimeline, float generatorEndTimePos)
 	{
 		//==========================================================================================
 		float startTimePos = updatedTimeline.getGeneratorStartTimePos();
 		
-		this.updateTimePos(updatedTimeline, startTimePos, generatorEndTimePos);
+		this.updateTimePos(soundSourceData, updatedTimeline, startTimePos, generatorEndTimePos);
 		
 		//==========================================================================================
 	}
@@ -426,15 +420,15 @@ public class TimelineManagerLogic
 	 * @param generatorEndTimePos
 	 * 			is the generator EndTimePos.
 	 */
-	public void updateTimePos(Timeline updatedTimeline, float generatorStartTimePos, float generatorEndTimePos)
+	public void updateTimePos(final SoundSourceData soundSourceData, Timeline updatedTimeline, float generatorStartTimePos, float generatorEndTimePos)
 	{
 		//==========================================================================================
-		updatedTimeline.setTimePos(generatorStartTimePos, generatorEndTimePos);
+		updatedTimeline.setTimePos(soundSourceData, generatorStartTimePos, generatorEndTimePos);
 
 		//------------------------------------------------------------------------------------------
 		// Notify Module
 		{
-			this.updateModuleTimelines(updatedTimeline);
+			this.updateModuleTimelines(soundSourceData, updatedTimeline);
 		}
 		//------------------------------------------------------------------------------------------
 		// Update all output Module-Timelines:
@@ -444,7 +438,7 @@ public class TimelineManagerLogic
 			
 			for (Timeline outputTimeline : outputTimelines)
 			{
-				this.updateModuleTimelines(outputTimeline);
+				this.updateModuleTimelines(soundSourceData, outputTimeline);
 			}
 		}
 		//==========================================================================================
@@ -469,7 +463,7 @@ public class TimelineManagerLogic
 	/**
 	 * @param generatorTypeData
 	 * 			is the generatorType Data.
-	 * @param frameRate
+	 * @param soundFrameRate
 	 * 			is the frame rate.
 	 * @param generatorName
 	 * 			is the genrator name.
@@ -501,19 +495,19 @@ public class TimelineManagerLogic
 	 * @param removedTimeline
 	 * 			is the timeline.
 	 */
-	public void removeTimeline(Timeline removedTimeline)
+	public void removeTimeline(final SoundSourceData soundSourceData, Timeline removedTimeline)
 	{
 		//==========================================================================================
 		// remove all inputs from all other timelines:
 		
 		for (Timeline timeline : this.mainGeneratorTimelines.values())
 		{
-			timeline.removeInputTimeline(removedTimeline);
+			timeline.removeInputTimeline(soundSourceData, removedTimeline);
 		}
 		//------------------------------------------------------------------------------------------
 		Generator timelineGenerator = removedTimeline.getGenerator();
 		
-		this.mainModuleGeneratorTypeData.removeGenerator(timelineGenerator);
+		this.mainModuleGeneratorTypeData.removeGenerator(soundSourceData, timelineGenerator);
 		
 		this.mainGeneratorTimelines.remove(timelineGenerator);
 		
@@ -531,10 +525,10 @@ public class TimelineManagerLogic
 	 * 			<code>null</code> if not used.
 	 * @param inputTypeData
 	 * 			is the Input-Type Data.
-	 * @param inputValue
+	 * @param floatValue
 	 * 			is the Input-Value.<br/>
 	 * 			<code>null</code> if not used.
-	 * @param inputStringValue
+	 * @param stringValue
 	 * 			is the Input-String-Value.<br/>
 	 * 			<code>null</code> if not used.
 	 * @param inputModuleInputTypeData
@@ -543,12 +537,11 @@ public class TimelineManagerLogic
 	 * @return 
 	 * 			the new created and added {@link InputData}-Object.
 	 */
-	public InputData addGeneratorInput(Timeline newTimeline, 
-	                                   Timeline inputTimeline,
-	                                   InputTypeData inputTypeData, 
-	                                   Float floatValue, String stringValue,
-	                                   InputTypeData inputModuleInputTypeData)
-	{
+	public InputData addGeneratorInput(final SoundSourceData soundSourceData, final Timeline newTimeline,
+									   final Timeline inputTimeline,
+									   final InputTypeData inputTypeData,
+									   final Float floatValue, final String stringValue,
+									   final InputTypeData inputModuleInputTypeData) {
 		//==========================================================================================
 		InputData inputData;
 		
@@ -566,16 +559,16 @@ public class TimelineManagerLogic
 		}
 		
 		inputData = 
-			newGenerator.addGeneratorInput(inputGenerator, 
+			newGenerator.addGeneratorInput(soundSourceData, inputGenerator,
 			                               inputTypeData, 
 			                               floatValue, stringValue,
 			                               inputModuleInputTypeData);
 		
 		//------------------------------------------------------------------------------------------
-		this.addInputTimeline(newTimeline, inputData, inputGenerator);
+		this.addInputTimeline(soundSourceData, newTimeline, inputData, inputGenerator);
 		
 		//------------------------------------------------------------------------------------------
-		newTimeline.generatorChanged();
+		newTimeline.generatorChanged(soundSourceData);
 		
 		//==========================================================================================
 		return inputData;
@@ -592,7 +585,8 @@ public class TimelineManagerLogic
 	 * @param stringValue
 	 * @param moduleInputTypeData
 	 */
-	public void updateInput(Timeline updatedTimeline, 
+	public void updateInput(final SoundSourceData soundSourceData,
+							Timeline updatedTimeline,
 	                        InputData inputData, 
 	                        Timeline inputTimeline,
 							InputTypeData inputTypeData, 
@@ -602,7 +596,7 @@ public class TimelineManagerLogic
 		//==========================================================================================
 		// Update Timeline-Input for given Input-Data and Input-Generator:
 		{
-			Timeline oldInputTimeline = updatedTimeline.updateInput(inputData, inputTimeline);
+			Timeline oldInputTimeline = updatedTimeline.updateInput(soundSourceData, inputData, inputTimeline);
 			
 			if (oldInputTimeline != inputTimeline)
 			{
@@ -625,12 +619,12 @@ public class TimelineManagerLogic
 	//			}
 				if (oldInputTimeline != null)
 				{
-					oldInputTimeline.removeOutputTimeline(inputData);
+					oldInputTimeline.removeOutputTimeline(soundSourceData, inputData);
 				}
 				
 				if (inputTimeline != null)
 				{
-					inputTimeline.addOutputTimeline(inputData, updatedTimeline);
+					inputTimeline.addOutputTimeline(soundSourceData, inputData, updatedTimeline);
 				}
 				//--------------------------------------------------------------------------------------
 				// Update Input-Data:
@@ -646,13 +640,13 @@ public class TimelineManagerLogic
 					inputGenerator = null;
 				}
 				
-				inputData.setInputGenerator(inputGenerator);
+				inputData.setInputGenerator(soundSourceData, inputGenerator);
 			}
 		}
 		//------------------------------------------------------------------------------------------
 		// Update Module
 		{
-			this.updateModuleTimelines(updatedTimeline);
+			this.updateModuleTimelines(soundSourceData, updatedTimeline);
 		}
 		//------------------------------------------------------------------------------------------
 		boolean generatorChanged;
@@ -660,7 +654,7 @@ public class TimelineManagerLogic
 		if ((CompareUtils.compareWithNull(inputData.getInputValue(), floatValue) == false) ||
 			(CompareUtils.compareWithNull(inputData.getInputStringValue(), stringValue) == false))
 		{
-			inputData.setInputValue(floatValue, stringValue);
+			inputData.setInputValue(soundSourceData, floatValue, stringValue);
 			
 			generatorChanged = true;
 		}
@@ -671,14 +665,14 @@ public class TimelineManagerLogic
 		
 		if (inputData.getInputModuleInputTypeData() != moduleInputTypeData)
 		{
-			inputData.setInputModuleInputTypeData(moduleInputTypeData);
+			inputData.setInputModuleInputTypeData(soundSourceData, moduleInputTypeData);
 			
 			generatorChanged = true;
 		}
 		
 		if (generatorChanged == true)
 		{
-			updatedTimeline.generatorChanged();
+			updatedTimeline.generatorChanged(soundSourceData);
 		}
 		//==========================================================================================
 	}
@@ -687,24 +681,20 @@ public class TimelineManagerLogic
 	 * @param updatedTimeline
 	 * 			is the updated timeline.
 	 */
-	private void updateModuleTimelines(Timeline updatedTimeline)
-	{
+	private void updateModuleTimelines(final SoundSourceData soundSourceData, final Timeline updatedTimeline) {
 		//==========================================================================================
 		Generator generator = updatedTimeline.getGenerator();
 		
-		if (generator != null)
-		{
-			if (generator instanceof ModuleGenerator)
-			{
+		if (generator != null) {
+			if (generator instanceof ModuleGenerator) {
 				// Notify module timelines.
 
 				Collection<Timeline> subGeneratorTimelines = updatedTimeline.getSubGeneratorTimelines();
 				
-				for (Timeline subGeneratorTimeline : subGeneratorTimelines)
-				{
-					this.updateModuleTimelines(subGeneratorTimeline);
+				for (Timeline subGeneratorTimeline : subGeneratorTimelines) {
+					this.updateModuleTimelines(soundSourceData, subGeneratorTimeline);
 					
-					subGeneratorTimeline.generatorChanged();
+					subGeneratorTimeline.generatorChanged(soundSourceData);
 				}
 			}
 		}
@@ -775,10 +765,10 @@ public class TimelineManagerLogic
 	 * @param inputData
 	 * 			is the InputData.
 	 */
-	public void removeInput(Timeline timeline, InputData inputData)
+	public void removeInput(final SoundSourceData soundSourceData, Timeline timeline, InputData inputData)
 	{
 		//==========================================================================================
-		timeline.removeInput(inputData);
+		timeline.removeInput(soundSourceData, inputData);
 		
 		//==========================================================================================
 	}
@@ -791,10 +781,9 @@ public class TimelineManagerLogic
 	 * @param inputData
 	 * 			is the InputData.
 	 */
-	public void updateInput(Timeline timeline, InputData inputData)
-	{
+	public void updateInput(final SoundSourceData soundSourceData, Timeline timeline, InputData inputData) {
 		//==========================================================================================
-		timeline.updateInput(inputData);
+		timeline.updateInput(soundSourceData, inputData);
 		
 		//==========================================================================================
 	}

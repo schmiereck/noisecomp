@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Vector;
 
+import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -43,9 +44,9 @@ public class LoadFileOperationLogic
 	 * @param fileName
 	 * 			is the file name of the xml file to load.
 	 * @throws XMLPortException
-	 * @throws MainActionException
 	 */
-	public static ModuleGeneratorTypeData loadNoiseCompFile(GeneratorTypesData generatorTypesData,
+	public static ModuleGeneratorTypeData loadNoiseCompFile(final SoundSourceData soundSourceData,
+															GeneratorTypesData generatorTypesData,
 														   //ModuleGeneratorTypeData mainModuleTypeData,
 														   String fileName,
 														   float frameRate) 
@@ -73,9 +74,8 @@ public class LoadFileOperationLogic
 																				 noiseNode, 
 																				 frameRate);//, loadFileGeneratorNodeDatas);
 		
-		LoadFileOperationLogic.createModuleGeneratorTypesGenerators(generatorTypeNodesData, 
-		                                                            generatorTypesData, 
-		                                                            frameRate);
+		LoadFileOperationLogic.createModuleGeneratorTypesGenerators(soundSourceData,
+				generatorTypeNodesData, generatorTypesData, frameRate);
 		
 		// Old file version without any main module?
 		if (mainModuleGeneratorTypeData == null)
@@ -94,7 +94,7 @@ public class LoadFileOperationLogic
 			
 			//Generators mainGenerators = mainModuleGeneratorTypeData.getGenerators();
 			
-			LoadFileOperationLogic.createGenerators(generatorTypesData,
+			LoadFileOperationLogic.createGenerators(soundSourceData, generatorTypesData,
 													noiseNode, 
 													frameRate, 
 													//mainGenerators, 
@@ -110,13 +110,10 @@ public class LoadFileOperationLogic
 		return mainModuleGeneratorTypeData;
 	}
 
-	/**
-	 * @param generatorTypeNodesData
-	 * @param generatorTypesData
-	 * @param frameRate
-	 */
-	private static void createModuleGeneratorTypesGenerators(GeneratorTypeNodesData generatorTypeNodesData, GeneratorTypesData generatorTypesData, float frameRate)
-	{
+	private static void createModuleGeneratorTypesGenerators(final SoundSourceData soundSourceData,
+															 GeneratorTypeNodesData generatorTypeNodesData,
+															 GeneratorTypesData generatorTypesData,
+															 float frameRate) {
 		//==========================================================================================
 		Iterator<GeneratorTypeNodeData> generatorTypeNodesIterator = generatorTypeNodesData.getGeneratorTypeNodesIterator();
 		
@@ -133,7 +130,7 @@ public class LoadFileOperationLogic
 			
 			//Generators moduleenerators = moduleeneratorTypeData.getGenerators();
 			
-			LoadFileOperationLogic.createGenerators(generatorTypesData,
+			LoadFileOperationLogic.createGenerators(soundSourceData, generatorTypesData,
 													generatorTypeNode, frameRate, 
 													//moduleenerators, 
 													moduleGeneratorTypeData);
@@ -147,7 +144,8 @@ public class LoadFileOperationLogic
 	/**
 	 * Creates the list of generatores descripted below the 'rootNode'.
 	 */
-	private static void createGenerators(GeneratorTypesData generatorTypesData,
+	private static void createGenerators(final SoundSourceData soundSourceData,
+										 GeneratorTypesData generatorTypesData,
 										 Node rootNode, float frameRate, 
 										 //Generators generators, 
 										 ModuleGeneratorTypeData moduleGeneratorTypeData) //, ModuleGenerator parentModuleGenerator)
@@ -156,14 +154,14 @@ public class LoadFileOperationLogic
 		// List with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 		Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas = new Vector<LoadFileGeneratorNodeData>();
 		
-		LoadFileOperationLogic.createGenerators(generatorTypesData,
+		LoadFileOperationLogic.createGenerators(soundSourceData, generatorTypesData,
 												rootNode, frameRate, //generators, 
 												loadFileGeneratorNodeDatas, 
 												moduleGeneratorTypeData); //, parentModuleGenerator);
 		
 		// Inserting the inputs:
 		
-		LoadFileOperationLogic.createGeneratorInputs(//generators, 
+		LoadFileOperationLogic.createGeneratorInputs(soundSourceData, //generators,
 		                                             loadFileGeneratorNodeDatas, 
 		                                             moduleGeneratorTypeData);
 		//==========================================================================================
@@ -481,10 +479,11 @@ public class LoadFileOperationLogic
 	 * @param loadFileGeneratorNodeDatas 
 	 * 			is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
-	private static void createGenerators(GeneratorTypesData generatorTypesData,
-										 Node generatorTypeNode, float frameRate, 
+	private static void createGenerators(final SoundSourceData soundSourceData,
+										 GeneratorTypesData generatorTypesData,
+										 Node generatorTypeNode, float frameRate,
 										 //Generators generators, 
-										 Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas, 
+										 Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas,
 										 ModuleGeneratorTypeData moduleGeneratorTypeData) 
 			//ModuleGenerator parentModuleGenerator)
 	{
@@ -537,8 +536,8 @@ public class LoadFileOperationLogic
 				throw new PopupRuntimeException("can't create generator by type \"" + folderPath + "\" + \"" + generatorType + "\".");
 			}
 
-			generator.setTimePos(generatorStartTime.floatValue(),
-			                     generatorEndTime.floatValue());
+			generator.setTimePos(soundSourceData,
+					generatorStartTime.floatValue(), generatorEndTime.floatValue());
 
 			/*
 			// Generator is a Module ?
@@ -609,7 +608,7 @@ public class LoadFileOperationLogic
 	 * 
 	 * @param loadFileGeneratorNodeDatas is a list with temporarely {@link LoadFileGeneratorNodeData}-Objects.
 	 */
-	private static void createGeneratorInputs(//Generators generators, 
+	private static void createGeneratorInputs(final SoundSourceData soundSourceData, //Generators generators,
 											  Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas, 
 											  ModuleGeneratorTypeData moduleGeneratorTypeData)
 	{
@@ -657,7 +656,7 @@ public class LoadFileOperationLogic
 					
 					//generators.addInput(generator, inputGenerator, inputTypeData, inputValue, inputModuleInputTypeData);
 //					InputData inputData = 
-						generator.addGeneratorInput(inputGenerator, inputTypeData, 
+						generator.addGeneratorInput(soundSourceData, inputGenerator, inputTypeData,
 						                            inputValue, inputStringValue,
 						                            inputModuleInputTypeData);
 				}
