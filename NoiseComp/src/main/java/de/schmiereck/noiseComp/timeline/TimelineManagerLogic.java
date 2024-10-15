@@ -533,18 +533,22 @@ public class TimelineManagerLogic
 									   final Float floatValue, final String stringValue,
 									   final InputTypeData inputModuleInputTypeData) {
 		//==========================================================================================
-		InputData inputData;
-		
+		final InputData inputData;
+
+		final float oldStartTimePos;
+		final float oldEndTimePos;
+
 		final Generator newGenerator = newTimeline.getGenerator();
 		
 		final Generator inputGenerator;
 		
-		if (inputTimeline != null)
-		{
+		if (Objects.nonNull(inputTimeline)) {
+			oldStartTimePos = inputTimeline.getGeneratorStartTimePos();
+			oldEndTimePos = inputTimeline.getGeneratorEndTimePos();
 			inputGenerator = inputTimeline.getGenerator();
-		}
-		else
-		{
+		} else {
+			oldStartTimePos = newTimeline.getGeneratorStartTimePos();
+			oldEndTimePos = newTimeline.getGeneratorEndTimePos();
 			inputGenerator = null;
 		}
 		
@@ -558,7 +562,7 @@ public class TimelineManagerLogic
 		this.addInputTimeline(soundSourceData, newTimeline, inputData, inputGenerator);
 		
 		//------------------------------------------------------------------------------------------
-		newTimeline.generatorChanged(soundSourceData);
+		newTimeline.generatorChanged(soundSourceData, oldStartTimePos, oldEndTimePos);
 		
 		//==========================================================================================
 		return inputData;
@@ -653,7 +657,7 @@ public class TimelineManagerLogic
 		}
 		
 		if (generatorChanged) {
-			updatedTimeline.generatorChanged(soundSourceData);
+			updatedTimeline.generatorChanged(soundSourceData, oldStartTimePos, oldEndTimePos);
 		}
 		//==========================================================================================
 	}
