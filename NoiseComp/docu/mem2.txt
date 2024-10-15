@@ -189,7 +189,7 @@
  186:            28           1120  [Ljavax.swing.text.AbstractDocument$AbstractElement;
  187:             7           1064  [Ljava.util.concurrent.ConcurrentHashMap$Segment;
  188:            33           1056  java.io.ExpiringCache$Entry
- 189:            22           1056  de.schmiereck.noiseComp.generator.GeneratorTypeData
+ 189:            22           1056  de.schmiereck.noiseComp.generator.GeneratorTypeInfoData
  190:            12           1056  sun.java2d.loops.GraphicsPrimitiveProxy
  191:            22           1056  javax.swing.UIDefaults$ProxyLazyValue
  192:             1           1048  [Ljava.lang.Character;
@@ -551,7 +551,7 @@
  548:             3             96  java.nio.DirectByteBuffer$Deallocator
  549:             2             96  javax.swing.text.JTextComponent$DefaultKeymap
  550:             3             96  com.sun.java.swing.plaf.windows.WindowsMenuUI$WindowsMouseInputHandler
- 551:             1             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData
+ 551:             1             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData
  552:             3             96  javax.swing.plaf.basic.BasicMenuUI$Handler
  553:             2             96  java.io.OutputStreamWriter
  554:             3             96  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel$HighlightedTimelineHandler
@@ -580,7 +580,7 @@
  577:             1             96  java.awt.EventQueue
  578:             1             96  javax.swing.tree.VariableHeightLayoutCache
  579:             2             96  java.security.BasicPermissionCollection
- 580:             3             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData$TicksPer
+ 580:             3             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData$TicksPer
  581:             3             96  javax.swing.JMenu$MenuChangeListener
  582:             3             96  sun.nio.cs.Surrogate$Parser
  583:             3             96  [[B

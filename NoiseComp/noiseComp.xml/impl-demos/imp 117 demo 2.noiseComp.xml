@@ -3,7 +3,7 @@
 	<version><![CDATA[2.0]]></version>
 	<generatorTypes>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.shape.FaderGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Fader]]></name>
@@ -28,7 +28,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.mixer.MixerGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Mixer]]></name>
@@ -53,7 +53,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.mixer.MultiplierGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Multiplier]]></name>
@@ -78,7 +78,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.mixer.AddGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[add]]></name>
@@ -95,7 +95,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.mixer.MultGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[mult]]></name>
@@ -112,7 +112,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.shape.PowGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[pow]]></name>
@@ -137,7 +137,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.OutputGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Output]]></name>
@@ -154,7 +154,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.SinusGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Sinus]]></name>
@@ -195,7 +195,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.RectangleGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Rectangle]]></name>
@@ -228,7 +228,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.TriangelGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Triangel]]></name>
@@ -261,7 +261,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.SawtoothGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Sawtooth]]></name>
@@ -302,7 +302,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.filter.CutGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Cut]]></name>
@@ -335,7 +335,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.WaveGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Wave File]]></name>
@@ -352,7 +352,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.shape.ASRPulseGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[ASRPulse]]></name>
@@ -401,7 +401,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.WhiteNoiseGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[White Gaussian Noise]]></name>
@@ -426,7 +426,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.PinkNoiseGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Pink Noise]]></name>
@@ -451,7 +451,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.PinkNoise2Generator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Pink Noise 2]]></name>
@@ -492,7 +492,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.shape.TanhGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[tanh]]></name>
@@ -509,7 +509,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.shape.ExponentGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[exponent]]></name>
@@ -526,7 +526,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.shape.IntegratorGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[Integrator]]></name>
@@ -543,7 +543,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.filter.EchoGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[echo]]></name>
@@ -584,7 +584,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.filter.FilterGenerator]]></generatorClassName>
 			<folderPath><![CDATA[/]]></folderPath>
 			<name><![CDATA[filter]]></name>
@@ -609,7 +609,7 @@
 			</inputTypes>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#Main-Module]></generatorClassName>
 			<folderPath><![CDATA[/File/Modules/]]></folderPath>
 			<name><![CDATA[Main-Module]></name>
@@ -810,7 +810,7 @@
 			</tracks>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.module.ModuleGenerator#Module (new)]]></generatorClassName>
 			<folderPath><![CDATA[/File/Modules/]]></folderPath>
 			<name><![CDATA[Module (new)]]></name>
@@ -855,7 +855,7 @@
 			</tracks>
 		</generatorType>
 		<generatorType>
-			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeData]]></generatorTypeClassName>
+			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
 			<generatorClassName />
 			<folderPath><![CDATA[/File/Modules/newSub-Modules/]]></folderPath>
 			<name />

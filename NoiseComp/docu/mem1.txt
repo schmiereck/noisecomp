@@ -190,7 +190,7 @@
  187:            28           1120  [Ljavax.swing.text.AbstractDocument$AbstractElement;
  188:             7           1064  [Ljava.util.concurrent.ConcurrentHashMap$Segment;
  189:            22           1056  javax.swing.UIDefaults$ProxyLazyValue
- 190:            22           1056  de.schmiereck.noiseComp.generator.GeneratorTypeData
+ 190:            22           1056  de.schmiereck.noiseComp.generator.GeneratorTypeInfoData
  191:            33           1056  java.io.ExpiringCache$Entry
  192:            12           1056  sun.java2d.loops.GraphicsPrimitiveProxy
  193:             1           1048  [Ljava.lang.Character;
@@ -559,7 +559,7 @@
  556:             4             96  javax.sound.sampled.LineEvent$Type
  557:             2             96  javax.swing.text.DefaultEditorKit$EndAction
  558:             3             96  de.schmiereck.noiseComp.swingView.timelineSelect.TimelinesDrawPanelModel$HighlightedTimelineHandler
- 559:             1             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData
+ 559:             1             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData
  560:             2             96  sun.util.LocaleServiceProviderPool
  561:             2             96  javax.swing.text.DefaultEditorKit$PageAction
  562:             2             96  javax.swing.text.DefaultEditorKit$BeginAction
@@ -583,7 +583,7 @@
  580:             3             96  com.sun.awt.AWTUtilities$Translucency
  581:             1             96  javax.swing.tree.VariableHeightLayoutCache
  582:             3             96  javax.swing.JMenu$MenuChangeListener
- 583:             3             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData$TicksPer
+ 583:             3             96  de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData$TicksPer
  584:             1             96  com.sun.media.sound.MixerSourceLine$MixerSourceLineGainControl
  585:             3             96  [[B
  586:             1             88  com.sun.media.sound.MixerSourceLine$MixerSourceLineSampleRateControl
