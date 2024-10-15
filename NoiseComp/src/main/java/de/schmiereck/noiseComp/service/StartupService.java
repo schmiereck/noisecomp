@@ -9,6 +9,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.shape.ASRPulseGenerator;
 import de.schmiereck.noiseComp.generator.mixer.AddGenerator;
 import de.schmiereck.noiseComp.generator.filter.CutGenerator;
@@ -16,12 +17,11 @@ import de.schmiereck.noiseComp.generator.filter.EchoGenerator;
 import de.schmiereck.noiseComp.generator.shape.ExponentGenerator;
 import de.schmiereck.noiseComp.generator.shape.FaderGenerator;
 import de.schmiereck.noiseComp.generator.filter.FilterGenerator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
 import de.schmiereck.noiseComp.generator.shape.IntegratorGenerator;
 import de.schmiereck.noiseComp.generator.filter.LowpassFilterGenerator;
 import de.schmiereck.noiseComp.generator.mixer.MixerGenerator;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.mixer.MultGenerator;
 import de.schmiereck.noiseComp.generator.mixer.MultiplierGenerator;
 import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
@@ -170,8 +170,7 @@ public class StartupService
      * 			is the frame rate.
      *
      */
-    public static
-    ModuleGeneratorTypeData createDemoGenerators(final SoundSourceData soundSourceData, final SoundService soundService, final float frameRate)
+    public static ModuleGeneratorTypeInfoData createDemoGenerators(final SoundSourceData soundSourceData, final SoundService soundService, final float frameRate)
     {
         //==========================================================================================
         //SoundService soundService = SoundService.getInstance();
@@ -183,7 +182,7 @@ public class StartupService
 
         //Generators generators = mainModuleypeData.getGenerators();
 
-        final ModuleGeneratorTypeData mainModuleypeData = ModuleGenerator.createModuleGeneratorTypeData(MODULE_FOLDER_PATH);
+        final ModuleGeneratorTypeInfoData mainModuleypeData = ModuleGenerator.createModuleGeneratorTypeData(MODULE_FOLDER_PATH);
 
         mainModuleypeData.setIsMainModuleGeneratorType(true);
 
@@ -194,10 +193,10 @@ public class StartupService
         //---------------------------------
         FaderGenerator faderInGenerator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH,
+            GeneratorTypeInfoData generatorTypeInfoData = soundService.searchGeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH,
                     FaderGenerator.class.getName());
             // or generatorTypeData.createGeneratorInstance("faderIn", Float.valueOf(frameRate))
-            faderInGenerator = new FaderGenerator("faderIn", frameRateFloat, generatorTypeData);
+            faderInGenerator = new FaderGenerator("faderIn", frameRateFloat, generatorTypeInfoData);
 
             faderInGenerator.setTimePos(soundSourceData, 0.0F, 2.0F);
 
@@ -211,9 +210,9 @@ public class StartupService
         //---------------------------------
         FaderGenerator faderOutGenerator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH,
+            GeneratorTypeInfoData generatorTypeInfoData = soundService.searchGeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH,
                     FaderGenerator.class.getName());
-            faderOutGenerator = new FaderGenerator("faderOut", frameRateFloat, generatorTypeData);
+            faderOutGenerator = new FaderGenerator("faderOut", frameRateFloat, generatorTypeInfoData);
 
             faderOutGenerator.setTimePos(soundSourceData, 2.0F, 5.0F);
 
@@ -227,9 +226,9 @@ public class StartupService
         //---------------------------------
         SinusGenerator sinus0Generator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
+            GeneratorTypeInfoData generatorTypeInfoData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     SinusGenerator.class.getName());
-            sinus0Generator = new SinusGenerator("sinus0", frameRateFloat, generatorTypeData);
+            sinus0Generator = new SinusGenerator("sinus0", frameRateFloat, generatorTypeInfoData);
             sinus0Generator.addInputValue(soundSourceData, 110F, SinusGenerator.INPUT_TYPE_FREQ);
             //sinusGenerator.setSignalFrequency(262F);
 
@@ -240,9 +239,9 @@ public class StartupService
         //---------------------------------
         SinusGenerator sinus1Generator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
+            GeneratorTypeInfoData generatorTypeInfoData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     SinusGenerator.class.getName());
-            sinus1Generator = new SinusGenerator("sinus1", frameRateFloat, generatorTypeData);
+            sinus1Generator = new SinusGenerator("sinus1", frameRateFloat, generatorTypeInfoData);
             sinus1Generator.addInputValue(soundSourceData, 220F, SinusGenerator.INPUT_TYPE_FREQ);
             //sinusGenerator.setSignalFrequency(262F);
 
@@ -253,9 +252,9 @@ public class StartupService
         //---------------------------------
         SinusGenerator sinus2Generator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
+            GeneratorTypeInfoData generatorTypeInfoData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     SinusGenerator.class.getName());
-            sinus2Generator = new SinusGenerator("sinus2", frameRateFloat, generatorTypeData);
+            sinus2Generator = new SinusGenerator("sinus2", frameRateFloat, generatorTypeInfoData);
             sinus2Generator.addInputValue(soundSourceData, 240F, SinusGenerator.INPUT_TYPE_FREQ);
             //sinus2Generator.setSignalFrequency(131F);
 
@@ -266,9 +265,9 @@ public class StartupService
         //---------------------------------
         SinusGenerator sinus3Generator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
+            GeneratorTypeInfoData generatorTypeInfoData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     SinusGenerator.class.getName());
-            sinus3Generator = new SinusGenerator("sinus3", frameRateFloat, generatorTypeData);
+            sinus3Generator = new SinusGenerator("sinus3", frameRateFloat, generatorTypeInfoData);
             sinus3Generator.addInputValue(soundSourceData, 248F, SinusGenerator.INPUT_TYPE_FREQ);
             //sinus3Generator.setSignalFrequency(70F);
 
@@ -279,9 +278,9 @@ public class StartupService
         //---------------------------------
         MixerGenerator mixerGenerator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(MIXER_GENERATOR_FOLDER_PATH,
+            GeneratorTypeInfoData generatorTypeInfoData = soundService.searchGeneratorTypeData(MIXER_GENERATOR_FOLDER_PATH,
                     MixerGenerator.class.getName());
-            mixerGenerator = new MixerGenerator("mixer", frameRateFloat, generatorTypeData);
+            mixerGenerator = new MixerGenerator("mixer", frameRateFloat, generatorTypeInfoData);
             mixerGenerator.addInputValue(soundSourceData, 0.5F, MixerGenerator.INPUT_TYPE_VOLUME);
 
             mixerGenerator.setTimePos(soundSourceData, 0.0F, 5.0F);
@@ -300,9 +299,9 @@ public class StartupService
         //---------------------------------
         OutputGenerator outputGenerator;
         {
-            GeneratorTypeData generatorTypeData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
+            GeneratorTypeInfoData generatorTypeInfoData = soundService.searchGeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH,
                     OutputGenerator.class.getName());
-            outputGenerator = new OutputGenerator("output", frameRateFloat, generatorTypeData);
+            outputGenerator = new OutputGenerator("output", frameRateFloat, generatorTypeInfoData);
 
             outputGenerator.setTimePos(soundSourceData, 0.0F, 5.0F);
 
