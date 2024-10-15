@@ -20,6 +20,7 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.JPanel;
 import javax.swing.Scrollable;
@@ -1064,191 +1065,65 @@ implements Scrollable//, MouseMotionListener
 	 * @param timelineSelectEntryModel
 	 * 			is the timeline model.
 	 */
-	private void paintTimeline(Graphics2D g2, int timelineGeneratorPos, TimelineSelectEntryModel timelineSelectEntryModel)
-	{
+	private void paintTimeline(final Graphics2D g2, final int timelineGeneratorPos, final TimelineSelectEntryModel timelineSelectEntryModel) {
 		//==========================================================================================
-		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		final SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
 		
 		//==========================================================================================
-		float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+		final float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
+
+		final float startTimePos = timelineSelectEntryModel.getStartTimePos();
+		final float endTimePos = timelineSelectEntryModel.getEndTimePos();
+		final float generatorPosY = timelineGeneratorPos * maxUnitIncrementY;
+
+		final float timeLength = endTimePos - startTimePos;
+
+		final boolean highlighted;
+
+		final TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
 		
-		float startTimePos = timelineSelectEntryModel.getStartTimePos();
-		float endTimePos = timelineSelectEntryModel.getEndTimePos();
-		float generatorPosY = timelineGeneratorPos * maxUnitIncrementY;
-		
-		float timeLength = endTimePos - startTimePos;
-		
-		boolean highlighted;
-		
-		TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
-		
-		if (highlightedTimelineSelectEntryModel == timelineSelectEntryModel)
-		{
+		if (highlightedTimelineSelectEntryModel == timelineSelectEntryModel) {
 			highlighted = true;
-		}
-		else
-		{
+		} else {
 			highlighted = false;
 		}
 		
 		//------------------------------------------------------------------------------------------
 		// Background:
 		
-		if (selectedTimelineModel.getSelectedTimelineSelectEntryModel() == timelineSelectEntryModel)
-		{
+		if (selectedTimelineModel.getSelectedTimelineSelectEntryModel() == timelineSelectEntryModel) {
 			g2.setPaint(CTimelineSelectedBackground);
-		}
-		else
-		{
-			if (highlighted == true)
-			{
+		} else {
+			if (highlighted) {
 				g2.setPaint(CTimelineHighlightedBackground);
-			}
-			else
-			{
+			} else {
 				g2.setPaint(CTimelineNormalBackground);
 			}
 		}
-		
-		Rectangle2D rectangle = new Rectangle2D.Float(startTimePos,
+
+		final Rectangle2D rectangle = new Rectangle2D.Float(startTimePos,
 		                                              generatorPosY,
 		                                              timeLength,
 		                                              maxUnitIncrementY);
-		
-		Shape shape = this.at.createTransformedShape(rectangle);
+
+		final Shape shape = this.at.createTransformedShape(rectangle);
 		
 		g2.fill(shape);
 		
 		//------------------------------------------------------------------------------------------
 		// Display signal shapes:
-		
-		Timeline timeline = timelineSelectEntryModel.getTimeline();
 
-		if (timeline != null)
-		{
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			float valueMax = timeline.getValueMax();
-			float valueMin = timeline.getValueMin();
-			
-			float frameRate = timeline.getSoundFrameRate();
-			float frameStep = timeLength / (frameRate / DRAW_EVERY_SAMPLE);
-	
-//			float pointSizeX = (float)(1.0F / this.at.getScaleX());
-//			float pointSizeY = (float)(1.0F / this.at.getScaleY());
-			
-//			Rectangle2D point = new Rectangle2D.Float();
-			Point2D srcPoint = new Point2D.Float();
-			Point2D dstPoint = new Point2D.Float();
-			
-			boolean haveLastSample = false;
-			int lastX = 0;
-			int lastY = 0;
-			
-			for (float timePos = 0.0F; timePos < timeLength; timePos += frameStep)
-			{
-				long sampleFrame = (long)((startTimePos + timePos) * frameRate);
-				
-				SoundSample bufSoundSample = timeline.getBufSoundSample(sampleFrame);
-				SoundSample soundSample;
-				
-				if (bufSoundSample != null)
-				{
-					soundSample = bufSoundSample;
-				}
-				else
-				{
-					soundSample = null;//timeline.generateFrameSample(sampleFrame, parentModuleGenerator);
-					bufSoundSample = null;
-				}
-				
-				if (soundSample != null)
-				{
-					float posX = (startTimePos + timePos); 
+		final Timeline timeline = timelineSelectEntryModel.getTimeline();
 
-					float value = soundSample.getMonoValue();
-					float posY;
-					
-					if (Float.isNaN(value) == false)
-					{
-						if (value > 0.0F)
-						{
-							if (Float.isNaN(valueMax) == false)
-							{
-								value /= valueMax;
-							}
-						}
-						else
-						{
-							if (value < 0.0F)
-							{
-								if (Float.isNaN(valueMin) == false)
-								{
-									value /= -valueMin;
-								}
-							}
-						}
-						
-						posY = (generatorPosY + 
-								(value * maxUnitIncrementY * -0.45F) + 
-								(maxUnitIncrementY / 2.0F)) +
-								1.0F; 
-					}
-					else
-					{
-						if (haveLastSample == true)
-						{
-							break;
-						}
-						posY = 0.0F;
-					}
-					
-//					Shape shape = this.at.createTransformedShape(point);
-					srcPoint.setLocation(posX, posY);
-					this.at.transform(srcPoint, dstPoint);
-					
-					int x = (int)dstPoint.getX();
-					int y = (int)dstPoint.getY();
-					
-					if (haveLastSample == true)
-					{
-						// x or y changed after last draw?
-						if ((x != lastX) || (y != lastY))
-						{
-							// Draw line.
-							
-							g2.setColor(CTimelineSignal);
-							
-		//					g2.fill(shape);
-							g2.drawLine(lastX, lastY, 
-							            x, y);
-						}
-					}
-					else
-					{
-						haveLastSample = true;
-					}
-					
-					lastX = x;
-					lastY = y;
-					
-					if (bufSoundSample != null)
-					{
-						g2.setColor(CTimelineBuffer);
-						
-						int gy = (int)(generatorPosY * this.at.getScaleY());
-						
-						g2.drawLine(x, gy, 
-						            x, gy + 1);
-					}
-				}
-			}
-			
+		if (Objects.nonNull(timeline)) {
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (highlighted == true)
-			{
-				Rectangle2D bounds2D = shape.getBounds2D();
-				
-				TimelineHandlerModel timelineHandlerModel = this.makeTimelineHandlerModel(bounds2D);
+			this.paintSignalShapes(g2, timeline, timeLength, startTimePos, generatorPosY, maxUnitIncrementY);
+
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			if (highlighted == true) {
+				final Rectangle2D bounds2D = shape.getBounds2D();
+
+				final TimelineHandlerModel timelineHandlerModel = this.makeTimelineHandlerModel(bounds2D);
 				
 				g2.setColor(CTimelineHandlerBackground);
 				
@@ -1263,6 +1138,108 @@ implements Scrollable//, MouseMotionListener
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		//==========================================================================================
+	}
+
+	private void paintSignalShapes(Graphics2D g2, Timeline timeline, float timeLength, float startTimePos, float generatorPosY, float maxUnitIncrementY) {
+		final float valueMax = timeline.getValueMax();
+		final float valueMin = timeline.getValueMin();
+
+		final float frameRate = timeline.getSoundFrameRate();
+		final float frameStep = timeLength / (frameRate / DRAW_EVERY_SAMPLE);
+
+//			float pointSizeX = (float)(1.0F / this.at.getScaleX());
+//			float pointSizeY = (float)(1.0F / this.at.getScaleY());
+
+//			Rectangle2D point = new Rectangle2D.Float();
+		final Point2D srcPoint = new Point2D.Float();
+		final Point2D dstPoint = new Point2D.Float();
+
+		boolean haveLastSample = false;
+		int lastX = 0;
+		int lastY = 0;
+
+		for (float timePos = 0.0F; timePos < timeLength; timePos += frameStep) {
+			final long sampleFrame = (long)((startTimePos + timePos) * frameRate);
+
+			final SoundSample bufSoundSample = timeline.getBufSoundSample(sampleFrame);
+			final SoundSample soundSample;
+
+			if (bufSoundSample != null) {
+				soundSample = bufSoundSample;
+			} else {
+				soundSample = null;//timeline.generateFrameSample(sampleFrame, parentModuleGenerator);
+			}
+
+			if (soundSample != null) {
+				final float posX = (startTimePos + timePos);
+
+				final float soundSampleValue = soundSample.getMonoValue();
+				final float value;
+				final float posY;
+
+				if (Float.isNaN(soundSampleValue) == false) {
+					if (soundSampleValue > 0.0F) {
+						if (Float.isNaN(valueMax) == false) {
+							value = soundSampleValue / valueMax;
+						} else {
+							value = soundSampleValue;
+						}
+					} else {
+						if (soundSampleValue < 0.0F) {
+							if (Float.isNaN(valueMin) == false) {
+								value = soundSampleValue / -valueMin;
+							} else {
+								value = soundSampleValue;
+							}
+						} else {
+							value = soundSampleValue;
+						}
+					}
+
+					posY = (generatorPosY +
+							(value * maxUnitIncrementY * -0.45F) +
+							(maxUnitIncrementY / 2.0F)) +
+							1.0F;
+				} else {
+					if (haveLastSample) {
+						break;
+					}
+					posY = 0.0F;
+				}
+
+//					Shape shape = this.at.createTransformedShape(point);
+				srcPoint.setLocation(posX, posY);
+				this.at.transform(srcPoint, dstPoint);
+
+				final int x = (int)dstPoint.getX();
+				final int y = (int)dstPoint.getY();
+
+				if (haveLastSample) {
+					// x or y changed after last draw?
+					if ((x != lastX) || (y != lastY)) {
+						// Draw line.
+						g2.setColor(CTimelineSignal);
+	//					g2.fill(shape);
+						g2.drawLine(lastX, lastY,
+									x, y);
+					}
+				} else {
+					haveLastSample = true;
+				}
+
+				lastX = x;
+				lastY = y;
+
+				if (bufSoundSample != null) {
+					g2.setColor(CTimelineBuffer);
+
+					final int gy = (int)(generatorPosY * this.at.getScaleY());
+
+					g2.drawLine(x, gy,
+								x, gy + 1);
+				}
+			}
+		}
 	}
 
 	/**
