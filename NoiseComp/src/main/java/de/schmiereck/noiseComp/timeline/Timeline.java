@@ -18,8 +18,13 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
 /**
  * <p>
- * 	Timeline.
+ * 	Timeline.<br/>
+ * 	Visible, editable and playable Instances of a Generator.
  * </p>
+ * <p>
+ * 	Implements the Logic of a Generator is managing Samples in an Buffer at Framepositions:
+ *  So he is calulating Samples only one time.
+ * <p>
  * <p>
  * 	Manages a generator, his inputs, outputs and a buffer with his generated samples.
  * </p>
