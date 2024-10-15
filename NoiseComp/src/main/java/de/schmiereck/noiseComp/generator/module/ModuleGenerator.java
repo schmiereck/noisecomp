@@ -12,9 +12,7 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @version <p>28.02.2004: created, smk</p>
  */
 public class ModuleGenerator
-extends Generator
-//implements GeneratorChangeListenerInterface
-{
+extends Generator {
 	//**********************************************************************************************
 	// Functions:
 	
@@ -23,26 +21,13 @@ extends Generator
 	 * 
 	 */
 	public ModuleGenerator(String name, Float frameRate, 
-						  GeneratorTypeInfoData generatorTypeInfoData)
-	{
+						  GeneratorTypeInfoData generatorTypeInfoData) {
 		super(name, frameRate, generatorTypeInfoData);
 		
 		// Fügt sich als Listener zu dem seinem Typ hinzu, um über Änderungen informiert zu werden.
 		//((ModuleGeneratorTypeData)generatorTypeData).getGeneratorChangeObserver().registerGeneratorChangeListener(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#finalize()
-	 */
-	protected void finalize()
-		throws Throwable
-	{
-		// Nimmt sich als Listener von seinem Typ weg, um nicht mehr über Änderungen informiert zu werden.
-		//((ModuleGeneratorTypeData)this.getGeneratorTypeData()).getGeneratorChangeObserver().removeGeneratorChangeListener(this);
-
-		super.finalize();
-	}
-	
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
@@ -51,10 +36,8 @@ extends Generator
 	                                 SoundSample sample,
 	                                 ModuleGenerator parentModuleGenerator, 
 	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModuleArguments moduleArguments)
-	{
-		if (this.checkIsInTime(frameTime) == true)
-		{	
+	                                 ModuleArguments moduleArguments) {
+		if (this.checkIsInTime(frameTime)) {
 			ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)this.getGeneratorTypeData();
 			
 			OutputGenerator outputGenerator = moduleGeneratorTypeData.getOutputGenerator();
@@ -76,9 +59,7 @@ extends Generator
 				                                    thisModuleArguments);
 			
 			sample.setValues(outputSample);
-		}
-		else
-		{
+		} else {
 			sample.setNaN();
 		}
 	}
@@ -86,8 +67,7 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeInfoData createGeneratorTypeData(String folderPath)
-	{
+	public static GeneratorTypeInfoData createGeneratorTypeData(String folderPath) {
 		ModuleGeneratorTypeInfoData generatorTypeData = new ModuleGeneratorTypeInfoData(folderPath,
 		                                                                      ModuleGenerator.class, 
 																			  "Module", 
@@ -97,13 +77,12 @@ extends Generator
 	}
 
 	/**
-	 * @see #createGeneratorTypeData() with cast to {@link ModuleGeneratorTypeInfoData}
+	 * @see #createGeneratorTypeData(String) with cast to {@link ModuleGeneratorTypeInfoData}
 	 * 
 	 * @param folderPath
 	 * 			is the Folder-Path in Format <code>"/folder1/folder2/"</code>.
 	 */
-	public static ModuleGeneratorTypeInfoData createModuleGeneratorTypeData(String folderPath)
-	{
+	public static ModuleGeneratorTypeInfoData createModuleGeneratorTypeData(String folderPath) {
 		return (ModuleGeneratorTypeInfoData)ModuleGenerator.createGeneratorTypeData(folderPath);
 	}
 

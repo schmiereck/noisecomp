@@ -67,7 +67,7 @@ implements GeneratorInterface,
 	/**
 	 * Module-Generator Remove Listeners.
 	 */
-	private final List<ModuleGeneratorRemoveListenerInterface> moduleeneratorRemoveListeners = new Vector<ModuleGeneratorRemoveListenerInterface>();
+	private final List<ModuleGeneratorRemoveListenerInterface> moduleGeneratorRemoveListeners = new Vector<ModuleGeneratorRemoveListenerInterface>();
 	
 	//**********************************************************************************************
 	// Functions:
@@ -1041,20 +1041,20 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 
 	/**
 	 * @param moduleeneratorRemoveListener 
-	 * 			to add to {@link #moduleeneratorRemoveListeners}.
+	 * 			to add to {@link #moduleGeneratorRemoveListeners}.
 	 */
 	public void addModuleGeneratorRemoveListener(ModuleGeneratorRemoveListenerInterface moduleeneratorRemoveListener)
 	{
-		this.moduleeneratorRemoveListeners.add(moduleeneratorRemoveListener);
+		this.moduleGeneratorRemoveListeners.add(moduleeneratorRemoveListener);
 	}
 
 	/**
 	 * @param removedGenerator 
-	 * 			to notify the {@link #moduleeneratorRemoveListeners}.
+	 * 			to notify the {@link #moduleGeneratorRemoveListeners}.
 	 */
 	public void notifyModuleGeneratorRemoveListeners(final SoundSourceData soundSourceData, final Generator removedGenerator)
 	{
-		for (ModuleGeneratorRemoveListenerInterface moduleeneratorRemoveListener : this.moduleeneratorRemoveListeners)
+		for (ModuleGeneratorRemoveListenerInterface moduleeneratorRemoveListener : this.moduleGeneratorRemoveListeners)
 		{
 			moduleeneratorRemoveListener.notifyModuleGeneratorRemoved(soundSourceData, removedGenerator);
 		}
