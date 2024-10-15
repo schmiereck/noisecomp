@@ -3,13 +3,7 @@
  */
 package de.schmiereck.noiseComp.timeline;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 import java.util.Map.Entry;
 
 import de.schmiereck.dataTools.VectorHash;
@@ -399,34 +393,30 @@ implements GeneratorBufferInterface,
 	 * 			the sound sample.
 	 */
 	public synchronized 
-	SoundSample generateFrameSample(long framePosition, 
-	                                ModuleGenerator parentModuleGenerator,
-	                                ModuleArguments moduleArguments)
-	{
+	SoundSample generateFrameSample(final long framePosition,
+									final ModuleGenerator parentModuleGenerator,
+									final ModuleArguments moduleArguments){
 		//==========================================================================================
-		SoundSample retSoundSample;
+		final SoundSample retSoundSample;
+
+		final int bufFramePos = this.makeBufferFramePos(framePosition);
 		
-		int bufFramePos = this.makeBufferFramePos(framePosition);
-		
-		if (bufFramePos >= 0)
-		{
-			retSoundSample = this.bufSoundSamples[bufFramePos];
+		if (bufFramePos >= 0) {
+			final SoundSample soundSample = this.bufSoundSamples[bufFramePos];
 			
-			if (retSoundSample == null)
-			{
+			if (Objects.isNull(soundSample)) {
 				retSoundSample = this.generator.generateFrameSample(framePosition,
 				                                                    parentModuleGenerator, 
 				                                                    this,
 				                                                    moduleArguments);
 				
 				this.bufSoundSamples[bufFramePos] = retSoundSample;
+			} else {
+				retSoundSample = soundSample;
 			}
-		}
-		else
-		{
+		} else {
 			retSoundSample = null;
 		}
-		
 		//==========================================================================================
 		return retSoundSample;
 	}

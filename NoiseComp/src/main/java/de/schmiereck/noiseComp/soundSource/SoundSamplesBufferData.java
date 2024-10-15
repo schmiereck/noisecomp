@@ -5,6 +5,8 @@ import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
+import java.util.Objects;
+
 /**
  * Buffer of the calculated Samples.
  *
@@ -104,27 +106,23 @@ System.out.println("clearBuffer: " + startTimePos + ", " + endTimePos);
 	 * @return
 	 * 			the sound sample.
 	 */
-	public SoundSample generateSoundSample(long frame, Timeline outputTimeline)
-	{
-		SoundSample soundSample;
+	public SoundSample generateSoundSample(final long frame, final Timeline outputTimeline) {
+		final SoundSample retSoundSample;
 		
-		if (frame < this.bufferSoundSamples.length)
-		{
-			soundSample = this.bufferSoundSamples[(int)frame];
+		if (frame < this.bufferSoundSamples.length) {
+			final SoundSample soundSample = this.bufferSoundSamples[(int)frame];
 
-			if (soundSample == null)
-			{
-				soundSample = outputTimeline.generateFrameSample(frame, null, null);
+			if (Objects.isNull(soundSample)) {
+				retSoundSample = outputTimeline.generateFrameSample(frame, null, null);
 			
-				this.bufferSoundSamples[(int)frame] = soundSample;
+				this.bufferSoundSamples[(int)frame] = retSoundSample;
+			} else {
+				retSoundSample = soundSample;
 			}
+		} else {
+			retSoundSample = null;
 		}
-		else
-		{
-			soundSample = null;
-		}
-		
-		return soundSample;
+		return retSoundSample;
 	}
 
 	/**

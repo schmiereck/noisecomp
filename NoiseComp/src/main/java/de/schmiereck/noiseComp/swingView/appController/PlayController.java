@@ -14,6 +14,8 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.Timeli
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesTimeRule.TimelinesTimeRuleModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
+import java.util.Objects;
+
 /**
  * <p>
  * 	Play Controller.
@@ -60,35 +62,31 @@ public class PlayController
 		{
 			@Override
 			public void notifyPlaybackPosChanged(float actualTime) {
-				TimelinesTimeRuleModel timelinesTimeRuleModel = timelinesTimeRuleController.getTimelinesTimeRuleModel();
-				
-				TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
-				TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
-				
-				double startTime = startTimeMarkerSelectEntryModel.getTimeMarker();
-				double endTime = endTimeMarkerSelectEntryModel.getTimeMarker();
-				
-				//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
+				final TimelinesTimeRuleModel timelinesTimeRuleModel = PlayController.this.timelinesTimeRuleController.getTimelinesTimeRuleModel();
 
-				doPlaybackTimeChanged(actualTime);
+				final TimeMarkerSelectEntryModel startTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getStartTimeMarkerSelectEntryModel();
+				final TimeMarkerSelectEntryModel endTimeMarkerSelectEntryModel = timelinesTimeRuleModel.getEndTimeMarkerSelectEntryModel();
 
-				Timeline outputTimeline = soundSourceData.getOutputTimeline();
+				final double startTime = startTimeMarkerSelectEntryModel.getTimeMarker();
+				final double endTime = endTimeMarkerSelectEntryModel.getTimeMarker();
 
-				float generatorEndTimePos = outputTimeline.getGeneratorEndTimePos();
+				PlayController.this.doPlaybackTimeChanged(actualTime);
 
-				if ((actualTime > generatorEndTimePos) || (actualTime > endTime))
-				{
-					//SoundService soundService = SoundService.getInstance();
+				final Timeline outputTimeline = soundSourceData.getOutputTimeline();
 
-					if (soundService.retrieveLooped() == true)
-					{
-						//soundService.submitPlaybackPos(startTime);
-						playSoundService.submitPlaybackPos(startTime);
+				if (Objects.nonNull(outputTimeline)) {
+					final float generatorEndTimePos = outputTimeline.getGeneratorEndTimePos();
+
+					if ((actualTime > generatorEndTimePos) || (actualTime > endTime)) {
+						if (soundService.retrieveLooped()) {
+							//soundService.submitPlaybackPos(startTime);
+							PlayController.this.playSoundService.submitPlaybackPos(startTime);
+						} else {
+							PlayController.this.doStopSound();
+						}
 					}
-					else
-					{
-						doStopSound();
-					}
+				} else {
+					PlayController.this.doStopSound();
 				}
 			}
 		};
