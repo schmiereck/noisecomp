@@ -84,12 +84,8 @@ public class TimelineManagerLogic
 		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
 		
 		//==========================================================================================
-		Timeline timeline;
-		
-		//------------------------------------------------------------------------------------------
 		// Search or create Main-Module Timeline:
-		
-		timeline = this.makeMainTimeline(generator);
+		final Timeline timeline = this.makeMainTimeline(generator);
 		
 		//------------------------------------------------------------------------------------------
 //		if (OutputGenerator.class.getName().equals(generator.getGeneratorTypeData().getGeneratorTypeClassName())
@@ -97,19 +93,16 @@ public class TimelineManagerLogic
             // Update mainModuleGeneratorTypeData.
 			this.mainModuleGeneratorTypeData.setOutputGenerator(outputGenerator);
 
-			soundSourceData.setOutputTimeline(timeline);
-			
 			// Update SoundSourceLogic.
-			soundSourceLogic.setOutputGenerator(soundSourceData, generator);
+			soundSourceLogic.setOutputGeneratorTimeline(soundSourceData, timeline);
 		}
 		//------------------------------------------------------------------------------------------
 		this.createTimelineInputs(soundSourceData, generator, timeline);
 		
 		//------------------------------------------------------------------------------------------
 		// Notify Module
-		{
-			this.updateModuleTimelines(soundSourceData, timeline);
-		}
+		this.updateModuleTimelines(soundSourceData, timeline);
+
 		//==========================================================================================
 		return timeline;
 	}

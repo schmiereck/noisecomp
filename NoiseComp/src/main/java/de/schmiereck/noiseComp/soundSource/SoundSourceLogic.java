@@ -253,8 +253,38 @@ implements GeneratorChangeListenerInterface, TimelineChangedListernerInterface
 		//==========================================================================================
 	}
 
+	public void setOutputGeneratorTimeline(final SoundSourceData soundSourceData, final Timeline outputTimeline) {
+		//==========================================================================================
+		soundSourceData.setOutputTimeline(outputTimeline);
+
+		final Generator outputGenerator = outputTimeline.getGenerator();
+		this.setOutputGenerator(soundSourceData, outputGenerator);
+
+		//==========================================================================================
+	}
+
+	public void setOutputTimeline(final SoundSourceData soundSourceData, final Timeline outputTimeline) {
+		//==========================================================================================
+		// Remove last timeline change observer.
+
+		if (Objects.nonNull(soundSourceData.getOutputTimeline())) {
+			soundSourceData.getOutputTimeline().removeTimelineChangedListerner(this);
+		}
+
+		//------------------------------------------------------------------------------------------
+		soundSourceData.setOutputTimeline(outputTimeline);
+
+		//------------------------------------------------------------------------------------------
+		// Register new timeline change observer.
+		if (Objects.nonNull(soundSourceData.getOutputTimeline())) {
+			soundSourceData.getOutputTimeline().addTimelineChangedListerner(this);
+		}
+
+		//==========================================================================================
+	}
+
 	/**
-	 * @param outputGenerator 
+	 * @param outputGenerator
 	 * 			to set {@link SoundSourceData#setOutputGenerator(Generator)}.
 	 */
 	public void setOutputGenerator(final SoundSourceData soundSourceData, final Generator outputGenerator) {
@@ -266,7 +296,7 @@ implements GeneratorChangeListenerInterface, TimelineChangedListernerInterface
 		soundSourceData.setOutputGenerator(outputGenerator);
 
 		if (Objects.nonNull(soundSourceData.getOutputGenerator())) {
-			float timeLen = soundSourceData.getOutputGenerator().getEndTimePos() - soundSourceData.getOutputGenerator().getStartTimePos();
+			final float timeLen = soundSourceData.getOutputGenerator().getEndTimePos() - soundSourceData.getOutputGenerator().getStartTimePos();
 			
 			this.soundSamplesBufferData.createBuffer(timeLen, soundSourceData.getOutputGenerator().getSoundFrameRate());
 
@@ -456,26 +486,6 @@ implements GeneratorChangeListenerInterface, TimelineChangedListernerInterface
 	public TimelineManagerLogic getTimelineManagerLogic()
 	{
 		return this.timelineManagerLogic;
-	}
-
-	public void setOutputTimeline(final SoundSourceData soundSourceData, Timeline outputTimeline) {
-		//==========================================================================================
-		// Remove last timeline change observer.
-		
-		if (Objects.nonNull(soundSourceData.getOutputTimeline())) {
-			soundSourceData.getOutputTimeline().removeTimelineChangedListerner(this);
-		}
-		
-		//------------------------------------------------------------------------------------------
-		soundSourceData.setOutputTimeline(outputTimeline);
-		
-		//------------------------------------------------------------------------------------------
-		// Register new timeline change observer.
-		if (Objects.nonNull(soundSourceData.getOutputTimeline())) {
-			soundSourceData.getOutputTimeline().addTimelineChangedListerner(this);
-		}
-		
-		//==========================================================================================
 	}
 
 	/* (non-Javadoc)
