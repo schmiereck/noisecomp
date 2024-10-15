@@ -234,7 +234,7 @@ public class InputSelectController
 								
 								if (inputData == rowInputData)
 								{
-//									inputSelectModel.setSelectedRowNo(rowNo);
+									//inputSelectModel.setSelectedRowNo(rowNo);
 									selectionModel.setSelectionInterval(rowNo, rowNo);
 									break;
 								}
