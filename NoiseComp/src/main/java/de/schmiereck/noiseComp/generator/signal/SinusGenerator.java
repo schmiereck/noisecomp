@@ -6,7 +6,6 @@ import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 import java.util.Iterator;
 
 import static de.schmiereck.noiseComp.generator.GenratorUtils.calcPeriodFadeValue;
-import static de.schmiereck.noiseComp.service.StartupService.GENERATOR_FOLDER_PATH;
 import static de.schmiereck.noiseComp.service.StartupService.SIGNAL_GENERATOR_FOLDER_PATH;
 
 /**
@@ -56,9 +55,9 @@ extends Generator
 	 * 
 	 * @param frameRate	Frames per Second
 	 */
-	public SinusGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public SinusGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -245,30 +244,30 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData() {
+	public static GeneratorTypeInfoData createGeneratorTypeData() {
 		//==========================================================================================
 		//GeneratorTypeData generatorTypeData = new GeneratorTypeData(GENERATOR_FOLDER_PATH, SinusGenerator.class, "Sinus", "Generates a sinus signal with a specified frequency and amplidude.");
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH, SinusGenerator.class, "Sinus", "Generates a sinus signal with a specified frequency and amplidude.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SIGNAL_GENERATOR_FOLDER_PATH, SinusGenerator.class, "Sinus", "Generates a sinus signal with a specified frequency and amplidude.");
 
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, null, "Frequency of the signal in oscillations per second (alternativ to signalInput).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_AMPL, "signalAmplitude", 1, 1, Float.valueOf(1.0F), "Amplidude of the signal between 0 and 1.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", -1, 1, Float.valueOf(0.0F), "The offset of the sinus between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 //			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_INPUT, "signalInput", -1, -1, null, "Integrated Input of the frequenz signal (alternativ to signalFrequency).");
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_IIFREQ, "signalIIFreq", -1, -1, null, "Integrated Input of the frequenz signal (alternativ to signalFrequency).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 }

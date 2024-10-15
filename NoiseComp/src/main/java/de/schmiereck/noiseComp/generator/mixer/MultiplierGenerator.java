@@ -40,12 +40,12 @@ extends Generator
 	 * 			is the genrator name.
 	 * @param frameRate
 	 * 			is the frame rate.
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the Generator-Type Data.
 	 */
-	public MultiplierGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public MultiplierGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -175,21 +175,21 @@ extends Generator
 		//==========================================================================================
 	}
 
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MIXER_GENERATOR_FOLDER_PATH, MultiplierGenerator.class, "Multiplier", "Multiply multiple signal input lines and multiply them with a multiplier.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(MIXER_GENERATOR_FOLDER_PATH, MultiplierGenerator.class, "Multiplier", "Multiply multiple signal input lines and multiply them with a multiplier.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MULTIPLIER, "multiplier", -1, -1, "The volume of the output singal between 0 and 1 (average is calculated if more then one volume is connected).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", -1, -1, "The input signal between -1 and 1 (average is calculated if more then one volume is connected).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 }

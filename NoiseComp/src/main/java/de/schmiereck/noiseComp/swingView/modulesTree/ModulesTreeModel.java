@@ -11,7 +11,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 
 /**
@@ -39,7 +39,7 @@ public class ModulesTreeModel
 	/**
 	 * Edited ModuleGenerator-Type Data.
 	 */
-	private ModuleGeneratorTypeData editedModuleGeneratorTypeData;
+	private ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData;
 	
 	private List<EditModuleChangedListener> editModuleChangedListeners = new Vector<EditModuleChangedListener>();
 
@@ -80,7 +80,7 @@ public class ModulesTreeModel
 	 * @return 
 	 * 			returns the {@link #editedModuleGeneratorTypeData}.
 	 */
-	public ModuleGeneratorTypeData getEditedModuleGeneratorTypeData()
+	public ModuleGeneratorTypeInfoData getEditedModuleGeneratorTypeData()
 	{
 		return this.editedModuleGeneratorTypeData;
 	}
@@ -89,7 +89,7 @@ public class ModulesTreeModel
 	 * @param editedModuleGeneratorTypeData 
 	 * 			to set {@link #editedModuleGeneratorTypeData}.
 	 */
-	public void setEditedModuleGeneratorTypeData(ModuleGeneratorTypeData editedModuleGeneratorTypeData)
+	public void setEditedModuleGeneratorTypeData(ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData)
 	{
 		//==========================================================================================
 //		ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.getEditedModuleGeneratorTypeData();
@@ -115,7 +115,7 @@ public class ModulesTreeModel
 	 * @return
 	 * 			the tree path or <code>null</code> if the ModuleGenerator-Type is not found.
 	 */
-	public TreePath searchModuleTreeNode(final ModuleGeneratorTypeData moduleGeneratorTypeData) {
+	public TreePath searchModuleTreeNode(final ModuleGeneratorTypeInfoData moduleGeneratorTypeData) {
 		//==========================================================================================
 		final TreePath treePath;
 		
@@ -145,7 +145,7 @@ public class ModulesTreeModel
 	 * 			the path or <code>null</code>.
 	 */
 	private ModuleTreePath searchModuleTreeNode(DefaultMutableTreeNode rootTreeNode,
-												ModuleGeneratorTypeData moduleGeneratorTypeData) {
+												ModuleGeneratorTypeInfoData moduleGeneratorTypeData) {
 		//==========================================================================================
 		ModuleTreePath retTreePath;
 		
@@ -362,7 +362,7 @@ public class ModulesTreeModel
 	 * 			the Module Tree-Node.
 	 */
 	public DefaultMutableTreeNode insertModule(final DefaultMutableTreeNode parentFolderTreeNode, 
-	                                           final ModuleGeneratorTypeData moduleGeneratorTypeData)
+	                                           final ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 //		DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();

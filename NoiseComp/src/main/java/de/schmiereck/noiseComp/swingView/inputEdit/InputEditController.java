@@ -17,15 +17,14 @@ import javax.swing.JOptionPane;
 import de.schmiereck.noiseComp.frequences.ToneFrequences;
 import de.schmiereck.noiseComp.frequences.ToneFrequences.Tone;
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.MultiValue;
-import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectController;
 import de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel;
@@ -229,10 +228,10 @@ public class InputEditController
 	 * @param editInput
 	 * 			<code>true</code> if a input edited.
 	 */
-	public void updateEditedInput(ModuleGeneratorTypeData editedModuleGeneratorTypeData, 
-	                              Timeline selectedTimeline, 
-	                              InputData inputData,
-	                              boolean editInput)
+	public void updateEditedInput(ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData,
+                                  Timeline selectedTimeline,
+                                  InputData inputData,
+                                  boolean editInput)
 	{
 		//==========================================================================================
 		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
@@ -425,8 +424,8 @@ public class InputEditController
 		{
 			inputTypeSelectItems = new Vector<InputTypeSelectItem>();
 			Generator selectedGenerator = selectedTimeline.getGenerator();
-			GeneratorTypeData generatorTypeData = selectedGenerator.getGeneratorTypeData();
-			Iterator<InputTypeData> inputTypeIterator = generatorTypeData.getInputTypesIterator();
+			GeneratorTypeInfoData generatorTypeInfoData = selectedGenerator.getGeneratorTypeData();
+			Iterator<InputTypeData> inputTypeIterator = generatorTypeInfoData.getInputTypesIterator();
 			if (inputTypeIterator != null)
 			{
 				InputTypeSelectItem noSelectItem = new InputTypeSelectItem(null);

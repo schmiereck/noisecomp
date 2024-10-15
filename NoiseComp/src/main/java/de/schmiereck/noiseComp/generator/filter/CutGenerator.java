@@ -30,9 +30,9 @@ extends Generator
 	 * @param frameRate	
 	 * 			are the Frames per Second.
 	 */
-	public CutGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public CutGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -117,25 +117,25 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(FILTER_GENERATOR_FOLDER_PATH, CutGenerator.class, "Cut", "Cut the input singnal to the given minimum and maximum values.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(FILTER_GENERATOR_FOLDER_PATH, CutGenerator.class, "Cut", "Cut the input singnal to the given minimum and maximum values.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MAX_AMPL, "signalMaximum", 1, 1, Float.valueOf(1.0F), "Mamximum of the signal value.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MIN_AMPL, "signalMinimum", 1, 1, Float.valueOf(-1.0F), "Minimum of the signal value.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, Float.valueOf(0.0F), "Signal value.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 }

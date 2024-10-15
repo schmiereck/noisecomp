@@ -51,9 +51,9 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public SawtoothGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public SawtoothGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -297,33 +297,33 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH, SawtoothGenerator.class, "Sawtooth", "Generates a sawtooth signal with a specified frequency and amplidude.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SIGNAL_GENERATOR_FOLDER_PATH, SawtoothGenerator.class, "Sawtooth", "Generates a sawtooth signal with a specified frequency and amplidude.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the signal in oscillations per second.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_AMPL, "signalAmplitude", 1, 1, Float.valueOf(1.0F), "Amplidude of the signal between 0 and 1.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SHIFT, "signalShift", 0, 1, Float.valueOf(0.0F), "The offset of the sawtooth between -1 and 1 (0 is no shift, 0.5 is shifting a half oscillation).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_IIFREQ, "signalIIFreq", -1, -1, null, "Integrated Input of the frequenz signal (alternativ to signalFrequency).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_PULSE_WIDTH, "pulseWidth", 0, 1, Float.valueOf(0.5F), "The pulse width of the rectangle between 0 and 1 (Default).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 }

@@ -17,7 +17,7 @@ import java.util.List;
 import javax.swing.JComponent;
 
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
@@ -210,11 +210,11 @@ extends JComponent
 					
 					if (generator != null)
 					{
-						GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
+						GeneratorTypeInfoData generatorTypeInfoData = generator.getGeneratorTypeData();
 						
-						if (generatorTypeData != null)
+						if (generatorTypeInfoData != null)
 						{
-							generatorTypeName = generatorTypeData.getGeneratorTypeName();
+							generatorTypeName = generatorTypeInfoData.getGeneratorTypeName();
 						}
 						else
 						{

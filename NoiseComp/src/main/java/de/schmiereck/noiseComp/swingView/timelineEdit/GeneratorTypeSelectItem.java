@@ -3,7 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.service.StartupService;
 
 /**
@@ -22,7 +22,7 @@ public class GeneratorTypeSelectItem
 	/**
 	 * Input-Type Data.
 	 */
-	private final GeneratorTypeData generatorTypeData;
+	private final GeneratorTypeInfoData generatorTypeInfoData;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -30,21 +30,21 @@ public class GeneratorTypeSelectItem
 	/**
 	 * Constructor.
 	 * 
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the Input-Type Data.
 	 */
-	public GeneratorTypeSelectItem(GeneratorTypeData generatorTypeData)
+	public GeneratorTypeSelectItem(GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		this.generatorTypeData = generatorTypeData;
+		this.generatorTypeInfoData = generatorTypeInfoData;
 	}
 
 	/**
 	 * @return 
-	 * 			returns the {@link #generatorTypeData}.
+	 * 			returns the {@link #generatorTypeInfoData}.
 	 */
-	public GeneratorTypeData getGeneratorTypeData()
+	public GeneratorTypeInfoData getGeneratorTypeData()
 	{
-		return this.generatorTypeData;
+		return this.generatorTypeInfoData;
 	}
 
 	/* (non-Javadoc)
@@ -57,7 +57,7 @@ public class GeneratorTypeSelectItem
 		
 		if (obj != null)
 		{
-			ret = this.generatorTypeData == ((GeneratorTypeSelectItem)obj).generatorTypeData;
+			ret = this.generatorTypeInfoData == ((GeneratorTypeSelectItem)obj).generatorTypeInfoData;
 		}
 		else
 		{
@@ -75,9 +75,9 @@ public class GeneratorTypeSelectItem
 	{
 		String ret;
 		
-		if (this.generatorTypeData != null)
+		if (this.generatorTypeInfoData != null)
 		{
-			String folderPath = this.generatorTypeData.getFolderPath();
+			String folderPath = this.generatorTypeInfoData.getFolderPath();
 			
 			String path;
 			
@@ -90,7 +90,7 @@ public class GeneratorTypeSelectItem
 				path = "";
 			}
 			
-			ret = path + this.generatorTypeData.getGeneratorTypeName();
+			ret = path + this.generatorTypeInfoData.getGeneratorTypeName();
 		}
 		else
 		{

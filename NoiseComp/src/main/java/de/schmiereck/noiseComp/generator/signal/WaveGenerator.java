@@ -43,9 +43,9 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public WaveGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public WaveGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 	
 	/* (non-Javadoc)
@@ -313,17 +313,17 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH, WaveGenerator.class,
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SIGNAL_GENERATOR_FOLDER_PATH, WaveGenerator.class,
 																	"Wave File", "Plays a Wave file from file system.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_FILE_NAME, "fileName", 1, 1, 
 															"Is the file name of a .WAV file.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 }

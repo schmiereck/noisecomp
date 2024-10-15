@@ -17,7 +17,7 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceData;
  * 	The "ouput signal" is calculated based on the internal logic of the generator 
  * 	and the values of differnet inputs.<br/>
  * 	The the count and types of the acceped inputs are defined by the generator type
- * 	returned by the function {@link #createGeneratorTypeData()}.
+ * 	returned by the function {@link #createGeneratorData()}.
  * </p>
  * 
  * @author smk
@@ -26,8 +26,7 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 public abstract class Generator 
 implements GeneratorInterface,
 		   GeneratorChangeListenerInterface,
-		   ModuleGeneratorRemoveListenerInterface
-{
+		   ModuleGeneratorRemoveListenerInterface {
 	//**********************************************************************************************
 	// Fields:
 	
@@ -59,7 +58,7 @@ implements GeneratorInterface,
 	/**
 	 * Type of the Generator.
 	 */
-	private GeneratorTypeData generatorTypeData;
+	private GeneratorTypeInfoData generatorTypeInfoData;
 
 	//private GeneratorBuffer	generatorBuffer = null;
 	
@@ -80,17 +79,14 @@ implements GeneratorInterface,
 	 * 			is the unique name of the generator.
 	 * @param soundFrameRate		
 	 * 			are the Frames per Second.
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the Type of the Generator.
 	 */
-	public Generator(String name, Float soundFrameRate, GeneratorTypeData generatorTypeData)
-	{
-		super();
-		
+	public Generator(String name, Float soundFrameRate, GeneratorTypeInfoData generatorTypeInfoData) {
 		//==========================================================================================
 		this.name = name;
 		this.soundFrameRate = soundFrameRate.floatValue();
-		this.generatorTypeData = generatorTypeData;
+		this.generatorTypeInfoData = generatorTypeInfoData;
 		//this.parentModuleGenerator = parentModuleGenerator;
 		//==========================================================================================
 	}
@@ -126,8 +122,7 @@ implements GeneratorInterface,
 	 * @param endTimePos
 	 * 			is the endTimePos.
 	 */
-	public void setTimePos(final SoundSourceData soundSourceData, float startTimePos, float endTimePos)
-	{
+	public void setTimePos(final SoundSourceData soundSourceData, float startTimePos, float endTimePos) {
 		//==========================================================================================
 		float changedStartTimePos 	= Math.min(this.startTimePos, startTimePos);
 		float changedEndTimePos		= Math.max(this.endTimePos, endTimePos);
@@ -333,7 +328,7 @@ implements GeneratorInterface,
 	}
 
 	/**
-	 * @see #addInputGenerator(Generator, InputTypeData, Float)
+	 * @see #addGeneratorInput(SoundSourceData, Generator, InputTypeData, Float, String, InputTypeData)
 	 */
 	public InputData addInputValue(final SoundSourceData soundSourceData, Float value, InputTypeData inputTypeData)
 	{
@@ -447,37 +442,24 @@ implements GeneratorInterface,
 	/**
 	 * Searches a input by type.<br/>
 	 * Throws a {@link RuntimeException} if there is more than one input of this type.
-	 * 
-	 * @param inputType
-	 * @return
 	 */
-	public InputData searchInputByType(InputTypeData inputTypeData)
-	{
+	public InputData searchInputByType(final InputTypeData inputTypeData) {
 		//==========================================================================================
 		InputData retInputData = null;
 		
-		if (this.inputs != null)
-		{	
-			synchronized (this.inputs)
-			{
-				int inputType = inputTypeData.getInputType();
-				
-				Iterator<InputData> inputGeneratorsIterator = this.inputs.iterator();
-				
-				while (inputGeneratorsIterator.hasNext())
-				{
-					InputData inputData = inputGeneratorsIterator.next();
-					
-					if (inputData.getInputTypeData().getInputType() == inputType)
-					{
-						if (retInputData != null)
-						{
-							throw new PopupRuntimeException("Found more than one input by type \"" + inputTypeData + "\" in generator \"" + this.getName() + "\".");
-						}
-						
-						retInputData = inputData;
-					}
-				}
+		if (this.inputs != null) {
+			synchronized (this.inputs) {
+				final int inputType = inputTypeData.getInputType();
+
+                for (final InputData inputData : this.inputs) {
+                    if (inputData.getInputTypeData().getInputType() == inputType) {
+                        if (retInputData != null) {
+                            throw new PopupRuntimeException("Found more than one input by type \"" + inputTypeData + "\" in generator \"" + this.getName() + "\".");
+                        }
+
+                        retInputData = inputData;
+                    }
+                }
 			}
 		}
 		//==========================================================================================
@@ -487,41 +469,27 @@ implements GeneratorInterface,
 	/**
 	 * Searches a input by type.<br/>
 	 * Throws a {@link RuntimeException} if there is more than one input of this type.
-	 * 
-	 * @param inputType
-	 * @return
 	 */
-	public InputData searchInputByTypeName(String inputTypeName)
-	{
+	public InputData searchInputByTypeName(final String inputTypeName) {
 		//==========================================================================================
 		InputData retInputData = null;
 		
-		if (this.inputs != null)
-		{	
-			synchronized (this.inputs)
-			{
-				if (this.inputs != null)
-				{	
-					Iterator<InputData> inputGeneratorsIterator = this.inputs.iterator();
-					
-					while (inputGeneratorsIterator.hasNext())
-					{
-						InputData inputData = inputGeneratorsIterator.next();
-						
-						if (inputTypeName.equals(inputData.getInputTypeData().getInputTypeName()) == true)
-						{
-							if (retInputData != null)
-							{
-								throw new PopupRuntimeException("found more than one input by name \"" + inputTypeName + "\" in generator " + this.toString());
-							}
-							
-							retInputData = inputData;
-						}
-					}
+		if (this.inputs != null) {
+			synchronized (this.inputs) {
+				if (this.inputs != null) {
+
+                    for (final InputData inputData : this.inputs) {
+                        if (inputTypeName.equals(inputData.getInputTypeData().getInputTypeName())) {
+                            if (retInputData != null) {
+                                throw new PopupRuntimeException("found more than one input by name \"" + inputTypeName + "\" in generator " + this.toString());
+                            }
+
+                            retInputData = inputData;
+                        }
+                    }
 				}
 			}
 		}
-		
 		//==========================================================================================
 		return retInputData;
 	}
@@ -603,12 +571,12 @@ implements GeneratorInterface,
 	}
 
 	/**
-	 * @return the attribute {@link #generatorTypeData}.
+	 * @return the attribute {@link #generatorTypeInfoData}.
 	 */
-	public GeneratorTypeData getGeneratorTypeData()
+	public GeneratorTypeInfoData getGeneratorTypeData()
 	{
 		//==========================================================================================
-		return this.generatorTypeData;
+		return this.generatorTypeInfoData;
 	}
 	
 	/**
@@ -840,8 +808,6 @@ implements GeneratorInterface,
 	 * 			soundFramePosition = framePosition - {@link #getStartTimePos()}!)
 	 * @param frameTime
 	 * 			is the absolute time of the frame in milli seconds.
-	 * @param signal
-	 * 			is the sound sample.
 	 * @param generatorBuffer
 	 * 			is the generator buffer.<br/>
 	 * 			<code>null</code> if there is no buffer available.
@@ -851,34 +817,28 @@ implements GeneratorInterface,
 	 * 			the default value.<br/>
 	 * 			{@link Float#NaN} if no default input defined.
 	 */
-	protected float calcInputMonoValue(long framePosition, 
-	                                   float frameTime,
-	                                   InputTypeData inputTypeData, 
-	                                   ModuleGenerator parentModuleGenerator,
-	                                   GeneratorBufferInterface generatorBuffer,
-	                                   ModuleArguments moduleArguments)
-//	throws NoInputSignalException
-	{
+	protected float calcInputMonoValue(final long framePosition,
+									   final float frameTime,
+									   final InputTypeData inputTypeData,
+									   final ModuleGenerator parentModuleGenerator,
+									   final GeneratorBufferInterface generatorBuffer,
+									   final ModuleArguments moduleArguments) {
 		//==========================================================================================
-		float value;
+		final float value;
+
+		final InputData inputData = this.searchInputByType(inputTypeData);
 		
-		InputData inputData = this.searchInputByType(inputTypeData);
-		
-		if (inputData != null)
-		{
+		if (inputData != null) {
 			value = this.calcInputMonoValue(framePosition, 
 			                                frameTime,
 			                                inputData, 
 			                                parentModuleGenerator,
 			                                generatorBuffer,
 			                                moduleArguments);
-		}
-		else
-		{
+		} else {
 			//throw new RuntimeException("input type not found: " + inputType);
 			value = this.getInputDefaultValueByInputType(inputTypeData);
 		}
-		
 		//==========================================================================================
 		return value;
 	}
@@ -1042,7 +1002,7 @@ System.out.println("Generator(\"" + this.getName() + "\").generateChangedEvent: 
 	}
 	
 	/**
-	 * {@link #generateChangedEvent(float, float)} for {@link #startTimePos} and {@link #endTimePos}.
+	 * {@link #generateChangedEvent(SoundSourceData, Generator, float, float)} for {@link #startTimePos} and {@link #endTimePos}.
 	 */
 	public void generateChangedEvent(final SoundSourceData soundSourceData)
 	{

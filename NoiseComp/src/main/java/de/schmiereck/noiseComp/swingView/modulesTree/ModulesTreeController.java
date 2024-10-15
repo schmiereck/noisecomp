@@ -14,9 +14,9 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appView.AppView;
@@ -118,14 +118,14 @@ public class ModulesTreeController
 	 * @param generatorTypes
 	 * 			are the generator Types.
 	 */
-	public void addGeneratorTypes(List<GeneratorTypeData> generatorTypes)
+	public void addGeneratorTypes(List<GeneratorTypeInfoData> generatorTypes)
 	{
 		//==========================================================================================
 		this.modulesTreeModel.removeGeneratorNodes();
 		this.modulesTreeModel.removeModuleodes();
 
 		//------------------------------------------------------------------------------------------
-		Iterator<GeneratorTypeData> generatorTypesIterator = generatorTypes.iterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = generatorTypes.iterator();
 		
 		this.importGeneratorTypes(generatorTypesIterator);
 		
@@ -136,17 +136,17 @@ public class ModulesTreeController
 	 * @param generatorTypesIterator
 	 * 			is the generator Types iterator.
 	 */
-	public void importGeneratorTypes(Iterator<GeneratorTypeData> generatorTypesIterator)
+	public void importGeneratorTypes(Iterator<GeneratorTypeInfoData> generatorTypesIterator)
 	{
 		//==========================================================================================
 		DefaultTreeModel treeModel = this.modulesTreeModel.getTreeModel();
 		
 		//------------------------------------------------------------------------------------------
 		while (generatorTypesIterator.hasNext()) {
-			final GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			final GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			final String folderPath = generatorTypeData.getFolderPath();
+			final String folderPath = generatorTypeInfoData.getFolderPath();
 
 			DefaultMutableTreeNode lastInsertTreeNode;
 			
@@ -201,17 +201,17 @@ public class ModulesTreeController
 					}
 				}
 			} else {
-				throw new RuntimeException("Folder-Path of \"%s\" is null.".formatted(generatorTypeData.getGeneratorTypeName()));
+				throw new RuntimeException("Folder-Path of \"%s\" is null.".formatted(generatorTypeInfoData.getGeneratorTypeName()));
 			}
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			final Class< ? extends Generator> generatorClass = generatorTypeData.getGeneratorClass();
+			final Class< ? extends Generator> generatorClass = generatorTypeInfoData.getGeneratorClass();
 			
 			if (Objects.nonNull(generatorClass)) {
-				DefaultMutableTreeNode moduleTreeNode = new DefaultMutableTreeNode(generatorTypeData);
+				DefaultMutableTreeNode moduleTreeNode = new DefaultMutableTreeNode(generatorTypeInfoData);
 
 				// Module?
-				if (generatorTypeData instanceof ModuleGeneratorTypeData) {
+				if (generatorTypeInfoData instanceof ModuleGeneratorTypeInfoData) {
 					this.modulesTreeModel.addModuleNode(lastInsertTreeNode, moduleTreeNode);
 				} else {
 					this.modulesTreeModel.addGeneratoreNode(lastInsertTreeNode, moduleTreeNode);
@@ -238,7 +238,7 @@ public class ModulesTreeController
 	/**
 	 * Update Edited ModuleTree-Entry.
 	 */
-	public void updateEditedModuleTreeEntry(final ModuleGeneratorTypeData editedModuleGeneratorTypeData) {
+	public void updateEditedModuleTreeEntry(final ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData) {
 		//==========================================================================================
 		final DefaultTreeModel treeModel = (DefaultTreeModel)this.modulesTreeView.getModel();
 
@@ -316,7 +316,7 @@ public class ModulesTreeController
 	public void doInsertModule(String folderPath)
 	{
 		//==========================================================================================
-		final ModuleGeneratorTypeData moduleGeneratorTypeData =
+		final ModuleGeneratorTypeInfoData moduleGeneratorTypeData =
 			ModuleGenerator.createModuleGeneratorTypeData(folderPath);
 	
 		//moduleeneratorTypeData.setIsMainModuleGeneratorType(true);
@@ -399,7 +399,7 @@ public class ModulesTreeController
 		Object userObject = treeNode.getUserObject();
 		
 		// Delete Module?
-		if (userObject instanceof ModuleGeneratorTypeData)
+		if (userObject instanceof ModuleGeneratorTypeInfoData)
 		{
 			this.doDeleteModule(treeNode);
 		}
@@ -506,7 +506,7 @@ public class ModulesTreeController
 	 */
 	public void doPasteModule(DefaultMutableTreeNode cutModuleTreeNode, 
 	                          DefaultMutableTreeNode pasteFolderTreeNode,
-	                          ModuleGeneratorTypeData moduleGeneratorTypeData)
+	                          ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		// Update Service:
@@ -543,9 +543,9 @@ public class ModulesTreeController
 		Object userObject = cutTreeNode.getUserObject();
 		
 		// Paste Module?
-		if (userObject instanceof ModuleGeneratorTypeData)
+		if (userObject instanceof ModuleGeneratorTypeInfoData)
 		{
-			ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
+			ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)userObject;
 			
 			this.doPasteModule(cutTreeNode,
 			                   pasteFolderTreeNode,
@@ -573,7 +573,7 @@ public class ModulesTreeController
 		//==========================================================================================
 		Object userObject = moduleTreeNode.getUserObject();
 		
-		ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
+		ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)userObject;
 		
 		// Module is used by other modules?
 		if (this.soundService.checkModuleIsUsed(moduleGeneratorTypeData) == true)

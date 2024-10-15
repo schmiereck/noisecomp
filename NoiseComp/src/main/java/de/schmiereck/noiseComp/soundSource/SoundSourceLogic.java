@@ -5,7 +5,7 @@ import java.util.*;
 import de.schmiereck.noiseComp.generator.Generator;
 import de.schmiereck.noiseComp.generator.GeneratorChangeListenerInterface;
 import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 import de.schmiereck.noiseComp.generator.SoundSample;
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
@@ -64,7 +64,7 @@ implements GeneratorChangeListenerInterface, TimelineChangedListernerInterface
 	 * 			is the mainModuleGeneratorTypeData.
 	 */
 	public synchronized void setMainModuleGeneratorTypeData(final SoundSourceData soundSourceData,
-															final ModuleGeneratorTypeData mainModuleGeneratorTypeData) {
+															final ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData) {
 		//==========================================================================================
 		//------------------------------------------------------------------------------------------
 		this.timelineManagerLogic = new TimelineManagerLogic(this, mainModuleGeneratorTypeData);

@@ -44,12 +44,12 @@ extends Generator
 	 * 			is the generator name.
 	 * @param frameRate
 	 * 			is the frame rate.
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the Generator-Type Data.
 	 */
-	public EchoGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public EchoGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -209,27 +209,27 @@ extends Generator
 		//==========================================================================================
 	}
 
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(FILTER_GENERATOR_FOLDER_PATH, EchoGenerator.class, "echo", "Echo Generator.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(FILTER_GENERATOR_FOLDER_PATH, EchoGenerator.class, "echo", "Echo Generator.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "The input signal between -1 and 1.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_ECHOS, "echos", 1, 1, "Count of echos.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_DELAY, "delay", 1, 1, "Delay (Verzögerung).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_DECAY, "decay", 1, 1, "Decay (Dämpfung).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 }

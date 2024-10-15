@@ -23,9 +23,9 @@ extends Generator
 	 * 
 	 */
 	public ModuleGenerator(String name, Float frameRate, 
-						  GeneratorTypeData generatorTypeData)
+						  GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 		
 		// Fügt sich als Listener zu dem seinem Typ hinzu, um über Änderungen informiert zu werden.
 		//((ModuleGeneratorTypeData)generatorTypeData).getGeneratorChangeObserver().registerGeneratorChangeListener(this);
@@ -55,7 +55,7 @@ extends Generator
 	{
 		if (this.checkIsInTime(frameTime) == true)
 		{	
-			ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)this.getGeneratorTypeData();
+			ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)this.getGeneratorTypeData();
 			
 			OutputGenerator outputGenerator = moduleGeneratorTypeData.getOutputGenerator();
 			
@@ -86,9 +86,9 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData(String folderPath)
+	public static GeneratorTypeInfoData createGeneratorTypeData(String folderPath)
 	{
-		ModuleGeneratorTypeData generatorTypeData = new ModuleGeneratorTypeData(folderPath,
+		ModuleGeneratorTypeInfoData generatorTypeData = new ModuleGeneratorTypeInfoData(folderPath,
 		                                                                      ModuleGenerator.class, 
 																			  "Module", 
 																			  "Manages a Group of other generators.");
@@ -97,14 +97,14 @@ extends Generator
 	}
 
 	/**
-	 * @see #createGeneratorTypeData() with cast to {@link ModuleGeneratorTypeData}
+	 * @see #createGeneratorTypeData() with cast to {@link ModuleGeneratorTypeInfoData}
 	 * 
 	 * @param folderPath
 	 * 			is the Folder-Path in Format <code>"/folder1/folder2/"</code>.
 	 */
-	public static ModuleGeneratorTypeData createModuleGeneratorTypeData(String folderPath)
+	public static ModuleGeneratorTypeInfoData createModuleGeneratorTypeData(String folderPath)
 	{
-		return (ModuleGeneratorTypeData)ModuleGenerator.createGeneratorTypeData(folderPath);
+		return (ModuleGeneratorTypeInfoData)ModuleGenerator.createGeneratorTypeData(folderPath);
 	}
 
 	/* (non-Javadoc)

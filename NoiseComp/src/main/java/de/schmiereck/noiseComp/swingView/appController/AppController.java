@@ -27,13 +27,10 @@ import de.schmiereck.noiseComp.Version;
 import de.schmiereck.noiseComp.file.ImportFileOperationLogic;
 import de.schmiereck.noiseComp.file.LoadFileOperationLogic;
 import de.schmiereck.noiseComp.file.SaveFileOperationLogic;
-import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.GeneratorTypesData;
-import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.*;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData.TicksPer;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceData;
@@ -515,7 +512,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		 	new DoEditModuleListener()
 		 	{
 				@Override
-				public void notifyEditModule(ModuleGeneratorTypeData moduleGeneratorTypeData)
+				public void notifyEditModule(ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					selectEditModule(moduleGeneratorTypeData);
@@ -541,7 +538,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				                                    TreePath selectionTreePath)
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 					
 					moduleEditController.doEditModuleChanged(moduleGeneratorTypeData);
 					
@@ -563,7 +560,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					ModuleInputTypeSelectController moduleInputTypeSelectController = moduleInputTypesController.getModuleInputTypeSelectController();
 					
-					ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 					
 					moduleInputTypeSelectController.doEditModuleChanged(moduleGeneratorTypeData);
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -600,7 +597,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				public void notifyModelPropertyChanged()
 				{
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					ModuleGeneratorTypeData editedModuleGeneratorTypeData = 
+					ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData =
 						modulesTreeController.getModulesTreeModel().getEditedModuleGeneratorTypeData();
 					
 					modulesTreeController.updateEditedModuleTreeEntry(editedModuleGeneratorTypeData);
@@ -691,7 +688,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					ModuleGeneratorTypeData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 //					ModuleInputTypeSelectModel selectModel = moduleInputTypeSelectController.getInputTypeSelectModel();
 					
 //					InputTypeData inputTypeData = moduleInputTypeSelectController.getSelectedModuleInputType();
@@ -887,7 +884,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					
 					ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 					
-					ModuleGeneratorTypeData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 					
 					Timeline selectedTimeline = timelinesDrawPanelController.getSelectedTimeline();
 					
@@ -1589,7 +1586,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	    //------------------------------------------------------------------------------------------
 		// Init Generator-Types:
 	    //------------------------------------------------------------------------------------------
-		List<GeneratorTypeData> generatorTypes = this.soundService.retrieveGeneratorTypes();
+		List<GeneratorTypeInfoData> generatorTypes = this.soundService.retrieveGeneratorTypes();
 		
 		this.modulesTreeController.addGeneratorTypes(generatorTypes);
 		
@@ -1620,7 +1617,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * @param mainModuleGeneratorTypeData
 	 * 			is the edited module
 	 */
-	public void selectEditModule(ModuleGeneratorTypeData mainModuleGeneratorTypeData)
+	public void selectEditModule(ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData)
 	{
 		//==========================================================================================
 		final TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
@@ -1700,7 +1697,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public Generator retrieveGeneratorOfEditedModule(String generatorName)
 	{
 		//==========================================================================================
-		ModuleGeneratorTypeData moduleGeneratorTypeData = 
+		ModuleGeneratorTypeInfoData moduleGeneratorTypeData =
 			modulesTreeController.getModulesTreeModel().getEditedModuleGeneratorTypeData();
 		
 		Generator generator = moduleGeneratorTypeData.searchGenerator(generatorName);
@@ -1722,10 +1719,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * @return
 	 * 			the generator types.
 	 */
-	public List<GeneratorTypeData> retrieveGeneratorTypesForSelect()
+	public List<GeneratorTypeInfoData> retrieveGeneratorTypesForSelect()
 	{
 		//==========================================================================================
-		final List<GeneratorTypeData> generatorTypes = this.soundService.retrieveGeneratorTypes();
+		final List<GeneratorTypeInfoData> generatorTypes = this.soundService.retrieveGeneratorTypes();
 
 		//==========================================================================================
 		return generatorTypes;
@@ -1735,12 +1732,12 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * @return
 	 * 			the edited ModuleGenerator-Type Data.
 	 */
-	public ModuleGeneratorTypeData getEditedModuleGeneratorTypeData()
+	public ModuleGeneratorTypeInfoData getEditedModuleGeneratorTypeData()
 	{
 		//==========================================================================================
 		ModulesTreeModel modulesTreeModel = this.modulesTreeController.getModulesTreeModel();
 		
-		ModuleGeneratorTypeData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+		ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 		
 		//==========================================================================================
 		return editedModuleGeneratorTypeData;
@@ -2094,7 +2091,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		float frameRate = this.soundDataLogic.getFrameRate();
 		String absolutePath = file.getAbsolutePath();
 
-		ModuleGeneratorTypeData mainModuleGeneratorTypeData;
+		ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData;
 		GeneratorTypesData generatorTypesData = new GeneratorTypesData();
 
 		try {
@@ -2107,13 +2104,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		this.soundService.removeAllGeneratorTypes();
 		
-		Iterator<GeneratorTypeData> generatorTypesIterator = generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext())
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 
-			this.soundService.addGeneratorType(generatorTypeData);
+			this.soundService.addGeneratorType(generatorTypeInfoData);
 		}
 		
 		//------------------------------------------------------------------------------------------
@@ -2125,10 +2122,10 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//==========================================================================================
 	}
 
-	public void changeEditModule(final ModuleGeneratorTypeData mainModuleGeneratorTypeData) {
+	public void changeEditModule(final ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData) {
 		this.selectEditModule(null);
 
-		final List<GeneratorTypeData> generatorTypes = this.soundService.retrieveGeneratorTypes();
+		final List<GeneratorTypeInfoData> generatorTypes = this.soundService.retrieveGeneratorTypes();
 
 		this.modulesTreeController.addGeneratorTypes(generatorTypes);
 
@@ -2147,17 +2144,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 	{
 		//==========================================================================================
 		GeneratorTypesData generatorTypesData = new GeneratorTypesData();
-		ModuleGeneratorTypeData mainModuleGeneratorTypeData = null;
+		ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData = null;
 		
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.soundService.retrieveGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.soundService.retrieveGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext())
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
-			if (generatorTypeData instanceof ModuleGeneratorTypeData)
+			if (generatorTypeInfoData instanceof ModuleGeneratorTypeInfoData)
 			{
-				ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
+				ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData) generatorTypeInfoData;
 				
 				if (moduleGeneratorTypeData.getIsMainModuleGeneratorType() == true)
 				{
@@ -2165,7 +2162,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 				}
 			}
 			
-			generatorTypesData.addGeneratorTypeData(generatorTypeData);
+			generatorTypesData.addGeneratorTypeData(generatorTypeInfoData);
 		}
 		
 		//------------------------------------------------------------------------------------------
@@ -2204,7 +2201,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		float frameRate = this.soundDataLogic.getFrameRate();
 		String absolutePath = file.getAbsolutePath();
 
-		ModuleGeneratorTypeData mainModuleGeneratorTypeData;
+		ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData;
 		GeneratorTypesData generatorTypesData = new GeneratorTypesData();
 
 		try {
@@ -2222,18 +2219,18 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		GeneratorTypesData addedGeneratorTypesData = new GeneratorTypesData();
 		
-		Iterator<GeneratorTypeData> generatorTypesIterator = generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext())
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 
 			// Not an existing generator type?
-			if (this.soundService.checkGeneratorTypeIsExisting(generatorTypeData) == false)
+			if (this.soundService.checkGeneratorTypeIsExisting(generatorTypeInfoData) == false)
 			{
-				this.soundService.addGeneratorType(generatorTypeData);
+				this.soundService.addGeneratorType(generatorTypeInfoData);
 				 
-				addedGeneratorTypesData.addGeneratorTypeData(generatorTypeData);
+				addedGeneratorTypesData.addGeneratorTypeData(generatorTypeInfoData);
 			}
 		}
 		
@@ -2426,7 +2423,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		final TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
-		final ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.getEditedModuleGeneratorTypeData();
+		final ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData = this.getEditedModuleGeneratorTypeData();
 		final TimelinesDrawPanelModel timelinesDrawPanelModel = this.timelinesDrawPanelController.getTimelinesDrawPanelModel();
 		final TimelineEditModel timelineEditModel = this.timelineEditController.getTimelineEditModel();
 		
@@ -2449,8 +2446,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 				Timeline timeline = selectedTimelineSelectEntryModel.getTimeline();
 				timelineEditModel.setTimeline(timeline);
 				{
-					GeneratorTypeData generatorTypeData = timeline.getGenerator().getGeneratorTypeData();
-					timelineEditModel.setGeneratorTypeData(generatorTypeData);
+					GeneratorTypeInfoData generatorTypeInfoData = timeline.getGenerator().getGeneratorTypeData();
+					timelineEditModel.setGeneratorTypeData(generatorTypeInfoData);
 				}
 			}
 			{
@@ -2549,7 +2546,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 //		TimelineSelectEntryModel timelineGeneratorModel = this.timelinesDrawPanelModel.getSelectedTimelineGeneratorModel();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.getEditedModuleGeneratorTypeData();
+		ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData = this.getEditedModuleGeneratorTypeData();
 		
 		TimelineSelectEntryModel timelineSelectEntryModel = 
 			this.selectedTimelineModel.getSelectedTimelineSelectEntryModel();

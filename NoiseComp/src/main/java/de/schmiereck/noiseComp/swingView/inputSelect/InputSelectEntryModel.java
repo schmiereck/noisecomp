@@ -4,7 +4,7 @@
 package de.schmiereck.noiseComp.swingView.inputSelect;
 
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
@@ -75,10 +75,10 @@ public class InputSelectEntryModel
 		final String generatorLabel;
 
 		if (inputGenerator != null) {
-			final GeneratorTypeData inputGeneratorTypeData = inputGenerator.getGeneratorTypeData();
+			final GeneratorTypeInfoData inputGeneratorTypeInfoData = inputGenerator.getGeneratorTypeData();
 
-			if (inputGeneratorTypeData != null) {
-				generatorLabel = inputGenerator.getName() + " [" + inputGeneratorTypeData.getGeneratorTypeName() + "]";
+			if (inputGeneratorTypeInfoData != null) {
+				generatorLabel = inputGenerator.getName() + " [" + inputGeneratorTypeInfoData.getGeneratorTypeName() + "]";
 			} else {
 				generatorLabel = inputGenerator.getName();
 			}

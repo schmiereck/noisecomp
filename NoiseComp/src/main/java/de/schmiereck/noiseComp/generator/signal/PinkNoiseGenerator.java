@@ -40,12 +40,12 @@ extends Generator
 	 * 			is the generator name.
 	 * @param frameRate
 	 * 			is the frame rate.
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the Generator-Type Data.
 	 */
-	public PinkNoiseGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public PinkNoiseGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -197,20 +197,20 @@ extends Generator
 		return new PinkNoiseGeneratorData(new Random().nextLong(), new Random(0), new double[pinkCoefs.length]);
 	}
 
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH, PinkNoiseGenerator.class, "Pink Noise", "Generate White Gaussian Noise with variance and mean.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SIGNAL_GENERATOR_FOLDER_PATH, PinkNoiseGenerator.class, "Pink Noise", "Generate White Gaussian Noise with variance and mean.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VARIANCE, "variance", -1, -1, "The variance.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_MEAN, "mean", -1, -1, "The mean.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 
 }

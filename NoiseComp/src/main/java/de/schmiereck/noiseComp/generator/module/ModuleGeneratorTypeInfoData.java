@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
@@ -18,8 +18,8 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceData;
  * @author smk
  * @version <p>28.02.2004: created, smk</p>
  */
-public class ModuleGeneratorTypeData
-	extends GeneratorTypeData
+public class ModuleGeneratorTypeInfoData
+	extends GeneratorTypeInfoData
 //	implements GeneratorChangeListenerInterface
 {
 	//**********************************************************************************************
@@ -80,10 +80,10 @@ public class ModuleGeneratorTypeData
 	 * Constructor.
 	 * 
 	 */
-	public ModuleGeneratorTypeData(String folderPath,
-	                              Class<? extends Generator> generatorClass, 
-								  String generatorTypeName, 
-								  String generatorTypeDescription)
+	public ModuleGeneratorTypeInfoData(String folderPath,
+									   Class<? extends Generator> generatorClass,
+									   String generatorTypeName,
+									   String generatorTypeDescription)
 	{
 		super(folderPath, generatorClass, generatorTypeName, generatorTypeDescription);
 	}

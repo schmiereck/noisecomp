@@ -7,8 +7,7 @@ import javax.sound.sampled.SourceDataLine;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
 import de.schmiereck.noiseComp.soundScheduler.SoundDataLogic;
@@ -17,7 +16,6 @@ import de.schmiereck.noiseComp.swingView.appController.AppController;
 
 import java.awt.*;
 import java.util.Enumeration;
-import java.util.List;
 
 /**
  * <p>
@@ -80,7 +78,7 @@ public class SwingMain
 
 					// see: LoadFileOperationLogic#loadNoiseCompFile
 
-					final ModuleGeneratorTypeData mainModuleGeneratorTypeData =
+					final ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData =
 							StartupService.createDemoGenerators(appController.getSoundSourceData(),
 									soundService, soundDataLogic.getFrameRate());
 

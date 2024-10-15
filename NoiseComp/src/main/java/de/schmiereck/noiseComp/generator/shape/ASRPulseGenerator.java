@@ -6,7 +6,6 @@ package de.schmiereck.noiseComp.generator.shape;
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
-import static de.schmiereck.noiseComp.service.StartupService.FILTER_GENERATOR_FOLDER_PATH;
 import static de.schmiereck.noiseComp.service.StartupService.SHAPE_GENERATOR_FOLDER_PATH;
 
 /**
@@ -50,9 +49,9 @@ extends Generator
 	 * 
 	 * @param frameRate	Frames per Second
 	 */
-	public ASRPulseGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public ASRPulseGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -206,31 +205,31 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH, ASRPulseGenerator.class, "ASRPulse", "Generates a pulse signal with a specified frequency and amplidude and puls shape.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SHAPE_GENERATOR_FOLDER_PATH, ASRPulseGenerator.class, "ASRPulse", "Generates a pulse signal with a specified frequency and amplidude and puls shape.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the pulse in oscillations per second.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_AMPL, "signalAmplitude", 1, 1, Float.valueOf(1.0F), "Amplidude of the pulse between 0 and 1.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_ATTACK_TIME, "attackTime", 1, 1, Float.valueOf(0.1F), "The attack time of the pulse in percent between 0.0 and 1.0.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SUSTAIN_TIME, "sustainTime", 1, 1, Float.valueOf(0.3F), "The sustain time of the pulse in percent between 0.0 and 1.0.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_RELEASE_TIME, "releaseTime", 1, 1, Float.valueOf(0.2F), "The release time of the pulse in percent between 0.0 and 1.0.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 }

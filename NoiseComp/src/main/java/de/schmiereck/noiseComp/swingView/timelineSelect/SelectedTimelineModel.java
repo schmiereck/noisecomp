@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.InputTypesData;
@@ -138,14 +138,14 @@ public class SelectedTimelineModel
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				Generator generator = timeline.getGenerator();
 				
-				GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
+				GeneratorTypeInfoData generatorTypeInfoData = generator.getGeneratorTypeData();
 				
 //				List<InputEntryModel> inputEntryModels = this.inputEntriesModel.getInputEntryModels();
 				
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// Add Input-Groups:
 				
-				InputTypesData inputTypesData = generatorTypeData.getInputTypesData();
+				InputTypesData inputTypesData = generatorTypeInfoData.getInputTypesData();
 				
 				for (int inputTypePos = 0; inputTypePos < inputTypesData.getInputTypesSize(); inputTypePos++)
 				{

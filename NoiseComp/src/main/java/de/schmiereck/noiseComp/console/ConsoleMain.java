@@ -2,7 +2,7 @@ package de.schmiereck.noiseComp.console;
 
 import javax.sound.sampled.SourceDataLine;
 
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.service.StartupService;
@@ -13,9 +13,6 @@ import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.soundSource.SoundSourceSchedulerLogic;
 import de.schmiereck.noiseComp.soundScheduler.SoundSchedulerData;
-import de.schmiereck.noiseComp.timeline.Timeline;
-
-import java.util.List;
 
 
 /*
@@ -70,7 +67,7 @@ public class ConsoleMain
 		//------------------------------------------------------------------------------------------
 		final SoundSourceData soundSourceData = new SoundSourceData();
 
-		final ModuleGeneratorTypeData mainModuleGeneratorTypeData =
+		final ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData =
 			StartupService.createDemoGenerators(soundSourceData, soundService, soundDataLogic.getFrameRate());
 
 		soundSourceLogic.setMainModuleGeneratorTypeData(soundSourceData, mainModuleGeneratorTypeData);

@@ -3,7 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.modulesTree;
 
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 
 
 /**
@@ -23,5 +23,5 @@ public interface DoEditModuleListener
 	 * @param moduleGeneratorTypeData
 	 * 			is the edited module
 	 */
-	public void notifyEditModule(ModuleGeneratorTypeData moduleGeneratorTypeData);
+	public void notifyEditModule(ModuleGeneratorTypeInfoData moduleGeneratorTypeData);
 }

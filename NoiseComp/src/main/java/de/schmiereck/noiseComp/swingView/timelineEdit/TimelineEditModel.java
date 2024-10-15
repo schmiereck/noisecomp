@@ -6,7 +6,7 @@ package de.schmiereck.noiseComp.swingView.timelineEdit;
 import java.util.List;
 import java.util.Vector;
 
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -36,10 +36,10 @@ public class TimelineEditModel
 	/**
 	 * Input Generator.
 	 */
-	private GeneratorTypeData generatorTypeData = null;
+	private GeneratorTypeInfoData generatorTypeInfoData = null;
 
 	/**
-	 * {@link #generatorTypeData} changed listeners.
+	 * {@link #generatorTypeInfoData} changed listeners.
 	 */
 	private final ModelPropertyChangedNotifier generatorTypeDataChangedNotifier = new ModelPropertyChangedNotifier();
 	
@@ -248,22 +248,22 @@ public class TimelineEditModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #generatorTypeData}.
+	 * 			returns the {@link #generatorTypeInfoData}.
 	 */
-	public GeneratorTypeData getGeneratorTypeData()
+	public GeneratorTypeInfoData getGeneratorTypeData()
 	{
-		return this.generatorTypeData;
+		return this.generatorTypeInfoData;
 	}
 
 	/**
-	 * @param generatorTypeData 
-	 * 			to set {@link #generatorTypeData}.
+	 * @param generatorTypeInfoData
+	 * 			to set {@link #generatorTypeInfoData}.
 	 */
-	public void setGeneratorTypeData(GeneratorTypeData generatorTypeData)
+	public void setGeneratorTypeData(GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		if (CompareUtils.compareWithNull(this.generatorTypeData, generatorTypeData) == false)
+		if (CompareUtils.compareWithNull(this.generatorTypeInfoData, generatorTypeInfoData) == false)
 		{
-			this.generatorTypeData = generatorTypeData;
+			this.generatorTypeInfoData = generatorTypeInfoData;
 			
 			// Notify Listeners.
 			this.generatorTypeDataChangedNotifier.notifyModelPropertyChangedListeners();

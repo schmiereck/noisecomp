@@ -4,7 +4,7 @@
 package de.schmiereck.noiseComp.swingView.moduleInputTypeEdit;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSelectController;
 import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSelectEntryModel;
@@ -81,7 +81,7 @@ public class ModuleInputTypeEditController
 	 */
 	public void doUpdate(final ModuleInputTypeSelectModel selectModel, 
 	                     //final InputTypeData selectedInputTypeData,
-	                     ModuleGeneratorTypeData editedModuleGeneratorTypeData)
+	                     ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData)
 	{
 		//==========================================================================================
 		ModuleInputTypeEditModel inputEditModel = this.getModuleInputTypeEditModel();
@@ -204,7 +204,7 @@ public class ModuleInputTypeEditController
 		ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		ModuleGeneratorTypeData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+		ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 		ModuleInputTypeSelectModel selectModel = moduleInputTypeSelectController.getInputTypeSelectModel();
 		
 //		InputTypeData inputTypeData = moduleInputTypeSelectController.getSelectedModuleInputType();

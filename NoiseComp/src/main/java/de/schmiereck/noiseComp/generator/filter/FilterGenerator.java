@@ -38,12 +38,12 @@ extends Generator
 	 * 			is the generator name.
 	 * @param frameRate
 	 * 			is the frame rate.
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the Generator-Type Data.
 	 */
-	public FilterGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public FilterGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -148,20 +148,20 @@ extends Generator
 		//==========================================================================================
 	}
 
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(FILTER_GENERATOR_FOLDER_PATH, FilterGenerator.class, "filter", "Filter Generator.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(FILTER_GENERATOR_FOLDER_PATH, FilterGenerator.class, "filter", "Filter Generator.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "Is a signal between -1 and 1.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FILTER, "filter", 1, 1, "Is a filter between 0 and 1.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 
 

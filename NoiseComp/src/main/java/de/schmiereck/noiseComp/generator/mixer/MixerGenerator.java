@@ -46,12 +46,12 @@ extends Generator
 	 * 			is the genrator name.
 	 * @param frameRate
 	 * 			is the frame rate.
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the Generator-Type Data.
 	 */
-	public MixerGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public MixerGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	public void addVolumeInput(final SoundSourceData soundSourceData, Generator volumeInput)
@@ -185,20 +185,20 @@ extends Generator
 		//==========================================================================================
 	}
 
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(MIXER_GENERATOR_FOLDER_PATH, MixerGenerator.class, "Mixer", "Mixes multiple signal input lines and scale them with a volume.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(MIXER_GENERATOR_FOLDER_PATH, MixerGenerator.class, "Mixer", "Mixes multiple signal input lines and scale them with a volume.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_VOLUME, "volume", -1, -1, "The volume of the output singal between 0 and 1 (average is calculated if more then one volume is connected).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", -1, -1, "The input signal between -1 and 1 (average is calculated if more then one volume is connected).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 	
 }

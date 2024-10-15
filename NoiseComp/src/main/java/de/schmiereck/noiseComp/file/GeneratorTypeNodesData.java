@@ -1,6 +1,6 @@
 package de.schmiereck.noiseComp.file;
 
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,7 +20,7 @@ public class GeneratorTypeNodesData
 {	
 	/**
 	 * Verwaltet eine Liste von {@link GeneratorTypeNodeData}-Objekten
-	 * mit ihrem {@link ModuleGeneratorTypeData#getGeneratorTypeClassName()} als Key.
+	 * mit ihrem {@link ModuleGeneratorTypeInfoData#getGeneratorTypeClassName()} als Key.
 	 */
 	private final HashMap<String, GeneratorTypeNodeData> generatorTypeNodes = new HashMap<>();
 

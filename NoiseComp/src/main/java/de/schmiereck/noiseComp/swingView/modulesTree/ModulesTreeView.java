@@ -16,8 +16,8 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.swingView.appModel.EditModuleChangedListener;
 
 /**
@@ -86,15 +86,15 @@ implements EditModuleChangedListener
 				DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)value;
 				Object userObject = treeNode.getUserObject();
 				
-				if (userObject instanceof GeneratorTypeData)
+				if (userObject instanceof GeneratorTypeInfoData)
 				{
-					GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
+					GeneratorTypeInfoData generatorTypeInfoData = (GeneratorTypeInfoData)userObject;
 					
 					String labelDecoration = "";
 					
-					if (userObject instanceof ModuleGeneratorTypeData)
+					if (userObject instanceof ModuleGeneratorTypeInfoData)
 					{
-						ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
+						ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)userObject;
 						
 						boolean isMainModule = moduleGeneratorTypeData.getIsMainModuleGeneratorType();
 						
@@ -105,12 +105,12 @@ implements EditModuleChangedListener
 					}
 					
 					// Edited?
-					if (modulesTreeModel.getEditedModuleGeneratorTypeData() == generatorTypeData)
+					if (modulesTreeModel.getEditedModuleGeneratorTypeData() == generatorTypeInfoData)
 					{
 						labelDecoration += " *";
 					}	
 					
-					this.setText(generatorTypeData.getGeneratorTypeName() + labelDecoration);
+					this.setText(generatorTypeInfoData.getGeneratorTypeName() + labelDecoration);
 					
 					// Update changed text width.
 					//this.revalidate();
@@ -176,7 +176,7 @@ implements EditModuleChangedListener
 	 * @param moduleGeneratorTypeData
 	 * 			is the module to edit.
 	 */
-	public void notifyEditModuleisteners(ModuleGeneratorTypeData moduleGeneratorTypeData)
+	public void notifyEditModuleisteners(ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		for (DoEditModuleListener doEditModuleListener : this.doEditModuleListeners)
@@ -196,10 +196,10 @@ implements EditModuleChangedListener
 	}
 
 	/**
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the generator to edit.
 	 */
-	public void notifyDoEditGeneratorListeners(GeneratorTypeData generatorTypeData)
+	public void notifyDoEditGeneratorListeners(GeneratorTypeInfoData generatorTypeInfoData)
 	{
 		// TODO impl.
 	}

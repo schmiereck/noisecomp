@@ -11,15 +11,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.InputData;
-import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.InputTypesData;
+import de.schmiereck.noiseComp.generator.*;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
-import de.schmiereck.noiseComp.swingView.SwingMain;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.appModel.InputEntriesAddListenerInterface;
@@ -130,13 +126,13 @@ public class InputSelectController
 					
 					if (generator != null)
 					{
-						GeneratorTypeData generatorTypeData = generator.getGeneratorTypeData();
+						GeneratorTypeInfoData generatorTypeInfoData = generator.getGeneratorTypeData();
 						
 						Vector<InputData> inputs = generator.getInputs();
 						
 						if (inputs != null)
 						{
-							InputTypesData inputTypesData = generatorTypeData.getInputTypesData();
+							InputTypesData inputTypesData = generatorTypeInfoData.getInputTypesData();
 							
 							int entryPos = 0;
 							

@@ -3,7 +3,7 @@
  */
 package de.schmiereck.noiseComp.swingView.appController;
 
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.service.SoundService;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditController;
@@ -58,7 +58,7 @@ public class AppModuleController
 		final ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		final ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+		final ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 		
 		if (moduleGeneratorTypeData != null) {
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

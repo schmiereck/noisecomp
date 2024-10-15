@@ -34,9 +34,9 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public FaderGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public FaderGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -87,21 +87,21 @@ extends Generator
 		/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH, FaderGenerator.class, "Fader", "Fades linear from a start to a end value.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SHAPE_GENERATOR_FOLDER_PATH, FaderGenerator.class, "Fader", "Fades linear from a start to a end value.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_START_VALUE, "startFadeValue", 1, 1, "Start value between -1 and 1 of the fading over generator length (other value ranges can used).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_END_VALUE, "endFadeValue", 1, 1, "End value between -1 and 1 of the fading over generator length (other value ranges can used).");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 
 //	/* (non-Javadoc)

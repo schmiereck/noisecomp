@@ -13,8 +13,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 
 /**
  * <p>
@@ -254,7 +254,7 @@ extends MouseAdapter
 						
 						Object userObject = treeNode.getUserObject();
 						
-						ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
+						ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)userObject;
 
 						modulesTreeView.notifyEditModuleisteners(moduleGeneratorTypeData);
 						//--------------------------------------------------------------------------
@@ -287,9 +287,9 @@ extends MouseAdapter
 						
 						Object userObject = treeNode.getUserObject();
 						
-						GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
+						GeneratorTypeInfoData generatorTypeInfoData = (GeneratorTypeInfoData)userObject;
 
-						modulesTreeView.notifyDoEditGeneratorListeners(generatorTypeData);
+						modulesTreeView.notifyDoEditGeneratorListeners(generatorTypeInfoData);
 						//--------------------------------------------------------------------------
 					}
 			 	}
@@ -325,13 +325,13 @@ extends MouseAdapter
 			{
 				Object userObject = treeNode.getUserObject();
 				
-				if (userObject instanceof ModuleGeneratorTypeData) {
+				if (userObject instanceof ModuleGeneratorTypeInfoData) {
 //					ModuleGeneratorTypeData moduleeneratorTypeData = (ModuleGeneratorTypeData)userObject;
 
 					this.modulePopupMenu.show(e.getComponent(),
 					                          e.getX(), e.getY());
 				} else {
-					if (userObject instanceof GeneratorTypeData) {
+					if (userObject instanceof GeneratorTypeInfoData) {
 //						GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 	
 						this.generatorPopupMenu.show(e.getComponent(),
@@ -361,17 +361,17 @@ extends MouseAdapter
 					
 					Object userObject = treeNode.getUserObject();
 					
-					if (userObject instanceof ModuleGeneratorTypeData) {
+					if (userObject instanceof ModuleGeneratorTypeInfoData) {
 //						// Update the node edited bevor: 
 //						DefaultTreeModel treeModel = (DefaultTreeModel)modulesTreeView.getModel();
 //						treeModel.nodeChanged(oldTreeNode);
 						
-						ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)userObject;
+						ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)userObject;
 					
 						// Notify edit module event to listeners.
 						this.modulesTreeView.notifyEditModuleisteners(moduleGeneratorTypeData);
 					} else {
-						if (userObject instanceof GeneratorTypeData) {
+						if (userObject instanceof GeneratorTypeInfoData) {
 							//GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;
 						}
 					}

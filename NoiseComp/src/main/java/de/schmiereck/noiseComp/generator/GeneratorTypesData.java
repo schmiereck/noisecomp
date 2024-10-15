@@ -27,14 +27,14 @@ public class GeneratorTypesData
 	// Fields:
 	
 	/**
-	 * List of the available {@link GeneratorTypeData}-Objects with the Class-Name-String 
-	 * {@link GeneratorTypeData#getGeneratorTypeClassName()} as keys.<br/>
+	 * List of the available {@link GeneratorTypeInfoData}-Objects with the Class-Name-String
+	 * {@link GeneratorTypeInfoData#getGeneratorTypeClassName()} as keys.<br/>
 	 * If the GeneratorType is a generic type like {@link ModuleGenerator},
 	 * the name of the generic type is appendet after a &quot;#&quot; on the class name.<br/>
 	 * If the generator type is in a folder the key starts with a <code>"/"</code>,
 	 * in older versions there is no slash if generator is in the root.
 	 */
-	private VectorHash<String, GeneratorTypeData> generatorTypes;
+	private VectorHash<String, GeneratorTypeInfoData> generatorTypes;
 	
 	//**********************************************************************************************
 	// Functions:
@@ -46,35 +46,35 @@ public class GeneratorTypesData
 	public GeneratorTypesData()
 	{
 		//==========================================================================================
-		this.generatorTypes = new VectorHash<String, GeneratorTypeData>();
+		this.generatorTypes = new VectorHash<String, GeneratorTypeInfoData>();
 
 		//==========================================================================================
 	}
 	
-	public void addGeneratorTypeData(GeneratorTypeData generatorTypeData)
+	public void addGeneratorTypeData(GeneratorTypeInfoData generatorTypeInfoData)
 	{
 		//==========================================================================================
-		String key = this.makeKeyName(generatorTypeData);
+		String key = this.makeKeyName(generatorTypeInfoData);
 		
-		this.generatorTypes.add(key, generatorTypeData);
+		this.generatorTypes.add(key, generatorTypeInfoData);
 		
 		//==========================================================================================
 	}
 
 	/**
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the generator Type-Data.
 	 * @return
 	 * 			the key.
 	 */
-	private String makeKeyName(GeneratorTypeData generatorTypeData)
+	private String makeKeyName(GeneratorTypeInfoData generatorTypeInfoData)
 	{
 		//==========================================================================================
 		String key;
 		
-		String typeClassName = generatorTypeData.getGeneratorTypeClassName();
+		String typeClassName = generatorTypeInfoData.getGeneratorTypeClassName();
 		
-		String folderPath = generatorTypeData.getFolderPath();
+		String folderPath = generatorTypeInfoData.getFolderPath();
 		
 		key = this.makeKeyName(folderPath, typeClassName);
 		
@@ -115,39 +115,39 @@ public class GeneratorTypesData
 	 * @param generatorTypeClassName
 	 * 			is the generator type name.
 	 */
-	public GeneratorTypeData searchGeneratorTypeData(final String folderPath,
-													 final String generatorTypeClassName) {
+	public GeneratorTypeInfoData searchGeneratorTypeData(final String folderPath,
+                                                         final String generatorTypeClassName) {
 		//==========================================================================================
-		final GeneratorTypeData generatorTypeData;
+		final GeneratorTypeInfoData generatorTypeInfoData;
 		
 		if (generatorTypeClassName != null) {
 			final String key = this.makeKeyName(folderPath, generatorTypeClassName);
 			
-			generatorTypeData = this.generatorTypes.get(key);
+			generatorTypeInfoData = this.generatorTypes.get(key);
 		} else {
-			generatorTypeData = null;
+			generatorTypeInfoData = null;
 		}
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 
-	public GeneratorTypeData get(int pos)
+	public GeneratorTypeInfoData get(int pos)
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData;
+		GeneratorTypeInfoData generatorTypeInfoData;
 		
-		generatorTypeData = this.generatorTypes.get(pos);
+		generatorTypeInfoData = this.generatorTypes.get(pos);
 
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 	
-	public void removeGeneratorType(GeneratorTypeData generatorTypeData)
+	public void removeGeneratorType(GeneratorTypeInfoData generatorTypeInfoData)
 	{
 		//==========================================================================================
-		String key = this.makeKeyName(generatorTypeData);
+		String key = this.makeKeyName(generatorTypeInfoData);
 		
-		this.generatorTypes.remove(key, generatorTypeData);
+		this.generatorTypes.remove(key, generatorTypeInfoData);
 		
 		//==========================================================================================
 	}
@@ -158,7 +158,7 @@ public class GeneratorTypesData
 		return this.generatorTypes.size();
 	}
 
-	public Iterator<GeneratorTypeData> getGeneratorTypesIterator()
+	public Iterator<GeneratorTypeInfoData> getGeneratorTypesIterator()
 	{
 		//==========================================================================================
 		return this.generatorTypes.iterator();

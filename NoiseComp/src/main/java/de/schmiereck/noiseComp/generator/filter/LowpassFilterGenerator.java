@@ -38,9 +38,9 @@ extends Generator
 	 * @param frameRate	
 	 * 			are the Frames per Second.
 	 */
-	public LowpassFilterGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public LowpassFilterGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -186,21 +186,21 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(FILTER_GENERATOR_FOLDER_PATH, LowpassFilterGenerator.class, "Lowpass", "Lowpass filter (Cutoff).");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(FILTER_GENERATOR_FOLDER_PATH, LowpassFilterGenerator.class, "Lowpass", "Lowpass filter (Cutoff).");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, Float.valueOf(0.0F), "Signal value.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_CUTOFF, "cutoff", 1, 1, Float.valueOf(5000.0F), "Cutoff value.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 }

@@ -40,12 +40,12 @@ extends Generator
 	 * 			is the genrator name.
 	 * @param frameRate
 	 * 			is the frame rate.
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the Generator-Type Data.
 	 */
-	public PowGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public PowGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
@@ -146,21 +146,21 @@ extends Generator
 		//==========================================================================================
 	}
 
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SHAPE_GENERATOR_FOLDER_PATH, PowGenerator.class, "pow", "Calculates the value of the base (sum) raised to the power of the exponent (sum).");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SHAPE_GENERATOR_FOLDER_PATH, PowGenerator.class, "pow", "Calculates the value of the base (sum) raised to the power of the exponent (sum).");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_BASE, "base", -1, -1, "The base singal.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_EXPONENT, "exponent", -1, -1, "The exponent signal.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 }

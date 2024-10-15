@@ -10,7 +10,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import de.schmiereck.noiseComp.generator.InputTypeData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
 
@@ -163,7 +163,7 @@ public class ModuleInputTypeSelectController
 	 * @param moduleGeneratorTypeData
 	 * 			is the ModuleGenerator-Type Data.
 	 */
-	public void doEditModuleChanged(ModuleGeneratorTypeData moduleGeneratorTypeData)
+	public void doEditModuleChanged(ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		this.inputTypeSelectModel.clearInputs();
@@ -241,7 +241,7 @@ public class ModuleInputTypeSelectController
 	 * @param editedModuleGeneratorTypeData
 	 * 			is the edited ModuleGenerator-Type Data.
 	 */
-	public void doRemoveSelectedEntry(ModuleGeneratorTypeData editedModuleGeneratorTypeData)
+	public void doRemoveSelectedEntry(ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData)
 	{
 		//==========================================================================================
 		ModuleInputTypeSelectEntryModel selectEntryModel = this.inputTypeSelectModel.getSelectedRow();

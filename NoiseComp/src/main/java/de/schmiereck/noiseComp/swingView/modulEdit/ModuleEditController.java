@@ -3,8 +3,8 @@
  */
 package de.schmiereck.noiseComp.swingView.modulEdit;
 
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData.TicksPer;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData.TicksPer;
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.appController.AppController;
 import de.schmiereck.noiseComp.swingView.appModel.AppModelChangedObserver;
@@ -63,7 +63,7 @@ public class ModuleEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 					
 					if (moduleGeneratorTypeData != null)
 					{
@@ -87,7 +87,7 @@ public class ModuleEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 					
 					if (moduleGeneratorTypeData != null)
 					{
@@ -111,7 +111,7 @@ public class ModuleEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					ModuleGeneratorTypeData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
 					
 					if (moduleGeneratorTypeData != null)
 					{
@@ -176,7 +176,7 @@ public class ModuleEditController
 	 * @param moduleGeneratorTypeData
 	 * 			is the ModuleGenerator-Type Data.
 	 */
-	public void doEditModuleChanged(ModuleGeneratorTypeData moduleGeneratorTypeData)
+	public void doEditModuleChanged(ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		String generatorTypeName;

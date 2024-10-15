@@ -1,7 +1,7 @@
 package de.schmiereck.noiseComp.file;
 
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import org.w3c.dom.Node;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
 
 /*
  * Created on 17.04.2005, Copyright (c) schmiereck, 2005
@@ -17,14 +17,14 @@ import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
  */
 public class GeneratorTypeNodeData
 {
-	private ModuleGeneratorTypeData moduleGeneratorTypeData;
+	private ModuleGeneratorTypeInfoData moduleGeneratorTypeData;
 	private Node generatorTypeNode;
 	
 	/**
 	 * Constructor.
 	 * 
 	 */
-	public GeneratorTypeNodeData(ModuleGeneratorTypeData moduleGeneratorTypeData,
+	public GeneratorTypeNodeData(ModuleGeneratorTypeInfoData moduleGeneratorTypeData,
 								 Node generatorTypeNode)
 	{
 		this.moduleGeneratorTypeData = moduleGeneratorTypeData;
@@ -34,7 +34,7 @@ public class GeneratorTypeNodeData
 	/**
 	 * @return returns the {@link #moduleGeneratorTypeData}.
 	 */
-	protected ModuleGeneratorTypeData getModuleGeneratorTypeData()
+	protected ModuleGeneratorTypeInfoData getModuleGeneratorTypeData()
 	{
 		return this.moduleGeneratorTypeData;
 	}

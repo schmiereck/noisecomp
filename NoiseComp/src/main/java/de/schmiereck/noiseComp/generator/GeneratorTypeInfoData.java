@@ -14,7 +14,7 @@ import java.util.Iterator;
  * @author smk
  * @version 21.02.2004
  */
-public class GeneratorTypeData
+public class GeneratorTypeInfoData
 {
 	//**********************************************************************************************
 	// Fields:
@@ -30,7 +30,7 @@ public class GeneratorTypeData
 	private Class<? extends Generator> generatorClass;
 	
 	/**
-	 * {@link GeneratorTypeData#generatorTypeName} of the generator type.
+	 * {@link GeneratorTypeInfoData#generatorTypeName} of the generator type.
 	 */
 	private String generatorTypeName;
 	
@@ -53,12 +53,12 @@ public class GeneratorTypeData
 	 * @param folderPath
 	 * 			is the Folder-Path in format <code>"/folder1/folder2/"</code>.
 	 * @param generatorTypeName
-	 * 			is the {@link GeneratorTypeData#generatorTypeName} of the generator type.
+	 * 			is the {@link GeneratorTypeInfoData#generatorTypeName} of the generator type.
 	 */
-	public GeneratorTypeData(String folderPath,
-	                         Class<? extends Generator> generatorClass, 
-	                         String generatorTypeName, 
-	                         String generatorTypeDescription)
+	public GeneratorTypeInfoData(String folderPath,
+								 Class<? extends Generator> generatorClass,
+								 String generatorTypeName,
+								 String generatorTypeDescription)
 	{
 		//==========================================================================================
 		this.folderPath = folderPath;
@@ -204,7 +204,7 @@ public class GeneratorTypeData
 			
 			params[0] = String.class;				// generatorName
 			params[1] = Float.class;				// frameRate
-			params[2] = GeneratorTypeData.class;	// generatorTypeData
+			params[2] = GeneratorTypeInfoData.class;	// generatorTypeData
 			//params[3] = ModuleGenerator.class;		// parentModuleGenerator
 			
 			try

@@ -90,24 +90,24 @@ implements GeneratorBufferInterface,
 	 * 
 	 * Key is the {@link InputData} of the source input timeline generator.
 	 */
-	private VectorHash<InputData, Timeline> inputTimelines = new VectorHash<InputData, Timeline>();
+	private final VectorHash<InputData, Timeline> inputTimelines = new VectorHash<>();
 	
 	/**
 	 * Output Timelines.
 	 * 
 	 * Key is the {@link InputData} of the target output timeline generator.
 	 */
-	private Map<InputData, Timeline> outputTimelines = new HashMap<InputData, Timeline>();
+	private final Map<InputData, Timeline> outputTimelines = new HashMap<>();
 	
 	/**
 	 * Sub-Module Generator Timelines.
 	 */
-	private Map<Generator, Timeline> subGeneratorTimelines = new HashMap<Generator, Timeline>();
+	private final Map<Generator, Timeline> subGeneratorTimelines = new HashMap<>();
 	
 	/**
 	 * Timeline Changed Listerners.
 	 */
-	private List<TimelineChangedListernerInterface> timelineChangedListerners = new Vector<TimelineChangedListernerInterface>();
+	private final List<TimelineChangedListernerInterface> timelineChangedListerners = new Vector<>();
 
 	/**
 	 * Generator Data.
@@ -651,10 +651,9 @@ implements GeneratorBufferInterface,
 	/**
 	 * Generator changed.
 	 * 
-	 * #see {@link #generatorChanged(float, float)} for generator time.
+	 * #see {@link #generatorChanged(SoundSourceData, float, float)} for generator time.
 	 */
-	public void generatorChanged(final SoundSourceData soundSourceData)
-	{
+	public void generatorChanged(final SoundSourceData soundSourceData) {
 		this.generatorChanged(soundSourceData, this.timelineStartTimePos, this.timelineEndTimePos);
 	}
 

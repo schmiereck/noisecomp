@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Vector;
 
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.swingView.CompareUtils;
 
 /**
@@ -50,17 +50,17 @@ public class SoundService
 	 * @return
 	 * 			the list of {@link #generatorTypesData}.
 	 */
-	public List<GeneratorTypeData> retrieveGeneratorTypes() {
+	public List<GeneratorTypeInfoData> retrieveGeneratorTypes() {
 		//==========================================================================================
-		List<GeneratorTypeData> generatorTypes = new Vector<GeneratorTypeData>();
+		List<GeneratorTypeInfoData> generatorTypes = new Vector<GeneratorTypeInfoData>();
 		
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext())
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
-			generatorTypes.add(generatorTypeData);
+			generatorTypes.add(generatorTypeInfoData);
 		}
 		
 		//==========================================================================================
@@ -76,12 +76,12 @@ public class SoundService
 	}
 
 	/**
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the generator type.
 	 */
-	public void addGeneratorType(GeneratorTypeData generatorTypeData)
+	public void addGeneratorType(GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		this.generatorTypesData.addGeneratorTypeData(generatorTypeData);
+		this.generatorTypesData.addGeneratorTypeData(generatorTypeInfoData);
 	}
 
 	/**
@@ -92,15 +92,15 @@ public class SoundService
 	 * @return
 	 * 			the generator type.
 	 */
-	public GeneratorTypeData searchGeneratorTypeData(String folderPath, 
-	                                                 String generatorTypeClassName) {
+	public GeneratorTypeInfoData searchGeneratorTypeData(String folderPath,
+														 String generatorTypeClassName) {
 		//==========================================================================================
-		GeneratorTypeData generatorTypeData = 
+		GeneratorTypeInfoData generatorTypeInfoData =
 			this.generatorTypesData.searchGeneratorTypeData(folderPath,
 			                                                generatorTypeClassName);
 		
 		//==========================================================================================
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 
 	/**
@@ -109,13 +109,13 @@ public class SoundService
 	 * @return
 	 * 			the generator of {@link #generatorTypesData} at given position.
 	 */
-	public GeneratorTypeData getGeneratorTypeData(int pos) {
+	public GeneratorTypeInfoData getGeneratorTypeData(int pos) {
 		//==========================================================================================
-		GeneratorTypeData ret;
+		GeneratorTypeInfoData ret;
 		
 		if (this.generatorTypesData != null)
 		{
-			ret = (GeneratorTypeData)this.generatorTypesData.get(pos);
+			ret = (GeneratorTypeInfoData)this.generatorTypesData.get(pos);
 		}
 		else
 		{
@@ -149,9 +149,9 @@ public class SoundService
 	 * @return
 	 * 			the iterator of {@link #generatorTypesData}.
 	 */
-	public Iterator<GeneratorTypeData> retrieveGeneratorTypesIterator() {
+	public Iterator<GeneratorTypeInfoData> retrieveGeneratorTypesIterator() {
 		//==========================================================================================
-		Iterator<GeneratorTypeData> ret;
+		Iterator<GeneratorTypeInfoData> ret;
 		
 		if (this.generatorTypesData != null)
 		{
@@ -167,11 +167,11 @@ public class SoundService
 	}
 
 	/**
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the generator type.
 	 */
-	public void removeGeneratorType(GeneratorTypeData generatorTypeData) {
-		this.generatorTypesData.removeGeneratorType(generatorTypeData);
+	public void removeGeneratorType(GeneratorTypeInfoData generatorTypeInfoData) {
+		this.generatorTypesData.removeGeneratorType(generatorTypeInfoData);
 	}
 
 	/**
@@ -184,12 +184,12 @@ public class SoundService
 		//==========================================================================================
 		String path = folderPath + folderName + "/";
 		
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(path,
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(path,
 		                                                            null,
 		                                                            null,
 		                                                            null);
 		
-		this.generatorTypesData.addGeneratorTypeData(generatorTypeData);
+		this.generatorTypesData.addGeneratorTypeData(generatorTypeInfoData);
 		
 		//==========================================================================================
 	}
@@ -202,13 +202,13 @@ public class SoundService
 	 */
 	public void renameFolder(String folderPath, String folderName) {
 		//==========================================================================================
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext())
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
-			String gtFolderPath = generatorTypeData.getFolderPath();
+			String gtFolderPath = generatorTypeInfoData.getFolderPath();
 			
 			if (gtFolderPath.startsWith(folderPath))
 			{
@@ -218,7 +218,7 @@ public class SoundService
 				String startPath = gtFolderPath.substring(0, beginIndex + 1);
 				String endPath = gtFolderPath.substring(endIndex);
 				
-				generatorTypeData.setFolderPath(startPath + folderName + endPath);
+				generatorTypeInfoData.setFolderPath(startPath + folderName + endPath);
 			}
 		}
 		//==========================================================================================
@@ -232,13 +232,13 @@ public class SoundService
 	 */
 	public void moveFolder(String cutFolderPath,  String pasteFolderPath) {
 		//==========================================================================================
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext())
 		{
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
-			String gtFolderPath = generatorTypeData.getFolderPath();
+			String gtFolderPath = generatorTypeInfoData.getFolderPath();
 			
 			if (gtFolderPath.startsWith(cutFolderPath)) {
 				//----------------------------------------------------------------------------------
@@ -246,7 +246,7 @@ public class SoundService
 				
 				String endPath = gtFolderPath.substring(beginIndex + 1);
 				
-				generatorTypeData.setFolderPath(pasteFolderPath + endPath);
+				generatorTypeInfoData.setFolderPath(pasteFolderPath + endPath);
 				
 				//----------------------------------------------------------------------------------
 			}
@@ -264,24 +264,24 @@ public class SoundService
 	 */
 	public void moveModule(String cutFolderPath, 
 	                       String pasteFolderPath,
-	                       ModuleGeneratorTypeData moduleGeneratorTypeData) {
+	                       ModuleGeneratorTypeInfoData moduleGeneratorTypeData) {
 		//==========================================================================================
 		boolean moduleMoved = false;
 		
 		String moduleName = moduleGeneratorTypeData.getGeneratorTypeName();
 		
 		//------------------------------------------------------------------------------------------
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext()) {
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
-			String gtFolderPath = generatorTypeData.getFolderPath();
-			String gtName = generatorTypeData.getGeneratorTypeName();
+			String gtFolderPath = generatorTypeInfoData.getFolderPath();
+			String gtName = generatorTypeInfoData.getGeneratorTypeName();
 			
 			if (cutFolderPath.equals(gtFolderPath) && moduleName.equals(gtName)) {
 				//----------------------------------------------------------------------------------
-				generatorTypeData.setFolderPath(pasteFolderPath);
+				generatorTypeInfoData.setFolderPath(pasteFolderPath);
 
 				moduleMoved = true;
 				
@@ -305,30 +305,30 @@ public class SoundService
 	 * @return
 	 * 			<code>true</code> if module is in use.
 	 */
-	public boolean checkModuleIsUsed(ModuleGeneratorTypeData moduleGeneratorTypeData) {
+	public boolean checkModuleIsUsed(ModuleGeneratorTypeInfoData moduleGeneratorTypeData) {
 		//==========================================================================================
 		boolean moduleIsUsed;
 		
 		moduleIsUsed = false;
 		
 		//------------------------------------------------------------------------------------------
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext()) {
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (generatorTypeData instanceof ModuleGeneratorTypeData) {
-				ModuleGeneratorTypeData checkedGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
+			if (generatorTypeInfoData instanceof ModuleGeneratorTypeInfoData) {
+				ModuleGeneratorTypeInfoData checkedGeneratorTypeData = (ModuleGeneratorTypeInfoData) generatorTypeInfoData;
 				
 				Iterator<Generator> tracksIterator = checkedGeneratorTypeData.getTracksIterator();
 				
 				while (tracksIterator.hasNext()) {
 					Generator trackGenerator = (Generator)tracksIterator.next();
 					
-					GeneratorTypeData trackGeneratorTypeData = trackGenerator.getGeneratorTypeData();
+					GeneratorTypeInfoData trackGeneratorTypeInfoData = trackGenerator.getGeneratorTypeData();
 					
-					if (moduleGeneratorTypeData == trackGeneratorTypeData) {
+					if (moduleGeneratorTypeData == trackGeneratorTypeInfoData) {
 						moduleIsUsed = true;
 					}
 				}
@@ -352,23 +352,23 @@ public class SoundService
 		moduleIsUsed = false;
 		
 		//------------------------------------------------------------------------------------------
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext()) {
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (generatorTypeData instanceof ModuleGeneratorTypeData) {
-				ModuleGeneratorTypeData checkedGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
+			if (generatorTypeInfoData instanceof ModuleGeneratorTypeInfoData) {
+				ModuleGeneratorTypeInfoData checkedGeneratorTypeData = (ModuleGeneratorTypeInfoData) generatorTypeInfoData;
 				
 				Iterator<Generator> tracksIterator = checkedGeneratorTypeData.getTracksIterator();
 				
 				while (tracksIterator.hasNext()) {
 					Generator trackGenerator = (Generator)tracksIterator.next();
 					
-					GeneratorTypeData trackGeneratorTypeData = trackGenerator.getGeneratorTypeData();
+					GeneratorTypeInfoData trackGeneratorTypeInfoData = trackGenerator.getGeneratorTypeData();
 					
-					String gtFolderPath = trackGeneratorTypeData.getFolderPath();
+					String gtFolderPath = trackGeneratorTypeInfoData.getFolderPath();
 					
 					if (gtFolderPath.startsWith(folderPath)) {
 						moduleIsUsed = true;
@@ -394,14 +394,14 @@ public class SoundService
 		moduleIsMainModule = false;
 		
 		//------------------------------------------------------------------------------------------
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext()) {
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (generatorTypeData instanceof ModuleGeneratorTypeData) {
-				ModuleGeneratorTypeData checkedGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
+			if (generatorTypeInfoData instanceof ModuleGeneratorTypeInfoData) {
+				ModuleGeneratorTypeInfoData checkedGeneratorTypeData = (ModuleGeneratorTypeInfoData) generatorTypeInfoData;
 				
 				String gtFolderPath = checkedGeneratorTypeData.getFolderPath();
 				
@@ -424,14 +424,14 @@ public class SoundService
 	 */
 	public void removeFolder(String folderPath) {
 		//==========================================================================================
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext()) {
-			GeneratorTypeData generatorTypeData = generatorTypesIterator.next();
+			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			if (generatorTypeData instanceof ModuleGeneratorTypeData) {
-				ModuleGeneratorTypeData checkedGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
+			if (generatorTypeInfoData instanceof ModuleGeneratorTypeInfoData) {
+				ModuleGeneratorTypeInfoData checkedGeneratorTypeData = (ModuleGeneratorTypeInfoData) generatorTypeInfoData;
 
 				String gtFolderPath = checkedGeneratorTypeData.getFolderPath();
 				
@@ -445,25 +445,25 @@ public class SoundService
 	}
 
 	/**
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the Module-Generator.
 	 * @return
 	 * 			<code>true</code> if Module-Generator is existing.
 	 */
-	public boolean checkGeneratorTypeIsExisting(GeneratorTypeData generatorTypeData) {
+	public boolean checkGeneratorTypeIsExisting(GeneratorTypeInfoData generatorTypeInfoData) {
 		//==========================================================================================
 		boolean isExisting;
 		
 		isExisting = false;
 		
-		String folderPath = generatorTypeData.getFolderPath();
-		String generatorTypeName = generatorTypeData.getGeneratorTypeName();
+		String folderPath = generatorTypeInfoData.getFolderPath();
+		String generatorTypeName = generatorTypeInfoData.getGeneratorTypeName();
 		
 		//------------------------------------------------------------------------------------------
-		Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+		Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 		
 		while (generatorTypesIterator.hasNext()) {
-			GeneratorTypeData gtData = generatorTypesIterator.next();
+			GeneratorTypeInfoData gtData = generatorTypesIterator.next();
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //			if (gtData instanceof ModuleGeneratorTypeData)
@@ -498,12 +498,12 @@ public class SoundService
 	 * 			<code>null</code> if the given ModuleGenerator was main or 
 	 * 			the generator is set to not main.
 	 */
-	public ModuleGeneratorTypeData 
-	updateModuleGeneratorTypeData(ModuleGeneratorTypeData moduleGeneratorTypeData, 
-	                             String generatorTypeName,
-	                             Boolean modulesMain) {
+	public ModuleGeneratorTypeInfoData
+	updateModuleGeneratorTypeData(ModuleGeneratorTypeInfoData moduleGeneratorTypeData,
+								  String generatorTypeName,
+								  Boolean modulesMain) {
 		//==========================================================================================
-		ModuleGeneratorTypeData lastMainModuleGeneratorTypeData;
+		ModuleGeneratorTypeInfoData lastMainModuleGeneratorTypeData;
 		
 		//------------------------------------------------------------------------------------------
 		// Set main module?
@@ -514,13 +514,13 @@ public class SoundService
 				
 				// Search last Main ModuleGenerator:
 				
-				Iterator<GeneratorTypeData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
+				Iterator<GeneratorTypeInfoData> generatorTypesIterator = this.generatorTypesData.getGeneratorTypesIterator();
 				
 				while (generatorTypesIterator.hasNext()) {
-					GeneratorTypeData generatorTypeData = (GeneratorTypeData)generatorTypesIterator.next();
+					GeneratorTypeInfoData generatorTypeInfoData = (GeneratorTypeInfoData)generatorTypesIterator.next();
 					
-					if (generatorTypeData instanceof ModuleGeneratorTypeData) {
-						ModuleGeneratorTypeData checkedModuleGeneratorTypeData = (ModuleGeneratorTypeData)generatorTypeData;
+					if (generatorTypeInfoData instanceof ModuleGeneratorTypeInfoData) {
+						ModuleGeneratorTypeInfoData checkedModuleGeneratorTypeData = (ModuleGeneratorTypeInfoData) generatorTypeInfoData;
 						
 						if (checkedModuleGeneratorTypeData.getIsMainModuleGeneratorType() == true) {
 							checkedModuleGeneratorTypeData.setIsMainModuleGeneratorType(false);

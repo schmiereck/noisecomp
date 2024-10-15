@@ -41,7 +41,7 @@ public class InputData
 	private String inputStringValue;
 	
 	/**
-	 * The type of the input as defined in the {@link GeneratorTypeData} of the
+	 * The type of the input as defined in the {@link GeneratorTypeInfoData} of the
 	 * Generator used this input.
 	 */
 	private InputTypeData 		inputTypeData;

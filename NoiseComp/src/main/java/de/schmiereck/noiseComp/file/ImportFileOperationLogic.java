@@ -4,7 +4,7 @@
 package de.schmiereck.noiseComp.file;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypesData;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.xmlTools.XMLPortException;
 
@@ -28,15 +28,15 @@ public class ImportFileOperationLogic
 	 * @throws XMLPortException
 	 * @throws MainActionException
 	 */
-	public static ModuleGeneratorTypeData importNoiseCompFile(final SoundSourceData soundSourceData,
-															  GeneratorTypesData generatorTypesData,
-															  //ModuleGeneratorTypeData mainModuleTypeData,
-															  String fileName,
-															  float frameRate)
+	public static ModuleGeneratorTypeInfoData importNoiseCompFile(final SoundSourceData soundSourceData,
+                                                                  GeneratorTypesData generatorTypesData,
+                                                                  //ModuleGeneratorTypeData mainModuleTypeData,
+                                                                  String fileName,
+                                                                  float frameRate)
 	throws XMLPortException
 	{
 		//==========================================================================================
-		ModuleGeneratorTypeData mainModuleGeneratorTypeData;
+		ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData;
 		
 		//------------------------------------------------------------------------------------------
 		mainModuleGeneratorTypeData = 

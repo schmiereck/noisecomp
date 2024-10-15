@@ -12,11 +12,11 @@ import java.util.Vector;
 
 import de.schmiereck.dataTools.VectorHash;
 import de.schmiereck.noiseComp.generator.Generator;
-import de.schmiereck.noiseComp.generator.GeneratorTypeData;
+import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.InputData;
 import de.schmiereck.noiseComp.generator.InputTypeData;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
-import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeData;
+import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
 import de.schmiereck.noiseComp.generator.signal.OutputGenerator;
 import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 import de.schmiereck.noiseComp.soundSource.SoundSourceLogic;
@@ -43,7 +43,7 @@ public class TimelineManagerLogic
 	/**
 	 * Main ModuleGenerator-Type Data.
 	 */
-	private final ModuleGeneratorTypeData mainModuleGeneratorTypeData;
+	private final ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData;
 	
 	/**
 	 * Main-Module Generator Timelines.
@@ -64,7 +64,7 @@ public class TimelineManagerLogic
 	 * @param mainModuleGeneratorTypeData
 	 * 			is the mainModuleGeneratorTypeData.
 	 */
-	public TimelineManagerLogic(SoundSourceLogic soundSourceLogic, ModuleGeneratorTypeData mainModuleGeneratorTypeData)
+	public TimelineManagerLogic(SoundSourceLogic soundSourceLogic, ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData)
 	{
 		this.soundSourceLogic = soundSourceLogic;
 		this.mainModuleGeneratorTypeData = mainModuleGeneratorTypeData;
@@ -140,7 +140,7 @@ public class TimelineManagerLogic
 		{
 			ModuleGenerator moduleGenerator = (ModuleGenerator)generator;
 			
-			ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)moduleGenerator.getGeneratorTypeData();
+			ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)moduleGenerator.getGeneratorTypeData();
 			
 			OutputGenerator outputGenerator = moduleGeneratorTypeData.getOutputGenerator();
 			
@@ -202,7 +202,7 @@ public class TimelineManagerLogic
 					{
 						ModuleGenerator moduleGenerator = (ModuleGenerator)inputGenerator;
 						
-						ModuleGeneratorTypeData moduleGeneratorTypeData = (ModuleGeneratorTypeData)moduleGenerator.getGeneratorTypeData();
+						ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)moduleGenerator.getGeneratorTypeData();
 						
 						OutputGenerator outputGenerator = moduleGeneratorTypeData.getOutputGenerator();
 						
@@ -454,7 +454,7 @@ public class TimelineManagerLogic
 	}
 
 	/**
-	 * @param generatorTypeData
+	 * @param generatorTypeInfoData
 	 * 			is the generatorType Data.
 	 * @param soundFrameRate
 	 * 			is the frame rate.
@@ -465,13 +465,13 @@ public class TimelineManagerLogic
 	 * @return
 	 * 			the generator.
 	 */
-	public Timeline createTimeline(final SoundSourceData soundSourceData, GeneratorTypeData generatorTypeData,
+	public Timeline createTimeline(final SoundSourceData soundSourceData, GeneratorTypeInfoData generatorTypeInfoData,
 	                               Float soundFrameRate,
 	                               String generatorName,
                                    int generatorPos)
 	{
 		//==========================================================================================
-		Generator generator = generatorTypeData.createGeneratorInstance(generatorName, 
+		Generator generator = generatorTypeInfoData.createGeneratorInstance(generatorName,
 		                                                                soundFrameRate);
 
 		this.mainModuleGeneratorTypeData.addGenerator(generatorPos,

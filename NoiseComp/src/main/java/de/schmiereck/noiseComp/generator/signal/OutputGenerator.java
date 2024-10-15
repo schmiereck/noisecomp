@@ -30,9 +30,9 @@ extends Generator
 	 * Constructor.
 	 * 
 	 */
-	public OutputGenerator(String name, Float frameRate, GeneratorTypeData generatorTypeData)
+	public OutputGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
 	{
-		super(name, frameRate, generatorTypeData);
+		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	public void setSignalInput(final SoundSourceData soundSourceData, Generator inputSoundGenerator)
@@ -71,16 +71,16 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeData createGeneratorTypeData()
+	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
-		GeneratorTypeData generatorTypeData = new GeneratorTypeData(SIGNAL_GENERATOR_FOLDER_PATH, OutputGenerator.class, "Output", "The input signal is audible at the audio hardware.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SIGNAL_GENERATOR_FOLDER_PATH, OutputGenerator.class, "Output", "The input signal is audible at the audio hardware.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_SIGNAL, "signal", 1, 1, "Is a signal between -1 and 1 send to output speakers.");
-			generatorTypeData.addInputTypeData(inputTypeData);
+			generatorTypeInfoData.addInputTypeData(inputTypeData);
 		}
 		
-		return generatorTypeData;
+		return generatorTypeInfoData;
 	}
 
 	/* (non-Javadoc)
