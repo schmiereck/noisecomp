@@ -413,7 +413,8 @@ public class TimelineManagerLogic
 	 * @param generatorEndTimePos
 	 * 			is the generator EndTimePos.
 	 */
-	public void updateTimePos(final SoundSourceData soundSourceData, Timeline updatedTimeline, float generatorStartTimePos, float generatorEndTimePos)
+	public void updateTimePos(final SoundSourceData soundSourceData, final Timeline updatedTimeline,
+							  final float generatorStartTimePos, final float generatorEndTimePos)
 	{
 		//==========================================================================================
 		updatedTimeline.setTimePos(soundSourceData, generatorStartTimePos, generatorEndTimePos);

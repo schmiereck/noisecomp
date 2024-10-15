@@ -35,3 +35,14 @@ Runs a SoundOutLogic in a separate thread.
 
 ### SoundOutLogic
 is a class that represents a sound output.
+
+# Architecture
+
+* Generator
+  * GeneratorTypeInfoData
+
+  * ModuleGenerator
+
+* Timeline
+  - Visible, editable and playable Instances of a Generator.
+  

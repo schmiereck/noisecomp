@@ -51,7 +51,7 @@ implements GeneratorInterface,
 	private String name;
 	
 	/**
-	 * Liste aus {@link InputData}-Objekten (mit {@link Generator}-Objekten).
+	 * List of {@link InputData}-Objekts (with {@link Generator}-Objekts).
 	 */
 	private Vector<InputData> inputs = null;
 	
@@ -67,7 +67,7 @@ implements GeneratorInterface,
 	/**
 	 * Module-Generator Remove Listeners.
 	 */
-	private final List<ModuleGeneratorRemoveListenerInterface> moduleGeneratorRemoveListeners = new Vector<ModuleGeneratorRemoveListenerInterface>();
+	private final List<ModuleGeneratorRemoveListenerInterface> moduleGeneratorRemoveListeners = new Vector<>();
 	
 	//**********************************************************************************************
 	// Functions:

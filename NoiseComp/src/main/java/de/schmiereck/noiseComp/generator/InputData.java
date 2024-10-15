@@ -3,8 +3,8 @@ package de.schmiereck.noiseComp.generator;
 import de.schmiereck.noiseComp.soundSource.SoundSourceData;
 
 /**
- * Verwaltet einen {@link Generator} der als Input benutzt wird und den
- * Typ des Eingangs.
+ * Manages a {@link Generator} is used as Input
+ * and the Type of this Input.
  *
  * @author smk
  * @version 01.02.2004
@@ -14,13 +14,13 @@ public class InputData
 	/**
 	 * Is the Generator owning this input.
 	 */
-	private Generator ownerGenerator;
+	private final Generator ownerGenerator;
 	
 	/**
 	 * The generator generates the input value (see {@link #inputModuleInputTypeData} ???).<br/>
 	 * <code>null</code> if {@link #inputValue} is used.
 	 */
-	private Generator 	inputGenerator;
+	private Generator inputGenerator;
 	
 	/**
 	 * The type of the input of the module used to get the input value  
@@ -32,7 +32,7 @@ public class InputData
 	 * Constant Value of the input.<br/>
 	 * <code>null</code> if no input value is used, otherwise {@link #inputGenerator} is used. 
 	 */
-	private Float 		inputValue;
+	private Float inputValue;
 	
 	/**
 	 * String representation of the constant Value {@link #inputValue}.<br/>
@@ -44,7 +44,7 @@ public class InputData
 	 * The type of the input as defined in the {@link GeneratorTypeInfoData} of the
 	 * Generator used this input.
 	 */
-	private InputTypeData 		inputTypeData;
+	private InputTypeData inputTypeData;
 	
 	/**
 	 * Data of the Input of a module input.<br/>
@@ -54,7 +54,6 @@ public class InputData
 	
 	/**
 	 * Constructor.
-	 * 
 	 */
 	public InputData(Generator ownerGenerator,
 					 Generator inputGenerator, 
@@ -62,7 +61,6 @@ public class InputData
 					 //String inputModuleInput)
 					 InputTypeData inputModuleInputTypeData)
 	{
-		super();
 		this.ownerGenerator = ownerGenerator;
 		this.inputGenerator = inputGenerator;
 		this.inputTypeData = inputTypeData;
