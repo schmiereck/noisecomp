@@ -377,17 +377,13 @@ implements GeneratorInterface,
 		//==========================================================================================
 	}
 
-	public void updateInput(final SoundSourceData soundSourceData, InputData inputData)
-	{
+	public void updateInput(final SoundSourceData soundSourceData, InputData inputData) {
 		//==========================================================================================
-		synchronized (this)
-		{
-			if (this.inputs != null)
-			{
+		synchronized (this) {
+			if (this.inputs != null) {
 //				this.inputs.remove(inputData);
 				
-				if (inputData.getInputGenerator() != null)
-				{
+				if (inputData.getInputGenerator() != null) {
 					// The Generator de-register as Listener from Input.
 //					inputData.getInputGenerator().getGeneratorChangeObserver().removeGeneratorChangeListener(this);
 				}

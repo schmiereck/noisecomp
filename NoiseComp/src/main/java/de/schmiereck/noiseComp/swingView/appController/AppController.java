@@ -2386,20 +2386,19 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * @see de.schmiereck.noiseComp.swingView.inputSelect.UpdateInputSelectEntryListenerInterface#notifyUpdateInputSelectEntry(de.schmiereck.noiseComp.timeline.Timeline, de.schmiereck.noiseComp.swingView.inputSelect.InputSelectModel, de.schmiereck.noiseComp.swingView.inputSelect.InputSelectEntryModel)
 	 */
 	@Override
-	public void notifyUpdateInputSelectEntry(Timeline selectedTimeline,
-	                                         InputSelectModel inputSelectModel, 
-	                                         InputSelectEntryModel inputSelectEntryModel)
+	public void notifyUpdateInputSelectEntry(final Timeline selectedTimeline,
+											 final InputSelectModel inputSelectModel,
+											 final InputSelectEntryModel inputSelectEntryModel)
 	{
 		//==========================================================================================
-		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
+		final TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//------------------------------------------------------------------------------------------
 		// Update Generator-Input-Data:
+
+		final InputData inputData = inputSelectEntryModel.getInputData();
 		
-		InputData inputData = inputSelectEntryModel.getInputData();
-		
-		if (inputData != null)
-		{
+		if (Objects.nonNull(inputData)) {
 			timelineManagerLogic.updateInput(this.soundSourceData, selectedTimeline,
 			                                 inputData);
 		}
