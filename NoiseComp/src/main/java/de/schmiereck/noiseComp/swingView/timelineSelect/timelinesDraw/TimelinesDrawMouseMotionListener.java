@@ -7,6 +7,7 @@ import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
@@ -32,7 +33,7 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @version <p>22.02.2011:	created, smk</p>
  */
 public class TimelinesDrawMouseMotionListener
-implements MouseMotionListener
+		extends MouseAdapter implements MouseMotionListener
 {
 	//**********************************************************************************************
 	// Fields:
@@ -69,12 +70,52 @@ implements MouseMotionListener
 	}
 
 	@Override
+	public void mouseReleased(final MouseEvent e) {
+		if (this.timelinesDrawPanelModel.getTimelineHandlerMoved()) {
+			this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+
+			final TimelineSelectEntryModel highlightedTimelineSelectEntryModel =
+					this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
+
+			if (Objects.nonNull(highlightedTimelineSelectEntryModel)) {
+				HighlightedTimelineHandler timelineHandler =
+						this.timelinesDrawPanelModel.getHighlightedTimelineHandler();
+
+				if (timelineHandler != HighlightedTimelineHandler.NONE) {
+					switch (timelineHandler) {
+						case LEFT: {
+							this.timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+							this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+							this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
+							break;
+						}
+						case RIGHT: {
+							this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+							this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
+							this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
+							break;
+						}
+					}
+				}
+			}
+		}
+		if (this.timelinesDrawPanelModel.getTimelineMoved()) {
+			final TimelineSelectEntryModel highlightedTimelineSelectEntryModel =
+					this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
+
+			if (Objects.nonNull(highlightedTimelineSelectEntryModel)) {
+				this.timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+				this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
+				this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
+			}
+			this.timelinesDrawPanelModel.setTimelineMoved(false);
+		}
+	}
+
+	@Override
 	public void mouseDragged(final MouseEvent e) {
 		//==========================================================================================
 		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
-		
-		//==========================================================================================
-		final AffineTransform at = this.timelinesDrawPanelView.getAt();
 		
 		final Point mousePoint = e.getPoint();
 		final Point2D mousePoint2D = this.timelinesDrawPanelView.mousePos(mousePoint);
@@ -85,7 +126,6 @@ implements MouseMotionListener
 		if (timelineHandler != HighlightedTimelineHandler.NONE) {
 			this.dragTimelineHandler(selectedTimelineModel, mousePoint2D, timelineHandler);
 		} else {
-			//--------------------------------------------------------------------------------------
 			final InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
 			
 			if (Objects.nonNull(selectedInputEntry)) {
@@ -102,42 +142,64 @@ implements MouseMotionListener
 						this.dragTimelineListPosition(selectedTimelineModel,
 								selectedTimelineSelectEntryModel, targetTimelineSelectEntryModel, mousePoint2D);
 					} else {
-						final double timePos = mousePoint2D.getX();
-
-						final double nearestSnapToTimpePos =
-								this.timelinesDrawPanelView.searchNearestSnapToTimpePos(this.timelinesDrawPanelModel,
-										selectedTimelineSelectEntryModel, timePos);
-
-						final double pos;
-						final double snapDif = Math.abs(nearestSnapToTimpePos - timePos);
-						final double d = snapDif * at.getScaleX();
-
-						//if (d < 6.0D) {
-							pos = 3.0D;//Math.min(0.0D, nearestSnapToTimpePos);
-						//} else {
-						//	pos = Math.min(0.0D, timePos);
-						//}
-						System.out.println("timePos:" + timePos + ", nearestSnapToTimpePos:" +  + nearestSnapToTimpePos +
-								", d: " + d + ", pos:" + pos + ", " + at.getScaleX());
-
-//						final Timeline timeline = selectedTimelineSelectEntryModel.getTimeline();
-//
-//						final float startTimePos = timeline.getGeneratorStartTimePos();
-//						final float endTimePos = timeline.getGeneratorEndTimePos();
-//
-//						final float lengthTime = endTimePos - startTimePos;
-//
-//						selectedTimelineSelectEntryModel.setStartTimePos((float)pos);
-//						selectedTimelineSelectEntryModel.setEndTimePos((float)pos + lengthTime);
-//						//this.timelinesDrawPanelModel.setTimelineHandlerMoved(true);
-//						this.timelinesDrawPanelView.repaint();
-
+						this.dragTimeline(selectedTimelineSelectEntryModel, mousePoint2D);
 					}
 				}
 			}
-			//--------------------------------------------------------------------------------------
 		}
 		//==========================================================================================
+	}
+
+	private void dragTimeline(final TimelineSelectEntryModel selectedTimelineSelectEntryModel, final Point2D mousePoint2D) {
+		final double mouseTimePos = mousePoint2D.getX();
+
+		final Timeline timeline = selectedTimelineSelectEntryModel.getTimeline();
+
+		final float startTimePos = timeline.getGeneratorStartTimePos();
+		final float endTimePos = timeline.getGeneratorEndTimePos();
+
+		if (!this.timelinesDrawPanelModel.getTimelineMoved()) {
+			this.timelinesDrawPanelModel.setTimelineMoved(true);
+			this.timelinesDrawPanelModel.setDragOffsetX(mouseTimePos - startTimePos);
+		}
+
+		//final double dragOffsetX = mouseTimePos - startTimePos;
+		final double timePos = mouseTimePos - this.timelinesDrawPanelModel.getDragOffsetX();
+
+		final double nearestSnapToTimePos =
+				this.timelinesDrawPanelView.searchNearestSnapToTimePos(this.timelinesDrawPanelModel,
+						selectedTimelineSelectEntryModel, timePos);
+
+		final AffineTransform at = this.timelinesDrawPanelView.getAt();
+
+		final boolean handlerSnaped;
+		final double pos;
+		final double snapDif = Math.abs(nearestSnapToTimePos - timePos);
+		final double d = snapDif * at.getScaleX();
+
+		if (d < 6.0D) {
+			handlerSnaped = true;
+			pos = Math.max(0.0D, nearestSnapToTimePos);
+		} else {
+			handlerSnaped = false;
+			pos = Math.max(0.0D, timePos);
+		}
+		//System.out.println("timePos:" + timePos +
+		//		", dragOffsetX:" +  + this.timelinesDrawPanelModel.getDragOffsetX() +
+		//		", nearestSnapToTimePos:" +  + nearestSnapToTimePos +
+		//		", d: " + d +
+		//		", pos:" + pos +
+		//		", " + at.getScaleX());
+
+		this.timelinesDrawPanelModel.setHandlerSnaped(handlerSnaped);
+		this.timelinesDrawPanelModel.setNearestSnapToTimpePos(nearestSnapToTimePos);
+
+		final float lengthTime = endTimePos - startTimePos;
+
+		selectedTimelineSelectEntryModel.setStartTimePos((float)pos);
+		selectedTimelineSelectEntryModel.setEndTimePos((float)pos + lengthTime);
+		//this.timelinesDrawPanelModel.setTimelineHandlerMoved(true);
+		this.timelinesDrawPanelView.repaint();
 	}
 
 	private void dragTimelineListPosition(final SelectedTimelineModel selectedTimelineModel,
@@ -221,7 +283,7 @@ implements MouseMotionListener
 			final double timePos = mousePoint2D.getX();
 
 			final double nearestSnapToTimpePos =
-				this.timelinesDrawPanelView.searchNearestSnapToTimpePos(this.timelinesDrawPanelModel,
+				this.timelinesDrawPanelView.searchNearestSnapToTimePos(this.timelinesDrawPanelModel,
 						selectedTimelineSelectEntryModel, timePos);
 //				System.out.println(nearestSnapToTimpePos);
 
@@ -233,10 +295,10 @@ implements MouseMotionListener
 
 			if (d < 6.0D) {
 				handlerSnaped = true;
-				pos = Math.min(0.0D, nearestSnapToTimpePos);
+				pos = Math.max(0.0D, nearestSnapToTimpePos);
 			} else {
 				handlerSnaped = false;
-				pos = Math.min(0.0D, timePos);
+				pos = Math.max(0.0D, timePos);
 			}
 
 			this.timelinesDrawPanelModel.setHandlerSnaped(handlerSnaped);
@@ -244,15 +306,7 @@ implements MouseMotionListener
 
 			switch (timelineHandler) {
 				case LEFT: {
-					final Timeline timeline = selectedTimelineSelectEntryModel.getTimeline();
-
-					final float startTimePos = timeline.getGeneratorStartTimePos();
-					final float endTimePos = timeline.getGeneratorEndTimePos();
-
-					final float lengthTime = endTimePos - startTimePos;
-
 					selectedTimelineSelectEntryModel.setStartTimePos((float)pos);
-					selectedTimelineSelectEntryModel.setEndTimePos((float)pos + lengthTime);
 					this.timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 					this.timelinesDrawPanelView.repaint();
 					break;

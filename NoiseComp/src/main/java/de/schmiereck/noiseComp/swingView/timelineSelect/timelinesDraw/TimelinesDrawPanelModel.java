@@ -32,7 +32,7 @@ public class TimelinesDrawPanelModel
 	// Constants:
 	
 	public static final int SIZE_TIMELINE_Y = 16;
-	
+
 	//**********************************************************************************************
 	// Fields:
 	
@@ -133,7 +133,10 @@ public class TimelinesDrawPanelModel
 	 * <code>true</code> if a handler snaped to a line.
 	 */
 	private boolean handlerSnaped = false;
-	
+
+	private boolean timelineMoved;
+	private double dragOffsetX;
+
 	//----------------------------------------------------------------------------------------------
 	
 //	/**
@@ -770,5 +773,21 @@ public class TimelinesDrawPanelModel
 		}
 		//==========================================================================================
 		return timelinePos;
+	}
+
+	public boolean getTimelineMoved() {
+		return this.timelineMoved;
+	}
+
+	public void setTimelineMoved(final boolean timelineMoved) {
+		this.timelineMoved = timelineMoved;
+	}
+
+	public double getDragOffsetX() {
+		return this.dragOffsetX;
+	}
+
+	public void setDragOffsetX(final double dragOffsetX) {
+		this.dragOffsetX = dragOffsetX;
 	}
 }

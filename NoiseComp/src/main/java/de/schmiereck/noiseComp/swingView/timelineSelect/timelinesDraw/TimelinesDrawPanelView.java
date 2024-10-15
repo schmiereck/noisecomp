@@ -246,11 +246,11 @@ implements Scrollable//, MouseMotionListener
 		 	new TimelinesDrawMouseListener(timelinesDrawPanelModel,
 		 	                                this)
 		);
-		this.addMouseMotionListener
-		(
-		 	new TimelinesDrawMouseMotionListener(timelinesDrawPanelModel,
-		 	                                      this)
-		);
+
+		final TimelinesDrawMouseMotionListener timelinesDrawMouseMotionListener = new TimelinesDrawMouseMotionListener(timelinesDrawPanelModel, this);
+		this.addMouseMotionListener(timelinesDrawMouseMotionListener);
+		this.addMouseListener(timelinesDrawMouseMotionListener);
+
 		//------------------------------------------------------------------------------------------
 		selectedTimelineModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
 		(
@@ -1538,9 +1538,9 @@ implements Scrollable//, MouseMotionListener
 //		return new Dimension(1500, 1000);
 //	}
 
-	public double searchNearestSnapToTimpePos(TimelinesDrawPanelModel timelinesDrawPanelModel, 
-	                                          TimelineSelectEntryModel highlightedTimelineSelectEntryModel,
-	                                          double timePos)
+	public double searchNearestSnapToTimePos(TimelinesDrawPanelModel timelinesDrawPanelModel,
+											 TimelineSelectEntryModel highlightedTimelineSelectEntryModel,
+											 double timePos)
 	{
 		//==========================================================================================
 		TimelineSelectEntriesModel timelineSelectEntriesModel = 

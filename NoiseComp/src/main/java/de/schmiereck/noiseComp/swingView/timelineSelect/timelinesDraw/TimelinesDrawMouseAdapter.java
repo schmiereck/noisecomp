@@ -194,34 +194,28 @@ extends MouseAdapter
 		
 		//------------------------------------------------------------------------------------------
 		// Popup?
-		if (e.isPopupTrigger()) 
-		{
+		if (e.isPopupTrigger()) {
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
 			
 			TimelineSelectEntryModel timelineSelectEntryModel = 
 				this.timelinesDrawPanelView.searchGenerator(point2D);
 			
-			if (timelineSelectEntryModel != null)
-			{
+			if (timelineSelectEntryModel != null) {
 				selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 				
 				this.generatorPopupMenu.show(e.getComponent(),
 				                             e.getX(), e.getY());
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		}
-		else
-		{
+		} else {
 			//--------------------------------------------------------------------------------------
 			final InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
 			
-			if (selectedInputEntry != null)
-			{
+			if (selectedInputEntry != null) {
 				final InputEntryTargetModel inputEntryTargetModel = selectedTimelineModel.getInputEntryTargetModel();
 				
-				if (inputEntryTargetModel != null)
-				{
+				if (inputEntryTargetModel != null) {
 					final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
 					final TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 					final TimelineSelectEntryModel targetTimelineSelectEntryModel = inputEntryTargetModel.getTargetTimelineSelectEntryModel();
@@ -250,44 +244,6 @@ extends MouseAdapter
 //				selectedTimelineModel.setHighlightedInputEntry(null);
 //				selectedTimelineModel.setSelectedInputEntry(null);
 				selectedTimelineModel.setInputEntryTargetModel(null);
-			}
-			else
-			{
-				if (this.timelinesDrawPanelModel.getTimelineHandlerMoved() == true)
-				{
-					this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
-					
-					TimelineSelectEntryModel highlightedTimelineSelectEntryModel = 
-						this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
-					
-					if (highlightedTimelineSelectEntryModel != null)
-					{
-						HighlightedTimelineHandler timelineHandler = 
-							this.timelinesDrawPanelModel.getHighlightedTimelineHandler();
-						
-						if (timelineHandler != HighlightedTimelineHandler.NONE)
-						{
-							switch (timelineHandler)
-							{
-								case LEFT:
-								{
-									this.timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
-									this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
-									this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
-									this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
-									break;
-								}
-								case RIGHT:
-								{
-									this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
-									this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
-									this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
-									break;
-								}
-							}
-						}
-					}
-				}
 			}
 			//--------------------------------------------------------------------------------------
 		}
