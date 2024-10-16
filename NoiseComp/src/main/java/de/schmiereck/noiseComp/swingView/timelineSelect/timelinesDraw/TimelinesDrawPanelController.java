@@ -477,37 +477,29 @@ implements TimelineContentChangedListenerInterface,
 		//==========================================================================================
 	}
 
-	/**
-	 * 
-	 */
-	public void doCreateNew(final TimelinesTimeRuleController timelinesTimeRuleController,
-	                        final TimelinesGeneratorsRuleController timelinesGeneratorsRuleController,
-	                        final AppModelChangedObserver appModelChangedObserver)
-	{
+	public void doCreateNewTimeline(final TimelinesTimeRuleController timelinesTimeRuleController,
+									final TimelinesGeneratorsRuleController timelinesGeneratorsRuleController,
+									final AppModelChangedObserver appModelChangedObserver) {
 		//==========================================================================================
-		TimelinesDrawPanelModel timelinesDrawPanelModel = this.getTimelinesDrawPanelModel();
-		
-		TimelineSelectEntriesModel timelineSelectEntriesModel = 
-			this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
+		final TimelinesDrawPanelModel timelinesDrawPanelModel = this.getTimelinesDrawPanelModel();
+
+		final TimelineSelectEntriesModel timelineSelectEntriesModel =  this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
 		
 		//==========================================================================================
-		SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		final SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		int timelinePos;
-		Float startTimePos;
-		Float endTimePos;
+		final int timelinePos;
+		final Float startTimePos;
+		final Float endTimePos;
+
+		final TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 		
-		TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
-		
-		if (selectedTimelineSelectEntryModel != null)
-		{
+		if (selectedTimelineSelectEntryModel != null) {
 			timelinePos = this.calcTimelineSelectEntryModelPos(selectedTimelineSelectEntryModel) + 1;
 			startTimePos = selectedTimelineSelectEntryModel.getStartTimePos();
 			endTimePos = selectedTimelineSelectEntryModel.getEndTimePos();
-		}
-		else
-		{
+		} else {
 			timelinePos = timelineSelectEntriesModel.getTimelineSelectEntryModels().size();
 			startTimePos = 0.0F;
 			endTimePos = 1.0F;
@@ -515,11 +507,11 @@ implements TimelineContentChangedListenerInterface,
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// Update Timeline-Select-Model:
-		
-		TimelineSelectEntryModel timelineSelectEntryModel = 
+
+		final TimelineSelectEntryModel timelineSelectEntryModel =
 			new TimelineSelectEntryModel(null,
 //			                             timelinePos,
-			                             "(new)",
+			                             "new-%d".formatted(timelinePos),
 			                             startTimePos,
 			                             endTimePos);
 		
@@ -529,7 +521,7 @@ implements TimelineContentChangedListenerInterface,
 		selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+		final Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
 		
 		// TimelinesTimeRule update.
 		timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
@@ -539,11 +531,10 @@ implements TimelineContentChangedListenerInterface,
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		appModelChangedObserver.notifyAppModelChanged();
-		
-		
+
 //		
 //		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//		Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+//		final Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
 //		
 //		// TimelinesTimeRule update.
 //		timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());

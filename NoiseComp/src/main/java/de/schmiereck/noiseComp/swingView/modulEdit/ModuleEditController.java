@@ -40,7 +40,7 @@ public class ModuleEditController
 	/**
 	 * Constructor.
 	 * 
-	 * @param timelinesDrawPanelModel 
+	 * @param appController
 	 * 			is the App Controller.
 	 * @param modulesTreeModel
 	 * 			is the Modules Tree Model.
@@ -63,7 +63,7 @@ public class ModuleEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeInfoData();
 					
 					if (moduleGeneratorTypeData != null)
 					{
@@ -87,7 +87,7 @@ public class ModuleEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeInfoData();
 					
 					if (moduleGeneratorTypeData != null)
 					{
@@ -111,7 +111,7 @@ public class ModuleEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+					ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeInfoData();
 					
 					if (moduleGeneratorTypeData != null)
 					{

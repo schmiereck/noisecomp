@@ -105,7 +105,7 @@ implements EditModuleChangedListener
 					}
 					
 					// Edited?
-					if (modulesTreeModel.getEditedModuleGeneratorTypeData() == generatorTypeInfoData)
+					if (modulesTreeModel.getEditedModuleGeneratorTypeInfoData() == generatorTypeInfoData)
 					{
 						labelDecoration += " *";
 					}	
@@ -176,7 +176,7 @@ implements EditModuleChangedListener
 	 * @param moduleGeneratorTypeData
 	 * 			is the module to edit.
 	 */
-	public void notifyEditModuleisteners(ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
+	public void notifyEditModuleListeners(ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
 	{
 		//==========================================================================================
 		for (DoEditModuleListener doEditModuleListener : this.doEditModuleListeners)

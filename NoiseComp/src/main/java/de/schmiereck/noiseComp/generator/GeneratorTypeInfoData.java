@@ -277,7 +277,7 @@ public class GeneratorTypeInfoData
 	@Override
 	public String toString()
 	{
-		return this.generatorTypeName + " (" + this.generatorTypeDescription + ")";
+		return "\"%s\" (%s)".formatted(this.generatorTypeName, this.generatorTypeDescription);
 	}
 	
 }

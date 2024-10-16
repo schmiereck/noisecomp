@@ -29,4 +29,8 @@ public class SoundSourceData {
     public void setOutputTimeline(final Timeline outputTimeline) {
         this.outputTimeline = outputTimeline;
     }
+
+    public void clearTimelineList() {
+        this.timelineList.clear();
+    }
 }

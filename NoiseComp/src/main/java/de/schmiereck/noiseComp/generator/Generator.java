@@ -593,23 +593,23 @@ implements GeneratorInterface,
 				
 				signal.setSignals(frameSample);
 			} else {
-				//----------------------------------------------------------------------------------
+				//------------------------------------------------------------------------------
 				// Found no Input-Generator:
-				final Float inputValue = inputData.getInputValue();
-				
-				// Found constant input value ?
-				if (inputValue != null) {
-					signal.setMonoValue(inputValue.floatValue());
+				final InputTypeData moduleInputTypeData = inputData.getInputModuleInputTypeData();
+
+				// Found a module input type ?
+				if (moduleInputTypeData != null) {
+					this.calcModuleInputValue(framePosition, frameTime, signal,
+							parentModuleGenerator,
+							moduleArguments, moduleInputTypeData);
 				} else {
-					//------------------------------------------------------------------------------
-					// Found no input value:
-					final InputTypeData moduleInputTypeData = inputData.getInputModuleInputTypeData();
-	
-					// Found a module input type ?
-					if (moduleInputTypeData != null) {
-						this.calcModuleInputValue(framePosition, frameTime, signal, 
-						                         parentModuleGenerator,
-						                         moduleArguments, moduleInputTypeData);
+					//----------------------------------------------------------------------------------
+					// Found no module input:
+					final Float inputValue = inputData.getInputValue();
+
+					// Found constant input value ?
+					if (inputValue != null) {
+						signal.setMonoValue(inputValue.floatValue());
 					} else {
 						//--------------------------------------------------------------------------
 						// Use Default Value of Input type:

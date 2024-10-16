@@ -256,7 +256,7 @@ extends MouseAdapter
 						
 						ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)userObject;
 
-						modulesTreeView.notifyEditModuleisteners(moduleGeneratorTypeData);
+						modulesTreeView.notifyEditModuleListeners(moduleGeneratorTypeData);
 						//--------------------------------------------------------------------------
 					}
 			 		
@@ -369,7 +369,7 @@ extends MouseAdapter
 						ModuleGeneratorTypeInfoData moduleGeneratorTypeData = (ModuleGeneratorTypeInfoData)userObject;
 					
 						// Notify edit module event to listeners.
-						this.modulesTreeView.notifyEditModuleisteners(moduleGeneratorTypeData);
+						this.modulesTreeView.notifyEditModuleListeners(moduleGeneratorTypeData);
 					} else {
 						if (userObject instanceof GeneratorTypeInfoData) {
 							//GeneratorTypeData generatorTypeData = (GeneratorTypeData)userObject;

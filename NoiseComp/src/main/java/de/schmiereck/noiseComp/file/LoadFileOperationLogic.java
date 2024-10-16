@@ -484,9 +484,7 @@ public class LoadFileOperationLogic
 										 Node generatorTypeNode, float frameRate,
 										 //Generators generators, 
 										 Vector<LoadFileGeneratorNodeData> loadFileGeneratorNodeDatas,
-										 ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
-			//ModuleGenerator parentModuleGenerator)
-	{
+										 ModuleGeneratorTypeInfoData moduleGeneratorTypeData) {
 		//==========================================================================================
 		Node generatorsNode = XMLData.selectSingleNode(generatorTypeNode, "generators");
 
@@ -504,17 +502,13 @@ public class LoadFileOperationLogic
 			Float generatorStartTime = XMLData.selectSingleNodeFloat(generatorNode, "startTime");
 			Float generatorEndTime = XMLData.selectSingleNodeFloat(generatorNode, "endTime");
 			
-			if (folderPath == null)
-			{
+			if (folderPath == null) {
 //				folderPath = makeMissingFolderPath(generatorType);
 				
 				//"de.schmiereck.noiseComp.generator.module.ModuleGenerator#drum-set 1"
-				if (generatorType.startsWith("de.schmiereck.noiseComp.generator.module.ModuleGenerator#"))
-				{
+				if (generatorType.startsWith("de.schmiereck.noiseComp.generator.module.ModuleGenerator#")) {
 					folderPath = StartupService.MODULE_FOLDER_PATH;
-				}
-				else
-				{
+				} else {
 					folderPath = StartupService.GENERATOR_FOLDER_PATH;
 				}
 			}
@@ -522,8 +516,7 @@ public class LoadFileOperationLogic
 			GeneratorTypeInfoData generatorTypeInfoData = generatorTypesData.searchGeneratorTypeData(folderPath,
 			                                                                                 generatorType);
 			
-			if (generatorTypeInfoData == null)
-			{
+			if (generatorTypeInfoData == null) {
 				throw new RuntimeException("Unknown Generator-Type \"" + folderPath + "\" + \"" + generatorType + "\".");
 			}
 			
@@ -531,8 +524,7 @@ public class LoadFileOperationLogic
 			
 			generator = generatorTypeInfoData.createGeneratorInstance(generatorName, frameRate); //, parentModuleGenerator);
 
-			if (generator == null)
-			{
+			if (generator == null) {
 				throw new PopupRuntimeException("can't create generator by type \"" + folderPath + "\" + \"" + generatorType + "\".");
 			}
 

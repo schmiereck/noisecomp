@@ -98,11 +98,11 @@ public class ModuleEditModel
 	 * @param moduleName 
 	 * 			to set {@link #moduleName}.
 	 */
-	public void setModuleName(String moduleame)
+	public void setModuleName(String moduleName)
 	{
-		if (CompareUtils.compareWithNull(this.moduleName, moduleame) == false)
+		if (CompareUtils.compareWithNull(this.moduleName, moduleName) == false)
 		{
-			this.moduleName = moduleame;
+			this.moduleName = moduleName;
 			
 			// Notify listeners.
 			this.moduleNameChangedNotifier.notifyModelPropertyChangedListeners();
@@ -142,9 +142,9 @@ public class ModuleEditModel
 	 * @param moduleIsMain 
 	 * 			to set {@link #moduleIsMain}.
 	 */
-	public void setModuleIsMain(Boolean modulesMain)
+	public void setModuleIsMain(Boolean moduleIsMain)
 	{
-		this.moduleIsMain = modulesMain;
+		this.moduleIsMain = moduleIsMain;
 		
 		// Notify listeners.
 		this.moduleIsMainChangedNotifier.notifyModelPropertyChangedListeners();

@@ -313,29 +313,30 @@ public class ModulesTreeController
 	 * @param folderPath
 	 * 			is the Folder-Path in Format <code>"/folder1/folder2/"</code>.
 	 */
-	public void doInsertModule(String folderPath)
-	{
+	public void doInsertModule(final String folderPath) {
 		//==========================================================================================
+		final DefaultMutableTreeNode folderTreeNode = this.modulesTreeModel.searchModuleTreeNode(folderPath);
+		final int parentChildCount = folderTreeNode.getChildCount();
+
+		//------------------------------------------------------------------------------------------
 		final ModuleGeneratorTypeInfoData moduleGeneratorTypeData =
 			ModuleGenerator.createModuleGeneratorTypeData(folderPath);
 	
-		//moduleeneratorTypeData.setIsMainModuleGeneratorType(true);
+		//moduleGeneratorTypeData.setIsMainModuleGeneratorType(true);
 		
-		moduleGeneratorTypeData.setGeneratorTypeName("Module (new)");
+		moduleGeneratorTypeData.setGeneratorTypeName("Module-%d".formatted(parentChildCount + 1));
 	
 		this.soundService.addGeneratorType(moduleGeneratorTypeData);
-		
+
 		//------------------------------------------------------------------------------------------
-		DefaultMutableTreeNode folderTreeNode = this.modulesTreeModel.searchModuleTreeNode(folderPath);
-		
-		DefaultMutableTreeNode modulereeNode = 
+		final DefaultMutableTreeNode modulereeNode =
 			this.modulesTreeModel.insertModule(folderTreeNode,
 			                                   moduleGeneratorTypeData);
 		
 		this.modulesTreeView.setSelectionPath(modulereeNode);
 		
 		//------------------------------------------------------------------------------------------
-		this.modulesTreeView.notifyEditModuleisteners(moduleGeneratorTypeData);
+		this.modulesTreeView.notifyEditModuleListeners(moduleGeneratorTypeData);
 
 		//==========================================================================================
 	}

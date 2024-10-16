@@ -109,7 +109,7 @@ extends BasicEditView
 					{
 						GeneratorTypeSelectItem generatorTypeSelectItem = null;
 						
-						GeneratorTypeInfoData generatorTypeInfoData = timelineEditModel.getGeneratorTypeData();
+						GeneratorTypeInfoData generatorTypeInfoData = timelineEditModel.getGeneratorTypeInfoData();
 
 						List<GeneratorTypeSelectItem> generatorTypeSelectItems = timelineEditModel.getGeneratorTypeSelectItems();
 						if (generatorTypeSelectItems != null)

@@ -39,9 +39,9 @@ public class ModulesTreeModel
 	/**
 	 * Edited ModuleGenerator-Type Data.
 	 */
-	private ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData;
+	private ModuleGeneratorTypeInfoData editedModuleGeneratorTypeInfoData;
 	
-	private List<EditModuleChangedListener> editModuleChangedListeners = new Vector<EditModuleChangedListener>();
+	private List<EditModuleChangedListener> editModuleChangedListeners = new Vector<>();
 
 	//----------------------------------------------------------------------------------------------
 	private final DefaultMutableTreeNode generatorsTreeNode;
@@ -78,31 +78,29 @@ public class ModulesTreeModel
 
 	/**
 	 * @return 
-	 * 			returns the {@link #editedModuleGeneratorTypeData}.
+	 * 			returns the {@link #editedModuleGeneratorTypeInfoData}.
 	 */
-	public ModuleGeneratorTypeInfoData getEditedModuleGeneratorTypeData()
+	public ModuleGeneratorTypeInfoData getEditedModuleGeneratorTypeInfoData()
 	{
-		return this.editedModuleGeneratorTypeData;
+		return this.editedModuleGeneratorTypeInfoData;
 	}
 
 	/**
-	 * @param editedModuleGeneratorTypeData 
-	 * 			to set {@link #editedModuleGeneratorTypeData}.
+	 * @param editedModuleGeneratorTypeInfoData
+	 * 			to set {@link #editedModuleGeneratorTypeInfoData}.
 	 */
-	public void setEditedModuleGeneratorTypeData(ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData)
-	{
+	public void setEditedModuleGeneratorTypeInfoData(ModuleGeneratorTypeInfoData editedModuleGeneratorTypeInfoData) {
 		//==========================================================================================
 //		ModuleGeneratorTypeData editedModuleGeneratorTypeData = this.getEditedModuleGeneratorTypeData();
 		
-		TreePath selectionTreePath = this.searchModuleTreeNode(editedModuleGeneratorTypeData);
+		TreePath selectionTreePath = this.searchModuleTreeNode(editedModuleGeneratorTypeInfoData);
 			
 		this.setSelectionPath(selectionTreePath);
 		
 		//------------------------------------------------------------------------------------------
-		this.editedModuleGeneratorTypeData = editedModuleGeneratorTypeData;
+		this.editedModuleGeneratorTypeInfoData = editedModuleGeneratorTypeInfoData;
 		
-		for (EditModuleChangedListener editModuleChangedListener : this.editModuleChangedListeners)
-		{
+		for (EditModuleChangedListener editModuleChangedListener : this.editModuleChangedListeners) {
 			editModuleChangedListener.notifyEditModuleChanged(this,
 			                                                  selectionTreePath);
 		}

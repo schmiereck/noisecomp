@@ -58,7 +58,7 @@ public class AppModuleController
 		final ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		final ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+		final ModuleGeneratorTypeInfoData moduleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeInfoData();
 		
 		if (moduleGeneratorTypeData != null) {
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

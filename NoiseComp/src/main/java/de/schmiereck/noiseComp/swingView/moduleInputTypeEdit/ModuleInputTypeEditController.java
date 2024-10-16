@@ -204,7 +204,7 @@ public class ModuleInputTypeEditController
 		ModulesTreeModel modulesTreeModel = modulesTreeController.getModulesTreeModel();
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeData();
+		ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData = modulesTreeModel.getEditedModuleGeneratorTypeInfoData();
 		ModuleInputTypeSelectModel selectModel = moduleInputTypeSelectController.getInputTypeSelectModel();
 		
 //		InputTypeData inputTypeData = moduleInputTypeSelectController.getSelectedModuleInputType();

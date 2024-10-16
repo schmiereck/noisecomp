@@ -38,7 +38,7 @@ public class TimelineManagerLogic
 	/**
 	 * Main ModuleGenerator-Type Data.
 	 */
-	private final ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData;
+	private ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData;
 	
 	/**
 	 * Main-Module Generator Timelines.
@@ -48,20 +48,19 @@ public class TimelineManagerLogic
 	/**
 	 * Timeline Content Changed Listeners.
 	 */
-	private List<TimelineContentChangedListenerInterface> timelineContentChangedListeners = new Vector<TimelineContentChangedListenerInterface>();
+	private List<TimelineContentChangedListenerInterface> timelineContentChangedListeners = new Vector<>();
 	
 	//**********************************************************************************************
 	// Functions:
 
 	/**
 	 * Constructor.
-	 * 
-	 * @param mainModuleGeneratorTypeData
-	 * 			is the mainModuleGeneratorTypeData.
 	 */
-	public TimelineManagerLogic(SoundSourceLogic soundSourceLogic, ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData)
-	{
+	public TimelineManagerLogic(final SoundSourceLogic soundSourceLogic) {
 		this.soundSourceLogic = soundSourceLogic;
+	}
+
+	public void setMainModuleGeneratorTypeData(final ModuleGeneratorTypeInfoData mainModuleGeneratorTypeData) {
 		this.mainModuleGeneratorTypeData = mainModuleGeneratorTypeData;
 	}
 
@@ -734,8 +733,7 @@ public class TimelineManagerLogic
 	 * @param timelineContentChangedListener 
 	 * 			to add to {@link #timelineContentChangedListeners}.
 	 */
-	public void addTimelineContentChangedListener(TimelineContentChangedListenerInterface timelineContentChangedListener)
-	{
+	public void addTimelineContentChangedListener(final TimelineContentChangedListenerInterface timelineContentChangedListener) {
 		this.timelineContentChangedListeners.add(timelineContentChangedListener);
 	}
 
@@ -745,14 +743,11 @@ public class TimelineManagerLogic
 	 * @param bufferEnd
 	 * 			is the changed Buffer end.
 	 */
-	public void notifyTimelineContentChangedListeners(long bufferStart, long bufferEnd)
-	{
+	public void notifyTimelineContentChangedListeners(final long bufferStart, final long bufferEnd) {
 		//==========================================================================================
-		for (TimelineContentChangedListenerInterface timelineContentChangedListener : this.timelineContentChangedListeners)
-		{
+		for (final TimelineContentChangedListenerInterface timelineContentChangedListener : this.timelineContentChangedListeners) {
 			timelineContentChangedListener.notifyTimelineContentChanged(bufferStart, bufferEnd);
 		}
-		
 		//==========================================================================================
 	}
 
@@ -826,21 +821,19 @@ public class TimelineManagerLogic
 	/**
 	 * XXX Because of a memory leake clear timelines explicitely.
 	 */
-	public void clearTimelines()
-	{
+	public void clearTimelines() {
 		//==========================================================================================
-		Iterator<Timeline> timelinesIterator = this.getTimelinesIterator();
+		final Iterator<Timeline> timelineIterator = this.getTimelinesIterator();
 		
-		while (timelinesIterator.hasNext())
-		{
-			Timeline timeline = timelinesIterator.next();
+		while (timelineIterator.hasNext()) {
+			final Timeline timeline = timelineIterator.next();
 			
 			timeline.clearTimeline();
 		}
 		
 		this.mainGeneratorTimelines.clear();
 		
-		this.timelineContentChangedListeners.clear();
+		//this.timelineContentChangedListeners.clear();
 		
 		//==========================================================================================
 	}

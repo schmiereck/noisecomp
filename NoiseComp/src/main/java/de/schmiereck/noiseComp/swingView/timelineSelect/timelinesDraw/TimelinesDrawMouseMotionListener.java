@@ -155,51 +155,53 @@ public class TimelinesDrawMouseMotionListener
 
 		final Timeline timeline = selectedTimelineSelectEntryModel.getTimeline();
 
-		final float startTimePos = timeline.getGeneratorStartTimePos();
-		final float endTimePos = timeline.getGeneratorEndTimePos();
+		if (Objects.nonNull(timeline)) {
+			final float startTimePos = timeline.getGeneratorStartTimePos();
+			final float endTimePos = timeline.getGeneratorEndTimePos();
 
-		if (!this.timelinesDrawPanelModel.getTimelineMoved()) {
-			this.timelinesDrawPanelModel.setTimelineMoved(true);
-			this.timelinesDrawPanelModel.setDragOffsetX(mouseTimePos - startTimePos);
+			if (!this.timelinesDrawPanelModel.getTimelineMoved()) {
+				this.timelinesDrawPanelModel.setTimelineMoved(true);
+				this.timelinesDrawPanelModel.setDragOffsetX(mouseTimePos - startTimePos);
+			}
+
+			//final double dragOffsetX = mouseTimePos - startTimePos;
+			final double timePos = mouseTimePos - this.timelinesDrawPanelModel.getDragOffsetX();
+
+			final double nearestSnapToTimePos =
+					this.timelinesDrawPanelView.searchNearestSnapToTimePos(this.timelinesDrawPanelModel,
+							selectedTimelineSelectEntryModel, timePos);
+
+			final AffineTransform at = this.timelinesDrawPanelView.getAt();
+
+			final boolean handlerSnaped;
+			final double pos;
+			final double snapDif = Math.abs(nearestSnapToTimePos - timePos);
+			final double d = snapDif * at.getScaleX();
+
+			if (d < 6.0D) {
+				handlerSnaped = true;
+				pos = Math.max(0.0D, nearestSnapToTimePos);
+			} else {
+				handlerSnaped = false;
+				pos = Math.max(0.0D, timePos);
+			}
+			//System.out.println("timePos:" + timePos +
+			//		", dragOffsetX:" +  + this.timelinesDrawPanelModel.getDragOffsetX() +
+			//		", nearestSnapToTimePos:" +  + nearestSnapToTimePos +
+			//		", d: " + d +
+			//		", pos:" + pos +
+			//		", " + at.getScaleX());
+
+			this.timelinesDrawPanelModel.setHandlerSnaped(handlerSnaped);
+			this.timelinesDrawPanelModel.setNearestSnapToTimpePos(nearestSnapToTimePos);
+
+			final float lengthTime = endTimePos - startTimePos;
+
+			selectedTimelineSelectEntryModel.setStartTimePos((float) pos);
+			selectedTimelineSelectEntryModel.setEndTimePos((float) pos + lengthTime);
+			//this.timelinesDrawPanelModel.setTimelineHandlerMoved(true);
+			this.timelinesDrawPanelView.repaint();
 		}
-
-		//final double dragOffsetX = mouseTimePos - startTimePos;
-		final double timePos = mouseTimePos - this.timelinesDrawPanelModel.getDragOffsetX();
-
-		final double nearestSnapToTimePos =
-				this.timelinesDrawPanelView.searchNearestSnapToTimePos(this.timelinesDrawPanelModel,
-						selectedTimelineSelectEntryModel, timePos);
-
-		final AffineTransform at = this.timelinesDrawPanelView.getAt();
-
-		final boolean handlerSnaped;
-		final double pos;
-		final double snapDif = Math.abs(nearestSnapToTimePos - timePos);
-		final double d = snapDif * at.getScaleX();
-
-		if (d < 6.0D) {
-			handlerSnaped = true;
-			pos = Math.max(0.0D, nearestSnapToTimePos);
-		} else {
-			handlerSnaped = false;
-			pos = Math.max(0.0D, timePos);
-		}
-		//System.out.println("timePos:" + timePos +
-		//		", dragOffsetX:" +  + this.timelinesDrawPanelModel.getDragOffsetX() +
-		//		", nearestSnapToTimePos:" +  + nearestSnapToTimePos +
-		//		", d: " + d +
-		//		", pos:" + pos +
-		//		", " + at.getScaleX());
-
-		this.timelinesDrawPanelModel.setHandlerSnaped(handlerSnaped);
-		this.timelinesDrawPanelModel.setNearestSnapToTimpePos(nearestSnapToTimePos);
-
-		final float lengthTime = endTimePos - startTimePos;
-
-		selectedTimelineSelectEntryModel.setStartTimePos((float)pos);
-		selectedTimelineSelectEntryModel.setEndTimePos((float)pos + lengthTime);
-		//this.timelinesDrawPanelModel.setTimelineHandlerMoved(true);
-		this.timelinesDrawPanelView.repaint();
 	}
 
 	private void dragTimelineListPosition(final SelectedTimelineModel selectedTimelineModel,

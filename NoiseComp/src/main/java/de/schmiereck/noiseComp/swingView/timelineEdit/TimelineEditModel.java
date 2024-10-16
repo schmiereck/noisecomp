@@ -250,7 +250,7 @@ public class TimelineEditModel
 	 * @return 
 	 * 			returns the {@link #generatorTypeInfoData}.
 	 */
-	public GeneratorTypeInfoData getGeneratorTypeData()
+	public GeneratorTypeInfoData getGeneratorTypeInfoData()
 	{
 		return this.generatorTypeInfoData;
 	}
@@ -259,10 +259,8 @@ public class TimelineEditModel
 	 * @param generatorTypeInfoData
 	 * 			to set {@link #generatorTypeInfoData}.
 	 */
-	public void setGeneratorTypeData(GeneratorTypeInfoData generatorTypeInfoData)
-	{
-		if (CompareUtils.compareWithNull(this.generatorTypeInfoData, generatorTypeInfoData) == false)
-		{
+	public void setGeneratorTypeInfoData(GeneratorTypeInfoData generatorTypeInfoData) {
+		if (CompareUtils.compareWithNull(this.generatorTypeInfoData, generatorTypeInfoData) == false) {
 			this.generatorTypeInfoData = generatorTypeInfoData;
 			
 			// Notify Listeners.

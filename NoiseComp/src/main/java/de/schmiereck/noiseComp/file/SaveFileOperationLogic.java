@@ -180,27 +180,24 @@ public class SaveFileOperationLogic
 		//==========================================================================================
 	}
 
-	private static void appendGenerators(Document xmlDoc, 
-										 Node generatorTypeNode,
-										 ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
-	{
+	private static void appendGenerators(final Document xmlDoc,
+										 final Node generatorTypeNode,
+										 final ModuleGeneratorTypeInfoData moduleGeneratorTypeData) {
 		//==========================================================================================
-		Node generatorsNode = XMLData.appendNode(xmlDoc, generatorTypeNode, "generators");
+		final Node generatorsNode = XMLData.appendNode(xmlDoc, generatorTypeNode, "generators");
+
+		final Iterator<Generator> generatorsIterator = moduleGeneratorTypeData.getGeneratorsIterator();
 		
-		Iterator<Generator> generatorsIterator = moduleGeneratorTypeData.getGeneratorsIterator();
-		
-		while (generatorsIterator.hasNext())
-		{
-			Generator generator = generatorsIterator.next();
-			
-			Node generatorNode = XMLData.appendNode(xmlDoc, generatorsNode, "generator");
-			
-			String folderPath;
-			String type;
+		while (generatorsIterator.hasNext()) {
+			final Generator generator = generatorsIterator.next();
+
+			final Node generatorNode = XMLData.appendNode(xmlDoc, generatorsNode, "generator");
+
+			final String folderPath;
+			final String type;
 			
 			// Generator is a Module ?
-			if (generator instanceof ModuleGenerator)
-			{
+			if (generator instanceof ModuleGenerator) {
 				ModuleGenerator moduleGenerator = (ModuleGenerator)generator;
 				
 				GeneratorTypeInfoData generatorTypeInfoData = moduleGenerator.getGeneratorTypeData();
@@ -210,10 +207,8 @@ public class SaveFileOperationLogic
 				String moduleypeName = generatorTypeInfoData.getGeneratorTypeName();
 
 				type = generator.getClass().getName() + "#" + moduleypeName;
-			}
-			else
-			{
-				folderPath = null;
+			} else {
+				folderPath = generator.getGeneratorTypeData().getFolderPath();
 				type = generator.getClass().getName();
 			}
 			
@@ -229,22 +224,19 @@ public class SaveFileOperationLogic
 				XMLData.appendFloatNode(xmlDoc, generatorNode, "startTime", generator.getStartTimePos());
 //			Node generatorEndTimeNode = 
 				XMLData.appendFloatNode(xmlDoc, generatorNode, "endTime", generator.getEndTimePos());
+
+			final Iterator<InputData> inputsIterator = generator.getInputsIterator();
 			
-			Iterator<InputData> inputsIterator = generator.getInputsIterator();
-			
-			if (inputsIterator != null)
-			{	
-				Node inputsNode = XMLData.appendNode(xmlDoc, generatorNode, "inputs");
+			if (inputsIterator != null) {
+				final Node inputsNode = XMLData.appendNode(xmlDoc, generatorNode, "inputs");
 				
-				while (inputsIterator.hasNext())
-				{
-					InputData InputData = inputsIterator.next();
-				
-					Node inputNode = XMLData.appendNode(xmlDoc, inputsNode, "input");
-					
-					Generator inputGenerator = InputData.getInputGenerator();
-					if (inputGenerator != null)
-					{	
+				while (inputsIterator.hasNext()) {
+					final InputData InputData = inputsIterator.next();
+
+					final Node inputNode = XMLData.appendNode(xmlDoc, inputsNode, "input");
+
+					final Generator inputGenerator = InputData.getInputGenerator();
+					if (inputGenerator != null) {
 //						Node inputGeneratorNameNode = 
 							XMLData.appendTextNode(xmlDoc, inputNode, "generatorName", inputGenerator.getName());
 					}
@@ -254,11 +246,10 @@ public class SaveFileOperationLogic
 						XMLData.appendFloatNode(xmlDoc, inputNode, "value", InputData.getInputValue());
 //					Node inputStringValueNode = 
 						XMLData.appendTextNode(xmlDoc, inputNode, "stringValue", InputData.getInputStringValue());
+
+					final InputTypeData inputModuleInputTypeData = InputData.getInputModuleInputTypeData();
 					
-					InputTypeData inputModuleInputTypeData = InputData.getInputModuleInputTypeData();
-					
-					if (inputModuleInputTypeData != null)
-					{
+					if (inputModuleInputTypeData != null) {
 //						Node inputModuleInputNode = 
 							XMLData.appendIntegerNode(xmlDoc, inputNode, "inputModuleInputType", inputModuleInputTypeData.getInputType());
 					}
@@ -268,12 +259,7 @@ public class SaveFileOperationLogic
 		//==========================================================================================
 	}
 
-	/**
-	 * @param xmlDoc
-	 * @param generatorTypeNode
-	 * @param moduleGeneratorTypeData
-	 */
-	private static void appendTracks(Document xmlDoc, Node generatorTypeNode, 
+	private static void appendTracks(Document xmlDoc, Node generatorTypeNode,
 									 ModuleGeneratorTypeInfoData moduleGeneratorTypeData)
 	{
 		//==========================================================================================

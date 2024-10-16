@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.timelineEdit;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
@@ -108,8 +109,7 @@ public class TimelineEditController
 		 	new ModelPropertyChangedListener()
 		 	{
 				@Override
-				public void notifyModelPropertyChanged()
-				{
+				public void notifyModelPropertyChanged() {
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					Timeline timeline;
 					List<GeneratorTypeSelectItem> generatorTypeSelectItems;
@@ -120,34 +120,29 @@ public class TimelineEditController
 
 					TimelineSelectEntryModel timelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 					
-					if (timelineSelectEntryModel != null)
-					{
+					if (timelineSelectEntryModel != null) {
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						timeline = timelineSelectEntryModel.getTimeline();
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						{
-							ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData = appController.getEditedModuleGeneratorTypeData();
+							ModuleGeneratorTypeInfoData editedModuleGeneratorTypeInfoData = appController.getEditedModuleGeneratorTypeInfoData();
 							
-							generatorTypeSelectItems = new Vector<GeneratorTypeSelectItem>();
+							generatorTypeSelectItems = new Vector<>();
 							List<GeneratorTypeInfoData> generatorTypes = appController.retrieveGeneratorTypesForSelect();
 
-							if (generatorTypes != null)
-							{
+							if (generatorTypes != null) {
 								GeneratorTypeSelectItem noSelectItem = new GeneratorTypeSelectItem(null);
 								generatorTypeSelectItems.add(noSelectItem);
 
-								for (GeneratorTypeInfoData itemGeneratorTypeInfoData : generatorTypes)
-								{
+								for (GeneratorTypeInfoData itemGeneratorTypeInfoData : generatorTypes) {
 									Class< ? extends Generator> generatorClass = itemGeneratorTypeInfoData.getGeneratorClass();
 									
 									// Not a folder?
 									//if (itemGeneratorTypeData instanceof ModuleGeneratorTypeData)
 									//if (folderPath.startsWith(StartupService.MODULE_FOLDER_PATH))
-									if (generatorClass != null)
-									{
+									if (generatorClass != null) {
 										// Is not the edited Module as Generator-Type?
-										if (editedModuleGeneratorTypeData != itemGeneratorTypeInfoData)
-										{
+										if (editedModuleGeneratorTypeInfoData != itemGeneratorTypeInfoData) {
 											generatorTypeSelectItems.add(new GeneratorTypeSelectItem(itemGeneratorTypeInfoData));
 										}
 									}
@@ -160,12 +155,9 @@ public class TimelineEditController
 						{
 							Generator generator = appController.retrieveGeneratorOfEditedModule(generatorName);
 							
-							if (generator != null)
-							{
+							if (generator != null) {
 								generatorTypeInfoData = generator.getGeneratorTypeData();
-							}
-							else
-							{
+							} else {
 								generatorTypeInfoData = null;
 							}
 						}
@@ -173,9 +165,7 @@ public class TimelineEditController
 						generatorStartTimePos = timelineSelectEntryModel.getStartTimePos();
 						generatorEndTimePos = timelineSelectEntryModel.getEndTimePos();
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					}
-					else
-					{
+					} else {
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						timeline = null;
 						generatorTypeSelectItems = null;
@@ -189,7 +179,7 @@ public class TimelineEditController
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					timelineEditModel.setTimeline(timeline);
 					timelineEditModel.setGeneratorTypeSelectItems(generatorTypeSelectItems);
-					timelineEditModel.setGeneratorTypeData(generatorTypeInfoData);
+					timelineEditModel.setGeneratorTypeInfoData(generatorTypeInfoData);
 					timelineEditModel.setGeneratorName(generatorName);
 					timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
 					timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
@@ -206,16 +196,13 @@ public class TimelineEditController
 				@Override
 				public void notifyModelPropertyChanged()
 				{
-					GeneratorTypeInfoData generatorTypeInfoData = timelineEditModel.getGeneratorTypeData();
+					final GeneratorTypeInfoData generatorTypeInfoData = timelineEditModel.getGeneratorTypeInfoData();
+
+					final JComboBox generatorTypeComboBox = timelineEditView.getGeneratorTypeComboBox();
 					
-					JComboBox generatorTypeComboBox = timelineEditView.getGeneratorTypeComboBox();
-					
-					if (generatorTypeInfoData != null)
-					{
+					if (Objects.nonNull(generatorTypeInfoData)) {
 						generatorTypeComboBox.setEnabled(false);
-					}
-					else
-					{
+					} else {
 						generatorTypeComboBox.setEnabled(true);
 					}
 				}
@@ -296,46 +283,41 @@ public class TimelineEditController
 //		TimelineSelectEntryModel timelineSelectEntryModel = timelinesDrawPanelModel.getSelectedTimelineSelectEntryModel();
 //		TimelineEditView timelineEditView = timelineEditController.getTimelineEditView();
 		
-		if (timelineSelectEntryModel != null)
-		{
+		if (timelineSelectEntryModel != null) {
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			GeneratorTypeInfoData generatorTypeInfoData;
+			final GeneratorTypeInfoData generatorTypeInfoData;
 			{
-				GeneratorTypeSelectItem generatorTypeSelectItem = 
+				final GeneratorTypeSelectItem generatorTypeSelectItem =
 					(GeneratorTypeSelectItem)this.timelineEditView.getGeneratorTypeComboBox().getSelectedItem();
-				generatorTypeInfoData = generatorTypeSelectItem.getGeneratorTypeData();
+                if (Objects.nonNull(generatorTypeSelectItem)) {
+					generatorTypeInfoData = generatorTypeSelectItem.getGeneratorTypeData();
+				} else {
+					generatorTypeInfoData = null;
+				}
 			}
-			String generatorName = this.timelineEditView.getGeneratorNameTextField().getText();
-			Float generatorStartTimePos = InputUtils.makeFloatValue(this.timelineEditView.getGeneratorStartTimePosTextField().getText());
-			Float generatorEndTimePos = InputUtils.makeFloatValue(this.timelineEditView.getGeneratorEndTimePosTextField().getText());
+			final String generatorName = this.timelineEditView.getGeneratorNameTextField().getText();
+			final Float generatorStartTimePos = InputUtils.makeFloatValue(this.timelineEditView.getGeneratorStartTimePosTextField().getText());
+			final Float generatorEndTimePos = InputUtils.makeFloatValue(this.timelineEditView.getGeneratorEndTimePosTextField().getText());
 			
-			if (generatorTypeInfoData == null)
-			{
+			if (generatorTypeInfoData == null) {
 //				throw new RuntimeException("GeneratorTypeData not selected.");
 				AppView appView = this.appController.getAppView();
 			
 				JOptionPane.showMessageDialog(appView, "Generator-Type is not selected.");
-			}
-			else
-			{
+			} else {
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// Update Timeline-Generator:
-				
-				Timeline timeline = timelineSelectEntryModel.getTimeline();
-				
-				if (timeline == null)
-				{
+
+				final Timeline timeline;
+
+				if (Objects.isNull(timelineSelectEntryModel.getTimeline())) {
 					//Float soundFrameRate = SwingMain.getSoundData().getFrameRate();
 					final float soundFrameRate = this.soundDataLogic.getFrameRate();
 
 					timeline = timelineManagerLogic.createTimeline(soundSourceData,
-                            generatorTypeInfoData,
-					                                               soundFrameRate,
-					                                               generatorName,
-					                                               entryModelPos); 
-				}
-				else
-				{
+							generatorTypeInfoData, soundFrameRate, generatorName, entryModelPos);
+				} else {
+					timeline = timelineSelectEntryModel.getTimeline();
 					timelineManagerLogic.updateName(timeline, generatorName);
 				}
 	
@@ -347,7 +329,7 @@ public class TimelineEditController
 				// Update Timeline-Edit Model:
 				
 				this.timelineEditModel.setTimeline(timeline);
-				this.timelineEditModel.setGeneratorTypeData(generatorTypeInfoData);
+				this.timelineEditModel.setGeneratorTypeInfoData(generatorTypeInfoData);
 				this.timelineEditModel.setGeneratorName(generatorName);
 				this.timelineEditModel.setGeneratorStartTimePos(generatorStartTimePos);
 				this.timelineEditModel.setGeneratorEndTimePos(generatorEndTimePos);
