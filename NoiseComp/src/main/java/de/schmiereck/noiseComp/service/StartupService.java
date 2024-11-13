@@ -10,15 +10,12 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
 import de.schmiereck.noiseComp.generator.GeneratorTypeInfoData;
-import de.schmiereck.noiseComp.generator.shape.ASRPulseGenerator;
+import de.schmiereck.noiseComp.generator.filter.*;
+import de.schmiereck.noiseComp.generator.signal.ASRPulseGenerator;
 import de.schmiereck.noiseComp.generator.mixer.AddGenerator;
-import de.schmiereck.noiseComp.generator.filter.CutGenerator;
-import de.schmiereck.noiseComp.generator.filter.EchoGenerator;
 import de.schmiereck.noiseComp.generator.shape.ExponentGenerator;
 import de.schmiereck.noiseComp.generator.shape.FaderGenerator;
-import de.schmiereck.noiseComp.generator.filter.FilterGenerator;
 import de.schmiereck.noiseComp.generator.shape.IntegratorGenerator;
-import de.schmiereck.noiseComp.generator.filter.LowpassFilterGenerator;
 import de.schmiereck.noiseComp.generator.mixer.MixerGenerator;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 import de.schmiereck.noiseComp.generator.module.ModuleGeneratorTypeInfoData;
@@ -29,7 +26,6 @@ import de.schmiereck.noiseComp.generator.signal.PinkNoise2Generator;
 import de.schmiereck.noiseComp.generator.signal.PinkNoiseGenerator;
 import de.schmiereck.noiseComp.generator.shape.PowGenerator;
 import de.schmiereck.noiseComp.generator.signal.RectangleGenerator;
-import de.schmiereck.noiseComp.generator.filter.ResonanceFilterGenerator;
 import de.schmiereck.noiseComp.generator.signal.SawtoothGenerator;
 import de.schmiereck.noiseComp.generator.signal.SinusGenerator;
 import de.schmiereck.noiseComp.generator.shape.TanhGenerator;
@@ -79,30 +75,36 @@ public class StartupService
         //==========================================================================================
         soundService.removeAllGeneratorTypes();
 
-        soundService.addGeneratorType(FaderGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(MixerGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(MultiplierGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(AddGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(MultGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(PowGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(OutputGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(SinusGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(RectangleGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(TriangelGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(SawtoothGenerator.createGeneratorTypeData());
+        // Filter:
         soundService.addGeneratorType(CutGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(WaveGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(ASRPulseGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(WhiteNoiseGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(PinkNoiseGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(PinkNoise2Generator.createGeneratorTypeData());
-        soundService.addGeneratorType(TanhGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(ExponentGenerator.createGeneratorTypeData());
-        soundService.addGeneratorType(IntegratorGenerator.createGeneratorTypeData());
         soundService.addGeneratorType(EchoGenerator.createGeneratorTypeData());
         soundService.addGeneratorType(FilterGenerator.createGeneratorTypeData());
         soundService.addGeneratorType(LowpassFilterGenerator.createGeneratorTypeData());
         soundService.addGeneratorType(ResonanceFilterGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(SallenKeyFilterGenerator.createGeneratorTypeData());
+        // Mixer:
+        soundService.addGeneratorType(AddGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(MixerGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(MultGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(MultiplierGenerator.createGeneratorTypeData());
+        // Shape:
+        // ADSR?
+        soundService.addGeneratorType(ExponentGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(FaderGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(IntegratorGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(PowGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(TanhGenerator.createGeneratorTypeData());
+        // Signal:
+        soundService.addGeneratorType(ASRPulseGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(OutputGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(PinkNoiseGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(PinkNoise2Generator.createGeneratorTypeData());
+        soundService.addGeneratorType(RectangleGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(SawtoothGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(SinusGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(TriangelGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(WaveGenerator.createGeneratorTypeData());
+        soundService.addGeneratorType(WhiteNoiseGenerator.createGeneratorTypeData());
 
         //==========================================================================================
     }
