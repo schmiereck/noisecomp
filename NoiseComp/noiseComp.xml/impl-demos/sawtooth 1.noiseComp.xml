@@ -300,7 +300,7 @@
 		</generatorType>
 		<generatorType>
 			<generatorTypeClassName><![CDATA[de.schmiereck.noiseComp.generator.GeneratorTypeInfoData]]></generatorTypeClassName>
-			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.shape.ASRPulseGenerator]]></generatorClassName>
+			<generatorClassName><![CDATA[de.schmiereck.noiseComp.generator.signal.ASRPulseGenerator]]></generatorClassName>
 			<name><![CDATA[ASRPulse]]></name>
 			<description><![CDATA[Generates a pulse signal with a specified frequency and amplidude and puls shape.]]></description>
 			<inputTypes>
