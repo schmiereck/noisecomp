@@ -1,4 +1,4 @@
-package de.schmiereck.noiseComp.generator.shape;
+package de.schmiereck.noiseComp.generator.signal;
 /*
  * Created on 09.04.2005, Copyright (c) schmiereck, 2005
  */
@@ -6,14 +6,16 @@ package de.schmiereck.noiseComp.generator.shape;
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
+import static de.schmiereck.noiseComp.generator.GenratorUtils.calcPeriodFadeValue;
 import static de.schmiereck.noiseComp.service.StartupService.SHAPE_GENERATOR_FOLDER_PATH;
+import static de.schmiereck.noiseComp.service.StartupService.SIGNAL_GENERATOR_FOLDER_PATH;
 
 /**
  * <p>
 ASR:
 
 Attack
-Zeit die ein Signal ben�tigt, um von Wert Null auf die max. Amplitude (Lautst�rke) zu gelangen; Einschwingphase einer Voice
+Zeit die ein Signal benötigt, um von Wert Null auf die max. Amplitude (Lautstärke) zu gelangen; Einschwingphase einer Voice
 Anschlag: Ansteigen auf hohen Wert.
 
 Sustain
@@ -198,8 +200,10 @@ extends Generator
 				}
 			}
 		}
-		
-		soundSample.setStereoValues(value, value);
+		final float fadeValue = calcPeriodFadeValue(this.getStartTimePos(), this.getEndTimePos(),
+				this.getSoundFrameRate(), frameTime, periodLengthInFrames);
+
+		soundSample.setStereoValues(value * fadeValue, value * fadeValue);
 	}
 	
 	/* (non-Javadoc)
@@ -207,7 +211,7 @@ extends Generator
 	 */
 	public static GeneratorTypeInfoData createGeneratorTypeData()
 	{
-		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SHAPE_GENERATOR_FOLDER_PATH, ASRPulseGenerator.class, "ASRPulse", "Generates a pulse signal with a specified frequency and amplidude and puls shape.");
+		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(SIGNAL_GENERATOR_FOLDER_PATH, ASRPulseGenerator.class, "ASRPulse", "Generates a pulse signal with a specified frequency and amplidude and puls shape.");
 		
 		{
 			InputTypeData inputTypeData = new InputTypeData(INPUT_TYPE_FREQ, "signalFrequency", 1, 1, Float.valueOf(1.0F), "Frequency of the pulse in oscillations per second.");
