@@ -19,8 +19,7 @@ import static de.schmiereck.noiseComp.service.StartupService.FILTER_GENERATOR_FO
  * @version <p>28.02.2011:	created, smk</p>
  */
 public class ResonanceFilterGenerator
-extends Generator
-{
+extends Generator {
 	//**********************************************************************************************
 	// Constants:
 
@@ -41,28 +40,26 @@ extends Generator
 	 * @param frameRate	
 	 * 			are the Frames per Second.
 	 */
-	public ResonanceFilterGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
-	{
+	public ResonanceFilterGenerator(final String name, final Float frameRate, final GeneratorTypeInfoData generatorTypeInfoData) {
 		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, 
-	                                 SoundSample signalSample,
-	                                 ModuleGenerator parentModuleGenerator,
-	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModuleArguments moduleArguments)
+	public void calculateSoundSample(final long framePosition, final float frameTime,
+									 final SoundSample signalSample,
+									 final ModuleGenerator parentModuleGenerator,
+									 final GeneratorBufferInterface generatorBuffer,
+									 final ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		final ResonanceFilterGeneratorData data = (ResonanceFilterGeneratorData)generatorBuffer.getGeneratorData();
 		
 		//==========================================================================================
-		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		final InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
-		if (signalInputData != null)
-		{
+		if (signalInputData != null) {
 			this.calcInputValue(framePosition, 
 	                            frameTime,
 			                    signalInputData, 
@@ -72,7 +69,7 @@ extends Generator
 	                            moduleArguments);
 		}
 		//------------------------------------------------------------------------------------------
-		float cutoff = 
+		final float cutoff =
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_CUTOFF), 
@@ -81,7 +78,7 @@ extends Generator
 			                        moduleArguments);
 
 		//------------------------------------------------------------------------------------------
-		float resonance = 
+		final float resonance =
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_RESONANCE), 
@@ -90,7 +87,7 @@ extends Generator
 			                        moduleArguments);
 
 		//------------------------------------------------------------------------------------------
-		float amp = 
+		final float amp =
 			this.calcInputMonoValue(framePosition, 
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_AMP), 
@@ -104,15 +101,12 @@ extends Generator
 		data.lp_cutoff = cutoff;
 		data.lp_resonance = resonance;
 		data.lp_amp = amp;
-		
+
 		float value = signalSample.getMonoValue();
 		
-		if (Float.isNaN(value) == false)
-		{
+		if (Float.isNaN(value) == false) {
 			value = (float)this.tb303LPResoFilter(data, value);
-		}
-		else
-		{
+		} else {
 			value = Float.NaN;
 		}
 		
