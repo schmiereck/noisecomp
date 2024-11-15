@@ -68,20 +68,25 @@ class DftDemo1Main {
             Complex[] result = transformer.transform(audioData, TransformType.FORWARD);
 
             // Anzahl der gewünschten Frequenzbänder
-            int numFreqBands = 400;
+            //int numFreqBands = 400;
+            int numFreqBands = result.length;
             int bandSize = result.length / numFreqBands;
 
             double[] resultFreqBandSumArr = new double[numFreqBands];
+            Complex[] resultFreqBandSumComplexArr = new Complex[numFreqBands];
 
             for (int i = 0; i < numFreqBands; i++) {
                 double resultFreqBandSum = 0.0;
+                Complex resultFreqBandSumComplex = new Complex(0.0, 0.0);
                 for (int j = 0; j < bandSize; j++) {
                     Complex complex = result[i * bandSize + j];
                     double abs = complex.abs();
                     resultFreqBandSum += abs;
+                    resultFreqBandSumComplex = resultFreqBandSumComplex.add(complex);
                 }
                 double bandAverage = resultFreqBandSum / bandSize;
                 resultFreqBandSumArr[i] = bandAverage;
+                resultFreqBandSumComplexArr[i] = resultFreqBandSumComplex;
                 //System.out.printf("Band %d: %f\n", i, bandAverage);
             }
 
@@ -91,14 +96,14 @@ class DftDemo1Main {
             //    System.out.printf("%4d: %s\n", i, c);
             //}
 
-            displayResult(audioData, resultFreqBandSumArr);
+            displayResult(audioData, resultFreqBandSumArr, resultFreqBandSumComplexArr);
 
         } catch (UnsupportedAudioFileException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static void displayResult(double[] audioData, double[] resultFreqBandSumArr) {
+    private static void displayResult(double[] audioData, double[] resultFreqBandSumArr, Complex[] resultFreqBandSumComplexArr) {
     javax.swing.SwingUtilities.invokeLater(() -> {
         JFrame frame = new JFrame("DFT Result");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -132,17 +137,47 @@ class DftDemo1Main {
                     int y = midY - (int) (abs / max * midY);
                     g2d.drawLine(x, midY, x, y);
                 }
+                {
+                    g2d.setColor(Color.RED);
+                    int lastX = 0;
+                    int lastY = height - mid2Y;
+                    for (int i = 0; i < audioData.length; i += 1) {
+                        double sampleValue = audioData[i];
+                        int x = i * width / audioData.length;
+                        int y = (height - mid2Y) - (int) (sampleValue * mid2Y);
+                        g2d.drawLine(lastX, lastY, x, y);
+                        lastX = x;
+                        lastY = y;
+                    }
+                }
+                {
+                    g2d.setColor(Color.BLUE);
+                    double lastSampleValue = 0.0D;
+                    int lastX = 0;
+                    int lastY = height - mid2Y;
+                    for (int i = 0; i < audioData.length; i += 1) {
+                        double sampleValue = 0.0;
+                        //double sampleValue = lastSampleValue;
 
-                g2d.setColor(Color.RED);
-                int lastX = 0;
-                int lastY = height;
-                for (int i = 0; i < audioData.length; i += 1) {
-                    double sampleValue = audioData[i];
-                    int x = i * width / audioData.length;
-                    int y = (height - mid2Y) - (int) (sampleValue * mid2Y);
-                    g2d.drawLine(lastX, lastY, x, y);
-                    lastX = x;
-                    lastY = y;
+                        //double t = 2.0 * Math.PI * i / audioData.length;
+                        //double t = ((double)i) / audioData.length;
+                        double t = i;
+                        //double t = i / (Math.PI);
+                        //double t = 1.0D;
+
+                        for (int freqBandSumComplexPos = 0; freqBandSumComplexPos < resultFreqBandSumComplexArr.length; freqBandSumComplexPos += 1) {
+                            Complex complex = resultFreqBandSumComplexArr[freqBandSumComplexPos];
+                            //sampleValue += Math.sin(complex.getReal()) + Math.cos(complex.getImaginary());
+                            sampleValue += Math.sin(complex.getReal() * t) + Math.cos(complex.getImaginary() * t);
+                            //sampleValue += complex.abs();
+                        }
+                        int x = i * width / audioData.length;
+                        int y = (height - mid2Y) - (int) (sampleValue * mid2Y / 150.0D);
+                        g2d.drawLine(lastX, lastY, x, y);
+                        lastSampleValue = sampleValue;
+                        lastY = y;
+                        lastX = x;
+                    }
                 }
             }
         };
