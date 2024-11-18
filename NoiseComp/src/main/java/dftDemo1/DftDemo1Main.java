@@ -70,7 +70,7 @@ class DftDemo1Main {
             Complex[] result = transformer.transform(audioData, TransformType.FORWARD);
 
             // Anzahl der gewünschten Frequenzbänder
-            //int numFreqBands = 3000;
+            //int numFreqBands = 6000;
             int numFreqBands = result.length;
             int bandSize = result.length / numFreqBands;
 
@@ -78,7 +78,7 @@ class DftDemo1Main {
             Complex[] resultFreqBandSumComplexArr = new Complex[numFreqBands];
 
             for (int i = 0; i < numFreqBands; i++) {
-                double resultFreqBandSum = 0.0;
+                double resultFreqBandSum = 0.0D;
                 Complex resultFreqBandSumComplex = new Complex(0.0, 0.0);
                 for (int j = 0; j < bandSize; j++) {
                     Complex complex = result[i * bandSize + j];
@@ -88,7 +88,7 @@ class DftDemo1Main {
                 }
                 double bandAverage = resultFreqBandSum / bandSize;
                 resultFreqBandSumArr[i] = bandAverage;
-                resultFreqBandSumComplexArr[i] = resultFreqBandSumComplex;
+                resultFreqBandSumComplexArr[(numFreqBands - 1) - i] = resultFreqBandSumComplex.divide(bandSize);
                 //System.out.printf("Band %d: %f\n", i, bandAverage);
             }
 
@@ -139,6 +139,14 @@ class DftDemo1Main {
                     int y = midY - (int) (abs / max * midY);
                     g2d.drawLine(x, midY, x, y);
                 }
+                // Input + Result zero line:
+                {
+                    g2d.setColor(Color.GRAY);
+                    int x = (width);
+                    int y = (height - mid2Y);
+                    g2d.drawLine(0, y, x, y);
+                }
+                // Input:
                 {
                     g2d.setColor(Color.RED);
                     int lastX = 0;
@@ -152,48 +160,26 @@ class DftDemo1Main {
                         lastY = y;
                     }
                 }
+                // Result:
                 {
                     g2d.setColor(Color.BLUE);
                     double lastSampleValue = 0.0D;
                     int lastX = 0;
                     int lastY = height - mid2Y;
-                    for (int i = 0; i < audioData.length; i += 1) {
-                        double sampleValue = 0.0;
-                        //double sampleValue = lastSampleValue;
-
-                        //double t = 2.0 * Math.PI * i / audioData.length;
-                        //double t = ((double)i) / audioData.length;
+                    for (int i = 0; i < resultFreqBandSumComplexArr.length; i += 1) {
                         double t = i;
-                        //double t = i / (double) audioData.length;
-                        //double t = i / (Math.PI);
-                        //double t = 1.0D;
-
-//                        for (int freqBandSumComplexPos = 0; freqBandSumComplexPos < resultFreqBandSumComplexArr.length; freqBandSumComplexPos += 1) {
-//                            Complex complex = resultFreqBandSumComplexArr[freqBandSumComplexPos];
-//                            //sampleValue += Math.sin(complex.getReal()) + Math.cos(complex.getImaginary());
-//
-//                            //sampleValue += Math.cos(complex.getImaginary() * t) * Math.sin(complex.getReal() * t);
-//
-//                            double abs = complex.abs();
-//                            double phase = complex.getArgument();
-//                            //sampleValue += abs * Math.sin(phase * t);
-//                            // y2= mx .* ( cos(ma) + sqrt(-1) * sin(ma) );
-//                            //sampleValue += abs * Math.cos(phase * t) + abs * Math.sin(phase * t);
-//                            //sampleValue += abs * (Math.cos(phase * t) + Math.sin(phase * t));
-//                            sampleValue += Math.cos(complex.getImaginary() * t) * Math.sin(complex.getReal() * t);
-//                            //sampleValue += complex.abs();
-//                        }
                         //https://stackoverflow.com/questions/40775602/how-to-use-complex-coefficient-in-apache-fft
                         int d = 1;
                         //double k = Math.PI / (resultFreqBandSumComplexArr.length / d);
-                        double k = (Math.PI *  2.0D) / (audioData.length);
-                        sampleValue = resultFreqBandSumComplexArr[0].getReal();
-                        for (int m = 1; m < resultFreqBandSumComplexArr.length / d; m++) {
+                        double k = (Math.PI * 2.0D) / (resultFreqBandSumComplexArr.length - 1);
+                        double sampleValue = resultFreqBandSumComplexArr[0].getReal();
+                        for (int m = 1; m < resultFreqBandSumComplexArr.length / 1; m++) {
+                            double phase = t * k * m;
                             sampleValue +=
-                                    d * resultFreqBandSumComplexArr[m].getReal() * Math.cos(t * k * m) +
-                                    d * resultFreqBandSumComplexArr[m].getImaginary() * Math.sin(t * k * m);
+                                    d * resultFreqBandSumComplexArr[m].getReal() * Math.cos(phase) +
+                                    d * resultFreqBandSumComplexArr[m].getImaginary() * Math.sin(phase);
                         }
-                        int x = i * width / audioData.length;
+                        int x = (i * width) / (resultFreqBandSumComplexArr.length);
                         int y = (height - mid2Y) - (int) ((sampleValue / (resultFreqBandSumComplexArr.length)) * mid2Y);
                         //int y = (height - mid2Y) - (int) ((sampleValue / audioData.length) * mid2Y);
                         g2d.drawLine(lastX, lastY, x, y);
