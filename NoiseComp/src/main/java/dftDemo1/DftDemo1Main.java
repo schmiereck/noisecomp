@@ -12,6 +12,8 @@ import java.nio.file.Files;
 
 /**
  * https://stackoverflow.com/questions/53937227/sound-is-distorted-after-multiplying-frequency-spectrum-by-constant
+ *
+ * https://www.youtube.com/watch?v=xV4aQvPLYEY&t=479s
  */
 class DftDemo1Main {
     public static void main(String[] args) {
@@ -68,7 +70,7 @@ class DftDemo1Main {
             Complex[] result = transformer.transform(audioData, TransformType.FORWARD);
 
             // Anzahl der gewünschten Frequenzbänder
-            //int numFreqBands = 400;
+            //int numFreqBands = 3000;
             int numFreqBands = result.length;
             int bandSize = result.length / numFreqBands;
 
@@ -162,17 +164,38 @@ class DftDemo1Main {
                         //double t = 2.0 * Math.PI * i / audioData.length;
                         //double t = ((double)i) / audioData.length;
                         double t = i;
+                        //double t = i / (double) audioData.length;
                         //double t = i / (Math.PI);
                         //double t = 1.0D;
 
-                        for (int freqBandSumComplexPos = 0; freqBandSumComplexPos < resultFreqBandSumComplexArr.length; freqBandSumComplexPos += 1) {
-                            Complex complex = resultFreqBandSumComplexArr[freqBandSumComplexPos];
-                            //sampleValue += Math.sin(complex.getReal()) + Math.cos(complex.getImaginary());
-                            sampleValue += Math.sin(complex.getReal() * t) + Math.cos(complex.getImaginary() * t);
-                            //sampleValue += complex.abs();
+//                        for (int freqBandSumComplexPos = 0; freqBandSumComplexPos < resultFreqBandSumComplexArr.length; freqBandSumComplexPos += 1) {
+//                            Complex complex = resultFreqBandSumComplexArr[freqBandSumComplexPos];
+//                            //sampleValue += Math.sin(complex.getReal()) + Math.cos(complex.getImaginary());
+//
+//                            //sampleValue += Math.cos(complex.getImaginary() * t) * Math.sin(complex.getReal() * t);
+//
+//                            double abs = complex.abs();
+//                            double phase = complex.getArgument();
+//                            //sampleValue += abs * Math.sin(phase * t);
+//                            // y2= mx .* ( cos(ma) + sqrt(-1) * sin(ma) );
+//                            //sampleValue += abs * Math.cos(phase * t) + abs * Math.sin(phase * t);
+//                            //sampleValue += abs * (Math.cos(phase * t) + Math.sin(phase * t));
+//                            sampleValue += Math.cos(complex.getImaginary() * t) * Math.sin(complex.getReal() * t);
+//                            //sampleValue += complex.abs();
+//                        }
+                        //https://stackoverflow.com/questions/40775602/how-to-use-complex-coefficient-in-apache-fft
+                        int d = 1;
+                        //double k = Math.PI / (resultFreqBandSumComplexArr.length / d);
+                        double k = (Math.PI *  2.0D) / (audioData.length);
+                        sampleValue = resultFreqBandSumComplexArr[0].getReal();
+                        for (int m = 1; m < resultFreqBandSumComplexArr.length / d; m++) {
+                            sampleValue +=
+                                    d * resultFreqBandSumComplexArr[m].getReal() * Math.cos(t * k * m) +
+                                    d * resultFreqBandSumComplexArr[m].getImaginary() * Math.sin(t * k * m);
                         }
                         int x = i * width / audioData.length;
-                        int y = (height - mid2Y) - (int) (sampleValue * mid2Y / 150.0D);
+                        int y = (height - mid2Y) - (int) ((sampleValue / (resultFreqBandSumComplexArr.length)) * mid2Y);
+                        //int y = (height - mid2Y) - (int) ((sampleValue / audioData.length) * mid2Y);
                         g2d.drawLine(lastX, lastY, x, y);
                         lastSampleValue = sampleValue;
                         lastY = y;
