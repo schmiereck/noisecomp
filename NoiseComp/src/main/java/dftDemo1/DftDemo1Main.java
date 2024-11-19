@@ -18,6 +18,7 @@ import java.nio.file.Files;
 class DftDemo1Main {
     public static void main(String[] args) {
         try {
+            //----------------------------------------------------------------------------------------------------------
             // Load the WAV file
             //File wavFile = new File(DftDemo1Main.class.getResource("/16.wav").getFile());
             File wavFile = new File(DftDemo1Main.class.getResource("/soundcamp.org/tag/tuned-kick-drums/00s-studio-hip-hop-kickdrum-a-sharp-key-39-qKp.wav").getFile());
@@ -44,6 +45,7 @@ class DftDemo1Main {
             float[] samples = new float[audioBytes.length * 8 / format.getSampleSizeInBits()];
             int validSamples = SimpleAudioConversion.decode(audioBytes, samples, resultN, format);
 
+            //----------------------------------------------------------------------------------------------------------
             // Convert byte array to double array
             //int n = audioBytes.length / 2;
             //int paddedLength = 1;
@@ -69,8 +71,9 @@ class DftDemo1Main {
             FastFourierTransformer transformer = new FastFourierTransformer(DftNormalization.STANDARD);
             Complex[] result = transformer.transform(audioData, TransformType.FORWARD);
 
+            //----------------------------------------------------------------------------------------------------------
             // Anzahl der gewünschten Frequenzbänder
-            //int numFreqBands = 6000;
+            //int numFreqBands = 1024 * 4;
             int numFreqBands = result.length;
             int bandSize = result.length / numFreqBands;
 
@@ -92,20 +95,25 @@ class DftDemo1Main {
                 //System.out.printf("Band %d: %f\n", i, bandAverage);
             }
 
+            Complex[] result2FreqBandSumComplexArr = transformer.transform(resultFreqBandSumComplexArr, TransformType.INVERSE);
+
+            //----------------------------------------------------------------------------------------------------------
             // Output the results
             //for (int i = 0; i < result.length; i++) {
             //    Complex c = result[i];
             //    System.out.printf("%4d: %s\n", i, c);
             //}
 
-            displayResult(audioData, resultFreqBandSumArr, resultFreqBandSumComplexArr);
+            //displayResult(audioData, resultFreqBandSumArr, resultFreqBandSumComplexArr);
+            displayResult(audioData, resultFreqBandSumArr, resultFreqBandSumComplexArr, result2FreqBandSumComplexArr);
 
         } catch (UnsupportedAudioFileException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static void displayResult(double[] audioData, double[] resultFreqBandSumArr, Complex[] resultFreqBandSumComplexArr) {
+    private static void displayResult(double[] audioData, double[] resultFreqBandSumArr,
+                                      Complex[] resultFreqBandSumComplexArr, Complex[] result2FreqBandSumComplexArr) {
     javax.swing.SwingUtilities.invokeLater(() -> {
         JFrame frame = new JFrame("DFT Result");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -181,6 +189,35 @@ class DftDemo1Main {
                         }
                         int x = (i * width) / (resultFreqBandSumComplexArr.length);
                         int y = (height - mid2Y) - (int) ((sampleValue / (resultFreqBandSumComplexArr.length)) * mid2Y);
+                        //int y = (height - mid2Y) - (int) ((sampleValue / audioData.length) * mid2Y);
+                        g2d.drawLine(lastX, lastY, x, y);
+                        lastSampleValue = sampleValue;
+                        lastY = y;
+                        lastX = x;
+                    }
+                }
+                // Result 2:
+                {
+                    g2d.setColor(Color.LIGHT_GRAY);
+                    double lastSampleValue = 0.0D;
+                    int lastX = 0;
+                    int lastY = height - mid2Y;
+                    for (int i = 0; i < result2FreqBandSumComplexArr.length / 10; i += 1) {
+                        double t = i;
+                        //https://stackoverflow.com/questions/40775602/how-to-use-complex-coefficient-in-apache-fft
+                        int d = 1;
+                        //double k = Math.PI / (result2FreqBandSumComplexArr.length / d);
+                        double k = (Math.PI * 2.0D) / (result2FreqBandSumComplexArr.length - 1);
+                        double sampleValue = result2FreqBandSumComplexArr[0].getReal();
+                        for (int m = 1; m < result2FreqBandSumComplexArr.length / 1; m++) {
+                            double phase = t * k * m;
+                            sampleValue +=
+                                    d * result2FreqBandSumComplexArr[m].getReal() * Math.cos(phase) +
+                                    d * result2FreqBandSumComplexArr[m].getImaginary() * Math.sin(phase);
+                        }
+                        int x = (i * width) / (result2FreqBandSumComplexArr.length / 68);
+                        int y = (height - mid2Y) - (int) ((sampleValue / (result2FreqBandSumComplexArr.length / 10)) * mid2Y);
+                        //int y = (height - mid2Y) - (int) ((sampleValue / (result2FreqBandSumComplexArr.length)) * mid2Y);
                         //int y = (height - mid2Y) - (int) ((sampleValue / audioData.length) * mid2Y);
                         g2d.drawLine(lastX, lastY, x, y);
                         lastSampleValue = sampleValue;
