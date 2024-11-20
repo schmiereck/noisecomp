@@ -198,29 +198,34 @@ class DftDemo1Main {
                 }
                 // Result 2:
                 {
-                    g2d.setColor(Color.LIGHT_GRAY);
-                    double lastSampleValue = 0.0D;
+                    final int ql = result2FreqBandSumComplexArr.length / 4;
+                    final int ql2 = ql * 2;
+                    final int ql3 = ql * 3;
+                    g2d.setColor(Color.ORANGE);
                     int lastX = 0;
                     int lastY = height - mid2Y;
-                    for (int i = 0; i < result2FreqBandSumComplexArr.length / 10; i += 1) {
-                        double t = i;
-                        //https://stackoverflow.com/questions/40775602/how-to-use-complex-coefficient-in-apache-fft
-                        int d = 1;
-                        //double k = Math.PI / (result2FreqBandSumComplexArr.length / d);
-                        double k = (Math.PI * 2.0D) / (result2FreqBandSumComplexArr.length - 1);
-                        double sampleValue = result2FreqBandSumComplexArr[0].getReal();
-                        for (int m = 1; m < result2FreqBandSumComplexArr.length / 1; m++) {
-                            double phase = t * k * m;
-                            sampleValue +=
-                                    d * result2FreqBandSumComplexArr[m].getReal() * Math.cos(phase) +
-                                    d * result2FreqBandSumComplexArr[m].getImaginary() * Math.sin(phase);
+                    for (int i = 0; i < result2FreqBandSumComplexArr.length / 1; i += 1) {
+                        double real = result2FreqBandSumComplexArr[i].getReal();
+                        double abs = result2FreqBandSumComplexArr[i].abs();
+                        double sampleValue;
+                        // negative frequencies?
+                        if (i < ql3) {
+                            if (real < 0.0D) {
+                                sampleValue = abs;
+                            } else {
+                                sampleValue = -abs;
+                            }
+                        } else {
+                            if (real < 0.0D) {
+                                sampleValue = -abs;
+                            } else {
+                                sampleValue = abs;
+                            }
                         }
-                        int x = (i * width) / (result2FreqBandSumComplexArr.length / 68);
-                        int y = (height - mid2Y) - (int) ((sampleValue / (result2FreqBandSumComplexArr.length / 10)) * mid2Y);
-                        //int y = (height - mid2Y) - (int) ((sampleValue / (result2FreqBandSumComplexArr.length)) * mid2Y);
-                        //int y = (height - mid2Y) - (int) ((sampleValue / audioData.length) * mid2Y);
+
+                        int x = width - (i * width) / (result2FreqBandSumComplexArr.length);
+                        int y = (height - mid2Y) - (int) ((sampleValue) * mid2Y);
                         g2d.drawLine(lastX, lastY, x, y);
-                        lastSampleValue = sampleValue;
                         lastY = y;
                         lastX = x;
                     }
