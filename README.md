@@ -60,6 +60,7 @@ is a class that represents a sound output.
   - Phaser
   - Flanger
   - Chorus
+  - Dft-Filter (see DftDemo1Main)
 * Arithmetic
   - add
   - sub

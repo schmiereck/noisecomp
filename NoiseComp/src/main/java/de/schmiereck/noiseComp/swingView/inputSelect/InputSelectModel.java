@@ -103,7 +103,7 @@ public class InputSelectModel {
 	 * @param selectedRowNo 
 	 * 			to set {@link #selectedRowNo}.
 	 */
-	public void setSelectedRowNo(Integer selectedRowNo) {
+	public void setSelectedRowNo(final Integer selectedRowNo) {
 		//==========================================================================================
 		if (!CompareUtils.compareWithNull(this.selectedRowNo, selectedRowNo)) {
 			this.selectedRowNo = selectedRowNo;

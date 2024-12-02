@@ -5,10 +5,7 @@ package de.schmiereck.noiseComp.swingView.inputEdit;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -47,8 +44,7 @@ import de.schmiereck.noiseComp.timeline.TimelineManagerLogic;
  * @author smk
  * @version <p>15.09.2010:	created, smk</p>
  */
-public class InputEditController
-{
+public class InputEditController {
 	//**********************************************************************************************
 	// Fields:
 
@@ -84,8 +80,7 @@ public class InputEditController
 							   final SoundSourceLogic soundSourceLogic,
 	                           final InputSelectModel inputSelectModel, 
 	                           final AppModelChangedObserver appModelChangedObserver,
-	                           final SelectedTimelineModel selectedTimelineModel)
-	{
+	                           final SelectedTimelineModel selectedTimelineModel) {
 		//==========================================================================================
 		this.soundSourceLogic = soundSourceLogic;
 		this.appModelChangedObserver = appModelChangedObserver;
@@ -95,22 +90,17 @@ public class InputEditController
 		this.inputEditView = new InputEditView(this.inputEditModel);
 		
 		//------------------------------------------------------------------------------------------
-		this.inputEditView.getInputTypeComboBox().addActionListener
-		(
-		 	new ActionListener()
-		 	{
+		this.inputEditView.getInputTypeComboBox().addActionListener(
+		 	new ActionListener() {
 				@Override
-				public void actionPerformed(ActionEvent e)
-				{
+				public void actionPerformed(ActionEvent e) {
 					final JComboBox inputTypeSelectField = (JComboBox)e.getSource();
 					final InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)inputTypeSelectField.getSelectedItem();
 					
-					if (inputTypeSelectItem != null)
-					{
+					if (inputTypeSelectItem != null) {
 						final InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
 						
-						if (inputTypeData != null)
-						{
+						if (inputTypeData != null) {
 							updateInputTypeDefaultValueField(inputTypeData);
 						}
 						
@@ -157,26 +147,19 @@ public class InputEditController
 //		 	}
 //		);
 		//------------------------------------------------------------------------------------------
-		selectedTimelineModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener
-		(
-		 	new ModelPropertyChangedListener()
-			{
+		selectedTimelineModel.getSelectedTimelineChangedNotifier().addModelPropertyChangedListener(
+		 	new ModelPropertyChangedListener() {
 				@Override
-				public void notifyModelPropertyChanged()
-				{
-					TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+				public void notifyModelPropertyChanged() {
+					final TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+
+					final List<InputTypeSelectItem> inputTypeSelectItems;
 					
-					List<InputTypeSelectItem> inputTypeSelectItems;
-					
-					if (selectedTimelineSelectEntryModel != null)
-					{
-						Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
+					if (selectedTimelineSelectEntryModel != null) {
+						final Timeline selectedTimeline = selectedTimelineSelectEntryModel.getTimeline();
 						
-						inputTypeSelectItems = 
-							updateEditedInputType(selectedTimeline);
-					}
-					else
-					{
+						inputTypeSelectItems = updateEditedInputType(selectedTimeline);
+					} else {
 						inputTypeSelectItems = null;
 					}
 					
@@ -186,11 +169,11 @@ public class InputEditController
 		);
 		//------------------------------------------------------------------------------------------
 		{
-			JButton updateButton = this.inputEditView.getUpdateButton();
-		
-			TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
-			
-			InputEditUpdateAction inputEditUpdateAction = new InputEditUpdateAction(soundSourceData,
+			final JButton updateButton = this.inputEditView.getUpdateButton();
+
+			final TimelinesDrawPanelModel timelinesDrawPanelModel = timelinesDrawPanelController.getTimelinesDrawPanelModel();
+
+			final InputEditUpdateAction inputEditUpdateAction = new InputEditUpdateAction(soundSourceData,
 					this, inputSelectModel, timelinesDrawPanelModel);
 			
 			updateButton.setAction(inputEditUpdateAction);
@@ -217,7 +200,7 @@ public class InputEditController
 	}
 
 	/**
-	 * Update the Edited-Input in the Input-Edit-Model if a input is selected.
+	 * Update the Edited-Input in the Input-Edit-Model if an input is selected.
 	 * 
 	 * @param editedModuleGeneratorTypeData 
 	 * 			is the edited ModuleGenerator-Type Data.
@@ -228,25 +211,22 @@ public class InputEditController
 	 * @param editInput
 	 * 			<code>true</code> if a input edited.
 	 */
-	public void updateEditedInput(ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData,
-                                  Timeline selectedTimeline,
-                                  InputData inputData,
-                                  boolean editInput)
-	{
+	public void updateEditedInput(final ModuleGeneratorTypeInfoData editedModuleGeneratorTypeData,
+								  final Timeline selectedTimeline,
+								  final InputData inputData,
+								  final boolean editInput) {
 		//==========================================================================================
-		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-		
-		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
+		final TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
 		//List<InputTypeSelectItem> inputTypeSelectItems;
 		//InputTypeData inputTypeData;
-		List<GeneratorSelectItem> generatorSelectItems;
-		Timeline inputTimeline;
-		List<ValueSelectItem> valueSelectItems;
-		String value;
-		List<ModuleInputTypeSelectItem> moduleInputTypeSelectItems;
-		InputTypeData moduleInputTypeData;
+		final List<GeneratorSelectItem> generatorSelectItems;
+		final Timeline inputTimeline;
+		final List<ValueSelectItem> valueSelectItems;
+		final String value;
+		final List<ModuleInputTypeSelectItem> moduleInputTypeSelectItems;
+		final InputTypeData moduleInputTypeData;
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// Make InputType-SelectItems:
@@ -254,17 +234,13 @@ public class InputEditController
 			//inputTypeSelectItems = this.updateEditedInputType(selectedTimeline);
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		if (editInput == true)
-		{
+		if (editInput == true) {
 //			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //			// Input-Type:
 //			
-//			if (inputData != null)
-//			{
+//			if (inputData != null) {
 //				inputTypeData = inputData.getInputTypeData();
-//			}
-//			else
-//			{
+//			} else {
 //				inputTypeData = null;
 //			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -272,23 +248,21 @@ public class InputEditController
 			{
 				generatorSelectItems = new Vector<GeneratorSelectItem>();
 //				Iterator<Generator> generatorsIterator = editedModuleGeneratorTypeData.getGeneratorsIterator();
-				Iterator<Timeline> timelinesIterator = timelineManagerLogic.getTimelinesIterator();
-				if (timelinesIterator != null)
-				{
-					GeneratorSelectItem noSelectItem = new GeneratorSelectItem(null);
+				final Iterator<Timeline> timelinesIterator = timelineManagerLogic.getTimelinesIterator();
+				if (timelinesIterator != null) {
+					final GeneratorSelectItem noSelectItem = new GeneratorSelectItem(null);
+
 					generatorSelectItems.add(noSelectItem);
-					while (timelinesIterator.hasNext())
-					{
-						Timeline timeline = timelinesIterator.next();
+
+					while (timelinesIterator.hasNext()) {
+						final Timeline timeline = timelinesIterator.next();
 						
 						// Edited generator is not input generator?
-						if (selectedTimeline != timeline)
-						{
+						if (selectedTimeline != timeline) {
 							// Do not serve the edited generator as input generator.
 							
 							// Output generators of edited generator is not a input generator?
-							if (selectedTimeline.checkIsOutputTimeline(timeline) == false)
-							{
+							if (selectedTimeline.checkIsOutputTimeline(timeline) == false) {
 								// Do not serve the output generators of edited generator as input generator.
 								generatorSelectItems.add(new GeneratorSelectItem(timeline));
 							}
@@ -301,13 +275,10 @@ public class InputEditController
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Input-Timeline:
 			
-			if (inputData != null)
-			{
+			if (inputData != null) {
 //				inputTimeline = inputData.getInputGenerator();
 				inputTimeline = selectedTimeline.searchInputTimeline(inputData);
-			}
-			else
-			{
+			} else {
 				inputTimeline = null;
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -322,15 +293,12 @@ public class InputEditController
 				valueSelectItems.add(new ValueSelectItem("1,0"));
 				valueSelectItems.add(new ValueSelectItem("2,0"));
 				
-				for (int octave = ToneFrequences.OCTAVE_MIN; octave <= ToneFrequences.OCTAVE_MAX; octave++)
-				{
-					Tone[] tones = ToneFrequences.Tone.values();
+				for (int octave = ToneFrequences.OCTAVE_MIN; octave <= ToneFrequences.OCTAVE_MAX; octave++) {
+					final Tone[] tones = ToneFrequences.Tone.values();
 					
-					for (Tone tone : tones)
-					{
-						float frequence = ToneFrequences.makeFrequence(octave, tone);
-						
-						String frequenceValue = OutputUtils.makeFloatEditText(frequence);
+					for (final Tone tone : tones) {
+						final float frequence = ToneFrequences.makeFrequence(octave, tone);
+						final String frequenceValue = OutputUtils.makeFloatEditText(frequence);
 						
 						valueSelectItems.add(new ValueSelectItem(frequenceValue, octave, tone));
 					}
@@ -339,28 +307,24 @@ public class InputEditController
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Value:
 			
-			if (inputData != null)
-			{
+			if (inputData != null) {
 				MultiValue multiValue = new MultiValue();
 				multiValue.floatValue = inputData.getInputValue();
 				multiValue.stringValue = inputData.getInputStringValue();
 				value = OutputUtils.makeMultiValueEditText(multiValue);
-			}
-			else
-			{
+			} else {
 				value = null;
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Make ModuleInputType-SelectItems:
 			{
 				moduleInputTypeSelectItems = new Vector<ModuleInputTypeSelectItem>();
-				Iterator<InputTypeData> moduleInputTypeIterator = editedModuleGeneratorTypeData.getInputTypesIterator();
-				if (moduleInputTypeIterator != null)
-				{
-					ModuleInputTypeSelectItem noSelectItem = new ModuleInputTypeSelectItem(null);
+				final Iterator<InputTypeData> moduleInputTypeIterator = editedModuleGeneratorTypeData.getInputTypesIterator();
+				if (moduleInputTypeIterator != null) {
+					final ModuleInputTypeSelectItem noSelectItem = new ModuleInputTypeSelectItem(null);
 					moduleInputTypeSelectItems.add(noSelectItem);
-					while (moduleInputTypeIterator.hasNext())
-					{
+
+					while (moduleInputTypeIterator.hasNext()) {
 						InputTypeData inputTypeData2 = moduleInputTypeIterator.next();
 						
 						moduleInputTypeSelectItems.add(new ModuleInputTypeSelectItem(inputTypeData2));
@@ -370,18 +334,13 @@ public class InputEditController
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// ModuleInput-Type:
 			
-			if (inputData != null)
-			{
+			if (inputData != null) {
 				moduleInputTypeData = inputData.getInputModuleInputTypeData();
-			}
-			else
-			{
+			} else {
 				moduleInputTypeData = null;
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		}
-		else
-		{
+		} else {
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			//inputTypeSelectItems = null;
 //			inputTypeData = null;
@@ -415,31 +374,26 @@ public class InputEditController
 	 * @return
 	 * 		the InputTypeSelectItems.
 	 */
-	private List<InputTypeSelectItem> updateEditedInputType(Timeline selectedTimeline)
-	{
+	private List<InputTypeSelectItem> updateEditedInputType(final Timeline selectedTimeline) {
 		//==========================================================================================
-		List<InputTypeSelectItem> inputTypeSelectItems;
+		final List<InputTypeSelectItem> inputTypeSelectItems;
 		
-		if (selectedTimeline != null)
-		{
+		if (selectedTimeline != null) {
 			inputTypeSelectItems = new Vector<InputTypeSelectItem>();
-			Generator selectedGenerator = selectedTimeline.getGenerator();
-			GeneratorTypeInfoData generatorTypeInfoData = selectedGenerator.getGeneratorTypeData();
-			Iterator<InputTypeData> inputTypeIterator = generatorTypeInfoData.getInputTypesIterator();
-			if (inputTypeIterator != null)
-			{
-				InputTypeSelectItem noSelectItem = new InputTypeSelectItem(null);
+			final Generator selectedGenerator = selectedTimeline.getGenerator();
+			final GeneratorTypeInfoData generatorTypeInfoData = selectedGenerator.getGeneratorTypeData();
+			final Iterator<InputTypeData> inputTypeIterator = generatorTypeInfoData.getInputTypesIterator();
+			if (inputTypeIterator != null) {
+				final InputTypeSelectItem noSelectItem = new InputTypeSelectItem(null);
 				inputTypeSelectItems.add(noSelectItem);
-				while (inputTypeIterator.hasNext())
-				{
-					InputTypeData inputTypeData2 = inputTypeIterator.next();
+
+				while (inputTypeIterator.hasNext()) {
+					final InputTypeData inputTypeData2 = inputTypeIterator.next();
 					
 					inputTypeSelectItems.add(new InputTypeSelectItem(inputTypeData2));
 				}
 			}
-		}
-		else
-		{
+		} else {
 			inputTypeSelectItems = null;
 		}
 		//==========================================================================================
@@ -448,44 +402,34 @@ public class InputEditController
 
 	/**
 	 * Submit edited Input.
-	 * 
-	 * @param inputSelectModel
-	 * 			is the input Select Model.
-	 * @param selectedTimeline
-	 * 			is the selected Timeline.
+	 *
+	 * @param selectedTimeline is the selected Timeline.
+	 * @param inputSelectModel is the input Select Model.
 	 */
-	public void doSubmit(final SoundSourceData soundSourceData, final InputSelectModel inputSelectModel,
-						 final Timeline selectedTimeline)
-	{
+	public void doSubmitInput(final SoundSourceData soundSourceData,
+							  final Timeline selectedTimeline, final InputSelectModel inputSelectModel) {
 		//==========================================================================================
-		//SoundSourceLogic soundSourceLogic = SwingMain.getSoundSourceLogic();
-		
-		TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
+		final TimelineManagerLogic timelineManagerLogic = this.soundSourceLogic.getTimelineManagerLogic();
 		
 		//==========================================================================================
-		// Input is selceted?
-		if (inputSelectModel.getSelectedRowNo() != null)
-		{
-			InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
-			GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
-			Object valueSelectedValue = this.inputEditView.getInputTypeValueTextField().getSelectedItem();
-			ModuleInputTypeSelectItem moduleInputTypeSelectItem = (ModuleInputTypeSelectItem)this.inputEditView.getModuleInputTypeComboBox().getSelectedItem();
+		// Input is selected?
+		if (Objects.nonNull(inputSelectModel.getSelectedRowNo())) {
+			final InputTypeSelectItem inputTypeSelectItem = (InputTypeSelectItem)this.inputEditView.getInputTypeComboBox().getSelectedItem();
+			final GeneratorSelectItem inputGeneratorSelectItem = (GeneratorSelectItem)this.inputEditView.getInputGeneratorComboBox().getSelectedItem();
+			final Object valueSelectedValue = this.inputEditView.getInputTypeValueTextField().getSelectedItem();
+			final ModuleInputTypeSelectItem moduleInputTypeSelectItem = (ModuleInputTypeSelectItem)this.inputEditView.getModuleInputTypeComboBox().getSelectedItem();
 				
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
-			Timeline inputTimeline = inputGeneratorSelectItem.getTimeline();
-			MultiValue multiValue;
+			final InputTypeData inputTypeData = inputTypeSelectItem.getInputTypeData();
+			final Timeline inputTimeline = inputGeneratorSelectItem.getTimeline();
+			final MultiValue multiValue;
 			{
-				String valueStr;
+				final String valueStr;
 				
-				if (valueSelectedValue instanceof ValueSelectItem)
-				{
+				if (valueSelectedValue instanceof ValueSelectItem) {
 					ValueSelectItem valueSelectItem = (ValueSelectItem)valueSelectedValue;
-					
-					valueStr = valueSelectItem.getValue();
-				}
-				else
-				{
+					valueStr = valueSelectItem.getValue(); }
+				else {
 					valueStr = valueSelectedValue.toString();
 				}
 				
@@ -493,46 +437,41 @@ public class InputEditController
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			// Input-Data:
-			InputTypeData moduleInputTypeData = moduleInputTypeSelectItem.getInputTypeData();
-			
-			Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
+			final InputTypeData moduleInputTypeData = moduleInputTypeSelectItem.getInputTypeData();
+
+			final Integer selectedRowNo = inputSelectModel.getSelectedRowNo();
 			
 			// Input selected?
-			if (selectedRowNo != null)
-			{
-				InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
-				
-				InputSelectEntryModel inputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
-				
-				InputData inputData = inputSelectEntryModel.getInputData();
+			if (Objects.nonNull(selectedRowNo)) {
+				final InputsTabelModel inputsTabelModel = inputSelectModel.getInputsTabelModel();
+
+				final InputSelectEntryModel selectedInputSelectEntryModel = inputsTabelModel.getRow(selectedRowNo);
+
+				final InputData selectedInputData = selectedInputSelectEntryModel.getInputData();
 				
 				// Existing Input selected?
-				if (inputData != null)
-				{
+				if (Objects.nonNull(selectedInputData)) {
 					// Update selected Input:
-					
 					timelineManagerLogic.updateInput(soundSourceData,
 							                         selectedTimeline,
-					                                 inputData,
-					                                 inputTimeline, 
-					                                 inputTypeData, 
+					                                 selectedInputData,
+					                                 inputTimeline,
+					                                 inputTypeData,
 					                                 multiValue.floatValue, multiValue.stringValue,
 					                                 moduleInputTypeData);
-	//				inputData.setInputGenerator(inputGenerator);
-	//				inputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
-	//				inputData.setInputModuleInputTypeData(moduleInputTypeData);
-				}
-				else
-				{
+	//				selectedInputData.setInputGenerator(inputGenerator);
+	//				selectedInputData.setInputValue(multiValue.floatValue, multiValue.stringValue);
+	//				selectedInputData.setInputModuleInputTypeData(moduleInputTypeData);
+				} else {
 					// Insert new Input:
-					inputData = 
-						timelineManagerLogic.addGeneratorInput(soundSourceData, selectedTimeline,
+					final InputData newInputData =
+							timelineManagerLogic.addGeneratorInput(soundSourceData, selectedTimeline,
 						                                       inputTimeline, 
 						                                       inputTypeData, 
 						                                       multiValue.floatValue, multiValue.stringValue,
 						                                       moduleInputTypeData);
 					
-					inputSelectEntryModel.setInputData(inputData);
+					selectedInputSelectEntryModel.setInputData(newInputData);
 				}
 			}
 			
@@ -559,18 +498,15 @@ public class InputEditController
 	public void doCreateNewInput(final SoundSourceData soundSourceData,
 								 final InputSelectController inputSelectController) {
 		//==========================================================================================
-		InputTypeData inputTypeData;
+		final InputTypeData inputTypeData;
 		
 		inputTypeData = this.inputEditModel.getInputTypeData();
 		
-		if (inputTypeData != null)
-		{
+		if (Objects.nonNull(inputTypeData)) {
 			inputSelectController.doCreateNewInput(soundSourceData, inputTypeData);
 
 			this.updateInputTypeDefaultValueField(inputTypeData);
-		}
-		else
-		{
+		} else {
 			JOptionPane.showMessageDialog(this.inputEditView,
 			                              "Please select a input type.", 
 			                              "No input type", 
@@ -579,11 +515,7 @@ public class InputEditController
 		//==========================================================================================
 	}
 
-	/**
-	 * @param inputTypeData
-	 */
-	private void updateInputTypeDefaultValueField(final InputTypeData inputTypeData)
-	{
+	private void updateInputTypeDefaultValueField(final InputTypeData inputTypeData) {
 		//==========================================================================================
 		final JComboBox inputTypeValueTextField = this.inputEditView.getInputTypeValueTextField();
 		
@@ -592,9 +524,8 @@ public class InputEditController
 		//
 		//if (valueStr == null)
 		{
-			Float defaultValue = inputTypeData.getDefaultValue();
-			
-			String defaultValueStr = OutputUtils.makeFloatEditText(defaultValue);
+			final Float defaultValue = inputTypeData.getDefaultValue();
+			final String defaultValueStr = OutputUtils.makeFloatEditText(defaultValue);
 			
 			inputTypeValueTextField.setSelectedItem(defaultValueStr);
 		}

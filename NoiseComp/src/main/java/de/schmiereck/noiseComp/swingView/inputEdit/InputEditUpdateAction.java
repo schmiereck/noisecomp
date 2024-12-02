@@ -160,7 +160,7 @@ implements Action
 		}
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		this.inputEditController.doSubmit(this.soundSourceData, inputSelectModel, selectedTimeline);
+		this.inputEditController.doSubmitInput(this.soundSourceData, selectedTimeline, inputSelectModel);
 		
 		//==========================================================================================
 	}

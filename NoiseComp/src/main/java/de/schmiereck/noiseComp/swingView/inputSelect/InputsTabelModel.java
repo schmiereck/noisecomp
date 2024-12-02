@@ -80,7 +80,13 @@ extends AbstractTableModel
 	}
 	
 	public InputSelectEntryModel getRow(final int rowNo) {
-		return this.inputs.get(rowNo);
+		final InputSelectEntryModel retInputSelectEntryModel;
+		if (rowNo < this.inputs.size()) {
+			retInputSelectEntryModel = this.inputs.get(rowNo);
+		} else {
+			retInputSelectEntryModel = null;
+		}
+		return retInputSelectEntryModel;
 	}
 	
 	@Override

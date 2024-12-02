@@ -353,10 +353,9 @@ public class SelectedTimelineModel
 	 * @param selectedInputEntry 
 	 * 			to set {@link #selectedInputEntry}.
 	 */
-	public void setSelectedInputEntry(InputEntryModel selectedInputEntry)
-	{
+	public void setSelectedInputEntry(final InputEntryModel selectedInputEntry) {
 		//==========================================================================================
-		// Is also used to notify for reselet.
+		// Is also used to notify for reselected.
 //		if (this.selectedInputEntry != selectedInputEntry)
 		{
 			this.selectedInputEntry = selectedInputEntry;
