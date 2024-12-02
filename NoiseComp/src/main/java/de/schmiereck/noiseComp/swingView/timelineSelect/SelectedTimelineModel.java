@@ -81,7 +81,8 @@ public class SelectedTimelineModel
 	 * {@link #selectedInputEntry} changed listeners.
 	 */
 	private final ModelPropertyChangedNotifier selectedInputEntryChangedNotifier = new ModelPropertyChangedNotifier();
-	
+	private final ModelPropertyChangedNotifier selectedInputEntryChangedViewNotifier = new ModelPropertyChangedNotifier();
+
 	//==============================================================================================
 	/**
 	 * Positions of Input-Entries and Input-Groups.<br/>
@@ -202,7 +203,7 @@ public class SelectedTimelineModel
 		
 		//------------------------------------------------------------------------------------------
 		this.setHighlightedInputEntry(null);
-		this.setSelectedInputEntry(null);
+		this.setSelectedInputEntry(null, false);
 		
 		//------------------------------------------------------------------------------------------
 		this.selectedTimelineChangedNotifier.notifyModelPropertyChangedListeners();
@@ -353,14 +354,17 @@ public class SelectedTimelineModel
 	 * @param selectedInputEntry 
 	 * 			to set {@link #selectedInputEntry}.
 	 */
-	public void setSelectedInputEntry(final InputEntryModel selectedInputEntry) {
+	public void setSelectedInputEntry(final InputEntryModel selectedInputEntry, final boolean notiefyOnlyView) {
 		//==========================================================================================
 		// Is also used to notify for reselected.
 //		if (this.selectedInputEntry != selectedInputEntry)
 		{
 			this.selectedInputEntry = selectedInputEntry;
 			
-			this.selectedInputEntryChangedNotifier.notifyModelPropertyChangedListeners();
+			this.selectedInputEntryChangedViewNotifier.notifyModelPropertyChangedListeners();
+			if (!notiefyOnlyView) {
+				this.selectedInputEntryChangedNotifier.notifyModelPropertyChangedListeners();
+			}
 		}
 		//==========================================================================================
 	}
@@ -372,6 +376,15 @@ public class SelectedTimelineModel
 	public ModelPropertyChangedNotifier getSelectedInputEntryChangedNotifier()
 	{
 		return this.selectedInputEntryChangedNotifier;
+	}
+
+	/**
+	 * @return
+	 * 			returns the {@link #selectedInputEntryChangedViewNotifier}.
+	 */
+	public ModelPropertyChangedNotifier getSelectedInputEntryChangedViewNotifier()
+	{
+		return this.selectedInputEntryChangedViewNotifier;
 	}
 
 	/**

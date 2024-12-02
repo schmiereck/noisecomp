@@ -103,13 +103,15 @@ public class InputSelectModel {
 	 * @param selectedRowNo 
 	 * 			to set {@link #selectedRowNo}.
 	 */
-	public void setSelectedRowNo(final Integer selectedRowNo) {
+	public void setSelectedRowNo(final Integer selectedRowNo, final boolean notifyListeners) {
 		//==========================================================================================
 		if (!CompareUtils.compareWithNull(this.selectedRowNo, selectedRowNo)) {
 			this.selectedRowNo = selectedRowNo;
-			
-			// Notify listeners.
-			this.selectedRowNoChangedNotifier.notifyModelPropertyChangedListeners();
+
+			if (notifyListeners) {
+				// Notify listeners.
+				this.selectedRowNoChangedNotifier.notifyModelPropertyChangedListeners();
+			}
 		}
 		//==========================================================================================
 	}

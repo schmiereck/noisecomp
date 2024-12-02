@@ -196,8 +196,7 @@ public class InputEntriesModel
 	 * @return
 	 * 			the removed InputEntryModel.
 	 */
-	public InputEntryModel removeInputEntry(int inputNo)
-	{
+	public InputEntryModel removeInputEntry(final int inputNo) {
 		//==========================================================================================
 		InputEntryModel retInputEntryModel;
 		
@@ -207,14 +206,11 @@ public class InputEntriesModel
 		
 		int entryPos = 0;
 		
-		for (InputEntryGroupModel inputEntryGroupModel : this.inputEntryGroups)
-		{
-			List<InputEntryModel> inputEntries = inputEntryGroupModel.getInputEntries();
+		for (final InputEntryGroupModel inputEntryGroupModel : this.inputEntryGroups) {
+			final List<InputEntryModel> inputEntries = inputEntryGroupModel.getInputEntries();
 			
-			for (InputEntryModel inputEntryModel : inputEntries)
-			{
-				if (entryPos == inputNo)
-				{
+			for (final InputEntryModel inputEntryModel : inputEntries) {
+				if (entryPos == inputNo) {
 					retInputEntryModel = inputEntryModel;
 					inputEntries.remove(inputEntryModel);
 					break;
@@ -222,8 +218,7 @@ public class InputEntriesModel
 				entryPos++;
 			}
 			
-			if (retInputEntryModel != null)
-			{
+			if (retInputEntryModel != null) {
 				break;
 			}
 		}

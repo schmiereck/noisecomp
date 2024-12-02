@@ -118,7 +118,7 @@ implements MouseListener
 			
 			if (selectedTimelineModel.getSelectedInputEntry() != highlightedInputEntry)
 			{
-				selectedTimelineModel.setSelectedInputEntry(highlightedInputEntry);
+				selectedTimelineModel.setSelectedInputEntry(highlightedInputEntry, false);
 			}
 		}
 		//==========================================================================================

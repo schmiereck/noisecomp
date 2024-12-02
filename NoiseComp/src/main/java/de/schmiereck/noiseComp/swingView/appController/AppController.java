@@ -846,7 +846,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					// TODO YYY selectedTimelineController.setSelectedInputData(inputData);
 					// timelinesDrawPanelController.setSelectedInputData(inputData);
 					//selectedTimelineModel.setSelectedInputEntry(selectedInputEntry);
-					selectedTimelineController.setSelectedInputEntryByRowNo(selectedRowNo);
+					selectedTimelineController.setSelectedInputEntryByRowNo(selectedRowNo, true);
 
 					inputEditController.updateEditedInput(editedModuleGeneratorTypeData,
 					                                      selectedTimeline,
@@ -859,6 +859,27 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		// Input-Select (SelectedTimelineModel in Timeline-View): Selected Input changed: Update Input-Edit:
 
+		this.selectedTimelineModel.getSelectedInputEntryChangedViewNotifier().addModelPropertyChangedListener(
+				new ModelPropertyChangedListener() {
+					@Override
+					public void notifyModelPropertyChanged() {
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+						final InputEntryModel selectedInputEntry = selectedTimelineModel.getSelectedInputEntry();
+
+						final InputData inputData;
+
+						if (Objects.nonNull(selectedInputEntry)) {
+							inputData = selectedInputEntry.getInputData();
+						} else {
+							inputData = null;
+						}
+
+						// Highlight selected Input in Input-Select-Table:
+						inputSelectController.changeSelectedInputData(inputData, false);
+						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					}
+				}
+		);
 		this.selectedTimelineModel.getSelectedInputEntryChangedNotifier().addModelPropertyChangedListener(
 		 	new ModelPropertyChangedListener() {
 				@Override
@@ -884,7 +905,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 					final Timeline selectedTimeline = timelinesDrawPanelController.getSelectedTimeline();
 
 					// Highlight selected Input in Input-Select-Table:
-					inputSelectController.changeSelectedInputData(inputData);
+					//inputSelectController.changeSelectedInputData(inputData);
 
 					// Update selected Input Input-Edit-Form:
 					inputEditController.updateEditedInput(editedModuleGeneratorTypeData,
@@ -2511,7 +2532,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		//	Select Input.
-		selectedTimelineModel.setSelectedInputEntry(selectedInputEntry);
+		selectedTimelineModel.setSelectedInputEntry(selectedInputEntry, true);
 		
 		//==========================================================================================
 	}

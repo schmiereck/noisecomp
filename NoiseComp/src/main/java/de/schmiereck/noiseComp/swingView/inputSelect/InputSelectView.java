@@ -64,7 +64,7 @@ extends JTable {
 							selectedRowNo = null;
 						}
 						
-						inputSelectModel.setSelectedRowNo(selectedRowNo);
+						inputSelectModel.setSelectedRowNo(selectedRowNo, true);
 //						inputSelectModel.getS
 //						selectedTimelineModel.setSelectedInputEntry();
 		            }

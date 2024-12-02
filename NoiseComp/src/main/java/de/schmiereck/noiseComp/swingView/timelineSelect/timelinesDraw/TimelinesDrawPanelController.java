@@ -160,7 +160,7 @@ implements TimelineContentChangedListenerInterface,
 	    );
 		//------------------------------------------------------------------------------------------
 		{
-			selectedTimelineModel.getSelectedInputEntryChangedNotifier().addModelPropertyChangedListener
+			selectedTimelineModel.getSelectedInputEntryChangedViewNotifier().addModelPropertyChangedListener
 			(
 			 	new ModelPropertyChangedListener()
 				{

@@ -200,7 +200,7 @@ public class InputSelectController {
 							inputsTabelModel.addInputData(entryPos,
 							                              inputSelectEntryModel);
 						
-						inputSelectModel.setSelectedRowNo(entryPos);
+						inputSelectModel.setSelectedRowNo(entryPos, true);
 						
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					}
@@ -305,7 +305,7 @@ public class InputSelectController {
 						if (selInputData == selectedInputData) {
 							final Integer selectedRowNo = inputsTabelModel.searchInputSelectEntryPos(selectedInputData);
 							
-							inputSelectModel.setSelectedRowNo(selectedRowNo);
+							inputSelectModel.setSelectedRowNo(selectedRowNo, true);
 						}
 						// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 						inputSelectView.repaint();
@@ -318,7 +318,7 @@ public class InputSelectController {
 		//==========================================================================================
 	}
 
-	public void changeSelectedInputData(final InputData inputData) {
+	public void changeSelectedInputData(final InputData inputData, final boolean notifyListeners) {
 		if (Objects.nonNull(inputData)) {
 			final InputsTabelModel inputsTabelModel = this.inputSelectModel.getInputsTabelModel();
 
@@ -327,7 +327,7 @@ public class InputSelectController {
 				final InputData rowInputData = entryModel.getInputData();
 
 				if (inputData == rowInputData) {
-					//inputSelectModel.setSelectedRowNo(rowNo);
+					this.inputSelectModel.setSelectedRowNo(rowNo, notifyListeners);
 					this.changeSelectedTableRow(rowNo);
 					break;
 				}

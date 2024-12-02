@@ -35,7 +35,7 @@ public class SelectedTimelineController {
         //==========================================================================================
     }
 
-    public void setSelectedInputEntryByRowNo(final Integer selectedRowNo) {
+    public void setSelectedInputEntryByRowNo(final Integer selectedRowNo, final boolean notiefyOnlyView) {
         //==========================================================================================
         final InputEntryModel selectedInputEntry;
 
@@ -46,7 +46,7 @@ public class SelectedTimelineController {
         } else {
             selectedInputEntry = null;
         }
-        this.selectedTimelineModel.setSelectedInputEntry(selectedInputEntry);
+        this.selectedTimelineModel.setSelectedInputEntry(selectedInputEntry, notiefyOnlyView);
 
         //==========================================================================================
     }
