@@ -109,8 +109,7 @@ public class SelectedTimelineModel
 	 * @return 
 	 * 			returns the {@link #selectedTimelineSelectEntryModel}.
 	 */
-	public TimelineSelectEntryModel getSelectedTimelineSelectEntryModel()
-	{
+	public TimelineSelectEntryModel getSelectedTimelineSelectEntryModel() {
 		return this.selectedTimelineSelectEntryModel;
 	}
 
@@ -120,8 +119,7 @@ public class SelectedTimelineModel
 	 * @param selectedTimelineSelectEntryModel 
 	 * 			to set {@link #selectedTimelineSelectEntryModel}.
 	 */
-	public void setSelectedTimelineSelectEntryModel(TimelineSelectEntryModel selectedTimelineSelectEntryModel)
-	{
+	public void setSelectedTimelineSelectEntryModel(TimelineSelectEntryModel selectedTimelineSelectEntryModel) {
 		//==========================================================================================
 		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
 		

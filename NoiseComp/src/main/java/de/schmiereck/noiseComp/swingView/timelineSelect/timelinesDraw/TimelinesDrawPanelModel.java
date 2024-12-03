@@ -26,12 +26,15 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @author smk
  * @version <p>06.09.2010:	created, smk</p>
  */
-public class TimelinesDrawPanelModel
-{
+public class TimelinesDrawPanelModel {
 	//**********************************************************************************************
 	// Constants:
 	
-	public static final int SIZE_TIMELINE_Y = 16;
+	public static final int X_SIZE_TIMELINE = 1;
+	public static final int Y_SIZE_TIMELINE =
+			TimelinesDrawPanelView.INPUT_MARKER_SIZE_Y + 4 +
+			TimelinesDrawPanelView.TimelineHandlerSizeY + 4 +
+			TimelinesDrawPanelView.ExpandHandlerSizeY + 4;
 
 	//**********************************************************************************************
 	// Fields:
@@ -45,8 +48,8 @@ public class TimelinesDrawPanelModel
 	private final ModelPropertyChangedNotifier dimensionChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	//----------------------------------------------------------------------------------------------
-	private int maxUnitIncrementX = 1;
-	private int maxUnitIncrementY = SIZE_TIMELINE_Y;
+	//private int xMinUnitIncrement = 1;
+	//private int yMinUnitIncrement = Y_SIZE_TIMELINE;
 
 	//----------------------------------------------------------------------------------------------
 //	/**
@@ -100,8 +103,7 @@ public class TimelinesDrawPanelModel
 	/**
 	 * Highlighted Timeline Handler.
 	 */
-	public enum HighlightedTimelineHandler
-	{
+	public enum HighlightedTimelineHandler {
 		NONE,
 		LEFT,
 		RIGHT
@@ -167,11 +169,9 @@ public class TimelinesDrawPanelModel
 	 * Something in the Timeline-Generator internals changed.
 	 */
 	private final ModelPropertyChangedListener timelineGeneratorModelChangedListener =
-	 	new ModelPropertyChangedListener()
- 	{
+	 	new ModelPropertyChangedListener() {
 		@Override
-		public void notifyModelPropertyChanged()
-		{
+		public void notifyModelPropertyChanged() {
 //			timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
 			timelineSelectEntriesModel.getTimelineGeneratorModelsChangedNotifier().notifyModelPropertyChangedListeners();
 		}
@@ -209,8 +209,7 @@ public class TimelinesDrawPanelModel
 	 */
 	public TimelinesDrawPanelModel(final AppModelChangedObserver appModelChangedObserver,
 	                               final TimelineSelectEntriesModel timelineSelectEntriesModel,
-                                   final SelectedTimelineModel selectedTimelineModel)
-	{
+                                   final SelectedTimelineModel selectedTimelineModel) {
 		//==========================================================================================
 		this.timelineSelectEntriesModel = timelineSelectEntriesModel;
 		
@@ -225,8 +224,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #selectedTimelineModel}.
 	 */
-	public SelectedTimelineModel getSelectedTimelineModel()
-	{
+	public SelectedTimelineModel getSelectedTimelineModel() {
 		return this.selectedTimelineModel;
 	}
 
@@ -356,41 +354,37 @@ public class TimelinesDrawPanelModel
 //		this.selectedTimelineChangedNotifier.add(selectedTimelineChangedListener);
 //	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #maxUnitIncrementX}.
-	 */
-	public int getMaxUnitIncrementX()
-	{
-		return this.maxUnitIncrementX;
-	}
-
-	/**
-	 * @param maxUnitIncrementX 
-	 * 			to set {@link #maxUnitIncrementX}.
-	 */
-	public void setMaxUnitIncrementX(int maxUnitIncrementX)
-	{
-		this.maxUnitIncrementX = maxUnitIncrementX;
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #maxUnitIncrementY}.
-	 */
-	public int getMaxUnitIncrementY()
-	{
-		return this.maxUnitIncrementY;
-	}
-
-	/**
-	 * @param maxUnitIncrementY 
-	 * 			to set {@link #maxUnitIncrementY}.
-	 */
-	public void setMaxUnitIncrementY(int maxUnitIncrementY)
-	{
-		this.maxUnitIncrementY = maxUnitIncrementY;
-	}
+//	/**
+//	 * @return
+//	 * 			returns the {@link #xMinUnitIncrement}.
+//	 */
+//	public int getXMinUnitIncrement() {
+//		return this.xMinUnitIncrement;
+//	}
+//
+//	/**
+//	 * @param xMinUnitIncrement
+//	 * 			to set {@link #xMinUnitIncrement}.
+//	 */
+//	public void setXMinUnitIncrement(int xMinUnitIncrement) {
+//		this.xMinUnitIncrement = xMinUnitIncrement;
+//	}
+//
+//	/**
+//	 * @return
+//	 * 			returns the {@link #yMinUnitIncrement}.
+//	 */
+//	public int getYMinUnitIncrement() {
+//		return this.yMinUnitIncrement;
+//	}
+//
+//	/**
+//	 * @param yMinUnitIncrement
+//	 * 			to set {@link #yMinUnitIncrement}.
+//	 */
+//	public void setYMinUnitIncrement(int yMinUnitIncrement) {
+//		this.yMinUnitIncrement = yMinUnitIncrement;
+//	}
 //
 //	/**
 //	 * @param firstTimelinePos
@@ -433,8 +427,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #zoomX}.
 	 */
-	public float getZoomX()
-	{
+	public float getZoomX() {
 		return this.zoomX;
 	}
 
@@ -442,8 +435,7 @@ public class TimelinesDrawPanelModel
 	 * @param zoomX 
 	 * 			to set {@link #zoomX}.
 	 */
-	public void setZoomX(float zoomX)
-	{
+	public void setZoomX(float zoomX) {
 		//==========================================================================================
 		this.zoomX = zoomX;
 		
@@ -456,8 +448,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #zoomXChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getZoomXChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getZoomXChangedNotifier() {
 		return this.zoomXChangedNotifier;
 	}
 
@@ -465,8 +456,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #dimension}.
 	 */
-	public Dimension getDimension()
-	{
+	public Dimension getDimension() {
 		return this.dimension;
 	}
 
@@ -476,8 +466,7 @@ public class TimelinesDrawPanelModel
      * @param height 
      * 			the new height of the {@link #dimension}.
 	 */
-	public void setDimensionSize(double width, double height)
-	{
+	public void setDimensionSize(double width, double height) {
 		//==========================================================================================
 		this.dimension.setSize(width, height);
 		
@@ -490,8 +479,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #dimensionChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getDimensionChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getDimensionChangedNotifier() {
 		return this.dimensionChangedNotifier;
 	}
 
@@ -499,8 +487,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #timelineGeneratorModelChangedListener}.
 	 */
-	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener()
-	{
+	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener() {
 		return this.timelineGeneratorModelChangedListener;
 	}
 //
@@ -544,8 +531,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #highlightedTimelineSelectEntryModel}.
 	 */
-	public TimelineSelectEntryModel getHighlightedTimelineSelectEntryModel()
-	{
+	public TimelineSelectEntryModel getHighlightedTimelineSelectEntryModel() {
 		return this.highlightedTimelineSelectEntryModel;
 	}
 
@@ -553,8 +539,7 @@ public class TimelinesDrawPanelModel
 	 * @param highlightedTimelineSelectEntryModel 
 	 * 			to set {@link #highlightedTimelineSelectEntryModel}.
 	 */
-	public void setHighlightedTimelineSelectEntryModel(TimelineSelectEntryModel highlightedTimelineSelectEntryModel)
-	{
+	public void setHighlightedTimelineSelectEntryModel(TimelineSelectEntryModel highlightedTimelineSelectEntryModel) {
 		this.highlightedTimelineSelectEntryModel = highlightedTimelineSelectEntryModel;
 	}
 
@@ -562,8 +547,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #highlightedTimelineHandler}.
 	 */
-	public HighlightedTimelineHandler getHighlightedTimelineHandler()
-	{
+	public HighlightedTimelineHandler getHighlightedTimelineHandler() {
 		return this.highlightedTimelineHandler;
 	}
 
@@ -571,8 +555,7 @@ public class TimelinesDrawPanelModel
 	 * @param highlightedTimelineHandler 
 	 * 			to set {@link #highlightedTimelineHandler}.
 	 */
-	public void setHighlightedTimelineHandler(HighlightedTimelineHandler highlightedTimelineHandler)
-	{
+	public void setHighlightedTimelineHandler(HighlightedTimelineHandler highlightedTimelineHandler) {
 		this.highlightedTimelineHandler = highlightedTimelineHandler;
 	}
 
@@ -580,8 +563,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #timelineHandlerMoved}.
 	 */
-	public boolean getTimelineHandlerMoved()
-	{
+	public boolean getTimelineHandlerMoved() {
 		return this.timelineHandlerMoved;
 	}
 
@@ -589,8 +571,7 @@ public class TimelinesDrawPanelModel
 	 * @param timelineHandlerMoved 
 	 * 			to set {@link #timelineHandlerMoved}.
 	 */
-	public void setTimelineHandlerMoved(boolean timelineHandlerMoved)
-	{
+	public void setTimelineHandlerMoved(boolean timelineHandlerMoved) {
 		this.timelineHandlerMoved = timelineHandlerMoved;
 	}
 
@@ -598,15 +579,12 @@ public class TimelinesDrawPanelModel
 	 * @param timelineSelectEntryModel
 	 * 			is the TimelineSelectEntryModel.
 	 */
-	public void notifyTimelineStartTimePosChangedListeners(TimelineSelectEntryModel timelineSelectEntryModel)
-	{
+	public void notifyTimelineStartTimePosChangedListeners(TimelineSelectEntryModel timelineSelectEntryModel) {
 		Timeline timeline = timelineSelectEntryModel.getTimeline();
 		Float startTimePos = timelineSelectEntryModel.getStartTimePos();
 		
-		if (timeline != null)
-		{
-			for (TimelineStartTimePosChangedListenerInterface changedListener : this.timelineStartTimePosChangedListeners)
-			{
+		if (timeline != null) {
+			for (TimelineStartTimePosChangedListenerInterface changedListener : this.timelineStartTimePosChangedListeners) {
 				changedListener.notifyTimelineStartTimePosChangedListener(timeline,
 				                                                          startTimePos);
 			}
@@ -617,13 +595,11 @@ public class TimelinesDrawPanelModel
 	 * @param timelineSelectEntryModel
 	 * 			is the TimelineSelectEntryModel.
 	 */
-	public void notifyTimelineEndTimePosChangedListeners(TimelineSelectEntryModel timelineSelectEntryModel)
-	{
+	public void notifyTimelineEndTimePosChangedListeners(TimelineSelectEntryModel timelineSelectEntryModel) {
 		Timeline timeline = timelineSelectEntryModel.getTimeline();
 		Float endTimePos = timelineSelectEntryModel.getEndTimePos();
 		
-		for (TimelineEndTimePosChangedListenerInterface changedListener : this.timelineEndTimePosChangedListeners)
-		{
+		for (TimelineEndTimePosChangedListenerInterface changedListener : this.timelineEndTimePosChangedListeners) {
 			changedListener.notifyTimelineEndTimePosChangedListener(timeline,
 			                                                        endTimePos);
 		}
@@ -633,8 +609,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #timelineStartTimePosChangedListeners}.
 	 */
-	public List<TimelineStartTimePosChangedListenerInterface> getTimelineStartTimePosChangedListeners()
-	{
+	public List<TimelineStartTimePosChangedListenerInterface> getTimelineStartTimePosChangedListeners() {
 		return this.timelineStartTimePosChangedListeners;
 	}
 
@@ -642,8 +617,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #timelineEndTimePosChangedListeners}.
 	 */
-	public List<TimelineEndTimePosChangedListenerInterface> getTimelineEndTimePosChangedListeners()
-	{
+	public List<TimelineEndTimePosChangedListenerInterface> getTimelineEndTimePosChangedListeners() {
 		return this.timelineEndTimePosChangedListeners;
 	}
 
@@ -651,8 +625,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #nearestSnapToTimpePos}.
 	 */
-	public double getNearestSnapToTimpePos()
-	{
+	public double getNearestSnapToTimpePos() {
 		return this.nearestSnapToTimpePos;
 	}
 
@@ -660,8 +633,7 @@ public class TimelinesDrawPanelModel
 	 * @param nearestSnapToTimpePos 
 	 * 			to set {@link #nearestSnapToTimpePos}.
 	 */
-	public void setNearestSnapToTimpePos(double nearestSnapToTimpePos)
-	{
+	public void setNearestSnapToTimpePos(double nearestSnapToTimpePos) {
 		this.nearestSnapToTimpePos = nearestSnapToTimpePos;
 	}
 
@@ -669,8 +641,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #handlerSnaped}.
 	 */
-	public boolean getHandlerSnaped()
-	{
+	public boolean getHandlerSnaped() {
 		return this.handlerSnaped;
 	}
 
@@ -678,8 +649,7 @@ public class TimelinesDrawPanelModel
 	 * @param handlerSnaped 
 	 * 			to set {@link #handlerSnaped}.
 	 */
-	public void setHandlerSnaped(boolean handlerSnaped)
-	{
+	public void setHandlerSnaped(boolean handlerSnaped) {
 		this.handlerSnaped = handlerSnaped;
 	}
 
@@ -689,8 +659,7 @@ public class TimelinesDrawPanelModel
 	 * @param ticksCount
 	 * 			are the ticks.
 	 */
-	public void notifyTicksChangedNotifier(TicksPer ticksPer, Float ticksCount)
-	{
+	public void notifyTicksChangedNotifier(TicksPer ticksPer, Float ticksCount) {
 		//==========================================================================================
 		this.ticksPer = ticksPer;
 
@@ -709,8 +678,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #ticksChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getTicksChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getTicksChangedNotifier() {
 		return this.ticksChangedNotifier;
 	}
 
@@ -718,8 +686,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #ticksPer}.
 	 */
-	public TicksPer getTicksPer()
-	{
+	public TicksPer getTicksPer() {
 		return this.ticksPer;
 	}
 
@@ -727,8 +694,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #ticksCount}.
 	 */
-	public Float getTicksCount()
-	{
+	public Float getTicksCount() {
 		return this.ticksCount;
 	}
 
@@ -736,8 +702,7 @@ public class TimelinesDrawPanelModel
 	 * @return 
 	 * 			returns the {@link #timelineSelectEntriesModel}.
 	 */
-	public TimelineSelectEntriesModel getTimelineSelectEntriesModel()
-	{
+	public TimelineSelectEntriesModel getTimelineSelectEntriesModel() {
 		return this.timelineSelectEntriesModel;
 	}
 
@@ -747,27 +712,23 @@ public class TimelinesDrawPanelModel
 	 * @return
 	 * 			the Position of timeline.
 	 */
-	public int calcTimelinePos(TimelineSelectEntryModel timelineEntryModel)
-	{
+	public int calcTimelinePos(TimelineSelectEntryModel timelineEntryModel) {
 		//==========================================================================================
 		int timelinePos;
 		
 		//------------------------------------------------------------------------------------------
 		timelinePos = 0;
 		
-		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelineSelectEntriesModel.getTimelineSelectEntryModels(); 
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = this.timelineSelectEntriesModel.getTimelineSelectEntryModelList();
 		
 		{
 			int timelineGeneratorPos = 0;
 			
-			for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
-			{
-				if (timelineEntryModel == timelineSelectEntryModel)
-				{
+			for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels) {
+				if (timelineEntryModel == timelineSelectEntryModel) {
 					timelinePos = timelineGeneratorPos;
 					break;
 				}
-				
 				timelineGeneratorPos++;
 			}
 		}

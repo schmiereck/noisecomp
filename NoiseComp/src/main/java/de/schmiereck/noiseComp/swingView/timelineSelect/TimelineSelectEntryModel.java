@@ -4,6 +4,7 @@
 package de.schmiereck.noiseComp.swingView.timelineSelect;
 
 import de.schmiereck.noiseComp.swingView.ModelPropertyChangedNotifier;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.timeline.Timeline;
 
 
@@ -65,7 +66,13 @@ public class TimelineSelectEntryModel
 	 * {@link #endTimePos} changed listeners.
 	 */
 	private final ModelPropertyChangedNotifier endTimePosChangedNotifier = new ModelPropertyChangedNotifier();
-	
+
+	//----------------------------------------------------------------------------------------------
+	private boolean expanded;
+
+	private int yPosGenerator;
+	private int ySizeGenerator;// = TimelinesDrawPanelModel.Y_SIZE_TIMELINE;
+
 	//**********************************************************************************************
 	// Functions:
 	
@@ -74,7 +81,7 @@ public class TimelineSelectEntryModel
 	 * 
 	 * @param timeline
 	 * 			is the Timeline.
-	 * @param name
+	 * @param generatorName
 	 * 			is the Name of Generator.
 	 * @param startTimePos
 	 * 			is the Start time position in milli seconds.
@@ -84,7 +91,8 @@ public class TimelineSelectEntryModel
 	public TimelineSelectEntryModel(final Timeline timeline,
 //	                                final int timelinePos,
 	                                final String generatorName,
-	                                final Float startTimePos, final Float endTimePos)
+	                                final Float startTimePos, final Float endTimePos,
+									final int yPosGenerator, final int ySizeGenerator)
 	{
 		//==========================================================================================
 		this.timeline = timeline;
@@ -92,7 +100,9 @@ public class TimelineSelectEntryModel
 		this.name = generatorName;
 		this.startTimePos = startTimePos;
 		this.endTimePos = endTimePos;
-		
+		this.yPosGenerator = yPosGenerator;
+		this.ySizeGenerator = ySizeGenerator;
+
 		//==========================================================================================
 	}
 
@@ -100,8 +110,7 @@ public class TimelineSelectEntryModel
 	 * @return 
 	 * 			returns the {@link #startTimePos}.
 	 */
-	public Float getStartTimePos()
-	{
+	public Float getStartTimePos() {
 		return this.startTimePos;
 	}
 
@@ -109,8 +118,7 @@ public class TimelineSelectEntryModel
 	 * @param startTimePos 
 	 * 			to set {@link #startTimePos}.
 	 */
-	public void setStartTimePos(Float startTimePos)
-	{
+	public void setStartTimePos(Float startTimePos) {
 		this.startTimePos = startTimePos;
 		
 		// Notify listeners.
@@ -121,8 +129,7 @@ public class TimelineSelectEntryModel
 	 * @return 
 	 * 			returns the {@link #startTimePosChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getStartTimePosChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getStartTimePosChangedNotifier() {
 		return this.startTimePosChangedNotifier;
 	}
 
@@ -130,8 +137,7 @@ public class TimelineSelectEntryModel
 	 * @return 
 	 * 			returns the {@link #endTimePos}.
 	 */
-	public Float getEndTimePos()
-	{
+	public Float getEndTimePos() {
 		return this.endTimePos;
 	}
 
@@ -139,8 +145,7 @@ public class TimelineSelectEntryModel
 	 * @param endTimePos 
 	 * 			to set {@link #endTimePos}.
 	 */
-	public void setEndTimePos(Float endTimePos)
-	{
+	public void setEndTimePos(Float endTimePos) {
 		this.endTimePos = endTimePos;
 		
 		// Notify listeners.
@@ -151,17 +156,15 @@ public class TimelineSelectEntryModel
 	 * @return 
 	 * 			returns the {@link #name}.
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * @param name 
+	 * @param generatorName
 	 * 			to set {@link #name}.
 	 */
-	public void setName(String generatorName)
-	{
+	public void setName(String generatorName) {
 		this.name = generatorName;
 		
 		this.nameChangedNotifier.notifyModelPropertyChangedListeners();
@@ -171,8 +174,7 @@ public class TimelineSelectEntryModel
 	 * @return 
 	 * 			returns the {@link #nameChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getNameChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getNameChangedNotifier() {
 		return this.nameChangedNotifier;
 	}
 
@@ -180,8 +182,7 @@ public class TimelineSelectEntryModel
 	 * @return 
 	 * 			returns the {@link #endTimePosChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getEndTimePosChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getEndTimePosChangedNotifier() {
 		return this.endTimePosChangedNotifier;
 	}
 
@@ -189,8 +190,7 @@ public class TimelineSelectEntryModel
 	 * @return 
 	 * 			returns the {@link #timeline}.
 	 */
-	public Timeline getTimeline()
-	{
+	public Timeline getTimeline() {
 		return this.timeline;
 	}
 
@@ -198,9 +198,32 @@ public class TimelineSelectEntryModel
 	 * @param timeline 
 	 * 			to set {@link #timeline}.
 	 */
-	public void setTimeline(Timeline timeline)
-	{
+	public void setTimeline(Timeline timeline) {
 		this.timeline = timeline;
 	}
-	
+
+	public boolean getExpanded() {
+		return this.expanded;
+	}
+
+	public void setExpanded(final boolean expanded) {
+		this.expanded = expanded;
+	}
+
+	public int getYSizeGenerator() {
+		return this.ySizeGenerator;
+	}
+
+	public void setYSizeGenerator(int ySizeGenerator) {
+		this.ySizeGenerator = ySizeGenerator;
+	}
+
+	public void setYPosGenerator(int yPosGenerator) {
+		this.yPosGenerator = yPosGenerator;
+	}
+
+	public int getYPosGenerator() {
+		return this.yPosGenerator;
+	}
+
 }

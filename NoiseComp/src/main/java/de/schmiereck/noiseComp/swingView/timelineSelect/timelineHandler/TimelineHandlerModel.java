@@ -19,48 +19,50 @@ public class TimelineHandlerModel
 	// Fields:
 	
 	/**
-	 * Left Handler.
+	 * Start-Time Handler.
 	 */
-	private final Rectangle rect1;
+	private final Rectangle startTimelineHandlerRect;
 	
 	/**
-	 * Right Handler.
+	 * End-Time Handler.
 	 */
-	private final Rectangle rect2;
-	
+	private final Rectangle endTimelineHandlerRect;
+
+	/**
+	 * Expand Timeline Handler.
+	 */
+	private final Rectangle expandTimelineHandlerRect;
+
 	//**********************************************************************************************
 	// Functions:
 
 	/**
 	 * Constructor.
 	 * 
-	 * @param rect1
+	 * @param startTimelineHandlerRect
 	 * 			is the Left Handler.
-	 * @param rect2
+	 * @param endTimelineHandlerRect
 	 * 			is the Right Handler.
 	 */
-	public TimelineHandlerModel(Rectangle rect1, Rectangle rect2)
+	public TimelineHandlerModel(final Rectangle startTimelineHandlerRect,
+								final Rectangle endTimelineHandlerRect,
+								final Rectangle expandTimelineHandlerRect)
 	{
-		this.rect1 = rect1;
-		this.rect2 = rect2;
+		this.startTimelineHandlerRect = startTimelineHandlerRect;
+		this.endTimelineHandlerRect = endTimelineHandlerRect;
+		this.expandTimelineHandlerRect = expandTimelineHandlerRect;
 	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #rect1}.
-	 */
-	public Rectangle getRect1()
-	{
-		return this.rect1;
+	public Rectangle getStartTimelineHandlerRect() {
+		return this.startTimelineHandlerRect;
 	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #rect2}.
-	 */
-	public Rectangle getRect2()
-	{
-		return this.rect2;
+	public Rectangle getEndTimelineHandlerRect() {
+		return this.endTimelineHandlerRect;
 	}
-	
+
+	public Rectangle getExpandTimelineHandlerRect() {
+		return this.expandTimelineHandlerRect;
+	}
+
 }

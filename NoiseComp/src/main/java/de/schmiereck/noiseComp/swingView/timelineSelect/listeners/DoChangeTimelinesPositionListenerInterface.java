@@ -15,11 +15,6 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel
  */
 public interface DoChangeTimelinesPositionListenerInterface
 {
-
-	/**
-	 * @param selectedTimelineSelectEntryModel
-	 * @param newTimelineSelectEntryModel
-	 */
 	void changeTimelinesPosition(TimelineSelectEntryModel selectedTimelineSelectEntryModel,
 	                             TimelineSelectEntryModel newTimelineSelectEntryModel);
 }

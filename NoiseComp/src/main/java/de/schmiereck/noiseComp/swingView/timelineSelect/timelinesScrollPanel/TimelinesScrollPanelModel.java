@@ -15,9 +15,7 @@ public class TimelinesScrollPanelModel
 {
 	//**********************************************************************************************
 	// Fields:
-	
-	private int generatorSizeY = 32;
-	
+
 	//**********************************************************************************************
 	// Functions:
 	
@@ -30,23 +28,5 @@ public class TimelinesScrollPanelModel
 		//==========================================================================================
 	    
 		//==========================================================================================
-	}
-
-	/**
-	 * @return 
-	 * 			returns the {@link #generatorSizeY}.
-	 */
-	public int getGeneratorSizeY()
-	{
-		return this.generatorSizeY;
-	}
-
-	/**
-	 * @param generatorSizeY 
-	 * 			to set {@link #generatorSizeY}.
-	 */
-	public void setGeneratorSizeY(int generatorSizeY)
-	{
-		this.generatorSizeY = generatorSizeY;
 	}
 }

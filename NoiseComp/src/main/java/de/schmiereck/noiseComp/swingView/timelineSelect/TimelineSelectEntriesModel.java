@@ -21,8 +21,7 @@ import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesD
  * @author smk
  * @version <p>01.03.2011:	created, smk</p>
  */
-public class TimelineSelectEntriesModel
-{
+public class TimelineSelectEntriesModel {
 	//**********************************************************************************************
 	// Fields:
 	
@@ -35,25 +34,25 @@ public class TimelineSelectEntriesModel
 	/**
 	 * Timeline-Generator Models.
 	 */
-	private List<TimelineSelectEntryModel> timelineSelectEntryModels = new Vector<TimelineSelectEntryModel>();
+	private List<TimelineSelectEntryModel> timelineSelectEntryModelList = new Vector<TimelineSelectEntryModel>();
 
 	/**
-	 * {@link #timelineSelectEntryModels} changed (set new, insert or remove) listeners.
+	 * {@link #timelineSelectEntryModelList} changed (set new, insert or remove) listeners.
 	 */
 	private final ModelPropertyChangedNotifier timelineGeneratorModelsChangedNotifier = new ModelPropertyChangedNotifier();
 
 	/**
-	 * {@link #timelineSelectEntryModels} changed (set new) listeners.
+	 * {@link #timelineSelectEntryModelList} changed (set new) listeners.
 	 */
 	private final ModelPropertyChangedNotifier timelineSelectEntryModelsChangedNotifier = new ModelPropertyChangedNotifier();
 	
 	/**
-	 * {@link #timelineSelectEntryModels} removed listeners.
+	 * {@link #timelineSelectEntryModelList} removed listeners.
 	 */
 	private RemoveTimelineGeneratorNotifier removeTimelineGeneratorNotifier = new RemoveTimelineGeneratorNotifier();
 	
 	/**
-	 * {@link #timelineSelectEntryModels} positions changed.
+	 * {@link #timelineSelectEntryModelList} positions changed.
 	 * 
 	 * @see #changeTimelinesPosition(int, int)
 	 */
@@ -77,8 +76,7 @@ public class TimelineSelectEntriesModel
 	 * Constructor.
 	 * 
 	 */
-	public TimelineSelectEntriesModel(final AppModelChangedObserver appModelChangedObserver)
-	{
+	public TimelineSelectEntriesModel(final AppModelChangedObserver appModelChangedObserver) {
 		//==========================================================================================
 		this.appModelChangedObserver = appModelChangedObserver;
 		
@@ -87,21 +85,19 @@ public class TimelineSelectEntriesModel
 	
 	/**
 	 * @return 
-	 * 			returns the {@link #timelineSelectEntryModels}.
+	 * 			returns the {@link #timelineSelectEntryModelList}.
 	 */
-	public List<TimelineSelectEntryModel> getTimelineSelectEntryModels()
-	{
-		return this.timelineSelectEntryModels;
+	public List<TimelineSelectEntryModel> getTimelineSelectEntryModelList() {
+		return this.timelineSelectEntryModelList;
 	}
 
 	/**
-	 * @param timelineSelectEntryModels 
-	 * 			to set {@link #timelineSelectEntryModels}.
+	 * @param timelineSelectEntryModelList
+	 * 			to set {@link #timelineSelectEntryModelList}.
 	 */
-	public void setTimelineSelectEntryModels(List<TimelineSelectEntryModel> timelineSelectEntryModels)
-	{
+	public void setTimelineSelectEntryModelList(final List<TimelineSelectEntryModel> timelineSelectEntryModelList) {
 		//==========================================================================================
-		this.timelineSelectEntryModels = timelineSelectEntryModels;
+		this.timelineSelectEntryModelList = timelineSelectEntryModelList;
 		
 		// Notify listeners.
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
@@ -113,10 +109,9 @@ public class TimelineSelectEntriesModel
 	/**
 	 * Clear Timeline-Generators.
 	 */
-	public void clearTimelineGenerators()
-	{
+	public void clearTimelineGenerators() {
 		//==========================================================================================
-		this.timelineSelectEntryModels.clear();
+		this.timelineSelectEntryModelList.clear();
 		
 		// Notify listeners.
 		this.timelineGeneratorModelsChangedNotifier.notifyModelPropertyChangedListeners();
@@ -125,7 +120,7 @@ public class TimelineSelectEntriesModel
 	}
 
 	/**
-	 * Do not use this directly, use {@link TimelinesDrawPanelController#addTimelineSelectEntryModel(TimelineSelectEntryModel)}
+	 * Do not use this directly, use {@link TimelinesDrawPanelController#addTimelineSelectEntryModel(int, TimelineSelectEntryModel)}
 	 * because of registering change listeners for TimelineSelectEntryModel changes.
 	 * 
 	 * @param timelinePos
@@ -133,11 +128,10 @@ public class TimelineSelectEntriesModel
 	 * @param timelineSelectEntryModel
 	 * 			is a Timeline-Generator Model.
 	 */
-	public void addTimelineSelectEntryModel(int timelinePos,
-	                                        TimelineSelectEntryModel timelineSelectEntryModel)
-	{
+	public void addTimelineSelectEntryModel(final int timelinePos,
+											final TimelineSelectEntryModel timelineSelectEntryModel) {
 		//==========================================================================================
-		this.timelineSelectEntryModels.add(timelinePos,
+		this.timelineSelectEntryModelList.add(timelinePos,
 		                                   timelineSelectEntryModel);
 		
 		// Notify listeners.
@@ -151,12 +145,13 @@ public class TimelineSelectEntriesModel
 	 * @param timelineSelectEntryModel
 	 * 			is the Generator.
 	 */
-	public void removeTimelineSelectEntryModel(final SoundSourceData soundSourceData,
-											   final TimelinesDrawPanelModel timelinesDrawPanelModel,
-											   final TimelineSelectEntryModel timelineSelectEntryModel)
-	{
+	public int removeTimelineSelectEntryModel(final SoundSourceData soundSourceData,
+											  final TimelinesDrawPanelModel timelinesDrawPanelModel,
+											  final TimelineSelectEntryModel timelineSelectEntryModel) {
 		//==========================================================================================
-		this.timelineSelectEntryModels.remove(timelineSelectEntryModel);
+		final int timelinePos = this.calcTimelineSelectEntryPos(timelineSelectEntryModel);
+
+		this.timelineSelectEntryModelList.remove(timelinePos);
 		
 		// Notify listeners.
 		this.removeTimelineGeneratorNotifier.notifyRemoveTimelineGeneratorListeners(soundSourceData,
@@ -168,6 +163,7 @@ public class TimelineSelectEntriesModel
 		this.appModelChangedObserver.notifyAppModelChanged();
 		
 		//==========================================================================================
+		return timelinePos;
 	}
 
 	/**
@@ -176,14 +172,13 @@ public class TimelineSelectEntriesModel
 	 * @param secondTimelinePos
 	 * 			is the second Timeline-Generator Poisition.
 	 */
-	public void changeTimelinesPosition(int firstTimelinePos, int secondTimelinePos)
-	{
+	public void changeTimelinesPosition(final int firstTimelinePos, final int secondTimelinePos) {
 		//==========================================================================================
-		TimelineSelectEntryModel firstTimelineSelectEntryModel = this.timelineSelectEntryModels.get(firstTimelinePos);
-		TimelineSelectEntryModel secondTimelineSelectEntryModel = this.timelineSelectEntryModels.get(secondTimelinePos);
+		final TimelineSelectEntryModel firstTimelineSelectEntryModel = this.timelineSelectEntryModelList.get(firstTimelinePos);
+		final TimelineSelectEntryModel secondTimelineSelectEntryModel = this.timelineSelectEntryModelList.get(secondTimelinePos);
 		
-		this.timelineSelectEntryModels.set(firstTimelinePos, secondTimelineSelectEntryModel);
-		this.timelineSelectEntryModels.set(secondTimelinePos, firstTimelineSelectEntryModel);
+		this.timelineSelectEntryModelList.set(firstTimelinePos, secondTimelineSelectEntryModel);
+		this.timelineSelectEntryModelList.set(secondTimelinePos, firstTimelineSelectEntryModel);
 		
 		//------------------------------------------------------------------------------------------
 		// Update Timeline-Generator Models:
@@ -204,23 +199,16 @@ public class TimelineSelectEntriesModel
 	 * @return
 	 * 			the position of timeline.
 	 */
-	public int getTimelineSelectEntryPos(TimelineSelectEntryModel searchTimelineSelectEntryModel)
-	{
+	public int calcTimelineSelectEntryPos(final TimelineSelectEntryModel searchTimelineSelectEntryModel) {
 		//==========================================================================================
-		int retPos;
+		int retPos = 0;
 		
-		retPos = 0;
-		
-		for (TimelineSelectEntryModel timelineSelectEntryModel : this.timelineSelectEntryModels)
-		{
-			if (timelineSelectEntryModel == searchTimelineSelectEntryModel)
-			{
+		for (final TimelineSelectEntryModel timelineSelectEntryModel : this.timelineSelectEntryModelList) {
+			if (timelineSelectEntryModel == searchTimelineSelectEntryModel) {
 				break;
 			}
-			
 			retPos++;
 		}
-		
 		//==========================================================================================
 		return retPos;
 	}
@@ -229,8 +217,7 @@ public class TimelineSelectEntriesModel
 	 * @return 
 	 * 			returns the {@link #timelineGeneratorModelsChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getTimelineGeneratorModelsChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getTimelineGeneratorModelsChangedNotifier() {
 		return this.timelineGeneratorModelsChangedNotifier;
 	}
 
@@ -238,8 +225,7 @@ public class TimelineSelectEntriesModel
 	 * @return 
 	 * 			returns the {@link #removeTimelineGeneratorNotifier}.
 	 */
-	public RemoveTimelineGeneratorNotifier getRemoveTimelineGeneratorNotifier()
-	{
+	public RemoveTimelineGeneratorNotifier getRemoveTimelineGeneratorNotifier() {
 		return this.removeTimelineGeneratorNotifier;
 	}
 
@@ -247,8 +233,7 @@ public class TimelineSelectEntriesModel
 	 * @return 
 	 * 			returns the {@link #changeTimelinesPositionChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getChangeTimelinesPositionChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getChangeTimelinesPositionChangedNotifier() {
 		return this.changeTimelinesPositionChangedNotifier;
 	}
 
@@ -256,8 +241,7 @@ public class TimelineSelectEntriesModel
 	 * @return 
 	 * 			returns the {@link #endTime}.
 	 */
-	public double getEndTime()
-	{
+	public double getEndTime() {
 		return this.endTime;
 	}
 
@@ -265,8 +249,7 @@ public class TimelineSelectEntriesModel
 	 * @param endTime 
 	 * 			to set {@link #endTime}.
 	 */
-	public void setEndTime(double endTime)
-	{
+	public void setEndTime(final double endTime) {
 		this.endTime = endTime;
 	}
 
@@ -274,42 +257,8 @@ public class TimelineSelectEntriesModel
 	 * @return 
 	 * 			returns the {@link #timelineSelectEntryModelsChangedNotifier}.
 	 */
-	public ModelPropertyChangedNotifier getTimelineSelectEntryModelsChangedNotifier()
-	{
+	public ModelPropertyChangedNotifier getTimelineSelectEntryModelsChangedNotifier() {
 		return this.timelineSelectEntryModelsChangedNotifier;
 	}
 
-//	/**
-//	 * @return 
-//	 * 			returns the {@link #playbackTime}.
-//	 */
-//	public float getPlaybackTime()
-//	{
-//		return this.playbackTime;
-//	}
-//
-//	/**
-//	 * @param playbackTime 
-//	 * 			to set {@link #playbackTime}.
-//	 */
-//	public void setPlaybackTime(float playbackTime)
-//	{
-//		//==========================================================================================
-//		this.playbackTime = playbackTime;
-//		
-//		this.playbackTimeChangedNotifier.notifyModelPropertyChangedListeners();
-//		
-//		//==========================================================================================
-//	}
-//
-//	/**
-//	 * @return 
-//	 * 			returns the {@link #playbackTimeChangedNotifier}.
-//	 */
-//	public ModelPropertyChangedNotifier getPlaybackTimeChangedNotifier()
-//	{
-//		//==========================================================================================
-//		return this.playbackTimeChangedNotifier;
-//	}
-	
 }

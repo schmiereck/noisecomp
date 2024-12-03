@@ -214,7 +214,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
 	
-		List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModels();
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModelList();
 		
 		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
 		{
@@ -289,7 +289,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 		//------------------------------------------------------------------------------------------
 		TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesTimeRuleModel.getTimelineSelectEntriesModel();
 	
-		List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModels();
+		List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModelList();
 		
 		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntryModels)
 		{

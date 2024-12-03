@@ -12,6 +12,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -22,7 +23,6 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
-import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -118,198 +118,181 @@ extends JComponent
 	/* (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
-	protected void paintComponent(Graphics g)
-	{
+	protected void paintComponent(final Graphics g) {
 		//==========================================================================================
-		TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
-		
-		SelectedTimelineModel selectedTimelineModel = this.timelinesGeneratorsRuleModel.getSelectedTimelineModel();
+		final TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
+
+		final SelectedTimelineModel selectedTimelineModel = this.timelinesGeneratorsRuleModel.getSelectedTimelineModel();
 		
 		//==========================================================================================
-		Graphics2D g2 = (Graphics2D)g;
+		final Graphics2D g2 = (Graphics2D)g;
 		   
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-							RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	   
 		//------------------------------------------------------------------------------------------
-		Rectangle drawHere = g.getClipBounds();
+		final Rectangle drawRectangle = g.getClipBounds();
 		
 		// Fill clipping area.
 		g.setColor(COLOR_BACKGROUND);
-		g.fillRect(drawHere.x, drawHere.y, drawHere.width, drawHere.height);
-		
-		Font labelFont = new Font("SansSerif", Font.PLAIN, 11);
-		Font numFont = new Font("SansSerif", Font.PLAIN, 10);
+		g.fillRect(drawRectangle.x, drawRectangle.y, drawRectangle.width, drawRectangle.height);
+
+		final Font labelFont = new Font("SansSerif", Font.PLAIN, 11);
+		final Font numFont = new Font("SansSerif", Font.PLAIN, 10);
 
 		g.setColor(Color.BLACK);
-		
-		int generatorSizeY = timelinesScrollPanelModel.getGeneratorSizeY();
 
 		//------------------------------------------------------------------------------------------
-		TimelineSelectEntryModel selectedTimelineSelectEntryModel = 
+		final TimelineSelectEntryModel selectedTimelineSelectEntryModel =
 			selectedTimelineModel.getSelectedTimelineSelectEntryModel();
-		
-		TimelineSelectEntryModel highlightedTimelineSelectEntryModel = 
+
+		final TimelineSelectEntryModel highlightedTimelineSelectEntryModel =
 			this.timelinesGeneratorsRuleModel.getHighlightedTimelineSelectEntryModel();
-		
+
 		//------------------------------------------------------------------------------------------
-		TimelineSelectEntriesModel timelineSelectEntriesModel = 
+		final TimelineSelectEntriesModel timelineSelectEntriesModel =
 			this.timelinesGeneratorsRuleModel.getTimelineSelectEntriesModel();
+
+		final List<TimelineSelectEntryModel> timelineSelectEntryModels =
+			timelineSelectEntriesModel.getTimelineSelectEntryModelList();
 		
-		List<TimelineSelectEntryModel> timelineSelectEntryModels = 
-			timelineSelectEntriesModel.getTimelineSelectEntryModels();
-		
-		// Use clipping bounds to calculate first and last tick locations.
-		int start = (drawHere.y / generatorSizeY) * generatorSizeY;
-		int end = (((drawHere.y + drawHere.height) / generatorSizeY) + 1) * generatorSizeY;
+		int yPosGenerator = 0;
 
 		// ticks and labels
-		for (int tickPos = start; tickPos < end; tickPos += generatorSizeY)
-		{
-			int stringPosY;
-			
-			// Make a special case of 0 to display the number
-			// within the rule and draw a units label.
-//			if (tickPos == 0)
+		for (int generatorPos = 0; generatorPos < timelineSelectEntryModels.size(); generatorPos++) {
+		//for (int yPosTick = start; yPosTick < end; yPosTick += ySizeGenerator) {
+			final TimelineSelectEntryModel timelineSelectEntryModel = timelineSelectEntryModels.get(generatorPos);
+
+			final int ySizeGenerator = timelineSelectEntryModel.getYSizeGenerator();
+
+			// Use clipping bounds to calculate first and last tick locations.
+			if (((yPosGenerator + ySizeGenerator) > drawRectangle.y) &&
+				(yPosGenerator < (drawRectangle.y + drawRectangle.height))) {
+				int yPosTick = yPosGenerator;
+				int yPosString;
+
+				// Make a special case of 0 to display the number
+				// within the rule and draw a units label.
+//			if (yPosTick == 0)
 //			{
-//				stringPosY = 10;
+//				yPosString = 10;
 //			}
 //			else
 //			{
-//				stringPosY = tickPos + 3;
+//				yPosString = yPosTick + 3;
 //			}
-			stringPosY = tickPos + 10;
-			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			int tickLength = 10;
-			
-			g.drawLine(SIZE_X - 1, tickPos, SIZE_X - tickLength - 1, tickPos);
-			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			int generatorPos = tickPos / generatorSizeY;
-			
-			String generatorName;
-			String generatorTypeName;
-			float valueMax;
-			float valueMin;
-			
-			if (generatorPos < timelineSelectEntryModels.size())
-			{
-				TimelineSelectEntryModel timelineSelectEntryModel = timelineSelectEntryModels.get(generatorPos);
-				
-				generatorName = timelineSelectEntryModel.getName();
+				yPosString = yPosTick + 10;
 
-				Timeline timeline = timelineSelectEntryModel.getTimeline();
-				
-				if (timeline != null)
-				{
-					valueMax = timeline.getValueMax();
-					valueMin = timeline.getValueMin();
-					
-					Generator generator = timeline.getGenerator();
-					
-					if (generator != null)
-					{
-						GeneratorTypeInfoData generatorTypeInfoData = generator.getGeneratorTypeData();
-						
-						if (generatorTypeInfoData != null)
-						{
-							generatorTypeName = generatorTypeInfoData.getGeneratorTypeName();
-						}
-						else
-						{
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				g.drawLine(0, yPosTick, SIZE_X - 1, yPosTick);
+
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				final String generatorName;
+				final String generatorTypeName;
+				final float valueMax;
+				final float valueMin;
+
+				if (generatorPos < timelineSelectEntryModels.size()) {
+					generatorName = timelineSelectEntryModel.getName();
+
+					final Timeline timeline = timelineSelectEntryModel.getTimeline();
+
+					if (timeline != null) {
+						valueMax = timeline.getValueMax();
+						valueMin = timeline.getValueMin();
+
+						final Generator generator = timeline.getGenerator();
+
+						if (generator != null) {
+							final GeneratorTypeInfoData generatorTypeInfoData = generator.getGeneratorTypeData();
+
+							if (generatorTypeInfoData != null) {
+								generatorTypeName = generatorTypeInfoData.getGeneratorTypeName();
+							} else {
+								generatorTypeName = null;
+							}
+						} else {
 							generatorTypeName = null;
 						}
-					}
-					else
-					{
+					} else {
 						generatorTypeName = null;
+
+						valueMax = 1.0F;
+						valueMin = -1.0F;
+					}
+
+					// Selected timeline?
+					if (selectedTimelineSelectEntryModel == timelineSelectEntryModel) {
+						g.setColor(COLOR_SELECTED_BACKGROUND);
+						g.fillRect(0, yPosTick,
+								SIZE_X - 1, ySizeGenerator - 1);
+						g.setColor(COLOR_SELECTED_BORDER);
+						g.draw3DRect(0, yPosTick,
+								SIZE_X - 1, ySizeGenerator - 1,
+								true);
+					}
+
+					if (highlightedTimelineSelectEntryModel == timelineSelectEntryModel) {
+						final boolean raised = true;
+
+						g.setColor(COLOR_HIGHLIGHTED_BORDER);
+						g.draw3DRect(0, yPosTick,
+								SIZE_X - 1, ySizeGenerator - 1,
+								raised);
+					}
+				} else {
+					generatorName = "";
+					generatorTypeName = null;
+
+					valueMax = Float.NaN;
+					valueMin = Float.NaN;
+				}
+
+				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				g.setFont(labelFont);
+				g.setColor(Color.BLACK);
+
+				{
+					final String text = Integer.toString(generatorPos) + ":" + generatorName;
+
+					g.drawString(text, 9, yPosString);
+				}
+
+				if (generatorTypeName != null) {
+					g.drawString("(" + generatorTypeName + ")", 17, yPosString + 12);
+				}
+
+				g.setFont(numFont);
+				{
+					if (Float.isNaN(valueMax) == false) {
+						final String text = OutputUtils.makeFloatText(valueMax, 2);
+
+						final FontMetrics fm = getFontMetrics(g.getFont());
+
+						final int stringWidth = fm.stringWidth(text);
+
+						g.drawString(text,
+								SIZE_X - stringWidth - 2,
+								yPosString);
 					}
 				}
-				else
 				{
-					generatorTypeName = null;
-					
-					valueMax = 1.0F;
-					valueMin = -1.0F;
-				}
-				
-				// Selected timeline?
-				if (selectedTimelineSelectEntryModel == timelineSelectEntryModel)
-				{
-					g.setColor(COLOR_SELECTED_BACKGROUND);
-					g.fillRect(0, tickPos, 
-					           SIZE_X - 1, generatorSizeY - 1);
-					g.setColor(COLOR_SELECTED_BORDER);
-					g.draw3DRect(0, tickPos, 
-					             SIZE_X - 1, generatorSizeY - 1,
-					             true);
-				}
-				
-				if (highlightedTimelineSelectEntryModel == timelineSelectEntryModel)
-				{
-					boolean raised = true;
-					
-					g.setColor(COLOR_HIGHLIGHTED_BORDER);
-					g.draw3DRect(0, tickPos, 
-					             SIZE_X - 1, generatorSizeY - 1,
-					             raised);
+					if ((Float.isNaN(valueMax) == false) ||
+							(Float.isNaN(valueMin) == false)) {
+						final String text = OutputUtils.makeFloatText(valueMin, 2);
+
+						final FontMetrics fm = getFontMetrics(g.getFont());
+
+						final int stringWidth = fm.stringWidth(text);
+						Rectangle2D stringBoundsRect = fm.getStringBounds(text, g);
+						final int stringHeight = stringBoundsRect.getBounds().height;
+
+						g.drawString(text,
+								SIZE_X - stringWidth - 2,
+								yPosString + ySizeGenerator - stringHeight);
+					}
 				}
 			}
-			else
-			{
-				generatorName = "";
-				generatorTypeName = null;
-				
-				valueMax = Float.NaN;
-				valueMin = Float.NaN;
-			}
-			
-			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			g.setFont(labelFont);
-			g.setColor(Color.BLACK);
-			
-			{
-				String text = Integer.toString(generatorPos) + ":" + generatorName;
-				
-				g.drawString(text, 9, stringPosY);
-			}
-			
-			if (generatorTypeName != null)
-			{
-				g.drawString("(" + generatorTypeName + ")", 17, stringPosY + 12);
-			}
-			
-			g.setFont(numFont);
-			{
-				if (Float.isNaN(valueMax) == false)
-				{
-					String text = OutputUtils.makeFloatText(valueMax, 2);
-				
-					FontMetrics fm = getFontMetrics(g.getFont());
-					
-					int stringWidth = fm.stringWidth(text);
-					
-					g.drawString(text, 
-					             SIZE_X - stringWidth - 2, 
-					             stringPosY);
-				}
-			}
-			{
-				if ((Float.isNaN(valueMax) == false) ||
-					(Float.isNaN(valueMin) == false))
-				{
-					String text = OutputUtils.makeFloatText(valueMin, 2);
-				
-					FontMetrics fm = getFontMetrics(g.getFont());
-					
-					int stringWidth = fm.stringWidth(text);
-					
-					g.drawString(text, 
-					             SIZE_X - stringWidth - 2, 
-					             (int)(stringPosY + TimelinesDrawPanelModel.SIZE_TIMELINE_Y));
-				}
-			}
+			yPosGenerator += ySizeGenerator;
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		//==========================================================================================
@@ -331,28 +314,22 @@ extends JComponent
 	 * @return
 	 * 			is the Timeline at given point.
 	 */
-	public TimelineSelectEntryModel searchGenerator(Point2D point2D)
-	{
+	public TimelineSelectEntryModel searchGenerator(final Point2D point2D) {
 		//==========================================================================================
-		TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
+		final TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
 		
 		//==========================================================================================
-		TimelineSelectEntryModel retTimelineSelectEntryModel;
+		TimelineSelectEntryModel retTimelineSelectEntryModel = null;
 		
-		retTimelineSelectEntryModel = null;
-		
-		int generatorSizeY = timelinesScrollPanelModel.getGeneratorSizeY();
-		
-		TimelineSelectEntriesModel timelineSelectEntriesModel = 
-			this.timelinesGeneratorsRuleModel.getTimelineSelectEntriesModel();
+		final TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesGeneratorsRuleModel.getTimelineSelectEntriesModel();
 		
 		double generatorPosY = 0.0D;
 		
-		for (TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntriesModel.getTimelineSelectEntryModels())
-		{
+		for (final TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntriesModel.getTimelineSelectEntryModelList()) {
+			int generatorSizeY = timelineSelectEntryModel.getYSizeGenerator();
+
 			if ((point2D.getY() >= generatorPosY) &&
-				(point2D.getY() <= (generatorPosY + generatorSizeY)))
-			{
+				(point2D.getY() <= (generatorPosY + generatorSizeY))) {
 				retTimelineSelectEntryModel = timelineSelectEntryModel;
 				break;
 			}

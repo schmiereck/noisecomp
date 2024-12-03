@@ -151,6 +151,7 @@ public class TimelinesDrawMouseMotionListener
 	}
 
 	private void dragTimeline(final TimelineSelectEntryModel selectedTimelineSelectEntryModel, final Point2D mousePoint2D) {
+		//==========================================================================================
 		final double mouseTimePos = mousePoint2D.getX();
 
 		final Timeline timeline = selectedTimelineSelectEntryModel.getTimeline();
@@ -202,12 +203,14 @@ public class TimelinesDrawMouseMotionListener
 			//this.timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 			this.timelinesDrawPanelView.repaint();
 		}
+		//==========================================================================================
 	}
 
 	private void dragTimelineListPosition(final SelectedTimelineModel selectedTimelineModel,
 										  final TimelineSelectEntryModel selectedTimelineSelectEntryModel,
 										  final TimelineSelectEntryModel targetTimelineSelectEntryModel,
 										  final Point2D mousePoint2D) {
+		//==========================================================================================
 		if (targetTimelineSelectEntryModel != selectedTimelineSelectEntryModel) {
 			selectedTimelineModel.notifyDoChangeTimelinesPositionListeners(selectedTimelineSelectEntryModel,
 					targetTimelineSelectEntryModel);
@@ -219,10 +222,12 @@ public class TimelinesDrawMouseMotionListener
 				64, 64);
 
 		this.timelinesDrawPanelView.scrollRectToVisible(rect);
+		//==========================================================================================
 	}
 
 	private void dragInput(final SelectedTimelineModel selectedTimelineModel,
 						   final Point2D mousePoint2D, final Point mousePoint, final InputEntryModel selectedInputEntry) {
+		//==========================================================================================
 		final TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 
 		final InputEntryTargetModel selectedInputEntryTargetModel;
@@ -273,10 +278,12 @@ public class TimelinesDrawMouseMotionListener
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		this.timelinesDrawPanelView.repaint();
+		//==========================================================================================
 	}
 
 	private void dragTimelineHandler(final SelectedTimelineModel selectedTimelineModel,
 									 final Point2D mousePoint2D, final HighlightedTimelineHandler timelineHandler) {
+		//==========================================================================================
 		final TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 		//TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
 
@@ -342,6 +349,7 @@ public class TimelinesDrawMouseMotionListener
 				this.timelinesDrawPanelView.scrollRectToVisible(rect);
 			}
 		}
+		//==========================================================================================
 	}
 
 	/**
@@ -418,9 +426,9 @@ public class TimelinesDrawMouseMotionListener
 		final AffineTransform at = this.timelinesDrawPanelView.getAt();
 		
 		//==========================================================================================
-		boolean resetHighlightedTimelineHandler;
-		
-		TimelineSelectEntryModel timelineSelectEntryModel =  this.timelinesDrawPanelView.searchGenerator(point2D);
+		final boolean resetHighlightedTimelineHandler;
+
+		final TimelineSelectEntryModel timelineSelectEntryModel =  this.timelinesDrawPanelView.searchGenerator(point2D);
 		
 		//------------------------------------------------------------------------------------------
 		if (this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel() != timelineSelectEntryModel) {
@@ -430,36 +438,36 @@ public class TimelinesDrawMouseMotionListener
 
 		//------------------------------------------------------------------------------------------
 		if (timelineSelectEntryModel != null) {
-			float maxUnitIncrementY = this.timelinesDrawPanelModel.getMaxUnitIncrementY();
-			
-			int timelineGeneratorPos = (int)(point2D.getY() / maxUnitIncrementY);
-			
-			float startTimePos = timelineSelectEntryModel.getStartTimePos();
-			float endTimePos = timelineSelectEntryModel.getEndTimePos();
-			float generatorPosY = timelineGeneratorPos * maxUnitIncrementY;
-			
-			float timeLength = endTimePos - startTimePos;
-			
-			Rectangle2D rectangle = new Rectangle2D.Float(startTimePos,
-			                                              generatorPosY,
-			                                              timeLength,
-			                                              maxUnitIncrementY);
-			
-			Shape shape = at.createTransformedShape(rectangle);
-			
-			Rectangle2D bounds2D = shape.getBounds2D();
-			
-			TimelineHandlerModel timelineHandlerModel = 
+			final float ySizeGenerator = timelineSelectEntryModel.getYSizeGenerator();
+
+			final int timelineGeneratorPos = (int)(point2D.getY() / ySizeGenerator);
+
+			final float startTimePos = timelineSelectEntryModel.getStartTimePos();
+			final float endTimePos = timelineSelectEntryModel.getEndTimePos();
+			final float generatorPosY = timelineGeneratorPos * ySizeGenerator;
+
+			final float timeLength = endTimePos - startTimePos;
+
+			final Rectangle2D rectangle = new Rectangle2D.Float(startTimePos,
+			                                                    generatorPosY,
+			                                                    timeLength,
+			                                                    ySizeGenerator);
+
+			final Shape shape = at.createTransformedShape(rectangle);
+
+			final Rectangle2D bounds2D = shape.getBounds2D();
+
+			final TimelineHandlerModel timelineHandlerModel =
 				this.timelinesDrawPanelView.makeTimelineHandlerModel(bounds2D);
 			
-			if (timelineHandlerModel.getRect1().contains(point)) {
+			if (timelineHandlerModel.getStartTimelineHandlerRect().contains(point)) {
 				if (this.timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.LEFT) {
 					this.timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.LEFT);
 					this.timelinesDrawPanelView.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
 				}
 				resetHighlightedTimelineHandler = false;
 			} else {
-				if (timelineHandlerModel.getRect2().contains(point)) {
+				if (timelineHandlerModel.getEndTimelineHandlerRect().contains(point)) {
 					if (this.timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.RIGHT) {
 						this.timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.RIGHT);
 						this.timelinesDrawPanelView.setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));

@@ -400,7 +400,7 @@ implements RemoveTimelineGeneratorListenerInterface,
 			this.timelinesScrollPanelController.getTimelinesScrollPanelModel();
 		
 		// TODO Change this dynamicaly with listener/notifier.
-		timelinesDrawPanelModel.setMaxUnitIncrementY(timelinesScrollPanelModel.getGeneratorSizeY());
+		//timelinesDrawPanelModel.setYMinUnitIncrement(timelinesScrollPanelModel.getYSizeGenerator());
 		
 		this.timelinesScrollPanelController.setTimelinesDrawPanelController(this.timelinesDrawPanelController);
 		
@@ -777,9 +777,12 @@ implements RemoveTimelineGeneratorListenerInterface,
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Update Timeline-Select-Model:
 
-					timelineSelectEntriesModel.removeTimelineSelectEntryModel(soundSourceData,
-							timelinesDrawPanelModel, selectedTimelineSelectEntryModel);
-					
+					final int timelinePos =
+							timelineSelectEntriesModel.removeTimelineSelectEntryModel(soundSourceData,
+									timelinesDrawPanelModel, selectedTimelineSelectEntryModel);
+
+					timelinesDrawPanelController.recalcYPosTimelineList(timelinePos);
+
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}
@@ -1570,7 +1573,8 @@ implements RemoveTimelineGeneratorListenerInterface,
 
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			int timelinePos = 0;
-			
+			int yPosGenerator = 0;
+
 			for (final Timeline timeline : timelineList) {
 				final Generator generator = timeline.getGenerator();
 
@@ -1578,13 +1582,14 @@ implements RemoveTimelineGeneratorListenerInterface,
 					new TimelineSelectEntryModel(timeline,
 //					                             timelinePos,
 					                             generator.getName(),
-					                             generator.getStartTimePos(),
-					                             generator.getEndTimePos());
+					                             generator.getStartTimePos(), generator.getEndTimePos(),
+							                     yPosGenerator, TimelinesDrawPanelModel.Y_SIZE_TIMELINE);
 				
 				this.timelinesDrawPanelController.addTimelineSelectEntryModel(timelinePos,
 				                                                              timelineSelectEntryModel);
 				
 				timelinePos++;
+				yPosGenerator += timelineSelectEntryModel.getYSizeGenerator();
 			}
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			this.timelinesTimeRuleController.resetTime();
