@@ -130,6 +130,7 @@ implements Scrollable { //, MouseMotionListener
 	
 	private static final Color CTimelineHandlerBorder = new Color(0xA1B4BE);//200, 200, 255);
 	private static final Color CTimelineHandlerBackground = new Color(0x4282A4);//100, 100, 100);
+	private static final Color CTimelineHandlerHighlightBackground = new Color(0x9FD0EF);//100, 100, 100);
 	private static final Color CTimelineHandlerNearestSnapLine = new Color(0x16, 0x76, 0x43, 64);//0, 0, 200, 200);
 	private static final Color CTimelineHandlerSnapLine = new Color(0x90CB4F);//60, 60, 255);
 	
@@ -138,6 +139,7 @@ implements Scrollable { //, MouseMotionListener
 
 	private static final Color CExpandTimelineHandlerBorder = new Color(0xA1B4BE);//200, 200, 255);
 	private static final Color CExpandTimelineHandlerBackground = new Color(0x4282A4);//100, 100, 100);
+	private static final Color CExpandTimelineHandlerHighlightBackground = new Color(0x9FD0EF);//100, 100, 100);
 	private static final Color CExpandTimelineHandlerNearestSnapLine = new Color(0x16, 0x76, 0x43, 64);//0, 0, 200, 200);
 	private static final Color CExpandTimelineHandlerSnapLine = new Color(0x90CB4F);//60, 60, 255);
 
@@ -931,7 +933,7 @@ implements Scrollable { //, MouseMotionListener
 							   final int yTopPosGenerator,
 							   final TimelineSelectEntryModel timelineSelectEntryModel) {
 		//==========================================================================================
-		final SelectedTimelineModel selectedTimelineModel = timelinesDrawPanelModel.getSelectedTimelineModel();
+		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
 		//==========================================================================================
 		final float ySizeGenerator = timelineSelectEntryModel.getYSizeGenerator();
@@ -943,7 +945,7 @@ implements Scrollable { //, MouseMotionListener
 
 		final boolean highlighted;
 
-		final TimelineSelectEntryModel highlightedTimelineSelectEntryModel = timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
+		final TimelineSelectEntryModel highlightedTimelineSelectEntryModel = this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
 		
 		if (highlightedTimelineSelectEntryModel == timelineSelectEntryModel) {
 			highlighted = true;
@@ -985,18 +987,33 @@ implements Scrollable { //, MouseMotionListener
 				final Rectangle2D bounds2D = shape.getBounds2D();
 
 				final TimelineHandlerModel timelineHandlerModel = this.makeTimelineHandlerModel(bounds2D);
-				
-				g2.setColor(CTimelineHandlerBackground);
-				
+
+				// Draw Start-Handler:
+				if (this.timelinesDrawPanelModel.getHighlightedTimelineHandler() == TimelinesDrawPanelModel.HighlightedTimelineHandler.START) {
+					g2.setColor(CTimelineHandlerHighlightBackground);
+				} else {
+					g2.setColor(CTimelineHandlerBackground);
+				}
 				g2.fill(timelineHandlerModel.getStartTimelineHandlerRect());
-				g2.fill(timelineHandlerModel.getEndTimelineHandlerRect());
-				
 				g2.setColor(CTimelineHandlerBorder);
-				
 				g2.draw(timelineHandlerModel.getStartTimelineHandlerRect());
+
+				// Draw End-Handler:
+				if (this.timelinesDrawPanelModel.getHighlightedTimelineHandler() == TimelinesDrawPanelModel.HighlightedTimelineHandler.END) {
+					g2.setColor(CTimelineHandlerHighlightBackground);
+				} else {
+					g2.setColor(CTimelineHandlerBackground);
+				}
+				g2.fill(timelineHandlerModel.getEndTimelineHandlerRect());
+				g2.setColor(CTimelineHandlerBorder);
 				g2.draw(timelineHandlerModel.getEndTimelineHandlerRect());
 
-				g2.setColor(CExpandTimelineHandlerBackground);
+				// Draw Expand-Handler:
+				if (this.timelinesDrawPanelModel.getHighlightExpandTimelineHandler()) {
+					g2.setColor(CExpandTimelineHandlerHighlightBackground);
+				} else {
+					g2.setColor(CExpandTimelineHandlerBackground);
+				}
 				g2.fill(timelineHandlerModel.getExpandTimelineHandlerRect());
 				g2.setColor(CExpandTimelineHandlerBorder);
 				g2.draw(timelineHandlerModel.getExpandTimelineHandlerRect());

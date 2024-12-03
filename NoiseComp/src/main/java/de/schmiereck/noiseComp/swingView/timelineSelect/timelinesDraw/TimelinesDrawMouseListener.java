@@ -6,9 +6,11 @@ package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
+import java.util.Objects;
 
 import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
 
 /**
@@ -24,7 +26,7 @@ implements MouseListener
 {
 	//**********************************************************************************************
 	// Fields:
-	
+
 	/**
 	 * Timeline Draw-Panel Model. 
 	 */
@@ -46,8 +48,8 @@ implements MouseListener
 	 * @param timelinesDrawPanelView 
 	 * 			is the Timeline Draw-Panel View.
 	 */
-	public TimelinesDrawMouseListener(TimelinesDrawPanelModel timelinesDrawPanelModel, 
-	                                   TimelinesDrawPanelView timelinesDrawPanelView)
+	public TimelinesDrawMouseListener(final TimelinesDrawPanelModel timelinesDrawPanelModel,
+									  final TimelinesDrawPanelView timelinesDrawPanelView)
 	{
 		//==========================================================================================
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
@@ -93,22 +95,32 @@ implements MouseListener
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e)
-	{
+	public void mousePressed(MouseEvent e) {
 		//==========================================================================================
-		final SelectedTimelineModel selectedTimelineModel = 
-			this.timelinesDrawPanelModel.getSelectedTimelineModel();
-		
+		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
+		final TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
+
 		//==========================================================================================
-		Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
-		
+		final Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
+		boolean repaintView = false;
+
+		//------------------------------------------------------------------------------------------
+		final TimelineSelectEntryModel highlightedTimelineSelectEntryModel =
+				this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
+
+		if (Objects.nonNull(highlightedTimelineSelectEntryModel)) {
+			if (this.timelinesDrawPanelModel.getHighlightExpandTimelineHandler()) {
+				highlightedTimelineSelectEntryModel.setExpanded(!highlightedTimelineSelectEntryModel.getExpanded());
+				final int timelinePos = timelineSelectEntriesModel.calcTimelineSelectEntryPos(highlightedTimelineSelectEntryModel);
+				TimelinesDrawPanelUtils.recalcYPosTimelineList(timelineSelectEntriesModel, timelinePos);
+				repaintView = true;
+			}
+		}
 		//------------------------------------------------------------------------------------------
 		{
-			TimelineSelectEntryModel timelineSelectEntryModel = 
-				this.timelinesDrawPanelView.searchGenerator(point2D);
+			final TimelineSelectEntryModel timelineSelectEntryModel = this.timelinesDrawPanelView.searchGenerator(point2D);
 			
-			if (selectedTimelineModel.getSelectedTimelineSelectEntryModel() != timelineSelectEntryModel)
-			{
+			if (selectedTimelineModel.getSelectedTimelineSelectEntryModel() != timelineSelectEntryModel) {
 				selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
 			}
 		}
@@ -116,10 +128,13 @@ implements MouseListener
 		{
 			final InputEntryModel highlightedInputEntry = selectedTimelineModel.getHighlightedInputEntry();
 			
-			if (selectedTimelineModel.getSelectedInputEntry() != highlightedInputEntry)
-			{
+			if (selectedTimelineModel.getSelectedInputEntry() != highlightedInputEntry) {
 				selectedTimelineModel.setSelectedInputEntry(highlightedInputEntry, false);
 			}
+		}
+		//------------------------------------------------------------------------------------------
+		if (repaintView) {
+			this.timelinesDrawPanelView.repaint();
 		}
 		//==========================================================================================
 	}

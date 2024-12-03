@@ -78,18 +78,18 @@ public class TimelinesDrawMouseMotionListener
 					this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel();
 
 			if (Objects.nonNull(highlightedTimelineSelectEntryModel)) {
-				HighlightedTimelineHandler timelineHandler =
+				final HighlightedTimelineHandler timelineHandler =
 						this.timelinesDrawPanelModel.getHighlightedTimelineHandler();
 
 				if (timelineHandler != HighlightedTimelineHandler.NONE) {
 					switch (timelineHandler) {
-						case LEFT: {
+						case START: {
 							this.timelinesDrawPanelModel.notifyTimelineStartTimePosChangedListeners(highlightedTimelineSelectEntryModel);
 							this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
 							this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
 							break;
 						}
-						case RIGHT: {
+						case END: {
 							this.timelinesDrawPanelModel.notifyTimelineEndTimePosChangedListeners(highlightedTimelineSelectEntryModel);
 							this.timelinesDrawPanelModel.setTimelineHandlerMoved(false);
 							this.timelinesDrawPanelModel.setNearestSnapToTimpePos(Double.NaN);
@@ -314,13 +314,13 @@ public class TimelinesDrawMouseMotionListener
 			this.timelinesDrawPanelModel.setNearestSnapToTimpePos(nearestSnapToTimpePos);
 
 			switch (timelineHandler) {
-				case LEFT: {
+				case START: {
 					selectedTimelineSelectEntryModel.setStartTimePos((float)pos);
 					this.timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 					this.timelinesDrawPanelView.repaint();
 					break;
 				}
-				case RIGHT: {
+				case END: {
 					selectedTimelineSelectEntryModel.setEndTimePos((float)pos);
 					this.timelinesDrawPanelModel.setTimelineHandlerMoved(true);
 					this.timelinesDrawPanelView.repaint();
@@ -400,16 +400,14 @@ public class TimelinesDrawMouseMotionListener
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		//==========================================================================================
-		Point point = e.getPoint();
-		Point2D point2D = this.timelinesDrawPanelView.mousePos(point);
+		final Point point = e.getPoint();
+		final Point2D point2D = this.timelinesDrawPanelView.mousePos(point);
 		
 		//------------------------------------------------------------------------------------------
-		this.updateTimelineHandlers(point, 
-		                            point2D);
+		this.updateTimelineHandlers(point, point2D);
 		
 		//------------------------------------------------------------------------------------------
-		this.updateInputHandler(point, 
-	                            point2D);
+		this.updateInputHandler(point, point2D);
 		
 		//==========================================================================================
 	}
@@ -420,23 +418,24 @@ public class TimelinesDrawMouseMotionListener
 	 * @param point2D
 	 * 			is the scaled mouse position.
 	 */
-	private void updateTimelineHandlers(final Point point,
-	                                    final Point2D point2D) {
+	private void updateTimelineHandlers(final Point point, final Point2D point2D) {
 		//==========================================================================================
 		final AffineTransform at = this.timelinesDrawPanelView.getAt();
 		
 		//==========================================================================================
-		final boolean resetHighlightedTimelineHandler;
-
 		final TimelineSelectEntryModel timelineSelectEntryModel =  this.timelinesDrawPanelView.searchGenerator(point2D);
 		
 		//------------------------------------------------------------------------------------------
+		boolean repaintView = false;
 		if (this.timelinesDrawPanelModel.getHighlightedTimelineSelectEntryModel() != timelineSelectEntryModel) {
 			this.timelinesDrawPanelModel.setHighlightedTimelineSelectEntryModel(timelineSelectEntryModel);
-			this.timelinesDrawPanelView.repaint();
+			repaintView = true;
 		}
 
 		//------------------------------------------------------------------------------------------
+		final boolean resetHighlightedTimelineHandler;
+		final boolean resetHighlightedTimelineExpandHandler;
+
 		if (timelineSelectEntryModel != null) {
 			final float ySizeGenerator = timelineSelectEntryModel.getYSizeGenerator();
 
@@ -459,33 +458,58 @@ public class TimelinesDrawMouseMotionListener
 
 			final TimelineHandlerModel timelineHandlerModel =
 				this.timelinesDrawPanelView.makeTimelineHandlerModel(bounds2D);
-			
+
 			if (timelineHandlerModel.getStartTimelineHandlerRect().contains(point)) {
-				if (this.timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.LEFT) {
-					this.timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.LEFT);
+				if (this.timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.START) {
+					this.timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.START);
 					this.timelinesDrawPanelView.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
+					repaintView = true;
 				}
 				resetHighlightedTimelineHandler = false;
+				resetHighlightedTimelineExpandHandler = true;
 			} else {
 				if (timelineHandlerModel.getEndTimelineHandlerRect().contains(point)) {
-					if (this.timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.RIGHT) {
-						this.timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.RIGHT);
+					if (this.timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.END) {
+						this.timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.END);
 						this.timelinesDrawPanelView.setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+						repaintView = true;
 					}
 					resetHighlightedTimelineHandler = false;
+					resetHighlightedTimelineExpandHandler = true;
 				} else {
-					resetHighlightedTimelineHandler = true;
+					if (timelineHandlerModel.getExpandTimelineHandlerRect().contains(point)) {
+						if (!this.timelinesDrawPanelModel.getHighlightExpandTimelineHandler()) {
+							this.timelinesDrawPanelModel.setHighlightExpandTimelineHandler(true);
+							repaintView = true;
+						}
+						resetHighlightedTimelineHandler = true;
+						resetHighlightedTimelineExpandHandler = false;
+					} else {
+						resetHighlightedTimelineHandler = true;
+						resetHighlightedTimelineExpandHandler = true;
+					}
 				}
 			}
 		} else {
 			resetHighlightedTimelineHandler = true;
+			resetHighlightedTimelineExpandHandler = true;
 		}
 		
 		if (resetHighlightedTimelineHandler) {
 			if (this.timelinesDrawPanelModel.getHighlightedTimelineHandler() != HighlightedTimelineHandler.NONE) {
 				this.timelinesDrawPanelModel.setHighlightedTimelineHandler(HighlightedTimelineHandler.NONE);
 				this.timelinesDrawPanelView.setCursor(this.timelinesDrawPanelView.getDefaultCursor());
+				repaintView = true;
 			}
+		}
+		if (resetHighlightedTimelineExpandHandler) {
+			if (this.timelinesDrawPanelModel.getHighlightExpandTimelineHandler()) {
+				this.timelinesDrawPanelModel.setHighlightExpandTimelineHandler(false);
+				repaintView = true;
+			}
+		}
+		if (repaintView) {
+			this.timelinesDrawPanelView.repaint();
 		}
 		//==========================================================================================
 	}

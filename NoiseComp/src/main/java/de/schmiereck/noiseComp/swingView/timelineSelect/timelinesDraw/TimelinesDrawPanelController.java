@@ -517,23 +517,13 @@ implements TimelineContentChangedListenerInterface,
 	}
 
 	public void recalcYPosTimelineList(final int startTimelinePos) {
-		final TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
-		final List<TimelineSelectEntryModel> timelineSelectEntryModels = timelineSelectEntriesModel.getTimelineSelectEntryModelList();
-		int yPosGenerator;
-		if (startTimelinePos > 0) {
-			final TimelineSelectEntryModel prevTimelineSelectEntryModel = timelineSelectEntryModels.get(startTimelinePos - 1);
-			yPosGenerator = prevTimelineSelectEntryModel.getYPosGenerator() + prevTimelineSelectEntryModel.getYSizeGenerator();
-		} else {
-			yPosGenerator = 0;
-		}
+		//==========================================================================================
+		final TimelineSelectEntriesModel timelineSelectEntriesModel = timelinesDrawPanelModel.getTimelineSelectEntriesModel();
 
-		for (int timelinePos = startTimelinePos; timelinePos < timelineSelectEntryModels.size(); timelinePos++) {
-			final TimelineSelectEntryModel timelineSelectEntryModel = timelineSelectEntryModels.get(timelinePos);
-			timelineSelectEntryModel.setYPosGenerator(yPosGenerator);
-			yPosGenerator += timelineSelectEntryModel.getYSizeGenerator();
-		}
+		TimelinesDrawPanelUtils.recalcYPosTimelineList(timelineSelectEntriesModel, startTimelinePos);
+		//==========================================================================================
 	}
-//
+
 //	public void doTimelinesZoomIn()
 //	{
 //		//==========================================================================================

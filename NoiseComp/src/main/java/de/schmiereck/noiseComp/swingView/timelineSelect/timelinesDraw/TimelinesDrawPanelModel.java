@@ -105,15 +105,20 @@ public class TimelinesDrawPanelModel {
 	 */
 	public enum HighlightedTimelineHandler {
 		NONE,
-		LEFT,
-		RIGHT
+		START,
+		END
 	}
 	
 	/**
 	 * Highlighted Handler.
 	 */
 	private HighlightedTimelineHandler highlightedTimelineHandler = HighlightedTimelineHandler.NONE;
-	
+
+	/**
+	 * Highlight Expand-Handler.
+	 */
+	private boolean highlightExpandTimelineHandler = false;
+
 	/**
 	 * <code>true</code> if the {@link #highlightedTimelineHandler} is moved.
 	 */
@@ -527,36 +532,28 @@ public class TimelinesDrawPanelModel {
 //		return this.removeTimelineGeneratorNotifier;
 //	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #highlightedTimelineSelectEntryModel}.
-	 */
 	public TimelineSelectEntryModel getHighlightedTimelineSelectEntryModel() {
 		return this.highlightedTimelineSelectEntryModel;
 	}
 
-	/**
-	 * @param highlightedTimelineSelectEntryModel 
-	 * 			to set {@link #highlightedTimelineSelectEntryModel}.
-	 */
 	public void setHighlightedTimelineSelectEntryModel(TimelineSelectEntryModel highlightedTimelineSelectEntryModel) {
 		this.highlightedTimelineSelectEntryModel = highlightedTimelineSelectEntryModel;
 	}
 
-	/**
-	 * @return 
-	 * 			returns the {@link #highlightedTimelineHandler}.
-	 */
 	public HighlightedTimelineHandler getHighlightedTimelineHandler() {
 		return this.highlightedTimelineHandler;
 	}
 
-	/**
-	 * @param highlightedTimelineHandler 
-	 * 			to set {@link #highlightedTimelineHandler}.
-	 */
-	public void setHighlightedTimelineHandler(HighlightedTimelineHandler highlightedTimelineHandler) {
+	public void setHighlightedTimelineHandler(final HighlightedTimelineHandler highlightedTimelineHandler) {
 		this.highlightedTimelineHandler = highlightedTimelineHandler;
+	}
+
+	public boolean getHighlightExpandTimelineHandler() {
+		return this.highlightExpandTimelineHandler;
+	}
+
+	public void setHighlightExpandTimelineHandler(final boolean highlightExpandTimelineHandler) {
+		this.highlightExpandTimelineHandler = highlightExpandTimelineHandler;
 	}
 
 	/**
