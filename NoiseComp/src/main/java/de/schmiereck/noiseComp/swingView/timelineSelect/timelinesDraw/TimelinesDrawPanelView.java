@@ -360,7 +360,8 @@ implements Scrollable { //, MouseMotionListener
 		//------------------------------------------------------------------------------------------
 		final List<TimelineSelectEntryModel> timelineSelectEntryModelList = timelineSelectEntriesModel.getTimelineSelectEntryModelList();
 
-		final TimelineSelectEntryModel selectedTimelineEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+		TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
+		final TimelineSelectEntryModel selectedTimelineEntryModel = selectedTimelineSelectEntryModel;
 		
 		int selectedPos = 0;
 		
@@ -471,18 +472,19 @@ implements Scrollable { //, MouseMotionListener
 					inputEntryTargetModel.getTargetTimelineSelectEntryModel();
 
 				final float selectedScreenPosX = selectedTimelineEntryModel.getStartTimePos();
-				final float selectedScreenInputOffset =
-					this.calcSelectedScreenInputOffset(selectedTimelineModel,
+				final float selectedScreenInputXOffset =
+					this.calcSelectedScreenInputXOffset(selectedTimelineModel,
 					                                   selectedTimelineEntryModel);
 
-				final int entryHeight = selectedTimelineModel.getSelectedTimelineSelectEntryModel().getYSizeGenerator();
+				//final int entryHeight = selectedTimelineSelectEntryModel.getYSizeGenerator();
 
 				final int inputNo = inputPosEntriesModel.searchInputEntryPos(selectedInputEntry);
 
-				final float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
+				final float inputOffsetScreenX = inputNo * selectedScreenInputXOffset;
 
 				final float inp1X = selectedScreenPosX + inputOffsetScreenX;
-				final float inp1Y = selectedPos * entryHeight;
+				//final float inp1Y = selectedPos * entryHeight;
+				final float inp1Y = selectedTimelineSelectEntryModel.getYPosGenerator();
 
 				final Point2D point2D = inputEntryTargetModel.getTargetPoint2D();
 				
@@ -524,7 +526,7 @@ implements Scrollable { //, MouseMotionListener
 		final SelectedTimelineModel selectedTimelineModel = this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
 		//==========================================================================================
-		final int entryHeight = selectedTimelineEntryModel.getYSizeGenerator();
+		//final int entryHeight = selectedTimelineEntryModel.getYSizeGenerator();
 
 		final Timeline timeline = selectedTimelineEntryModel.getTimeline();
 		
@@ -557,9 +559,11 @@ implements Scrollable { //, MouseMotionListener
 			if (retEntryCnt > 0) {
 				//----------------------------------------------------------------------------------
 				final float selectedScreenPosX = selectedTimelineEntryModel.getStartTimePos();
-				final float selectedScreenInputOffset =
-					this.calcSelectedScreenInputOffset(selectedTimelineModel,
+				final float selectedScreenInputXOffset =
+					this.calcSelectedScreenInputXOffset(selectedTimelineModel,
 					                                   selectedTimelineEntryModel);
+				final int yPosGenerator = selectedTimelineEntryModel.getYPosGenerator();
+				final int ySizeGenerator = selectedTimelineEntryModel.getYSizeGenerator();
 
 				//----------------------------------------------------------------------------------
 				// Inputs:
@@ -575,10 +579,9 @@ implements Scrollable { //, MouseMotionListener
 					final List<InputPosEntriesModel> inputPosEntries = groupInputPosEntriesModel.getInputPosEntries();
 					
 					{
-						final Rectangle2D groupRect = this.calcInputPosGroupRect(selectedPos,
-						                                                         entryHeight,
+						final Rectangle2D groupRect = this.calcInputPosGroupRect(yPosGenerator,
 						                                                         selectedScreenPosX,
-						                                                         selectedScreenInputOffset,
+						                                                         selectedScreenInputXOffset,
 						                                                         inputNo,
 						                                                         groupInputPosEntriesModel);
 
@@ -607,10 +610,11 @@ implements Scrollable { //, MouseMotionListener
 								inputData = null;
 							}
 
-							final float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
+							final float inputOffsetScreenX = inputNo * selectedScreenInputXOffset;
 
-							final float inp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
-							final float inp1Y = selectedPos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
+							final float sourceInp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
+							//final float sourceInp1Y = selectedPos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
+							final float sourceInp1Y = yPosGenerator; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
 
 							final boolean highlighted = this.checkInputHighlighted(selectedTimelineModel, inputEntryModel);
 							final boolean selected = this.checkInputSelected(selectedTimelineModel, inputEntryModel);
@@ -624,9 +628,8 @@ implements Scrollable { //, MouseMotionListener
 									this.paintTimelineInputConnectorLine(g2, 
 									                                     timelineSelectEntriesModel, 
 									                                     inputGenerator,
-									                                     highlighted, selected, 
-									                                     entryHeight, 
-									                                     inp1X, inp1Y);
+									                                     highlighted, selected,
+									                                     sourceInp1X, sourceInp1Y);
 								}
 								addInput = false;
 							} else {
@@ -636,7 +639,7 @@ implements Scrollable { //, MouseMotionListener
 							this.paintTimelineInputConnectorHandler(g2, 
 							                                        highlighted, selected, 
 							                                        addInput,
-							                                        inp1X, inp1Y);
+							                                        sourceInp1X, sourceInp1Y);
 							inputNo++;
 						}
 					} else {
@@ -651,24 +654,24 @@ implements Scrollable { //, MouseMotionListener
 
 	/**
 	 * @return
-	 * 			is the offset between the input pos entries.
+	 * 			is the x-offset between the input pos entries.
 	 */
-	public float calcSelectedScreenInputOffset(final SelectedTimelineModel selectedTimelineModel,
-	                                           final TimelineSelectEntryModel selectedTimelineEntryModel) {
+	public float calcSelectedScreenInputXOffset(final SelectedTimelineModel selectedTimelineModel,
+												final TimelineSelectEntryModel selectedTimelineEntryModel) {
 		//==========================================================================================
 		final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
 		
 		final int retEntryCnt = inputPosEntriesModel.getSumEntryCnt();
 		
-		float selectedScreenInputOffset = (((selectedTimelineEntryModel.getEndTimePos() - 
+		float selectedScreenInputXOffset = (((selectedTimelineEntryModel.getEndTimePos() -
 											 selectedTimelineEntryModel.getStartTimePos())) / 
 										   (retEntryCnt + 1));
 		
 		//==========================================================================================
-		return selectedScreenInputOffset;
+		return selectedScreenInputXOffset;
 	}
 
-	private Rectangle2D calcInputPosGroupRect(final int selectedPos, final int entryHeight, final float selectedScreenPosX,
+	private Rectangle2D calcInputPosGroupRect(final int yPosGenerator, final float selectedScreenPosX,
 											  final float selectedScreenInputOffset, final int inputNo,
 											  final InputPosEntriesModel groupInputPosEntriesModel) {
 		//==========================================================================================
@@ -677,7 +680,7 @@ implements Scrollable { //, MouseMotionListener
 		final float groupX = selectedScreenPosX +
 						(inputNo * selectedScreenInputOffset) - 
 						(selectedScreenInputOffset * 0.25F);
-		final float groupY = selectedPos * entryHeight - 1.0F;
+		final float groupY = yPosGenerator - 1.0F;
 		final float groupW = groupSumEntryCnt * selectedScreenInputOffset -
 						(selectedScreenInputOffset * 0.5F);
 		final float groupH = INPUT_MARKER_SIZE_Y + 2.0F;
@@ -696,31 +699,32 @@ implements Scrollable { //, MouseMotionListener
 	 * 			<code>true</code> if the input is highlighted.
 	 * @param selected
 	 * 			<code>true</code> if the input is selected.
-	 * @param entryHeight
-	 * @param inp1X
+	 * @param ySizeGenerator
+	 * @param sourceInp1X
 	 * 			is the input position X.
-	 * @param inp1Y
+	 * @param sourceInp1Y
 	 * 			is the input position Y.
 	 */
 	private void paintTimelineInputConnectorLine(final Graphics2D g2,
 												 final TimelineSelectEntriesModel timelineSelectEntriesModel,
 												 final Generator inputGenerator,
 												 final boolean highlighted, final boolean selected,
-												 final int entryHeight,
-												 final float inp1X, float inp1Y) {
+												 final float sourceInp1X, float sourceInp1Y) {
 		//==========================================================================================
-		final TimelineSelectEntryModel inputTimelineEntryModel = this.searchTimelineModel(inputGenerator);
+		final TimelineSelectEntryModel inputTimelineSelectEntryModel = this.searchTimelineModel(inputGenerator);
 
 		// Timeline of Input-Generator found ?
-		if (inputTimelineEntryModel != null) {
+		if (inputTimelineSelectEntryModel != null) {
 //							int timelinePos = inputTimelineModel.getTimelinePos();
-			final int timelinePos = timelineSelectEntriesModel.calcTimelineSelectEntryPos(inputTimelineEntryModel);
+			//final int timelinePos = timelineSelectEntriesModel.calcTimelineSelectEntryPos(inputTimelineSelectEntryModel);
 
 			final float inputScreenPosX = inputGenerator.getEndTimePos(); //(int)((inputGenerator.getEndTimePos() - horizontalScrollStart) * scaleX);
 
-			final float inp2X = inputScreenPosX; //(int)(tracksData.getGeneratorsLabelSizeX() + inputScreenPosX);
-			final float inp2Y = timelinePos * entryHeight + entryHeight / 2.0F; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + timelinePos * entryHeight + entryHeight / 2);
-			
+			final float targetInp2X = inputScreenPosX; //(int)(tracksData.getGeneratorsLabelSizeX() + inputScreenPosX);
+			//final float targetInp2Y = timelinePos * ySizeGenerator + ySizeGenerator / 2.0F; //(int)(posY - ((int)(verticalScrollerStart + 1) * ySizeGenerator) + timelinePos * ySizeGenerator + ySizeGenerator / 2);
+			final float targetInp2Y = inputTimelineSelectEntryModel.getYPosGenerator() +
+					inputTimelineSelectEntryModel.getYSizeGenerator() / 2.0F; //(int)(posY - ((int)(verticalScrollerStart + 1) * ySizeGenerator) + timelinePos * ySizeGenerator + ySizeGenerator / 2);
+
 			if (highlighted == true) {
 				g2.setPaint(CTimelineInputHighlightedConnector);
 			} else {
@@ -733,17 +737,17 @@ implements Scrollable { //, MouseMotionListener
 				g2.setStroke(BSTimelineInputConnector);
 			}
 			{
-//							g2.drawLine(inp1X, inp1Y, 
-//							            inp1X, inp2Y);
-				final Line2D line = new Line2D.Float(inp1X, inp1Y,
-				                                     inp1X, inp2Y);
+//							g2.drawLine(sourceInp1X, sourceInp1Y,
+//							            sourceInp1X, targetInp2Y);
+				final Line2D line = new Line2D.Float(sourceInp1X, sourceInp1Y,
+				                                     sourceInp1X, targetInp2Y);
 				g2.draw(this.at.createTransformedShape(line));
 			}
 			{
-//							g2.drawLine(inp1X, inp2Y, 
-//							            inp2X, inp2Y);
-				final Line2D line = new Line2D.Float(inp1X, inp2Y,
-				                                     inp2X, inp2Y);
+//							g2.drawLine(sourceInp1X, targetInp2Y,
+//							            targetInp2X, targetInp2Y);
+				final Line2D line = new Line2D.Float(sourceInp1X, targetInp2Y,
+				                                     targetInp2X, targetInp2Y);
 				g2.draw(this.at.createTransformedShape(line));
 			}
 		}
@@ -1280,7 +1284,7 @@ implements Scrollable { //, MouseMotionListener
 	 * 			is the Timeline at given point.<br/>
 	 * 			<code>null</code> if no timeline is found.
 	 */
-	public TimelineSelectEntryModel searchTimeline(final Point2D point2D) {
+	public TimelineSelectEntryModel searchTimeline(final Point2D point2D, final boolean onlyWaveform) {
 		//==========================================================================================
 		final TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesDrawPanelModel.getTimelineSelectEntriesModel();
 		
@@ -1291,14 +1295,21 @@ implements Scrollable { //, MouseMotionListener
 		
 		for (final TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntriesModel.getTimelineSelectEntryModelList()) {
 			final int ySizeGenerator = timelineSelectEntryModel.getYSizeGenerator();
+			final int ySize2Generator = TimelinesDrawPanelUtils.calcYSizeGenerator(timelineSelectEntryModel);
 
+			final int ySize;
+			if (onlyWaveform) {
+				ySize = ySizeGenerator;
+			} else {
+				ySize = ySize2Generator;
+			}
 			if ((point2D.getY() >= generatorPosY) &&
-				(point2D.getY() <= (generatorPosY + ySizeGenerator))) {
+				(point2D.getY() <= (generatorPosY + ySize))) {
 				retTimelineSelectEntryModel = timelineSelectEntryModel;
 				break;
 			}
 			
-			generatorPosY += ySizeGenerator;
+			generatorPosY += ySize2Generator;
 		}
 		//==========================================================================================
 		return retTimelineSelectEntryModel;
@@ -1311,11 +1322,11 @@ implements Scrollable { //, MouseMotionListener
 	 * 			is the generator at given point.<br/>
 	 * 			<code>null</code> if no generator is selected.
 	 */
-	public TimelineSelectEntryModel searchGenerator(final Point2D point2D) {
+	public TimelineSelectEntryModel searchGenerator(final Point2D point2D, final boolean onlyWaveform) {
 		//==========================================================================================
 		final TimelineSelectEntryModel retTimelineSelectEntryModel;
 
-		final TimelineSelectEntryModel timelineSelectEntryModel = this.searchTimeline(point2D);
+		final TimelineSelectEntryModel timelineSelectEntryModel = this.searchTimeline(point2D, onlyWaveform);
 		
 		if (timelineSelectEntryModel != null) {
 			final float startTimePos = timelineSelectEntryModel.getStartTimePos();
@@ -1390,7 +1401,7 @@ implements Scrollable { //, MouseMotionListener
 		double height = 0.0D;
 		
 		for (final TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntriesModel.getTimelineSelectEntryModelList()) {
-			final int ySizeGenerator = timelineSelectEntryModel.getYSizeGenerator();
+			final int ySizeGenerator = TimelinesDrawPanelUtils.calcYSizeGenerator(timelineSelectEntryModel);
 			final float endTimePos = timelineSelectEntryModel.getEndTimePos();
 			
 			if (endTimePos > width) {
@@ -1532,7 +1543,7 @@ implements Scrollable { //, MouseMotionListener
 			
 			if (timeline != null) {
 				// Position of selected timeline.
-				int selectedTimelinePos = this.timelinesDrawPanelModel.calcTimelinePos(selectedTimelineEntryModel);
+				//int selectedTimelinePos = this.timelinesDrawPanelModel.calcTimelinePos(selectedTimelineEntryModel);
 				
 				// Calculates the Positions of Inputs.
 				final InputPosEntriesModel inputPosEntriesModel = selectedTimelineModel.getInputPosEntriesModel();
@@ -1545,8 +1556,8 @@ implements Scrollable { //, MouseMotionListener
 					
 					//----------------------------------------------------------------------------------
 					float selectedScreenPosX = selectedTimelineEntryModel.getStartTimePos();
-					float selectedScreenInputOffset = 
-						this.calcSelectedScreenInputOffset(selectedTimelineModel,
+					float selectedScreenInputXOffset =
+						this.calcSelectedScreenInputXOffset(selectedTimelineModel,
 						                                   selectedTimelineEntryModel);
 
 					//----------------------------------------------------------------------------------
@@ -1571,11 +1582,12 @@ implements Scrollable { //, MouseMotionListener
 //								InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
 	//							InputData inputData = inputEntryModel.getInputData();
 
-								final float inputOffsetScreenX = inputNo * selectedScreenInputOffset;
+								final float inputOffsetScreenX = inputNo * selectedScreenInputXOffset;
 
 								final float inp1X = selectedScreenPosX + inputOffsetScreenX; //(int)(tracksData.getGeneratorsLabelSizeX() + selectedScreenPosX + inputOffsetScreenX);
-								final float inp1Y = selectedTimelinePos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
-								
+								//final float inp1Y = selectedTimelinePos * entryHeight; //(int)(posY - ((int)(verticalScrollerStart + 1) * entryHeight) + selectedPos * entryHeight);
+								final float inp1Y = selectedTimelineEntryModel.getYPosGenerator();
+
 		//						Generator inputGenerator = inputData.getInputGenerator();
 								
 								{

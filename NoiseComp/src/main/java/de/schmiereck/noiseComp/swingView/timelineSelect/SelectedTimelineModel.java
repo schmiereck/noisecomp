@@ -119,35 +119,32 @@ public class SelectedTimelineModel
 	 * @param selectedTimelineSelectEntryModel 
 	 * 			to set {@link #selectedTimelineSelectEntryModel}.
 	 */
-	public void setSelectedTimelineSelectEntryModel(TimelineSelectEntryModel selectedTimelineSelectEntryModel) {
+	public void setSelectedTimelineSelectEntryModel(final TimelineSelectEntryModel selectedTimelineSelectEntryModel) {
 		//==========================================================================================
 		this.selectedTimelineSelectEntryModel = selectedTimelineSelectEntryModel;
 		
 		//------------------------------------------------------------------------------------------
-		InputPosEntriesModel inputPosEntriesModel;
+		final InputPosEntriesModel inputPosEntriesModel;
 		
-		if (this.selectedTimelineSelectEntryModel != null)
-		{
+		if (this.selectedTimelineSelectEntryModel != null) {
 			this.inputEntriesModel.clear();
 
-			Timeline timeline = this.selectedTimelineSelectEntryModel.getTimeline();
+			final Timeline timeline = this.selectedTimelineSelectEntryModel.getTimeline();
 			
-			if (timeline != null)
-			{
+			if (timeline != null) {
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				Generator generator = timeline.getGenerator();
-				
-				GeneratorTypeInfoData generatorTypeInfoData = generator.getGeneratorTypeData();
+				final Generator generator = timeline.getGenerator();
+
+				final GeneratorTypeInfoData generatorTypeInfoData = generator.getGeneratorTypeData();
 				
 //				List<InputEntryModel> inputEntryModels = this.inputEntriesModel.getInputEntryModels();
 				
 				// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				// Add Input-Groups:
+
+				final InputTypesData inputTypesData = generatorTypeInfoData.getInputTypesData();
 				
-				InputTypesData inputTypesData = generatorTypeInfoData.getInputTypesData();
-				
-				for (int inputTypePos = 0; inputTypePos < inputTypesData.getInputTypesSize(); inputTypePos++)
-				{
+				for (int inputTypePos = 0; inputTypePos < inputTypesData.getInputTypesSize(); inputTypePos++) {
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					InputTypeData inputTypeData = inputTypesData.getInputTypeDataByPos(inputTypePos);
 					
@@ -155,21 +152,18 @@ public class SelectedTimelineModel
 					
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 					// Add Inputs:
+
+					final Iterator<InputData> inputsIterator = timeline.getInputsIterator();
 					
-					Iterator<InputData> inputsIterator = timeline.getInputsIterator();
-					
-					if (inputsIterator != null)
-					{
-						while (inputsIterator.hasNext())
-						{
+					if (inputsIterator != null) {
+						while (inputsIterator.hasNext()) {
 							final InputData inputData = inputsIterator.next();
+
+							final InputTypeData inputTypeData2 = inputData.getInputTypeData();
 							
-							InputTypeData inputTypeData2 = inputData.getInputTypeData();
-							
-							if (inputTypeData == inputTypeData2)
-							{
-								InputEntryModel inputEntryModel = new InputEntryModel(inputEntryGroupModel,
-								                                                      inputData);
+							if (inputTypeData == inputTypeData2) {
+								final InputEntryModel inputEntryModel =
+										new InputEntryModel(inputEntryGroupModel, inputData);
 								
 //								inputEntryModels.add(inputEntryModel);
 								
@@ -188,12 +182,9 @@ public class SelectedTimelineModel
 				this.calcInputPosEntries(this);
 			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		}
-		else
-		{
+		} else {
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			inputPosEntriesModel = null;
-			
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		}
 		

@@ -134,7 +134,7 @@ public class TimelinesDrawMouseMotionListener
 				final TimelineSelectEntryModel selectedTimelineSelectEntryModel = selectedTimelineModel.getSelectedTimelineSelectEntryModel();
 
 				if (Objects.nonNull(selectedTimelineSelectEntryModel)) {
-					final TimelineSelectEntryModel targetTimelineSelectEntryModel = this.timelinesDrawPanelView.searchTimeline(mousePoint2D);
+					final TimelineSelectEntryModel targetTimelineSelectEntryModel = this.timelinesDrawPanelView.searchTimeline(mousePoint2D, true);
 
 					// Drag Up/Down to other Timeline?
 					if (Objects.nonNull(targetTimelineSelectEntryModel) &&
@@ -242,7 +242,7 @@ public class TimelinesDrawMouseMotionListener
 		}
 
 		final TimelineSelectEntryModel targetTimelineSelectEntryModel =
-			this.timelinesDrawPanelView.searchTimeline(mousePoint2D);
+			this.timelinesDrawPanelView.searchTimeline(mousePoint2D, true);
 
 		selectedInputEntryTargetModel.setTargetPoint2D(mousePoint2D);
 		selectedInputEntryTargetModel.setTargetTimelineSelectEntryModel(targetTimelineSelectEntryModel);
@@ -423,7 +423,7 @@ public class TimelinesDrawMouseMotionListener
 		final AffineTransform at = this.timelinesDrawPanelView.getAt();
 		
 		//==========================================================================================
-		final TimelineSelectEntryModel timelineSelectEntryModel =  this.timelinesDrawPanelView.searchGenerator(point2D);
+		final TimelineSelectEntryModel timelineSelectEntryModel =  this.timelinesDrawPanelView.searchGenerator(point2D, true);
 		
 		//------------------------------------------------------------------------------------------
 		boolean repaintView = false;
@@ -439,11 +439,9 @@ public class TimelinesDrawMouseMotionListener
 		if (timelineSelectEntryModel != null) {
 			final float ySizeGenerator = timelineSelectEntryModel.getYSizeGenerator();
 
-			final int timelineGeneratorPos = (int)(point2D.getY() / ySizeGenerator);
-
 			final float startTimePos = timelineSelectEntryModel.getStartTimePos();
 			final float endTimePos = timelineSelectEntryModel.getEndTimePos();
-			final float generatorPosY = timelineGeneratorPos * ySizeGenerator;
+			final float generatorPosY = timelineSelectEntryModel.getYPosGenerator();
 
 			final float timeLength = endTimePos - startTimePos;
 
@@ -525,13 +523,11 @@ public class TimelinesDrawMouseMotionListener
 		final SelectedTimelineModel selectedTimelineModel =  this.timelinesDrawPanelModel.getSelectedTimelineModel();
 		
 		//==========================================================================================
-		InputPosEntriesModel inputPosEntryModel = 
-			this.timelinesDrawPanelView.searchInputEntry(selectedTimelineModel,
-			                                             point,
-			                                             point2D);
+		final InputPosEntriesModel inputPosEntryModel =
+			this.timelinesDrawPanelView.searchInputEntry(selectedTimelineModel, point, point2D);
 
 		if (inputPosEntryModel != null) {
-			InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
+			final InputEntryModel inputEntryModel = inputPosEntryModel.getInputEntryModel();
 			
 			if (selectedTimelineModel.getHighlightedInputEntry() != inputEntryModel) {
 				selectedTimelineModel.setHighlightedInputEntry(inputEntryModel);

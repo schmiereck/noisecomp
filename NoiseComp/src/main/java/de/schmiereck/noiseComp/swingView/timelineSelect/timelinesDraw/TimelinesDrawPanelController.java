@@ -72,8 +72,7 @@ implements TimelineContentChangedListenerInterface,
 	                                    final AppModelChangedObserver appModelChangedObserver,
 	                                    final TimelineSelectEntriesModel timelineSelectEntriesModel,
 	                                    final SelectedTimelineModel selectedTimelineModel,
-	                                    final TimelinesTimeRuleModel timelinesTimeRuleModel)
-	{
+	                                    final TimelinesTimeRuleModel timelinesTimeRuleModel) {
 		//==========================================================================================
 		this.soundSourceLogic = soundSourceLogic;
 		//this.modulesTreeModel = modulesTreeModel;

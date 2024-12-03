@@ -12,6 +12,7 @@ import de.schmiereck.noiseComp.swingView.appModel.InputEntryModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesGeneratorsRule.TimelinesGeneratorsRuleView;
 
 /**
  * <p>
@@ -36,7 +37,7 @@ implements MouseListener
 	 * Timeline Draw-Panel View. 
 	 */
 	private final TimelinesDrawPanelView timelinesDrawPanelView;
-	
+
 	//**********************************************************************************************
 	// Functions:
 
@@ -54,7 +55,7 @@ implements MouseListener
 		//==========================================================================================
 		this.timelinesDrawPanelModel = timelinesDrawPanelModel;
 		this.timelinesDrawPanelView = timelinesDrawPanelView;
-		
+
 		//==========================================================================================
 	}
 
@@ -102,7 +103,6 @@ implements MouseListener
 
 		//==========================================================================================
 		final Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
-		boolean repaintView = false;
 
 		//------------------------------------------------------------------------------------------
 		final TimelineSelectEntryModel highlightedTimelineSelectEntryModel =
@@ -113,12 +113,12 @@ implements MouseListener
 				highlightedTimelineSelectEntryModel.setExpanded(!highlightedTimelineSelectEntryModel.getExpanded());
 				final int timelinePos = timelineSelectEntriesModel.calcTimelineSelectEntryPos(highlightedTimelineSelectEntryModel);
 				TimelinesDrawPanelUtils.recalcYPosTimelineList(timelineSelectEntriesModel, timelinePos);
-				repaintView = true;
+				this.timelinesDrawPanelModel.fireYPosTimelineListChanged();
 			}
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			final TimelineSelectEntryModel timelineSelectEntryModel = this.timelinesDrawPanelView.searchGenerator(point2D);
+			final TimelineSelectEntryModel timelineSelectEntryModel = this.timelinesDrawPanelView.searchGenerator(point2D, false);
 			
 			if (selectedTimelineModel.getSelectedTimelineSelectEntryModel() != timelineSelectEntryModel) {
 				selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);
@@ -131,10 +131,6 @@ implements MouseListener
 			if (selectedTimelineModel.getSelectedInputEntry() != highlightedInputEntry) {
 				selectedTimelineModel.setSelectedInputEntry(highlightedInputEntry, false);
 			}
-		}
-		//------------------------------------------------------------------------------------------
-		if (repaintView) {
-			this.timelinesDrawPanelView.repaint();
 		}
 		//==========================================================================================
 	}

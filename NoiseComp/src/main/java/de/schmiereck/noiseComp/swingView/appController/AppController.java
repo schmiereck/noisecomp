@@ -458,7 +458,22 @@ implements RemoveTimelineGeneratorListenerInterface,
 				}
 		 	}
 		);
-		
+
+		this.timelinesDrawPanelController.getTimelinesDrawPanelModel().addYPosTimelineListChangedListener(evt -> {
+			//if ("yPosTimelineList".equals(evt.getPropertyName())) {
+			this.timelinesDrawPanelController.getTimelinesDrawPanelView().repaint();
+			this.timelinesGeneratorsRuleController.getTimelinesGeneratorsRuleView().repaint();
+
+			final Dimension timelinesDrawPanelDimension = timelinesDrawPanelModel.getDimension();
+
+			// TimelinesTimeRule update.
+			this.timelinesTimeRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getWidth());
+
+			// TimelinesGeneratorsRule update.
+			this.timelinesGeneratorsRuleController.doTimelineGeneratorModelsChanged(timelinesDrawPanelDimension.getHeight());
+			//}
+		});
+
 		//------------------------------------------------------------------------------------------
 		this.moduleEditController = new ModuleEditController(this,
 		                                                     this.modulesTreeController.getModulesTreeModel(),

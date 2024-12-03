@@ -199,7 +199,7 @@ extends MouseAdapter
 			Point2D point2D = this.timelinesDrawPanelView.mousePos(e.getPoint());
 			
 			TimelineSelectEntryModel timelineSelectEntryModel = 
-				this.timelinesDrawPanelView.searchGenerator(point2D);
+				this.timelinesDrawPanelView.searchGenerator(point2D, true);
 			
 			if (timelineSelectEntryModel != null) {
 				selectedTimelineModel.setSelectedTimelineSelectEntryModel(timelineSelectEntryModel);

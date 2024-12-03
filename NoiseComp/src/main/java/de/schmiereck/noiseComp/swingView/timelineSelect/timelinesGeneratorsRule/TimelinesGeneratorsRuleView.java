@@ -23,6 +23,7 @@ import de.schmiereck.noiseComp.swingView.ModelPropertyChangedListener;
 import de.schmiereck.noiseComp.swingView.timelineSelect.SelectedTimelineModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntriesModel;
 import de.schmiereck.noiseComp.swingView.timelineSelect.TimelineSelectEntryModel;
+import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw.TimelinesDrawPanelUtils;
 import de.schmiereck.noiseComp.swingView.timelineSelect.timelinesScrollPanel.TimelinesScrollPanelModel;
 import de.schmiereck.noiseComp.swingView.utils.OutputUtils;
 import de.schmiereck.noiseComp.timeline.Timeline;
@@ -162,7 +163,7 @@ extends JComponent
 		//for (int yPosTick = start; yPosTick < end; yPosTick += ySizeGenerator) {
 			final TimelineSelectEntryModel timelineSelectEntryModel = timelineSelectEntryModels.get(generatorPos);
 
-			final int ySizeGenerator = timelineSelectEntryModel.getYSizeGenerator();
+			final int ySizeGenerator = TimelinesDrawPanelUtils.calcYSizeGenerator(timelineSelectEntryModel);
 
 			// Use clipping bounds to calculate first and last tick locations.
 			if (((yPosGenerator + ySizeGenerator) > drawRectangle.y) &&

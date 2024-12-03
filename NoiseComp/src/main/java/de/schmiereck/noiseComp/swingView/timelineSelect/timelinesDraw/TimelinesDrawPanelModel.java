@@ -4,6 +4,9 @@
 package de.schmiereck.noiseComp.swingView.timelineSelect.timelinesDraw;
 
 import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -99,7 +102,9 @@ public class TimelinesDrawPanelModel {
 	 */
 	@SuppressWarnings("unused")
 	private final ModelPropertyChangedNotifier highlightedTimelineChangedNotifier = new ModelPropertyChangedNotifier();
-	
+
+	private final List<PropertyChangeListener> yPosTimelineListChangedListenerList = new ArrayList<>();
+
 	/**
 	 * Highlighted Timeline Handler.
 	 */
@@ -747,5 +752,16 @@ public class TimelinesDrawPanelModel {
 
 	public void setDragOffsetX(final double dragOffsetX) {
 		this.dragOffsetX = dragOffsetX;
+	}
+
+	public void addYPosTimelineListChangedListener(final PropertyChangeListener listener) {
+		this.yPosTimelineListChangedListenerList.add(listener);
+	}
+
+	public void fireYPosTimelineListChanged() {
+		final PropertyChangeEvent event = new PropertyChangeEvent(this, "yPosTimelineList", null, null);
+		for (final PropertyChangeListener listener : this.yPosTimelineListChangedListenerList) {
+			listener.propertyChange(event);
+		}
 	}
 }
