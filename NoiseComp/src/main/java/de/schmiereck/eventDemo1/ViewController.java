@@ -9,19 +9,33 @@ public class ViewController {
         this.centralModel = centralModel;
 
         this.centralModel.addPropertyChangeListener(evt -> {
-            if ("property".equals(evt.getPropertyName())) {
-                this.viewModel.setProperty((String) evt.getNewValue());
+            switch (evt.getPropertyName()) {
+                case "property1" -> this.viewModel.setProperty1((String) evt.getNewValue());
+                case "property2" -> this.viewModel.setProperty2((String) evt.getNewValue());
+                case "property3" -> this.viewModel.setProperty3((Integer) evt.getNewValue());
+                default -> throw new RuntimeException("Unexpected Property \"%s\".".formatted(evt.getPropertyName()));
             }
         });
 
         this.viewModel.addPropertyChangeListener(evt -> {
-            if ("property".equals(evt.getPropertyName())) {
-                centralModel.setProperty((String) evt.getNewValue());
+            switch (evt.getPropertyName()) {
+                case "property1" -> this.centralModel.setProperty1((String) evt.getNewValue());
+                case "property2" -> this.centralModel.setProperty2((String) evt.getNewValue());
+                case "property3" -> this.centralModel.setProperty3((Integer) evt.getNewValue());
+                default -> throw new RuntimeException("Unexpected Property \"%s\".".formatted(evt.getPropertyName()));
             }
         });
     }
 
-    public void updateCentralModel(final String newValue) {
-        this.centralModel.setProperty(newValue);
+    public void updateProperty1CentralModel(final String property1) {
+        this.centralModel.setProperty1(property1);
+    }
+
+    public void updateProperty2CentralModel(final String property2) {
+        this.centralModel.setProperty2(property2);
+    }
+
+    public void updateProperty3CentralModel(final Integer property3) {
+        this.centralModel.setProperty3(property3);
     }
 }

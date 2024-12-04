@@ -1,7 +1,6 @@
 package de.schmiereck.eventDemo1;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class EventDemo1Main {
@@ -30,36 +29,64 @@ public class EventDemo1Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         {
-            JPanel outerViewPanel = new JPanel();
+            final JPanel outerViewPanel = new JPanel();
             outerViewPanel.setLayout(new BoxLayout(outerViewPanel, BoxLayout.Y_AXIS));
             outerViewPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 10));
 
-            JPanel titlePanel = new JPanel();
+            final JPanel titlePanel = new JPanel();
             titlePanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
             titlePanel.add(new JLabel("View 1:"));
             outerViewPanel.add(titlePanel);
 
-            JPanel formViewPanel = new JPanel();
-            formViewPanel.setLayout(new GridLayout(1, 2, 10, 10));
+            final JPanel formViewPanel = new JPanel();
+            formViewPanel.setLayout(new GridLayout(3, 2, 10, 10));
             formViewPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 10));
 
-            JPanel labelPanel = new JPanel();
-            labelPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
-            labelPanel.add(new JLabel("Property:"));
-            formViewPanel.add(labelPanel);
+            // Property 1:
+            {
+                final JPanel property1LabelPanel = new JPanel();
+                property1LabelPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
+                property1LabelPanel.add(new JLabel("Property 1:"));
+                formViewPanel.add(property1LabelPanel);
 
-            JTextField textField = view1.getTextField();
-            JPanel textPanel = new JPanel();
-            textPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
-            textPanel.add(textField);
-            formViewPanel.add(textPanel);
-            Dimension dimension = new Dimension(120, textField.getPreferredSize().height);
-            //textField.setMaximumSize(dimension);
-            //textField.setMinimumSize(dimension);
-            textField.setPreferredSize(dimension);
-            //textField.setMaximumSize(dimension);
-            //textField.setSize(dimension);
-            textField.revalidate();
+                final JTextField property1TextField = view1.getProperty1TextField();
+                final JPanel property1TextPanel = new JPanel();
+                property1TextPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
+                property1TextPanel.add(property1TextField);
+                formViewPanel.add(property1TextPanel);
+                property1TextField.setPreferredSize(new Dimension(120, property1TextField.getPreferredSize().height));
+                property1TextField.revalidate();
+            }
+            // Property 2:
+            {
+                final JPanel property2LabelPanel = new JPanel();
+                property2LabelPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
+                property2LabelPanel.add(new JLabel("Property 2:"));
+                formViewPanel.add(property2LabelPanel);
+
+                final JTextField property2TextField = view1.getProperty2TextField();
+                final JPanel property2TextPanel = new JPanel();
+                property2TextPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
+                property2TextPanel.add(property2TextField);
+                formViewPanel.add(property2TextPanel);
+                property2TextField.setPreferredSize(new Dimension(120, property2TextField.getPreferredSize().height));
+                property2TextField.revalidate();
+            }
+            // Property 3:
+            {
+                final JPanel property3LabelPanel = new JPanel();
+                property3LabelPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
+                property3LabelPanel.add(new JLabel("Property 3:"));
+                formViewPanel.add(property3LabelPanel);
+
+                final JTextField property3TextField = view1.getProperty3TextField();
+                final JPanel property3TextPanel = new JPanel();
+                property3TextPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 10));
+                property3TextPanel.add(property3TextField);
+                formViewPanel.add(property3TextPanel);
+                property3TextField.setPreferredSize(new Dimension(120, property3TextField.getPreferredSize().height));
+                property3TextField.revalidate();
+            }
 
             outerViewPanel.add(formViewPanel);
 
@@ -69,66 +96,73 @@ public class EventDemo1Main {
             panel.add(outerViewPanel);
         }
         {
-            JPanel viewPanel = new JPanel();
+            final JPanel viewPanel = new JPanel();
             //viewPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
             //viewPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
-            SpringLayout springLayout = new SpringLayout();
+            final SpringLayout springLayout = new SpringLayout();
             viewPanel.setLayout(springLayout);
 
-            JLabel titleLabel = new JLabel("View 2:");
+            final JLabel titleLabel = new JLabel("View 2:");
             viewPanel.add(titleLabel);
 
-            JLabel aLabel = new JLabel("Property:");
-            viewPanel.add(aLabel);
+            final JLabel property1Label = new JLabel("Property 1:");
+            viewPanel.add(property1Label);
 
-            JTextField aTextField = view2.getTextField();
-            aTextField.setColumns(20);
-            viewPanel.add(aTextField);
+            final JTextField property1TextField = view2.getProperty1TextField();
+            property1TextField.setColumns(20);
+            viewPanel.add(property1TextField);
 
-            JLabel bLabel = new JLabel("Long Property:");
-            viewPanel.add(bLabel);
+            final JLabel property2Label = new JLabel("Long Property 2:");
+            viewPanel.add(property2Label);
 
-            JTextField bTextField = new JTextField();
-            bTextField.setColumns(20);
-            viewPanel.add(bTextField);
+            final JTextField property2TextField = view2.getProperty2TextField();
+            property2TextField.setColumns(20);
+            viewPanel.add(property2TextField);
 
-            JLabel cLabel = new JLabel("Prop.:");
-            viewPanel.add(cLabel);
+            final JLabel property3Label = new JLabel("Prop. 3:");
+            viewPanel.add(property3Label);
 
-            JTextField cTextField = new JTextField();
-            cTextField.setColumns(10);
-            viewPanel.add(cTextField);
+            final JTextField property3TextField = view2.getProperty3TextField();
+            property3TextField.setColumns(10);
+            viewPanel.add(property3TextField);
+
+            final JButton updateButton = view2.getUpdateButton();
+            viewPanel.add(updateButton);
 
             // Left-align all Labels.
-            springLayout.putConstraint(SpringLayout.EAST, aLabel, 0, SpringLayout.EAST, bLabel);
-            springLayout.putConstraint(SpringLayout.EAST, cLabel, 0, SpringLayout.EAST, bLabel);
+            springLayout.putConstraint(SpringLayout.EAST, property1Label, 0, SpringLayout.EAST, property2Label);
+            springLayout.putConstraint(SpringLayout.EAST, property3Label, 0, SpringLayout.EAST, property2Label);
 
             // Title to the Top.
             springLayout.putConstraint(SpringLayout.NORTH, titleLabel, 10, SpringLayout.NORTH, viewPanel);
             //springLayout.putConstraint(SpringLayout.WEST, titleLabel, 5, SpringLayout.WEST, viewPanel);
 
-            // aLabel to the bottom of title.
-            springLayout.putConstraint(SpringLayout.NORTH, aLabel, 5, SpringLayout.SOUTH, titleLabel);
-            //springLayout.putConstraint(SpringLayout.WEST, aLabel, 10, SpringLayout.WEST, viewPanel);
+            // property1Label to the bottom of title.
+            springLayout.putConstraint(SpringLayout.NORTH, property1Label, 5, SpringLayout.SOUTH, titleLabel);
+            //springLayout.putConstraint(SpringLayout.WEST, property1Label, 10, SpringLayout.WEST, viewPanel);
 
             // Align Text Field to his Label:
-            springLayout.putConstraint(SpringLayout.SOUTH, aTextField, 5, SpringLayout.SOUTH, aLabel);
-            springLayout.putConstraint(SpringLayout.WEST, aTextField, 10, SpringLayout.EAST, aLabel);
+            springLayout.putConstraint(SpringLayout.SOUTH, property1TextField, 5, SpringLayout.SOUTH, property1Label);
+            springLayout.putConstraint(SpringLayout.WEST, property1TextField, 10, SpringLayout.EAST, property1Label);
 
-            // bLabel to the bottom of aLabel.
-            springLayout.putConstraint(SpringLayout.NORTH, bLabel, 5, SpringLayout.SOUTH, aLabel);
-            //springLayout.putConstraint(SpringLayout.WEST, bLabel, 10, SpringLayout.WEST, aLabel);
-
-            // Align Text Field to his Label:
-            springLayout.putConstraint(SpringLayout.SOUTH, bTextField, 5, SpringLayout.SOUTH, bLabel);
-            springLayout.putConstraint(SpringLayout.WEST, bTextField, 10, SpringLayout.EAST, bLabel);
-
-            // cLabel to the bottom of bLabel.
-            springLayout.putConstraint(SpringLayout.NORTH, cLabel, 5, SpringLayout.SOUTH, bLabel);
+            // property2Label to the bottom of property1Label.
+            springLayout.putConstraint(SpringLayout.NORTH, property2Label, 5, SpringLayout.SOUTH, property1Label);
+            //springLayout.putConstraint(SpringLayout.WEST, property2Label, 10, SpringLayout.WEST, property1Label);
 
             // Align Text Field to his Label:
-            springLayout.putConstraint(SpringLayout.SOUTH, cTextField, 5, SpringLayout.SOUTH, cLabel);
-            springLayout.putConstraint(SpringLayout.WEST, cTextField, 10, SpringLayout.EAST, cLabel);
+            springLayout.putConstraint(SpringLayout.SOUTH, property2TextField, 5, SpringLayout.SOUTH, property2Label);
+            springLayout.putConstraint(SpringLayout.WEST, property2TextField, 10, SpringLayout.EAST, property2Label);
+
+            // property3Label to the bottom of property2Label.
+            springLayout.putConstraint(SpringLayout.NORTH, property3Label, 5, SpringLayout.SOUTH, property2Label);
+
+            // Align Text Field to his Label:
+            springLayout.putConstraint(SpringLayout.SOUTH, property3TextField, 5, SpringLayout.SOUTH, property3Label);
+            springLayout.putConstraint(SpringLayout.WEST, property3TextField, 10, SpringLayout.EAST, property3Label);
+
+            // Update-Button.
+            springLayout.putConstraint(SpringLayout.NORTH, updateButton, 15, SpringLayout.SOUTH, property3TextField);
+            springLayout.putConstraint(SpringLayout.WEST, updateButton, 0, SpringLayout.WEST, property3TextField);
 
             panel.add(viewPanel);
         }
