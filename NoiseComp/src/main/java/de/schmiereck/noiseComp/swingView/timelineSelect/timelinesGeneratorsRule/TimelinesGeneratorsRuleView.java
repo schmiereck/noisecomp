@@ -72,28 +72,21 @@ extends JComponent
 	 * @param timelinesGeneratorsRuleModel
 	 * 			is the Timeline-Generators Rule Model.
 	 */
-	public TimelinesGeneratorsRuleView(TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel)
-	{
+	public TimelinesGeneratorsRuleView(final TimelinesGeneratorsRuleModel timelinesGeneratorsRuleModel) {
 		//==========================================================================================
 		this.timelinesGeneratorsRuleModel = timelinesGeneratorsRuleModel;
 		
 		//------------------------------------------------------------------------------------------
-		this.addMouseListener
-		(
-		 	new TimelinesGeneratorsRuleMouseListener(timelinesGeneratorsRuleModel,
-		 	                                          this)
+		this.addMouseListener(
+		 	new TimelinesGeneratorsRuleMouseListener(timelinesGeneratorsRuleModel, this)
 		);
-		this.addMouseMotionListener
-		(
-		 	new TimelinesGeneratorsRuleMouseMotionListener(timelinesGeneratorsRuleModel,
-		 	                                               this)
+		this.addMouseMotionListener(
+		 	new TimelinesGeneratorsRuleMouseMotionListener(timelinesGeneratorsRuleModel, this)
 		);
 		//------------------------------------------------------------------------------------------
-		this.timelineGeneratorModelChangedListener = new ModelPropertyChangedListener()
-	 	{
+		this.timelineGeneratorModelChangedListener = new ModelPropertyChangedListener() {
 			@Override
-			public void notifyModelPropertyChanged()
-			{
+			public void notifyModelPropertyChanged() {
 				repaint();
 			}
 	 	};
@@ -106,10 +99,9 @@ extends JComponent
 //		this.repaint();
 //	}
 
-	public void setHeight(int ph)
-	{
+	public void setHeight(final int ph) {
 		//==========================================================================================
-		Dimension dimension = new Dimension(SIZE_X, ph);
+		final Dimension dimension = new Dimension(SIZE_X, ph);
 		
 //		this.setSize(dimension);
 		this.setPreferredSize(dimension);
@@ -168,8 +160,8 @@ extends JComponent
 			// Use clipping bounds to calculate first and last tick locations.
 			if (((yPosGenerator + ySizeGenerator) > drawRectangle.y) &&
 				(yPosGenerator < (drawRectangle.y + drawRectangle.height))) {
-				int yPosTick = yPosGenerator;
-				int yPosString;
+				final int yPosTick = yPosGenerator;
+				final int yPosString;
 
 				// Make a special case of 0 to display the number
 				// within the rule and draw a units label.
@@ -266,9 +258,7 @@ extends JComponent
 				{
 					if (Float.isNaN(valueMax) == false) {
 						final String text = OutputUtils.makeFloatText(valueMax, 2);
-
 						final FontMetrics fm = getFontMetrics(g.getFont());
-
 						final int stringWidth = fm.stringWidth(text);
 
 						g.drawString(text,
@@ -280,9 +270,7 @@ extends JComponent
 					if ((Float.isNaN(valueMax) == false) ||
 							(Float.isNaN(valueMin) == false)) {
 						final String text = OutputUtils.makeFloatText(valueMin, 2);
-
 						final FontMetrics fm = getFontMetrics(g.getFont());
-
 						final int stringWidth = fm.stringWidth(text);
 						Rectangle2D stringBoundsRect = fm.getStringBounds(text, g);
 						final int stringHeight = stringBoundsRect.getBounds().height;
@@ -303,8 +291,7 @@ extends JComponent
 	 * @return 
 	 * 			returns the {@link #timelineGeneratorModelChangedListener}.
 	 */
-	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener()
-	{
+	public ModelPropertyChangedListener getTimelineGeneratorModelChangedListener() {
 		//==========================================================================================
 		return this.timelineGeneratorModelChangedListener;
 	}
@@ -317,17 +304,14 @@ extends JComponent
 	 */
 	public TimelineSelectEntryModel searchGenerator(final Point2D point2D) {
 		//==========================================================================================
-		final TimelinesScrollPanelModel timelinesScrollPanelModel = this.timelinesGeneratorsRuleModel.getTimelinesScrollPanelModel();
-		
+		final TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesGeneratorsRuleModel.getTimelineSelectEntriesModel();
+
 		//==========================================================================================
 		TimelineSelectEntryModel retTimelineSelectEntryModel = null;
-		
-		final TimelineSelectEntriesModel timelineSelectEntriesModel = this.timelinesGeneratorsRuleModel.getTimelineSelectEntriesModel();
-		
 		double generatorPosY = 0.0D;
 		
 		for (final TimelineSelectEntryModel timelineSelectEntryModel : timelineSelectEntriesModel.getTimelineSelectEntryModelList()) {
-			int generatorSizeY = timelineSelectEntryModel.getYSizeGenerator();
+			final int generatorSizeY = TimelinesDrawPanelUtils.calcYSizeGenerator(timelineSelectEntryModel);
 
 			if ((point2D.getY() >= generatorPosY) &&
 				(point2D.getY() <= (generatorPosY + generatorSizeY))) {
@@ -337,7 +321,6 @@ extends JComponent
 			
 			generatorPosY += generatorSizeY;
 		}
-		
 		//==========================================================================================
 		return retTimelineSelectEntryModel;
 	}
