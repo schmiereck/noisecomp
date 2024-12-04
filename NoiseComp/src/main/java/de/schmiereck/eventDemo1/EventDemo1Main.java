@@ -22,7 +22,7 @@ public class EventDemo1Main {
         appController.addView(view2, viewController2);
 
         // Display views in a JFrame or other container
-        JFrame frame = new JFrame("DFT Result");
+        JFrame frame = new JFrame("EventDemo1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
 
@@ -62,6 +62,9 @@ public class EventDemo1Main {
             textField.revalidate();
 
             outerViewPanel.add(formViewPanel);
+
+            final JButton updateButton = view1.getUpdateButton();
+            outerViewPanel.add(updateButton);
 
             panel.add(outerViewPanel);
         }

@@ -13,6 +13,12 @@ public class ViewController {
                 this.viewModel.setProperty((String) evt.getNewValue());
             }
         });
+
+        this.viewModel.addPropertyChangeListener(evt -> {
+            if ("property".equals(evt.getPropertyName())) {
+                centralModel.setProperty((String) evt.getNewValue());
+            }
+        });
     }
 
     public void updateCentralModel(final String newValue) {

@@ -16,7 +16,8 @@ public class CentralModel {
     public void setProperty(final String property) {
         final String oldProperty = this.property;
         this.property = property;
-        firePropertyChange("property", oldProperty, property);
+        System.out.println("CentralModel.setProperty: property=" + property);
+        this.firePropertyChange("property", oldProperty, property);
     }
 
     public void addPropertyChangeListener(final PropertyChangeListener listener) {
