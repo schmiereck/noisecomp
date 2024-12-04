@@ -37,8 +37,7 @@ import de.schmiereck.noiseComp.timeline.Timeline;
  * @version <p>23.09.2010:	created, smk</p>
  */
 public class TimelinesGeneratorsRuleView
-extends JComponent
-{
+extends JComponent {
 	//**********************************************************************************************
 	// Constats:
 
