@@ -7,8 +7,9 @@ import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
 import java.util.Iterator;
+import java.util.Objects;
 
-import static de.schmiereck.noiseComp.generator.GenratorUtils.calcPeriodFadeValue;
+import static de.schmiereck.noiseComp.generator.GeneratorUtils.calcPeriodFadeValue;
 import static de.schmiereck.noiseComp.service.StartupService.SIGNAL_GENERATOR_FOLDER_PATH;
 
 /**
@@ -56,13 +57,22 @@ extends Generator
 		super(name, frameRate, generatorTypeInfoData);
 	}
 
+	/**
+	 * Funktion zur Generierung des SoundSample im Generator,
+	 * so das zusätzliche Informationen (z.B. die Phase) in den SoundSample geschrieben werden können.
+	 */
+	public SoundSample createSoundSample() {
+		return new OscillatorSoundSample();
+	}
+
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator,
-									 GeneratorBufferInterface generatorBuffer,
-									 ModuleArguments moduleArguments)
-	{
+	public void calculateSoundSample(final long framePosition, final float frameTime,
+									 final SoundSample soundSample,
+									 final ModuleGenerator parentModuleGenerator,
+									 final GeneratorBufferInterface generatorBuffer,
+									 final ModuleArguments moduleArguments) {
 		//==========================================================================================
 		// Frequency of generated Signal oscillation.
 		float signalFrequency = Float.NaN;
@@ -76,25 +86,21 @@ extends Generator
 		// Width of Signal per oscillation.
 		float pulseWidth = Float.NaN;
 
+		final OscillatorSoundSample oscillatorSoundSample = (OscillatorSoundSample) soundSample;
+
 		//==========================================================================================
 		Object inputsSyncObject = this.getInputsSyncObject();
 		
-		if (inputsSyncObject != null)
-		{	
-			synchronized (inputsSyncObject)
-			{
+		if (inputsSyncObject != null) {
+			synchronized (inputsSyncObject) {
 				Iterator<InputData> inputsIterator = this.getInputsIterator();
 			
-				if (inputsIterator != null)
-				{
-					while (inputsIterator.hasNext())
-					{
+				if (inputsIterator != null) {
+					while (inputsIterator.hasNext()) {
 						InputData inputData = inputsIterator.next();
 						
-						switch (inputData.getInputTypeData().getInputType())
-						{
-							case INPUT_TYPE_FREQ:
-							{
+						switch (inputData.getInputTypeData().getInputType()) {
+							case INPUT_TYPE_FREQ: {
 								final float value =  
 									this.calcInputMonoValue(framePosition, 
 									                        frameTime,
@@ -103,21 +109,16 @@ extends Generator
 									                        generatorBuffer,
 									                        moduleArguments);
 								
-								if (Float.isNaN(value) == false)
-								{
-									if (Float.isNaN(signalFrequency) == false)
-									{
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(signalFrequency) == false) {
 										signalFrequency += value;
-									}
-									else
-									{
+									} else {
 										signalFrequency = value;
 									}
 								}
 								break;
 							}
-							case INPUT_TYPE_IIFREQ:
-							{
+							case INPUT_TYPE_IIFREQ: {
 								final float value =  
 									this.calcInputMonoValue(framePosition, 
 									                        frameTime,
@@ -126,21 +127,16 @@ extends Generator
 									                        generatorBuffer,
 									                        moduleArguments);
 								
-								if (Float.isNaN(value) == false)
-								{
-									if (Float.isNaN(signalIIFreq) == false)
-									{
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(signalIIFreq) == false) {
 										signalIIFreq += value;
-									}
-									else
-									{
+									} else {
 										signalIIFreq = value;
 									}
 								}
 								break;
 							}
-							case INPUT_TYPE_AMPL:
-							{
+							case INPUT_TYPE_AMPL: {
 								final float value =  
 									this.calcInputMonoValue(framePosition, 
 									                        frameTime,
@@ -149,21 +145,16 @@ extends Generator
 									                        generatorBuffer,
 									                        moduleArguments);
 								
-								if (Float.isNaN(value) == false)
-								{
-									if (Float.isNaN(signalAmplitude) == false)
-									{
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(signalAmplitude) == false) {
 										signalAmplitude += value;
-									}
-									else
-									{
+									} else {
 										signalAmplitude = value;
 									}
 								}
 								break;
 							}
-							case INPUT_TYPE_SHIFT:
-							{
+							case INPUT_TYPE_SHIFT: {
 								final float value =  
 									this.calcInputMonoValue(framePosition, 
 									                        frameTime,
@@ -172,21 +163,16 @@ extends Generator
 									                        generatorBuffer,
 									                        moduleArguments);
 								
-								if (Float.isNaN(value) == false)
-								{
-									if (Float.isNaN(signalShift) == false)
-									{
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(signalShift) == false) {
 										signalShift += value;
-									}
-									else
-									{
+									} else {
 										signalShift = value;
 									}
 								}
 								break;
 							}
-							case INPUT_TYPE_PULSE_WIDTH:
-							{
+							case INPUT_TYPE_PULSE_WIDTH: {
 								final float value =  
 									this.calcInputMonoValue(framePosition, 
 									                        frameTime,
@@ -195,21 +181,16 @@ extends Generator
 									                        generatorBuffer,
 									                        moduleArguments);
 								
-								if (Float.isNaN(value) == false)
-								{
-									if (Float.isNaN(pulseWidth) == false)
-									{
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(pulseWidth) == false) {
 										pulseWidth += value;
-									}
-									else
-									{
+									} else {
 										pulseWidth = value;
 									}
 								}
 								break;
 							}
-							default:
-							{
+							default: {
 								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
 							}
 						}
@@ -219,46 +200,63 @@ extends Generator
 		}
 		
 		//------------------------------------------------------------------------------------------
-		// Relative timepos in Generator.
-
+		//------------------------------------------------------------------------------------------
+		// Phase in the range [0, 1) is the Period-Position.
+		// Phase of the Signal in the current period.
+		final float actualPhase;
+		// Length of a Sinus-Periode in Frames.
 		final float periodLengthInFrames;
-		// Pos in Periode.
-		float periodPosition;
-		
-		if (Float.isNaN(signalFrequency) == false)
-		{
+		// Phase of the Signal in the current period.
+		//float periodPosition;
+
+		if (Float.isNaN(signalFrequency) == false) {
+			// https://chatgpt.com/c/67972cde-b54c-8013-889a-e739689095d8
+
+			final float sampleRate = this.getSoundFrameRate();
+
+			final long previousFramePosition = framePosition - 1L;
+			final float previousFrameTime = previousFramePosition / this.getSoundFrameRate();
+
+			final OscillatorSoundSample previousOscillatorSoundSample = (OscillatorSoundSample)
+					generatorBuffer.calcFrameSample(previousFramePosition, previousFrameTime, parentModuleGenerator, moduleArguments);
+
+			// Delta-Time between two Samples.
+			final float deltaT = 1.0F / sampleRate;
+
+			// Calculate actual Phase (integrated) based on the previous Phase (read from previous Sample).
+			final float previousPhase = Objects.nonNull(previousOscillatorSoundSample) ? previousOscillatorSoundSample.getPhase() : 0.0F;
+			actualPhase = (previousPhase + (signalFrequency * deltaT)) % 1.0F;
+
+			// output = Math.sin(TWO_PI * actualPhase);
+
 			// Length of a Period in Frames.
-			periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
-			periodPosition = (float)(framePosition / periodLengthInFrames);
-		}
-		else
-		{
+			periodLengthInFrames = (sampleRate / signalFrequency);
+			//periodPosition = (framePosition / periodLengthInFrames);
+		} else {
+			actualPhase = 0.0F;
+
 			periodLengthInFrames = 1.0F;
-			periodPosition = 0.0F;
+			//periodPosition = 0.0F;
 		}
 		
-		if (Float.isNaN(signalIIFreq) == false)
-		{
-			periodPosition += signalIIFreq;
+		if (Float.isNaN(signalIIFreq) == false) {
+			//periodPosition += signalIIFreq;
 		}
 
 		// signalAmplitude is not defined?
-		if (Float.isNaN(signalAmplitude) == true)
-		{
+		if (Float.isNaN(signalAmplitude) == true) {
 			// Use default value.
 			signalAmplitude = 1.0F;
 		}
 
 		// signalShift is not defined?
-		if (Float.isNaN(signalShift) == true)
-		{
+		if (Float.isNaN(signalShift) == true) {
 			// Use default value.
 			signalShift = 0.0F;
 		}
 
 		// pulseWidth is not defined?
-		if (Float.isNaN(pulseWidth) == true)
-		{
+		if (Float.isNaN(pulseWidth) == true) {
 			// Use default value.
 			pulseWidth = 1.0F;
 		}
@@ -269,31 +267,223 @@ extends Generator
 
 		float value;
 		
-		float posInPeriod = ((periodPosition + signalShift) % 1.0F);
-		
-		if (posInPeriod <= pulseWidth)
-		{
-			if (pulseWidth > 0.0F)
-			{
+		//float posInPeriod = ((periodPosition + signalShift) % 1.0F);
+		float posInPeriod = ((actualPhase + signalShift) % 1.0F);
+
+		if (posInPeriod <= pulseWidth) {
+			if (pulseWidth > 0.0F) {
 				float d = posInPeriod / pulseWidth;
 				value = 1.0F - d * 2.0F;
-			}
-			else
-			{
+			} else {
 				value = 1.0F;
 			}
-		}
-		else
-		{
+		} else {
 			value = -1.0F;
 		}
 		
 		soundSample.setStereoValues(value * signalAmplitude * fadeValue,
 		                            value * signalAmplitude * fadeValue);
-		
+		oscillatorSoundSample.setPhase(actualPhase);
+
 		//==========================================================================================
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
+	 */
+	public void calculateSoundSample_old(final long framePosition, final float frameTime,
+									 final SoundSample soundSample,
+									 final ModuleGenerator parentModuleGenerator,
+									 final GeneratorBufferInterface generatorBuffer,
+									 final ModuleArguments moduleArguments) {
+		//==========================================================================================
+		// Frequency of generated Signal oscillation.
+		float signalFrequency = Float.NaN;
+		// Integrated Input of Frequency of generated Signal oscillation.
+		float signalIIFreq = Float.NaN;
+		// Amplitude of generated Signal.
+		float signalAmplitude = Float.NaN;
+		// Shif of generated Signal oscillation.
+		float signalShift = Float.NaN;
+		// Pulse-Width of generated Signal oscillation (0.0 to 1.0).
+		// Width of Signal per oscillation.
+		float pulseWidth = Float.NaN;
+
+		final OscillatorSoundSample oscillatorSoundSample = (OscillatorSoundSample) soundSample;
+
+		//==========================================================================================
+		Object inputsSyncObject = this.getInputsSyncObject();
+
+		if (inputsSyncObject != null) {
+			synchronized (inputsSyncObject) {
+				Iterator<InputData> inputsIterator = this.getInputsIterator();
+
+				if (inputsIterator != null) {
+					while (inputsIterator.hasNext()) {
+						InputData inputData = inputsIterator.next();
+
+						switch (inputData.getInputTypeData().getInputType()) {
+							case INPUT_TYPE_FREQ: {
+								final float value =
+									this.calcInputMonoValue(framePosition,
+									                        frameTime,
+									                        inputData,
+									                        parentModuleGenerator,
+									                        generatorBuffer,
+									                        moduleArguments);
+
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(signalFrequency) == false) {
+										signalFrequency += value;
+									} else {
+										signalFrequency = value;
+									}
+								}
+								break;
+							}
+							case INPUT_TYPE_IIFREQ: {
+								final float value =
+									this.calcInputMonoValue(framePosition,
+									                        frameTime,
+									                        inputData,
+									                        parentModuleGenerator,
+									                        generatorBuffer,
+									                        moduleArguments);
+
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(signalIIFreq) == false) {
+										signalIIFreq += value;
+									} else {
+										signalIIFreq = value;
+									}
+								}
+								break;
+							}
+							case INPUT_TYPE_AMPL: {
+								final float value =
+									this.calcInputMonoValue(framePosition,
+									                        frameTime,
+									                        inputData,
+									                        parentModuleGenerator,
+									                        generatorBuffer,
+									                        moduleArguments);
+
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(signalAmplitude) == false) {
+										signalAmplitude += value;
+									} else {
+										signalAmplitude = value;
+									}
+								}
+								break;
+							}
+							case INPUT_TYPE_SHIFT: {
+								final float value =
+									this.calcInputMonoValue(framePosition,
+									                        frameTime,
+									                        inputData,
+									                        parentModuleGenerator,
+									                        generatorBuffer,
+									                        moduleArguments);
+
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(signalShift) == false) {
+										signalShift += value;
+									} else {
+										signalShift = value;
+									}
+								}
+								break;
+							}
+							case INPUT_TYPE_PULSE_WIDTH: {
+								final float value =
+									this.calcInputMonoValue(framePosition,
+									                        frameTime,
+									                        inputData,
+									                        parentModuleGenerator,
+									                        generatorBuffer,
+									                        moduleArguments);
+
+								if (Float.isNaN(value) == false) {
+									if (Float.isNaN(pulseWidth) == false) {
+										pulseWidth += value;
+									} else {
+										pulseWidth = value;
+									}
+								}
+								break;
+							}
+							default: {
+								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
+							}
+						}
+					}
+				}
+			}
+		}
+
+		//------------------------------------------------------------------------------------------
+		// Relative timepos in Generator.
+		final float periodLengthInFrames;
+		// Pos in Periode.
+		float periodPosition;
+
+		if (Float.isNaN(signalFrequency) == false) {
+			// Length of a Period in Frames.
+			periodLengthInFrames = (float)/*Math.floor*/(this.getSoundFrameRate() / signalFrequency);
+			periodPosition = (float)(framePosition / periodLengthInFrames);
+		} else {
+			periodLengthInFrames = 1.0F;
+			periodPosition = 0.0F;
+		}
+
+		if (Float.isNaN(signalIIFreq) == false) {
+			periodPosition += signalIIFreq;
+		}
+
+		// signalAmplitude is not defined?
+		if (Float.isNaN(signalAmplitude) == true) {
+			// Use default value.
+			signalAmplitude = 1.0F;
+		}
+
+		// signalShift is not defined?
+		if (Float.isNaN(signalShift) == true) {
+			// Use default value.
+			signalShift = 0.0F;
+		}
+
+		// pulseWidth is not defined?
+		if (Float.isNaN(pulseWidth) == true) {
+			// Use default value.
+			pulseWidth = 1.0F;
+		}
+
+		//------------------------------------------------------------------------------------------
+		final float fadeValue = calcPeriodFadeValue(this.getStartTimePos(), this.getEndTimePos(),
+				this.getSoundFrameRate(), frameTime, periodLengthInFrames);
+
+		float value;
+
+		float posInPeriod = ((periodPosition + signalShift) % 1.0F);
+
+		if (posInPeriod <= pulseWidth) {
+			if (pulseWidth > 0.0F) {
+				float d = posInPeriod / pulseWidth;
+				value = 1.0F - d * 2.0F;
+			} else {
+				value = 1.0F;
+			}
+		} else {
+			value = -1.0F;
+		}
+
+		soundSample.setStereoValues(value * signalAmplitude * fadeValue,
+		                            value * signalAmplitude * fadeValue);
+
+		//==========================================================================================
+	}
+
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */

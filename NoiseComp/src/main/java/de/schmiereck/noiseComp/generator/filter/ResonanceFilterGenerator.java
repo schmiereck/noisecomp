@@ -54,6 +54,7 @@ extends Generator {
 									 final ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
+		// TODO Store the data in the last SoundSample to use it to generate this new SoundSample (see SinusSoundSample).
 		final ResonanceFilterGeneratorData data = (ResonanceFilterGeneratorData)generatorBuffer.getGeneratorData();
 		
 		//==========================================================================================

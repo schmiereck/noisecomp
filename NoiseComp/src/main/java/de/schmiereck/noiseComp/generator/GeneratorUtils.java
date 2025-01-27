@@ -1,8 +1,8 @@
 package de.schmiereck.noiseComp.generator;
 
-public abstract class GenratorUtils {
+public abstract class GeneratorUtils {
 
-    private GenratorUtils() {
+    private GeneratorUtils() {
     }
 
     public static float calcPeriodFadeValue(final float generatorStartTimePos, final float generatorEndTimePos,

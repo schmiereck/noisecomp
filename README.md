@@ -15,6 +15,7 @@ With a graphically editor one can connect the inputs and outputs of sound genera
   - Equalizer
   - Compressor
   - Limiter
+  - BitDepth
   - NoiseGate
   - Phaser
   - Flanger

@@ -54,7 +54,7 @@ implements GeneratorBufferInterface,
 	private Generator generator = null;
 
 	/**
-	 * <code>true</code> (default) if {@link #bufSoundSamples} is not compleately calculated. 
+	 * <code>true</code> (default) if {@link #bufSoundSamples} is not completely calculated.
 	 */
 	private boolean bufferIsDirty = true;
 	
@@ -524,8 +524,9 @@ implements GeneratorBufferInterface,
 			if (bufInputSoundSample == null)
 			{
 				//SoundSample bufInputSoundSample = this.generator.generateFrameSample(framePosition, parentModuleGenerator, generatorBuffer);
-				bufInputSoundSample = new SoundSample();
-				
+				//bufInputSoundSample = new SoundSample();
+				bufInputSoundSample = this.generator.createSoundSample();
+
 				this.generator.calculateSoundSample(framePosition, 
 				                                    frameTime, 
 				                                    bufInputSoundSample, 

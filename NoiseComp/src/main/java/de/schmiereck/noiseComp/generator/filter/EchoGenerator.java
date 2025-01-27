@@ -20,8 +20,7 @@ import static de.schmiereck.noiseComp.service.StartupService.FILTER_GENERATOR_FO
  * @version <p>21.11.2010:	created, smk</p>
  */
 public class EchoGenerator
-extends Generator
-{
+extends Generator {
 	//**********************************************************************************************
 	// Constants:
 
@@ -47,18 +46,17 @@ extends Generator
 	 * @param generatorTypeInfoData
 	 * 			is the Generator-Type Data.
 	 */
-	public EchoGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
-	{
+	public EchoGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData) {
 		super(name, frameRate, generatorTypeInfoData);
 	}
 
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample soundSample, ModuleGenerator parentModuleGenerator,
+	public void calculateSoundSample(long framePosition, float frameTime,
+									 SoundSample soundSample, ModuleGenerator parentModuleGenerator,
                                      GeneratorBufferInterface generatorBuffer,
-                                     ModuleArguments moduleArguments)
-	{
+                                     ModuleArguments moduleArguments) {
 		//==========================================================================================
 		int echos;
 		float delay;
@@ -68,8 +66,7 @@ extends Generator
 		{
 			InputData echosInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ECHOS));
 			
-			if (echosInputData != null)
-			{
+			if (echosInputData != null) {
 				float echosValue = 
 					this.calcInputMonoValue(framePosition, 
 					                        frameTime,
@@ -78,17 +75,12 @@ extends Generator
 					                        generatorBuffer,
 				                            moduleArguments);
 					
-				if (Float.isNaN(echosValue) == false)
-				{
+				if (Float.isNaN(echosValue) == false) {
 					echos = (int)Math.round(echosValue);
-				}
-				else
-				{
+				} else {
 					echos = 0;
 				}
-			}
-			else
-			{
+			} else {
 				echos = 0;
 			}
 		}
@@ -96,8 +88,7 @@ extends Generator
 		{
 			InputData delayInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_DELAY));
 			
-			if (delayInputData != null)
-			{
+			if (delayInputData != null) {
 				float delayValue = 
 					this.calcInputMonoValue(framePosition, 
 					                        frameTime,
@@ -106,17 +97,12 @@ extends Generator
 					                        generatorBuffer,
 				                            moduleArguments);
 					
-				if (Float.isNaN(delayValue) == false)
-				{
+				if (Float.isNaN(delayValue) == false) {
 					delay = delayValue;
-				}
-				else
-				{
+				} else {
 					delay = 0.0F;
 				}
-			}
-			else
-			{
+			} else {
 				delay = 0.0F;
 			}
 		}
@@ -124,8 +110,7 @@ extends Generator
 		{
 			InputData decayInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_DECAY));
 			
-			if (decayInputData != null)
-			{
+			if (decayInputData != null) {
 				float decayValue = 
 					this.calcInputMonoValue(framePosition, 
 					                        frameTime,
@@ -134,17 +119,12 @@ extends Generator
 					                        generatorBuffer,
 				                            moduleArguments);
 					
-				if (Float.isNaN(decayValue) == false)
-				{
+				if (Float.isNaN(decayValue) == false) {
 					decay = decayValue;
-				}
-				else
-				{
+				} else {
 					decay = 0.0F;
 				}
-			}
-			else
-			{
+			} else {
 				decay = 0.0F;
 			}
 		}
@@ -156,10 +136,8 @@ extends Generator
 		
 		float soundFrameRate = this.getSoundFrameRate();
 		
-		if (signalInputData != null)
-		{
-			for (int echoPos = 0; echoPos <= echos; echoPos++)
-			{
+		if (signalInputData != null) {
+			for (int echoPos = 0; echoPos <= echos; echoPos++) {
 				SoundSample signalSample = new SoundSample();
 				
 				float delayTime = (echoPos * delay);
@@ -178,26 +156,21 @@ extends Generator
 				
 				float decayValue;
 				
-				if (echoPos == 0)
-				{
+				if (echoPos == 0) {
 					decayValue = 1.0F;
-				}
-				else
-				{
+				} else {
 					decayValue = (decay / echoPos);
 				}
 				
 				float leftValue = signalSample.getLeftValue();
 				
-				if (Float.isNaN(leftValue) == false)
-				{
+				if (Float.isNaN(leftValue) == false) {
 					left += (leftValue * decayValue);
 				}
 			
 				float rightValue = signalSample.getRightValue();
 				
-				if (Float.isNaN(rightValue) == false)
-				{
+				if (Float.isNaN(rightValue) == false) {
 					right += (rightValue * decayValue);
 				}
 			}
@@ -209,8 +182,7 @@ extends Generator
 		//==========================================================================================
 	}
 
-	public static GeneratorTypeInfoData createGeneratorTypeData()
-	{
+	public static GeneratorTypeInfoData createGeneratorTypeData() {
 		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(FILTER_GENERATOR_FOLDER_PATH, EchoGenerator.class, "echo", "Echo Generator.");
 		
 		{

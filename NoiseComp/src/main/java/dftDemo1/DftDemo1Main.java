@@ -21,7 +21,8 @@ class DftDemo1Main {
             //----------------------------------------------------------------------------------------------------------
             // Load the WAV file
             //File wavFile = new File(DftDemo1Main.class.getResource("/16.wav").getFile());
-            File wavFile = new File(DftDemo1Main.class.getResource("/soundcamp.org/tag/tuned-kick-drums/00s-studio-hip-hop-kickdrum-a-sharp-key-39-qKp.wav").getFile());
+            //File wavFile = new File(DftDemo1Main.class.getResource("/soundcamp.org/tag/tuned-kick-drums/00s-studio-hip-hop-kickdrum-a-sharp-key-39-qKp.wav").getFile());
+            File wavFile = new File(DftDemo1Main.class.getResource("/de/schmiereck/noiseComp/drums-kick01-mono.wav").getFile());
 
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(wavFile);
             AudioFormat format = audioInputStream.getFormat();

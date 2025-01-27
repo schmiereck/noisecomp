@@ -40,7 +40,7 @@ implements GeneratorInterface,
 	private float endTimePos = 1.0F;
 	
 	/**
-	 * Is the Frame rate of the outgoing sound.
+	 * Is the Frame rate of the outgoing sound (Sample-Rate).
 	 */
 	private float soundFrameRate;
 	
@@ -193,7 +193,7 @@ implements GeneratorInterface,
 		
 		if (this.checkIsInTime(frameTime)) {
 			//--------------------------------------------------------------------------------------
-			soundSample = new SoundSample();
+			soundSample = this.createSoundSample();
 
 			this.calculateSoundSample(framePosition, frameTime, soundSample, parentModuleGenerator, 
 			                          generatorBuffer,
@@ -225,6 +225,10 @@ implements GeneratorInterface,
 		}
 		//==========================================================================================
 		return ret;
+	}
+
+	public SoundSample createSoundSample() {
+		return new SoundSample();
 	}
 	
 	/**

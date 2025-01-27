@@ -6,8 +6,9 @@ package de.schmiereck.noiseComp.generator.signal;
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
 
-import static de.schmiereck.noiseComp.generator.GenratorUtils.calcPeriodFadeValue;
-import static de.schmiereck.noiseComp.service.StartupService.SHAPE_GENERATOR_FOLDER_PATH;
+import java.util.Objects;
+
+import static de.schmiereck.noiseComp.generator.GeneratorUtils.calcPeriodFadeValue;
 import static de.schmiereck.noiseComp.service.StartupService.SIGNAL_GENERATOR_FOLDER_PATH;
 
 /**
@@ -38,8 +39,7 @@ Absenken und Ausklingen zu Null.
  * @version <p>09.04.2005:	created, smk</p>
  */
 public class ASRPulseGenerator
-extends Generator
-{
+extends Generator {
 	public static final int	INPUT_TYPE_FREQ			= 1;
 	public static final int	INPUT_TYPE_AMPL			= 2;
 	public static final int	INPUT_TYPE_ATTACK_TIME	= 3;
@@ -51,20 +51,30 @@ extends Generator
 	 * 
 	 * @param frameRate	Frames per Second
 	 */
-	public ASRPulseGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
-	{
+	public ASRPulseGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData) {
 		super(name, frameRate, generatorTypeInfoData);
+	}
+
+	/**
+	 * Funktion zur Generierung des SoundSample im Generator,
+	 * so das zusätzliche Informationen (z.B. die Phase) in den SoundSample geschrieben werden können.
+	 */
+	public SoundSample createSoundSample() {
+		return new OscillatorSoundSample();
 	}
 
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, 
-	                                 SoundSample soundSample,
-	                                 ModuleGenerator parentModuleGenerator,
-	                                 GeneratorBufferInterface generatorBuffer,
-	                                 ModuleArguments moduleArguments)
-	{
+	public void calculateSoundSample(final long framePosition, final float frameTime,
+									 final SoundSample soundSample,
+									 final ModuleGenerator parentModuleGenerator,
+									 final GeneratorBufferInterface generatorBuffer,
+									 final ModuleArguments moduleArguments) {
+		//==========================================================================================
+		final OscillatorSoundSample oscillatorSoundSample = (OscillatorSoundSample) soundSample;
+
+		//==========================================================================================
 		//----------------------------------------------------------------------
 		float signalFrequency;
 //		try
@@ -144,33 +154,52 @@ extends Generator
 //		{
 //			releaseTime = 0.0F;
 //		}
-		//----------------------------------------------------------------------
+		//---------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
-		
-		
+
+		// https://chatgpt.com/c/67972cde-b54c-8013-889a-e739689095d8
+
+		final float sampleRate = this.getSoundFrameRate();
+
+		final long previousFramePosition = framePosition - 1L;
+		final float previousFrameTime = previousFramePosition / this.getSoundFrameRate();
+
+		final OscillatorSoundSample previousOscillatorSoundSample = (OscillatorSoundSample)
+				generatorBuffer.calcFrameSample(previousFramePosition, previousFrameTime, parentModuleGenerator, moduleArguments);
+
+		// Delta-Time between two Samples.
+		final float deltaT = 1.0F / sampleRate;
+
+		// Calculate actual Phase (integrated) based on the previous Phase (read from previous Sample).
+		final float previousPhase = Objects.nonNull(previousOscillatorSoundSample) ? previousOscillatorSoundSample.getPhase() : 0.0F;
+		final float actualPhase = (previousPhase + (signalFrequency * deltaT)) % 1.0F;
+
+		// output = Math.sin(TWO_PI * actualPhase);
+
+		// Length of a Period in Frames.
+		final float periodLengthInFrames = (sampleRate / signalFrequency);
+		//periodPosition = (framePosition / periodLengthInFrames);
+
 		// Länge einer Sinus-Periode in Frames.
-		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency);
+		//float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency);
 		
 		// Die Position im Puls in Prozent als Wert zwischen 0.0 und 1.0.
-		float	periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
+		//float periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
 
+		//---------------------------------------------------------------------
 		float value;
 		
-		float ppos = periodPosition % 1.0F;
-		
+		//float ppos = periodPosition % 1.0F;
+		float ppos = actualPhase % 1.0F;
+
 		// After Attack + Sustain + Release ?
-		if (ppos > (attackTime + sustainTime + releaseTime))
-		{
+		if (ppos > (attackTime + sustainTime + releaseTime)) {
 			// Between pulses:
-			
 			value = 0;
-		}
-		else
-		{
+		} else {
 			// After: Attack + Sustain ?
-			if (ppos > (attackTime + sustainTime))
-			{
+			if (ppos > (attackTime + sustainTime)) {
 				// Release:
 				
 				//   x              100%
@@ -180,22 +209,152 @@ extends Generator
 				float f = (ppos - (attackTime + sustainTime)) / releaseTime;
 				
 				value = signalAmplitude - (signalAmplitude * f);
-			}
-			else
-			{
+			} else {
 				// After Attack?
-				if (ppos > (attackTime))
-				{
+				if (ppos > (attackTime)) {
 					// Sustain:
-					
 					value = signalAmplitude;
-				}
-				else
-				{
+				} else {
 					// Attack:
-
 					float f = ppos / attackTime;
+					value = signalAmplitude * f;
+				}
+			}
+		}
+		final float fadeValue = calcPeriodFadeValue(this.getStartTimePos(), this.getEndTimePos(),
+				this.getSoundFrameRate(), frameTime, periodLengthInFrames);
 
+		soundSample.setStereoValues(value * fadeValue, value * fadeValue);
+		oscillatorSoundSample.setPhase(actualPhase);
+	}
+	
+
+	/* (non-Javadoc)
+	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
+	 */
+	public void calculateSoundSample_old(final long framePosition, final float frameTime,
+									 final SoundSample soundSample,
+									 final ModuleGenerator parentModuleGenerator,
+									 final GeneratorBufferInterface generatorBuffer,
+									 final ModuleArguments moduleArguments) {
+		//----------------------------------------------------------------------
+		float signalFrequency;
+//		try
+//		{
+			signalFrequency = this.calcInputMonoValue(framePosition,
+			                                          frameTime,
+			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ),
+			                                          parentModuleGenerator,
+			                                          generatorBuffer,
+			                                          moduleArguments);
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalFrequency = 0.0F;
+//		}
+
+		//----------------------------------------------------------------------
+		float signalAmplitude;
+//		try
+//		{
+			// Amplitude des gerade generierten Sinus-Siganls.
+			signalAmplitude = this.calcInputMonoValue(framePosition,
+			                                          frameTime,
+			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL),
+			                                          parentModuleGenerator,
+			                                          generatorBuffer,
+			        	                              moduleArguments);
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			signalAmplitude = 0.0F;
+//		}
+
+		//----------------------------------------------------------------------
+		float attackTime;
+//		try
+//		{
+			attackTime = this.calcInputMonoValue(framePosition,
+			                                     frameTime,
+			                                     this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ATTACK_TIME),
+			                                     parentModuleGenerator,
+			                                     generatorBuffer,
+		        	                             moduleArguments);
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			attackTime = 0.0F;
+//		}
+		//----------------------------------------------------------------------
+		float sustainTime;
+//		try
+//		{
+			sustainTime = this.calcInputMonoValue(framePosition,
+		                                          frameTime,
+			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SUSTAIN_TIME),
+			                                      parentModuleGenerator,
+			                                      generatorBuffer,
+		        	                              moduleArguments);
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			sustainTime = 0.0F;
+//		}
+		//----------------------------------------------------------------------
+		float releaseTime;
+//		try
+//		{
+			releaseTime = this.calcInputMonoValue(framePosition,
+		                                          frameTime,
+			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_RELEASE_TIME),
+			                                      parentModuleGenerator,
+			                                      generatorBuffer,
+		        	                              moduleArguments);
+
+//		}
+//		catch (NoInputSignalException ex)
+//		{
+//			releaseTime = 0.0F;
+//		}
+		//----------------------------------------------------------------------
+		// Relativer Zeitpunkt im Generator.
+		//float timePos = frameTime - (this.getStartTimePos());
+
+
+		// Länge einer Sinus-Periode in Frames.
+		float periodLengthInFrames = (float)Math.floor(this.getSoundFrameRate() / signalFrequency);
+
+		// Die Position im Puls in Prozent als Wert zwischen 0.0 und 1.0.
+		float periodPosition = (float) (framePosition) / (float)periodLengthInFrames;
+
+		float value;
+
+		float ppos = periodPosition % 1.0F;
+
+		// After Attack + Sustain + Release ?
+		if (ppos > (attackTime + sustainTime + releaseTime)) {
+			// Between pulses:
+			value = 0;
+		} else {
+			// After: Attack + Sustain ?
+			if (ppos > (attackTime + sustainTime)) {
+				// Release:
+
+				//   x              100%
+				// ------------- = ------
+				//  releaseTime     1.0
+
+				float f = (ppos - (attackTime + sustainTime)) / releaseTime;
+
+				value = signalAmplitude - (signalAmplitude * f);
+			} else {
+				// After Attack?
+				if (ppos > (attackTime)) {
+					// Sustain:
+					value = signalAmplitude;
+				} else {
+					// Attack:
+					float f = ppos / attackTime;
 					value = signalAmplitude * f;
 				}
 			}
@@ -205,7 +364,7 @@ extends Generator
 
 		soundSample.setStereoValues(value * fadeValue, value * fadeValue);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
