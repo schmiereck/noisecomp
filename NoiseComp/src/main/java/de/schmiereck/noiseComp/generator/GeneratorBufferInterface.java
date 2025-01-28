@@ -47,6 +47,22 @@ public interface GeneratorBufferInterface
 	                            ModuleArguments moduleArguments);
 
 	/**
+	 * @param framePosition
+	 * 			is the frame position.
+	 * @param frameTime
+	 * 			is the absolute time of the frame in milli seconds.
+	 * @param parentModuleGenerator
+	 * 			is the parent module generator.
+	 * @return
+	 * 			the bufSoundSample.<br/>
+	 * 			<code>null</code> if time is out of generator time.
+	 */
+	SoundSample retrieveFrameSample(long framePosition,
+								   float frameTime,
+								   ModuleGenerator parentModuleGenerator,
+								   ModuleArguments moduleArguments);
+
+	/**
 	 * @param inputData
 	 * 			is the input data.
 	 * @return

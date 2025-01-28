@@ -5,6 +5,9 @@ package de.schmiereck.noiseComp.generator.filter;
 
 import de.schmiereck.noiseComp.generator.*;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
+import de.schmiereck.noiseComp.generator.signal.OscillatorSoundSample;
+
+import java.util.Objects;
 
 import static de.schmiereck.noiseComp.service.StartupService.FILTER_GENERATOR_FOLDER_PATH;
 
@@ -38,65 +41,112 @@ extends Generator
 	 * @param frameRate	
 	 * 			are the Frames per Second.
 	 */
-	public LowpassFilterGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData)
-	{
+	public LowpassFilterGenerator(String name, Float frameRate, GeneratorTypeInfoData generatorTypeInfoData) {
 		super(name, frameRate, generatorTypeInfoData);
+	}
+
+	/**
+	 * Funktion zur Generierung des SoundSample im Generator,
+	 * so das zusätzliche Informationen (z.B. die Phase) in den SoundSample geschrieben werden können.
+	 */
+	public SoundSample createSoundSample() {
+		//return new LowpassFilterSoundSample(new LowpassFilterGeneratorData(new double[3], new double[3]));
+		return new LowpassFilterSoundSample();
 	}
 
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#calculateSoundSample(long, float, de.schmiereck.noiseComp.generator.SoundSample, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
-	public void calculateSoundSample(long framePosition, float frameTime, SoundSample signalSample, ModuleGenerator parentModuleGenerator,
-									 GeneratorBufferInterface generatorBuffer,
-									 ModuleArguments moduleArguments)
-	{
+	public void calculateSoundSample(final long framePosition, final float frameTime,
+									 final SoundSample soundSample,
+									 final ModuleGenerator parentModuleGenerator,
+									 final GeneratorBufferInterface generatorBuffer,
+									 final ModuleArguments moduleArguments) {
 		//==========================================================================================
-		final LowpassFilterGeneratorData data = (LowpassFilterGeneratorData)generatorBuffer.getGeneratorData();
-		
+		final LowpassFilterSoundSample lowpassFilterSoundSample = (LowpassFilterSoundSample) soundSample;
+
+		final LowpassFilterGeneratorData lowpassFilterData = (LowpassFilterGeneratorData)generatorBuffer.getGeneratorData();
+
+		float cutoff = Float.NaN;
+
 		//==========================================================================================
-		InputData signalInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
-		
-		if (signalInputData != null)
-		{
-			this.calcInputValue(framePosition, 
-	                            frameTime,
-			                    signalInputData, 
-			                    signalSample, 
-			                    parentModuleGenerator, 
-			                    generatorBuffer,
-	                            moduleArguments);
+		final Object inputsSyncObject = this.getInputsSyncObject();
+
+		if (Objects.nonNull(inputsSyncObject)) {
+			synchronized (inputsSyncObject) {
+				final InputData signalInputData =
+						this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+
+				if (signalInputData != null) {
+					this.calcInputValue(framePosition,
+							frameTime,
+							signalInputData,
+							soundSample,
+							parentModuleGenerator,
+							generatorBuffer,
+							moduleArguments);
+				}
+				//------------------------------------------------------------------------------------------
+				cutoff =
+						this.calcInputMonoValueSumByInputType(framePosition,
+								frameTime,
+								this.getGeneratorTypeData().getInputTypeData(INPUT_CUTOFF),
+								parentModuleGenerator,
+								generatorBuffer,
+								moduleArguments);
+			}
+		}
+		//==========================================================================================
+		final float soundFrameRate = this.getSoundFrameRate();
+		final float sampleRate = this.getSoundFrameRate();
+
+		final long previousFramePosition = framePosition - 1L;
+		final float previousFrameTime = previousFramePosition / sampleRate;
+
+		final LowpassFilterSoundSample previousSoundSample = (LowpassFilterSoundSample)
+				//generatorBuffer.calcFrameSample(previousFramePosition, previousFrameTime, parentModuleGenerator, moduleArguments);
+				generatorBuffer.retrieveFrameSample(previousFramePosition, previousFrameTime, parentModuleGenerator, moduleArguments);
+
+		final LowpassFilterGeneratorData previousLowpassFilterData;
+
+		if (Objects.nonNull(previousSoundSample)) {
+			previousLowpassFilterData = previousSoundSample.getData();
+		} else {
+			previousLowpassFilterData = null;
+		}
+
+		final LowpassFilterGeneratorData actualLowpassFilterData;
+
+		if (Objects.nonNull(previousLowpassFilterData)) {
+			actualLowpassFilterData = new LowpassFilterGeneratorData(previousLowpassFilterData);
+		} else {
+			actualLowpassFilterData = new LowpassFilterGeneratorData();
 		}
 		//------------------------------------------------------------------------------------------
-		float cutoff = 
-			this.calcSingleInputMonoValueByInputType(framePosition,
-			                        frameTime,
-			                        this.getGeneratorTypeData().getInputTypeData(INPUT_CUTOFF), 
-			                        parentModuleGenerator,
-			                        generatorBuffer,
-			                        moduleArguments);
+		//double ax[] = new double[3];
+		//double by[] = new double[3];
 
-		//------------------------------------------------------------------------------------------
-		float soundFrameRate = this.getSoundFrameRate();
-		
-		double ax[] = new double[3];
-		double by[] = new double[3];
-
-		this.calcLPCoefficientsButterworth2Pole(data, (int)soundFrameRate, cutoff, ax, by);
-
-		float value = signalSample.getMonoValue();
-		
-		if (Float.isNaN(value) == false)
-		{
-			value = (float)this.filter(data, ax, by, value);
+		if (lowpassFilterData.cutoff != cutoff) {
+			lowpassFilterData.cutoff = cutoff;
+			//this.calcLPCoefficientsButterworth2Pole(lowpassFilterData, (int)soundFrameRate, lowpassFilterData.cutoff);
+			this.calcLPCoefficientsButterworth2Pole(actualLowpassFilterData, (int)soundFrameRate, lowpassFilterData.cutoff);
 		}
-		else
-		{
+
+		//this.calcLPCoefficientsButterworth2Pole(lowpassFilterData, (int)soundFrameRate, cutoff, ax, by);
+
+		float value = soundSample.getMonoValue();
+		
+		if (Float.isNaN(value) == false) {
+			//value = (float)this.filter(lowpassFilterData, value);
+			value = (float)this.filter(actualLowpassFilterData, value);
+		} else {
 			value = Float.NaN;
 		}
 		
-		signalSample.setMonoValue(value);
-		
-//		float leftValue = signalSample.getLeftValue();
+		soundSample.setMonoValue(value);
+		lowpassFilterSoundSample.setData(actualLowpassFilterData);
+
+//		float leftValue = soundSample.getLeftValue();
 //		
 //		if (Float.isNaN(leftValue) == false)
 //		{
@@ -107,56 +157,46 @@ extends Generator
 //			leftValue = Float.NaN;
 //		}
 //		
-//		signalSample.setStereoValues(leftValue, rightValue);
+//		soundSample.setStereoValues(leftValue, rightValue);
 		//==========================================================================================
 	}
 
 	void calcLPCoefficientsButterworth2Pole(final LowpassFilterGeneratorData data,
 	                                        final int samplerate, 
-	                                        final double cutoff, 
-	                                        final double ax[], 
-	                                        final double by[])
-	{
+	                                        final double cutoff) {
 		//==========================================================================================
 	    // Find cutoff frequency in [0..PI]
-	    double qcRaw  = (2 * Math.PI * cutoff) / samplerate;
+	    final double qcRaw  = (2.0D * Math.PI * cutoff) / samplerate;
 	    // Warp cutoff frequency
-	    double qcWarp = Math.tan(qcRaw); 
+		final double qcWarp = Math.tan(qcRaw);
 
-	    double gain = 1 / ( 1 + sqrt2 / qcWarp + 2 / (qcWarp * qcWarp));
+		final double gain = 1.0D / (1.0D + sqrt2 / qcWarp + 2.0D / (qcWarp * qcWarp));
 	    
-	    by[2] = (1 - sqrt2 / qcWarp + 2 / (qcWarp * qcWarp)) * gain;
-	    by[1] = (2 - 2 * 2 / (qcWarp * qcWarp)) * gain;
-	    by[0] = 1;
-	    ax[0] = 1 * gain;
-	    ax[1] = 2 * gain;
-	    ax[2] = 1 * gain;
+	    data.by[2] = (1.0D - sqrt2 / qcWarp + 2.0D / (qcWarp * qcWarp)) * gain;
+		data.by[1] = (2.0D - 2.0D * 2.0D / (qcWarp * qcWarp)) * gain;
+		data.by[0] = 1.0D;
+		data.ax[0] = 1.0D * gain;
+		data.ax[1] = 2.0D * gain;
+		data.ax[2] = 1.0D * gain;
 	    
 		//==========================================================================================
 	}
 
 	void filter(final LowpassFilterGeneratorData data,
-                final double samples[], int count)
-	{
+                final double samples[], int count) {
 		//==========================================================================================
-		double ax[] = new double[3];
-		double by[] = new double[3];
+		this.calcLPCoefficientsButterworth2Pole(data, 44100, 5000);
 
-		this.calcLPCoefficientsButterworth2Pole(data, 44100, 5000, ax, by);
-
-		for (int i = 0; i < count; i++)
-		{
-			double sample = this.filter(data, ax, by, samples[i]);
+		for (int samplePos = 0; samplePos < count; samplePos++) {
+			double sample = this.filter(data, samples[samplePos]);
 			
-			samples[i] = sample;
+			samples[samplePos] = sample;
 		}
 		//==========================================================================================
 	}
 	
 	private double filter(final LowpassFilterGeneratorData data,
-	                      double ax[], double by[],
-	                      final double sample)
-	{
+	                      final double sample) {
 		//==========================================================================================
 		data.xv[2] = data.xv[1]; 
 		data.xv[1] = data.xv[0];
@@ -164,11 +204,11 @@ extends Generator
 		
 		data.yv[2] = data.yv[1]; 
 		data.yv[1] = data.yv[0];
-		data.yv[0] = (ax[0] * data.xv[0] + 
-				 ax[1] * data.xv[1] + 
-				 ax[2] * data.xv[2] - 
-    		     by[1] * data.yv[0] - 
-    		     by[2] * data.yv[1]);
+		data.yv[0] = (data.ax[0] * data.xv[0] +
+				data.ax[1] * data.xv[1] +
+				data.ax[2] * data.xv[2] -
+				data.by[1] * data.yv[0] -
+				data.by[2] * data.yv[1]);
 		
 		//==========================================================================================
 		return data.yv[0];
@@ -186,8 +226,7 @@ extends Generator
 	/* (non-Javadoc)
 	 * @see de.schmiereck.noiseComp.generator.Generator#createGeneratorTypeData()
 	 */
-	public static GeneratorTypeInfoData createGeneratorTypeData()
-	{
+	public static GeneratorTypeInfoData createGeneratorTypeData() {
 		//==========================================================================================
 		GeneratorTypeInfoData generatorTypeInfoData = new GeneratorTypeInfoData(FILTER_GENERATOR_FOLDER_PATH, LowpassFilterGenerator.class, "Lowpass", "Lowpass filter (Cutoff).");
 		

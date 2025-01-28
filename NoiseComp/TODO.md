@@ -1,6 +1,8 @@
 
+TODO Wave Export
+
 SinusGenerator
-    TODO use SinusSoundSample
+    DONE use SinusSoundSample
 
 ResonanceFilterGenerator
-    TODO Store the data in the last SoundSample to use it to generate this new SoundSample (see SinusSoundSample).
+DONE Store the data in the last SoundSample to use it to generate this new SoundSample (see SinusSoundSample).

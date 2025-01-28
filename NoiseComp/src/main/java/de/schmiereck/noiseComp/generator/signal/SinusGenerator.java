@@ -126,7 +126,7 @@ extends Generator
 			final float sampleRate = this.getSoundFrameRate();
 
 			final long previousFramePosition = framePosition - 1L;
-			final float previousFrameTime = previousFramePosition / this.getSoundFrameRate();
+			final float previousFrameTime = previousFramePosition / sampleRate;
 
 			final OscillatorSoundSample previousOscillatorSoundSample = (OscillatorSoundSample)
 					generatorBuffer.calcFrameSample(previousFramePosition, previousFrameTime, parentModuleGenerator, moduleArguments);

@@ -509,20 +509,18 @@ implements GeneratorBufferInterface,
 	 * @see de.schmiereck.noiseComp.generator.GeneratorBufferInterface#calcFrameSample(long, float, de.schmiereck.noiseComp.generator.module.ModuleGenerator)
 	 */
 	@Override
-	public SoundSample calcFrameSample(long framePosition, 
-	                                   float frameTime,
-	                                   ModuleGenerator parentModuleGenerator,
-	                                   ModuleArguments moduleArguments)
+	public SoundSample calcFrameSample(final long framePosition,
+									   final float frameTime,
+									   final ModuleGenerator parentModuleGenerator,
+									   final ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
 		SoundSample bufInputSoundSample;
 		
-		if (this.generator.checkIsInTime(frameTime) == true)
-		{
+		if (this.generator.checkIsInTime(frameTime) == true) {
 			bufInputSoundSample = this.getBufSoundSample(framePosition);
 			
-			if (bufInputSoundSample == null)
-			{
+			if (Objects.isNull(bufInputSoundSample)) {
 				//SoundSample bufInputSoundSample = this.generator.generateFrameSample(framePosition, parentModuleGenerator, generatorBuffer);
 				//bufInputSoundSample = new SoundSample();
 				bufInputSoundSample = this.generator.createSoundSample();
@@ -537,9 +535,25 @@ implements GeneratorBufferInterface,
 				this.setBufSoundSample(framePosition,
 				                       bufInputSoundSample);
 			}
+		} else {
+			bufInputSoundSample = null;
 		}
-		else
-		{
+		//==========================================================================================
+		return bufInputSoundSample;
+	}
+
+	@Override
+	public SoundSample retrieveFrameSample(final long framePosition,
+									       final float frameTime,
+									       final ModuleGenerator parentModuleGenerator,
+									       final ModuleArguments moduleArguments)
+	{
+		//==========================================================================================
+		SoundSample bufInputSoundSample;
+
+		if (this.generator.checkIsInTime(frameTime) == true) {
+			bufInputSoundSample = this.getBufSoundSample(framePosition);
+		} else {
 			bufInputSoundSample = null;
 		}
 		//==========================================================================================
