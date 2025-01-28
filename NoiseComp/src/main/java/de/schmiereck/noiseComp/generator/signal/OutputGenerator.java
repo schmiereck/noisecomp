@@ -52,7 +52,7 @@ extends Generator
 	                                 ModuleArguments moduleArguments)
 	{
 		//==========================================================================================
-		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		InputData signalInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
 		if (signalInputData != null)
 		{

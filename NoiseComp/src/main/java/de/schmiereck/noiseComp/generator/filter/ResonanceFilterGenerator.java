@@ -58,7 +58,7 @@ extends Generator {
 		final ResonanceFilterGeneratorData data = (ResonanceFilterGeneratorData)generatorBuffer.getGeneratorData();
 		
 		//==========================================================================================
-		final InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		final InputData signalInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
 		if (signalInputData != null) {
 			this.calcInputValue(framePosition, 
@@ -71,7 +71,7 @@ extends Generator {
 		}
 		//------------------------------------------------------------------------------------------
 		final float cutoff =
-			this.calcInputMonoValue(framePosition, 
+			this.calcSingleInputMonoValueByInputType(framePosition,
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_CUTOFF), 
 			                        parentModuleGenerator,
@@ -80,7 +80,7 @@ extends Generator {
 
 		//------------------------------------------------------------------------------------------
 		final float resonance =
-			this.calcInputMonoValue(framePosition, 
+			this.calcSingleInputMonoValueByInputType(framePosition,
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_RESONANCE), 
 			                        parentModuleGenerator,
@@ -89,7 +89,7 @@ extends Generator {
 
 		//------------------------------------------------------------------------------------------
 		final float amp =
-			this.calcInputMonoValue(framePosition, 
+			this.calcSingleInputMonoValueByInputType(framePosition,
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_AMP), 
 			                        parentModuleGenerator,

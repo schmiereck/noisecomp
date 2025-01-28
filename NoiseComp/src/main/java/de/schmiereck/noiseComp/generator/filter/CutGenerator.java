@@ -46,7 +46,7 @@ extends Generator
 	{
 		//==========================================================================================
 		float maxValue = 
-			this.calcInputMonoValue(framePosition, 
+			this.calcSingleInputMonoValueByInputType(framePosition,
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MAX_AMPL), 
 			                        parentModuleGenerator,
@@ -54,7 +54,7 @@ extends Generator
 			                        moduleArguments);
 		//------------------------------------------------------------------------------------------
 		float minValue = 
-			this.calcInputMonoValue(framePosition, 
+			this.calcSingleInputMonoValueByInputType(framePosition,
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_MIN_AMPL), 
 			                        parentModuleGenerator,
@@ -62,7 +62,7 @@ extends Generator
 			                        moduleArguments);
 
 		//------------------------------------------------------------------------------------------
-		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		InputData signalInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		if (signalInputData != null)
 		{
 			this.calcInputValue(framePosition, 

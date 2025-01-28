@@ -51,7 +51,7 @@ public class SallenKeyFilterGenerator
         //final ResonanceFilterGeneratorData data = (ResonanceFilterGeneratorData) generatorBuffer.getGeneratorData();
 
         //==========================================================================================
-        final InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+        final InputData signalInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 
         if (signalInputData != null) {
             this.calcInputValue(framePosition,
@@ -64,7 +64,7 @@ public class SallenKeyFilterGenerator
         }
         //------------------------------------------------------------------------------------------
         final float filter =
-                this.calcInputMonoValue(framePosition,
+                this.calcSingleInputMonoValueByInputType(framePosition,
                         frameTime,
                         this.getGeneratorTypeData().getInputTypeData(INPUT_FILTER),
                         parentModuleGenerator,

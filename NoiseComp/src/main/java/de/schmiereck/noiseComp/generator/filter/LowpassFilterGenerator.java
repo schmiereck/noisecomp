@@ -54,7 +54,7 @@ extends Generator
 		final LowpassFilterGeneratorData data = (LowpassFilterGeneratorData)generatorBuffer.getGeneratorData();
 		
 		//==========================================================================================
-		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		InputData signalInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
 		if (signalInputData != null)
 		{
@@ -68,7 +68,7 @@ extends Generator
 		}
 		//------------------------------------------------------------------------------------------
 		float cutoff = 
-			this.calcInputMonoValue(framePosition, 
+			this.calcSingleInputMonoValueByInputType(framePosition,
 			                        frameTime,
 			                        this.getGeneratorTypeData().getInputTypeData(INPUT_CUTOFF), 
 			                        parentModuleGenerator,

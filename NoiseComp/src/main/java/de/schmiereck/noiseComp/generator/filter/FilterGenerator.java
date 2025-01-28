@@ -58,7 +58,7 @@ extends Generator
 		SoundSample filterSample = new SoundSample();
 		
 		//------------------------------------------------------------------------------------------
-		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		InputData signalInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
 		if (signalInputData != null)
 		{
@@ -72,7 +72,7 @@ extends Generator
 		}
 		
 		//------------------------------------------------------------------------------------------
-		InputData filterInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FILTER));
+		InputData filterInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FILTER));
 		
 		if (filterInputData != null)
 		{

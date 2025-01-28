@@ -75,85 +75,37 @@ extends Generator {
 		final OscillatorSoundSample oscillatorSoundSample = (OscillatorSoundSample) soundSample;
 
 		//==========================================================================================
-		//----------------------------------------------------------------------
-		float signalFrequency;
-//		try
-//		{
-			signalFrequency = this.calcInputMonoValue(framePosition, 
-			                                          frameTime,
-			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ),
-			                                          parentModuleGenerator,
-			                                          generatorBuffer,
-			                                          moduleArguments);
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			signalFrequency = 0.0F;
-//		}
+		float signalFrequency = Float.NaN;
+		float signalAmplitude = Float.NaN;
+		float attackTime = Float.NaN;
+		float sustainTime = Float.NaN;
+		float releaseTime = Float.NaN;
 
-		//----------------------------------------------------------------------
-		float signalAmplitude;
-//		try
-//		{
-			// Amplitude des gerade generierten Sinus-Siganls.
-			signalAmplitude = this.calcInputMonoValue(framePosition, 
-			                                          frameTime,
-			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL), 
-			                                          parentModuleGenerator,
-			                                          generatorBuffer,
-			        	                              moduleArguments);
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			signalAmplitude = 0.0F;
-//		}
-		
-		//----------------------------------------------------------------------
-		float attackTime;
-//		try
-//		{
-			attackTime = this.calcInputMonoValue(framePosition, 
-			                                     frameTime,
-			                                     this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ATTACK_TIME), 
-			                                     parentModuleGenerator,
-			                                     generatorBuffer,
-		        	                             moduleArguments);
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			attackTime = 0.0F;
-//		}
-		//----------------------------------------------------------------------
-		float sustainTime;
-//		try
-//		{
-			sustainTime = this.calcInputMonoValue(framePosition, 
-		                                          frameTime,
-			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SUSTAIN_TIME), 
-			                                      parentModuleGenerator,
-			                                      generatorBuffer,
-		        	                              moduleArguments);
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			sustainTime = 0.0F;
-//		}
-		//----------------------------------------------------------------------
-		float releaseTime;
-//		try
-//		{
-			releaseTime = this.calcInputMonoValue(framePosition, 
-		                                          frameTime,
-			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_RELEASE_TIME), 
-			                                      parentModuleGenerator,
-			                                      generatorBuffer,
-		        	                              moduleArguments);
-		
-//		}
-//		catch (NoInputSignalException ex)
-//		{
-//			releaseTime = 0.0F;
-//		}
+		final Object inputsSyncObject = this.getInputsSyncObject();
+
+		if (Objects.nonNull(inputsSyncObject)) {
+			synchronized (inputsSyncObject) {
+				signalFrequency = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
+
+				signalAmplitude = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
+
+				attackTime = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ATTACK_TIME),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
+
+				sustainTime = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SUSTAIN_TIME),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
+
+				releaseTime = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_RELEASE_TIME),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
+			}
+		}
 		//---------------------------------------------------------------------
 		// Relativer Zeitpunkt im Generator.
 		//float timePos = frameTime - (this.getStartTimePos());
@@ -241,7 +193,7 @@ extends Generator {
 		float signalFrequency;
 //		try
 //		{
-			signalFrequency = this.calcInputMonoValue(framePosition,
+			signalFrequency = this.calcSingleInputMonoValueByInputType(framePosition,
 			                                          frameTime,
 			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ),
 			                                          parentModuleGenerator,
@@ -258,7 +210,7 @@ extends Generator {
 //		try
 //		{
 			// Amplitude des gerade generierten Sinus-Siganls.
-			signalAmplitude = this.calcInputMonoValue(framePosition,
+			signalAmplitude = this.calcSingleInputMonoValueByInputType(framePosition,
 			                                          frameTime,
 			                                          this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL),
 			                                          parentModuleGenerator,
@@ -274,7 +226,7 @@ extends Generator {
 		float attackTime;
 //		try
 //		{
-			attackTime = this.calcInputMonoValue(framePosition,
+			attackTime = this.calcSingleInputMonoValueByInputType(framePosition,
 			                                     frameTime,
 			                                     this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ATTACK_TIME),
 			                                     parentModuleGenerator,
@@ -289,7 +241,7 @@ extends Generator {
 		float sustainTime;
 //		try
 //		{
-			sustainTime = this.calcInputMonoValue(framePosition,
+			sustainTime = this.calcSingleInputMonoValueByInputType(framePosition,
 		                                          frameTime,
 			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SUSTAIN_TIME),
 			                                      parentModuleGenerator,
@@ -304,7 +256,7 @@ extends Generator {
 		float releaseTime;
 //		try
 //		{
-			releaseTime = this.calcInputMonoValue(framePosition,
+			releaseTime = this.calcSingleInputMonoValueByInputType(framePosition,
 		                                          frameTime,
 			                                      this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_RELEASE_TIME),
 			                                      parentModuleGenerator,

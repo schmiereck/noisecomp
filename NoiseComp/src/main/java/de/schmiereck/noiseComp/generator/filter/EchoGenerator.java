@@ -64,11 +64,11 @@ extends Generator {
 		
 		//------------------------------------------------------------------------------------------
 		{
-			InputData echosInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ECHOS));
+			InputData echosInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_ECHOS));
 			
 			if (echosInputData != null) {
 				float echosValue = 
-					this.calcInputMonoValue(framePosition, 
+					this.calcInputMonoValueByInputData(framePosition,
 					                        frameTime,
 					                        echosInputData, 
 					                        parentModuleGenerator,
@@ -86,11 +86,11 @@ extends Generator {
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			InputData delayInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_DELAY));
+			InputData delayInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_DELAY));
 			
 			if (delayInputData != null) {
 				float delayValue = 
-					this.calcInputMonoValue(framePosition, 
+					this.calcInputMonoValueByInputData(framePosition,
 					                        frameTime,
 					                        delayInputData, 
 					                        parentModuleGenerator,
@@ -108,11 +108,11 @@ extends Generator {
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			InputData decayInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_DECAY));
+			InputData decayInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_DECAY));
 			
 			if (decayInputData != null) {
 				float decayValue = 
-					this.calcInputMonoValue(framePosition, 
+					this.calcInputMonoValueByInputData(framePosition,
 					                        frameTime,
 					                        decayInputData, 
 					                        parentModuleGenerator,
@@ -132,7 +132,7 @@ extends Generator {
 		float left = 0.0F;
 		float right = 0.0F;
 		
-		InputData signalInputData = this.searchInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
+		InputData signalInputData = this.searchSingleInputByType(this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SIGNAL));
 		
 		float soundFrameRate = this.getSoundFrameRate();
 		

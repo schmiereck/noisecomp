@@ -2,6 +2,7 @@ package de.schmiereck.noiseComp.generator;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Vector;
 import de.schmiereck.noiseComp.PopupRuntimeException;
 import de.schmiereck.noiseComp.generator.module.ModuleGenerator;
@@ -419,7 +420,7 @@ implements GeneratorInterface,
 	 * Searches a input by type.<br/>
 	 * Throws a {@link RuntimeException} if there is more than one input of this type.
 	 */
-	public InputData searchInputByType(final InputTypeData inputTypeData) {
+	public InputData searchSingleInputByType(final InputTypeData inputTypeData) {
 		//==========================================================================================
 		InputData retInputData = null;
 		
@@ -731,7 +732,49 @@ implements GeneratorInterface,
 		}
 		//==========================================================================================
 	}
-	
+
+	protected float calcInputMonoValueSumByInputType(final long framePosition,
+														final float frameTime,
+														final InputTypeData inputTypeData,
+														final ModuleGenerator parentModuleGenerator,
+														final GeneratorBufferInterface generatorBuffer,
+														final ModuleArguments moduleArguments) {
+		//==========================================================================================
+		float retValue = Float.NaN;
+
+		final Iterator<InputData> inputsIterator = this.getInputsIterator();
+
+		if (Objects.nonNull(inputsIterator)) {
+			while (inputsIterator.hasNext()) {
+				final InputData inputData = inputsIterator.next();
+
+				if (inputData.getInputTypeData().getInputType() == inputTypeData.getInputType()) {
+					final float value =
+							this.calcInputMonoValueByInputData(framePosition,
+									frameTime,
+									inputData,
+									parentModuleGenerator,
+									generatorBuffer,
+									moduleArguments);
+
+					if (Float.isNaN(value) == false) {
+						if (Float.isNaN(retValue) == false) {
+							retValue += value;
+						} else {
+							retValue = value;
+						}
+					}
+
+				}
+			}
+		}
+		if (Float.isNaN(retValue) == true) {
+			retValue = this.getInputDefaultValueByInputType(inputTypeData);
+		}
+		//==========================================================================================
+		return retValue;
+	}
+
 	/**
 	 * @param framePosition
 	 * 			is the absolute position of the frame in the complete line to play.<br/>
@@ -748,24 +791,24 @@ implements GeneratorInterface,
 	 * 			the default value.<br/>
 	 * 			{@link Float#NaN} if no default input defined.
 	 */
-	protected float calcInputMonoValue(final long framePosition,
-									   final float frameTime,
-									   final InputTypeData inputTypeData,
-									   final ModuleGenerator parentModuleGenerator,
-									   final GeneratorBufferInterface generatorBuffer,
-									   final ModuleArguments moduleArguments) {
+	protected float calcSingleInputMonoValueByInputType(final long framePosition,
+														final float frameTime,
+														final InputTypeData inputTypeData,
+														final ModuleGenerator parentModuleGenerator,
+														final GeneratorBufferInterface generatorBuffer,
+														final ModuleArguments moduleArguments) {
 		//==========================================================================================
 		final float value;
 
-		final InputData inputData = this.searchInputByType(inputTypeData);
+		final InputData inputData = this.searchSingleInputByType(inputTypeData);
 		
 		if (inputData != null) {
-			value = this.calcInputMonoValue(framePosition, 
-			                                frameTime,
-			                                inputData, 
-			                                parentModuleGenerator,
-			                                generatorBuffer,
-			                                moduleArguments);
+			value = this.calcInputMonoValueByInputData(framePosition,
+			                                	  frameTime,
+					                        	  inputData,
+			                                	  parentModuleGenerator,
+			                                	  generatorBuffer,
+			                                	  moduleArguments);
 		} else {
 			//throw new RuntimeException("input type not found: " + inputType);
 			value = this.getInputDefaultValueByInputType(inputTypeData);
@@ -788,12 +831,12 @@ implements GeneratorInterface,
 	 * 			the value.<br/>
 	 * 			{@link Float#NaN} if no input signal found.
 	 */
-	protected float calcInputMonoValue(final long framePosition,
-									   final float frameTime,
-									   final InputData inputData,
-									   final ModuleGenerator parentModuleGenerator,
-									   final GeneratorBufferInterface generatorBuffer,
-									   final ModuleArguments moduleArguments) {
+	protected float calcInputMonoValueByInputData(final long framePosition,
+												  final float frameTime,
+												  final InputData inputData,
+												  final ModuleGenerator parentModuleGenerator,
+												  final GeneratorBufferInterface generatorBuffer,
+												  final ModuleArguments moduleArguments) {
 		//==========================================================================================
 		final float value;
 
@@ -827,7 +870,7 @@ implements GeneratorInterface,
 		//==========================================================================================
 		final String value;
 
-		final InputData inputData = this.searchInputByType(inputTypeData);
+		final InputData inputData = this.searchSingleInputByType(inputTypeData);
 
 		if (inputData != null) {
 			final Generator inputSoundGenerator = inputData.getInputGenerator();
@@ -876,7 +919,7 @@ implements GeneratorInterface,
 		final float ret;
 		final Float defaultValue = inputTypeData.getDefaultValue();
 		
-		if (defaultValue != null) {
+		if (Objects.nonNull(defaultValue)) {
 			ret = defaultValue.floatValue();
 		} else {
 			ret = Float.NaN;

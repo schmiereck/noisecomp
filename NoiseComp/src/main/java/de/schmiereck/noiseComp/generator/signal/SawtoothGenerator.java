@@ -89,113 +89,29 @@ extends Generator
 		final OscillatorSoundSample oscillatorSoundSample = (OscillatorSoundSample) soundSample;
 
 		//==========================================================================================
-		Object inputsSyncObject = this.getInputsSyncObject();
-		
-		if (inputsSyncObject != null) {
+		final Object inputsSyncObject = this.getInputsSyncObject();
+
+		if (Objects.nonNull(inputsSyncObject)) {
 			synchronized (inputsSyncObject) {
-				Iterator<InputData> inputsIterator = this.getInputsIterator();
-			
-				if (inputsIterator != null) {
-					while (inputsIterator.hasNext()) {
-						InputData inputData = inputsIterator.next();
-						
-						switch (inputData.getInputTypeData().getInputType()) {
-							case INPUT_TYPE_FREQ: {
-								final float value =  
-									this.calcInputMonoValue(framePosition, 
-									                        frameTime,
-									                        inputData, 
-									                        parentModuleGenerator,
-									                        generatorBuffer,
-									                        moduleArguments);
-								
-								if (Float.isNaN(value) == false) {
-									if (Float.isNaN(signalFrequency) == false) {
-										signalFrequency += value;
-									} else {
-										signalFrequency = value;
-									}
-								}
-								break;
-							}
-							case INPUT_TYPE_IIFREQ: {
-								final float value =  
-									this.calcInputMonoValue(framePosition, 
-									                        frameTime,
-									                        inputData, 
-									                        parentModuleGenerator,
-									                        generatorBuffer,
-									                        moduleArguments);
-								
-								if (Float.isNaN(value) == false) {
-									if (Float.isNaN(signalIIFreq) == false) {
-										signalIIFreq += value;
-									} else {
-										signalIIFreq = value;
-									}
-								}
-								break;
-							}
-							case INPUT_TYPE_AMPL: {
-								final float value =  
-									this.calcInputMonoValue(framePosition, 
-									                        frameTime,
-									                        inputData, 
-									                        parentModuleGenerator,
-									                        generatorBuffer,
-									                        moduleArguments);
-								
-								if (Float.isNaN(value) == false) {
-									if (Float.isNaN(signalAmplitude) == false) {
-										signalAmplitude += value;
-									} else {
-										signalAmplitude = value;
-									}
-								}
-								break;
-							}
-							case INPUT_TYPE_SHIFT: {
-								final float value =  
-									this.calcInputMonoValue(framePosition, 
-									                        frameTime,
-									                        inputData, 
-									                        parentModuleGenerator,
-									                        generatorBuffer,
-									                        moduleArguments);
-								
-								if (Float.isNaN(value) == false) {
-									if (Float.isNaN(signalShift) == false) {
-										signalShift += value;
-									} else {
-										signalShift = value;
-									}
-								}
-								break;
-							}
-							case INPUT_TYPE_PULSE_WIDTH: {
-								final float value =  
-									this.calcInputMonoValue(framePosition, 
-									                        frameTime,
-									                        inputData, 
-									                        parentModuleGenerator,
-									                        generatorBuffer,
-									                        moduleArguments);
-								
-								if (Float.isNaN(value) == false) {
-									if (Float.isNaN(pulseWidth) == false) {
-										pulseWidth += value;
-									} else {
-										pulseWidth = value;
-									}
-								}
-								break;
-							}
-							default: {
-								throw new RuntimeException("Unknown input type \"" + inputData.getInputTypeData() + "\".");
-							}
-						}
-					}
-				}
+				signalFrequency = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_FREQ),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
+
+				signalIIFreq = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_IIFREQ),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
+
+				signalAmplitude = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_AMPL),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
+
+				signalShift = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_SHIFT),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
+
+				pulseWidth = this.calcInputMonoValueSumByInputType(framePosition, frameTime,
+						this.getGeneratorTypeData().getInputTypeData(INPUT_TYPE_PULSE_WIDTH),
+						parentModuleGenerator, generatorBuffer, moduleArguments);
 			}
 		}
 		
@@ -325,7 +241,7 @@ extends Generator
 						switch (inputData.getInputTypeData().getInputType()) {
 							case INPUT_TYPE_FREQ: {
 								final float value =
-									this.calcInputMonoValue(framePosition,
+									this.calcInputMonoValueByInputData(framePosition,
 									                        frameTime,
 									                        inputData,
 									                        parentModuleGenerator,
@@ -343,7 +259,7 @@ extends Generator
 							}
 							case INPUT_TYPE_IIFREQ: {
 								final float value =
-									this.calcInputMonoValue(framePosition,
+									this.calcInputMonoValueByInputData(framePosition,
 									                        frameTime,
 									                        inputData,
 									                        parentModuleGenerator,
@@ -361,7 +277,7 @@ extends Generator
 							}
 							case INPUT_TYPE_AMPL: {
 								final float value =
-									this.calcInputMonoValue(framePosition,
+									this.calcInputMonoValueByInputData(framePosition,
 									                        frameTime,
 									                        inputData,
 									                        parentModuleGenerator,
@@ -379,7 +295,7 @@ extends Generator
 							}
 							case INPUT_TYPE_SHIFT: {
 								final float value =
-									this.calcInputMonoValue(framePosition,
+									this.calcInputMonoValueByInputData(framePosition,
 									                        frameTime,
 									                        inputData,
 									                        parentModuleGenerator,
@@ -397,7 +313,7 @@ extends Generator
 							}
 							case INPUT_TYPE_PULSE_WIDTH: {
 								final float value =
-									this.calcInputMonoValue(framePosition,
+									this.calcInputMonoValueByInputData(framePosition,
 									                        frameTime,
 									                        inputData,
 									                        parentModuleGenerator,

@@ -83,7 +83,7 @@ extends Generator
 							case INPUT_TYPE_MEAN:
 							{
 								float value = 
-									this.calcInputMonoValue(framePosition, 
+									this.calcInputMonoValueByInputData(framePosition,
 									                        frameTime,
 									                        inputData, 
 									                        parentModuleGenerator,
@@ -99,7 +99,7 @@ extends Generator
 							case INPUT_TYPE_VARIANCE:
 							{
 								float value =  
-									this.calcInputMonoValue(framePosition, 
+									this.calcInputMonoValueByInputData(framePosition,
 									                        frameTime,
 									                        inputData, 
 									                        parentModuleGenerator,
@@ -115,7 +115,7 @@ extends Generator
 							case INPUT_TYPE_ALPHA:
 							{
 								float value = 
-									this.calcInputMonoValue(framePosition, 
+									this.calcInputMonoValueByInputData(framePosition,
 									                        frameTime,
 									                        inputData, 
 									                        parentModuleGenerator,
@@ -131,7 +131,7 @@ extends Generator
 							case INPUT_TYPE_POLES:
 							{
 								float value =
-									this.calcInputMonoValue(framePosition, 
+									this.calcInputMonoValueByInputData(framePosition,
 									                        frameTime,
 									                        inputData, 
 									                        parentModuleGenerator,

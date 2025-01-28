@@ -116,7 +116,7 @@ extends Generator
 							{
 //								try
 //								{
-									float value = this.calcInputMonoValue(framePosition, 
+									float value = this.calcInputMonoValueByInputData(framePosition,
 									                                      frameTime,
 									                                      inputData, 
 									                                      parentModuleGenerator,
