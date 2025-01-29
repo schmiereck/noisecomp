@@ -19,8 +19,7 @@ import javax.swing.KeyStroke;
  * @version <p>14.02.2011:	created, smk</p>
  */
 public class FileImportAction
-implements Action
-{
+implements Action {
 	//**********************************************************************************************
 	// Fields:
 
@@ -37,95 +36,72 @@ implements Action
 	 * 
 	 * @param appController 
 	 * 			is the Main-Controller of Application. 
-	 * @param mainController 
-	 * 			is the Main-Controller of View. 
 	 */
-	public FileImportAction(AppController appController)
-	{
+	public FileImportAction(final AppController appController) {
 		this.appController = appController;
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.Action#addPropertyChangeListener(java.beans.PropertyChangeListener)
 	 */
-	public void addPropertyChangeListener(PropertyChangeListener listener)
-	{
+	public void addPropertyChangeListener(final PropertyChangeListener listener) {
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.Action#getValue(java.lang.String)
 	 */
-	public Object getValue(String key)
-	{
-		Object value;
+	public Object getValue(final String key) {
+		final Object value;
 		
-		if (Action.NAME.equals(key))
-		{
+		if (Action.NAME.equals(key)) {
 			value = "Import...";
-		}
-		else
-		{
-			if (Action.MNEMONIC_KEY.equals(key))
-			{
+		} else {
+			if (Action.MNEMONIC_KEY.equals(key)) {
 				value = KeyEvent.VK_I;
-			}
-			else
-			{
-				if (Action.ACCELERATOR_KEY.equals(key))
-				{
+			} else {
+				if (Action.ACCELERATOR_KEY.equals(key)) {
 					value = KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK);
-				}
-				else
-				{
-					if (Action.SHORT_DESCRIPTION.equals(key))
-					{
+				} else {
+					if (Action.SHORT_DESCRIPTION.equals(key)) {
 						value = "Import the file \"*.noiseComp.xml\".";
-					}
-					else
-					{
+					} else {
 						value = null;
 					}
 				}
 			}
 		}
-		
 		return value;
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.Action#isEnabled()
 	 */
-	public boolean isEnabled()
-	{
+	public boolean isEnabled() {
 		return true;
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.Action#putValue(java.lang.String, java.lang.Object)
 	 */
-	public void putValue(String key, Object value)
-	{
+	public void putValue(final String key, final Object value) {
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.Action#removePropertyChangeListener(java.beans.PropertyChangeListener)
 	 */
-	public void removePropertyChangeListener(PropertyChangeListener listener)
-	{
+	public void removePropertyChangeListener(final PropertyChangeListener listener) {
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.swing.Action#setEnabled(boolean)
 	 */
-	public void setEnabled(boolean b)
-	{
+	public void setEnabled(final boolean b) {
 	}
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
-	public void actionPerformed(ActionEvent e)
-	{
+	public void actionPerformed(final ActionEvent e) {
 		this.appController.doFileImport();
 	}
 

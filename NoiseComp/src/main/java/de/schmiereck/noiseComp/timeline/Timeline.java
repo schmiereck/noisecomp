@@ -402,8 +402,7 @@ implements GeneratorBufferInterface,
 	 * @return
 	 * 			the Frame rate of the outgoing sound.
 	 */
-	public float getSoundFrameRate()
-	{
+	public float getSoundFrameRate() {
 		return this.generator.getSoundFrameRate();
 	}
 
@@ -432,19 +431,15 @@ implements GeneratorBufferInterface,
 	 * 			is the buffered sample.
 	 */
 	public synchronized 
-	SoundSample getBufSoundSample(long sampleFramePos)
-	{
+	SoundSample getBufSoundSample(long sampleFramePos) {
 		//==========================================================================================
 		SoundSample soundSample;
 		
 		int bufFramePos = this.makeBufferFramePos(sampleFramePos);
 		
-		if (bufFramePos >= 0)
-		{
+		if (bufFramePos >= 0) {
 			soundSample = this.bufSoundSamples[bufFramePos];
-		}
-		else
-		{
+		} else {
 			soundSample = null;
 		}
 		//==========================================================================================
@@ -478,31 +473,28 @@ implements GeneratorBufferInterface,
 	 * 			is the buffer Frame or <code>-1</code> if not in buffer range.
 	 */
 	private synchronized 
-	int makeBufferFramePos(long sampleFrame)
-	{
+	int makeBufferFramePos(final long sampleFrame) {
 		//==========================================================================================
-		int bufFramePos;
+		final int retBufFramePos;
 		
-		if (this.bufSoundSamples != null)
-		{
-			float startTimePos = this.generator.getStartTimePos();
-			
-			long startFrame = (long)(this.generator.getSoundFrameRate() * startTimePos);
-			
-			bufFramePos = (int)(sampleFrame - startFrame);
+		if (this.bufSoundSamples != null) {
+			final float startTimePos = this.generator.getStartTimePos();
+
+			final long startFrame = (long)(this.generator.getSoundFrameRate() * startTimePos);
+
+			final int bufFramePos = (int)(sampleFrame - startFrame);
 			
 			// Frame is not in buffer range?
-			if (((bufFramePos >= 0) && (bufFramePos < this.bufSoundSamples.length)) == false)
-			{
-				bufFramePos = -1;
+			if (((bufFramePos >= 0) && (bufFramePos < this.bufSoundSamples.length)) == false) {
+				retBufFramePos = -1;
+			} else {
+				retBufFramePos = bufFramePos;
 			}
-		}
-		else
-		{
-			bufFramePos = -1;
+		} else {
+			retBufFramePos = -1;
 		}
 		//==========================================================================================
-		return bufFramePos;
+		return retBufFramePos;
 	}
 
 	/* (non-Javadoc)
@@ -512,8 +504,7 @@ implements GeneratorBufferInterface,
 	public SoundSample calcFrameSample(final long framePosition,
 									   final float frameTime,
 									   final ModuleGenerator parentModuleGenerator,
-									   final ModuleArguments moduleArguments)
-	{
+									   final ModuleArguments moduleArguments) {
 		//==========================================================================================
 		SoundSample bufInputSoundSample;
 		
@@ -1100,38 +1091,31 @@ implements GeneratorBufferInterface,
 	 * @return
 	 * 			<code>true</code> if timeline is already output timeline.
 	 */
-	public boolean checkIsOutputTimeline(Timeline timeline)
-	{
+	public boolean checkIsOutputTimeline(final Timeline timeline) {
 		//==========================================================================================
 		boolean ret;
-		
-		Set<Entry<InputData, Timeline>> entrySet = this.outputTimelines.entrySet();
-		
-		Iterator<Entry<InputData, Timeline>> entrySetIterator = entrySet.iterator();
+
+		final Set<Entry<InputData, Timeline>> entrySet = this.outputTimelines.entrySet();
+
+		final Iterator<Entry<InputData, Timeline>> entrySetIterator = entrySet.iterator();
 		
 		ret = false;
 		
-		while (entrySetIterator.hasNext())
-		{
-			Map.Entry<InputData, Timeline> entry = entrySetIterator.next();
+		while (entrySetIterator.hasNext()) {
+			final Map.Entry<InputData, Timeline> entry = entrySetIterator.next();
+
+			final Timeline outputTimeline = entry.getValue();
 			
-			Timeline outputTimeline = entry.getValue();
-			
-			if (outputTimeline == timeline)
-			{
+			if (outputTimeline == timeline) {
 				ret = true;
 				break;
-			}
-			else
-			{
-				if (outputTimeline.checkIsOutputTimeline(timeline) == true)
-				{
+			} else {
+				if (outputTimeline.checkIsOutputTimeline(timeline) == true) {
 					ret = true;
 					break;
 				}
 			}
 		}
-		
 		//==========================================================================================
 		return ret;
 	}
@@ -1140,8 +1124,7 @@ implements GeneratorBufferInterface,
 	 * XXX Because of a memory leake clear timelines explicitely.
 	 */
 	public synchronized 
-	void clearTimeline()
-	{
+	void clearTimeline() {
 		this.bufSoundSamples = null;
 		
 		this.inputTimelines.clear();
@@ -1158,9 +1141,11 @@ implements GeneratorBufferInterface,
 	 */
 	@Override
 	public //synchronized
-	Object getGeneratorData()
-	{
+	Object getGeneratorData() {
 		return this.generatorData;
 	}
-	
+
+	public long getBufSoundSamplesCount() {
+		return this.bufSoundSamples.length;
+	}
 }

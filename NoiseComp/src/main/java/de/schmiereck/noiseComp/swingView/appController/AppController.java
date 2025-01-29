@@ -321,6 +321,11 @@ implements RemoveTimelineGeneratorListenerInterface,
 			
 			this.appView.getFileImportMenuItem().setAction(action);
 		}
+		{
+			final FileExportAction action = new FileExportAction(this);
+
+			this.appView.getFileExportMenuItem().setAction(action);
+		}
 		//------------------------------------------------------------------------------------------
 		// Edit:
 		{
@@ -2578,4 +2583,19 @@ implements RemoveTimelineGeneratorListenerInterface,
 	public ModulesTreeController getModulesTreeController() {
 		return this.modulesTreeController;
 	}
+
+	public void doFileExport() {
+		final JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+		final int returnValue = fileChooser.showSaveDialog(null);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			final File file = fileChooser.getSelectedFile();
+
+			AudioFileSaver.saveToFileAsFloatPcm(this.soundSourceData, file);
+			//AudioFileSaver.saveToFileAs16BitPcm(this.soundSourceData, file);
+		}
+    }
 }

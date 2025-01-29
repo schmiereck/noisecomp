@@ -105,12 +105,11 @@ public class SoundOutLogic {
 
     public void notifyRunSchedulOut() {
         //==========================================================================================
-        if (this.soundSchedulerData.getPlaybackPaused() == false)
-        {
+        if (this.soundSchedulerData.getPlaybackPaused() == false) {
 //			System.out.println("OUT: " + actualWaitPerFramesMillis);
-            SourceDataLine line = this.soundDataLogic.getLine();
+            final SourceDataLine line = this.soundDataLogic.getLine();
 
-            SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
+            final SoundBufferManager soundBufferManager = this.soundDataLogic.getSoundBufferManager();
 
             System.out.println("PLAY: %f".formatted(soundBufferManager.getActualTime()));
 
@@ -127,16 +126,17 @@ public class SoundOutLogic {
                 //int	nWritten =
                 //line.write(abData, 0, nRead);
 
-                int availableBytes = line.available();
-                //if (availableBytes > 0) {
-                if (availableBytes >= this.lineBufferData.length) {
-                    int nRead = soundBufferManager.read(this.lineBufferData, 0, this.lineBufferData.length);
-                    line.write(this.lineBufferData, 0, nRead);
-                }
+                final int availableBytes = line.available();
+                if (availableBytes > 0) {
+                    if (availableBytes >= this.lineBufferData.length) {
+                        final int nRead = soundBufferManager.read(this.lineBufferData, 0, this.lineBufferData.length);
+                        line.write(this.lineBufferData, 0, nRead);
+                    } else {
 
+                    }
+                }
                 //System.out.println("actualWaitPerFramesMillis: " + actualWaitPerFramesMillis + ", nWritten:" + nWritten + ", nRead: " + nRead);
-            }
-            catch (IOException ex) {
+            } catch (final IOException ex) {
                 throw new RuntimeException("read sound data", ex);
             }
         }

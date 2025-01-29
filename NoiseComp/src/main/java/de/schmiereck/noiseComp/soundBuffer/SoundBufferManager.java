@@ -1,6 +1,7 @@
 package de.schmiereck.noiseComp.soundBuffer;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.sound.sampled.AudioFormat;
 
@@ -118,30 +119,31 @@ public class SoundBufferManager
 		//==========================================================================================
 	}
 
-	/* (non-Javadoc)
-	 * @see java.io.InputStream#read(byte[], int, int)
+	/**
+	 * playing-Buffer => waiting-Buffer => generating-Buffer
 	 */
-	public int read(byte[] abData, int nOffset, int nLength) throws IOException {
+	public int read(final byte[] abData, final int nOffset, final int nLength) throws IOException {
 		//==========================================================================================
 		if (nLength % this.audioFormat.getFrameSize() != 0) {
 			throw new IOException("length must be an integer multiple of frame size");
 		}
 
-		int copyiedBytes;
+		final int copyiedBytes;
 		
 		synchronized (this) {
 			if (this.isPolling == true) {
+				// Play-Buffer ist leer?
 				if (this.playingGeneratorBuffer.getIsBufferIsEmpty()) {
 					if (this.waitingGeneratorBuffer == null) {
 						// isPollingExceptionPoint
 						//throw new IOException("waiting buffer is empty (maybe you should increase the Scheduler updates ?)");
 					}
 					
-					if (this.waitingGeneratorBuffer != null) {
-						// Der alte Playbuffer ist leer, muss neu generiert werden.
+					if (Objects.nonNull(this.waitingGeneratorBuffer)) {
+						// Der alte Play-Buffer ist leer, muss neu generiert werden.
 						this.generatingGeneratorBuffer = this.playingGeneratorBuffer;
 						
-						// der aktuellen wartebuffer wird jetzt abgespielt.
+						// Der aktuellen Warte-Buffer wird jetzt abgespielt.
 						this.playingGeneratorBuffer = this.waitingGeneratorBuffer;
 						
 						// nichts wartet mehr.

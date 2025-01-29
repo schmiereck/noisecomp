@@ -75,10 +75,15 @@ extends JFrame
 	private JMenuItem fileSaveMenuItem = null;
 
 	/**
-	 * SubMenu Bar: File: File-Open.
+	 * SubMenu Bar: File: File-Import.
 	 */
 	private JMenuItem fileImportMenuItem = null;
-	
+
+	/**
+	 * SubMenu Bar: File: File-Import.
+	 */
+	private JMenuItem fileExportMenuItem = null;
+
 	/**
 	 * SubMenu Bar: Edit: Double-Timeline.
 	 */
@@ -612,6 +617,10 @@ extends JFrame
 			this.fileImportMenuItem = new JMenuItem();
 			menu.add(this.fileImportMenuItem);
 			
+			// File-Export:
+			this.fileExportMenuItem = new JMenuItem();
+			menu.add(this.fileExportMenuItem);
+
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			menu.addSeparator();
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -805,11 +814,18 @@ extends JFrame
 
 	/**
 	 * @return 
-	 * 			returns the {@link #fileSaveMenuItem}.
+	 * 			returns the {@link #fileImportMenuItem}.
 	 */
-	public JMenuItem getFileImportMenuItem()
-	{
+	public JMenuItem getFileImportMenuItem() {
 		return this.fileImportMenuItem;
+	}
+
+	/**
+	 * @return
+	 * 			returns the {@link #fileExportMenuItem}.
+	 */
+	public JMenuItem getFileExportMenuItem() {
+		return this.fileExportMenuItem;
 	}
 
 	/**
