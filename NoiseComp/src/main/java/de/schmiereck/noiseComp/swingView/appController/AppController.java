@@ -57,6 +57,7 @@ import de.schmiereck.noiseComp.swingView.inputSelect.RemoveInputSelectEntryListe
 import de.schmiereck.noiseComp.swingView.inputSelect.UpdateInputSelectEntryListenerInterface;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditController;
 import de.schmiereck.noiseComp.swingView.modulEdit.ModuleEditModel;
+import de.schmiereck.noiseComp.swingView.moduleControls.ModuleControlsController;
 import de.schmiereck.noiseComp.swingView.moduleInputTypeEdit.ModuleInputTypeEditController;
 import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSelectController;
 import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSelectEntryModel;
@@ -162,7 +163,12 @@ implements RemoveTimelineGeneratorListenerInterface,
 	 * ModuleInput-Types Controller.
 	 */
 	private final ModuleInputTypesController moduleInputTypesController;
-	
+
+	/**
+	 * ModuleInput-Types Controller.
+	 */
+	private final ModuleControlsController moduleControlsController;
+
 	/**
 	 * Rename-Folder Controller.
 	 */
@@ -352,6 +358,13 @@ implements RemoveTimelineGeneratorListenerInterface,
 		this.moduleInputTypeEditController = moduleInputTypesController.getModuleInputTypeEditController();
 		this.moduleInputTypeSelectController = moduleInputTypesController.getModuleInputTypeSelectController();
 		
+		//------------------------------------------------------------------------------------------
+		this.moduleControlsController = new ModuleControlsController(this,
+		                                                               this.appModelChangedObserver);
+
+		//this.moduleInputTypeEditController = moduleControlsController.getModuleInputTypeEditController();
+		//this.moduleInputTypeSelectController = moduleControlsController.getModuleInputTypeSelectController();
+
 		//------------------------------------------------------------------------------------------
 		this.renameFolderController = new RenameFolderController(this,
 		                                                         this.appModelChangedObserver);
@@ -599,8 +612,22 @@ implements RemoveTimelineGeneratorListenerInterface,
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					appModuleController.doEditInputTypes(moduleInputTypesController);
-					
+					moduleInputTypesController.getModuleInputTypesView().setVisible(true);
+
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+				}
+		 	}
+		);
+		//------------------------------------------------------------------------------------------
+		// ModuleEdit: Edit-Module-Controls Button:
+
+		this.moduleEditController.getModuleEditView().getEditModuleControlsButton().addActionListener(
+		 	new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					moduleControlsController.getModuleControlsView().setVisible(true);
+
 					// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 				}
 		 	}

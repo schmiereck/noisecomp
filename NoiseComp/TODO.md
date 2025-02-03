@@ -1,4 +1,7 @@
 
+Board with Knobs to control the sound
+    TODO ModuleControlsController: A board with knobs to control the sound.
+
 Wave Export
     DONE see AudioFileSaver
 

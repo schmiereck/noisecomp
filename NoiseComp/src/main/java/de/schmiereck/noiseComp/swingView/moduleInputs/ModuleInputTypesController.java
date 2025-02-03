@@ -46,8 +46,7 @@ public class ModuleInputTypesController
 	 * 			is the AppModelChangedObserver.
 	 */
 	public ModuleInputTypesController(final AppController appController,
-	                                 final AppModelChangedObserver appModelChangedObserver)
-	{
+	                                 final AppModelChangedObserver appModelChangedObserver) {
 		//==========================================================================================
 		this.moduleInputTypesModel = new ModuleInputTypesModel();
 		this.moduleInputTypesView = new ModuleInputTypesView(appController.getAppView());
@@ -69,8 +68,7 @@ public class ModuleInputTypesController
 	 * @return 
 	 * 			returns the {@link #moduleInputTypesView}.
 	 */
-	public ModuleInputTypesView getModuleInputTypesView()
-	{
+	public ModuleInputTypesView getModuleInputTypesView() {
 		return this.moduleInputTypesView;
 	}
 
@@ -78,8 +76,7 @@ public class ModuleInputTypesController
 	 * @return 
 	 * 			returns the {@link #moduleInputTypesModel}.
 	 */
-	public ModuleInputTypesModel getModuleInputTypesModel()
-	{
+	public ModuleInputTypesModel getModuleInputTypesModel() {
 		return this.moduleInputTypesModel;
 	}
 
@@ -87,8 +84,7 @@ public class ModuleInputTypesController
 	 * @return 
 	 * 			returns the {@link #moduleInputTypeSelectController}.
 	 */
-	public ModuleInputTypeSelectController getModuleInputTypeSelectController()
-	{
+	public ModuleInputTypeSelectController getModuleInputTypeSelectController() {
 		return this.moduleInputTypeSelectController;
 	}
 
@@ -96,8 +92,7 @@ public class ModuleInputTypesController
 	 * @return 
 	 * 			returns the {@link #moduleInputTypeEditController}.
 	 */
-	public ModuleInputTypeEditController getModuleInputTypeEditController()
-	{
+	public ModuleInputTypeEditController getModuleInputTypeEditController() {
 		return this.moduleInputTypeEditController;
 	}
 }

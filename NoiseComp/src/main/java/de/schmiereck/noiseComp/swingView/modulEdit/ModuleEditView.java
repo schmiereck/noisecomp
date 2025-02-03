@@ -51,7 +51,12 @@ extends BasicEditView
 	 * Input-Types Button.
 	 */
 	private final JButton editInputTypesButton;
-	
+
+	/**
+	 * Module-Controls Button.
+	 */
+	private final JButton editModuleControlsButton;
+
 	//**********************************************************************************************
 	// Functions:
 
@@ -72,13 +77,10 @@ extends BasicEditView
 		{
 			this.moduleameTextField = this.addTextField(0, "ModuleName:");
 			
-			this.moduleEditModel.getModuleNameChangedNotifier().addModelPropertyChangedListener
-			(
-			 	new ModelPropertyChangedListener()
-			 	{
+			this.moduleEditModel.getModuleNameChangedNotifier().addModelPropertyChangedListener(
+			 	new ModelPropertyChangedListener() {
 					@Override
-					public void notifyModelPropertyChanged()
-					{
+					public void notifyModelPropertyChanged() {
 						moduleameTextField.setText(OutputUtils.makeStringText(moduleEditModel.getModuleName()));
 					}
 			 	}
@@ -88,13 +90,10 @@ extends BasicEditView
 		{
 			this.modulesMainCheckBox = this.addCheckBox(1, "Is Main:");
 			
-			this.moduleEditModel.getModuleIsMainChangedNotifier().addModelPropertyChangedListener
-			(
-			 	new ModelPropertyChangedListener()
-			 	{
+			this.moduleEditModel.getModuleIsMainChangedNotifier().addModelPropertyChangedListener(
+			 	new ModelPropertyChangedListener() {
 					@Override
-					public void notifyModelPropertyChanged()
-					{
+					public void notifyModelPropertyChanged() {
 						boolean modulesMain = OutputUtils.makeBoolean(moduleEditModel.getModuleIsMain());
 						
 						modulesMainCheckBox.setSelected(modulesMain);
@@ -104,19 +103,25 @@ extends BasicEditView
 		}
 		//------------------------------------------------------------------------------------------
 		{
-			this.editInputTypesButton = new JButton("Edit Input-Types...");
-			
-			this.addField(2, this.editInputTypesButton);
-		}
-		//------------------------------------------------------------------------------------------
-		{
 			this.updateButton = new JButton("Update");
 			
-			this.addField(3, this.updateButton);
+			this.addField(2, this.updateButton);
 
 //			this.getRootPane().setDefaultButton(this.updateButton);
 			this.setDefaultButton(this.updateButton);
 			this.updateButton.setDefaultCapable(true);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.editInputTypesButton = new JButton("Edit Input-Types...");
+
+			this.addField(3, this.editInputTypesButton);
+		}
+		//------------------------------------------------------------------------------------------
+		{
+			this.editModuleControlsButton = new JButton("Edit Modul-Controls...");
+
+			this.addField(4, this.editModuleControlsButton);
 		}
 		//==========================================================================================
 	}
@@ -125,9 +130,16 @@ extends BasicEditView
 	 * @return 
 	 * 			returns the {@link #editInputTypesButton}.
 	 */
-	public JButton getEditInputTypesButton()
-	{
+	public JButton getEditInputTypesButton() {
 		return this.editInputTypesButton;
+	}
+
+	/**
+	 * @return
+	 * 			returns the {@link #editModuleControlsButton}.
+	 */
+	public JButton getEditModuleControlsButton() {
+		return this.editModuleControlsButton;
 	}
 
 	/**

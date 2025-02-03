@@ -24,8 +24,7 @@ import de.schmiereck.noiseComp.swingView.moduleInputTypeSelect.ModuleInputTypeSe
  * @version <p>12.09.2010:	created, smk</p>
  */
 public class ModuleInputTypesView
-extends JDialog
-{
+extends JDialog  {
 	//**********************************************************************************************
 	// Fields:
 
@@ -37,18 +36,17 @@ extends JDialog
 	/**
 	 * Constructor.
 	 * 
-	 * Contructs a invisble Dialog.
+	 * Constructs an invisible Dialog.
 	 * 
 	 * @param appView 
 	 * 			this is the App View.
 	 */
-	public ModuleInputTypesView(AppView appView)
-	{
+	public ModuleInputTypesView(final AppView appView) {
 		super(appView, false);
 		//==========================================================================================
 		this.setVisible(false);
 		
-		this.setTitle("ModuleInputs");
+		this.setTitle("Module-Inputs");
 //		this.setModal(false);
 		
 		this.setSize(400, 300);
@@ -85,7 +83,7 @@ extends JDialog
 	}
 
 	/**
-	 * @param inputTypeSelectView
+	 * @param moduleInputTypeEditView
 	 * 			set the ModuleInput-Type Edit View.
 	 */
 	public void setModuleInputTypeEditView(ModuleInputTypeEditView moduleInputTypeEditView)

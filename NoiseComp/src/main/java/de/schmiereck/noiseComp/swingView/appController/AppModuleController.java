@@ -89,15 +89,4 @@ public class AppModuleController
 		}
 		//==========================================================================================
 	}
-
-	/**
-	 * Do Edit Input-Types.
-	 */
-	public void doEditInputTypes(final ModuleInputTypesController moduleInputTypesController)
-	{
-		//==========================================================================================
-		moduleInputTypesController.getModuleInputTypesView().setVisible(true);
-		
-		//==========================================================================================
-	}
 }
