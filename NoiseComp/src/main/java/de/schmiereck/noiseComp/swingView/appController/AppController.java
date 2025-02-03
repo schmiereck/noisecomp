@@ -3,14 +3,14 @@
  */
 package de.schmiereck.noiseComp.swingView.appController;
 
-import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.*;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.prefs.Preferences;
 
@@ -2588,11 +2588,17 @@ implements RemoveTimelineGeneratorListenerInterface,
 		final JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		//final FileDialog fileDialog = new FileDialog((Frame) null, "WAV-Export", FileDialog.SAVE);
+		//fileDialog.setVisible(true);
 
 		final int returnValue = fileChooser.showSaveDialog(null);
+		//final String directory = fileDialog.getDirectory();
+		//final String fileName = fileDialog.getFile();
 
+		//if (directory != null && fileName != null) {
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			final File file = fileChooser.getSelectedFile();
+			//final File file = new File(directory, fileName);
 
 			AudioFileSaver.saveToFileAsFloatPcm(this.soundSourceData, file);
 			//AudioFileSaver.saveToFileAs16BitPcm(this.soundSourceData, file);
