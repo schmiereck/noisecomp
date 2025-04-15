@@ -3,7 +3,8 @@
  */
 package de.schmiereck.noiseComp.frequences;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import static org.junit.Assert.*;
 import de.schmiereck.noiseComp.frequences.ToneFrequences.Tone;
 
 /**
@@ -15,7 +16,6 @@ import de.schmiereck.noiseComp.frequences.ToneFrequences.Tone;
  * @version <p>01.12.2010:	created, smk</p>
  */
 public class ToneFrequencesTest
-	extends TestCase
 {
 	public void testMakeFrequence()
 	{
